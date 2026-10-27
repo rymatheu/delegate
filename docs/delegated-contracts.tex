@@ -1,0 +1,63 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.7cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\pagestyle{empty}
+\newcommand{\ninf}[1]{\lVert #1\rVert_\infty}
+\newcommand{\ntwo}[1]{\lVert #1\rVert_2}
+\begin{document}
+{\Large\bfseries The global contract and the delegated contracts}\par 27 October 2026
+
+\section*{Ports}
+The planner $M_1$ reads $u=(s,h,g)$, the fence half-side $s\in\mathbb R$, the home $h\in\mathbb R^2$ and the goal $g\in\mathbb R^2$, and writes the mission $w=(w_1,w_2)$, two waypoints in $\mathbb R^2$. The controller $M_2$ reads the mission $w$ and the environment $e=(p_0,dt)$, the start position $p_0\in\mathbb R^2$ and the tick lengths $dt_0,\dots,dt_8$, and writes one target $y_t\in\mathbb R^2$ at every tick $t=0,\dots,8$. The planner never sees $e$ or $y$; the controller never sees $u$. $\ninf{\cdot}$ is the maximum of the absolute coordinates and $\ntwo{\cdot}$ the Euclidean norm.
+
+\section*{Global contract $(A,G)$}
+The assumption $A$ is a condition on $(u,e)$ and the guarantee $G$ a condition on $(u,e,y)$.
+\begin{align*}
+A:\quad& 25\le s\le 50,\qquad \ninf{h}\le s-3,\qquad \ninf{g}\le s+\tfrac12,\qquad \ninf{p_0-h}\le 1,\qquad dt_t\in[0.9,\,1.1]\ \text{for every } t.\\
+G:\quad& y_t\in[-s,s]^2\ \text{for every } t\qquad\text{and}\qquad \ntwo{y_t-g}\le 3\ \text{for some } t.
+\end{align*}
+In words, the fence is at least $50$ m across, home is $3$ m inside it, the goal may be up to half a metre outside it, the vehicle starts within $1$ m of home and ticks are close to one second; then every target stays inside the fence and some target comes within $3$ m of the goal.
+
+\section*{Delegated contracts (proposer A, verified)}
+\textbf{Planner contract $(A_1,G_1)$.} $A_1$ is a condition on $u$ and $G_1$ a condition on $(u,w)$.
+\begin{align*}
+A_1:\quad& 25\le s\le 50,\qquad \ninf{h}\le s-3,\qquad \ninf{g}\le s+\tfrac12.\\
+G_1:\quad& 5\le\ninf{w_2-w_1}\le 100,\qquad \ninf{w_1}\le 100,\qquad \ninf{w_2}\le 100,\\
+& 6\le\ninf{w_1-h}\le 99,\qquad \ninf{h}\le s-1,\qquad \ninf{w_1}\le s,\qquad \ninf{w_2}\le s-1,\qquad \ntwo{w_2-g}\le 3 .
+\end{align*}
+The first line of $G_1$ makes the mission acceptable to the controller. The second line keeps the first leg valid from any start the global assumption allows, keeps the box the controller may sweep inside the fence, and places the last waypoint close enough to the goal.
+
+\textbf{Controller contract $(A_2,G_2)$.} $A_2$ is a condition on $w$ and $G_2$ a condition on $(w,e,y)$.
+\begin{align*}
+A_2:\quad& 5\le\ninf{w_2-w_1}\le 100,\qquad \ninf{w_1}\le 100,\qquad \ninf{w_2}\le 100.\\
+G_2:\quad& \text{if}\quad 5\le\ninf{w_1-p_0}\le 100,\quad \ninf{p_0}\le 100,\quad dt_t\in[\tfrac12,\tfrac32]\ \text{for every } t,\quad\text{then}\\
+& \min(p_{0,k},w_{1,k},w_{2,k}-1)\le y_{t,k}\le\max(p_{0,k},w_{1,k},w_{2,k}+1)\ \text{for every } t \text{ and axis } k\in\{x,y\},\\
+& \text{and}\quad y_t=w_2\ \text{for some } t.
+\end{align*}
+$A_2$ is exactly the controller's input guards. $G_2$ promises, for environments inside the code's clamps, that the target never leaves the box spanned by the start and the two waypoints, widened by $1$ m around $w_2$ only, and that it reaches $w_2$ exactly. The widening comes from the handover code, which moves the target by less than half the waypoint radius at the blend tick.
+
+\section*{Why these compose to $(A,G)$}
+\begin{align*}
+\text{D1}\quad& A\subseteq A_1 && A_1 \text{ is the part of } A \text{ about } u.\\
+\text{D2}\quad& G_1\subseteq A_2 && \text{the first line of } G_1 \text{ is } A_2.\\
+\text{D3}\quad& A\cap G_1\cap A_2\cap G_2\subseteq G && \text{the box of } G_2 \text{ lies in the fence by the margins of } G_1;\ y_t=w_2 \text{ gives } \ntwo{y_t-g}\le 3.\\
+\text{R}\quad& \forall u\in A_1\ \exists w\ G_1(u,w) && \text{witness: planner R4 with margin } 1.
+\end{align*}
+All four were decided by Z3 (D3 in $5.7$ s, the rest under $2$ s). Then $M_1\models(A_1,G_1)$ was checked on the planner code ($0.6$ s) and $M_2\models(A_2,G_2)$ on the controller code by bounded model checking over $8$ ticks with $w$, $p_0$ and $dt$ free ($38.7$ s). By the composition rule, $M_1\cap M_2\models(A,G)$.
+
+\section*{The other two verified pairs}
+Proposers B and C found the same $A_1$ and $A_2$ and the same environment condition in $G_2$. They differ in the box and the margins.
+
+\begin{center}\small
+\begin{tabular}{@{}lp{6.2cm}p{7.6cm}@{}}\toprule
+ & box in $G_2$, and arrival & margins in $G_1$ \\\midrule
+A & box of $p_0,w_1,w_2$, widened by $1$ around $w_2$; $y_t=w_2$ & $\ninf{h}\le s-1$, $\ninf{w_1}\le s$, $\ninf{w_2}\le s-1$, $\ntwo{w_2-g}\le 3$ \\
+B & box of $p_0,w_1,w_2$ widened by $1$ on all sides; $\ntwo{y_t-w_2}\le\tfrac12$ & $\ninf{h}\le s-\tfrac94$, $\ninf{w_1}\le s-\tfrac54$, $\ninf{w_2}\le s-\tfrac54$, $\ntwo{w_2-g}\le\tfrac52$ \\
+C & box of $p_0,w_1$, and box of $w_1,w_2$ widened on the inner side only; $y_t=w_2$ & $\ninf{w_1}\le s$, $\ninf{w_2}\le s-1$, $\ntwo{w_2-g}\le 3$ \\
+algorithm & tube of radius $1$ around both legs; $\ntwo{y_t-w_2}\le\tfrac12$ & $\ninf{h}\le s-2$, $\ninf{w_1}\le s-1$, $\ninf{w_2}\le s-1$, $\ntwo{w_2-g}\le\tfrac52$ \\\bottomrule
+\end{tabular}
+\end{center}
+Every row also carries $6\le\ninf{w_1-h}\le 99$ in $G_1$. The agents' rows A and C are less conservative than the algorithm's row because they read the handover code instead of assuming a uniform tube.
+\end{document}
