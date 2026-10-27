@@ -1,0 +1,8 @@
+% Live route (minted 3 + custom lexer). Needs -shell-escape and ~/.latexminted_config; see README.md.
+\input{leancolors}
+\makeatletter
+% minted 3 runs \minted@patch@PygmentsStyledef right after loading any Pygments style; append our colours.
+\apptocmd{\minted@patch@PygmentsStyledef}{\leanapplycolors}{}{}
+\makeatother
+\newminted[leancode]{lean4vscode.py:CustomLexer}{fontsize=\footnotesize, bgcolor=white}
+\newmintinline[lean]{lean4vscode.py:CustomLexer}{fontsize=\footnotesize, bgcolor=white}

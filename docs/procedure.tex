@@ -1,0 +1,103 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem}
+\setlist{nosep,leftmargin=1.5em}
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}\newtheorem{definition}{Definition}
+\newcommand{\inp}{\mathrm{in}}\newcommand{\outp}{\mathrm{out}}\newcommand{\ports}{\mathrm{ports}}\newcommand{\priv}{\mathrm{priv}}\newcommand{\edge}{\mathrm{edge}}
+\newcommand{\ELIM}{\mathsf{Elim}}\newcommand{\TRUE}{\mathsf{true}}
+\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}
+\makeatletter\renewcommand\section{\@startsection{section}{1}{\z@}{7pt}{3pt}{\normalfont\bfseries}}\makeatother
+\begin{document}
+\begin{center}\textbf{Computing local delegations: the complete procedure}\\ 18 October 2026\end{center}
+
+\section{Objects}
+$V$ is a finite set of real-valued variables, each written by exactly one component or by the environment. Component $i$ reads $\inp(i)$, writes $\outp(i)$, $\ports(i)=\inp(i)\cup\outp(i)$, has delay $0$. The horizon is $H$; $v(t)$ denotes the value of $v$ at time $t\in\{0,\dots,H\}$. A \emph{trace} assigns a real to every $v(t)$.
+The formula language $\mathcal L$: Boolean combinations of atoms $\sum_v a_v\,v(t)\le b$ or $<b$ with rational $a_v,b$ and all variables at one time $t$. A bounded PolySTL formula unrolls into $\mathcal L$ ($\square,\Diamond$ become finite $\wedge,\vee$), and an atom of $\mathcal L$ at time $t$ is the PolySTL formula $\Diamond_{[t,t]}$ of that atom; so $\mathcal L$ and bounded PolySTL define the same sets of traces. A formula is \emph{over} $W\subseteq V$ if it mentions only variables of $W$. $\varphi\models\psi$ means every trace satisfying $\varphi$ satisfies $\psi$.
+A \emph{contract} for $i$ is a pair $(A_i,G_i)$ of formulas over $\ports(i)$; its implementation set is $S_i:=\neg A_i\vee G_i$. The query is $P=(A_P,G_P)$ over $V$.
+\begin{definition}[the problem]
+Find contracts $(A_i,G_i)_{i}$, each over its own ports, such that
+(V1) $A_P\wedge\bigwedge_iS_i\models G_P$;\ (V2) $A_P\wedge\bigwedge_iS_i\models A_j$ for every $j$;\ (R) for every history of $\inp(i)$ there is a history of $\outp(i)$ with the joint trace in $S_i$;\ (K) that history can be chosen so that the outputs at $t$ depend only on inputs at times $\le t$.
+(V1)+(V2) say exactly that the composition of the contracts refines $P$ in the assume--guarantee algebra; (R)+(K) say that each contract can be met by an input-driven component. A solution is an \emph{acceptable delegation}.
+\end{definition}
+\textbf{Why a selection is needed.} The unknowns are sets of traces and (V1), (V2) bound them from above only: if $(S_i)$ satisfies (V1) then so does every $(S_i')$ with $S_i'\subseteq S_i$. So the solutions form a down-set, the empty contract $G_i=\mathsf{false}$ is always a solution of (V1), (V2), and there is no greatest solution in general. Any algorithm therefore has to \emph{choose} a solution. The choice below is made by the witnesses of quantifier elimination, which are computed, not assumed.
+
+\section{Quantifier elimination with witnesses}
+\begin{lemma}[one variable]\label{lem:elim}
+Let $\varphi\in\mathcal L$ and $y$ a variable; write $x$ for the other variables of $\varphi$. One can compute formulas $c_1,\dots,c_m\in\mathcal L$ in $x$ with $\bigvee_jc_j\equiv\TRUE$, and for each $j$ finite families of affine expressions $\ell_{j,1},\dots$ (lower bounds) and $u_{j,1},\dots$ (upper bounds) in $x$, each marked strict or not, such that $c_j\models\big(\varphi\leftrightarrow\bigwedge_a\ell_{j,a}\lesssim y\wedge\bigwedge_b y\lesssim u_{j,b}\big)$. Consequently
+\[
+\exists y\,\varphi\ \equiv\ \bigvee_j\Big(c_j\wedge\bigwedge_{a,b}\ell_{j,a}\lesssim u_{j,b}\Big)\in\mathcal L\quad(\text{strict iff either bound is strict; empty conjunction}=\TRUE),
+\]
+and the function $s(x):=$ ``in case $j$: the midpoint of the largest lower and the smallest upper bound if both exist, largest lower $+1$ if only lower bounds exist, smallest upper $-1$ if only upper, $0$ if none'' satisfies $\exists y\,\varphi\models\varphi[y:=s(x)]$. $s$ is piecewise affine and its graph $y=s(x)$ is in $\mathcal L$.
+\end{lemma}
+\begin{proof}
+Put $\varphi$ in disjunctive normal form; a negated atom is an atom with the inequality reversed. In a conjunction, each atom containing $y$ with coefficient $a_y\neq0$ is solved for $y$ and becomes a lower or upper bound by the sign of $a_y$; the $y$-free atoms, together with the atoms that fix which lower bound is largest and which upper bound is smallest, form the case $c_j$. Within a case the admissible $y$ form an interval, nonempty iff every lower bound is below every upper bound (Fourier--Motzkin). If nonempty it contains the named point. Cases over the disjuncts are made exhaustive by adding the complement of their union as a case with no $y$ (where $\varphi$ is false and $s:=0$). All objects are affine in $x$, and $s$ is affine on each case, so its graph is a finite union of polyhedra, i.e.\ in $\mathcal L$.
+\end{proof}
+Write $\ELIM(\exists y,\varphi)=(\varphi',s)$ for the formula and the witness of the lemma, and $\ELIM(\forall y,\varphi):=\neg\ELIM(\exists y,\neg\varphi)$ (no witness). Eliminating a block of variables is repeated application.
+
+\section{Forwarding}
+Let $N$ be the components that write a variable of $G_P$ together with all components upstream of them (a directed path, writer to reader, leads from them to a writer of $G_P$). A topological ordering $i_1,\dots,i_p$ of $N$ lists every component after all components whose outputs it reads.
+\begin{definition}[nested ordering]
+For $k<p$ put $\priv_k:=\ports(i_k)\setminus\ports(i_{k+1})$ and $\edge_k:=\outp(i_k)\cap\inp(i_{k+1})$. The ordering is \emph{nested} if for all $k<p$: (E) $i_k\to i_{k+1}$ is an edge; (Cap) $|\priv_k|\le|\edge_k|$; (Pure) no variable of $\edge_k$ occurs in $A_P$ or $G_P$; (Info) $H=0$, or every variable read by $i_k$, $k\ge2$, is written by some $i_j$ with $j<k$.
+\end{definition}
+Fix injections $\sigma_k:\priv_k\to\edge_k$. The \emph{forwarding formula} of $i_k$ is $F_k:=\bigwedge_{t}\bigwedge_{v\in\priv_k}\sigma_k(v)(t)=v(t)$, a formula over $\ports(i_k)$.
+\begin{lemma}[carriers]\label{lem:carry}
+For $j<k$ and $v\in\ports(i_j)$ there is a variable $\kappa_k(v)\in\ports(i_k)$ with $F_j\wedge\dots\wedge F_{k-1}\models\kappa_k(v)(t)=v(t)$ for all $t$.
+\end{lemma}
+\begin{proof}
+Induction on $k-j$. If $v\in\ports(i_{j+1})$, set $w:=v$; otherwise $v\in\priv_j$ and $w:=\sigma_j(v)\in\inp(i_{j+1})$, with $F_j\models w(t)=v(t)$. In both cases $w\in\ports(i_{j+1})$; if $j+1=k$ take $\kappa_k(v):=w$, else apply the induction hypothesis to $w$.
+\end{proof}
+The substitution $\delta_k$ replaces every variable $v$ of an earlier component by $\kappa_k(v)$, at the same time index; it maps a formula to a formula over $\ports(i_k)$ and preserves truth on traces satisfying $F_1,\dots,F_{k-1}$.
+
+\section{The procedure}
+Input: the architecture and $P$. Output: an acceptable delegation, or the verdict that none exists.
+\begin{enumerate}
+\item Unroll $A_P,G_P$ into $\mathcal L$. Compute $N$. Every component outside $N$ gets $(\TRUE,\TRUE)$.
+\item Enumerate topological orderings of $N$; take a nested one. If there is none, stop: the procedure does not apply (Section~6).
+\item For $t\le H$ and $k\le p$ let $E_k(t)$ be the variables of $\inp(i_k)$ that no $i_j$, $j<k$, reads or writes, taken at time $t$, and $Y_k(t)$ the variables of $\outp(i_k)\setminus\edge_k$ at time $t$ (terminal outputs; the edge variables are fixed by $F_k$). Order the blocks $(t,k)$ lexicographically. Set $\psi:=A_P\to G_P$.
+\item For the blocks in reverse order, and within a block for the variables of $Y_k(t)$ in reverse order:\ $(\psi,s_{y}):=\ELIM(\exists y,\psi)$ for each $y\in Y_k(t)$; then $\psi:=\ELIM(\forall E_k(t),\psi)$. At the end $\psi$ has no free variables; call it $\Phi$.
+\item If $\Phi\equiv\mathsf{false}$: stop, \textbf{no acceptable delegation exists} (Theorem~\ref{thm:nec}).
+\item For each witness $s_y$, $y\in Y_k(t)$: while $s_y$ mentions a variable $z(s)$ with $z\in\outp(i_j)$, $j>k$, replace it by $s_{z(s)}$. (Such $z(s)$ was quantified before $y$, so $s<t$, and its witness mentions only variables quantified before it; the recursion descends in the block order and terminates.) Call the result $\tilde s_y$; under (Info) it mentions only $E_1(\le t)$, outputs of $i_j$, $j<k$, at times $\le t$, and outputs of $i_k$ at times $<t$.
+\item Emit, for $k\le p$:\quad $A_{i_k}:=\TRUE$,\qquad $G_{i_k}:=F_k\ \wedge\ \bigwedge_{t}\bigwedge_{y\in Y_k(t)}\big(y=\tilde s_y\big)\delta_k$,\quad with $F_p:=\TRUE$ and unused edge coordinates set to $0$.
+\item Sweep, once, for $k=1,\dots,p$ with the current contracts of the others:
+\[
+A_{i_k}:=\ELIM\big(\exists\,\overline{\ports(i_k)},\ A_P\wedge\textstyle\bigwedge_{j\ne k}S_j\big),\qquad
+G_{i_k}:=\ELIM\big(\forall\,\overline{\ports(i_k)},\ (A_P\wedge\textstyle\bigwedge_{j\ne k}S_j)\to G_P\big),
+\]
+where $\overline{\ports(i_k)}$ are all variables (at all times) not in $\ports(i_k)$; then $S_{i_k}:=\neg A_{i_k}\vee G_{i_k}$.
+\end{enumerate}
+Steps 4 and 8 are quantifier eliminations in linear real arithmetic (decidable; doubly exponential worst case). Step 6 is substitution. Nothing else is computed.
+
+\section{Correctness}
+\begin{theorem}[necessity]\label{thm:nec}
+If an acceptable delegation exists, then $\Phi\equiv\TRUE$ for every topological ordering.
+\end{theorem}
+\begin{proof}
+By (R), (K) each component has an input-driven strategy $f_i$ whose traces lie in $S_i$. $\Phi$ is the sentence $\prod_{(t,k)}\big(\forall E_k(t)\,\exists Y_k(t)\big)(A_P\to G_P)$ (with $Y_k(t)$ the terminal outputs; by (Pure) the edge variables can be fixed by $F_k$ without changing its truth). Witness each $\exists Y_k(t)$ by $f_{i_k}$ applied to the values fixed so far: with delay $0$ and a topological ordering, every input of $i_k$ at time $\le t$ is a fresh variable $E_j(s)$, $(s,j)\preceq(t,k)$, or an output of some $i_j$, $j<k$, at time $\le t$, hence already fixed. The resulting trace lies in $A_P\wedge\bigwedge S_i$, so in $G_P$ by (V1). Thus $\Phi$ holds.
+\end{proof}
+\begin{theorem}[soundness]\label{thm:sound}
+If $\Phi\equiv\TRUE$, the delegation of step 7 satisfies (V1), (V2), (R), (K), and every emitted formula is in $\mathcal L$ over its component's ports.
+\end{theorem}
+\begin{proof}
+\emph{Language.} Each graph $y=\tilde s_y$ is in $\mathcal L$ (Lemma~\ref{lem:elim}); $\delta_k$ renames variables at equal times; $F_k$ is a conjunction of single-time equalities.
+\emph{(V1).} Let $x$ satisfy $A_P$ and every $G_i$. Then all $F_k$ hold, so by Lemma~\ref{lem:carry} the renamed equations give $y=\tilde s_y$ at $x$ for every witness. By induction along the block order, $\tilde s_y=s_y$ at $x$ (the later witnesses substituted in step 6 hold at $x$). Hence $x$ satisfies every $y=s_y$. By Lemma~\ref{lem:elim}, applied block by block from the outside in, $\Phi\equiv\TRUE$ and $y=s_y$ for all witnesses imply the matrix $A_P\to G_P$ at $x$; with $x\models A_P$ this gives $x\models G_P$.
+\emph{(V2)} holds because all assumptions are $\TRUE$.
+\emph{(R), (K).} The outputs of $i_k$ at $t$ are the copies prescribed by $F_k$ (inputs at $t$) and the values $\tilde s_y\delta_k$, which by step 6 and Lemma~\ref{lem:carry} are functions of $i_k$'s inputs at times $\le t$ and its own outputs at times $<t$. A function always has a value.
+\end{proof}
+\begin{theorem}[sweep]\label{thm:sweep}
+Step 8 preserves (V1), (V2), (R), (K); after it, no $S_{i_k}$ can be enlarged without breaking (V1) while the others stay fixed.
+\end{theorem}
+\begin{proof}
+With the others fixed, (V1) for a candidate $S$ over $\ports(i_k)$ says $S\models\big((A_P\wedge\bigwedge_{j\ne k}S_j)\to G_P\big)$; the largest formula over $\ports(i_k)$ with this property is the universal elimination of the right side, which is the new $G_{i_k}$; and $\neg A_{i_k}$, the complement of the existential elimination, lies inside it. So the new $S_{i_k}$ is the largest set over $\ports(i_k)$ satisfying (V1) with the others, and it contains the old one. (V2) for the new $A_{i_k}$: $A_P\wedge\bigwedge_{j\ne k}S_j$ implies its own existential projection. (R), (K) are inherited by supersets. After the pass, recomputing any $S_{i_k}$ with the final others gives a set that contains $S_{i_k}$ (by (V1)) and is contained in the one assigned during the pass (the others only grew, so the right side only shrank); hence equality.
+\end{proof}
+So, on nested orderings: $\Phi$ false means no solution; $\Phi$ true means steps 4--8 return one that is maximal in its component-wise order.
+
+\section{The derivation on one instance, in this notation}
+Radio reads $r$, writes $m$; Display reads $m$, writes $d$; $H=0$; $A_P=|r|\le1$; $G_P=|d-r|\le\tfrac12$. $N=\{$Radio, Display$\}$, ordering Radio, Display; $\priv_1=\{r\}$, $\edge_1=\{m\}$, $\sigma_1(r)=m$, $F_1\equiv(m=r)$; $E_1=\{r\}$, $Y_1=\emptyset$, $E_2=\emptyset$, $Y_2=\{d\}$.
+Step 4: $\psi=\neg(|r|\le1)\vee(d\le r+\tfrac12\wedge d\ge r-\tfrac12)$. $\ELIM(\exists d,\psi)$: cases $c_1=|r|>1$ (no bound on $d$, $\psi$ true, witness $0$) and $c_2=|r|\le1$ (bounds $r-\tfrac12\le d\le r+\tfrac12$, nonempty, witness the midpoint $r$); result $\TRUE$, and since $d=r$ also satisfies $\psi$ under $c_1$ the implementation uses $s_d=r$. $\ELIM(\forall r,\TRUE)=\TRUE$, so $\Phi\equiv\TRUE$.
+Step 6: nothing to substitute. Step 7: $\delta_2(r)=m$; contracts Radio $(\TRUE,\ m=r)$, Display $(\TRUE,\ d=m)$.
+Step 8, Radio: $A=\ELIM(\exists d,\ |r|\le1\wedge d=m)=|r|\le1$; $G=\ELIM(\forall d,\ (|r|\le1\wedge d=m)\to|d-r|\le\tfrac12)=\big(|r|\le1\to|m-r|\le\tfrac12\big)$.
+Display: $A=\ELIM(\exists r,\ |r|\le1\wedge(|r|\le1\to|m-r|\le\tfrac12))=|m|\le\tfrac32$. For $G$, eliminate $\forall r$ by negating: $\exists r\,\big(|r|\le1\wedge|m-r|\le\tfrac12\wedge|d-r|>\tfrac12\big)$. Bounds on $r$: $-1\le r\le1$, $m-\tfrac12\le r\le m+\tfrac12$, and either $r>d+\tfrac12$ or $r<d-\tfrac12$. Fourier--Motzkin on the first case gives $d<\tfrac12\wedge d<m\wedge|m|\le\tfrac32$, on the second $d>-\tfrac12\wedge d>m\wedge|m|\le\tfrac32$. Negating, $G=\big(|m|\le\tfrac32\to(d\le-\tfrac12\vee d\le m)\wedge(d\ge\tfrac12\vee d\ge m)\big)$: on $|m|\le\tfrac12$ it forces $d=m$; for $m>\tfrac12$ it allows $d\in[\tfrac12,m]$; symmetrically below. Z3 reproduces every line (\texttt{scripts/delegate.py}).
+
+\textbf{Outside nested orderings.} If no ordering satisfies (E)--(Info), the prefix of $\Phi$ no longer matches who sees what, and the exact question has branching quantifiers. Theorem~\ref{thm:nec} still refutes. For construction, the available procedure enumerates piecewise-affine strategies with a growing budget and decides each budget as a sentence over the real closed field; it is sound, complete per budget, and terminates whenever a solution exists, but no bound on the budget is known. Delays are not covered: PolySTL cannot express that an output equals a delayed copy of an input, so forwarding real values across a delay-$1$ edge is impossible in this language, and only the truth values of atoms can cross it.
+\end{document}

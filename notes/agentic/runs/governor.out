@@ -1,0 +1,23 @@
+instance governor, H = 2, z3 5.3.1
+--- run 1
+  run 1 round 1: ACCEPTED
+      Perception: A = true | G = (and (= e_0 o_0) (= e_1 o_1) (= e_2 o_2))
+      Controller: A = true | G = (and (>= u_0 0.0) (<= u_0 2.0) (>= u_1 0.0) (<= u_1 2.0) (>= u_2 0.0) (<= u_2 2.0) (=> (<= e_0 2.0) (<= u_0 (/ 1.0 4.0))) (=> (<= e_1 2.0) (<= u_1 (/ 1.0 4.0))) (=> (<= e_2 2.0) (<= u_2 (/ 1.0 4.0))) (=> (> e_0 2.0) (>= u_0 1.0)) (=> (> e_1 2.0) (>= u_1 1.0)) (=> (> e_2 2.0) (>= u_2 1.0)))
+      Actuator: A = true | G = (and (>= v_0 0.0) (<= v_0 2.0) (>= v_1 0.0) (<= v_1 2.0) (>= v_2 0.0) (<= v_2 2.0) (=> (<= u_0 (/ 1.0 4.0)) (<= v_0 (/ 1.0 4.0))) (=> (<= u_1 (/ 1.0 4.0)) (<= v_1 (/ 1.0 4.0))) (=> (<= u_2 (/ 1.0 4.0)) (<= v_2 (/ 1.0 4.0))) (=> (>= u_0 1.0) (>= v_0 1.0)) (=> (>= u_1 1.0) (>= v_1 1.0)) (=> (>= u_2 1.0) (>= v_2 1.0)))
+  summary: {'run': 1, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}
+--- run 2
+  run 2 round 1: ACCEPTED
+      Perception: A = true | G = (and (= e_0 o_0) (= e_1 o_1) (= e_2 o_2))
+      Controller: A = true | G = (and (>= u_0 0.0) (<= u_0 2.0) (>= u_1 0.0) (<= u_1 2.0) (>= u_2 0.0) (<= u_2 2.0) (=> (< e_0 2.0) (<= u_0 (/ 1.0 4.0))) (=> (>= e_0 2.0) (>= u_0 1.0)) (=> (< e_1 2.0) (<= u_1 (/ 1.0 4.0))) (=> (>= e_1 2.0) (>= u_1 1.0)) (=> (< e_2 2.0) (<= u_2 (/ 1.0 4.0))) (=> (>= e_2 2.0) (>= u_2 1.0)))
+      Actuator: A = true | G = (and (>= v_0 0.0) (<= v_0 2.0) (>= v_1 0.0) (<= v_1 2.0) (>= v_2 0.0) (<= v_2 2.0) (=> (<= u_0 (/ 1.0 4.0)) (<= v_0 (/ 1.0 4.0))) (=> (<= u_1 (/ 1.0 4.0)) (<= v_1 (/ 1.0 4.0))) (=> (<= u_2 (/ 1.0 4.0)) (<= v_2 (/ 1.0 4.0))) (=> (>= u_0 1.0) (>= v_0 1.0)) (=> (>= u_1 1.0) (>= v_1 1.0)) (=> (>= u_2 1.0) (>= v_2 1.0)))
+  summary: {'run': 2, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}
+--- run 3
+  run 3 round 1: ACCEPTED
+      Perception: A = true | G = (and (= e_0 o_0) (= e_1 o_1) (= e_2 o_2))
+      Controller: A = true | G = (and (>= u_0 0.0) (<= u_0 2.0) (>= u_1 0.0) (<= u_1 2.0) (>= u_2 0.0) (<= u_2 2.0) (=> (<= e_0 2.0) (= u_0 0.0)) (=> (> e_0 2.0) (>= u_0 1.0)) (=> (<= e_1 2.0) (= u_1 0.0)) (=> (> e_1 2.0) (>= u_1 1.0)) (=> (<= e_2 2.0) (= u_2 0.0)) (=> (> e_2 2.0) (>= u_2 1.0)))
+      Actuator: A = true | G = (and (>= v_0 0.0) (<= v_0 2.0) (>= v_1 0.0) (<= v_1 2.0) (>= v_2 0.0) (<= v_2 2.0) (=> (<= u_0 (/ 1.0 4.0)) (<= v_0 (/ 1.0 4.0))) (=> (<= u_1 (/ 1.0 4.0)) (<= v_1 (/ 1.0 4.0))) (=> (<= u_2 (/ 1.0 4.0)) (<= v_2 (/ 1.0 4.0))) (=> (>= u_0 1.0) (>= v_0 1.0)) (=> (>= u_1 1.0) (>= v_1 1.0)) (=> (>= u_2 1.0) (>= v_2 1.0)))
+  summary: {'run': 3, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}
+==============================================================================
+{'run': 1, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}
+{'run': 2, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}
+{'run': 3, 'accepted': True, 'rounds': 1, 'model_calls': 3, 'inside_maximal': {'Perception': True, 'Controller': False, 'Actuator': False}, 'contains_maximal': {'Perception': False, 'Controller': False, 'Actuator': False}}

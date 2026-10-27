@@ -1,0 +1,18 @@
+Z3 version 5.3.1 | mode quick
+step 1: rho_1 observed 0.9500 -> chain [0.94, 0.99, 1.04, 1.09, 1.14, 1.19, 1.24, 1.29]
+E2 H=2 reach=sat j*=3 tube 8.8s total 8.9s checks [(8, 'unsat', 2.9), (4, 'unsat', 2.8), (2, 'sat', 0.2), (3, 'unsat', 2.9)]
+E2 H=4 reach=sat j*=3 tube 11.5s total 11.7s checks [(8, 'unsat', 3.7), (4, 'unsat', 3.9), (2, 'sat', 0.3), (3, 'unsat', 3.6)]
+E2 H=8 reach=unsat j*=3 tube 13.7s total 17.1s checks [(8, 'unsat', 5.1), (4, 'unsat', 4.4), (2, 'sat', 0.3), (3, 'unsat', 4.0)]
+E2 H=16 reach=unsat j*=3 tube 21.5s total 27.3s checks [(8, 'unsat', 7.5), (4, 'unsat', 5.9), (2, 'sat', 0.6), (3, 'unsat', 7.4)]
+E2 below rho_1: rho=0.89 sat at tick 2, dev 0.900
+E1a: G1 true {'unsat': 12, 'sat': 0, 'unknown': 0} ; G1 false {'unsat': 0, 'sat': 12, 'unknown': 0} ; by conjunct {'ii-leg1': {'sat': 5}, 'iv-goal': {'sat': 3}, 'iii-waypoint': {'sat': 4}} (25.5s, slowest query 24.7s)
+E1b: {'R1': {'both_accept': 5, 'both_reject': 6, 'deleg_rejects_mono_accepts': 1, 'deleg_accepts_mono_rejects': 0, 'mono_unknown': 0}, 'R2': {'both_accept': 7, 'both_reject': 5, 'deleg_rejects_mono_accepts': 0, 'deleg_accepts_mono_rejects': 0, 'mono_unknown': 0}, 'R3': {'both_accept': 8, 'both_reject': 3, 'deleg_rejects_mono_accepts': 1, 'deleg_accepts_mono_rejects': 0, 'mono_unknown': 0}, 'R4': {'both_accept': 12, 'both_reject': 0, 'deleg_rejects_mono_accepts': 0, 'deleg_accepts_mono_rejects': 0, 'mono_unknown': 0}} unsound=0 conservative=2 classes={'iii-w2': 2} (0.4s)
+E3 monolithic, original atom order (u free, R4): [(2, 'reject', 0.1, 2), (4, 'timeout', 60.0, 85), (8, 'timeout', 60.0, 200)]
+E3 quiet H=2: step2 6.64s (certified False) | mono fair {'R1': ('reject', 0.022), 'R2': ('reject', 0.036), 'R3': ('reject', 0.017), 'R4': ('reject', 0.055)} | planner {'R1': ('fail', 0.003), 'R2': ('fail', 0.004), 'R3': ('fail', 0.005), 'R4': ('pass', 0.37)} | fixed u 0.010s
+E3 quiet H=4: step2 10.10s (certified False) | mono fair {'R1': ('reject', 0.026), 'R2': ('reject', 0.048), 'R3': ('reject', 0.024), 'R4': ('accept', 9.68)} | planner {'R1': ('fail', 0.004), 'R2': ('fail', 0.004), 'R3': ('fail', 0.004), 'R4': ('pass', 0.431)} | fixed u 0.018s
+E3 quiet H=8: step2 15.48s (certified True) | mono fair {'R1': ('reject', 0.036), 'R2': ('reject', 0.092), 'R3': ('reject', 0.033), 'R4': ('accept', 13.165)} | planner {'R1': ('fail', 0.002), 'R2': ('fail', 0.005), 'R3': ('fail', 0.005), 'R4': ('pass', 0.381)} | fixed u 0.029s
+E3 cost H=8: c_M=13.17 c_2=15.48 c_1=0.381 n>1.21; R1..R4 mono 13.33s deleg 15.87s
+E5 planner grid: {'n': 3138764, 'fail': 0, 'step': 2.5, 's_values': [25, 35, 50], 'time': 0.036051034927368164} (0.0s)
+E5 controller sampling: max dev 0.9886 over 3000 runs, reach failures 0 (0.4s)
+E4: {'S6 mission ((-30,30),(40,40)) meets G1': True, 'S6 missions breaking fence/goal/near-home are rejected': True, 'S6 point (-1.72,-50.02) lies in the rho-tube of some admissible start': np.True_, 'S6 Bad formula agrees with constructed witnesses (20000 samples)': True, 'S6 no mission found for Bad inputs by random search': True} validation Bad points 0 of 20000
+soundness: ALL PASS | wall 135.5s

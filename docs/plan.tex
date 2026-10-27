@@ -1,0 +1,160 @@
+\RequirePackage{fix-cm}
+\documentclass[10pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,enumitem}
+\usepackage{fvextra}
+\setlist{nosep,leftmargin=1.5em}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage[hyphens]{url}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxnames=2,minnames=1,giveninits=true,doi=false,isbn=false,url=false,eprint=true]{biblatex}
+\addbibresource{../notes/agentic/literature.bib}
+\addbibresource{../lit/existing-work.bib}
+\setlength{\bibitemsep}{0pt}\AtEveryBibitem{\clearfield{eprintclass}\clearfield{pages}\clearfield{volume}\clearfield{number}}
+\newtheoremstyle{tplain}{1.5pt}{0.5pt}{\itshape}{}{\bfseries}{.}{0.5em}{}
+\newtheoremstyle{tdef}{1.5pt}{0.5pt}{\normalfont}{}{\bfseries}{.}{0.5em}{}
+\theoremstyle{tplain}\newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{corollary}[theorem]{Corollary}\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{tdef}\newtheorem{definition}[theorem]{Definition}
+\makeatletter\renewenvironment{proof}[1][\proofname]{\par\pushQED{\qed}\normalfont\topsep1pt\partopsep0pt\trivlist\item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}\makeatother
+\AtBeginDocument{\setlength\abovedisplayskip{3pt}\setlength\belowdisplayskip{3pt}\setlength\abovedisplayshortskip{1pt}\setlength\belowdisplayshortskip{1pt}}
+\newcommand{\inp}{\mathrm{in}}\newcommand{\outp}{\mathrm{out}}\newcommand{\ports}{\mathrm{ports}}
+\newcommand{\TRUE}{\mathsf{true}}\newcommand{\FALSE}{\mathsf{false}}
+\newcommand{\df}[1]{[\![#1]\!]}\newcommand{\hid}[1]{\overline{#1}}
+\setlength{\parskip}{0.5pt}\setlength{\parindent}{0pt}\setlength{\emergencystretch}{3em}
+\makeatletter\renewcommand\section{\@startsection{section}{1}{\z@}{3pt}{1pt}{\normalfont\bfseries}}\makeatother
+\begin{document}
+\begin{center}{\large\bfseries Delegation by proposal and verification: a research plan}\\[1pt] 19 October 2026\end{center}
+
+\section{Answer and position}
+The author asks: ``The algorithmic approach seems to not be fruitful. Can this instead be formulated as an agentic framework where delegates are computed by agents s.t.\ algebraic constraints derived from the contract calculus? If so, can it be done using strand labs?'' \textbf{Yes, under three conditions.} (1) Agents only propose. A family of contracts is accepted only when a deterministic verifier (Python and Z3) proves the conditions of the contract calculus for it, so correctness never rests on an agent. (2) What needs the whole graph stays symbolic: the set $N$ of relevant components, forwarding where it applies, and refutation by the existence sentences $\Phi$ and $\Phi^\circ$ of \texttt{complete.tex} (all defined in Section~2). (3) The author accepts three losses: the result is not guaranteed to be maximal; outside nested orderings only a budget guarantees that the search stops; the result is canonical only if the proposer is a deterministic enumerator. \textbf{Strands: yes, for the proposers only.} The Strands Agents SDK can run one agent per component on the Anthropic API, return typed proposals and log every model call. Strands Labs offers AI Functions, an experimental decorator that re-asks the model, up to a fixed number of attempts, until a Python check passes; it fits the per-component checks. Neither provides the verifier or coordinator (deterministic Python); a plain SDK loop is about as short.
+
+\textbf{What changes.} The calculus of \texttt{docs/complete.tex} still fixes what a correct delegation is: (V1), (V2), (R), (K) below. What moves is the search. There, it decides $\Phi$ by quantifier elimination over all timed variables, builds the seed, and sweeps; each sweep step eliminates every timed variable the component cannot see from a formula holding all other current sets. Here a proposer writes a contract and quantifier-free validity queries check it (or, for (K) without a rule list, one sentence over the component's ports). Maximality is given up, because deciding it is an $\exists\forall$ question that only the sweep answers. Selection itself is not new: by the proposition ``no greatest solution'' of \texttt{complete.tex}, no acceptable delegation contains all others, so \texttt{complete.tex} already selected one by fixed orders; now proposers do.
+
+\section{The constraints on a proposed family}
+\textbf{Notation, as in \texttt{complete.tex}.} $V$ is a finite set of real-valued variables. Component $i$ reads $\inp(i)$ and writes $\outp(i)$; $\ports(i):=\inp(i)\cup\outp(i)$. A variable written by no component is an \emph{environment variable}. Time is $t\in\{0,\dots,H\}$; the \emph{timed variable} $v(t)$ is the value of $v$ at time $t$. A \emph{history} of a set $W$ of variables gives a value to every $v(t)$ with $v\in W$; $\hid W$ is the set of timed variables $v(t)$ with $v\notin W$. The language $\mathcal L$ consists of Boolean combinations of atoms $\sum_va_v\,v(t)\le b$, rational $a_v,b$, one time per atom. A bounded PolySTL formula $\psi$ is compiled into $\mathcal L$ by $[\psi]_0$; $\square_{[a,b]}$ and $\Diamond_{[a,b]}$ mean ``at every'' and ``at some'' time in $[t+a,t+b]$. $\varphi\models\psi$ means every trace (assignment of reals to all timed variables) satisfying $\varphi$ satisfies $\psi$. A contract is a pair $(A,G)$ of formulas, assumption and guarantee. Its implementation set is $S:=\neg A\vee G$; the contract is \emph{saturated}, written $(A,S)$. For a contract $Q$, $A_Q$ and $S_Q$ are its assumption and implementation set. The query is $P=(A_P,G_P)$, and $S_P:=\neg A_P\vee G_P$. Refinement: $(A,S)\preccurlyeq(A',S')$ iff $A'\models A$ and $S\models S'$. Projection onto $W$ (what can be said over $W$) is $\rho_W(A,S):=(\exists\hid W A,\forall\hid W S)$. Composition (side by side) and quotient (what a component must meet so that, next to one meeting $(A',S')$, the pair meets $(A,S)$):
+\[(A_1,S_1)\otimes(A_2,S_2):=\big((A_1\wedge A_2)\vee\neg(S_1\wedge S_2),\,S_1\wedge S_2\big),\qquad (A,S)/(A',S'):=\big(A\wedge S',\,(S\wedge A')\vee\neg(A\wedge S')\big).\]
+$N$ is the set of components that write a variable of $G_P$, together with every component from which a directed path leads to one of them. (Scope): every variable of $A_P$ or $G_P$ is a port of a component of $N$. For component $i$ and given sets $S_j$: $X_i:=\hid{\ports(i)}$ (what $i$ cannot see), and $R_i:=A_P\wedge\bigwedge_{j\ne i}S_j$ (what the rest allows). $\inp_i(t)$ and $\outp_i(t)$ are the timed variables at time $t$ of $\inp(i)$ and $\outp(i)$. A \emph{causal strategy} for $i$ gives, for each $t\le H$, the values of $\outp_i(t)$ as a function of the values of $\inp(i)$ at times $\le t$. A contract $C_i=(A_i,S_i)$ of $i$ is \emph{receptive} (R) if for every history of $\inp(i)$ some history of $\outp(i)$ gives a trace in $S_i$, and \emph{causal} (K) if some causal strategy produces, from every history of $\inp(i)$, a trace in $S_i$; (K) implies (R). A family $(C_i)$, one per component, is an \emph{acceptable delegation} if each $C_i$ is over $\ports(i)$ and (V1), (V2) of the table below, (R) and (K) hold. A topological ordering of $N$ (each component after those whose outputs it reads) is \emph{nested} if each component feeds the next and can copy onto that edge all the next cannot see; \emph{forwarding} is that copying (\texttt{complete.tex}, carriers lemma). $\Phi$ is the sentence of step 3 of \texttt{complete.tex} (for every input there is an output, component by component along a nested ordering); it decides existence there, and the \emph{seed} is the delegation it yields (step 7). $\Phi^\circ$ is its variant for any topological ordering: false proves that none exists. The \emph{sweep} is steps 8--9, quotient and projection.
+
+\textbf{Causal rule lists.} A \emph{causal rule list} $f_i$ for component $i$ gives, for each $y\in\outp(i)$ and $t\le H$, a rule $f_{y,t}$: ``if $\pi_1$ then $c_1$, else if $\pi_2$ then $c_2$, \dots, else $0$''. Each region $\pi_l$ is a formula of $\mathcal L$ over $\inp(i)$ at times $\le t$. Each value $c_l$ is affine, with rational coefficients, in $\inp_i(t)$. $S_i[f_i]$ is $S_i$ with every $y(t)$ replaced by $f_{y,t}$, written in $\mathcal L$: an atom $\alpha$ becomes $\bigvee_l(\pi_l\wedge\bigwedge_{l'<l}\neg\pi_{l'}\wedge\alpha[y(t):=c_l])\vee(\bigwedge_l\neg\pi_l\wedge\alpha[y(t):=0])$, applied for each $y(t)$ in turn. The \emph{defining formula} is $\df{f_i}:=\bigwedge_{y,t}\df{y(t)=f_{y,t}}$, with $\df{y(t)=f_{y,t}}:=\bigvee_l(\pi_l\wedge\bigwedge_{l'<l}\neg\pi_{l'}\wedge y(t)=c_l)\vee(\bigwedge_l\neg\pi_l\wedge y(t)=0)$.
+
+\textbf{The constraints.} A proposal gives, for each $i\in N$, formulas $A_i,G_i$ of $\mathcal L$ (or bounded PolySTL, compiled), and optionally a causal rule list $f_i$. Put $S_i:=\neg A_i\vee G_i$; saturation then holds by definition and needs no check. The family is \emph{accepted} iff all rows hold:\par\vspace{2pt}
+{\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}lll>{\raggedright\arraybackslash}p{1.55in}@{}}
+constraint & statement & Z3 check & quantifiers, variables\\\hline
+(C0) scope & $(A_i,G_i)=(\TRUE,\TRUE)$ for $i\notin N$ & none: set by the coordinator & none\\
+(C1) ports & only $v(t)$ with $v\in\ports(i)$, $t\le H$ & parse, only these declared & none: syntax\\
+(V1) & $A_P\wedge\bigwedge_iS_i\models G_P$ & $A_P\wedge\bigwedge_iS_i\wedge\neg G_P$ unsat & none; all $|V|(H+1)$\\
+(V2), each $j$ & $A_P\wedge\bigwedge_iS_i\models A_j$ & $A_P\wedge\bigwedge_iS_i\wedge\neg A_j$ unsat & none; all $|V|(H+1)$\\
+(K), rule list & $f_i$ causal, $S_i[f_i]$ valid & syntax, then $\neg S_i[f_i]$ unsat & none; $|\inp(i)|(H+1)$\\
+(K), no list & $\forall\inp_i(0)\exists\outp_i(0)\cdots\forall\inp_i(H)\exists\outp_i(H)\,S_i$ & Z3 on this sentence & $2(H+1)$ blocks; $|\ports(i)|(H+1)$
+\end{tabular}}\par\vspace{2pt}
+By the validity proposition of \texttt{complete.tex}, (C1), (V1), (V2), (K) say exactly ``acceptable delegation''. (C0) loses nothing: outputs of components outside $N$ occur in no formula of $N$, $A_P$, $G_P$, and (R) fills them in.
+
+\begin{lemma}[rule lists lose nothing]\label{lem:rules}
+(a) If $f_i$ is causal and $S_i[f_i]$ is valid, then $S_i$ satisfies (K). (b) If $S_i\in\mathcal L$ satisfies (K), a causal rule list $f_i$ with rational data and $S_i[f_i]$ valid exists.
+\end{lemma}
+\begin{proof}
+(a) The rule list is a causal strategy; validity says its traces lie in $S_i$. (b) Eliminate the quantifiers of the (K) sentence from the inside out, recording witnesses (elimination with witnesses, \texttt{complete.tex}, parts (b), (c)): values are affine at their time with rational coefficients and regions are in $\mathcal L$. The witness of $y(t)$ mentions only inputs of $i$ at times $\le t$, outputs of $i$ at times $<t$ (in regions only), and outputs of $i$ at time $t$ earlier in the block (in regions and values). Substitute the witnesses of these outputs, earliest first: in a region, replace each atom $\alpha$ mentioning $z$ by $\bigvee_{(\pi',c')}(\pi'\wedge\alpha[z:=c'])$ as in step 6; in a value $c$ mentioning $z(t)$, replace the pair $(\pi,c)$ by the pairs $(\pi\wedge\pi',c[z(t):=c'])$. Values stay affine at time $t$, regions stay in $\mathcal L$, and each round brings in only earlier variables, so this ends. The induction of the (V1) part of the soundness theorem, on this one sentence, puts the traces in $S_i$.
+\end{proof}
+\begin{lemma}[the quotient is checked, never computed]\label{lem:quot}
+Fix all contracts but $C_i$, and let $Q_i:=\rho_{\ports(i)}\big(P/\bigotimes_{j\ne i}C_j\big)$, the projected quotient. (a) $S_{Q_i}\equiv\forall X_i\big(R_i\to G_P\wedge\bigwedge_{j\ne i}A_j\big)$ and $A_{Q_i}\equiv\exists X_iR_i$. (b) $C_i\preccurlyeq Q_i$ iff the two quantifier-free validities $R_i\wedge S_i\models G_P\wedge\bigwedge_{j\ne i}A_j$ and $R_i\models A_i$ hold. (c) A rational history $z$ of $\ports(i)$ lies in $S_{Q_i}$ iff $R_i\wedge(\ports(i)=z)\wedge\neg(G_P\wedge\bigwedge_{j\ne i}A_j)$ is unsatisfiable, where $(\ports(i)=z)$ fixes every timed port to its value in $z$: one quantifier-free call.
+\end{lemma}
+\begin{proof}
+(a) The others compose to $(A',S')$, $S'=\bigwedge_{j\ne i}S_j$, $A'=\bigwedge_{j\ne i}A_j\vee\neg S'$. The quotient $P/(A',S')=\big(A_P\wedge S',\,(S_P\wedge A')\vee\neg(A_P\wedge S')\big)$ has assumption $R_i$, and, as $S_P=G_P$ and $A'=\bigwedge_{j\ne i}A_j$ on $R_i$, guarantee $R_i\to G_P\wedge\bigwedge_{j\ne i}A_j$; $\rho_{\ports(i)}$ takes $\exists X_i$ of the first and $\forall X_i$ of the second. (b) Refinement against (a); $S_i$ and $A_i$ do not mention $X_i$, so $S_i\models\forall X_i\varphi$ iff $S_i\models\varphi$, and $\exists X_iR_i\models A_i$ iff $R_i\models A_i$. (c) By (a).
+\end{proof}
+As $R_i\wedge S_i=A_P\wedge\bigwedge_jS_j$ and $\neg A_i\models S_i$, (b) is (V1), (V2) seen from $i$. Only the sweep, which computes $S_{Q_i}$, eliminates what $i$ cannot see.
+
+\section{The loop}
+\textbf{Roles.} A \emph{proposer} $p_i$ for each $i\in N$ sees the graph, the query $P$, its port list $\ports(i)$, the current family, and the counterexamples projected onto $\ports(i)$. It outputs a contract over $\ports(i)$ in bounded PolySTL or $\mathcal L$, optionally with a causal rule list, or declines; it is outside the trust base. The \emph{verifier} (deterministic Python with Z3, fixed version and seed) checks (C1), (K), (V2), (V1) in this order and stops at the first failure with a counterexample. (V2) comes first: a (V1) counterexample that violates some $A_j$ satisfies $A_P\wedge\bigwedge_iS_i\wedge\neg A_j$, so it is a (V2) counterexample, and the right fault to report, since off $A_j$ saturation lets $j$ do anything. Once (V2) holds, every (V1) counterexample satisfies all $A_j$. The \emph{coordinator} (deterministic Python) holds the routing policy, cell projection, the no-repeat record and budget $B$.
+
+\textbf{No culprit.} If a trace $x$ violates (V1), then for every $i$ the restriction of $x$ to $\ports(i)$ lies in $S_i$ but not in $S_{Q_i}$ ($x\models R_i\wedge S_i\wedge\neg G_P$, then Lemma~\ref{lem:quot}(c)). So the algebra does not say which contract must change; routing is a policy.
+
+\textbf{Cells, not points.} A proposer can exclude a counterexample point while every nearby trace still fails, so repair against single points need not converge. For a counterexample $x$ of an obligation $\omega$ (for (V1), $\omega=A_P\wedge\bigwedge_iS_i\wedge\neg G_P$), the \emph{cell} of $x$ is the conjunction, over the atoms $\alpha$ of $\omega$, of $\alpha$ if $x\models\alpha$ and $\neg\alpha$ otherwise. Every trace in the cell is a counterexample. The \emph{projected cell} for $i$ is $\exists X_i\,\mathrm{cell}(x)$: elimination from one conjunction (Fourier--Motzkin, no case split). If $\omega$ is the (V1) obligation, or the (V2) obligation of some $j\ne i$, every history in the projected cell lies outside $S_{Q_i}$ (Lemma~\ref{lem:quot}(c)); for (V1) it stays outside while the other sets only grow, for (V2) only while $A_j$ is also unchanged. For the (V2) obligation of $i$ itself, the projected cell lies inside $A_{Q_i}$ and violates $A_i$: $A_i$ is too strong. Proposer $i$ keeps its cells in a set $\mathit{forbidden}_i$, emptied whenever another set shrinks, since old cells may then be allowed. Dually, a history $z\notin S_i$ with $z\in S_{Q_i}$ is a \emph{positive example}: $S_i$ may be enlarged to include it.
+
+\textbf{Routing.} (1) On a (V2) failure for $j$: ask the writers other than $j$ of the non-environment variables of $A_j$, in topological order, to exclude their projected cells; if there are none, or all decline, ask $j$ to weaken $A_j$. (2) On a (V1) failure: ask in reverse topological order, so the writers of variables of $G_P$ first. The one asked may strengthen $G_i$ to exclude its projected cell while keeping (K); add an assumption over $\inp(i)$ that is false on the cell, which moves the obligation to its writers (case 1 next round); or decline, and the next is asked. (3) On a (K) failure for $i$: return the failing input history if a rule list was given; if (K) was checked by the sentence, the verifier returns no history and $i$ is told only ``(K) failed''. (4) A rejected triple (component, proposal, hash of the others) proposed again counts as declining.
+
+\textbf{Repair mode and weakening mode.} \emph{Repair} starts from a family that fails and routes counterexamples as above. \emph{Weakening} starts from an accepted family. A proposal $S_i'$ replaces $S_i$ if it passes (C1), $S_i\models S_i'$, and (V1), (V2) hold for the new family: a syntax check and three quantifier-free checks. (R) and (K) are inherited, because they survive enlarging $S_i$. Every state is acceptable, so the loop can stop at any time. Proposers receive positive examples, each found by one call of Lemma~\ref{lem:quot}(c). The loop, with input the graph, $P$, $H$, the budget $B$ and the proposers ($\Phi$ counts as cheap when $|V|(H+1)\le12$, the governor's size at $H=2$; line~7 re-checks the seed, acceptable by \texttt{complete.tex}):
+\begin{Verbatim}[fontsize=\normalsize]
+ 1  compute N; if (Scope) fails: return "does not apply"; C_i := (true,true), i not in N
+ 2  if a nested ordering exists and |V|(H+1) <= 12:
+ 3      if Phi is false: return "none exists"
+ 4      F := seed of complete.tex;  mode := WEAKEN
+ 5  elif Phi-circle is false for some topological ordering: return "none exists"
+ 6  else: F := { p_i.propose(graph, P, ports(i)) : i in N };  mode := REPAIR
+ 7  best := F if verify(F) = ACCEPT else NONE;  C := none;  declined := {}
+ 8  for round := 1 .. B:
+ 9      if mode = REPAIR:
+10          r := verify(F)                     # (C1), (K), (V2), (V1); first failure
+11          if r = ACCEPT: best := F; mode := WEAKEN; continue
+12          if C is not none: rejected += {(i, C, hash of the others)}
+13          i := route(r, F, declined)         # next one to ask on this failure
+14          if i is none: break                # all asked components declined
+15          C := p_i.propose(..., projected cell or (K) feedback, forbidden_i)
+16          if C = DECLINE or (i, C, hash) in rejected: declined += {i}; C := none
+17          else: F := F with C_i := C;  declined := {}
+18      else:                                  # WEAKEN
+19          i := next component of N in a fixed cyclic order
+20          Z := sampled histories z of ports(i) with z not in S_i and z in S_Q_i
+21          if Z is empty for every i in one full cycle: break
+22          C := p_i.propose(..., allowed := Z)
+23          if C passes (C1), S_i |= S_C, (V1), (V2): F := F with C_i := C;  best := F
+24      log(round, i, raw proposal, parsed formula, verdict, counterexample)
+25  return best with its rule lists and the log, or "not found within budget"
+\end{Verbatim}
+\textbf{Where the algorithmic pieces remain.} $N$ and (Scope): always. $\Phi$: when cheap (0.03\,s on the governor at $H=2$). The seed: initial proposal, then weakening, with no (K) check. $\Phi^\circ$: refutation on forks. The sweep: an optional final strengthening on small instances, the only maximality test ($S_{Q_i}\models S_i$ is $\exists\forall$).
+
+\section{What can be proved and what cannot}
+\begin{theorem}[soundness by construction]
+If the loop returns a family, it satisfies (C0), (C1), (V1), (V2), (K): it is an acceptable delegation and each contract mentions only its own ports.
+\end{theorem}
+\begin{proof}
+A family is returned only after the verifier accepts it (lines 7, 11) or after a weakening step from an accepted family (line 23), which checks (C1), (V1), (V2) and inherits (K) from $S_i\models S_i'$.
+\end{proof}
+The trust base is Z3's unsat answers in quantifier-free linear real arithmetic, Z3's answer on the (K) sentence when no rule list is given, the compiler $[\cdot]_0$ from PolySTL to $\mathcal L$, and the verifier's Python code that parses proposals, checks (C1) and rule-list syntax, and builds $S_i$, $S_i[f_i]$ and the (V1), (V2) formulas. An answer ``unknown'' counts as a rejection.
+
+\begin{claim}[semi-decision at every horizon; claimed in \texttt{notes/agentic/formulation.md}, to be proved in work package 1]
+If an acceptable delegation exists, one exists in which, for every $i\in N$, the assumption is $\TRUE$ and $S_i$ is $\df{f_i}$ for a causal rule list $f_i$ with rational data. Hence a fair enumeration of tuples of such rule lists (each tuple appears at a finite position), with one quantifier-free check each ($A_P\wedge\bigwedge_i\df{f_i}\wedge\neg G_P$ unsat), halts with an acceptable delegation iff one exists.
+\end{claim}
+Argument: Lemma~\ref{lem:rules}(b) gives rule lists, $\df{f_i}\models S_i$, (V1) survives shrinking, (V2) is trivial, (K) holds by the rule lists. \texttt{complete.tex} states this only for $H=0$. \textbf{Completeness} holds only relative to fairness of the proposals, which a language model does not promise. Interleaving gives it back: the proposer of component $i$ returns the enumerator's next candidate every $k$-th time it is asked; that this reaches every tuple under routing is part of work package 1. On nested orderings with $\Phi$ decided, lines 2--4 give completeness, not the proposers. \textbf{Non-existence} is shown only by $\Phi$ or $\Phi^\circ$ false; a true $\Phi^\circ$ proves nothing (Left/Right in \texttt{complete.tex}). Decidability in general stays open. \textbf{Termination} is by the budget, or when all asked components decline on one failure (line 14), or when weakening finds no positive example in a full cycle (line 21); none of these says anything about existence. Only the enumerator of work package 3, which checks every tuple of a finite candidate set, can say ``none in this set'' (not ``none exists'').
+
+\textbf{Reproducibility.} Quantifier-free verdicts are deterministic: sat or unsat in quantifier-free linear real arithmetic does not depend on solver state (models do; building formulas in sorted order made the governor output identical under four hash seeds). Language-model runs cannot be reproduced by re-running: the models in question accept no temperature other than the default, and the API has no seed. The reproducible artefact is the log of proposals (raw text, parsed formula, verdict, exact counterexample, versions), a certificate file (graph, $P$, $H$, contracts, rule lists), one command \texttt{verify.py certificate.json} that re-checks every constraint with no proposer, and \texttt{replay.py log.jsonl}, which re-verifies each logged proposal. Language-model results are reported over several runs. \textbf{Canonicity.} \texttt{SCOPE.md} asks for a procedure ``choosing canonically from (G, P) alone''. A deterministic enumerator meets this (its output is a function of $(G,P)$ and a fixed order, as with the candidate order of \texttt{complete.tex}); a language model does not. This is a scope consequence the author must accept or reject: either the deliverable uses the enumerator and the language model only speeds the search, its output recorded, or \texttt{SCOPE.md} is relaxed to ``reproducible from the record''.
+
+\section{Evidence so far}
+\textbf{Instance.} The speed governor of \texttt{docs/example.tex}: Perception reads $o$, writes $e$; Controller reads $e$, writes $u$; Actuator reads $u$, writes $v$; $A_P=\square_{[0,2]}(0\le o\le5)$, $G_P=\square_{[0,2]}(0\le v\le2)\wedge\square_{[0,1]}(o\le1\to\Diamond_{[0,1]}v\le\frac14)\wedge\square_{[0,1]}(o\ge3\to\Diamond_{[0,1]}v\ge1)$. Two hand-written families, all assumptions $\TRUE$, rule lists in brackets. $D_{\rm react}$: Perception $\square_{[0,2]}((o\ge3\to e\ge3)\wedge(o\le1\to e\le1))$ [$e(t):=o(t)$]; Controller the same from $e$ to $u$ [$u(t):=e(t)$]; Actuator $\square_{[0,2]}(0\le v\le2\wedge(u\ge3\to v\ge1)\wedge(u\le1\to v\le\frac14))$ [$v(t):=1$ if $u(t)\ge3$, else $0$]. $D_{\rm lazy}$: Perception $o(1)\ge3\to e(1)\ge3$; Controller $e(1)\ge3\to u(1)\ge3$; Actuator $\square_{[0,2]}(0\le v\le2)\wedge v(0)\ge1\wedge v(1)\le\frac14\wedge(u(1)\ge3\to v(2)\ge1)$ [$v(0):=1$, $v(1):=0$, $v(2):=1$ if $u(1)\ge3$, else $0$]. One command, \texttt{.venv/bin/python notes/agentic/governor\_checks.py}, prints 101 verdicts, all as expected, in 0.26\,s (times are machine-dependent):\par\vspace{2pt}
+{\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lllll@{}}
+family (every check passes) & (V1) & (V2), all $j$ & (K) by rule list & (K) by the sentence\\\hline
+$D_{\rm react}$, $H=2$ & 2.9\,ms & 0.9\,ms & 0.6\,ms (slowest) & 6.9\,ms (slowest)\\
+$D_{\rm lazy}$, $H=2$ & 0.5\,ms & 0.8\,ms & 0.3\,ms (slowest) & 1.1\,ms (slowest)\\
+swept family of \texttt{example.tex}, $H=2$ & 0.6\,ms & 0.9\,ms & no rule list given & 1.5\,ms (slowest)\\
+$D_{\rm react}$, $H=80$ (324 timed variables) & 12.1\,ms & trivial (all $A_j=\TRUE$) & 15.5\,ms (all three) & not run\\\hline
+\texttt{complete.tex} route, $H=2$ & \multicolumn{4}{l}{$\Phi$ 0.03\,s; seed 0.02\,s; whole procedure 0.5\,s}
+\end{tabular}}\par\vspace{2pt}
+\textbf{Maximal is not greatest.} $S_{\rm Actuator}$ of $D_{\rm lazy}$ entails the swept one, but $S_{\rm Perception}$ and $S_{\rm Controller}$ do not; so $D_{\rm lazy}$ is acceptable and not inside the maximal swept family. Weakening and a repair by projected cell (computed in 2.4\,ms) also pass; a foreign port, $A=\FALSE$, $(\TRUE,\FALSE)$, input pinning and two bad rule lists are rejected. All proposals are hand-written stand-ins: no language model has been run, and \texttt{verify.py}, \texttt{replay.py} do not exist yet. Today Z3~5.3.1's virtual-substitution tactic was found to return a wrong, too strong elimination for the Actuator, accepted by a cross-check built on the same tactic; \texttt{scripts/delegate.py} now uses the model-based tactic with an independent cross-check, runs in 2\,s, and asserts the swept Actuator set against the one above. The sweep's cost is an issue on the three-component, two-input stack (nine minutes, unfinished), not on the governor.
+
+\section{Building it with Strands}
+\textbf{Version.} \texttt{strands-agents} 1.61.1 (15 October 2026), Python $\ge3.10$, Apache-2.0. \texttt{AnthropicModel} calls the Anthropic API directly; \texttt{structured\_output\_model=Contract} returns a Pydantic object, re-asking on validation errors.\footnote{\url{https://strandsagents.com/docs/user-guide/sdk/agents/structured-output/}} \textbf{Shape.} One \texttt{Agent} per component; a \texttt{Contract} of SMT-LIB~2 strings, parsed with only the component's ports declared, so (C1) is free; hooks logging every call. Swarm and Agents-as-Tools are rejected: a language model would route. \textbf{Strands Labs.} AI Functions (\texttt{strands-ai-functions} 0.5.0, Python $\ge3.12$) turns a typed Python function into an agent call with post-conditions.\footnote{\url{https://github.com/strands-labs/ai-functions}} It fits (C1) and (K), not (V1), (V2), which need every proposal. \textbf{Blockers.} (i) Opus 5.5 and Sonnet 5.5 reject a forced tool choice, which Strands sends when the model ends a turn without calling the output tool; use a \texttt{submit\_contract} tool and log failures as failed proposals (untested live). (ii) No sampling control: no temperature other than the default, no seed (Opus 5.5 migration guide). (iii) Weekly releases: pin \texttt{strands-agents[anthropic]==1.61.1}, \texttt{anthropic==0.125.0}. (iv) Bedrock is the silent default without an explicit model.
+
+\section{Related work}
+As far as a search of about 30 arXiv queries shows, nobody uses language-model or agent proposers for assume--guarantee contract decomposition. The closest pieces: Katis et al.\ check realizability of one component's contract over linear real arithmetic and extract implementations \cite{katis2016synthesis,katis2017validityguided}, usable as our (K) checker. Golia, Roy and Meel cast synthesis as dependency quantified formulas \cite{golia2021program}, the logical form of (K) with port locality, and Manthan3 \cite{golia2023synthesis} is the learn--verify--repair loop over Booleans that ours follows. Skolemization for quantified linear real arithmetic by Chatterjee et al.\ \cite{chatterjee2024quantified} is the natural symbolic proposer for one component's (K), and a baseline. Agentic Model Checking \cite{sun2026agentic} is the closest architecture, without a contract algebra, real-valued time or receptiveness. Finkbeiner, Metzger and Moses show that some necessary obligations are about information flow, not behaviour \cite{finkbeiner2022information}: this is why forwarding stays symbolic. The limits: assume--guarantee synthesis under partial information is undecidable in many settings \cite{bloem2014assumeguarantee}, and counterexample-guided synthesis need not terminate over infinite candidate spaces \cite{jha2014are}.
+
+\section{Work packages}
+WP1 and WP2 in parallel, then WP3 to WP6 in order; about 30 working days.
+\begin{itemize}
+\item \textbf{WP1 Proofs (5 days).} Re-check Lemma~\ref{lem:rules} (proved here); prove the semi-decision claim, the routing policy (cells stay forbidden while the other sets grow; weakening keeps acceptability), and completeness when interleaved.
+\item \textbf{WP2 Verifier library (6 days).} \texttt{verify.py} (all constraints, Lemma~\ref{lem:quot}(b),(c), cells, certificates) and \texttt{replay.py}. \emph{Done when} it reproduces the 101 verdicts as a regression suite, identically under four hash seeds.
+\item \textbf{WP3 Enumerator proposer (5 days).} Rule lists by increasing size and coefficient set; first accepted output, or ``none in this set''. Baseline and canonical. \emph{Done when} it solves the relay, governor ($H=2$) and fan-in, identically each run.
+\item \textbf{WP4 Language-model proposer in Strands (5 days).} Pinned versions, Anthropic provider, hooks logging every model call. \emph{Done when} relay and governor runs pass within budget and replay reproduces each verdict.
+\item \textbf{WP5 Experiments (6 days).} Governor at $H=2$, $10$; the three-component, two-input stack the sweep could not finish (to be written down first: it is not in this directory); Left/Right forks for $\Phi^\circ$. Measure rounds to acceptance, check time per round, model calls, cost; ten language-model runs per instance.
+\item \textbf{WP6 Document and reproduction (3 days).} Method and results, every number printed by one command.
+\end{itemize}
+\textbf{Stop criteria: the agentic route is also not fruitful if} (a) on the governor at $H=10$ and the three-component stack neither proposer is accepted within 50 rounds in most runs; (b) checks per round take longer than the sweep; or (c) on forks neither proposer finds a family and $\Phi^\circ$ refutes nothing. If only the language model loses to the enumerator, drop WP4.
+
+\section{Risks}
+\begin{itemize}
+\item \emph{Invented ports} fail (C1), since the parser declares only the component's ports. \emph{Vacuous or input-pinning proposals.} $(\TRUE,\FALSE)$ has empty $S_i$ and fails (R), hence (K). Pinning an input ($\square_{[0,2]}(u=0\wedge v=0)$) fails (R) at every other input history. $A_i=\FALSE$ fails (V2) if $A_P$ is satisfiable over environment variables only: every $S_j$ already passed (K), hence (R), so $A_P\wedge\bigwedge_jS_j$ is satisfiable.
+\item \emph{The proposer sees the global query:} allowed, as the problem gives it as an input; only the output must be port-local ((C1)). \emph{Mutual blame loops:} cut by deterministic routing, the no-repeat record and the budget. \emph{Cost:} about \$0.11 per Opus 5.5 call (an estimate), under \$2 for the relay; logged per call. \emph{API churn:} pinned versions, a lock file, replay without a model.
+\end{itemize}
+
+\printbibliography[title={References}]
+\end{document}

@@ -1,0 +1,83 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.45cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+\pagestyle{empty}
+\newcommand{\sect}[1]{\par\smallskip{\large\bfseries #1}\par\smallskip}
+\newcommand{\ex}{\exists}
+\newcommand{\fa}{\forall}
+\newcommand{\Dthree}{\mathrm{D3}^{+}}
+\begin{document}
+\small
+{\Large\bfseries Delegating a contract to a planner in series with an existing controller}\par 26 October 2026
+
+\sect{1\quad Setting}
+
+\textbf{Ports and behaviours.} The ports are $\Pi=U\cup W\cup E\cup Y$: $U$ is the planner's input (fence, home, goal), $W$ the wire (a mission: at most $N$ items, each an item kind and a waypoint, stored as a fixed-length vector with a length field), $E=E_s\cup E_d$ the environment (static part $E_s$: start position, parameters; per-tick part $E_d$: measured $dt$, estimates), $Y$ the controller's per-tick targets. A behaviour assigns a value to every port at each tick $t\in\{0,\dots,H\}$; ports in $U$, $W$, $E_s$ keep one value over the horizon, which removes the mismatch between a finite list and per-tick signals. $\Omega$ is the set of behaviours and $\lnot S:=\Omega\setminus S$.
+
+\textbf{Projections.} For $X\subseteq\Pi$ and $S\subseteq\Omega$, $\ex_X S$ is the set of behaviours that agree outside $X$ with some member of $S$, and $\fa_X S:=\lnot\ex_X\lnot S$. $S$ is \emph{over} $Z\subseteq\Pi$ if $\ex_{\Pi\setminus Z}S=S$. We use: (F0) sets over $Z$ are closed under $\lnot,\cap,\cup$ and are over every $Z'\supseteq Z$; (F1) $\fa_X S\subseteq S\subseteq\ex_X S$, and both operators are monotone; (F2) if $S$ is over $Z$ then $\ex_X S$ and $\fa_X S$ are over $Z\setminus X$; (F3) if $C$ is over $\Pi\setminus X$ then $C\subseteq S$ iff $C\subseteq\fa_X S$, and $S\subseteq C$ iff $\ex_X S\subseteq C$; (F4) if $C$ is over $\Pi\setminus X$ then $\ex_X(C\cap S)=C\cap\ex_X S$.
+
+\textbf{Contracts.} A contract is a pair $(A,G)$ of subsets of $\Omega$, and $M\models(A,G)$ iff $M\cap A\subseteq G$. Given: $A$ over $U\cup E$ and $G$ over $U\cup E\cup Y$, both PolySTL formulas (atoms $p\ge0$ or $p>0$, $p$ a rational polynomial in the values at the current tick; $\lnot,\wedge,\vee$; $\Box_I,\Diamond_I,\mathcal U_I$ with integer windows $I\subseteq[0,H]$); the controller $M_2$ over $W\cup E\cup Y$, given as deterministic code with bounded loops. The planner $M_1$ over $U\cup W$ does not exist yet. Wanted: $A_1$ over $U$, $G_1$ over $U\cup W$, $A_2$ over $W\cup E$, $G_2$ over $W\cup E\cup Y$ with (D1) $A\subseteq A_1$, (D2) $G_1\subseteq A_2$ and ($\Dthree$) $A\cap G_1\cap A_2\cap G_2\subseteq G$.
+
+\textbf{Why $\Dthree$ and not $A\cap A_2\cap G_2\subseteq G$.} $A_2\cap G_2$ is over $\Pi\setminus U$, so by F3 the shorter form is equivalent to $A_2\cap G_2\subseteq\fa_U(\lnot A\cup G)$: the controller alone would have to keep $G$ for every planner input at once (for square fences of every half-side $s>0$ this pins the target to the origin). Only $G_1$ can relate $u$ to the mission, so the third condition must contain it; $\Dthree$ is implied by the shorter form and by $G_2\cap A_2\subseteq G$, so it loses nothing. Likewise, if $A_2$ kept the environment conditions $P$ of the code, D2 would force $G_1\subseteq\fa_E A_2$, which is empty once $P$ bounds $dt$; step 2 moves $P$ into $G_2$, which leaves the controller's obligation unchanged (Theorem, d).
+
+\textbf{Pointwise class.} $\Phi$ consists of formulas $\beta\wedge\Box_{[0,H]}\alpha\wedge\bigwedge_{j=1}^{m}\Diamond_{[0,H]}\gamma_j$ with $\beta$ quantifier-free over the static ports $U\cup W\cup E_s$ and $\alpha,\gamma_j$ quantifier-free over static ports and the values of one tick; we set $\gamma_0:=\top$.
+
+\sect{2\quad Algorithm}
+
+\emph{Input:} $A$, $G$, $H$, the code of $M_2$. \emph{Output:} $(A_1,G_1)$, $(A_2,G_2)$ and a set $\mathit{Bad}$ over $U$, or the report ``no controller guarantee''.
+
+\textbf{1. Controller vocabulary (reads $M_2$ only).} From the guards and clamps of $M_2$ read three PolySTL formulas: $V$ over $W$ (accepted item kinds, sentinel values excluded, length at most $N$, leg lengths in $[\ell_{\min},\ell_{\max}]$), $P$ over $W\cup E$ (ranges of $dt$ and parameters, leg conditions that involve the start position; $P$ may also take over the conjuncts of $A$ that mention only $E$, since $A$ lies inside them), and a chain $T_1\subseteq\dots\subseteq T_k$ over $W\cup E\cup Y$, where $T_j$ says that at every tick the target lies within $\rho_j$ of the polyline from the start through the waypoints and that some tick brings it within $\eta$ of the last waypoint. $\rho_1$ is the largest distance to the polyline observed when $M_2$ is run on a fixed finite list of legs with nominal inputs (no valid tube can be thinner), and $\rho_j:=\rho_1+(j-1)\kappa$ for a fixed step $\kappa$ and length $k$.
+
+\textbf{2. Certify (reads $M_2$ only).} Decide $M_2\cap V\cap P\subseteq T_j$ by bounded model checking of the code unrolled over the horizon $[0,H]$ of $A$ and $G$ (a guarantee certified on a shorter horizon says nothing about the remaining ticks and would empty $G_1$). The verified indices form an up-set of the chain, so binary search finds the least verified $j^*$ in $\lceil\log_2 k\rceil+1$ checks. If there is none, stop with ``no controller guarantee''. Set $A_2:=V$ and $G_2:=\lnot P\cup T_{j^*}$.
+
+\textbf{3. Planner assumption.} $A_1:=\ex_{E\cup Y}A$.
+
+\textbf{4. Planner guarantee.} $R:=\fa_{E\cup Y}(\lnot A\cup\lnot A_2\cup\lnot G_2\cup G)$ and $G_1:=A_2\cap R$, computed as in Section 5.
+
+\textbf{5. Realizability.} $\mathit{Bad}:=A_1\cap\lnot\ex_W G_1$. Return both contracts and $\mathit{Bad}$, and report a vacuous query if $A_1=\emptyset$. If $\mathit{Bad}=\emptyset$, every planner input allowed by $A$ has a mission meeting $G_1$; otherwise $\mathit{Bad}$ is exactly the set of inputs that no mission serves under this controller guarantee, and no other certified member of the chain gives a smaller $\mathit{Bad}$ (Theorem, e). A further repair needs a thinner tube than any certified one; the strongest guarantee $M_2$ admits under $V$ is $M_2\cap V$ itself, i.e.\ the code inlined, which the method excludes.
+
+Every step is deterministic: the chain, the test legs, the variable orders and the search orders are fixed, and the decision procedures below are deterministic. A guarantee for $M_2$ that mentioned $U$ would gain nothing: $M_2\cap A_2$ is over $\Pi\setminus U$, so by F3 it lies in $G_2$ iff it lies in $\fa_U G_2$.
+
+\sect{3\quad Theorem}
+
+(a) $A_1$ is over $U$, $G_1$ over $U\cup W$, $A_2$ over $W$, $G_2$ over $W\cup E\cup Y$. (b) D1, D2 and $\Dthree$ hold. (c) If $M_1\models(A_1,G_1)$ and $M_2\models(A_2,G_2)$ then $M_1\cap M_2\models(A,G)$ and $\ex_W(M_1\cap M_2)\models(A,G)$. (d) $M_2\models(A_2,G_2)$ iff $M_2\cap V\cap P\subseteq T_{j^*}$, which step 2 established. (e) Every $G_1'$ over $U\cup W$ with $G_1'\subseteq A_2$ and $A\cap G_1'\cap A_2\cap G_2\subseteq G$ satisfies $G_1'\subseteq G_1$, and among the certified members of the chain $T_{j^*}$ yields the largest $G_1$. (f) A planner $M_1$ that answers every input ($\ex_W M_1=\Omega$) with $M_1\models(A_1,G_1)$ exists iff $\mathit{Bad}=\emptyset$.
+
+Hence $G_1\neq\emptyset$ iff some $G_1'$ meeting D2 and $\Dthree$ for the chosen $(A_2,G_2)$ is nonempty, iff $V\cap\fa_{E\cup Y}(\lnot A\cup\lnot G_2\cup G)\neq\emptyset$; when every $(u,e)$ admits a target outside $G$, this reads: some mission $w$ in $V$ and input $u$ have $A\subseteq P$ and $A\cap T_{j^*}\subseteq G$ at $(u,w)$. $G_1$ is built from $A,G,V,P,T_{j^*}$ only, so its size does not depend on the code of $M_2$.
+
+\sect{4\quad Proof}
+
+(a) $A$ is over $U\cup E$, so $A_1$ is over $U$ by F2. The set inside $R$ is over $\Pi$ (F0), so $R$ is over $U\cup W$ by F2; $V$ is over $W$, so $G_1$ is over $U\cup W$ by F0; $G_2$ is over $W\cup E\cup Y$ by F0.
+
+(b) D1 is F1. D2: $G_1=A_2\cap R\subseteq A_2$. $\Dthree$: by F1, $A\cap G_1\cap A_2\cap G_2\subseteq(A\cap A_2\cap G_2)\cap(\lnot(A\cap A_2\cap G_2)\cup G)\subseteq G$.
+
+(c) Let $M:=M_1\cap M_2$. By D1, $M\cap A\subseteq M_1\cap A_1\subseteq G_1$; by D2, $M\cap A\subseteq M_2\cap G_1\subseteq M_2\cap A_2\subseteq G_2$; so $M\cap A\subseteq A\cap G_1\cap A_2\cap G_2\subseteq G$ by $\Dthree$. $A$ and $G$ are over $\Pi\setminus W$, so F4 gives $\ex_W M\cap A=\ex_W(M\cap A)$ and F3 gives $\ex_W(M\cap A)\subseteq G$.
+
+(d) $M_2\cap V\subseteq\lnot P\cup T_{j^*}$ iff $M_2\cap V\cap P\subseteq T_{j^*}$.
+
+(e) $A\cap G_1'\cap A_2\cap G_2\subseteq G$ iff $G_1'\subseteq\lnot(A\cap A_2\cap G_2)\cup G$, iff $G_1'\subseteq R$ by F3, as $G_1'$ is over $\Pi\setminus(E\cup Y)$; with $G_1'\subseteq A_2$ this gives $G_1'\subseteq G_1$. If $T\subseteq T'$ then $\lnot P\cup T\subseteq\lnot P\cup T'$, so the $R$ built from $T'$ is contained in the $R$ built from $T$ (F1).
+
+(f) If $\mathit{Bad}=\emptyset$, take $M_1:=G_1\cup\lnot A_1$: $\ex_W M_1\supseteq\ex_W G_1\cup\lnot A_1\supseteq A_1\cup\lnot A_1=\Omega$ (F1 and $\mathit{Bad}=\emptyset$) and $M_1\cap A_1\subseteq G_1$. Conversely, by F4 and F1, $A_1=A_1\cap\ex_W M_1=\ex_W(A_1\cap M_1)\subseteq\ex_W G_1$. \hfill$\square$
+
+\sect{5\quad Decidability and cost}
+
+\textbf{Termination.} Five steps, a finite chain, and each call below terminates.
+
+\textbf{Step 2} is the only step that reads code, and it reads $M_2$ alone. With bounded loops and IEEE arithmetic the code unrolled over $H$ ticks is a finite circuit on finitely many bit-vector inputs; $V,P,T_j$ unroll to finitely many polynomial atoms on those inputs, so the inclusion is a finite satisfiability question (bit-precise SMT; real quantifier elimination if the code is read over the reals). Running the code (step 1) only bounds $\rho$ from below; with measured $dt$ and estimates as free inputs a finite set of runs certifies nothing, so runs never replace step 2. Symmetry of the code under rigid motions is not exact under rounding and is not relied on. A deadline of $D$ seconds becomes the tick window $[0,\lfloor D/\overline{dt}\rfloor]$, with $\overline{dt}$ the largest tick length $A$ admits; this is sound because no tick is longer, and its loss is the ratio of the tick-length bounds, which is why $P$ should take over the range of $dt$ from $A$.
+
+\textbf{Steps 3--5 never read code.} Unrolling over $[0,H]$ turns $A,G,V,P,T_{j^*}$ into quantifier-free formulas of real arithmetic over the samples; $\ex_X$ and $\fa_X$ become blocks of real quantifiers over the samples of $X$, and real quantifier elimination (cylindrical algebraic decomposition; Tarski--Seidenberg) returns an equivalent quantifier-free polynomial formula over the static samples of $U\cup W$, that is a PolySTL formula without temporal operators read at tick $0$; $\mathit{Bad}=\emptyset$ is a closed sentence decided the same way. This is complete but doubly exponential in $(H+1)(|E_d|+|Y|)$. (If $U$ were per-tick, an output atom could couple two ticks, which is outside PolySTL; the output then stays in quantifier-free real arithmetic over samples.)
+
+\textbf{Pointwise lemma.} Let $\varphi=\beta\wedge\Box\alpha\wedge\bigwedge_{j\le m}\Diamond\gamma_j\in\Phi$ with $H\ge m$. Over all signals, $\varphi\to\Box c$ holds iff $\lnot\beta$, or $\alpha\cap\gamma_j=\emptyset$ for some $j\le m$, or $\alpha\subseteq c$; and $\varphi\to\Diamond d$ holds iff $\lnot\beta$ or $\alpha\cap\gamma_j\subseteq d$ for some $j\le m$ (sets of one tick's values). Reason: witnesses of the $\Diamond\gamma_j$ go on distinct ticks and every other tick repeats one of them or carries the value that breaks $c$, so a violating signal exists iff violating tick values do; $H\ge m$ is needed (it fails for smaller $H$). When $A,P,T_{j^*},G$ are in $\Phi$, step 4 splits $\lnot P$ and the conjuncts of $G$ and calls quantifier elimination over one tick's $E_d\cup Y$ values and $E_s$, independently of $H$. For convex polygonal fences and tubes no solver is needed: the largest value of $n\cdot z$ over the $\rho$-neighbourhood of a segment $[a,b]$ is $\max(n\cdot a,n\cdot b)+\rho\lVert n\rVert$.
+
+\textbf{Cost.} A monolithic check decides, for one planner, one query on the unrolled code of $M_1$ and $M_2$ together, and is repeated for every planner revision. Here every decision procedure sees one component's artefacts: step 2 sees the unrolled $M_2$ and the formulas $V,P,T_j$, of size independent of $G$; steps 3--5 see only formulas; in $\Phi$ each call eliminates $|E_s|+|E_d|+|Y|$ variables, independent of $H$ and of the code. Each planner is then checked against $G_1$ alone, a quantifier-free formula over static $U\cup W$: no unrolling of $M_2$ and no per-tick variable. Since the unrolled $M_2$ (about $1.2\cdot10^4$ ticks for a $30$ s mission at the rate $A$ admits in Section 6) dominates both encodings and is shared, the delegation costs about one controller check plus $O(\log k)$ repeats of it, done once, and every planner check is far smaller than a monolithic one.
+
+\sect{6\quad Worked example}
+
+\textbf{Data.} $u=(s,h,g)$: square fence $F_s=[-s,s]^2$, home $h\in\mathbb R^2$, goal $g\in\mathbb R^2$. $E_s=\{p_0\}$ (start position), $E_d=\{dt\}$; $Y=\{y\}$, $y_t\in\mathbb R^2$ the horizontal target; $W=(w_1,w_2)$, two straight legs $p_0\to w_1\to w_2$. Write $\lVert z\rVert_\infty:=\max(|z_x|,|z_y|)$ (so $\lVert z\rVert_\infty\le c$ and $z\in F_s$ are four linear atoms each), $q\times r:=q_xr_y-q_yr_x$, and $S_\rho(a,b)$ for the points within $\rho$ of $[a,b]$, the polynomial disjunction $\lVert z-a\rVert^2\le\rho^2\vee\lVert z-b\rVert^2\le\rho^2\vee\bigl(0\le(z-a)\cdot(b-a)\le\lVert b-a\rVert^2\wedge((z-a)\times(b-a))^2\le\rho^2\lVert b-a\rVert^2\bigr)$. $A:=s>0\wedge\lVert p_0-h\rVert^2\le\delta^2\wedge\Box(0.0024\le dt\le0.0026)$ and $G:=\Box(y\in F_s)\wedge\Diamond(\lVert y-g\rVert^2\le\varepsilon^2)$ with $\delta=1$, $\varepsilon=3$. Suppose steps 1--2 give $V:=\ell_{\min}^2\le\lVert w_2-w_1\rVert^2\le\ell_{\max}^2$, $P:=\ell_{\min}^2\le\lVert w_1-p_0\rVert^2\le\ell_{\max}^2\wedge\Box(\tfrac1{2000}\le dt\le\tfrac1{50})$ and $T:=\Box\bigl(y\in S_\rho(p_0,w_1)\cup S_\rho(w_1,w_2)\bigr)\wedge\Diamond(\lVert y-w_2\rVert^2\le\eta^2)$ with $\ell_{\min}=5$, $\ell_{\max}=100$, $\rho=2$, $\eta=0.5$ (illustrative values; the tube width covers the corner blend and half a tick of travel).
+
+\textbf{Step 3.} $A_1=(s>0)$. \textbf{Step 4 by hand}, for $s>0$, in four parts. (i) $\lnot P$ through $dt$: $\Box(dt\in[0.0024,0.0026])\wedge\Diamond(dt\notin[\frac1{2000},\frac1{50}])$ has $\alpha\cap\gamma_1=\emptyset$, so it is vacuous. (ii) $\lnot P$ through the first leg: some target breaks $G$, so every start allowed by $A$ must meet the leg condition: $(\ell_{\min}+\delta)^2\le\lVert w_1-h\rVert^2\le(\ell_{\max}-\delta)^2$. (iii) $T$ and the fence, by the lemma ($c=F_s$) and support functions over all $p_0$ in the disc: $\lVert h\rVert_\infty\le s-\rho-\delta$, $\lVert w_1\rVert_\infty\le s-\rho$, $\lVert w_2\rVert_\infty\le s-\rho$. (iv) $T$ and the goal, by the lemma ($d$ the $\varepsilon$-disc at $g$; $\alpha\cap\gamma_1$ is the $\eta$-disc at $w_2$, which lies in the tube as $\eta\le\rho$): $\lVert w_2-g\rVert^2\le(\varepsilon-\eta)^2$. So $G_1=V\wedge\bigl(s\le0\vee[(\mathrm{ii})\wedge(\mathrm{iii})\wedge(\mathrm{iv})]\bigr)$, polynomial atoms over $U\cup W$ only, found without a solver.
+
+\textbf{Instance} $s=50$, $h=(-40,-40)$, $g=(40,40)$. The mission $((-30,30),(40,40))$ meets $G_1$ (legs $70.7$ and $70.7$, coordinates within $48$, $w_2=g$). $((0,-49),(40,40))$ breaks $\lVert w_1\rVert_\infty\le48$: the tube contains $(-1.72,-50.02)$, outside $F_{50}$; the real controller cuts this corner inward, which $G_1$ cannot see without inlining $M_2$. $((-30,30),(44,40))$ breaks the goal part. Any $w_1$ within $6$ m of $h$ is rejected: some start allowed by $A$ then makes the first leg shorter than $\ell_{\min}$, which $P$ excludes. \textbf{Step 5} at $s=50$: $\mathit{Bad}=\{\lVert h\rVert_\infty>47\}\cup\{\mathrm{dist}(g,[-48,48]^2)>2.5\}$; otherwise $w_2:=$ the point of $[-48,48]^2$ nearest $g$ and $w_1:=$ the midpoint of $h,w_2$ (or, when $\lVert h-w_2\rVert<12$, any point of $[-48,48]^2$ at distance $20$ from $h$) meet $G_1$. An exhaustive search over extreme starts and targets on $5\cdot10^4$ random missions agreed with $G_1$ on every one, and for $25$ fixed missions meeting $G_1$ an SMT solver found no start, tick lengths or targets violating $G$ (unrolled over two ticks), while the symbolic query in all of $u,w$ did not finish in $10$ minutes.
+
+\end{document}

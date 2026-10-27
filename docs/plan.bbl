@@ -1,0 +1,480 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{katis2016synthesis}{misc}{}{}
+      \name{author}{6}{}{%
+        {{hash=6a4a2417f6aac898f4057057cc9c1f23}{%
+           family={Katis},
+           familyi={K\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8c5233726399701811e191b0f0825c27}{%
+           family={Fedyukovich},
+           familyi={F\bibinitperiod},
+           given={Grigory},
+           giveni={G\bibinitperiod}}}%
+        {{hash=9fc4ccbf930cb88559c1422c6a3890dd}{%
+           family={Gacek},
+           familyi={G\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=60f51ba0496fd1eda862c46cb9f8defe}{%
+           family={Backes},
+           familyi={B\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b6a85aabf982fa0236b58eb6b9f2ce66}{%
+           family={Gurfinkel},
+           familyi={G\bibinitperiod},
+           given={Arie},
+           giveni={A\bibinitperiod}}}%
+        {{hash=0cfce6f742e7dccad84972dacee6d67a}{%
+           family={Whalen},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima W.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{fullhash}{bec4f039bd89dc9dd294e87d9bc65313}
+      \strng{fullhashraw}{bec4f039bd89dc9dd294e87d9bc65313}
+      \strng{bibnamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authorbibnamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authornamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authorfullhash}{bec4f039bd89dc9dd294e87d9bc65313}
+      \strng{authorfullhashraw}{bec4f039bd89dc9dd294e87d9bc65313}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.SE}
+      \field{eprinttype}{arXiv}
+      \field{title}{Synthesis from Assume-Guarantee Contracts using Skolemized Proofs of Realizability}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb 1610.05867
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1610.05867
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1610.05867
+      \endverb
+    \endentry
+    \entry{katis2017validityguided}{misc}{}{}
+      \name{author}{7}{}{%
+        {{hash=6a4a2417f6aac898f4057057cc9c1f23}{%
+           family={Katis},
+           familyi={K\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8c5233726399701811e191b0f0825c27}{%
+           family={Fedyukovich},
+           familyi={F\bibinitperiod},
+           given={Grigory},
+           giveni={G\bibinitperiod}}}%
+        {{hash=e7525eceff43289b0268805ada5233f7}{%
+           family={Guo},
+           familyi={G\bibinitperiod},
+           given={Huajun},
+           giveni={H\bibinitperiod}}}%
+        {{hash=9fc4ccbf930cb88559c1422c6a3890dd}{%
+           family={Gacek},
+           familyi={G\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=60f51ba0496fd1eda862c46cb9f8defe}{%
+           family={Backes},
+           familyi={B\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b6a85aabf982fa0236b58eb6b9f2ce66}{%
+           family={Gurfinkel},
+           familyi={G\bibinitperiod},
+           given={Arie},
+           giveni={A\bibinitperiod}}}%
+        {{hash=0cfce6f742e7dccad84972dacee6d67a}{%
+           family={Whalen},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima W.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{fullhash}{f8b009eb813154479a508f32f9242f46}
+      \strng{fullhashraw}{f8b009eb813154479a508f32f9242f46}
+      \strng{bibnamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authorbibnamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authornamehash}{bc44e7dd1910d3ef574991a90e1db36f}
+      \strng{authorfullhash}{f8b009eb813154479a508f32f9242f46}
+      \strng{authorfullhashraw}{f8b009eb813154479a508f32f9242f46}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.SE}
+      \field{eprinttype}{arXiv}
+      \field{title}{Validity-Guided Synthesis of Reactive Systems from Assume-Guarantee Contracts}
+      \field{year}{2017}
+      \verb{eprint}
+      \verb 1709.04986
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1709.04986
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1709.04986
+      \endverb
+    \endentry
+    \entry{golia2021program}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=032315531db1d2eca62e8337bb7b8c3d}{%
+           family={Golia},
+           familyi={G\bibinitperiod},
+           given={Priyanka},
+           giveni={P\bibinitperiod}}}%
+        {{hash=aeb2442c2b7335323edbb1ec1080ba0f}{%
+           family={Roy},
+           familyi={R\bibinitperiod},
+           given={Subhajit},
+           giveni={S\bibinitperiod}}}%
+        {{hash=5c4fa3acb9479a07274e24a36eb9feef}{%
+           family={Meel},
+           familyi={M\bibinitperiod},
+           given={Kuldeep\bibnamedelima S.},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{fullhash}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{fullhashraw}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{bibnamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authorbibnamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authornamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authorfullhash}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{authorfullhashraw}{1d77f210d1e35f8dc362dcd960e21987}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.AI}
+      \field{eprinttype}{arXiv}
+      \field{title}{Program Synthesis as Dependency Quantified Formula Modulo Theory}
+      \field{year}{2021}
+      \verb{eprint}
+      \verb 2105.09221
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2105.09221
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2105.09221
+      \endverb
+    \endentry
+    \entry{golia2023synthesis}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=032315531db1d2eca62e8337bb7b8c3d}{%
+           family={Golia},
+           familyi={G\bibinitperiod},
+           given={Priyanka},
+           giveni={P\bibinitperiod}}}%
+        {{hash=aeb2442c2b7335323edbb1ec1080ba0f}{%
+           family={Roy},
+           familyi={R\bibinitperiod},
+           given={Subhajit},
+           giveni={S\bibinitperiod}}}%
+        {{hash=5c4fa3acb9479a07274e24a36eb9feef}{%
+           family={Meel},
+           familyi={M\bibinitperiod},
+           given={Kuldeep\bibnamedelima S.},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{fullhash}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{fullhashraw}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{bibnamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authorbibnamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authornamehash}{984f58d3cf05cfa961c42b470bdaac52}
+      \strng{authorfullhash}{1d77f210d1e35f8dc362dcd960e21987}
+      \strng{authorfullhashraw}{1d77f210d1e35f8dc362dcd960e21987}
+      \field{extraname}{2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Synthesis with Explicit Dependencies}
+      \field{year}{2023}
+      \verb{eprint}
+      \verb 2301.10556
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2301.10556
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2301.10556
+      \endverb
+    \endentry
+    \entry{chatterjee2024quantified}{misc}{}{}
+      \name{author}{6}{}{%
+        {{hash=1a126fe7ca5387e01e1bebcd84f3c49b}{%
+           family={Chatterjee},
+           familyi={C\bibinitperiod},
+           given={Krishnendu},
+           giveni={K\bibinitperiod}}}%
+        {{hash=1b66122ed9bc202435bf7e82cc6b1a48}{%
+           family={Goharshady},
+           familyi={G\bibinitperiod},
+           given={Ehsan\bibnamedelima Kafshdar},
+           giveni={E\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=ad085955f16b06b49f10b215d7a822a7}{%
+           family={Karrabi},
+           familyi={K\bibinitperiod},
+           given={Mehrdad},
+           giveni={M\bibinitperiod}}}%
+        {{hash=2426c4bbfb8f296656a87cb3c3b8f3cf}{%
+           family={Motwani},
+           familyi={M\bibinitperiod},
+           given={Harshit\bibnamedelima J},
+           giveni={H\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=61edbc9b3c5bc0e7648d0666154d75e6}{%
+           family={Seeliger},
+           familyi={S\bibinitperiod},
+           given={Maximilian},
+           giveni={M\bibinitperiod}}}%
+        {{hash=4faa29f2520e357e01f0b9e7fc70e46f}{%
+           family={Žikelić},
+           familyi={Ž\bibinitperiod},
+           given={{Đ}or{đ}e},
+           giveni={Đ\bibinitperiod}}}%
+      }
+      \strng{namehash}{8a194eec51da8a390e0784902739c187}
+      \strng{fullhash}{efd41625fb760ed91166b7d8a51b7e3e}
+      \strng{fullhashraw}{efd41625fb760ed91166b7d8a51b7e3e}
+      \strng{bibnamehash}{8a194eec51da8a390e0784902739c187}
+      \strng{authorbibnamehash}{8a194eec51da8a390e0784902739c187}
+      \strng{authornamehash}{8a194eec51da8a390e0784902739c187}
+      \strng{authorfullhash}{efd41625fb760ed91166b7d8a51b7e3e}
+      \strng{authorfullhashraw}{efd41625fb760ed91166b7d8a51b7e3e}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Quantified Linear and Polynomial Arithmetic Satisfiability via Template-based Skolemization}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2412.16226
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2412.16226
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2412.16226
+      \endverb
+    \endentry
+    \entry{sun2026agentic}{misc}{}{}
+      \name{author}{4}{}{%
+        {{hash=7b3601b6d90d6dd346fbc7ee2b2e024f}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Youcheng},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=451d91a5bd40575b8fa58bfe8d336090}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Jiawen},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b4aa934119a9d2ed6e4c21b1a7f20424}{%
+           family={Kroening},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=e1c16aad50100c6b5e097788e4c78588}{%
+           family={Xue},
+           familyi={X\bibinitperiod},
+           given={Jason},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{462a2f319a99f0bbfed50126e47733fb}
+      \strng{fullhash}{49338be58603905dee8af501c8c81ef6}
+      \strng{fullhashraw}{49338be58603905dee8af501c8c81ef6}
+      \strng{bibnamehash}{462a2f319a99f0bbfed50126e47733fb}
+      \strng{authorbibnamehash}{462a2f319a99f0bbfed50126e47733fb}
+      \strng{authornamehash}{462a2f319a99f0bbfed50126e47733fb}
+      \strng{authorfullhash}{49338be58603905dee8af501c8c81ef6}
+      \strng{authorfullhashraw}{49338be58603905dee8af501c8c81ef6}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.SE}
+      \field{eprinttype}{arXiv}
+      \field{title}{Agentic Model Checking}
+      \field{year}{2026}
+      \verb{eprint}
+      \verb 2605.21434
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2605.21434
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2605.21434
+      \endverb
+    \endentry
+    \entry{finkbeiner2022information}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=74aafad8c8571076f51c9dd04b851dd5}{%
+           family={Finkbeiner},
+           familyi={F\bibinitperiod},
+           given={Bernd},
+           giveni={B\bibinitperiod}}}%
+        {{hash=20cbbac4c740de4207cd70b6d415d0b0}{%
+           family={Metzger},
+           familyi={M\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=e0358215279a335adf4daf86a4660222}{%
+           family={Moses},
+           familyi={M\bibinitperiod},
+           given={Yoram},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{40e221a40ee75ea8ab616778f4128673}
+      \strng{fullhash}{289e45dbea19e869bb6c4bd21cc489d3}
+      \strng{fullhashraw}{289e45dbea19e869bb6c4bd21cc489d3}
+      \strng{bibnamehash}{40e221a40ee75ea8ab616778f4128673}
+      \strng{authorbibnamehash}{40e221a40ee75ea8ab616778f4128673}
+      \strng{authornamehash}{40e221a40ee75ea8ab616778f4128673}
+      \strng{authorfullhash}{289e45dbea19e869bb6c4bd21cc489d3}
+      \strng{authorfullhashraw}{289e45dbea19e869bb6c4bd21cc489d3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Information Flow Guided Synthesis (Full Version)}
+      \field{year}{2022}
+      \verb{eprint}
+      \verb 2205.12085
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2205.12085
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2205.12085
+      \endverb
+    \endentry
+    \entry{bloem2014assumeguarantee}{misc}{}{}
+      \name{author}{4}{}{%
+        {{hash=9865af1b742410e6dee8ca813e1ec733}{%
+           family={Bloem},
+           familyi={B\bibinitperiod},
+           given={Roderick},
+           giveni={R\bibinitperiod}}}%
+        {{hash=1a126fe7ca5387e01e1bebcd84f3c49b}{%
+           family={Chatterjee},
+           familyi={C\bibinitperiod},
+           given={Krishnendu},
+           giveni={K\bibinitperiod}}}%
+        {{hash=f509c56350ac7fcad3e419eb2be62058}{%
+           family={Jacobs},
+           familyi={J\bibinitperiod},
+           given={Swen},
+           giveni={S\bibinitperiod}}}%
+        {{hash=e5c4a0c3beac58ec5599c3ef0e84a60f}{%
+           family={Koenighofer},
+           familyi={K\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5f8c3a8f9efeaf167c699983f094761}
+      \strng{fullhash}{fd3ee78006dd0257c6da059fc9c02d39}
+      \strng{fullhashraw}{fd3ee78006dd0257c6da059fc9c02d39}
+      \strng{bibnamehash}{d5f8c3a8f9efeaf167c699983f094761}
+      \strng{authorbibnamehash}{d5f8c3a8f9efeaf167c699983f094761}
+      \strng{authornamehash}{d5f8c3a8f9efeaf167c699983f094761}
+      \strng{authorfullhash}{fd3ee78006dd0257c6da059fc9c02d39}
+      \strng{authorfullhashraw}{fd3ee78006dd0257c6da059fc9c02d39}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Assume-Guarantee Synthesis for Concurrent Reactive Programs with Partial Information}
+      \field{year}{2014}
+      \verb{eprint}
+      \verb 1411.4604
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1411.4604
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1411.4604
+      \endverb
+    \endentry
+    \entry{jha2014are}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=87bdc16cf1cf1eadb6f3c2b99c1a6e89}{%
+           family={Jha},
+           familyi={J\bibinitperiod},
+           given={Susmit},
+           giveni={S\bibinitperiod}}}%
+        {{hash=2cd16c374b639af8720d1ad5cfbe89d7}{%
+           family={Seshia},
+           familyi={S\bibinitperiod},
+           given={Sanjit\bibnamedelima A.},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{fullhash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{fullhashraw}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{bibnamehash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{authorbibnamehash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{authornamehash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{authorfullhash}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \strng{authorfullhashraw}{ae3ef40c03d52db7e2b6c2e4f45f1384}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Are There Good Mistakes? A Theoretical Analysis of CEGIS}
+      \field{year}{2014}
+      \verb{eprint}
+      \verb 1407.5397
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1407.5397
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1407.5397
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

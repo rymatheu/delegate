@@ -1,0 +1,44 @@
+instance stack, H = 2, z3 5.3.1
+--- run 1
+  run 1 round 1: ACCEPTED
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+      Planner: A = true | G = (and (>= a_0 0.0) (<= a_0 30.0) (>= a_1 0.0) (<= a_1 30.0) (>= a_2 0.0) (<= a_2 30.0) (=> (<= dh_0 15.0) (<= a_0 5.0)) (=> (<= dh_1 15.0) (<= a_1 5.0)) (=> (<= dh_2 15.0) (<= a_2 5.0)) (=> (and (>= dh_0 25.0) (>= wh_0 15.0)) (>= a_0 10.0)) (=> (and (>= dh_1 25.0) (>= wh_1 15.0)) (>= a_1 10.0)) (=> (and (>= dh_2 25.0) (>= wh_2 15.0)) (>= a_2 10.0)))
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 5.0) (<= v_0 5.0)) (=> (<= a_1 5.0) (<= v_1 5.0)) (=> (<= a_2 5.0) (<= v_2 5.0)) (=> (>= a_0 10.0) (>= v_0 10.0)) (=> (>= a_1 10.0) (>= v_1 10.0)) (=> (>= a_2 10.0) (>= v_2 10.0)))
+  summary: {'run': 1, 'accepted': True, 'rounds': 1, 'model_calls': 3}
+--- run 2
+  run 2 round 1: rejected  Sensor: 1 note(s); Planner: 1 note(s); Vehicle: 1 note(s)
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is d = (0, 25/2, 25/2); dh = (0, 25/2, 25/2); w = (0, 0, 0); wh = (0, 0, 0).
+      Planner: A = true | G = (and (>= a_0 0.0) (<= a_0 30.0) (>= a_1 0.0) (<= a_1 30.0) (>= a_2 0.0) (<= a_2 30.0) (=> (<= dh_0 12.0) (<= a_0 5.0)) (=> (<= dh_1 12.0) (<= a_1 5.0)) (=> (<= dh_2 12.0) (<= a_2 5.0)) (=> (and (>= dh_0 28.0) (>= wh_0 18.0)) (>= a_0 10.0)) (=> (and (>= dh_1 28.0) (>= wh_1 18.0)) (>= a_1 10.0)) (=> (and (>= dh_2 28.0) (>= wh_2 18.0)) (>= a_2 10.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (1/2, 1/2, 1/2); dh = (0, 25/2, 25/2); wh = (0, 0, 0).
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 0.0) (<= v_0 5.0)) (=> (<= a_1 0.0) (<= v_1 5.0)) (=> (<= a_2 0.0) (<= v_2 5.0)) (=> (>= a_0 1.0) (>= v_0 10.0)) (=> (>= a_1 1.0) (>= v_1 10.0)) (=> (>= a_2 1.0) (>= v_2 10.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (1/2, 1/2, 1/2); v = (11/2, 11/2, 11/2).
+  run 2 round 2: rejected  Sensor: 1 note(s); Planner: 1 note(s); Vehicle: 1 note(s)
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is d = (30, 13, 13); dh = (30, 13, 13); w = (20, 0, 0); wh = (20, 0, 0).
+      Planner: A = true | G = (and (=> (<= dh_0 12.0) (<= a_0 0.0)) (=> (<= dh_1 12.0) (<= a_1 0.0)) (=> (<= dh_2 12.0) (<= a_2 0.0)) (=> (and (>= dh_0 28.0) (>= wh_0 18.0)) (>= a_0 1.0)) (=> (and (>= dh_1 28.0) (>= wh_1 18.0)) (>= a_1 1.0)) (=> (and (>= dh_2 28.0) (>= wh_2 18.0)) (>= a_2 1.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (6, 6, 6); dh = (30, 13, 13); wh = (20, 0, 0).
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 5.0) (<= v_0 5.0)) (=> (<= a_1 5.0) (<= v_1 5.0)) (=> (<= a_2 5.0) (<= v_2 5.0)) (=> (>= a_0 10.0) (>= v_0 10.0)) (=> (>= a_1 10.0) (>= v_1 10.0)) (=> (>= a_2 10.0) (>= v_2 10.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (6, 6, 6); v = (6, 6, 6).
+  run 2 round 3: ACCEPTED
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+      Planner: A = true | G = (and (=> (<= dh_0 12.0) (<= a_0 0.0)) (=> (<= dh_1 12.0) (<= a_1 0.0)) (=> (<= dh_2 12.0) (<= a_2 0.0)) (=> (and (>= dh_0 28.0) (>= wh_0 18.0)) (>= a_0 10.0)) (=> (and (>= dh_1 28.0) (>= wh_1 18.0)) (>= a_1 10.0)) (=> (and (>= dh_2 28.0) (>= wh_2 18.0)) (>= a_2 10.0)))
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 0.0) (<= v_0 5.0)) (=> (<= a_1 0.0) (<= v_1 5.0)) (=> (<= a_2 0.0) (<= v_2 5.0)) (=> (>= a_0 1.0) (>= v_0 10.0)) (=> (>= a_1 1.0) (>= v_1 10.0)) (=> (>= a_2 1.0) (>= v_2 10.0)))
+  summary: {'run': 2, 'accepted': True, 'rounds': 3, 'model_calls': 9}
+--- run 3
+  run 3 round 1: rejected  Sensor: 1 note(s); Planner: 1 note(s); Vehicle: 1 note(s)
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is d = (11, 0, 11); dh = (11, 0, 11); w = (0, 0, 0); wh = (0, 0, 0).
+      Planner: A = true | G = (and (>= a_0 0.0) (<= a_0 30.0) (>= a_1 0.0) (<= a_1 30.0) (>= a_2 0.0) (<= a_2 30.0) (=> (<= dh_0 10.0) (<= a_0 5.0)) (=> (<= dh_1 10.0) (<= a_1 5.0)) (=> (<= dh_2 10.0) (<= a_2 5.0)) (=> (and (>= dh_0 30.0) (>= wh_0 20.0)) (>= a_0 10.0)) (=> (and (>= dh_1 30.0) (>= wh_1 20.0)) (>= a_1 10.0)) (=> (and (>= dh_2 30.0) (>= wh_2 20.0)) (>= a_2 10.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (0, 1, 6); dh = (11, 0, 11); wh = (0, 0, 0).
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 0.0) (<= v_0 5.0)) (=> (<= a_1 0.0) (<= v_1 5.0)) (=> (<= a_2 0.0) (<= v_2 5.0)) (=> (> a_0 0.0) (>= v_0 10.0)) (=> (> a_1 0.0) (>= v_1 10.0)) (=> (> a_2 0.0) (>= v_2 10.0)))
+         (V1) the composed contracts do not imply the query guarantee; on your ports the failing trace is a = (0, 1, 6); v = (0, 10, 10).
+  run 3 round 2: ACCEPTED
+      Sensor: A = true | G = (and (= dh_0 d_0) (= wh_0 w_0) (= dh_1 d_1) (= wh_1 w_1) (= dh_2 d_2) (= wh_2 w_2))
+      Planner: A = true | G = (and (>= a_0 0.0) (<= a_0 30.0) (>= a_1 0.0) (<= a_1 30.0) (>= a_2 0.0) (<= a_2 30.0) (=> (<= dh_0 10.0) (<= a_0 0.0)) (=> (<= dh_1 10.0) (<= a_1 0.0)) (=> (<= dh_2 10.0) (<= a_2 0.0)) (=> (and (>= dh_0 30.0) (>= wh_0 20.0)) (>= a_0 10.0)) (=> (and (>= dh_1 30.0) (>= wh_1 20.0)) (>= a_1 10.0)) (=> (and (>= dh_2 30.0) (>= wh_2 20.0)) (>= a_2 10.0)))
+      Vehicle: A = true | G = (and (>= v_0 0.0) (<= v_0 30.0) (>= v_1 0.0) (<= v_1 30.0) (>= v_2 0.0) (<= v_2 30.0) (=> (<= a_0 5.0) (<= v_0 5.0)) (=> (<= a_1 5.0) (<= v_1 5.0)) (=> (<= a_2 5.0) (<= v_2 5.0)) (=> (>= a_0 10.0) (>= v_0 10.0)) (=> (>= a_1 10.0) (>= v_1 10.0)) (=> (>= a_2 10.0) (>= v_2 10.0)))
+  summary: {'run': 3, 'accepted': True, 'rounds': 2, 'model_calls': 6}
+==============================================================================
+{'run': 1, 'accepted': True, 'rounds': 1, 'model_calls': 3}
+{'run': 2, 'accepted': True, 'rounds': 3, 'model_calls': 9}
+{'run': 3, 'accepted': True, 'rounds': 2, 'model_calls': 6}

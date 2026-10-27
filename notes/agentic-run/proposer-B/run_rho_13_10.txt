@@ -1,0 +1,42 @@
+proposal  notes/agentic-run/proposer-B/propB.py  (proposer B: bbox G2 (r=1), rho=13/10)
+instance  H = 8, (A, G) of scripts/validate.py, controller and planners of scripts/vcore.py, Z3 5.3.1, 120 s per check
+atoms
+  A1  linear
+  G1  NONLINEAR (proposal), e.g. (w2x - gx)*(w2x - gx) + (w2y - gy)*(w2y - gy) <= 25/4
+  A2  linear
+  G2  NONLINEAR (proposal), e.g. (y0x - w2x)*(y0x - w2x) + (y0y - w2y)*(y0y - w2y) <= 1/4
+  A   linear
+  G   NONLINEAR (top-level contract), e.g. (y0x - gx)*(y0x - gx) + (y0y - gy)*(y0y - gy) <= 9
+  WARNING: the proposal has nonlinear atoms in G1, G2; queries with them run in nonlinear real arithmetic (QF_NRA, nlsat; NRA with nlqsat for the quantified R route), which is slower and may return UNKNOWN. Infinity-norm atoms (inf_le, inf_ge, ...) keep a part linear.
+
+phase 1
+D1  A <= A1                              PASS         0.03 s
+    mode: linear, QF_LRA
+    parts: 10, decided by {'linear': 10}
+    horizon: dts: 1 of 8 ticks (pointwise class, 0 existential temporal operator(s) in the query)
+D2  G1 <= A2                             PASS         1.75 s
+    mode: nonlinear, QF_NRA (nlsat)
+    parts: 440, decided by {'linear': 232, 'linear relaxation with distance lemmas': 208}
+D3  A & G1 & A2 & G2 <= G                PASS         6.71 s
+    mode: nonlinear, QF_NRA (nlsat)
+    parts: 448, decided by {'linear': 32, 'linear relaxation with distance lemmas': 416}
+    horizon: y: 2 of 9 ticks (pointwise class, 2 existential temporal operator(s) in the query)
+    horizon: dts: 1 of 8 ticks (pointwise class, 1 existential temporal operator(s) in the query)
+R   (a) quantified: A1 & forall w. ~G1   FAIL         1.05 s
+    mode: nonlinear G1 bracketed by linear 32-gons: outer approximation of G1 (a superset) has no mission at this u (LRA, qsat)
+    counterexample:
+      u: s=50 h=(-42.703, 47) g=(50.4882, -50.5)
+      replay: fixed-u query "exists w. G1(u, w)": unsat (confirmed: no mission); A1(u)=True
+R   (b) witness: A1(u) -> G1(u, witness(u)) FAIL         0.21 s
+    mode: nonlinear, QF_NRA (nlsat)
+    parts: 31, decided by {'linear': 30, 'full part': 1}
+    counterexample:
+      u: s=27.5188 h=(0, 0) g=(28, 28)
+      w: w1=(13.1094, 13.1094) w2=(26.2188, 26.2188)
+      replay: witness(u) evaluated exactly: A1=True, G1=False
+R   verdict                              FAIL     (PASS if either route proves it; FAIL only on a quantified counterexample u; a failing witness alone leaves R open)
+S   non-vacuity sample                   INFO         0.37 s   (witness(u), concrete floats)
+    u drawn from the u-part of A: 10000 draws, 10000 in A1, 10000 with a witness (1.0000)
+    u drawn from a wide box, kept if in A1: 10000 draws, 35 in A1, 35 with a witness (1.0000)
+
+summary: NOT ALL PASS   total 10.2 s   (D1 PASS, D2 PASS, D3 PASS, R FAIL)

@@ -1,0 +1,25 @@
+\begin{document}
+\section{Delegation}
+The contract \lean|(A, G)| is delegated as in Theorem~1; the rule \lean|rule_composition| needs \lean|G₁ ⊆ A₂|.
+Characters outside JetBrains Mono: \lean|C₁ ⪯ C₂|, \lean|∁ A|, \lean|B ∖ A|.
+\begin{leancode}
+/-- `M` implements `(A, G)`: for every `E ⊆ A`, `M ∩ E ⊆ G`. -/
+def Implements (M : Behaviours B) (C : Contract B) : Prop :=
+  ∀ E : Behaviours B, E ⊆ C.A → M ∩ E ⊆ C.G
+
+infix:50 " ⊨ " => Implements   -- notation
+
+theorem delegation
+    {M₁ M₂ A G A₁ G₁ A₂ G₂ : Behaviours B}
+    (hA : A ⊆ A₁) (hG₁ : G₁ ⊆ A₂)
+    (hG₂ : (G₂ ∩ A₂) ⊆ G)
+    (hM₁ : M₁ ⊨ ⟨A₁, G₁⟩) (hM₂ : M₂ ⊨ ⟨A₂, G₂⟩) :
+    M₁ ∥ M₂ ⊨ ⟨A, G⟩ := by
+  have h₂ : M₂ ⊨ ⟨A₂, G⟩ :=
+    rule_guarantee_tightening hM₂ hG₂
+  have h₁₂ : M₁ ∥ M₂ ⊨ ⟨A₁, G⟩ :=
+    rule_composition hM₁ h₂ hG₁
+  exact rule_assumption_relaxation h₁₂ hA
+\end{leancode}
+Text continues in the column.
+\end{document}

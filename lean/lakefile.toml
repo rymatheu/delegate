@@ -1,0 +1,6 @@
+name = "contracts"
+defaultTargets = ["Contracts"]
+
+[[lean_lib]]
+name = "Contracts"
+roots = ["Contracts", "Composition", "Chain", "Hiding"]

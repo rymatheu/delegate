@@ -1,0 +1,67 @@
+   0.02 z3 version 5.3.1
+   0.03 ==============================================================================
+   0.03 relay, H = 0
+   0.03   Phi (linearised sentence) = True
+   0.03   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+   0.09   receptive & causal after sweep (every component): True
+   0.09 ==============================================================================
+   0.09 three-stage chain, H = 0
+   0.10   Phi (linearised sentence) = True
+   0.10   sweep to a maximal delegation (order ['C1', 'C2', 'C3'] ):
+   2.65   receptive & causal after sweep (every component): True
+   2.65 ==============================================================================
+   2.65 relay, disjunctive query, H = 0
+   2.66   Phi (linearised sentence) = True
+   2.66   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+   4.06   receptive & causal after sweep (every component): True
+   4.06 ==============================================================================
+   4.06 relay, H = 2, alw_[0,1](r >= 1/2 -> ev_[0,1] d >= 1/2) and alw_[0,2] |d| <= 1
+   4.08   Phi (linearised sentence) = True
+   4.10   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+   4.20   receptive & causal after sweep (every component): True
+   4.20 ==============================================================================
+   4.20 relay, H = 2, unrealizable query
+   4.24   Phi (linearised sentence) = False
+   4.24 ==============================================================================
+   4.24 fan-in, H = 0
+   4.24 ==============================================================================
+   4.24 fan-in -- fork semi-decision procedure with affine strategies (B = 1)
+   4.25 ==============================================================================
+   4.25 speed governor chain, H = 2: alw v in [0,2]; alw_[0,1](o<=1 -> ev_[0,1] v<=1/4); alw_[0,1](o>=3 -> ev_[0,1] v>
+   4.28   Phi (linearised sentence) = True
+   4.30   sweep to a maximal delegation (order ['Perception', 'Controller', 'Actuator'] ):
+  75.53   receptive & causal after sweep (every component): True
+  75.53 ==============================================================================
+  75.53 speed governor chain, unrealizable variant: alw(o<=1 -> v<=1/4) and alw_[0,1](o>=3 -> ev_[1,1] v>=1)
+  75.56   Phi (linearised sentence) = False
+  75.56 ==============================================================================
+  75.56 regression instances from review
+  75.56 ==============================================================================
+  75.56 regression 1a: four-stage chain C1..C4 (carrier lemma)
+  75.57   Phi (linearised sentence) = True
+  75.57   sweep to a maximal delegation (order ['C1', 'C2', 'C3', 'C4'] ):
+  79.14   receptive & causal after sweep (every component): True
+  79.14 ==============================================================================
+  79.14 regression 1b: X/Y/Z/W (carrier lemma)
+  79.14   Phi (linearised sentence) = True
+  79.14   sweep to a maximal delegation (order ['X', 'Y', 'Z', 'W'] ):
+  82.60   receptive & causal after sweep (every component): True
+  82.61 ==============================================================================
+  82.61 regression 2: relay, A_P = d >= r, G_P = d >= r - 1 (step 9, (V2))
+  82.61   Phi (linearised sentence) = True
+  82.61   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+  82.62   receptive & causal after sweep (every component): True
+  82.62 ==============================================================================
+  82.62 regression 3: relay + Q, (Scope) fails
+  82.62 ==============================================================================
+  82.62 regression 4: symbol names d and ad (step 6 terminates)
+  82.63   Phi (linearised sentence) = True
+  82.63   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+  83.57   receptive & causal after sweep (every component): True
+  83.57 ==============================================================================
+  83.57 regression 4b: H = 1, witness of q(1) mentions d(0) (step 6 substitutes)
+  83.59   Phi (linearised sentence) = True
+  83.60   sweep to a maximal delegation (order ['Radio', 'Display'] ):
+  85.53   receptive & causal after sweep (every component): True
+  85.53 ==============================================================================
+  85.53 all verdicts as expected

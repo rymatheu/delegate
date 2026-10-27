@@ -1,0 +1,17 @@
+home -0.1 sat
+w1 -0.1 sat
+w1 -0.4 sat
+w1 -0.2 sat
+w1 -0.3 sat
+w2 -0.3 sat
+w1 -0.1 sat
+home -0.4 sat
+w1 -0.4 sat
+home -0.3 sat
+home -0.1 sat
+w1 -0.3 sat
+home -0.2 sat
+w1 -0.2 sat
+w1 -0.1 sat
+w2 -0.3 sat
+edge cases: 16 verdicts by failing conjunct: {('home', 'sat'): 5, ('w1', 'sat'): 9, ('w2', 'sat'): 2} seconds: 305

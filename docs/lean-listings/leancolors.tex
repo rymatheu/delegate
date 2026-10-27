@@ -1,0 +1,26 @@
+% Colours for Lean listings: the hues of the VS Code dark theme, darkened for a white page.
+% \leanapplycolors redefines the Pygments token macros (prefix PYG); call it after the Pygments
+% style definitions are loaded (minted does this through leanstyle.tex; the static route calls it directly).
+\definecolor{LeanKeyword}{HTML}{B5301E}   % theorem, have, exact, by, def, namespace ...
+\definecolor{LeanDecl}{HTML}{5B2DB8}      % the name being declared
+\definecolor{LeanSymbol}{HTML}{8F2899}    % ⊆ ∩ ⊨ ∥ → ¬ ...
+\definecolor{LeanBracket}{HTML}{8C6D00}   % ( ) [ ] { }
+\definecolor{LeanAngle}{HTML}{7048C8}     % ⟨ ⟩ ⦃ ⦄
+\definecolor{LeanOperator}{HTML}{383A42}  % : := ,
+\definecolor{LeanType}{HTML}{0E7490}      % Prop, Type
+\definecolor{LeanComment}{HTML}{6A737D}
+\definecolor{LeanDoc}{HTML}{22863A}
+\definecolor{LeanNumber}{HTML}{986801}
+\definecolor{LeanName}{HTML}{1F2328}
+\makeatletter
+\newcommand*\leantok[2]{\expandafter\def\csname PYG@tok@#1\endcsname{\def\PYG@tc####1{\textcolor{#2}{####1}}}}
+\newcommand*\leantokit[2]{\expandafter\def\csname PYG@tok@#1\endcsname{\let\PYG@it=\textit\def\PYG@tc####1{\textcolor{#2}{####1}}}}
+\newcommand*\leanapplycolors{%
+  \leantok{k}{LeanKeyword}\leantok{kd}{LeanKeyword}\leantok{kn}{LeanKeyword}\leantok{kr}{LeanKeyword}%
+  \leantok{kc}{LeanKeyword}\leantok{kp}{LeanKeyword}%
+  \leantok{nf}{LeanDecl}\leantok{n}{LeanName}\leantok{nv}{LeanName}\leantok{nb}{LeanSymbol}%
+  \leantok{bp}{LeanSymbol}\leantok{p}{LeanBracket}\leantok{pm}{LeanAngle}\leantok{o}{LeanOperator}%
+  \leantok{kt}{LeanType}\leantok{nc}{LeanType}%
+  \leantokit{c}{LeanComment}\leantokit{cm}{LeanComment}\leantokit{c1}{LeanComment}%
+  \leantok{s}{LeanDoc}\leantok{sd}{LeanDoc}\leantok{s2}{LeanDoc}\leantok{m}{LeanNumber}\leantok{mi}{LeanNumber}}
+\makeatother

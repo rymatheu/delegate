@@ -1,0 +1,78 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}\newtheorem{lemma}{Lemma}\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}\newtheorem{definition}{Definition}\newtheorem{remark}{Remark}
+\newcommand{\refines}{\preccurlyeq}\newcommand{\comp}{\otimes}\newcommand{\Dl}{\textup{\textsc{Delegate}}}\newcommand{\Fk}{\textup{\textsc{Fork}}}
+\newcommand{\ports}{\mathrm{ports}}\newcommand{\inp}{\mathrm{in}}\newcommand{\outp}{\mathrm{out}}\newcommand{\priv}{\mathrm{priv}}\newcommand{\edge}{\mathrm{edge}}
+\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}
+\makeatletter\renewcommand\section{\@startsection{section}{1}{\z@}{6pt}{3pt}{\normalfont\bfseries}}\makeatother
+\begin{document}
+\begin{center}\textbf{The decision and construction algorithm for local delegations}\\ 18 October 2026. Notation, Theorems 1--3 and Corollary 1 refer to \emph{existence.pdf}.\end{center}
+
+\section{The sentence, the class, the algorithm}
+\textbf{Setting.} $V$ is a finite set of real-valued variables; each is written by exactly one component or by the environment. Component $i$ reads $\inp(i)$, writes $\outp(i)$, $\ports(i)=\inp(i)\cup\outp(i)$, and has delay $0$: its output at time $t$ may depend on its inputs at times $\le t$. The horizon is $H$; $v(t)$ denotes the value of variable $v$ at time $t\in\{0,\dots,H\}$, a real number, and a trace fixes $v(t)$ for every $v$ and $t$. PolySTL formulas, unrolled, are Boolean combinations of linear constraints among the $v(t)$ of one time $t$; a formula is \emph{over} a set of variables if it mentions only those. For a set $W$ of variables and a time $t$, $\forall W(t)$ and $\exists W(t)$ quantify over all real values $v(t)$, $v\in W$. Contracts $(A_i,G_i)$, validity, receptiveness, causality and ``acceptable'' are as in \emph{existence.pdf}, Definition~1. The graph has an edge $u\to v$ when $v$ reads a variable $u$ writes; it is acyclic. $N$ is the set of components that can influence the query: those that write a variable occurring in $G_P$, together with every component from which a directed path leads to one of them. Components outside $N$ receive $(\top,\top)$; nothing they do reaches a variable of $G_P$. A \emph{topological ordering} of $N$ lists its components so that every component comes after all components whose outputs it reads.
+\begin{definition}[linearisation]
+Let $i_1,\dots,i_p$ be a topological ordering of $N$. For $t\le H$ and $k\le p$ let
+\begin{itemize}
+\item $Y_k(t)$ be the variables $\outp(i_k)$ taken at time $t$: the outputs of $i_k$ at time $t$;
+\item $E_k(t)$ be the variables of $\inp(i_k)$ that lie in no $\ports(i_j)$, $j<k$, taken at time $t$: the inputs of $i_k$ that no earlier component reads or writes (environment variables, or outputs of components outside $N$). Inputs of $i_k$ written by an earlier $i_j$ are not quantified here; they belong to $Y_j(t)$. With $H=0$ these are plain subsets of the system variables; for $H>0$ the same variable is quantified once per time step, because its value at time $t$ is chosen or revealed at time $t$.
+\end{itemize}
+The \emph{linearised sentence} of the ordering is
+\[
+\Phi\ :=\ \prod_{t=0}^{H}\big(\forall E_1(t)\,\exists Y_1(t)\ \forall E_2(t)\,\exists Y_2(t)\cdots\forall E_p(t)\,\exists Y_p(t)\big)\ \ (A_P\to G_P),
+\]
+read left to right: for all values of the fresh inputs of $i_1$ at time $0$ there are values of its outputs at time $0$, such that for all fresh inputs of $i_2$ at time $0$ there are outputs of $i_2$, \dots, through $i_p$, then the same for time $1$, and so on to time $H$, such that the trace satisfies $A_P\to G_P$. It is a first-order sentence of linear real arithmetic. It grants $i_k$ at time $t$ knowledge of every value quantified before $Y_k(t)$.
+\end{definition}
+\begin{lemma}\label{lem:lin}
+If an acceptable delegation exists, $\Phi$ is true for every topological ordering of $N$.
+\end{lemma}
+\begin{proof}
+By Theorem~2(a) there is a causal distributed strategy $(f_i)$. Witness the existential blocks in prefix order by $Y_k(t):=f_{i_k}$ applied to the trace fixed so far. With delay $0$ and the ordering topological, every input of $i_k$ at a time $\le t$ is in some $E_j(s)$ with $(j,s)\preceq(k,t)$ or is an output of some $i_j$, $j<k$, at a time $\le t$; all precede $Y_k(t)$. The trace satisfies $A_P\to G_P$ by validity.
+\end{proof}
+The converse fails in general because $\Phi$ grants $i_k$ at time $t$ the values $E_j(s)$, $j>k$, $s<t$, which $i_k$ never sees, and $Y_j(s)$, $j>k$, $s<t$, which it does not see either. The class below is exactly where these grants are harmless.
+\begin{definition}[nested architecture]
+A topological ordering of $N$ is \emph{nested} if for every $k<p$: (E) $i_k\to i_{k+1}$ is an edge; with $\priv_k:=\ports(i_k)\setminus\ports(i_{k+1})$ and $\edge_k:=\outp(i_k)\cap\inp(i_{k+1})$, (Cap) $|\priv_k|\le|\edge_k|$; (Pure) no variable of $\edge_k$ occurs in $A_P$ or $G_P$; and (Info) $H=0$, or every variable read by $i_k$ with $k\ge2$ is written by some $i_j$, $j<k$.
+\end{definition}
+Fix injections $\sigma_k:\priv_k\to\edge_k$ (first variables in name order) and the \emph{forwarding} formulas $F_k:=\bigwedge_{t\le H}\bigwedge_{v\in\priv_k}\big(\sigma_k(v)(t)=v(t)\big)$, PolySTL over $\ports(i_k)$. Under $F_1,\dots,F_{k-1}$ the inputs of $i_k$ at times $\le t$ determine by an injective affine map the values at times $\le t$ of every variable read or written by $i_1,\dots,i_{k-1}$; $\delta_k$ denotes this decoding (variables by variables, same time).
+
+\textbf{Skolem functions.} Eliminating $\exists y$ from a linear formula by virtual substitution yields, on each cell of the outer variables, a feasible interval for $y$ with affine endpoints; taking the midpoint, or an endpoint $\pm1$ when unbounded, gives a \emph{piecewise-affine Skolem function} $s$ for $y$ whose graph is a finite union of polyhedra. Applied block by block from the inside out, this yields piecewise-affine Skolem functions $s_{k,t}$ for every $Y_k(t)$ of $\Phi$, each a function of the values quantified before $Y_k(t)$, such that substituting all of them into the body gives a formula valid for all values of the universally quantified variables.
+
+\textbf{Algorithm} \Dl.
+\begin{enumerate}
+\item Compute $N$; enumerate topological orderings; if none is nested, go to Section~2.
+\item Decide $\Phi$ of the nested ordering by quantifier elimination. If false, output ``no acceptable delegation exists'' (Lemma~\ref{lem:lin}).
+\item Compute the Skolem functions $s_{k,t}$. Substitute recursively: wherever $s_{k,t}$ mentions a value in $Y_j(s)$ with $j>k$ (necessarily $s<t$), replace it by $s_{j,s}$, and repeat; the recursion descends in $(s,j)$ lexicographically and ends with $\tilde s_{k,t}$ depending only on $E_1(\le t)$ and $Y_j(\le t)$, $j<k$, and own earlier outputs (under (Info), $E_j=\emptyset$ for $j\ge2$ when $H>0$; when $H=0$ there is no $s<t$ and nothing to substitute).
+\item Output $C_{i_k}:=\big(\top,\ F_k\wedge\bigwedge_{t\le H}\big(Y_k(t)=\tilde s_{k,t}\big)\delta_k\big)$ for $k\le p$ (with the $\edge_k$ coordinates of $Y_k(t)$ fixed by $F_k$ and unused ones set to $0$), and $(\top,\top)$ for components outside $N$.
+\item Apply the one-pass sweep (Corollary~1) to reach a maximal acceptable delegation above this one.
+\end{enumerate}
+
+\begin{theorem}\label{thm:main}
+For a nested architecture: (i) \Dl\ terminates and every emitted formula is PolySTL over its component's ports. (ii) If $\Phi$ is false, no acceptable delegation exists. (iii) If $\Phi$ is true, the delegation of step~4 is acceptable, and step~5 returns a maximal one. Hence on nested architectures the existence of an acceptable delegation is decidable, and one is computed whenever it exists.
+\end{theorem}
+\begin{proof}
+(i) Quantifier elimination and virtual substitution for linear real arithmetic terminate (Ferrante--Rackoff; Loos--Weispfenning). The graph of a piecewise-affine function is a finite union of polyhedra whose atoms are single-time after $\delta_k$ (variables for variables at the same time), so each $(Y_k(t)=\tilde s_{k,t})\delta_k$ is PolySTL over $\ports(i_k)$; $F_k$ is by construction. (ii) is Lemma~\ref{lem:lin}.
+
+(iii) \emph{Validity.} Let $x\in A_P\wedge\bigwedge_iG_i$. Then $x\models F_k$ for all $k$, so $\delta_k$ decodes correctly, and $x$ satisfies $Y_k(t)=\tilde s_{k,t}$ for all $k,t$. By the substitution in step~3, $\tilde s_{k,t}=s_{k,t}$ on every trace where the later Skolem equations hold, so $x$ satisfies every $Y_k(t)=s_{k,t}$. Substituting all Skolem functions into the body of $\Phi$ gives a valid formula, so $x\models A_P\to G_P$; with $x\in A_P$, $x\models G_P$: (C1). (C2) is trivial for $A_i=\top$.
+\emph{Receptive and causal.} The outputs of $i_k$ at $t$ are the forwarded copies of its inputs at $t$ and the values $\tilde s_{k,t}\delta_k$, functions of its inputs at times $\le t$ and own earlier outputs: a causal strategy exists, hence receptiveness and causality. \emph{Maximality} is Corollary~1.
+\end{proof}
+\begin{remark}
+(Info) is what makes the grants of $\Phi$ harmless: for $H>0$ every value $i_k$ is granted but does not see is a Skolem output of a later component, which step~3 expresses through values $i_k$ sees. If some $i_k$, $k\ge2$, read fresh environment information while $H>0$, the earlier components' later decisions would be granted that information in $\Phi$ without seeing it, and the architecture is a fork (Section~2). If (Pure) fails, replace $\sigma_k$ by a scaled injection with unknown gains; $\Phi$ becomes a sentence over the real closed field, still decidable but nonlinear. Delay-$1$ components cannot forward real values in PolySTL (a cross-time equality is not a single-time atom); they can forward truth values of atoms with a one-step shift, which is the case $G_P$ depends on their private variables only through those atoms.
+\end{remark}
+\textbf{Complexity.} Step 2 is one sentence with $2p(H+1)$ alternating blocks over $|V|(H+1)$ reals: doubly exponential time (Ferrante--Rackoff). Step 3 is the same elimination with witnesses kept.
+
+\section{Outside the class}
+Let no topological ordering be nested (an information fork). By Theorem~2 and definable choice in $(\mathbb R,<,+)$, an acceptable delegation exists iff a \emph{piecewise-affine} distributed strategy exists: functions $f_i$ reading only $\inp(i)$, affine on each of finitely many polyhedral pieces.
+
+\textbf{Semi-algorithm} \Fk. (a) For every topological ordering of $N$ decide its linearised sentence; if any is false, output ``no acceptable delegation'' (Lemma~\ref{lem:lin}). (b) Otherwise, for $B=1,2,\dots$: let $\Psi_B$ be $\exists\theta\,\forall\text{env}\,(A_P\to G_P)[\outp(i):=f_i^\theta(\inp(i))]$, where $f_i^\theta$ is piecewise affine with at most $B$ pieces, each cut out by at most $B$ affine atoms, all coefficients collected in $\theta$. Decide $\Psi_B$ over the real closed field (Tarski; cylindrical algebraic decomposition). If true, extract a witness $\theta$, output $C_i:=(\top,\mathrm{graph}(f_i^\theta))$ and sweep.
+
+\begin{proposition}
+\Fk\ is sound: every output is an acceptable delegation. It is complete for each budget: if a piecewise-affine distributed strategy with budget $B$ exists, \Fk\ outputs one at stage $\le B$. It terminates whenever an acceptable delegation exists. It need not terminate when none exists and step (a) did not refute.
+\end{proposition}
+\begin{proof}
+Soundness is Theorem~2(b). Completeness for $B$: the strategy is a witness of $\Psi_B$, a first-order sentence of the real closed field, hence decided. Termination: by Theorem~2(a) and definable choice, an acceptable delegation yields a piecewise-affine strategy with some finite budget, reached by enumeration. Non-termination: nothing bounds $B$ a priori.
+\end{proof}
+\textbf{Open.} A computable bound $B(\text{graph},P)$; with one, \Fk\ decides existence on forks. By Theorem~2(c) it must depend on edge capacities. Everything else here is proved.
+\end{document}

@@ -1,0 +1,12 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{fontspec}
+\directlua{luaotfload.add_fallback("leanfallback", {"[./fonts/juliamono/JuliaMono-Regular.ttf]:mode=harf;"})}
+\setmonofont[Path=./fonts/jetbrainsmono/, Extension=.ttf, UprightFont=JetBrainsMono-Regular,
+  BoldFont=JetBrainsMono-Bold, ItalicFont=JetBrainsMono-Italic, BoldItalicFont=JetBrainsMono-BoldItalic,
+  RawFeature={fallback=leanfallback}]{JetBrainsMono}
+\usepackage{xcolor}
+\usepackage[highlightmode=immediate]{minted}
+\usemintedstyle{default}
+\input{leanstyle}
+\input{body}  % example body; replace with your document

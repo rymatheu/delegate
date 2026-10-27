@@ -1,0 +1,16 @@
+\documentclass[twocolumn]{article}
+% Text block set to ACM sigconf dimensions (7in wide, 0.33in column gap).
+\usepackage[textwidth=506.295pt, textheight=9.25in, columnsep=0.33in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows,arrows.meta,backgrounds,decorations,decorations.pathmorphing,positioning,fit,automata,shapes,patterns,patterns.meta,plotmarks,calc}
+\usepackage{amsmath}
+\begin{document}
+\begin{figure*}
+  \centering
+  \input{compositions}
+  \caption{Composition shapes.}
+\end{figure*}
+\noindent\input{sequential}\par\bigskip
+\noindent\input{parallel}\par\bigskip
+\noindent\input{triangle}
+\end{document}

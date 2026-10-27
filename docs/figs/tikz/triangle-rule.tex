@@ -1,0 +1,36 @@
+% Triangle rule, proof, and the necessity of its side conditions.
+% Needs amsmath, amsthm, and \newcommand{\tria}[3]{\triangle(#1,#2,#3)}.
+
+\begin{definition}[Triangle]
+Let $M_1, M_2, M_3$ be components wired $M_1 \to M_2$, $M_1 \to M_3$, $M_2 \to M_3$: $M_2$ reads only from $M_1$, and $M_3$ reads only from $M_1$ and $M_2$. Their composition is $\tria{M_1}{M_2}{M_3} = M_1 \cap M_2 \cap M_3$.
+\end{definition}
+
+\begin{theorem}[Triangle rule]
+\[
+\frac{
+  \begin{array}{c}
+M_1\models(A_1,G_1)\quad M_2\models(A_2,G_2)\quad M_3\models(A_3,G_3)\\[2pt] G_1\subseteq A_2\quad G_1\cap G_2\subseteq A_3
+  \end{array}
+}{\tria{M_1}{M_2}{M_3}\models(A_1,G_3)}
+\]
+\end{theorem}
+
+\begin{proof}
+Let $T = M_1 \cap M_2 \cap M_3$, so $T \subseteq M_i$ for $i = 1, 2, 3$. By definition, $M \models (A, G)$ means $M \cap A \subseteq G$; we must show $T \cap A_1 \subseteq G_3$.
+\begin{align}
+T \cap A_1 &\subseteq M_1 \cap A_1 \subseteq G_1 \subseteq A_2, \label{tri:1}\\ T \cap A_1 &\subseteq M_2 \cap A_2 \subseteq G_2, \label{tri:2}\\ T \cap A_1 &\subseteq G_1 \cap G_2 \subseteq A_3, \label{tri:3}\\ T \cap A_1 &\subseteq M_3 \cap A_3 \subseteq G_3. \label{tri:4}
+\end{align}
+Line~\eqref{tri:1} uses $T \subseteq M_1$, then $M_1 \models (A_1, G_1)$, then $G_1 \subseteq A_2$. Line~\eqref{tri:2} uses $T \subseteq M_2$ together with the end of~\eqref{tri:1}, then $M_2 \models (A_2, G_2)$. Line~\eqref{tri:3} collects~\eqref{tri:1} and~\eqref{tri:2}, then uses $G_1 \cap G_2 \subseteq A_3$. Line~\eqref{tri:4} uses $T \subseteq M_3$ together with~\eqref{tri:3}, then $M_3 \models (A_3, G_3)$. Each step of the form ``$X \subseteq Y$ and $X \subseteq Z$, hence $X \subseteq Y \cap Z$'' is the universal property of intersection. Line~\eqref{tri:4} is $\tria{M_1}{M_2}{M_3} \models (A_1, G_3)$.
+\end{proof}
+
+\begin{proposition}[The side conditions are the weakest possible]
+Any rule with the same three implementation premises and the same conclusion, valid for all implementations and all $G_3$, must require $A_1 \cap G_1 \subseteq A_2$ and $A_1 \cap G_1 \cap G_2 \subseteq A_3$.
+\end{proposition}
+
+\begin{proof}
+Take $M_1 = G_1$, $M_2 = G_2$, $M_3 = \complement A_3$, and $G_3 = \emptyset$. Then $M_1 \cap A_1 \subseteq G_1$, $M_2 \cap A_2 \subseteq G_2$, and $M_3 \cap A_3 = \emptyset \subseteq G_3$, so the implementation premises hold. The conclusion reads $G_1 \cap G_2 \cap \complement A_3 \cap A_1 \subseteq \emptyset$, which is $A_1 \cap G_1 \cap G_2 \subseteq A_3$. The same choice with $M_2 = \complement A_2$ and $G_2 = \emptyset$ forces $A_1 \cap G_1 \subseteq A_2$.
+\end{proof}
+
+\begin{remark}
+The stated premises $G_1 \subseteq A_2$ and $G_1 \cap G_2 \subseteq A_3$ drop the factor $A_1$ and are therefore slightly stronger than necessary; they match the Sequential rule's $G_1 \subseteq A_2$. The proof above goes through unchanged with the exact conditions, since every line already carries $T \cap A_1$ on the left. Read as delegation constraints: the only facts upstream will certify to $M_3$ are $G_1$ and $G_2$, so $A_3$ may be no stronger than their conjunction, whereas in the chain $M_1 \otimes M_2 \otimes M_3$ the node $M_3$ is told $G_2$ alone.
+\end{remark}

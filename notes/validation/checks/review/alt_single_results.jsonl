@@ -1,0 +1,16 @@
+{"H": 8, "enc": "ite", "split": 0, "solver": "default", "verdict": "timeout", "time": 600.119, "nparts": 1, "detail": [[0, "unknown", 600.117]], "nq": 1}
+{"H": 8, "enc": "ite", "split": 1, "solver": "arith2", "verdict": "timeout", "time": 600.127, "nparts": 37, "detail": [[32, "unsat", 0.28], [33, "unsat", 0.809], [34, "unsat", 0.93], [35, "unsat", 0.436], [36, "unknown", 590.925]], "nq": 37}
+{"H": 8, "enc": "ite", "split": 0, "solver": "arith2", "verdict": "timeout", "time": 600.16, "nparts": 1, "detail": [[0, "unknown", 600.159]], "nq": 1}
+{"H": 4, "enc": "ite", "split": 1, "solver": "default", "verdict": "timeout", "time": 600.189, "nparts": 21, "detail": [[16, "unsat", 0.063], [17, "unsat", 0.324], [18, "unsat", 0.589], [19, "unsat", 0.321], [20, "unknown", 595.936]], "nq": 21}
+{"H": 8, "enc": "ite", "split": 0, "solver": "nlsat", "verdict": "timeout", "time": 600.207, "nparts": 1, "detail": [[0, "unknown", 600.207]], "nq": 1}
+{"H": 4, "enc": "ite", "split": 1, "solver": "nlsat", "verdict": "timeout", "time": 601.851, "nparts": 21, "detail": [[0, "unsat", 0.006], [1, "unknown", 601.844]], "nq": 2}
+{"H": 8, "enc": "ite", "split": 1, "solver": "nlsat", "verdict": "timeout", "time": 602.091, "nparts": 37, "detail": [[0, "unsat", 0.003], [1, "unknown", 602.087]], "nq": 2}
+{"H": 8, "enc": "ite", "split": 1, "solver": "default", "verdict": "timeout", "time": 615.087, "nparts": 37, "detail": [[32, "unsat", 0.461], [33, "unsat", 0.741], [34, "unsat", 0.506], [35, "unsat", 0.436], [36, "unknown", 603.126]], "nq": 37}
+{"H": 4, "enc": "ite", "split": 2, "solver": "arith2", "verdict": "unknown/unknown", "time": 1.246, "nparts": 21, "detail": [[16, "unsat", 0.017], [17, "unsat", 0.045], [18, "unsat", 0.066], [19, "unsat", 0.094], [20, "unknown", 0.105]], "nq": 21}
+{"H": 8, "enc": "ite", "split": 2, "solver": "arith2", "verdict": "unknown/unknown", "time": 8.505, "nparts": 37, "detail": [[32, "unsat", 0.239], [33, "unsat", 0.666], [34, "unsat", 0.759], [35, "unsat", 0.371], [36, "unknown", 0.299]], "nq": 37}
+{"H": 4, "enc": "ite", "split": 1, "solver": "arith2", "verdict": "unknown/unknown", "time": 336.532, "nparts": 21, "detail": [[16, "unsat", 0.016], [17, "unsat", 0.046], [18, "unsat", 0.065], [19, "unsat", 0.087], [20, "unknown", 335.46]], "nq": 21}
+{"H": 4, "enc": "ite", "split": 0, "solver": "default", "verdict": "timeout", "time": 600.124, "nparts": 1, "detail": [[0, "unknown", 600.124]], "nq": 1}
+{"H": 4, "enc": "ite", "split": 0, "solver": "arith2", "verdict": "timeout", "time": 600.091, "nparts": 1, "detail": [[0, "unknown", 600.089]], "nq": 1}
+{"H": 4, "enc": "ite", "split": 0, "solver": "nlsat", "verdict": "timeout", "time": 600.527, "nparts": 1, "detail": [[0, "unknown", 600.527]], "nq": 1}
+{"H": 8, "enc": "ite", "split": 2, "solver": "default", "verdict": "timeout", "time": 600.047, "nparts": 37, "detail": [[32, "unsat", 0.341], [33, "unsat", 0.612], [34, "unsat", 0.42], [35, "unsat", 0.335], [36, "unknown", 589.659]], "nq": 37}
+{"H": 4, "enc": "ite", "split": 2, "solver": "default", "verdict": "timeout", "time": 600.051, "nparts": 21, "detail": [[16, "unsat", 0.046], [17, "unsat", 0.282], [18, "unsat", 0.558], [19, "unsat", 0.278], [20, "unknown", 596.237]], "nq": 21}

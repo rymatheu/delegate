@@ -1,0 +1,14 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{fontspec}
+\setmonofont[Path=./fonts/jetbrainsmono/, Extension=.ttf, UprightFont=JetBrainsMono-Regular,
+  BoldFont=JetBrainsMono-Bold, ItalicFont=JetBrainsMono-Italic, BoldItalicFont=JetBrainsMono-BoldItalic]{JetBrainsMono}
+\newfontfamily\leanfallbackfont[Path=./fonts/juliamono/, Extension=.ttf, UprightFont=JuliaMono-Regular,
+  BoldFont=JuliaMono-Bold]{JuliaMono}
+\usepackage{newunicodechar}
+\input{fallback-xe}
+\usepackage{xcolor}
+\usepackage[highlightmode=immediate]{minted}
+\usemintedstyle{default}
+\input{leanstyle}
+\input{body}  % example body; replace with your document

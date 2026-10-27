@@ -1,0 +1,25 @@
+goal -0.22 sat
+goal -0.246 sat
+goal -0.148 sat
+goal -0.415 sat
+w2 -0.1 sat
+goal -0.008 sat
+goal -0.096 sat
+goal -0.286 sat
+goal -0.415 sat
+goal -0.365 sat
+goal -0.421 sat
+goal -0.125 sat
+goal -0.14 sat
+home -0.1 sat
+goal -0.461 sat
+goal -0.407 sat
+goal -0.302 sat
+w2 -0.1 sat
+goal -0.14 sat
+goal -0.251 sat
+goal -0.002 sat
+home -0.3 sat
+goal -0.302 sat
+goal -0.006 sat
+edge cases: 24 verdicts by failing conjunct: {('goal', 'sat'): 20, ('w2', 'sat'): 2, ('home', 'sat'): 2} seconds: 280

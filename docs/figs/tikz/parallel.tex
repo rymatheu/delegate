@@ -1,0 +1,20 @@
+\begin{tikzpicture}[
+  comp/.style={draw, minimum width=12mm, minimum height=7mm},
+  ctr/.style={font=\footnotesize, inner sep=1pt},
+  wire/.style={-{Latex[length=1.8mm]}},
+  node distance=9mm
+]
+  \node[comp] (m1) {$M_1$};
+  \node[comp, below=of m1] (m2) {$M_2$};
+  \node[ctr, below=1.5mm of m1] (c1) {$(A_1, G_1)$};
+  \node[ctr, below=1.5mm of m2] (c2) {$(A_2, G_2)$};
+  \draw[wire] ($(m1.west)+(-9mm,0)$) -- (m1.west);
+  \draw[wire] (m1.east) -- ++(9mm,0);
+  \draw[wire] ($(m2.west)+(-9mm,0)$) -- (m2.west);
+  \draw[wire] (m2.east) -- ++(9mm,0);
+  \begin{scope}[on background layer]
+    \node[draw, dashed, gray, rounded corners=2mm, inner sep=2.5mm,
+          fit=(m1)(m2)(c1)(c2),
+          label={[font=\footnotesize, inner sep=2pt]below:$M_1 \parallel M_2$}] {};
+  \end{scope}
+\end{tikzpicture}

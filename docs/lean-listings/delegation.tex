@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+\PYG{k+kd}{theorem}\PYG{+w}{ }\PYG{n+nf}{delegation}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}\PYG{n}{M₁}\PYG{+w}{ }\PYG{n}{M₂}\PYG{+w}{ }\PYG{n}{A}\PYG{+w}{ }\PYG{n}{G}\PYG{+w}{ }\PYG{n}{A₁}\PYG{+w}{ }\PYG{n}{G₁}\PYG{+w}{ }\PYG{n}{A₂}\PYG{+w}{ }\PYG{n}{G₂}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{Behaviours}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{(}\PYG{n}{hA}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{A}\PYG{+w}{ }\PYG{n+nb+bp}{⊆}\PYG{+w}{ }\PYG{n}{A₁}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{hG₁}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{G₁}\PYG{+w}{ }\PYG{n+nb+bp}{⊆}\PYG{+w}{ }\PYG{n}{A₂}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{(}\PYG{n}{hG₂}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{G₂}\PYG{+w}{ }\PYG{n+nb+bp}{∩}\PYG{+w}{ }\PYG{n}{A₂}\PYG{p}{)}\PYG{+w}{ }\PYG{n+nb+bp}{⊆}\PYG{+w}{ }\PYG{n}{G}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{(}\PYG{n}{hM₁}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{M₁}\PYG{+w}{ }\PYG{n+nb+bp}{⊨}\PYG{+w}{ }\PYG{p+pm}{⟨}\PYG{n}{A₁}\PYG{o}{,}\PYG{+w}{ }\PYG{n}{G₁}\PYG{p+pm}{⟩}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{hM₂}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{M₂}\PYG{+w}{ }\PYG{n+nb+bp}{⊨}\PYG{+w}{ }\PYG{p+pm}{⟨}\PYG{n}{A₂}\PYG{o}{,}\PYG{+w}{ }\PYG{n}{G₂}\PYG{p+pm}{⟩}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{M₁}\PYG{+w}{ }\PYG{n+nb+bp}{∥}\PYG{+w}{ }\PYG{n}{M₂}\PYG{+w}{ }\PYG{n+nb+bp}{⊨}\PYG{+w}{ }\PYG{p+pm}{⟨}\PYG{n}{A}\PYG{o}{,}\PYG{+w}{ }\PYG{n}{G}\PYG{p+pm}{⟩}\PYG{+w}{ }\PYG{o}{:=}\PYG{+w}{ }\PYG{k}{by}
+\PYG{+w}{  }\PYG{k}{have}\PYG{+w}{ }\PYG{n}{h₂}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{M₂}\PYG{+w}{ }\PYG{n+nb+bp}{⊨}\PYG{+w}{ }\PYG{p+pm}{⟨}\PYG{n}{A₂}\PYG{o}{,}\PYG{+w}{ }\PYG{n}{G}\PYG{p+pm}{⟩}\PYG{+w}{ }\PYG{o}{:=}
+\PYG{+w}{    }\PYG{n}{rule\PYGZus{}guarantee\PYGZus{}tightening}\PYG{+w}{ }\PYG{n}{hM₂}\PYG{+w}{ }\PYG{n}{hG₂}
+\PYG{+w}{  }\PYG{k}{have}\PYG{+w}{ }\PYG{n}{h₁₂}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{n}{M₁}\PYG{+w}{ }\PYG{n+nb+bp}{∥}\PYG{+w}{ }\PYG{n}{M₂}\PYG{+w}{ }\PYG{n+nb+bp}{⊨}\PYG{+w}{ }\PYG{p+pm}{⟨}\PYG{n}{A₁}\PYG{o}{,}\PYG{+w}{ }\PYG{n}{G}\PYG{p+pm}{⟩}\PYG{+w}{ }\PYG{o}{:=}
+\PYG{+w}{    }\PYG{n}{rule\PYGZus{}composition}\PYG{+w}{ }\PYG{n}{hM₁}\PYG{+w}{ }\PYG{n}{h₂}\PYG{+w}{ }\PYG{n}{hG₁}
+\PYG{+w}{  }\PYG{n}{exact}\PYG{+w}{ }\PYG{n}{rule\PYGZus{}assumption\PYGZus{}relaxation}\PYG{+w}{ }\PYG{n}{h₁₂}\PYG{+w}{ }\PYG{n}{hA}
+\end{Verbatim}

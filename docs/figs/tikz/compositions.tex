@@ -1,0 +1,68 @@
+% Three composition shapes side by side; \input inside a figure* environment.
+\begin{tikzpicture}[
+  baseline=(cap.base),
+  comp/.style={draw, minimum width=11mm, minimum height=6mm},
+  ctr/.style={font=\footnotesize, inner sep=1pt},
+  wire/.style={-{Latex[length=1.6mm]}},
+  enc/.style={draw, dashed, gray, rounded corners=2mm, inner sep=2mm},
+  node distance=9mm
+]
+  \node[comp] (m1) {$M_1$};
+  \node[comp, right=of m1] (m2) {$M_2$};
+  \node[ctr, below=1.5mm of m1] (c1) {$(A_1, G_1)$};
+  \node[ctr, below=1.5mm of m2] (c2) {$(A_2, G_2)$};
+  \draw[wire] ($(m1.west)+(-8mm,0)$) -- (m1.west);
+  \draw[wire] (m1.east) -- (m2.west);
+  \draw[wire] (m2.east) -- ++(8mm,0);
+  \begin{scope}[on background layer]
+    \node[enc, fit=(m1)(m2)(c1)(c2)] (sys) {};
+  \end{scope}
+  \node[ctr, below=1.5pt of sys] (lab) {$M_1 \otimes M_2$};
+  \node[font=\small, below=2mm of lab] (cap) {(a) sequential};
+\end{tikzpicture}\hfill
+\begin{tikzpicture}[
+  baseline=(cap.base),
+  comp/.style={draw, minimum width=11mm, minimum height=6mm},
+  ctr/.style={font=\footnotesize, inner sep=1pt},
+  wire/.style={-{Latex[length=1.6mm]}},
+  enc/.style={draw, dashed, gray, rounded corners=2mm, inner sep=2mm},
+  node distance=7mm
+]
+  \node[comp] (m1) {$M_1$};
+  \node[comp, below=of m1] (m2) {$M_2$};
+  \node[ctr, below=1.5mm of m1] (c1) {$(A_1, G_1)$};
+  \node[ctr, below=1.5mm of m2] (c2) {$(A_2, G_2)$};
+  \draw[wire] ($(m1.west)+(-8mm,0)$) -- (m1.west);
+  \draw[wire] (m1.east) -- ++(8mm,0);
+  \draw[wire] ($(m2.west)+(-8mm,0)$) -- (m2.west);
+  \draw[wire] (m2.east) -- ++(8mm,0);
+  \begin{scope}[on background layer]
+    \node[enc, fit=(m1)(m2)(c1)(c2)] (sys) {};
+  \end{scope}
+  \node[ctr, below=1.5pt of sys] (lab) {$M_1 \parallel M_2$};
+  \node[font=\small, below=2mm of lab] (cap) {(b) parallel};
+\end{tikzpicture}\hfill
+\begin{tikzpicture}[
+  baseline=(cap.base),
+  comp/.style={draw, minimum width=11mm, minimum height=6mm},
+  ctr/.style={font=\footnotesize, inner sep=1pt},
+  wire/.style={-{Latex[length=1.6mm]}},
+  enc/.style={draw, dashed, gray, rounded corners=2mm, inner sep=2mm}
+]
+  \node[comp] (m1) at (0,0)       {$M_1$};
+  \node[comp] (m2) at (20mm,10mm) {$M_2$};
+  \node[comp] (m3) at (40mm,0)    {$M_3$};
+  \node[ctr, below=1.5mm of m1] (c1) {$(A_1, G_1)$};
+  \node[ctr, above=1.5mm of m2] (c2) {$(A_2, G_2)$};
+  \node[ctr, below=1.5mm of m3] (c3) {$(A_3, G_3)$};
+  \draw[wire] ($(m1.west)+(-8mm,0)$) -- (m1.west);
+  \draw[wire] (m1) -- (m2);
+  \draw[wire] (m2) -- (m3);
+  \draw[wire] (m1.east) -- (m3.west);
+  \draw[wire] (m3.east) -- ++(8mm,0);
+  \begin{scope}[on background layer]
+    \node[enc, fit=(m1)(m2)(m3)(c1)(c2)(c3)] (sys) {};
+  \end{scope}
+  \node[ctr, below=1.5pt of sys] (lab) {$\triangle(M_1, M_2, M_3)$};
+  \node[font=\small, below=2mm of lab] (cap) {(c) triangle};
+\end{tikzpicture}

@@ -1,0 +1,85 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}\newtheorem{lemma}{Lemma}\newtheorem{proposition}{Proposition}\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}\newtheorem{definition}{Definition}
+\newcommand{\refines}{\preccurlyeq}\newcommand{\comp}{\otimes}\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\ports}{\mathrm{ports}}\newcommand{\inp}{\mathrm{in}}\newcommand{\outp}{\mathrm{out}}
+\setlength{\parskip}{2pt}\setlength{\parindent}{0pt}
+\makeatletter\renewcommand\section{\@startsection{section}{1}{\z@}{6pt}{3pt}{\normalfont\bfseries}}\makeatother
+\begin{document}
+\begin{center}\textbf{Does a local delegation exist, and is proving that easier than finding one?}\\ 18 October 2026\end{center}
+
+\section{Setting: contract operations only}
+Traces are maps $V\times\{0..H\}\to\mathbb R$. Component $i$ reads $\inp(i)$, writes $\outp(i)$, $\ports(i)=\inp(i)\cup\outp(i)$; variables are distinct and each has one writer. A set of traces is a \emph{$W$-cylinder} if membership depends only on the columns of $W$. A contract is a saturated pair $C=(A,G)$ of trace sets, $G\supseteq\neg A$; its implementations are the subsets of $G$. Refinement, composition and quotient are the standard ones~[Benveniste et al.\ 2018; Incer 2022]:
+\[
+C_1\refines C_2 \iff A_1\supseteq A_2,\ G_1\subseteq G_2;\qquad
+C_1\comp C_2=\big((A_1\cap A_2)\cup\neg(G_1\cap G_2),\ G_1\cap G_2\big);\qquad
+C/C_2=\big(A\cap G_2,\ (G\cap A_2)\cup\neg(A\cap G_2)\big),
+\]
+with the adjunction $C_1\comp C_2\refines C\iff C_1\refines C/C_2$. For a column set $W$ write $\pi_W X$ for the smallest $W$-cylinder containing $X$ (existential projection) and $\Pi_W X=\neg\pi_W\neg X$ for the largest one inside $X$.
+
+\begin{lemma}[localisation]\label{lem:loc}
+$\rho_W(C):=(\pi_WA,\ \Pi_WG)$ is a contract over $W$, and it is the $\refines$-greatest contract over $W$ that refines $C$.
+\end{lemma}
+\begin{proof}
+$\neg\pi_WA$ is a $W$-cylinder inside $\neg A\subseteq G$, hence inside $\Pi_WG$: saturated. $\pi_WA\supseteq A$ and $\Pi_WG\subseteq G$: it refines $C$. If $(A',G')$ over $W$ refines $C$ then $A'\supseteq A$ forces $A'\supseteq\pi_WA$ and $G'\subseteq G$ forces $G'\subseteq\Pi_WG$.
+\end{proof}
+
+\begin{definition}
+A \emph{delegation} for a query $P=(A_P,G_P)$ is a family $(C_i)_{i\le n}$ with $C_i$ over $\ports(i)$; it is \emph{valid} if $\comp_iC_i\refines P$. $C_i$ is \emph{receptive} if for every history of $\inp(i)$ some history of $\outp(i)$ lies in $G_i$, and \emph{causal} if that history can be chosen step by step from inputs up to $t-d_i$. A delegation is \emph{acceptable} if valid, receptive and causal.
+\end{definition}
+
+\begin{proposition}[validity alone is empty]
+For every graph and every $P$ a valid delegation exists. If moreover $A_P\cap G_P\neq\emptyset$ and every variable of $G_P$ is a port of some component, a valid delegation with consistent (nonempty) guarantees exists.
+\end{proposition}
+\begin{proof}
+$C_1=(\top,\bot)$, $C_i=(\top,\top)$ for $i>1$: the composition is $(\top,\bot)\refines P$. For the second claim pick $z\in A_P\cap G_P$ and give every component $C_i:=(\top,G_i)$ with $G_i:=\{$traces agreeing with $z$ on $\ports(i)\}$, a nonempty cylinder. Then $\bigcap_iG_i$ is the set of traces agreeing with $z$ on every variable of $G_P$, which lies in $G_P$ because $G_P$ depends only on those variables; so $\comp_iC_i\refines P$. Both delegations are useless: the first has no implementation, the second pins every input to one value and is not receptive.
+\end{proof}
+So the only meaningful question is existence of an \emph{acceptable} delegation. Receptiveness and causality are not contract operations; they are the one place where the port direction enters.
+
+\section{Existence and construction are the same problem}
+\begin{theorem}[closed form of the last component]\label{thm:last}
+Fix contracts $C_1,\dots,C_{n-1}$ over their ports and let $Q_n:=\rho_{\ports(n)}\big(P/\comp_{i<n}C_i\big)$. Then for $C_n$ over $\ports(n)$: $\ \comp_{i\le n}C_i\refines P\iff C_n\refines Q_n$. Consequently an acceptable delegation extending $C_1,\dots,C_{n-1}$ exists iff $Q_n$ is receptive and causal, and then $(C_1,\dots,C_{n-1},Q_n)$ is one.
+\end{theorem}
+\begin{proof}
+By the adjunction, $\comp_{i\le n}C_i\refines P\iff C_n\refines P/\comp_{i<n}C_i$, and since $C_n$ is over $\ports(n)$, by Lemma~\ref{lem:loc} this is $C_n\refines Q_n$. Receptiveness and causality are inherited upward along $\refines$ (the implementation set grows), so if some acceptable $C_n$ exists then $Q_n$ is acceptable.
+\end{proof}
+
+\begin{corollary}[maximal delegations in one sweep]
+If $(C_i)$ is valid, replacing $C_1,\dots,C_n$ in turn by $Q_i:=\rho_{\ports(i)}(P/\comp_{j\ne i}C_j)$ (each with the current values of the others) keeps validity, never shrinks any contract, and after one pass every $C_i$ equals its own $Q_i$: the result is a $\refines$-maximal valid delegation above the given one. Acceptability is preserved.
+\end{corollary}
+\begin{proof}
+Validity and $C_i\refines Q_i$ are Theorem~\ref{thm:last} with $i$ in the role of $n$. After the pass, recomputing $Q_i$ with the final others gives a contract $\succcurlyeq C_i$ (validity) and $\refines$ the $Q_i$ that was assigned (the others only grew, so the quotient only shrank); hence equality.
+\end{proof}
+
+\textbf{Answer to the first question.} Existence is not easier than construction. By Theorem~\ref{thm:last}, a certificate that an acceptable delegation exists is a tuple of $n-1$ local contracts, and the $n$-th is the closed form $Q_n$: one quotient and one localisation. Conversely a solution certifies existence. For the \emph{last} component the two problems coincide exactly. For the first $n-1$ components both problems are the same search, described next; there is no general existence theorem to prove, because existence fails for some $(\text{graph},P)$ (Theorem~\ref{thm:exist}(c)).
+
+\section{When an acceptable delegation exists}
+A \emph{distributed strategy} is a family of functions $f_i$ from histories of $\inp(i)$ to histories of $\outp(i)$, each causal for $d_i$, with $A_P\wedge\bigwedge_i(\outp(i)=f_i(\inp(i)))\models G_P$. The existence of one is the statement $\exists f_1\cdots\exists f_n\,\forall\text{env}.\,(A_P\to G_P)$ in which $f_i$ may read only $\inp(i)$: a branching (Henkin) quantifier, not a first-order prefix, unless the information sets are nested along the graph.
+
+\begin{theorem}\label{thm:exist}
+Let contracts be PolySTL over a bounded horizon, so every $A_i,G_i$ is a finite union of polyhedra in column space.
+\begin{enumerate}[label=(\alph*)]
+\item If an acceptable delegation exists then a distributed strategy exists. In particular $P$ is \emph{centrally realizable}: for every environment history in $A_P$ some outputs satisfy $G_P$, and they can be chosen step by step with the delays (one function of the whole environment, causal).
+\item If a distributed strategy exists whose graphs are PolySTL-definable (piecewise affine), then $C_i:=(\top,\ \mathrm{graph}(f_i))$ is an acceptable delegation, and the sweep of the Corollary turns it into a maximal one.
+\item The converse of (a) fails: there are $(\text{graph},P)$ with a distributed strategy but no acceptable PolySTL delegation.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(a) Receptiveness and causality give, for each $i$, a causal $f_i$ with $\mathrm{graph}(f_i)\subseteq G_i$. Any trace produced by the $f_i$ from an environment in $A_P$ lies in $A_P\cap\bigcap_iG_i$, hence in $G_P$ by validity ($\bigcap_iG_i\subseteq\neg A_P\cup G_P$).
+(b) $\bigcap_i\mathrm{graph}(f_i)\cap A_P\subseteq G_P$ is the defining property, so $\comp_iC_i=(\top\cup\neg\bigcap,\bigcap)\refines P$; each $C_i$ is over $\ports(i)$, receptive and causal because $f_i$ is a causal function.
+(c) Take a component $U$ whose private inputs $x\in\mathbb R^k$ are read by no one else, one edge variable $m\in\mathbb R$ from $U$ to $D$ ($k\ge2$, delay $0$, $H=0$), and $G_P$ requiring $D$'s outputs to equal $x$ exactly. A set-theoretic bijection $\mathbb R^k\to\mathbb R$ composed with its inverse is a distributed strategy. In any acceptable PolySTL delegation $G_U$ is a finite union of polyhedra in $(x,m)$, and $D$ must recover $x$ from $m$, so on $G_U\cap(\text{inputs})$ the map $x\mapsto m$ must be injective; but a semilinear relation that is a function on a $k$-dimensional set is affine on a $k$-dimensional piece, and an affine map $\mathbb R^k\to\mathbb R$ is not injective.
+\end{proof}
+
+\begin{theorem}[pipelines: existence equals central realizability]\label{thm:pipe}
+Let the support of $G_P$ be a path $i_1\to\cdots\to i_p$ with delays $0$, let $i_1$ alone read environment variables, and let every edge $i_k\to i_{k+1}$ carry at least as many variables as the number of columns private to $i_k$ (its inputs and outputs read by no later component). Then an acceptable PolySTL delegation exists iff $P$ is centrally realizable, and one is obtained by forwarding ($G_{i_k}$: the edge equals an injective affine image of the private columns) followed by $Q_{i_p}$ of Theorem~\ref{thm:last}.
+\end{theorem}
+\begin{proof}
+``Only if'' is Theorem~\ref{thm:exist}(a). ``If'': the forwarding contracts are PolySTL (affine equalities over the component's ports), receptive and causal. The forwarding maps are injective, so every later component can reconstruct all earlier private columns, and $Q_{i_p}$ of Theorem~\ref{thm:last} asks $i_p$, on each input it can receive, exactly what the central problem asks on the reconstructed environment. Hence $Q_{i_p}$ is receptive and causal iff $P$ is centrally realizable, and the delegation is valid by Theorem~\ref{thm:last}.
+\end{proof}
+
+\textbf{Answer to the second question.} Local contracts whose composition refines the query exist for every query, but only vacuous ones. Acceptable ones exist exactly when a distributed strategy with PolySTL-definable graphs exists (Theorem~\ref{thm:exist}); this is strictly stronger than the existence of some distributed strategy, which is in turn strictly stronger than central realizability (information forks). On pipelines with enough edge capacity the three coincide and the construction is one quotient and one localisation per component (Theorem~\ref{thm:pipe}). Off pipelines, deciding existence is the branching-quantifier problem above; a decision for a given instance is a construction, and I claim no general decision procedure.
+\end{document}

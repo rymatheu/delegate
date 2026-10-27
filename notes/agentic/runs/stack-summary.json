@@ -1,0 +1,20 @@
+[
+ {
+  "run": 1,
+  "accepted": true,
+  "rounds": 1,
+  "model_calls": 3
+ },
+ {
+  "run": 2,
+  "accepted": true,
+  "rounds": 3,
+  "model_calls": 9
+ },
+ {
+  "run": 3,
+  "accepted": true,
+  "rounds": 2,
+  "model_calls": 6
+ }
+]

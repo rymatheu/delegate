@@ -1,0 +1,50 @@
+[
+ {
+  "run": 1,
+  "accepted": true,
+  "rounds": 1,
+  "model_calls": 3,
+  "inside_maximal": {
+   "Perception": true,
+   "Controller": false,
+   "Actuator": false
+  },
+  "contains_maximal": {
+   "Perception": false,
+   "Controller": false,
+   "Actuator": false
+  }
+ },
+ {
+  "run": 2,
+  "accepted": true,
+  "rounds": 1,
+  "model_calls": 3,
+  "inside_maximal": {
+   "Perception": true,
+   "Controller": false,
+   "Actuator": false
+  },
+  "contains_maximal": {
+   "Perception": false,
+   "Controller": false,
+   "Actuator": false
+  }
+ },
+ {
+  "run": 3,
+  "accepted": true,
+  "rounds": 1,
+  "model_calls": 3,
+  "inside_maximal": {
+   "Perception": true,
+   "Controller": false,
+   "Actuator": false
+  },
+  "contains_maximal": {
+   "Perception": false,
+   "Controller": false,
+   "Actuator": false
+  }
+ }
+]

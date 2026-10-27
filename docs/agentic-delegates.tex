@@ -1,0 +1,54 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.6cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\pagestyle{empty}
+\newcommand{\ninf}[1]{\lVert #1\rVert_\infty}
+\begin{document}
+{\Large\bfseries Delegates found by the proposer agents, 27 October 2026}
+
+\textbf{Instance.} Planner input $u=(s,h,g)$ with square fence $[-s,s]^2$, home $h$, goal $g$. Mission $w=(w_1,w_2)$. Environment $e=(p_0,dt)$ with start $p_0$ and tick lengths $dt_t$. Controller targets $y_t$ for $t=0,\dots,8$. Top-level contract $A=\{25\le s\le50,\ \ninf{h}\le s-3,\ \ninf{g}\le s+\tfrac12,\ \ninf{p_0-h}\le1,\ \forall t\ dt_t\in[0.9,1.1]\}$ and $G=\{\forall t\ y_t\in[-s,s]^2\}\cap\{\exists t\ \lVert y_t-g\rVert\le3\}$. Conditions checked: D1 $A\subseteq A_1$, D2 $G_1\subseteq A_2$, D3 $A\cap G_1\cap A_2\cap G_2\subseteq G$, R $\forall u\in A_1\,\exists w\,G_1(u,w)$, then C1 planner R4 $\models(A_1,G_1)$ and C2 controller $\models(A_2,G_2)$. Every pair below passed all six.
+
+\textbf{Shared by all three.} $A_1=\{25\le s\le50,\ \ninf{h}\le s-3,\ \ninf{g}\le s+\tfrac12\}$, the part of $A$ about $u$. $A_2=V=\{5\le\ninf{w_2-w_1}\le100,\ \ninf{w_1}\le100,\ \ninf{w_2}\le100\}$, the controller's input guards. $P=\{5\le\ninf{w_1-p_0}\le100,\ \ninf{p_0}\le100,\ \forall t\ dt_t\in[\tfrac12,\tfrac32]\}$, the controller's clamps. Each $G_2$ has the form $\lnot P\cup(\text{tube}\cap\text{reach})$ and each $G_1$ has the form $V\cap(\lnot A_1\cup M)$ with $M$ the mission margins listed.
+
+\textbf{Proposer A (tightest from code; 2 rounds, 6 min).}
+\[
+\text{tube}_A:\ \forall t\,\forall k\in\{x,y\}\quad \min(p_{0,k},w_{1,k},w_{2,k}-1)\le y_{t,k}\le\max(p_{0,k},w_{1,k},w_{2,k}+1),\qquad \text{reach}_A:\ \exists t\ y_t=w_2 .
+\]
+\[
+M_A:\ 6\le\ninf{w_1-h}\le99,\quad \ninf{h}\le s-1,\quad \ninf{w_1}\le s,\quad \ninf{w_2}\le s-1,\quad \lVert w_2-g\rVert^2\le9 .
+\]
+Offset $0.99$ in place of $1$ fails C2 with a blend-tick target $0.9967$ m past $w_2$, so the offset is tight.
+
+\textbf{Proposer B (coarse then tighten; 3 rounds, 9 min), with $\rho=\tfrac54$.}
+\[
+\text{tube}_B:\ \forall t\ \ y_t\in\mathrm{bbox}(p_0,w_1,w_2)\oplus[-1,1]^2,\qquad \text{reach}_B:\ \exists t\ \lVert y_t-w_2\rVert\le\tfrac12 .
+\]
+\[
+M_B:\ 6\le\ninf{w_1-h}\le99,\quad \ninf{h}\le s-\rho-1,\quad \ninf{w_1}\le s-\rho,\quad \ninf{w_2}\le s-\rho,\quad \lVert w_2-g\rVert\le\tfrac52 .
+\]
+Phase 1 passes for $\rho\in[1,1.2675]$. Below $1$ the grown box leaves the fence (D3 fails at $s=26$, $h=(-22,-22)$, $g=(0,0)$); above $1.2678$ a goal near a corner has no mission (R fails at $s=25$, $g=(-25.50,25.5)$).
+
+\textbf{Proposer C (corner-shaped; 1 round, 4 min).}
+\[
+\text{tube}_C:\ \forall t\ \ y_t\in\mathrm{box}(p_0,w_1)\ \cup\ \mathrm{box}(w_1,w_2)^{+},\qquad \text{reach}_C:\ \exists t\ y_t=w_2,
+\]
+where $\mathrm{box}(w_1,w_2)^{+}$ is $\mathrm{box}(w_1,w_2)$ grown, on each axis $k$ and only on the side facing $p_0$, by $\min(1,\max(0,p_{0,k}-w_{1,k})/2)$.
+\[
+M_C:\ 6\le\ninf{w_1-h}\le99,\quad \ninf{w_1}\le s,\quad \ninf{w_2}\le s-1,\quad \lVert w_2-g\rVert^2\le9 .
+\]
+
+\textbf{Against the algorithmic delegates} (uniform tube of radius $1$ around both legs, reach within $\tfrac12$, margins $\ninf{w_1}\le s-1$, $\ninf{w_2}\le s-1$, $\ninf{h}\le s-2$ and $\lVert w_2-g\rVert\le\tfrac52$): A and C drop the margin on $w_1$ and widen the goal tolerance to $3$, because the handover code moves the target back along leg 1 by less than $1$ m and lands exactly on $w_2$; B is coarser on the controller side and faster to discharge.
+
+\begin{center}\small
+\begin{tabular}{lcccccc}\toprule
+check & D1 & D2 & D3 & R & C1 (R4) & C2 \\\midrule
+A & 0.03 s & 1.4 s & 5.7 s & 0.3 s & 0.6 s & 38.7 s \\
+B & 0.04 s & 1.8 s & 6.6 s & 0.5 s & 0.7 s & 18.9 s \\
+C & 0.03 s & 1.3 s & 7.6 s & 0.5 s & 0.5 s & 41.4 s \\\bottomrule
+\end{tabular}
+\end{center}
+
+Files: proposals in notes/agentic-run/proposer-\{A,B,C\}/, checker in scripts/agentic/. Rerun any pair with the checker and the option \texttt{--phase2}.
+\end{document}

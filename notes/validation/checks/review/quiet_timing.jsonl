@@ -1,0 +1,20 @@
+{"H": 8, "jstar": 3, "certified": true, "reach": "unsat", "step2_total": 12.75, "wall": 12.75, "checks": [[8, "unsat", 3.46], [4, "unsat", 3.53], [2, "sat", 0.24], [3, "unsat", 3.57]], "planner": "pass", "planner_time": 0.457}
+{"mode": "last", "status": "accept", "paths": 360, "time": 12.589961051940918, "prop_calls": 1938, "prop_time": 3.9861936569213867, "max_prop": 0.07690811157226562, "H": 8, "rev": 4}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 12.258908987045288, "prop_calls": 720, "prop_time": 3.7093615531921387, "max_prop": 0.09324502944946289, "H": 8, "rev": 4}
+{"H": 4, "jstar": 3, "certified": false, "reach": "sat", "step2_total": 8.73, "wall": 8.73, "checks": [[8, "unsat", 2.73], [4, "unsat", 2.84], [2, "sat", 0.21], [3, "unsat", 2.84]], "planner": "pass", "planner_time": 0.321}
+{"mode": "last", "status": "accept", "paths": 360, "time": 9.37294316291809, "prop_calls": 1938, "prop_time": 3.63741397857666, "max_prop": 0.050332069396972656, "H": 4, "rev": 4}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 9.245939016342163, "prop_calls": 720, "prop_time": 3.6012556552886963, "max_prop": 0.08043289184570312, "H": 4, "rev": 4}
+{"H": 16, "jstar": 3, "certified": true, "reach": "unsat", "step2_total": 19.45, "wall": 19.45, "checks": [[8, "unsat", 5.97], [4, "unsat", 4.87], [2, "sat", 0.41], [3, "unsat", 4.91]], "planner": "pass", "planner_time": 0.476}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 17.952957153320312, "prop_calls": 720, "prop_time": 3.418264865875244, "max_prop": 0.0691981315612793, "H": 16, "rev": 4}
+{"H": 32, "jstar": 3, "certified": true, "reach": "unsat", "step2_total": 30.96, "wall": 30.97, "checks": [[8, "unsat", 7.76], [4, "unsat", 7.81], [2, "sat", 0.71], [3, "unsat", 8.31]], "planner": "pass", "planner_time": 0.399}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 32.41434073448181, "prop_calls": 720, "prop_time": 3.96213436126709, "max_prop": 0.07258987426757812, "H": 32, "rev": 4}
+{"mode": "lastor", "status": "reject", "why": "fence", "tick": null, "paths": 1, "time": 0.035430908203125, "prop_calls": 1, "prop_time": 0.00038886070251464844, "max_prop": 0.00038886070251464844, "H": 8, "rev": 1}
+{"status": "reject", "why": "fence", "tick": 2, "paths": 1, "queries": 3, "time": 0.03758120536804199, "mode": "orig", "H": 8, "rev": 1}
+{"mode": "lastor", "status": "reject", "why": "goal", "tick": null, "paths": 2, "time": 0.06920313835144043, "prop_calls": 13, "prop_time": 0.012231111526489258, "max_prop": 0.004030942916870117, "H": 8, "rev": 2}
+{"status": "reject", "why": "goal", "paths": 2, "queries": 6, "time": 0.06325316429138184, "mode": "orig", "H": 8, "rev": 2}
+{"mode": "lastor", "status": "reject", "why": "fence", "tick": null, "paths": 1, "time": 0.033119916915893555, "prop_calls": 1, "prop_time": 0.0005462169647216797, "max_prop": 0.0005462169647216797, "H": 8, "rev": 3}
+{"status": "reject", "why": "fence", "tick": 2, "paths": 1, "queries": 3, "time": 0.03306698799133301, "mode": "orig", "H": 8, "rev": 3}
+{"H": 8, "jstar": 3, "certified": true, "reach": "unsat", "step2_total": 13.43, "wall": 13.43, "checks": [[8, "unsat", 3.65], [4, "unsat", 3.72], [2, "sat", 0.26], [3, "unsat", 3.75]], "planner": "pass", "planner_time": 0.476}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 12.795178174972534, "prop_calls": 720, "prop_time": 3.8061461448669434, "max_prop": 0.09560394287109375, "H": 8, "rev": 4}
+{"H": 8, "jstar": 3, "certified": true, "reach": "unsat", "step2_total": 13.41, "wall": 13.41, "checks": [[8, "unsat", 3.64], [4, "unsat", 3.72], [2, "sat", 0.25], [3, "unsat", 3.74]], "planner": "pass", "planner_time": 0.476}
+{"mode": "lastor", "status": "accept", "paths": 360, "time": 12.76680588722229, "prop_calls": 720, "prop_time": 3.8143277168273926, "max_prop": 0.0954899787902832, "H": 8, "rev": 4}
