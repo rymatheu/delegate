@@ -1,0 +1,22 @@
+# Figure-eight course for the Lean flight controller on the CF2X. Pass it after cf2x.txt:
+#   run_demo.py --params params/cf2x.txt --params params/cf2x-course.txt
+# Two diamonds of 1.25 m half-diagonal that meet over the origin, flown as one lap: the first lobe
+# turns left and climbs from 0.8 m to 1.4 m, the leg through the crossing climbs to 1.6 m, and the
+# second lobe turns right and descends back to 0.8 m over the start. Waypoints are NED meters; the
+# stored yaw is the heading of the leg that arrives at the waypoint (radians), and the vehicle faces
+# along the path (nav.yawAlongPath 1), so it turns through every corner.
+mission.clear
+waypoint 0 0 -0.8 0.7853981633974483
+waypoint 1.25 1.25 -1.0 0.7853981633974483
+waypoint 0 2.5 -1.2 2.356194490192345
+waypoint -1.25 1.25 -1.4 -2.356194490192345
+waypoint 1.25 -1.25 -1.6 -0.7853981633974483
+waypoint 0 -2.5 -1.4 -2.356194490192345
+waypoint -1.25 -1.25 -1.1 2.356194490192345
+waypoint 0 0 -0.8 0.7853981633974483
+nav.acceptRadius 0.05
+nav.wpSpeed 1.0
+nav.wpAccel 1.5
+nav.cornerRadius 0.3
+nav.yawAlongPath 1
+pos.maxSpeedXY 1.5           # cf2x.txt 1.0; room for the correction on top of the 1 m/s feed-forward

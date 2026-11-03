@@ -1,0 +1,65 @@
+# Crazyflie CF2X (gym-pybullet-drones, PYB physics, 120 Hz control) parameters for the Lean flight
+# controller. Read by `flight --params`; one `key value...` per line, keys name fields of
+# Flight.Controller.Params (see Flight/Main.lean, applyKey); `#` starts a comment. Every field is
+# listed, including those left at the library default (marked "default").
+
+# Mission (NED meters, yaw radians): climb to 1 m, fly 2 m north, then 2 m east while turning to
+# face east. The navigator starts along the path once within nav.acceptRadius of the first waypoint.
+waypoint 0 0 -1 0
+waypoint 2 0 -1 0
+waypoint 2 2 -1 1.5707963267948966
+nav.acceptRadius 0.05
+nav.wpSpeed 1.0              # default 5.0
+nav.wpAccel 1.5              # default 2.5
+nav.cornerRadius 0.3         # default 1.0
+nav.yawAlongPath 0           # default; hold the yaw stored with each waypoint
+
+# Position loop (P on position, PID on velocity, outputs acceleration).
+pos.posGainXY 1.0            # default
+pos.posGainZ 1.5             # default 1.0
+pos.maxSpeedXY 1.0           # default 5.0; a 2 m leg for a 27 g vehicle
+pos.maxSpeedZ 1.0            # default 2.5
+pos.velXY.kp 3.0             # default 2.0
+pos.velXY.ki 0.5             # default 1.0; less integrator overshoot at the end of a leg
+pos.velXY.kd 0.25            # default
+pos.velXY.iMax 2.0           # default
+pos.velZ.kp 4.0              # default
+pos.velZ.ki 2.0              # default
+pos.velZ.kd 0.0              # default
+pos.velZ.iMax 3.0            # default
+pos.maxAccelXY 3.0           # default 5.0
+pos.maxAccelZ 3.0            # default 5.0
+
+# Thrust and attitude target. run_demo.py maps a motor command m to thrust m * T_max (rpm =
+# sqrt(m T_max / kf)), and the CF2X thrust-to-weight ratio is 2.25, so hover is 1 / 2.25.
+target.gravity 9.8                       # default 9.80665; the simulator uses 9.8
+target.hoverThrottle 0.4444444444444444  # default 0.5
+target.maxLean 0.35                      # default 0.5236 (30 deg); 20 deg keeps margin to 30
+
+# Angle loops (P, outputs body-rate setpoints).
+att.rollGain 8.0             # default 4.5
+att.pitchGain 8.0            # default 4.5
+att.yawGain 4.5              # default
+att.maxRollPitchRate 3.5     # default
+att.maxYawRate 1.57          # default
+
+# Body-rate loops (PID, outputs normalized torque). The default kd 0.0036 is unstable on this
+# vehicle at 120 Hz (see README); kd is zero here.
+rate.roll.kp 0.135           # default
+rate.roll.ki 0.135           # default
+rate.roll.kd 0.0             # default 0.0036
+rate.roll.iMax 0.5           # default
+rate.pitch.kp 0.135          # default
+rate.pitch.ki 0.135          # default
+rate.pitch.kd 0.0            # default 0.0036
+rate.pitch.iMax 0.5          # default
+rate.yaw.kp 0.2              # default
+rate.yaw.ki 0.02             # default
+rate.yaw.kd 0.0              # default
+rate.yaw.iMax 0.5            # default
+
+# Mixer: quad X factors (roll, pitch, yaw) per motor, all defaults.
+mixer.f1 -0.5 0.5 0.5
+mixer.f2 0.5 -0.5 0.5
+mixer.f3 0.5 0.5 -0.5
+mixer.f4 -0.5 -0.5 -0.5

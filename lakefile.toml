@@ -1,0 +1,23 @@
+name = "delegate"
+defaultTargets = ["Contracts", "FloatModel", "Flight", "flight"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.0-rc1"
+
+[[lean_lib]]
+name = "FloatModel"
+globs = ["FloatModel.+"]
+
+[[lean_lib]]
+name = "Flight"
+globs = ["Flight.+"]
+
+[[lean_lib]]
+name = "Contracts"
+roots = ["Contracts"]
+
+[[lean_exe]]
+name = "flight"
+root = "Flight.Main"

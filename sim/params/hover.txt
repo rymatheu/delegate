@@ -1,0 +1,4 @@
+# Hover-recovery test mission: hold 1 m above the origin, facing north. Pass it after cf2x.txt:
+#   run_demo.py --params params/cf2x.txt --params params/hover.txt --init-ned 0 0 -1 --init-euler 25 -15 30
+mission.clear
+waypoint 0 0 -1 0
