@@ -305,12 +305,280 @@ static bool set_harness_param(HarnessParams &h, const std::string &name, float v
 }
 
 // ---------------------------------------------------------------------------------------------
+// --bench (oracle/bench.py, BENCH.md): the execution time of one control tick, without parsing or
+// printing. All inputs and navigator targets are parsed first; every pass builds fresh objects
+// (construction, parameters copied from the reference objects of main(), boot, takeover on the first
+// sample: all untimed), then times only the per-tick cascade of the loop in main() (scheduler and
+// gyro, rate controller, motors output, AHRS view, estimates, first-tick Auto entry, AutoYaw,
+// position controller, attitude controller) with std::chrono::steady_clock. WARMUP untimed passes,
+// then PASSES passes timed around the whole tick loop and PASSES passes timed per tick. The
+// checksum, the XOR of the 4 actuator bit patterns over all ticks of a pass, is printed so the work
+// cannot be optimized away; it is the same for every pass and equals the port's (Copter/Bench.lean).
+
+#include <chrono>
+#include <algorithm>
+#include <cmath>
+
+struct BenchNav {
+    Vector3p pos;
+    Vector3f vel, acc;
+};
+
+static void copy_param(const ParamRef &dst, const ParamRef &src)
+{
+    switch (src.type) {
+    case AP_PARAM_INT8: ((AP_Int8 *)dst.ptr)->set(((AP_Int8 *)src.ptr)->get()); break;
+    case AP_PARAM_INT16: ((AP_Int16 *)dst.ptr)->set(((AP_Int16 *)src.ptr)->get()); break;
+    case AP_PARAM_INT32: ((AP_Int32 *)dst.ptr)->set(((AP_Int32 *)src.ptr)->get()); break;
+    case AP_PARAM_FLOAT: ((AP_Float *)dst.ptr)->set(((AP_Float *)src.ptr)->get()); break;
+    default: break;
+    }
+}
+
+// AP_MotorsMatrix's constructor panics if its private static _singleton is set (AP_MotorsMatrix.h:20-24);
+// a fresh object per pass needs it cleared. An explicit instantiation may name a private member
+// ([temp.explicit]), which gives the harness its address without editing ArduPilot code.
+struct BenchMotorsSingleton {
+    typedef AP_MotorsMatrix **type;
+    friend type bench_get(BenchMotorsSingleton);
+};
+template <typename Tag, typename Tag::type M> struct BenchRob {
+    friend typename Tag::type bench_get(Tag) { return M; }
+};
+template struct BenchRob<BenchMotorsSingleton, &AP_MotorsMatrix::_singleton>;
+
+static int run_bench(const std::vector<ParamRef> &ref, const HarnessParams &h,
+                     const std::vector<std::vector<std::string>> &navtxt, long hold_from, int warmup, int passes)
+{
+    using clk = std::chrono::steady_clock;
+    // ---- parse everything first
+    const clk::time_point tp0 = clk::now();
+    std::vector<Sample> smps;
+    {
+        std::string line;
+        while (std::getline(std::cin, line)) {
+            if (line.find_first_not_of(" \t\r\n") == std::string::npos) {
+                continue;
+            }
+            Sample smp;
+            if (!parse_sample(line, smp)) {
+                fprintf(stderr, "oracle: bad input line %zu\n", smps.size() + 1);
+                return 1;
+            }
+            smps.push_back(smp);
+        }
+    }
+    if (smps.empty() || navtxt.size() < smps.size()) {
+        fprintf(stderr, "oracle: no input, or navigator trace shorter than the input\n");
+        return 1;
+    }
+    std::vector<BenchNav> nav(smps.size());
+    for (size_t i = 0; i < smps.size(); i++) {
+        const std::vector<std::string> &n = navtxt[i];
+        nav[i].pos = Vector3p(strtod(n[0].c_str(), nullptr), strtod(n[1].c_str(), nullptr), strtod(n[2].c_str(), nullptr));
+        nav[i].vel = Vector3f(strtof(n[3].c_str(), nullptr), strtof(n[4].c_str(), nullptr), strtof(n[5].c_str(), nullptr));
+        nav[i].acc = Vector3f(strtof(n[6].c_str(), nullptr), strtof(n[7].c_str(), nullptr), strtof(n[8].c_str(), nullptr));
+    }
+    const size_t N = smps.size();
+    const int64_t parse_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(clk::now() - tp0).count();
+
+    // one pass; per_tick != nullptr: time every tick into it; returns the checksum, *total_ns the loop
+    auto pass = [&](std::vector<int64_t> *per_tick, int64_t *total_ns) -> uint32_t {
+        // ---- untimed: fresh objects and globals, parameters, boot, takeover (as main())
+        oracle_scheduler._tick_counter32 = 0;
+        oracle_scheduler._tick_counter = 0;
+        oracle_scheduler._last_loop_time_s = 0.0f;
+        oracle_micros = 0;
+        oracle_ahrs.sample = AP_AHRS::Sample();
+        *bench_get(BenchMotorsSingleton()) = nullptr;
+        OracleMotors *motors = new OracleMotors(oracle_scheduler.get_loop_rate_hz());
+        AP_AHRS_View *ahrs_view = new AP_AHRS_View(oracle_ahrs, ROTATION_NONE);
+        AC_AttitudeControl_Multi *attitude_control = new AC_AttitudeControl_Multi(*ahrs_view, *motors);
+        OraclePosControl *pos_control = new OraclePosControl(*ahrs_view, *motors, *attitude_control);
+        std::vector<ParamRef> mine;
+        collect_params(mine, "ATC_", attitude_control, AC_AttitudeControl_Multi::var_info);
+        collect_params(mine, "PSC", pos_control, AC_PosControl::var_info);
+        collect_params(mine, "MOT_", motors, AP_MotorsMatrix::var_info);
+        for (size_t i = 0; i < mine.size(); i++) {
+            copy_param(mine[i], ref[i]);
+        }
+        motors->init(AP_Motors::MOTOR_FRAME_QUAD, AP_Motors::MOTOR_FRAME_TYPE_X);
+        motors->armed(true);
+        motors->set_interlock(true);
+        motors->set_desired_spool_state(AP_Motors::DesiredSpoolState::THROTTLE_UNLIMITED);
+        motors->force_spool_state_throttle_unlimited();
+        enum class YawMode { HOLD, LOOK_AT_NEXT_WP } yaw_mode = YawMode::LOOK_AT_NEXT_WP;
+        float yaw_angle_rad = 0.0f;
+        bool in_auto = false;
+        {
+            const Sample &smp = smps[0];
+            oracle_ahrs.sample.pos_ned = smp.pos;
+            oracle_ahrs.sample.vel_ned = smp.vel;
+            oracle_ahrs.sample.accel_ef = smp.accel_ef;
+            oracle_ahrs.sample.quat = smp.quat;
+            oracle_ahrs.sample.gyro = smp.gyro;
+            ahrs_view->update();
+            attitude_control->relax_attitude_controllers();
+            if (h.start_hover) {
+                const float hover = motors->get_throttle_hover();
+                attitude_control->set_throttle_out(hover, true, POSCONTROL_THROTTLE_CUTOFF_FREQ_HZ);
+                motors->preset_throttle_filter();
+            }
+        }
+        uint32_t ck = 0;
+        const clk::time_point t_start = clk::now();
+        for (size_t k = 0; k < N; k++) {
+            const clk::time_point t0 = per_tick ? clk::now() : clk::time_point();
+            const Sample &smp = smps[k];
+            const long tick = (long)k + 1;
+            // ---- the cascade of main()'s loop, verbatim but for the printing and the clamp counts
+            const bool first_tick = oracle_scheduler._tick_counter32 == 0;
+            oracle_scheduler._tick_counter32++;
+            oracle_scheduler._tick_counter++;
+            oracle_micros += smp.dt_us;
+            oracle_scheduler._last_loop_time_s = first_tick ? 1.0f / 400.0f : float(smp.dt_us) * 1.0e-6f;
+            oracle_ahrs.sample.gyro = smp.gyro;
+            const float last_loop_time_s = AP::scheduler().get_last_loop_time_s();
+            pos_control->set_dt_s(last_loop_time_s);
+            attitude_control->set_dt_s(last_loop_time_s);
+            motors->set_dt_s(last_loop_time_s);
+            attitude_control->rate_controller_run();
+            attitude_control->rate_controller_target_reset();
+            oracle_ahrs.sample.air_density_ratio = h.air_density_ratio;
+            motors->output();
+            uint32_t a[4];
+            for (int i = 0; i < 4; i++) {
+                const float f = motors->actuator(i);
+                memcpy(&a[i], &f, 4);
+            }
+            oracle_ahrs.sample.pos_ned = smp.pos;
+            oracle_ahrs.sample.vel_ned = smp.vel;
+            oracle_ahrs.sample.accel_ef = smp.accel_ef;
+            oracle_ahrs.sample.quat = smp.quat;
+            ahrs_view->update();
+            pos_control->update_estimates(false);
+            const float wp_accel = is_positive(h.WP_ACC) ? h.WP_ACC : 2.5f;
+            if (!in_auto) {
+                const float wp_speed = MAX(h.WP_SPD, 0.01f);
+                const float wp_desired_speed_ne_ms = MAX(wp_speed, 0.01f);
+                pos_control->D_init_controller_stopping_point();
+                pos_control->NE_init_controller_stopping_point();
+                pos_control->NE_set_max_speed_accel_m(wp_desired_speed_ne_ms, wp_accel);
+                pos_control->NE_set_correction_speed_accel_m(wp_desired_speed_ne_ms, wp_accel);
+                pos_control->D_set_max_speed_accel_m(fabsf(h.WP_SPD_DN), h.WP_SPD_UP, h.WP_ACC_Z);
+                pos_control->D_set_correction_speed_accel_m(fabsf(h.WP_SPD_DN), h.WP_SPD_UP, h.WP_ACC_Z);
+                attitude_control->set_roll_pitch_rate_tc(h.ACRO_RP_RATE_TC);
+                attitude_control->set_yaw_rate_tc(h.PILOT_Y_RATE_TC);
+                in_auto = true;
+            }
+            if (hold_from > 0 && tick == hold_from && yaw_mode != YawMode::HOLD) {
+                yaw_mode = YawMode::HOLD;
+                yaw_angle_rad = attitude_control->get_att_target_euler_rad().z;
+            }
+            pos_control->set_pos_terrain_target_D_m(0.0f);
+            pos_control->set_pos_vel_accel_NED_m(nav[k].pos, nav[k].vel, nav[k].acc);
+            pos_control->NE_update_controller();
+            pos_control->D_update_controller();
+            AC_AttitudeControl::HeadingCommand heading;
+            if (yaw_mode == YawMode::LOOK_AT_NEXT_WP) {
+                yaw_angle_rad = pos_control->get_yaw_rad();
+                heading.yaw_angle_rad = yaw_angle_rad;
+                heading.yaw_rate_rads = pos_control->get_yaw_rate_rads();
+                heading.heading_mode = AC_AttitudeControl::HeadingMode::Angle_And_Rate;
+            } else {
+                yaw_angle_rad = attitude_control->get_att_target_euler_rad().z;
+                heading.yaw_angle_rad = yaw_angle_rad;
+                heading.yaw_rate_rads = 0.0f;
+                heading.heading_mode = AC_AttitudeControl::HeadingMode::Rate_Only;
+            }
+            attitude_control->input_thrust_vector_heading(pos_control->get_thrust_vector(), heading);
+            ck ^= a[0] ^ a[1] ^ a[2] ^ a[3];
+            if (per_tick) {
+                const clk::time_point t1 = clk::now();
+                (*per_tick)[k] = std::chrono::duration_cast<std::chrono::nanoseconds>(t1 - t0).count();
+            }
+        }
+        const clk::time_point t_end = clk::now();
+        *total_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(t_end - t_start).count();
+        // the objects are left allocated (no virtual destructors are relied on; 43 passes)
+        return ck;
+    };
+
+    int64_t tot = 0;
+    uint32_t ck0 = 0;
+    bool ck_same = true;
+    for (int i = 0; i < warmup; i++) {
+        const uint32_t c = pass(nullptr, &tot);
+        if (i == 0) ck0 = c;
+        ck_same = ck_same && c == ck0;
+    }
+    std::vector<double> pass_mean;
+    std::vector<int64_t> totals;
+    for (int i = 0; i < passes; i++) {
+        const uint32_t c = pass(nullptr, &tot);
+        if (warmup == 0 && i == 0) ck0 = c;
+        ck_same = ck_same && c == ck0;
+        totals.push_back(tot);
+        pass_mean.push_back((double)tot / N);
+    }
+    std::vector<int64_t> all, one(N);
+    std::vector<double> timed_mean;
+    for (int i = 0; i < passes; i++) {
+        const uint32_t c = pass(&one, &tot);
+        ck_same = ck_same && c == ck0;
+        all.insert(all.end(), one.begin(), one.end());
+        int64_t s = 0;
+        for (int64_t v : one) s += v;
+        timed_mean.push_back((double)s / N);
+    }
+    // timer overhead: two consecutive reads
+    std::vector<int64_t> ovh(100000);
+    for (auto &v : ovh) {
+        const clk::time_point a = clk::now();
+        const clk::time_point b = clk::now();
+        v = std::chrono::duration_cast<std::chrono::nanoseconds>(b - a).count();
+    }
+    auto mean_sd = [](const std::vector<double> &x, double &m, double &sd) {
+        m = 0;
+        for (double v : x) m += v;
+        m /= x.size();
+        sd = 0;
+        for (double v : x) sd += (v - m) * (v - m);
+        sd = x.size() > 1 ? sqrt(sd / (x.size() - 1)) : 0;
+    };
+    double m, sd, tm, tsd;
+    mean_sd(pass_mean, m, sd);
+    mean_sd(timed_mean, tm, tsd);
+    std::sort(all.begin(), all.end());
+    std::sort(ovh.begin(), ovh.end());
+    int64_t ttot = 0;
+    for (int64_t v : totals) ttot += v;
+    auto pct = [&](double q) { return all[std::min(all.size() - 1, (size_t)floor(q * (all.size() - 1)))]; };
+    printf("program oracle-cpp\n");
+    printf("ticks %zu\nwarmup %d\npasses %d\n", N, warmup, passes);
+    printf("total_ns_mean %.0f\n", (double)ttot / passes);
+    printf("per_tick_mean_ns %.3f\nper_tick_sd_over_passes_ns %.3f\n", m, sd);
+    std::vector<double> pms = pass_mean;
+    std::sort(pms.begin(), pms.end());
+    printf("per_tick_mean_pass_median_ns %.3f\nper_tick_mean_pass_min_ns %.3f\n", pms[pms.size() / 2], pms[0]);
+    printf("timed_per_tick_mean_ns %.3f\ntimed_per_tick_sd_over_passes_ns %.3f\n", tm, tsd);
+    printf("per_tick_median_ns %lld\nper_tick_p99_ns %lld\nper_tick_max_ns %lld\nper_tick_min_ns %lld\n",
+           (long long)pct(0.5), (long long)pct(0.99), (long long)all.back(), (long long)all.front());
+    printf("timer_overhead_median_ns %lld\n", (long long)ovh[ovh.size() / 2]);
+    printf("parse_ns %lld\n", (long long)parse_ns);
+    printf("checksum %08x\nchecksum_same_every_pass %s\n", ck0, ck_same ? "true" : "false");
+    return ck_same ? 0 : 1;
+}
+
+// ---------------------------------------------------------------------------------------------
 
 static void usage()
 {
     fprintf(stderr,
             "usage: oracle --nav TRACE [--params FILE]... [--set \"NAME VALUE\"]... [--hold-from N]\n"
             "              [--vehicle-calls] [--print-params] < inputs.txt > out.txt\n"
+            "       oracle --nav TRACE [--params FILE]... [--hold-from N] --bench [--warmup W] [--passes P] < inputs.txt\n"
+            "  --bench: time the per-tick cascade only (oracle/bench.py, BENCH.md); W=3, P=20 by default\n"
             "  --vehicle-calls: also make the three ArduCopter calls the Lean harness leaves out as\n"
             "  no-ops (landed_gain_reduction(false), set_reset_handling_method, set_desired_spool_state)\n"
             "  per input line: m1 m2 m3 m4 and the 18 trace numbers of `copter --trace` as exact decimals,\n"
@@ -324,6 +592,8 @@ int main(int argc, char **argv)
     long hold_from = -1;
     bool print_params = false;
     bool vehicle_calls = false;
+    bool bench = false;
+    int bench_warmup = 3, bench_passes = 20;
     for (int i = 1; i < argc; i++) {
         std::string a = argv[i];
         if (a == "--params" && i + 1 < argc) {
@@ -346,6 +616,12 @@ int main(int argc, char **argv)
             print_params = true;
         } else if (a == "--vehicle-calls") {
             vehicle_calls = true;
+        } else if (a == "--bench") {
+            bench = true;
+        } else if (a == "--warmup" && i + 1 < argc) {
+            bench_warmup = (int)strtol(argv[++i], nullptr, 10);
+        } else if (a == "--passes" && i + 1 < argc) {
+            bench_passes = (int)strtol(argv[++i], nullptr, 10);
         } else {
             usage();
             return 2;
@@ -460,6 +736,10 @@ int main(int argc, char **argv)
             }
             nav.push_back(w);
         }
+    }
+
+    if (bench) {
+        return run_bench(params, h, nav, hold_from, bench_warmup, bench_passes);
     }
 
     // ---- boot: AP_MotorsMatrix::init(QUAD, X) (radio.cpp:56, AP_MotorsMatrix.cpp:23-41)
