@@ -781,7 +781,7 @@ theorem set4_get {α : Type} (v : Vector α 4) (x : Fin 4 → α) (h0 h1 h2 h3)
     (P : α → Prop) (hP : ∀ i, P (x i)) (i : Fin 4) :
     P ((((v.set ((0 : Fin 4) : ℕ) (x 0) h0).set ((1 : Fin 4) : ℕ) (x 1) h1).set ((2 : Fin 4) : ℕ)
       (x 2) h2).set ((3 : Fin 4) : ℕ) (x 3) h3)[i] := by
-  fin_cases i <;> simp [Vector.getElem_set] <;> exact hP _
+  fin_cases i <;> simp <;> exact hP _
 
 /-- **Actuators.** With the four motors enabled, the linear configuration, `lift_max = 1` and the
 battery filter at `1`, and the four thrusts `_thrust_rpyt_out[i]` of value `t ∈ [0, 1]`,

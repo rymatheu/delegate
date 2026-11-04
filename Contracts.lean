@@ -15,6 +15,9 @@ import Contracts.QuadHover
 import Contracts.CopterLift
 import Contracts.CopterCode
 import Contracts.CopterAxioms
+import Contracts.CopterVertNear
+import Contracts.CopterVertNearStep
+import Contracts.CopterVertNearTick
 
 /-!
 # Assume-guarantee contracts over sets of behaviors
