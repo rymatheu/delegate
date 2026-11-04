@@ -382,7 +382,13 @@ theorem attitude_controller_run_quat_Z (L : LibmZero32) (p : AC_AttitudeControl.
       IdQ (attitude_controller_run_quat p get_rate_yaw_pid s body)._attitude_ang_error ∧
       (attitude_controller_run_quat p get_rate_yaw_pid s body)._feedforward_scalar = 1.0 ∧
       (attitude_controller_run_quat p get_rate_yaw_pid s body)._ang_vel_target_rads =
-        s._ang_vel_target_rads := by
+        s._ang_vel_target_rads ∧
+      (attitude_controller_run_quat p get_rate_yaw_pid s body)._ang_accel_target_rads =
+        s._ang_accel_target_rads ∧
+      (attitude_controller_run_quat p get_rate_yaw_pid s body)._euler_rate_target_rads =
+        s._euler_rate_target_rads ∧
+      (attitude_controller_run_quat p get_rate_yaw_pid s body)._euler_angle_target_rad =
+        s._euler_angle_target_rad := by
   obtain ⟨h1, he, ha, hd⟩ := thrust_heading_rotation_angles_Id L p get_rate_yaw_pid hcap ht hb
   unfold attitude_controller_run_quat
   generalize thrust_heading_rotation_angles p get_rate_yaw_pid s._attitude_target body = r
@@ -407,6 +413,7 @@ theorem attitude_controller_run_quat_Z (L : LibmZero32) (p : AC_AttitudeControl.
         hang.sxb, hang.syb, hang.szb, hang.dt⟩ he) rf qf yf r0 q0 y0
   have hf : ZV (body.inverse * s._attitude_target * s._ang_vel_target_rads) :=
     ZV_of_SameV (mul_vec_Id (mul_Id (inverse_Id hb) ht) hff.fin) hff
-  exact ⟨ZV_add hw hf, trivial, ha, hd, mul_Id (inverse_Id hb) ht, trivial, trivial⟩
+  exact ⟨ZV_add hw hf, trivial, ha, hd, mul_Id (inverse_Id hb) ht, trivial, trivial, trivial,
+    trivial, trivial⟩
 
 end Contracts.CopterZero
