@@ -1,5 +1,5 @@
 name = "delegate"
-defaultTargets = ["Contracts", "FloatModel", "Flight", "flight", "AP_Math", "AC_PID", "AC_AttitudeControl", "AC_WPNav", "AP_Motors", "Copter"]
+defaultTargets = ["Contracts", "FloatModel", "Flight", "flight", "AP_Math", "AC_PID", "AC_AttitudeControl", "AC_WPNav", "AP_Motors", "Copter", "copter"]
 
 [[require]]
 name = "mathlib"
@@ -51,3 +51,7 @@ globs = ["AP_Motors", "AP_Motors.+"]
 name = "Copter"
 roots = ["Copter"]
 globs = ["Copter", "Copter.+"]
+
+[[lean_exe]]
+name = "copter"
+root = "Copter.Main"
