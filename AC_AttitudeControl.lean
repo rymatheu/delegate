@@ -1,5 +1,6 @@
 import AC_AttitudeControl.AC_AttitudeControl
 import AC_AttitudeControl.AC_AttitudeControl_Multi
+import AC_AttitudeControl.AC_PosControl
 /-!
 # `AC_AttitudeControl`
 
