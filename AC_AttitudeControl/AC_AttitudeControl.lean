@@ -61,8 +61,9 @@ Build configuration: Copter (`APM_BUILD_ArduCopter`), so `AC_ATTITUDE_CONTROL_IN
   `_pd_scale *= m` and `_angle_P_scale *= m` with `m = (1,1,1)·(1 - r) + (LAND_R, LAND_P, LAND_Y)·r`.
   Not landed and starting from `r = 0`, `r` stays `MAX(0, 0 - step) = 0`, so `m = 1·1 + LAND·0 =
   (1,1,1)` exactly for finite multipliers, and multiplying by 1 is the identity. When landed with
-  the default multipliers (1.0) `m` is `(1 - r) + r`, which is 1 for the values `r` takes, but this
-  port does not model the landed case.
+  the default multipliers (1.0) `m` is `(1 - r)·1 + 1·r`; evaluated in `Float32` over the whole ramp
+  `r := MIN(1, r + dt/(2·0.1))` and back down at `dt = 0.0025` (200 ticks each way) it is exactly 1
+  at every tick, so the default configuration needs no landed model either.
 - `_rate_gyro_time_us` (timestamp, `AP_HAL::micros64`), `_landed_gain_ratio`, `_singleton`,
   `max_rate_step_bf_*`, `pre_arm_checks`, `get_rpy_srate`, `convert_parameters`, `scale_I_to_angle_P`,
   `accel_limiting`, `use_sqrt_controller`, the sysid setters (`rate_bf_*_sysid_rads`,
