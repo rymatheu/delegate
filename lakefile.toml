@@ -1,5 +1,5 @@
 name = "delegate"
-defaultTargets = ["Contracts", "FloatModel", "Flight", "flight"]
+defaultTargets = ["Contracts", "FloatModel", "Flight", "flight", "AP_Math", "AC_PID", "AC_AttitudeControl", "AC_WPNav", "AP_Motors", "Copter"]
 
 [[require]]
 name = "mathlib"
@@ -21,3 +21,33 @@ roots = ["Contracts"]
 [[lean_exe]]
 name = "flight"
 root = "Flight.Main"
+
+[[lean_lib]]
+name = "AP_Math"
+roots = ["AP_Math"]
+globs = ["AP_Math", "AP_Math.+"]
+
+[[lean_lib]]
+name = "AC_PID"
+roots = ["AC_PID"]
+globs = ["AC_PID", "AC_PID.+"]
+
+[[lean_lib]]
+name = "AC_AttitudeControl"
+roots = ["AC_AttitudeControl"]
+globs = ["AC_AttitudeControl", "AC_AttitudeControl.+"]
+
+[[lean_lib]]
+name = "AC_WPNav"
+roots = ["AC_WPNav"]
+globs = ["AC_WPNav", "AC_WPNav.+"]
+
+[[lean_lib]]
+name = "AP_Motors"
+roots = ["AP_Motors"]
+globs = ["AP_Motors", "AP_Motors.+"]
+
+[[lean_lib]]
+name = "Copter"
+roots = ["Copter"]
+globs = ["Copter", "Copter.+"]
