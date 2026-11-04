@@ -14,7 +14,7 @@
 #
 # Usage: sim/build_copter_c.sh     (from anywhere; paths are resolved relative to this script)
 #
-# Environment (optional): EXTRA_CFLAGS, extra flags for every compile (default none: the flags lake
+# Environment (optional): EXTRA_CFLAGS, extra flags for every compile (default -fno-builtin-sinf -fno-builtin-cosf, as the lakefile sets; the flags lake
 # uses); BIN, the output binary (default sim/build/copter-c). For example
 #   EXTRA_CFLAGS="-fno-builtin-sinf -fno-builtin-cosf" BIN=build/copter-c-nosincos sim/build_copter_c.sh
 # keeps clang from fusing sinf(x) and cosf(x) into Apple's __sincosf_stret (see README).
@@ -26,7 +26,7 @@ OUT="$SIM/build"
 BIN="${BIN:-$OUT/copter-c}"
 case "$BIN" in /*) ;; *) BIN="$SIM/$BIN" ;; esac
 CDIR="$BIN.d"
-EXTRA_CFLAGS="${EXTRA_CFLAGS:-}"
+EXTRA_CFLAGS="${EXTRA_CFLAGS:--fno-builtin-sinf -fno-builtin-cosf}"
 ROOT="Copter.Main"
 
 # Step 1: build the Lean executable target, which makes lake (re)generate the C files.
