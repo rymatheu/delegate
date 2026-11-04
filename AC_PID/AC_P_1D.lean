@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 
 /-!
 # `AC_P_1D`
@@ -14,7 +14,7 @@ Left out: `save_gains` and the `AP_Param` plumbing.
 
 namespace AC_P_1D
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `var_info`, `AC_P_1D.cpp:7-13`. C++ member `_kp` (`AC_P_1D.h:55`). -/
 structure Params where

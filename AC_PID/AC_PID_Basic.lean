@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 import AC_PID.AP_PIDInfo
 
 /-!
@@ -23,7 +23,7 @@ Left out: the `INTERNAL_ERROR` report on non-finite input (`:82`, no effect on t
 
 namespace AC_PID_Basic
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `var_info`, `AC_PID_Basic.cpp:11-50`, fields named as the parameter suffixes
 (`PSC_D_VEL_P`, ...). C++ members `_kp`, `_ki`, `_kd`, `_kff`, `_kimax`, `_filt_E_hz`,
@@ -78,9 +78,9 @@ def set_kP (p : Params) (v : ftype) : Params := { p with P := v }
 def set_kI (p : Params) (v : ftype) : Params := { p with I := v }
 def set_kD (p : Params) (v : ftype) : Params := { p with D := v }
 def set_ff (p : Params) (v : ftype) : Params := { p with FF := v }
-def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := fabsf v }
-def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := fabsf hz }
-def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := fabsf hz }
+def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := v.abs }
+def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := hz.abs }
+def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := hz.abs }
 
 /-- `reset_filter()`, `AC_PID_Basic.h:41`. -/
 def reset_filter (s : State) : State := { s with _reset_filter := true }

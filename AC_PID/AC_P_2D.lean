@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 
 /-!
 # `AC_P_2D`
@@ -14,7 +14,7 @@ Left out: `save_gains` and the `AP_Param` plumbing.
 
 namespace AC_P_2D
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `var_info`, `AC_P_2D.cpp:7-13`. C++ member `_kp` (`AC_P_2D.h:52`). -/
 structure Params where
@@ -31,7 +31,7 @@ deriving Repr
 /-- Constructor `AC_P_2D(initial_p)`, `AC_P_2D.cpp:15-21`. The internal variables start at
 zero, as ArduPilot zero-fills its objects. -/
 def init (initial_p : ftype) : Params × State :=
-  ({ P := initial_p }, { _error := Vector2.zero, _error_max := 0, _D1_max := 0 })
+  ({ P := initial_p }, { _error := ({} : Vector2f), _error_max := 0, _D1_max := 0 })
 
 def kP (p : Params) : ftype := p.P
 def set_kP (p : Params) (v : ftype) : Params := { p with P := v }
@@ -54,7 +54,7 @@ def update_all (p : Params) (s : State) (target measurement : Vector2p) :
     if limited then
       target := measurement + s._error.topostype
   -- Use sqrt_controller to limit output and/or its derivative
-  return (s, target, sqrt_controller_vec s._error p.P s._D1_max 0.0)
+  return (s, target, sqrt_controller_xy s._error p.P s._D1_max 0.0)
 
 /-- `set_limits(output_max, D_Out_max = 0, D2_Out_max = 0)`, `AC_P_2D.cpp:40-63`. -/
 def set_limits (p : Params) (s : State) (output_max : ftype) (D_Out_max : ftype := 0.0)

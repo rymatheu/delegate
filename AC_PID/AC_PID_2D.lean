@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 import AC_PID.AP_PIDInfo
 
 /-!
@@ -23,7 +23,7 @@ Left out: `save_gains` and the `AP_Param` plumbing; logging.
 
 namespace AC_PID_2D
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `var_info`, `AC_PID_2D.cpp:9-48`, fields named as the parameter suffixes
 (`PSC_NE_VEL_P`, ...). C++ members `_kp`, `_ki`, `_kd`, `_kff`, `_kimax`, `_filt_E_hz`,
@@ -56,8 +56,8 @@ def init (initial_kP initial_kI initial_kD initial_kFF initial_imax initial_filt
     initial_filt_D_hz : ftype) : Params × State :=
   ({ P := initial_kP, I := initial_kI, IMAX := initial_imax, FLTE := initial_filt_E_hz,
      D := initial_kD, FLTD := initial_filt_D_hz, FF := initial_kFF },
-   { _target := Vector2.zero, _error := Vector2.zero, _derivative := Vector2.zero,
-     _integrator := Vector2.zero, _reset_filter := true, _pid_info_x := {},
+   { _target := ({} : Vector2f), _error := ({} : Vector2f), _derivative := ({} : Vector2f),
+     _integrator := ({} : Vector2f), _reset_filter := true, _pid_info_x := {},
      _pid_info_y := {} })
 
 /-! ### Accessors and setters, `AC_PID_2D.h:38-67` -/
@@ -75,9 +75,9 @@ def set_kP (p : Params) (v : ftype) : Params := { p with P := v }
 def set_kI (p : Params) (v : ftype) : Params := { p with I := v }
 def set_kD (p : Params) (v : ftype) : Params := { p with D := v }
 def set_ff (p : Params) (v : ftype) : Params := { p with FF := v }
-def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := fabsf v }
-def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := fabsf hz }
-def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := fabsf hz }
+def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := v.abs }
+def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := hz.abs }
+def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := hz.abs }
 
 /-- `reset_filter()`, `AC_PID_2D.h:44`. -/
 def reset_filter (s : State) : State := { s with _reset_filter := true }
@@ -118,7 +118,7 @@ def update_all (p : Params) (s : State) (target measurement : Vector2f) (dt : ft
     (limit : Vector2f) : State × Vector2f := Id.run do
   -- Return zero if any component is NaN or infinite
   if target.is_nan || target.is_inf || measurement.is_nan || measurement.is_inf then
-    return (s, Vector2.zero)
+    return (s, ({} : Vector2f))
   let mut s := { s with _target := target }
   -- reset input filter to value received
   if s._reset_filter then
@@ -126,7 +126,7 @@ def update_all (p : Params) (s : State) (target measurement : Vector2f) (dt : ft
     s := { s with _reset_filter := false }
     s := { s with _error := s._target - measurement }
     -- Reset the derivative to avoid transients
-    s := { s with _derivative := Vector2.zero }
+    s := { s with _derivative := ({} : Vector2f) }
   else
     let error_last := s._error
     -- Apply first-order low-pass filter to error
@@ -169,7 +169,7 @@ def get_ff_update_info (p : Params) (s : State) : State :=
            _pid_info_y := { s._pid_info_y with FF := s._target.y * p.FF } }
 
 /-- `reset_I()`, `AC_PID_2D.cpp:170-173`. -/
-def reset_I (s : State) : State := { s with _integrator := Vector2.zero }
+def reset_I (s : State) : State := { s with _integrator := ({} : Vector2f) }
 
 /-- `set_integrator(const Vector2f& i)`, `AC_PID_2D.cpp:211-216`: clamp to length `IMAX`. -/
 def set_integrator (p : Params) (s : State) (i : Vector2f) : State :=

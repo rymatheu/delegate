@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 import AC_PID.AP_PIDInfo
 
 /-!
@@ -27,7 +27,7 @@ Left out:
 
 namespace AC_PID
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `AC_PID_TFILT_HZ_DEFAULT`, `AC_PID.h:14`. -/
 def AC_PID_TFILT_HZ_DEFAULT : ftype := 0.0
@@ -131,12 +131,12 @@ def set_kP (p : Params) (v : ftype) : Params := { p with P := v }
 def set_kI (p : Params) (v : ftype) : Params := { p with I := v }
 def set_kD (p : Params) (v : ftype) : Params := { p with D := v }
 def set_ff (p : Params) (v : ftype) : Params := { p with FF := v }
-def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := fabsf v }
-def set_pdmax (p : Params) (v : ftype) : Params := { p with PDMX := fabsf v }
-def set_filt_T_hz (p : Params) (hz : ftype) : Params := { p with FLTT := fabsf hz }
-def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := fabsf hz }
-def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := fabsf hz }
-def set_slew_limit (p : Params) (smax : ftype) : Params := { p with SMAX := fabsf smax }
+def set_imax (p : Params) (v : ftype) : Params := { p with IMAX := v.abs }
+def set_pdmax (p : Params) (v : ftype) : Params := { p with PDMX := v.abs }
+def set_filt_T_hz (p : Params) (hz : ftype) : Params := { p with FLTT := hz.abs }
+def set_filt_E_hz (p : Params) (hz : ftype) : Params := { p with FLTE := hz.abs }
+def set_filt_D_hz (p : Params) (hz : ftype) : Params := { p with FLTD := hz.abs }
+def set_slew_limit (p : Params) (smax : ftype) : Params := { p with SMAX := smax.abs }
 def set_kDff (p : Params) (v : ftype) : Params := { p with D_FF := v }
 
 /-- `reset_filter()`, `AC_PID.h:85-87`. -/
@@ -228,7 +228,7 @@ def update_all (p : Params) (s : State) (target measurement dt : ftype) (limit :
   info := { info with PD_limit := false }
   -- Apply PD sum limit if enabled
   if is_positive p.PDMX then
-    let PD_sum_abs := fabsf (P_out + D_out)
+    let PD_sum_abs := (P_out + D_out).abs
     if PD_sum_abs > p.PDMX then
       let pd_limit_scale := p.PDMX / PD_sum_abs
       P_out := P_out * pd_limit_scale

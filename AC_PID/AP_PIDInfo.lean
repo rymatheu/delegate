@@ -1,4 +1,4 @@
-import AC_PID.Compat
+import AP_Math
 
 /-!
 # `AP_PIDInfo`
@@ -11,7 +11,7 @@ Left out: nothing; every field is kept. Field `slew_rate` is never updated by th
 `AC_PID.update_all`).
 -/
 
-open AC_PID.Compat
+open AP_Math
 
 /-- `struct AP_PIDInfo`, `AP_PIDInfo.h:9-24`. -/
 structure AP_PIDInfo where
