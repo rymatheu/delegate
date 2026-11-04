@@ -1,4 +1,5 @@
 import Contracts.CopterVertNear
+import Contracts.CopterCode
 
 /-!
 # The vertical path at a hover sample, function by function
@@ -682,6 +683,140 @@ theorem throttle_filter_near (s : AP_MotorsMulticopter.State) {φ τ : ℝ}
     hc, hdt, Id.run]
   simp only [c1, c2, if_false]
   rfl
+
+/-! ## The thrust curve and the slew limit in the linear configuration -/
+
+/-- The linear thrust configuration (`sim/params/copter-cf2x.txt`): `MOT_THST_EXPO 0`,
+`MOT_SPIN_MIN 0`, `MOT_SPIN_MAX 1`, and no slew limiting (`MOT_SLEW_UP_TIME`, `MOT_SLEW_DN_TIME`
+not positive, the code defaults). -/
+-- <<LinearConfig>>
+structure LinearConfig (p : AP_MotorsMulticopter.Params) : Prop where
+  expo : Z p.MOT_THST_EXPO
+  spin_min : Z p.MOT_SPIN_MIN
+  spin_max : One p.MOT_SPIN_MAX
+  slew_up : is_positive p.MOT_SLEW_UP_TIME = false
+  slew_dn : is_positive p.MOT_SLEW_DN_TIME = false
+-- <</LinearConfig>>
+
+/-- The run's `MOT_` parameters: the code defaults with the overrides of `Copter.defaults` and of
+`sim/params/copter-cf2x.txt` (`MOT_THST_EXPO 0`, `MOT_SPIN_MIN 0`, `MOT_SPIN_MAX 1`,
+`MOT_BAT_VOLT_MAX 0`, `MOT_HOVER_LEARN 0`, `MOT_THST_HOVER 0.4444`). -/
+def runMot : AP_MotorsMulticopter.Params :=
+  { Copter.defaults.mot with
+    MOT_THST_EXPO := Copter.Text.Decimal.toFloat32 ⟨false, 0, 0⟩
+    MOT_SPIN_MIN := Copter.Text.Decimal.toFloat32 ⟨false, 0, 0⟩
+    MOT_SPIN_MAX := Copter.Text.Decimal.toFloat32 ⟨false, 1, 0⟩
+    MOT_BAT_VOLT_MAX := Copter.Text.Decimal.toFloat32 ⟨false, 0, 0⟩
+    MOT_HOVER_LEARN := 0
+    MOT_THST_HOVER := Copter.Text.Decimal.toFloat32 ⟨false, 4444, -4⟩ }
+
+theorem runMot_hover : runMot.MOT_THST_HOVER = hoverF := by rfl
+
+/-- The run parameters are in the linear configuration. -/
+theorem runMot_linear : LinearConfig runMot := by
+  have h0 : (Copter.Text.Decimal.toFloat32 ⟨false, 0, 0⟩).toModel.unpack = .zero .positive := by rfl
+  have h1 : (Copter.Text.Decimal.toFloat32 ⟨false, 1, 0⟩).toModel.unpack =
+      (1 : Float32).toModel.unpack := by rfl
+  have z0 : Z (Copter.Text.Decimal.toFloat32 ⟨false, 0, 0⟩) := by
+    refine ⟨by rw [Float32.isFinite_iff, h0]; rfl, ?_⟩
+    rw [Float32.toReal, h0]; rfl
+  have o1 : One (Copter.Text.Decimal.toFloat32 ⟨false, 1, 0⟩) := by
+    refine ⟨by rw [Float32.isFinite_iff, h1]; exact Float32.isFinite_one, ?_⟩
+    rw [Float32.toReal, h1]; exact Float32.toReal_one
+  exact ⟨z0, z0, o1, by decide, by decide⟩
+
+/-- **Thrust curve.** In the linear configuration, with `lift_max = 1` and the battery filter at
+`1` (what `update_lift_max_from_batt_voltage` writes every tick), `thrust_to_actuator` is the
+identity on `[0, 1]`: `0 + (1 - 0) · (1 · t · (1/1)) = t`. -/
+theorem thrust_to_actuator_val {p : AP_MotorsMulticopter.Params} (hp : LinearConfig p)
+    {t : Float32} (ht : t.IsFinite) (h0 : 0 ≤ t.toReal) (h1 : t.toReal ≤ 1) :
+    (Thrust_Linearization.thrust_to_actuator p.toParams
+        { lift_max := 1.0, batt_voltage_filt := 1.0 } t).IsFinite ∧
+      (Thrust_Linearization.thrust_to_actuator p.toParams
+        { lift_max := 1.0, batt_voltage_filt := 1.0 } t).toReal = t.toReal := by
+  unfold Thrust_Linearization.thrust_to_actuator Thrust_Linearization.apply_thrust_curve_and_volt_scaling
+  have hc : constrain_float t 0.0 1.0 = t :=
+    constrain_float_of_le ht Z_lit0.1 One_lit1.1 (by rw [Z_lit0.2]; exact h0)
+      (by rw [One_lit1.2]; exact h1)
+  have hneg1 : ((-1.0 : Float32)).IsFinite ∧ ((-1.0 : Float32)).toReal = -1 := by
+    have := One_lit1
+    exact ⟨(Float32.isFinite_neg _).2 this.1, by rw [Float32.toReal_neg, this.2]⟩
+  have he : constrain_float p.MOT_THST_EXPO (-1.0) 1.0 = p.MOT_THST_EXPO :=
+    constrain_float_of_le hp.expo.1 hneg1.1 One_lit1.1 (by rw [hneg1.2, hp.expo.2]; norm_num)
+      (by rw [One_lit1.2, hp.expo.2]; norm_num)
+  have hz : is_zero p.MOT_THST_EXPO = true := is_zero_true hp.expo.1 (by rw [hp.expo.2]; norm_num)
+  have hpos : is_positive (1.0 : Float32) = true := by decide
+  simp only [Id.run, pure, hc, he, hz, hpos, if_true]
+  have hq : One ((1.0 : Float32) / 1.0) := by
+    have := div_exact One_lit1.1 One_lit1.1 (by rw [One_lit1.2]; norm_num) One_lit1.1
+      (by rw [One_lit1.2]; norm_num)
+    exact ⟨this.1, by rw [this.2, One_lit1.2]⟩
+  have m1 := one_mul_val ht One_lit1
+  have m2 := mul_one_val m1.1 hq
+  have d := sub_zero_val hp.spin_max.1 hp.spin_min
+  have d' : One (p.MOT_SPIN_MAX - p.MOT_SPIN_MIN) := ⟨d.1, by rw [d.2, hp.spin_max.2]⟩
+  have m3 := one_mul_val m2.1 d'
+  have a := zero_add_val m3.1 hp.spin_min
+  exact ⟨a.1, by rw [a.2, m3.2, m2.2, m1.2]⟩
+
+/-- **Slew limit off.** With both slew times not positive, `set_actuator_with_slew` is
+`constrain_float(input, 0, 1)`, which on `[0, 1]` is the input. -/
+theorem slew_val {p : AP_MotorsMulticopter.Params} (hp : LinearConfig p)
+    (st : AP_MotorsMulticopter.State) (a : Float32) {x : Float32} (hx : x.IsFinite)
+    (h0 : 0 ≤ x.toReal) (h1 : x.toReal ≤ 1) :
+    AP_MotorsMulticopter.set_actuator_with_slew p st a x = x := by
+  unfold AP_MotorsMulticopter.set_actuator_with_slew
+  simp only [Id.run, hp.slew_up, hp.slew_dn, Bool.false_eq_true, if_false]
+  exact constrain_float_of_le hx Z_lit0.1 One_lit1.1 (by rw [Z_lit0.2]; exact h0)
+    (by rw [One_lit1.2]; exact h1)
+
+theorem finRange4 : List.finRange 4 = [0, 1, 2, 3] := by decide
+theorem en4_0 : (#v[true, true, true, true] : Vector Bool 4)[(0 : Fin 4)] = true := rfl
+theorem en4_1 : (#v[true, true, true, true] : Vector Bool 4)[(1 : Fin 4)] = true := rfl
+theorem en4_2 : (#v[true, true, true, true] : Vector Bool 4)[(2 : Fin 4)] = true := rfl
+theorem en4_3 : (#v[true, true, true, true] : Vector Bool 4)[(3 : Fin 4)] = true := rfl
+
+/-- Four `set`s at the four slots: every slot holds one of the values set. -/
+theorem set4_get {α : Type} (v : Vector α 4) (x : Fin 4 → α) (h0 h1 h2 h3)
+    (P : α → Prop) (hP : ∀ i, P (x i)) (i : Fin 4) :
+    P ((((v.set ((0 : Fin 4) : ℕ) (x 0) h0).set ((1 : Fin 4) : ℕ) (x 1) h1).set ((2 : Fin 4) : ℕ)
+      (x 2) h2).set ((3 : Fin 4) : ℕ) (x 3) h3)[i] := by
+  fin_cases i <;> simp [Vector.getElem_set] <;> exact hP _
+
+/-- **Actuators.** With the four motors enabled, the linear configuration, `lift_max = 1` and the
+battery filter at `1`, and the four thrusts `_thrust_rpyt_out[i]` of value `t ∈ [0, 1]`,
+`output_to_motors` sets each actuator to a float of value `t` (`thrust_to_actuator` is the
+identity and the slew limit is off). -/
+theorem output_to_motors_val {p : AP_MotorsMulticopter.Params} (hp : LinearConfig p)
+    (s : AP_MotorsMatrix.State) (hen : s.motor_enabled = #v[true, true, true, true])
+    (hthr : s.thr_lin = { lift_max := 1.0, batt_voltage_filt := 1.0 }) {t : ℝ}
+    (h0 : 0 ≤ t) (h1 : t ≤ 1)
+    (hT : ∀ i : Fin 4, (s._thrust_rpyt_out[i]).IsFinite ∧ (s._thrust_rpyt_out[i]).toReal = t) :
+    ∀ i : Fin 4, ((AP_MotorsMatrix.output_to_motors p s).2[i]).IsFinite ∧
+      ((AP_MotorsMatrix.output_to_motors p s).2[i]).toReal = t := by
+  have key : ∀ i : Fin 4, ∀ a : Float32,
+      AP_MotorsMulticopter.set_actuator_with_slew p s.toState a
+        (Thrust_Linearization.thrust_to_actuator p.toParams s.thr_lin s._thrust_rpyt_out[i]) =
+      Thrust_Linearization.thrust_to_actuator p.toParams s.thr_lin s._thrust_rpyt_out[i] := by
+    intro i a
+    rw [hthr]
+    obtain ⟨hf, hv⟩ := hT i
+    have := thrust_to_actuator_val hp hf (by rw [hv]; exact h0) (by rw [hv]; exact h1)
+    exact slew_val hp _ a this.1 (by rw [this.2, hv]; exact h0) (by rw [this.2, hv]; exact h1)
+  have val : ∀ i : Fin 4,
+      (Thrust_Linearization.thrust_to_actuator p.toParams s.thr_lin s._thrust_rpyt_out[i]).IsFinite ∧
+      (Thrust_Linearization.thrust_to_actuator p.toParams s.thr_lin s._thrust_rpyt_out[i]).toReal = t := by
+    intro i
+    rw [hthr]
+    obtain ⟨hf, hv⟩ := hT i
+    have := thrust_to_actuator_val hp hf (by rw [hv]; exact h0) (by rw [hv]; exact h1)
+    exact ⟨this.1, this.2.trans hv⟩
+  unfold AP_MotorsMatrix.output_to_motors
+  simp only [Id.run, pure, bind, finRange4, List.forIn_cons, List.forIn_nil, hen, en4_0, en4_1,
+    en4_2, en4_3, if_true, key]
+  intro i
+  exact set4_get _ (fun j => Thrust_Linearization.thrust_to_actuator p.toParams s.thr_lin
+    s._thrust_rpyt_out[j]) _ _ _ _ (fun y => y.IsFinite ∧ y.toReal = t) val i
 
 end
 
