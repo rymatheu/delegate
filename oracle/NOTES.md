@@ -1,7 +1,9 @@
-# Oracle: notes on linking the ArduPilot classes (work stopped)
+# Oracle: notes on linking the ArduPilot classes
 
-Stopped before anything was built (bit-exactness no longer required); findings kept for
-whoever resumes. ArduPilot tree: /Users/ryan/Research/delegate/ardupilot, commit 802db19de1.
+Status: Route 2 is built; see README.md (build, stubs, harness), RESULTS.md (comparison with the
+port) and DIFF.md. The notes below are the findings from before it was built.
+
+ArduPilot tree: /Users/ryan/Research/delegate/ardupilot, commit 802db19de1.
 
 Route 1 (waf example on the SITL board)
 - The checkout has every submodule empty (`modules/waf`, `modules/mavlink`,
