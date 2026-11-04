@@ -1,3 +1,5 @@
+import AP_Motors.Interface
+
 /-!
 # `AP_Motors`
 
