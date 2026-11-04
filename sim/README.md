@@ -206,3 +206,182 @@ Timing (wall clock per simulated second, whole flight loop including the control
 ### Determinism: the compiled routes differ from the interpreter
 
 `lake` and `bin` are identical bit for bit in every run (closed loop and replay: 0 of 4000, 12000 and 8431 lines differ), and the replay of the live `lake` inputs reproduces the live run. The interpreter is not identical: on the hover replay 7 of 4000 actuator lines differ (first at line 1066; in the trace, the pitch-rate target differs by one `float` ulp from line 908), on the course 11379 of 12000 (first at line 620) and on the 1 m/s course 7076 of 8431 (first at line 503); in closed loop the trajectories then diverge slowly (final positions equal to 1 mm on the 30 s course). The cause is clang's library-call fusion, not Lean: at `-O3`, clang replaces a `sinf(x)` and a `cosf(x)` of the same argument in one function by one call of Apple's `__sincosf_stret` (`nm -u` lists it for `.lake/build/bin/copter` and `build/copter-c`, from `AP_Math/quaternion`, `AC_AttitudeControl` and `AC_PosControl`), and `__sincosf_stret` is not bit-identical to `sinf`/`cosf`: over all floats in [-7, 7] its sine differs on 2157922 of 213506851 values and its cosine on 964600. The interpreter calls `sinf` and `cosf` separately. With the fusion disabled (`EXTRA_CFLAGS="-fno-builtin-sinf -fno-builtin-cosf" BIN=build/copter-c-nosincos ./build_copter_c.sh`) the binary is bit-identical to the interpreter on all three replays (0 lines differ). The `flight` executable (binary64) also links the double version `__sincos_stret`, and its three routes were identical; whether that version always agrees with `sin`/`cos` was not checked here. Making all three routes agree needs the same flags on lake's compile of the `Copter` modules (`moreLeancArgs` in the lakefile), or a port that does not let the C compiler pair the calls.
+
+## Tuning (`params/copter-cf2x-tuned.txt`)
+
+The flights above use ArduPilot's default gains. `params/copter-cf2x-tuned.txt` is a parameter overlay that tunes them for the CF2X on the 1 m/s figure-eight. It changes parameters only: no Lean file and no driver code. Pass it after the course files:
+
+```
+.venv/bin/python run_copter.py --backend bin --params params/copter-cf2x.txt \
+  --params params/copter-course-speed.txt --params params/copter-cf2x-tuned.txt --duration 60 --out out/copter-tune-final
+```
+
+The vertical channel was left at the values the hover proof uses (`PSC_D_POS_P`, `PSC_D_VEL_*`, `PSC_D_ACC_*`, `MOT_THST_HOVER`, the throttle filter and the linear `MOT_*` configuration of `copter-cf2x.txt`), and every value is inside the `@Range` of ArduPilot's parameter metadata (`AC_PosControl.cpp`, `AC_AttitudeControl.cpp`, `AC_AttitudeControl_Multi.cpp`, `AC_WPNav.cpp`). The course itself (`WP_SPD 1`, `WP_ACC 1.5` of `copter-course-speed.txt`) was not changed.
+
+### Method
+
+One group at a time, roughly in the order an ArduPilot tuner works: horizontal position and velocity gains, attitude angle gains, rate PIDs, input shaping, navigator, then margin probes and an ablation of the result. Each run is the `bin` backend on the 1 m/s course with a 60 s limit (`out/copter-tune-<run>/`, with the overlay used in `overlay.txt`). The figures recorded per run are the tracking error from `summary.txt` (the distance to AC_PosControl's position target, max and rms over the whole run), its horizontal part (from `flight.csv`), the max tilt, the final error to the last waypoint and how the run ended. A setting was rejected if it tilted the vehicle past 25 degrees or oscillated. Oscillation was checked in `flight.csv`: the 8 Hz high-passed body rates per second of flight (to catch rate-loop ringing) and the tilt envelope per second after the target stops (to catch a velocity-loop limit cycle). A run that ends on the time limit has an rms averaged over 60 s, mostly hover, so its rms is not comparable with the others; its max is.
+
+### What each group did
+
+- `PSC_NE_POS_P` alone, on the default gains, made tracking worse: 1.5 to 4 raised the max error from 22.0 cm to between 22.9 cm (1.5) and 38.2 cm (4), and from 1.5 to 3 the run never held the last waypoint (the loiter point ended 11 to 19 cm away). With the default velocity loop (`PSC_NE_VEL_P 2`) and attitude shaping, the position loop cannot be stiffer than the loop inside it. AC_WPNav's track-speed scaler (which slows the target in proportion to `PSC_NE_POS_P` times the along-track error) makes the target speed swing with it.
+- `ATC_INPUT_TC` gave the largest single gain. On the course, every phase change of SimplePath's trapezoid steps the acceleration feed-forward, by up to 2.1 m/s^2 in the 90 degree corners, so the lean target steps by about 12 degrees. With the default 0.1 s, the shaped attitude target takes about 0.3 s to follow, and the vehicle falls 20 cm behind in each corner. 0.05 s (the "Very Crisp" end of the documented values) took the max error from 22.0 to 12.4 cm. With it, the shaping's acceleration limit binds, so `ATC_ACC_R_MAX`/`ATC_ACC_P_MAX` 1800 (the top of the range; default 1100) adds a little more. 0.03 and 0.02 go further (H max 8.7 and 8.1 cm instead of 11.0) but are below any documented value and raise the rate transients in the corners by half to nearly double, so they were not adopted.
+- `ATC_ANG_RLL_P`/`ATC_ANG_PIT_P`: 6 to 12 change the default-gain flight by at most 0.3 cm. In the tuned set, 9 instead of 4.5 cuts the largest pitch error behind the shaped target from 4.4 to 2.4 degrees, the horizontal max from 6.7 to 4.5 cm and the final error from 3.5 to 2.4 cm. 12 adds nothing measurable.
+- `PSC_NE_VEL_P` gave the second largest gain: on the fast attitude loop, 2 to 6 took the rms from 6.2 to 3.5 cm. `PSC_NE_VEL_D` 0.5 (default 0.25) damps the overshoot after the corners and at the last waypoint. `PSC_NE_VEL_I` 0.5 or 2 changes nothing beyond noise, so it stays at 1. The velocity loop has a clear stability edge, a 1.4 Hz swing that grows to the 30 degree lean limit (`B2velp8d0.75`, `E1_velp9`, `E1_veld1.25`). With the tuned set it oscillates from `PSC_NE_VEL_P` 9 (D 0.5) or 10 (D 0.25), and from `PSC_NE_VEL_D` 1.25; D 1.0 already reaches 30 degrees in the corners. P 6 and D 0.5 leave a gain margin of 1.5 on P and 2.5 on D. Higher P lowers the error further (P 8: rms 2.58 cm) but at a 1.1 margin.
+- `PSC_NE_POS_P` on the tuned inner loops: 1.5 now helps a little (H max 4.8 to 4.5 cm). At 3 the tilt reaches 23 degrees with large swings in the final hold, and at 4 it reaches 29.6 degrees.
+- Rate PIDs (`ATC_RAT_RLL_*`, `ATC_RAT_PIT_*`): the tracking is insensitive to them. P 0.09 to 0.2 and D 0 to 0.01 change the rms by under 0.1 cm, and none rings. The derivative problem of the earlier stack (above) does not appear here: ArduPilot's rate loop runs at 400 Hz and filters the derivative at `ATC_RAT_*_FLTD` 20 Hz, where the `flight` controller ran at 120 Hz with an unfiltered difference. The rate PIDs stay at the ArduPilot defaults, including `D` 0.0036.
+- `WP_RADIUS_M`: on the course, 0.3, 0.5 and 1 give motor commands bit-identical to the default 2. At 0.1 the last waypoint counts as reached only once the vehicle is within 10 cm, and `ModeAuto::exit_mission` then takes the loiter target from the vehicle's position and velocity at that tick (`get_stopping_point_NE_m`). On the default gains this made the end worse: the vehicle swung through the waypoint at 0.5 m/s and the loiter point landed 36.7 cm away (`rad0.1`). With the tuned gains the vehicle arrives slowly, and 0.1 gives a final error of 2.4 cm instead of 2.6 cm and a slightly lower rms (2.82 instead of 2.99 cm), so 0.1 is kept.
+- `WP_JERK`: SimplePath does not read it. Its only effect in this port is the time constant `WP_ACC / WP_JERK` of AC_WPNav's track-speed scaler, which is ported line for line from the C++. 5 (default 1) shortens that time constant from 1.5 s to 0.3 s, and the largest change is on the take-off climb, where the vertical error falls from 11.0 to 9.5 cm.
+- No effect or rejected: `PSC_NE_JERK` 20 gives bit-identical motor commands: on this course it would only limit the jerk of a change in the navigator's commanded speed (`_offset_vel_ms`), and that speed never changes. `WP_ACC_CNR` 2, below the 2.12 m/s^2 the 90 degree blends need, turns every corner into a stop (rms 6.5 cm, 5 s longer). `ATC_ANGLE_MAX` stays at 30 degrees because the tilt never saturates at 1 m/s (max 21.4 degrees). `WP_ACC 1` would cut the rms to 2.25 cm and the tilt to 13.4 degrees, but it changes the course, so it is not part of the overlay.
+
+Ablation: each group put back to its default in the tuned set (max / rms tracking error, horizontal max):
+
+| put back to default | tracking max / rms (cm) | horizontal max (cm) | max tilt (deg) | final error (cm) |
+|---|---|---|---|---|
+| none (tuned set) | 9.86 / 2.82 | 4.53 | 21.4 | 2.41 |
+| `ATC_INPUT_TC` 0.1 | 13.62 / 3.26 | 13.62 | 23.0 | 15.77 (no hold) |
+| `ATC_ACC_R/P_MAX` 1100 | 9.92 / 3.17 | 5.58 | 22.7 | 2.56 |
+| `ATC_ANG_RLL/PIT_P` 4.5 | 9.84 / 3.01 | 6.73 | 23.2 | 3.52 |
+| `PSC_NE_POS_P` 1 | 9.99 / 2.91 | 4.83 | 21.0 | 2.41 |
+| `PSC_NE_VEL_P` 2, `D` 0.25 | 11.51 / 5.45 | 9.37 | 16.8 | 2.51 |
+| `WP_RADIUS_M` 2 | 9.86 / 2.99 | 4.54 | 21.8 | 2.58 |
+| `WP_JERK` 1 | 11.01 / 3.22 | 5.38 | 21.4 | 2.17 |
+
+### Result
+
+The 1 m/s figure-eight, default gains (`out/copter-tune-baseline/`, identical to `out/copter-course-1ms-det/copter-bin/`) against the tuned set (`out/copter-tune-final/`, with plots):
+
+| | default gains | tuned |
+|---|---|---|
+| tracking error to the position target, max / rms | 22.04 / 12.29 cm | 9.86 / 2.82 cm |
+| horizontal part, max / rms | 22.01 / 12.09 cm | 4.53 / 2.00 cm |
+| vertical part, max (take-off climb) | 10.83 cm | 9.53 cm |
+| max tilt (roll, pitch) | 17.5 deg (16.7, 12.4) | 21.4 deg (17.4, 15.5) |
+| max attitude error behind its target (roll, pitch) | 1.23, 1.26 deg | 1.69, 2.40 deg |
+| max speed (target 1.01 m/s) | 1.454 m/s | 1.199 m/s |
+| closest approach to waypoints 0..7 | 0.8, 2.8, 10.8, 12.5, 5.7, 8.1, 11.7, 4.2 cm | 2.4, 6.0, 5.6, 5.7, 5.5, 5.9, 5.7, 0.9 cm |
+| end | last waypoint held 3 s at 21.08 s | last waypoint held 3 s at 18.97 s |
+| final error to the last waypoint | 7.89 cm | 2.41 cm |
+| max distance from the last waypoint after first reaching it | 11.95 cm | 6.00 cm |
+
+The max tracking error is now set by the vertical channel during the take-off climb (the vehicle leads the climbing target by up to 9.5 cm at about 1.8 s, as in the hover test), which the overlay does not touch. The horizontal error that remains (4.5 cm) comes from the stepped acceleration feed-forward of SimplePath meeting the attitude acceleration limit at the top of its range; ArduPilot's SCurve, which is not ported, would ramp that acceleration at `WP_JERK`. The vehicle no longer swings outside the corners: the closest approaches to the inner waypoints are all about 5.7 cm, which is the target's own blend, cut inside the corner by design. The rate and motor traces (`timeseries.png`) are active only at the feed-forward steps, are quiet on the straight legs and in the hold, and the actuators stay within 0.369 to 0.498.
+
+Hover test (`out/copter-tune-final-hover/`; `copter-cf2x.txt`, `copter-hover.txt`, the overlay, 10 s, against `out/copter-tune-hover-baseline/`): the vertical response is unchanged (max altitude 1.115 m against 1.114 m, tracking max 11.68 against 11.69 cm, rms 3.62 against 3.36 cm), tilt stays under 0.03 degrees, and the hover is steady. The settled point moves from 5.69 cm above to 4.43 cm below the waypoint: with `WP_RADIUS_M 0.1` the mission completes only once the vehicle falls back within 10 cm after the climb overshoot, while it is descending, so the loiter stopping point lies below the waypoint.
+
+ArduPilot's default speed (`WP_SPD 10`, `WP_ACC 2.5`; `copter-cf2x.txt` and the overlay, no `copter-course-speed.txt`, 30 s; `out/copter-tune-final-wpspd10/` against `out/copter-tune-baseline-wpspd10/`), not tuned for: the target again reaches 2.98 m/s, and the lean saturates at the 30 degree `ATC_ANGLE_MAX` (max tilt 32.5 degrees, as with the default gains). The tracking error drops from 93.95 / 30.06 cm to 26.00 / 8.20 cm (max / rms). All 8 waypoints are passed within 0.2 m in order, against 7 of 8, with closest approaches 0.1 to 4.1 cm. The end is still the loiter jump: the vehicle enters the 10 cm sphere of the last waypoint at 10.68 s still moving, the stopping point is taken from that velocity, and the vehicle settles 19.3 cm from the waypoint (71.0 cm with the default gains). The run ends on the time limit without a hold.
+
+Determinism (`out/copter-tune-final-det/copter-determinism.txt`, `--determinism` with the tuned overlay): closed loop, `lake` vs `bin` and `lake` vs `interp` 0 of 7586 actuator lines differ; replay of the `lake` inputs, 0 differ for both; replay vs the live `lake` run, 0 differ. The `bin` flight of that run is identical to `out/copter-tune-final/`.
+
+### Every run
+
+Bases: `defaults` = `copter-cf2x.txt` + `copter-course-speed.txt`; `B1` = defaults + `ATC_INPUT_TC 0.05`, `ATC_ACC_R_MAX`/`ATC_ACC_P_MAX 1800`; `B2` = B1 + `PSC_NE_VEL_P 6`, `PSC_NE_VEL_D 0.5`, `WP_RADIUS_M 0.1`; `C` = B2 + `ATC_ANG_RLL_P`/`ATC_ANG_PIT_P 9`; `D` = C + `WP_JERK 3`; `tuned` = D + `PSC_NE_POS_P 1.5`, `WP_JERK 5` (the overlay). Tracking error is to AC_PosControl's position target, from `summary.txt`.
+
+| run | base | change | tracking max / rms (cm) | horizontal max (cm) | max tilt (deg) | final error (cm) | outcome |
+|---|---|---|---|---|---|---|---|
+| baseline | defaults | none (copter-cf2x + copter-course-speed) | 22.04 / 12.29 | 22.01 | 17.5 | 7.89 | held, 21.08 s |
+| pos1.5 | defaults | PSC_NE_POS_P 1.5 | 22.94 / 7.86 | 22.93 | 18.2 | 11.49 | no hold: loiter point 11.5 cm from the last waypoint (60 s limit) |
+| pos2 | defaults | PSC_NE_POS_P 2 | 29.08 / 9.08 | 29.08 | 18.7 | 16.73 | no hold: loiter point 16.7 cm from the last waypoint (60 s limit) |
+| pos2.5 | defaults | PSC_NE_POS_P 2.5 | 35.99 / 10.02 | 35.98 | 18.9 | 18.91 | no hold: loiter point 18.9 cm from the last waypoint (60 s limit) |
+| pos3 | defaults | PSC_NE_POS_P 3 | 37.35 / 10.07 | 37.32 | 18.6 | 14.86 | no hold: loiter point 14.9 cm from the last waypoint (60 s limit) |
+| pos4 | defaults | PSC_NE_POS_P 4 | 38.21 / 13.21 | 38.02 | 19.8 | 8.78 | held, 33.51 s |
+| ang6 | defaults | ATC_ANG_RLL_P, ATC_ANG_PIT_P 6 | 22.00 / 12.15 | 21.97 | 17.4 | 7.69 | held, 21.05 s |
+| ang9 | defaults | ATC_ANG_RLL_P, ATC_ANG_PIT_P 9 | 21.95 / 12.02 | 21.92 | 17.2 | 7.91 | held, 20.98 s |
+| ang12 | defaults | ATC_ANG_RLL_P, ATC_ANG_PIT_P 12 | 21.80 / 11.98 | 21.77 | 17.1 | 7.95 | held, 20.96 s |
+| tc0.05 | defaults | ATC_INPUT_TC 0.05 | 12.35 / 7.18 | 12.24 | 17.0 | 3.13 | held, 18.73 s |
+| tc0.02 | defaults | ATC_INPUT_TC 0.02 | 11.36 / 6.19 | 10.02 | 16.9 | 2.75 | held, 18.68 s |
+| acc1800 | defaults | ATC_ACC_R_MAX, ATC_ACC_P_MAX 1800 | 21.15 / 11.91 | 21.12 | 17.3 | 6.96 | held, 21.17 s |
+| tc0.05acc1800 | defaults | ATC_INPUT_TC 0.05, ATC_ACC_R/P_MAX 1800 (= B1) | 11.76 / 6.15 | 10.95 | 16.5 | 2.80 | held, 18.70 s; base B1 |
+| tc0.03acc1800 | defaults | ATC_INPUT_TC 0.03, ATC_ACC_R/P_MAX 1800 | 11.21 / 5.25 | 8.68 | 16.4 | 2.86 | held, 18.68 s |
+| tc0.02acc1800 | defaults | ATC_INPUT_TC 0.02, ATC_ACC_R/P_MAX 1800 | 11.11 / 5.01 | 8.11 | 16.3 | 2.85 | held, 18.68 s |
+| tc0.05acc1800ang9 | B1 | ATC_ANG_RLL/PIT_P 9 | 11.70 / 6.00 | 10.72 | 16.5 | 2.61 | held, 18.70 s |
+| tc0.05acc1800ang12 | B1 | ATC_ANG_RLL/PIT_P 12 | 11.69 / 5.97 | 10.64 | 16.4 | 2.53 | held, 18.70 s |
+| tc0.03acc1800ang9 | B1 | ATC_INPUT_TC 0.03, ATC_ANG_RLL/PIT_P 9 | 11.18 / 5.13 | 8.47 | 16.7 | 2.61 | held, 18.68 s |
+| tc0.03acc1800ang12 | B1 | ATC_INPUT_TC 0.03, ATC_ANG_RLL/PIT_P 12 | 11.17 / 5.11 | 8.41 | 16.7 | 2.53 | held, 18.68 s |
+| b05velp3 | B1 | PSC_NE_VEL_P 3 | 11.39 / 4.92 | 8.68 | 17.5 | 4.12 | held, 18.68 s |
+| b05velp4 | B1 | PSC_NE_VEL_P 4 | 11.12 / 4.17 | 7.60 | 18.6 | 5.32 | held, 19.86 s |
+| b05velp6 | B1 | PSC_NE_VEL_P 6 | 10.82 / 3.53 | 7.30 | 20.9 | 5.93 | held, 19.80 s |
+| b05velp8 | B1 | PSC_NE_VEL_P 8 | 10.75 / 3.31 | 6.35 | 22.5 | 3.13 | held, 18.71 s |
+| b05veli0.5 | B1 | PSC_NE_VEL_I 0.5 | 11.80 / 5.89 | 10.44 | 16.4 | 2.64 | held, 18.68 s |
+| b05veli2 | B1 | PSC_NE_VEL_I 2 | 11.69 / 6.33 | 11.04 | 16.7 | 9.61 | held, 21.05 s |
+| b05veld0 | B1 | PSC_NE_VEL_D 0 | 12.29 / 7.02 | 12.20 | 16.0 | 6.61 | held, 20.86 s |
+| b05veld0.5 | B1 | PSC_NE_VEL_D 0.5 | 11.47 / 5.65 | 9.71 | 17.5 | 2.35 | held, 18.67 s |
+| b05velp6d0.1 | B1 | PSC_NE_VEL_P 6, D 0.1 | 10.84 / 3.62 | 8.61 | 20.7 | 8.56 | held, 20.63 s |
+| b05velp6d0.5 | B1 | PSC_NE_VEL_P 6, D 0.5 | 10.82 / 3.51 | 6.46 | 21.2 | 2.86 | held, 18.69 s |
+| b05velp6i0.5 | B1 | PSC_NE_VEL_P 6, I 0.5 | 10.83 / 3.50 | 6.86 | 20.6 | 5.44 | held, 19.76 s |
+| b05velp6i2 | B1 | PSC_NE_VEL_P 6, I 2 | 10.80 / 3.59 | 8.33 | 21.7 | 7.09 | held, 19.89 s |
+| b05velp6pos1.5 | B1 | PSC_NE_VEL_P 6, PSC_NE_POS_P 1.5 | 11.00 / 3.50 | 7.50 | 21.1 | 5.09 | held, 19.77 s |
+| b05velp6pos2 | B1 | PSC_NE_VEL_P 6, PSC_NE_POS_P 2 | 11.19 / 3.52 | 7.61 | 21.5 | 4.64 | held, 19.78 s |
+| b05velp4pos1.5 | B1 | PSC_NE_VEL_P 4, PSC_NE_POS_P 1.5 | 11.25 / 4.12 | 7.76 | 19.0 | 4.52 | held, 19.80 s |
+| rad0.1 | defaults | WP_RADIUS_M 0.1 | 26.38 / 7.64 | 26.37 | 17.5 | 36.72 | no hold: loiter point 36.7 cm from the last waypoint (60 s limit) |
+| rad0.3 | defaults | WP_RADIUS_M 0.3 | 22.04 / 12.29 | 22.01 | 17.5 | 7.89 | held, 21.08 s |
+| rad0.5 | defaults | WP_RADIUS_M 0.5 | 22.04 / 12.29 | 22.01 | 17.5 | 7.89 | held, 21.08 s |
+| rad1 | defaults | WP_RADIUS_M 1 | 22.04 / 12.29 | 22.01 | 17.5 | 7.89 | held, 21.08 s |
+| b05velp6d0.5rad0.5 | B1 | PSC_NE_VEL_P 6, D 0.5, WP_RADIUS_M 0.5 | 10.82 / 3.51 | 6.46 | 21.2 | 2.86 | held, 18.69 s |
+| B2 | B1 | PSC_NE_VEL_P 6, D 0.5, WP_RADIUS_M 0.1 (= B2) | 10.82 / 3.39 | 6.41 | 20.9 | 2.64 | held, 19.01 s; base B2 |
+| B2velp8 | B2 | PSC_NE_VEL_P 8 | 10.77 / 3.10 | 6.07 | 22.6 | 2.07 | held, 19.03 s |
+| B2velp8d0.75 | B2 | PSC_NE_VEL_P 8, D 0.75 | 21.21 / 8.18 | 21.21 | 31.9 | 6.44 | oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| B2veli0.5 | B2 | PSC_NE_VEL_I 0.5 | 10.82 / 3.37 | 6.38 | 20.9 | 2.40 | held, 19.01 s |
+| B2veld1 | B2 | PSC_NE_VEL_D 1 | 10.84 / 3.33 | 6.16 | 22.1 | 2.80 | held, 19.02 s |
+| B2pos1.5 | B2 | PSC_NE_POS_P 1.5 | 11.00 / 3.27 | 5.54 | 21.3 | 2.52 | held, 19.04 s |
+| B2ang9 | B2 | ATC_ANG_RLL/PIT_P 9 (= C) | 10.82 / 3.35 | 6.25 | 21.0 | 2.24 | held, 19.01 s; base C |
+| B2ang12 | B2 | ATC_ANG_RLL/PIT_P 12 | 10.83 / 3.34 | 6.17 | 20.9 | 2.28 | held, 19.01 s |
+| B2tc0.03 | B2 | ATC_INPUT_TC 0.03 | 10.80 / 3.04 | 5.55 | 20.5 | 2.69 | held, 19.02 s |
+| B2ratp0.09 | B2 | ATC_RAT_RLL/PIT_P 0.09 | 10.81 / 3.41 | 6.55 | 21.2 | 2.97 | held, 19.01 s |
+| B2ratp0.2 | B2 | ATC_RAT_RLL/PIT_P 0.2 | 10.82 / 3.39 | 6.31 | 20.7 | 2.62 | held, 19.01 s |
+| B2ratd0.002 | B2 | ATC_RAT_RLL/PIT_D 0.002 | 10.82 / 3.39 | 6.42 | 21.1 | 2.49 | held, 19.01 s |
+| B2ratd0.005 | B2 | ATC_RAT_RLL/PIT_D 0.005 | 10.82 / 3.40 | 6.40 | 20.7 | 2.76 | held, 19.01 s |
+| B2ratd0.01 | B2 | ATC_RAT_RLL/PIT_D 0.01 | 10.82 / 3.40 | 6.35 | 20.3 | 3.05 | held, 19.01 s |
+| B2wpjerk5 | B2 | WP_JERK 5 | 9.98 / 3.08 | 6.04 | 23.0 | 3.61 | held, 18.95 s |
+| B2nejerk20 | B2 | PSC_NE_JERK 20 | 10.82 / 3.39 | 6.41 | 20.9 | 2.64 | held, 19.01 s |
+| B2cnr2 | B2 | WP_ACC_CNR 2 | 10.82 / 6.49 | 10.76 | 23.4 | 3.95 | held, 24.02 s |
+| C1 | C | ATC_INPUT_TC 0.03 | 10.81 / 3.01 | 5.42 | 20.8 | 2.68 | held, 19.02 s |
+| C2 | C | ATC_INPUT_TC 0.03, PSC_NE_VEL_P 8 | 10.79 / 2.83 | 5.13 | 22.5 | 2.93 | held, 19.03 s |
+| C3 | C | PSC_NE_VEL_P 8 | 10.78 / 3.10 | 5.89 | 22.7 | 2.51 | held, 19.03 s |
+| C7 | C | PSC_NE_VEL_P 5 | 10.89 / 3.56 | 6.57 | 20.1 | 2.41 | held, 19.00 s |
+| C6 | C | PSC_NE_POS_P 1.5 | 11.01 / 3.22 | 5.38 | 21.4 | 2.17 | held, 19.04 s |
+| C4 | C | WP_JERK 2 | 11.16 / 3.23 | 5.21 | 21.0 | 2.33 | held, 18.99 s |
+| C5 | C | WP_JERK 3 (= D) | 10.74 / 3.10 | 4.83 | 21.0 | 2.31 | held, 18.98 s; base D |
+| D_p6d0.3 | D | PSC_NE_VEL_D 0.3 | 10.76 / 3.15 | 6.76 | 21.1 | 4.56 | held, 20.00 s |
+| D_p6d0.75 | D | PSC_NE_VEL_D 0.75 | 10.75 / 3.16 | 4.77 | 21.7 | 2.49 | held, 18.97 s |
+| D_p6d1 | D | PSC_NE_VEL_D 1 | 10.76 / 3.13 | 4.70 | 22.5 | 2.78 | held, 19.00 s |
+| D_p6d1.25 | D | PSC_NE_VEL_D 1.25 | 80.86 / 29.22 | 80.85 | 38.8 | 91.11 | oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| D_p7 | D | PSC_NE_VEL_P 7 | 10.65 / 2.94 | 4.61 | 21.8 | 1.94 | held, 18.98 s |
+| D_p8d0.5 | D | PSC_NE_VEL_P 8 | 10.59 / 2.85 | 4.49 | 22.8 | 2.17 | held, 18.99 s |
+| D_p8d0.6 | D | PSC_NE_VEL_P 8, D 0.6 | 10.60 / 2.89 | 4.49 | 23.0 | 2.50 | held, 18.99 s |
+| D_p9d0.5 | D | PSC_NE_VEL_P 9 | 22.05 / 4.39 | 22.04 | 32.2 | 3.39 | rejected: tilt over 25 deg (one swing to 32 deg on the approach to the last waypoint, then decays) |
+| D_p10d0.5 | D | PSC_NE_VEL_P 10 | 35.18 / 7.51 | 35.18 | 32.7 | 5.32 | oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| D_i0.5 | D | PSC_NE_VEL_I 0.5 | 10.76 / 3.09 | 4.86 | 20.9 | 2.16 | held, 18.98 s |
+| D_i2 | D | PSC_NE_VEL_I 2 | 10.72 / 3.13 | 4.87 | 21.1 | 3.11 | held, 18.98 s |
+| D_pos1.25 | D | PSC_NE_POS_P 1.25 | 10.74 / 3.06 | 4.67 | 21.2 | 2.32 | held, 18.98 s |
+| D_pos1.5 | D | PSC_NE_POS_P 1.5 | 10.74 / 3.03 | 4.53 | 21.4 | 2.26 | held, 18.99 s |
+| D_pos2 | D | PSC_NE_POS_P 2 | 10.76 / 3.00 | 4.41 | 21.9 | 2.17 | held, 19.00 s |
+| D_jerk2 | D | WP_JERK 2 | 11.16 / 3.23 | 5.21 | 21.0 | 2.33 | held, 18.99 s |
+| D_jerk5 | D | WP_JERK 5 | 9.99 / 2.91 | 4.83 | 21.0 | 2.41 | held, 18.95 s |
+| E1 | D | PSC_NE_POS_P 1.5, WP_JERK 5 (= tuned set) | 9.86 / 2.82 | 4.53 | 21.4 | 2.41 | **tuned set**; held, 18.96 s |
+| abl_tc | tuned | ATC_INPUT_TC 0.1 (default) | 13.62 / 3.26 | 13.62 | 23.0 | 15.77 | ablation; no hold: loiter point 15.8 cm from the last waypoint (60 s limit) |
+| abl_acc | tuned | ATC_ACC_R/P_MAX 1100 (default) | 9.92 / 3.17 | 5.58 | 22.7 | 2.56 | ablation; held, 18.98 s |
+| abl_ang | tuned | ATC_ANG_RLL/PIT_P 4.5 (default) | 9.84 / 3.01 | 6.73 | 23.2 | 3.52 | ablation; held, 18.96 s |
+| abl_pos | tuned | PSC_NE_POS_P 1 (default) | 9.99 / 2.91 | 4.83 | 21.0 | 2.41 | ablation; held, 18.95 s |
+| abl_vel | tuned | PSC_NE_VEL_P 2, D 0.25 (defaults) | 11.51 / 5.45 | 9.37 | 16.8 | 2.51 | ablation; held, 19.02 s |
+| E1_rad2 | tuned | WP_RADIUS_M 2 (default) | 9.86 / 2.99 | 4.54 | 21.8 | 2.58 | ablation; held, 18.65 s |
+| abl_jerk | tuned | WP_JERK 1 (default) | 11.01 / 3.22 | 5.38 | 21.4 | 2.17 | ablation; held, 19.04 s |
+| E1_p5 | tuned | PSC_NE_VEL_P 5 | 10.03 / 3.02 | 4.80 | 20.5 | 2.43 | margin probe; held, 18.96 s |
+| E1_velp8 | tuned | PSC_NE_VEL_P 8 | 9.69 / 2.58 | 4.19 | 23.2 | 1.61 | margin probe; held, 18.98 s |
+| E1_velp9 | tuned | PSC_NE_VEL_P 9 | 11.98 / 4.96 | 11.98 | 32.7 | 6.35 | margin probe; oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| E1_velp10 | tuned | PSC_NE_VEL_P 10 | 33.66 / 6.53 | 33.66 | 32.8 | 1.74 | margin probe; oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| E1_d0.25 | tuned | PSC_NE_VEL_D 0.25 | 9.85 / 3.00 | 8.68 | 21.7 | 5.34 | margin probe; held, 20.12 s |
+| E1_d0.4 | tuned | PSC_NE_VEL_D 0.4 | 9.85 / 2.88 | 6.75 | 22.1 | 3.61 | margin probe; held, 19.89 s |
+| E1_veld0.75 | tuned | PSC_NE_VEL_D 0.75 | 9.88 / 2.79 | 4.27 | 22.1 | 2.30 | margin probe; held, 18.96 s |
+| E1_veld1 | tuned | PSC_NE_VEL_D 1 | 18.31 / 4.15 | 18.31 | 30.3 | 2.75 | margin probe; rejected: tilt over 25 deg (in the corners) |
+| E1_veld1.25 | tuned | PSC_NE_VEL_D 1.25 | 66.71 / 21.43 | 66.67 | 40.0 | 61.48 | margin probe; oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| E1_d0.25p8 | tuned | PSC_NE_VEL_P 8, D 0.25 | 9.63 / 2.74 | 6.84 | 22.7 | 2.98 | margin probe; held, 18.98 s |
+| E1_d0.25p9 | tuned | PSC_NE_VEL_P 9, D 0.25 | 9.60 / 2.56 | 4.36 | 23.6 | 0.90 | margin probe; held, 19.00 s |
+| E1_d0.25p10 | tuned | PSC_NE_VEL_P 10, D 0.25 | 14.39 / 3.53 | 14.39 | 31.8 | 1.95 | margin probe; oscillates: sustained swing at the 30 deg lean limit in the final hold |
+| E1_d0.4p8.5 | tuned | PSC_NE_VEL_P 8.5, D 0.4 | 9.65 / 2.57 | 4.27 | 23.5 | 1.25 | margin probe; held, 18.99 s |
+| E1_pos2 | tuned | PSC_NE_POS_P 2 | 9.76 / 2.76 | 4.41 | 21.9 | 2.27 | margin probe; held, 18.98 s |
+| E1_pos3 | tuned | PSC_NE_POS_P 3 | 9.66 / 2.83 | 7.05 | 23.2 | 2.34 | margin probe; held, 18.99 s |
+| E1_pos4 | tuned | PSC_NE_POS_P 4 | 10.44 / 2.93 | 10.43 | 29.6 | 2.09 | margin probe; rejected: tilt over 25 deg (one swing at the last waypoint, then decays) |
+| E1_ang12 | tuned | ATC_ANG_RLL/PIT_P 12 | 9.87 / 2.80 | 4.43 | 21.4 | 2.25 | margin probe; held, 18.96 s |
+| E1_ratd0 | tuned | ATC_RAT_RLL/PIT_D 0 | 9.86 / 2.82 | 4.52 | 21.9 | 2.22 | margin probe; held, 18.96 s |
+| E1_tc0.03 | tuned | ATC_INPUT_TC 0.03 | 9.80 / 2.50 | 3.54 | 21.2 | 2.51 | not adopted; held, 18.98 s |
+| E1_wpacc1 | tuned | WP_ACC 1 (changes the course) | 9.51 / 2.25 | 3.64 | 13.4 | 1.62 | not adopted; held, 20.32 s |

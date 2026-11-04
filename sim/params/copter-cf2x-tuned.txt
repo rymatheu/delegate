@@ -1,0 +1,36 @@
+# Tuned gains for the Lean port of ArduCopter on the CF2X (27 g, 400 Hz control), for the 1 m/s
+# figure-eight. An overlay: pass it after copter-cf2x.txt and copter-course-speed.txt:
+#   run_copter.py --params params/copter-cf2x.txt --params params/copter-course-speed.txt \
+#     --params params/copter-cf2x-tuned.txt
+# Parameters only, every value inside ArduPilot's @Range. The vertical channel (PSC_D_*, MOT_*) and
+# the rate PIDs keep the values of copter-cf2x.txt and the ArduPilot defaults. The tuning runs and
+# the reasons are in sim/README.md ("Tuning").
+
+# Attitude input shaping. The 1 m/s course steps the acceleration feed-forward by up to 2.1 m/s^2 at
+# every phase change of SimplePath's trapezoid, so the lean target steps too; these set how fast the
+# attitude target follows the step.
+# Input time constant (default 0.1 s "Crisp"); 0.05 is the "Very Crisp" end of the documented values, and the largest single gain (max tracking error 22 -> 12 cm).
+ATC_INPUT_TC 0.05
+# Roll acceleration limit of the shaped target (default 1100 deg/s^2); 1800, the top of the range and far below what the CF2X can do (about 580 rad/s^2 per unit roll input), because with TC 0.05 this limit, not the time constant, sets how long a 12 deg lean change takes.
+ATC_ACC_R_MAX 1800
+# Pitch acceleration limit, same value and reason as roll.
+ATC_ACC_P_MAX 1800
+
+# Angle loop. Roll angle P (default 4.5); 9 about halves the largest attitude error behind the shaped target (pitch 4.4 -> 2.4 deg with the other tuned values); 12 brings almost nothing more.
+ATC_ANG_RLL_P 9
+# Pitch angle P, same value and reason as roll.
+ATC_ANG_PIT_P 9
+
+# Horizontal position and velocity loops (AC_PosControl NE).
+# Position P (default 1); 1.5 with the faster velocity loop below (on the default velocity loop any increase made tracking worse); 4 brings the tilt to 29.6 deg.
+PSC_NE_POS_P 1.5
+# Velocity P (default 2), the second largest gain (rms 6.2 -> 3.5 cm); the loop oscillates (growing to the 30 deg lean limit) from 9, so 6 keeps a gain margin of 1.5.
+PSC_NE_VEL_P 6
+# Velocity D (default 0.25); 0.5 damps the overshoot after each corner and at the last waypoint; 1.0 already swings to 30 deg tilt in the corners, 1.25 diverges.
+PSC_NE_VEL_D 0.5
+
+# Navigator.
+# Waypoint radius (default 2 m); 0.1 m makes the last waypoint count as reached only when the vehicle is within 10 cm, so the mission does not end (and the loiter target is not taken from the vehicle's state) while the vehicle still lags the target.
+WP_RADIUS_M 0.1
+# Jerk (default 1 m/s^3). SimplePath ignores it; here it only sets the time constant WP_ACC / WP_JERK of AC_WPNav's track-speed scaler (1.5 s -> 0.3 s), so the target waits sooner for a lagging vehicle, mostly on the take-off climb (vertical error 11.0 -> 9.5 cm).
+WP_JERK 5
