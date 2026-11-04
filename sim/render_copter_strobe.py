@@ -7,7 +7,9 @@ earth-frame specific force of `run_copter.SpecificForce`, the body-to-NED quater
 `run_copter.quat_ned_frd`, the body rates, dt), the four actuators and their conversion to RPM
 (`run_copter.actuators_to_rpm`), the 400 Hz control and 1200 Hz physics rates, gravity 9.80665, the
 damping removal and the settling on the ground are those of the recorded flights. The vehicle pose is
-taken from the simulator every `--every` seconds of the run's clock (which starts after the settling).
+taken from the simulator at every tick of the run's clock (which starts after the settling); the
+strobe instants are chosen by `select_instants` (default: from a 5 cm climb, every 0.5 s, and one
+instant at the final hover).
 The actuator stream of this run is compared line by line with each `--ref` file and the number of
 differing lines is printed.
 
@@ -120,6 +122,30 @@ def compare_motors(run, refs):
         first = f" (first at line {diff[0] + 1})" if diff else ""
         print(f"motor lines vs {ref.relative_to(SIM_DIR) if ref.is_relative_to(SIM_DIR) else ref}: "
               f"{len(b)} vs {len(a)} lines, {len(diff)} differ{first}")
+
+
+def select_instants(poses, wps_enu, every_s: float, climb: float | None, hover_tol: float):
+    """The strobe instants from poses captured at every tick.
+
+    With `climb` None: every `every_s` seconds from t = 0. Otherwise: from the first tick at which the
+    vehicle has climbed `climb` meters above its starting height, every `every_s` seconds after that
+    until the vehicle arrives at the last waypoint, plus the last tick (one instant at the final
+    hover). The vehicle arrives when it first comes within `hover_tol` meters of the last waypoint
+    after its last tick more than 0.5 m from it (the first and last waypoints may coincide)."""
+    step = int(round(every_s * rc.CTRL_HZ))
+    if climb is None:
+        return [ps for i, ps in enumerate(poses) if i % step == 0]
+    z = np.array([p[2] for _, p, _ in poses])
+    k0 = int(np.argmax(z - z[0] >= climb))
+    d = np.array([np.linalg.norm(p - wps_enu[-1]) for _, p, _ in poses])
+    on_course = np.nonzero(d > 0.5)[0]                    # last tick on the course, 0.5 m out
+    j = int(on_course[-1]) + 1 if len(on_course) else 0
+    arrived = np.nonzero(d[j:] <= hover_tol)[0]
+    hover = j + int(arrived[0]) if len(arrived) else len(poses)
+    picked = list(range(k0, hover, step))
+    if not picked or picked[-1] != len(poses) - 1:
+        picked.append(len(poses) - 1)
+    return [poses[i] for i in picked]
 
 
 def path_and_waypoints(run, mission):
@@ -372,6 +398,13 @@ def main():
                     help="motors.txt to compare the actuator stream with (repeatable; default: "
                          "out/copter-course-1ms-det/copter-bin and out/copter-course-1ms/copter-bin)")
     ap.add_argument("--every", type=float, default=0.5, help="seconds between instants (default 0.5)")
+    ap.add_argument("--climb", type=float, default=0.05, metavar="M",
+                    help="start the instants when the vehicle has climbed M meters, end them at the final "
+                         "hover with one instant there (default 0.05; a negative value: every --every "
+                         "seconds from t = 0)")
+    ap.add_argument("--hover-tol", type=float, default=0.1, metavar="M",
+                    help="the final hover starts when the vehicle arrives within M meters of the last "
+                         "waypoint (default 0.1)")
     ap.add_argument("--scale", type=float, default=3.0, help="drawing scale of the vehicle mesh (default 3)")
     ap.add_argument("--dpi", type=int, default=600, help="output resolution (default 600)")
     ap.add_argument("--supersample", type=int, default=4, metavar="N",
@@ -396,15 +429,19 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     params = args.params or [str(f) for f in DEFAULT_PARAMS]
-    run, poses, mission = fly_and_capture(args.every, Path(args.bin), params, args.duration, args.pyb_hz)
+    run, all_poses, mission = fly_and_capture(1.0 / rc.CTRL_HZ, Path(args.bin), params, args.duration,
+                                              args.pyb_hz)
     rc.write_outputs(out, run)
-    print(f"run: {run.end_reason}; {len(run.rows)} ticks; {len(poses)} instants captured")
+    rows, path_enu, wps_enu = path_and_waypoints(run, mission)
+    poses = select_instants(all_poses, wps_enu, args.every, None if args.climb < 0 else args.climb,
+                            args.hover_tol)
+    print(f"run: {run.end_reason}; {len(run.rows)} ticks; {len(poses)} instants, t = "
+          + " ".join(f"{t:g}" for t, _, _ in poses))
     compare_motors(run, args.ref or DEFAULT_REFS)
 
     width_px = int(round(args.width_cm / 2.54 * DPI))
     SS, W, H = pick_supersample(width_px, args.aspect, args.supersample, 1.25)
     print(f"supersample {SS}: renders {W} x {H} px")
-    rows, path_enu, wps_enu = path_and_waypoints(run, mission)
     lo, hi = floor_bounds(wps_enu)
     target = ((lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, wps_enu[:, 2].max() / 2)
     cam = Camera(W, H, target, args.cam_dist, args.cam_yaw, args.cam_pitch)
@@ -414,7 +451,7 @@ def main():
     print(f"strobe.png: {size[0]} x {size[1]} px at {DPI} dpi "
           f"({size[0] / DPI * 2.54:.2f} x {size[1] / DPI * 2.54:.2f} cm)")
     if args.filmstrip:
-        film_poses = [ps for ps in poses if any(abs(ps[0] - t) < 1e-6 for t in args.film_times)]
+        film_poses = [ps for ps in all_poses if any(abs(ps[0] - t) < 1e-6 for t in args.film_times)]
         film_layers = render_frames(film_poses, cam, args.film_scale)
         filmstrip(cam, film_layers, path_enu, wps_enu, args.film_times, rows[:, 0], width_px,
                   out / "filmstrip.png", out / "film-labels.txt")

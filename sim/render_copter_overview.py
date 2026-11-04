@@ -178,7 +178,10 @@ def main():
     ap.add_argument("--ref", action="append", default=None, metavar="FILE",
                     help="motors.txt to compare the actuator stream with (repeatable)")
     ap.add_argument("--every", type=float, default=0.5)
-    ap.add_argument("--scale", type=float, default=3.0)
+    ap.add_argument("--climb", type=float, default=0.05, help="as in render_copter_strobe.py")
+    ap.add_argument("--hover-tol", type=float, default=0.1, help="as in render_copter_strobe.py")
+    ap.add_argument("--scale", type=float, default=2.2, help="drawing scale of the vehicle mesh (default 2.2; "
+                    "at 1.3 no vehicle pixel leaves the corridor's image, but the vehicles are hard to read)")
     ap.add_argument("--dpi", type=int, default=600)
     ap.add_argument("--supersample", type=int, default=4)
     ap.add_argument("--width-cm", type=float, default=8.2)
@@ -196,16 +199,20 @@ def main():
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
 
     params = args.params or [str(f) for f in rs.DEFAULT_PARAMS]
-    run, poses, mission = rs.fly_and_capture(args.every, Path(args.bin), params, args.duration, args.pyb_hz)
+    run, all_poses, mission = rs.fly_and_capture(1.0 / rc.CTRL_HZ, Path(args.bin), params, args.duration,
+                                                 args.pyb_hz)
     rc.write_outputs(out, run)
-    print(f"run: {run.end_reason}; {len(run.rows)} ticks; {len(poses)} instants")
+    rows, path_enu, wps_enu = rs.path_and_waypoints(run, mission)
+    poses = rs.select_instants(all_poses, wps_enu, args.every, None if args.climb < 0 else args.climb,
+                               args.hover_tol)
+    print(f"run: {run.end_reason}; {len(run.rows)} ticks; {len(poses)} instants, t = "
+          + " ".join(f"{t:g}" for t, _, _ in poses))
     rs.compare_motors(run, args.ref or rs.DEFAULT_REFS)
 
     width_px = int(round(args.width_cm / 2.54 * args.dpi))
     ss, W, H = rs.pick_supersample(width_px, args.aspect, args.supersample, 1.3)
     rs.SS = ss
     print(f"supersample {ss}: renders {W} x {H}")
-    rows, path_enu, wps_enu = rs.path_and_waypoints(run, mission)
     lo, hi = rs.floor_bounds(wps_enu)
     target = ((lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, wps_enu[:, 2].max() / 2)
     cam = rs.Camera(W, H, target, args.cam_dist, args.cam_yaw, args.cam_pitch)
@@ -289,7 +296,7 @@ def main():
         f"({ac[i][0]:.3f},{ac[i][1]:.3f}) -- ({ac[j][0]:.3f},{ac[j][1]:.3f})" for i, j in BOX_EDGES) + ";")
     names = []
     for (t, _, _), p in zip(poses, cm(cam.project(ticks))):
-        names.append(f"\\coordinate (v{int(round(t * 10)):03d}) at ({p[0]:.3f},{p[1]:.3f});")
+        names.append(f"\\coordinate (v{int(round(t * 1000)):05d}) at ({p[0]:.3f},{p[1]:.3f});")
     for i, p in enumerate(cm(cam.project(wps_enu))):
         names.append(f"\\coordinate (wp{i}) at ({p[0]:.3f},{p[1]:.3f});")
     for nm, p in zip(["ce0", "ce1", "ce2", "ce3"], cm(ceil2)):
