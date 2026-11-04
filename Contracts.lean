@@ -12,6 +12,9 @@ import Contracts.QuadDivSqrt
 import Contracts.QuadHoverZero
 import Contracts.QuadHoverVert
 import Contracts.QuadHover
+import Contracts.CopterLift
+import Contracts.CopterCode
+import Contracts.CopterAxioms
 
 /-!
 # Assume-guarantee contracts over sets of behaviors
