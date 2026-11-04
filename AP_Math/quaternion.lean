@@ -12,16 +12,27 @@ Mirrors, at ArduPilot 802db19de1, `quaternion.h:28-57` (fields, constructors, `i
 `:711-731` (`operator*` Hamilton product), `:737-759` (`operator*(const Vector3&)`),
 `:761-780` (`operator*=`).
 
-Precision. The review (`ardupilot-review.md` section 1) and the task brief assume that the
-`sinF`/`cosF`/`atan2F`/`sqrtF` macros call the `double` libm here when `HAL_WITH_EKF_DOUBLE`. They do
-not. The macros expand to `sin(x)` etc. (`ftype.h:16-23`); with `-fsingle-precision-constant` the
-argument is `float` (`0.5*theta` is `0.5f*theta`), and `<math.h>` in C++ (libstdc++ and libc++)
-puts the `float` overloads `std::sin(float)` etc. into the global namespace, so overload
-resolution picks `sinf`, `cosf`, `atan2f`, `sqrtf`. Checked by compiling
-`float f(float t){ return sin(0.5*t); }` after `#include <cmath>` and `<math.h>`: g++ 15 with
-`-fsingle-precision-constant` and Apple clang 17 with `-cl-single-precision-constant` both emit a
-call to `sinf` (and `atan2f`, `fsqrt` for the other two). Without the flag, clang emits
-`fcvt; bl sin; fcvt`. So every quaternion operation here is binary32, libm included.
+Precision. Under `HAL_WITH_EKF_DOUBLE` the `sinF`/`cosF`/`atan2F`/`sqrtF` macros expand to
+`sin(x)` etc. (`ftype.h:14-23`), and overload resolution picks the `float` overload
+(`sinf`, `atan2f`, `sqrtf`) exactly when the argument is a `float`. The argument type depends on
+the literals. In an ordinary function, `-cl-single-precision-constant` (Apple clang) or
+`-fsingle-precision-constant` (g++) makes an unsuffixed literal such as `0.5` a `float`. Apple
+clang does not apply the flag inside a function template, and every method here is a member of
+the template `QuaternionT<T>`: there `0.5` stays a `double`. So `sinF(0.5*theta)` in
+`from_axis_angle(axis, theta)` (`quaternion.cpp:477`, `:479`) and `cosF(roll*0.5)` ... `sinF(yaw*0.5)`
+in `from_euler` (`:423-428`) widen the `float` argument to `double` (the product with `0.5` is
+exact), call the `double` `sin`/`cos`, and round the result once to `float` on assignment. The
+compiled oracle shows it (`fcvt d; fmul d; bl _sin; fcvt s`; `oracle/RESULTS.md`, "Port deviations
+found", 1 and 2), and the port computes the same: `Float.sin`/`Float.cos` (`sin`/`cos`) of the
+widened half angle, narrowed by `Float.toFloat32`. Until the oracle found this, the port used
+`Float32.sin`/`cos` (`sinf`/`cosf`) in both functions; on the 1 m/s course `from_axis_angle(axis,
+theta)` then differed from ArduPilot by one ulp on 204 calls, from the first at tick 496, where
+Apple's `cosf` rounds a near tie the wrong way (`oracle/RESULTS.md`, "First divergence"). The port
+follows the clang build. A g++ build keeps `0.5` a `float` and computes the pair through `cexpf`,
+which agrees with the clang build on that flight (`oracle/RESULTS.md`, "Other oracle builds"). Every
+other libm call in this file has `float` arguments (`f`-suffixed literals or `float` fields:
+`atan2F(2.0f*..., 1.0f - ...)`, `sqrtF(sq(q2)+...)`), so it is binary32 (`atan2f`, `sqrtf`), as is
+the rest of the arithmetic.
 
 Conventions. Mutating methods (`normalize`, `invert`, `rotate`, `zero`, `initialise`) return the
 new quaternion. Methods that overwrite every field regardless of `*this` (`from_euler`,
@@ -74,14 +85,15 @@ def rotation_matrix (q : Quaternion) : Matrix3f :=
 /-- `earth_to_body(Vector3 &v)`: `v = m * v` with `m = rotation_matrix()`. -/
 def earth_to_body (q : Quaternion) (v : Vector3f) : Vector3f := q.rotation_matrix * v
 
-/-- `from_euler(roll, pitch, yaw)`, 321 order; `cosF(roll*0.5)` is `cosf(roll*0.5f)`. -/
+/-- `from_euler(roll, pitch, yaw)`, 321 order. `const T cr2 = cosF(roll*0.5)` is
+`(float)cos((double)roll * 0.5)`: the literal is a `double` in the template (header, Precision). -/
 def from_euler (roll pitch yaw : Float32) : Quaternion :=
-  let cr2 := (roll * 0.5).cos
-  let cp2 := (pitch * 0.5).cos
-  let cy2 := (yaw * 0.5).cos
-  let sr2 := (roll * 0.5).sin
-  let sp2 := (pitch * 0.5).sin
-  let sy2 := (yaw * 0.5).sin
+  let cr2 := Float.toFloat32 (Float.cos (Float32.toFloat roll * 0.5))
+  let cp2 := Float.toFloat32 (Float.cos (Float32.toFloat pitch * 0.5))
+  let cy2 := Float.toFloat32 (Float.cos (Float32.toFloat yaw * 0.5))
+  let sr2 := Float.toFloat32 (Float.sin (Float32.toFloat roll * 0.5))
+  let sp2 := Float.toFloat32 (Float.sin (Float32.toFloat pitch * 0.5))
+  let sy2 := Float.toFloat32 (Float.sin (Float32.toFloat yaw * 0.5))
   ⟨cr2 * cp2 * cy2 + sr2 * sp2 * sy2,
    sr2 * cp2 * cy2 - cr2 * sp2 * sy2,
    cr2 * sp2 * cy2 + sr2 * cp2 * sy2,
@@ -90,12 +102,16 @@ def from_euler (roll pitch yaw : Float32) : Quaternion :=
 /-- `from_euler(const Vector3<T> &v)`. -/
 def from_euler_vec (v : Vector3f) : Quaternion := from_euler v.x v.y v.z
 
-/-- `from_axis_angle(const Vector3<T> &axis, T theta)`; `axis` must be a unit vector. -/
+/-- `from_axis_angle(const Vector3<T> &axis, T theta)`; `axis` must be a unit vector.
+`const T st2 = sinF(0.5*theta)` and `q1 = cosF(0.5*theta)` are `(float)sin(0.5 * (double)theta)`
+and `(float)cos(0.5 * (double)theta)`, the half angle formed twice: the literal is a `double` in
+the template (header, Precision; `oracle/RESULTS.md`). -/
 def from_axis_angle_theta (axis : Vector3f) (theta : Float32) : Quaternion :=
   if AP_Math.is_zero theta then ⟨1.0, 0.0, 0.0, 0.0⟩
   else
-    let st2 := (0.5 * theta).sin
-    ⟨(0.5 * theta).cos, axis.x * st2, axis.y * st2, axis.z * st2⟩
+    let st2 := Float.toFloat32 (Float.sin (0.5 * Float32.toFloat theta))
+    ⟨Float.toFloat32 (Float.cos (0.5 * Float32.toFloat theta)), axis.x * st2, axis.y * st2,
+     axis.z * st2⟩
 
 /-- `from_axis_angle(Vector3<T> v)`, rotation-vector form. -/
 def from_axis_angle (v : Vector3f) : Quaternion :=
