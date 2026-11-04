@@ -26,7 +26,7 @@ OUT="$SIM/build"
 BIN="${BIN:-$OUT/copter-c}"
 case "$BIN" in /*) ;; *) BIN="$SIM/$BIN" ;; esac
 CDIR="$BIN.d"
-EXTRA_CFLAGS="${EXTRA_CFLAGS:--fno-builtin-sinf -fno-builtin-cosf}"
+EXTRA_CFLAGS="${EXTRA_CFLAGS:--fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos}"
 ROOT="Copter.Main"
 
 # Step 1: build the Lean executable target, which makes lake (re)generate the C files.

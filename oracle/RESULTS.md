@@ -188,3 +188,7 @@ exact in either precision. Neither can change a value.
   through the spool-up logic.
 - The navigator and the mission (WPNav/SimplePath, the submode schedule) are the port's: fed from
   its trace and the probe.
+
+## Status after commit f50cd92
+
+The deviation in `from_axis_angle` (and `from_euler`) is fixed in `AP_Math/quaternion.lean`: the half-angle sine and cosine are now evaluated in double precision and narrowed, as the compiled C++ does. With that change the unmodified-ArduPilot variant `oracle-nosincos` matches a fresh replay of `sim/build/copter-c` on all 22 numbers on all 8431 ticks, actuators bit-identical on every tick. The `diag-floattrig` variant now models the superseded single-precision behavior and differs from the port from tick 496. The paragraphs above describe the state before the fix.

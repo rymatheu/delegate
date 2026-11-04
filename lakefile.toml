@@ -1,7 +1,7 @@
 name = "delegate"
 # clang at -O3 fuses sinf/cosf pairs into __sincosf_stret, which is not bit-identical to the
 # separate libm calls the interpreter makes; keep the compiled routes on sinf/cosf.
-moreLeancArgs = ["-fno-builtin-sinf", "-fno-builtin-cosf"]
+moreLeancArgs = ["-fno-builtin-sinf", "-fno-builtin-cosf", "-fno-builtin-sin", "-fno-builtin-cos"]
 defaultTargets = ["Contracts", "FloatModel", "Flight", "flight", "AP_Math", "AC_PID", "AC_AttitudeControl", "AC_WPNav", "AP_Motors", "Copter", "copter"]
 
 [[require]]
@@ -58,3 +58,7 @@ globs = ["Copter", "Copter.+"]
 [[lean_exe]]
 name = "copter"
 root = "Copter.Main"
+
+[[lean_exe]]
+name = "bench"
+root = "Copter.Bench"
