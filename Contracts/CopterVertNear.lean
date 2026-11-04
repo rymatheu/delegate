@@ -32,7 +32,7 @@ logical model of `Float32` (`rfl` on the unpacked form, no rounding argument):
 on the path (`PSC_D_POS_P = 1`, `PSC_D_VEL_P = 5`, `PSC_D_ACC_P = 0.05`, `PSC_D_ACC_I = 0.1`,
 `PSC_D_ACC_IMAX = 0.8`, `GRAVITY_MSS`, `MOT_THST_HOVER = 0.4444`, `FLT_EPSILON`). Their exact
 values are the rationals of `Contracts.CopterVert` (`dtc`, `av`, `aa`, `am`, `kp`, `ki`) and of
-`staging/text/vertical-channel.md`, section 5.
+`Contracts/VerticalChannel.md`, section 5.
 -/
 
 open Float.Model UnpackedFloat AP_Math Contracts.CopterVert

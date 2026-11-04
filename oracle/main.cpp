@@ -2,9 +2,10 @@
 //
 // Runs ArduPilot's own control classes (AC_PosControl, AC_AttitudeControl(_Multi), AP_MotorsMatrix /
 // AP_MotorsMulticopter / Thrust_Linearization, AC_PID family, AP_Math), compiled unmodified from
-// /Users/ryan/Research/delegate/ardupilot at 802db19de1, on the samples recorded from a flight of
-// the Lean port, and prints per tick what the port prints (Copter/PROTOCOL.md): the four actuators
-// and the 18 trace numbers, as exact decimals, then '|' and the bit patterns of the same 22 values.
+// a checkout of ArduPilot at 802db19de1 (the AP variable of build.sh), on the samples recorded from
+// a flight of the Lean port, and prints per tick what the port prints (Copter/PROTOCOL.md): the four
+// actuators and the 18 trace numbers, as exact decimals, then '|' and the bit patterns of the same 22
+// values.
 //
 // Everything in this file is harness, not ArduPilot code. It mirrors the Lean harness line for line:
 //   Copter/Loop.lean   `loop` (scheduler_loop, ins_update, run_rate_controller_main,

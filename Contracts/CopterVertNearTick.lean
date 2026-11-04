@@ -17,7 +17,7 @@ throttle filter minus `4/9`, and the plant's `ζ = z + 1`, `w`. The perturbation
 defined as the differences, and `vert_tick` bounds them by `NBound`: nothing accumulates between
 ticks except through `stepN` itself.
 
-**The tick invariant** (`VInv`, section 10 of `staging/text/vertical-channel.md`): the PIDs are out of
+**The tick invariant** (`VInv`, section 10 of `Contracts/VerticalChannel.md`): the PIDs are out of
 reset; the dead states (the velocity derivative filter, the acceleration target and derivative
 filters) are finite and bounded; the throttle filter's cutoff is 2 Hz; and **the stored throttle**
 `_throttle_in` is within `3.7 · 10⁻⁸` of `4/9 - kp Ea - ι`, with `Ea`, `ι` the exact values of the

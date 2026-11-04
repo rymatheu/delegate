@@ -1,9 +1,9 @@
 # C++ oracle for the Lean ArduCopter port
 
-The oracle runs ArduPilot's own control classes, compiled unmodified from
-`/Users/ryan/Research/delegate/ardupilot` (commit 802db19de1), on the samples recorded from a flight
-of the Lean port, and prints, tick by tick, what the port prints (`Copter/PROTOCOL.md`): the four
-actuator values and the 18 `--trace` numbers. `compare.py` compares the two. Results:
+The oracle runs ArduPilot's own control classes, compiled unmodified from a checkout of ArduPilot
+at 802db19de1 (the `AP` variable of build.sh), on the samples recorded from a flight of the Lean
+port, and prints, tick by tick, what the port prints (`Copter/PROTOCOL.md`): the four actuator
+values and the 18 `--trace` numbers. `compare.py` compares the two. Results:
 `RESULTS.md`. Copied or edited ArduPilot code: `DIFF.md`. This is Route 2 of `NOTES.md`.
 
 ## Build and run

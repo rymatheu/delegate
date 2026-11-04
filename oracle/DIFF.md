@@ -1,8 +1,8 @@
 # ArduPilot code that the oracle copies or edits
 
 The oracle proper (`build/oracle-nosincos`, and the `sincos` and `gcc` variants) compiles every
-ArduPilot `.cpp` it uses from `/Users/ryan/Research/delegate/ardupilot` (802db19de1) unmodified.
-No `.cpp` of the modules under test is copied or edited. The copies below are of code outside the
+ArduPilot `.cpp` it uses from a checkout of ArduPilot at 802db19de1 (the `AP` variable of build.sh)
+unmodified. No `.cpp` of the modules under test is copied or edited. The copies below are of code outside the
 modules under test (the environment and the parameter loader), and one diagnostic copy that is not
 part of the oracle.
 

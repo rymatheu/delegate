@@ -18,12 +18,18 @@
 #                   replaced by diag/quaternion.cpp, a copy whose from_axis_angle/from_euler/angle use
 #                   float sinf/cosf/asinf (edits marked // ORACLE:, listed in DIFF.md). Set
 #                   DIAG_DEFINES="-DORACLE_DIAG_EULER=0 ..." to switch single edits off.
-# Environment: AP (ArduPilot tree, default /Users/ryan/Research/delegate/ardupilot), CXX (clang++),
-# GXX (g++-15).
+# Environment: AP (ArduPilot tree, a checkout of https://github.com/ArduPilot/ardupilot at commit
+# 802db19de1; default ../ardupilot next to the repository root), CXX (clang++), GXX (g++-15).
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-AP="${AP:-/Users/ryan/Research/delegate/ardupilot}"
+ROOT="$(cd "$HERE/.." && pwd)"
+AP="${AP:-$ROOT/../ardupilot}"
+if [ ! -f "$AP/libraries/AC_AttitudeControl/AC_PosControl.cpp" ]; then
+  echo "error: no ArduPilot tree at AP=$AP ($AP/libraries/AC_AttitudeControl/AC_PosControl.cpp not found)." >&2
+  echo "Set AP to a checkout of https://github.com/ArduPilot/ardupilot at commit 802db19de1." >&2
+  exit 1
+fi
 L="$AP/libraries"
 CXX="${CXX:-clang++}"
 GXX="${GXX:-/opt/homebrew/bin/g++-15}"

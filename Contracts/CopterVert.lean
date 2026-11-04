@@ -24,7 +24,7 @@ six real states, per 400 Hz tick:
 The stored throttle `_throttle_in` (the one-tick delay between `set_throttle_out` and the next
 tick's motors output) is `4/9 + τ` with `τ = -kp Ea - ι`, a function of the state; the plant's
 stored specific force is `-k (φ + 4/9)`. The derivation, every constant and the Float32 rounding
-budget are in `staging/text/vertical-channel.md`.
+budget are in `Contracts/VerticalChannel.md`.
 
 The gains are the exact real values of the `Float32` constants the code computes (`calc_lowpass_alpha_dt`
 at `dt = float(2500) * 1e-6f`, the literals `0.05f`, `0.1f`, `5.0f`, `1.0f`): the recurrence is the
@@ -111,7 +111,7 @@ def step (x : VX) : VX :=
   ⟨x.ζ + h * x.w, x.w - k * h * φ', Ev', Ea', ι', φ'⟩
 -- <</stepVert>>
 
-/-- The four perturbations of one tick (`vertical-channel.md`, "Perturbations"). -/
+/-- The four perturbations of one tick (`Contracts/VerticalChannel.md`, "Perturbations"). -/
 structure VN where
   n1 : ℝ
   n2 : ℝ
@@ -148,7 +148,7 @@ theorem step_zero : step ⟨0, 0, 0, 0, 0, 0⟩ = ⟨0, 0, 0, 0, 0, 0⟩ := by
 `[300, 210, 82, 27/10, 1500, -160], [21, 18, 27/10, 6/25, 46, -23],`
 `[12000, -1100, 1500, 46, 160000, 13000], [-1600, -2800, -160, -23, 13000, 5600]]`
 in the coordinates `(ζ, w, Ev, Ea, ι, φ)`: the solution of a discrete Lyapunov equation
-(`vertical-channel.md`) rounded to two significant digits. -/
+(`Contracts/VerticalChannel.md`) rounded to two significant digits. -/
 -- <<Vvert>>
 def V (x : VX) : ℝ :=
   9200 * (x.ζ * x.ζ) +
@@ -350,7 +350,7 @@ theorem V_small (m : VX) (hζ : |m.ζ| ≤ 0) (hw : |m.w| ≤ (1 / 100000000)) (
   linarith
 
 
-/-- The perturbation bounds (`vertical-channel.md`: each is 3 to 9 times the binary32 budget). -/
+/-- The perturbation bounds (`Contracts/VerticalChannel.md`: each is 3 to 9 times the binary32 budget). -/
 -- <<NBound>>
 structure NBound (n : VN) : Prop where
   b1 : |n.n1| ≤ (1 / 100000000)

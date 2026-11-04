@@ -3,7 +3,7 @@
 Status: Route 2 is built; see README.md (build, stubs, harness), RESULTS.md (comparison with the
 port) and DIFF.md. The notes below are the findings from before it was built.
 
-ArduPilot tree: /Users/ryan/Research/delegate/ardupilot, commit 802db19de1.
+ArduPilot tree: a checkout of ArduPilot at 802db19de1 (the `AP` variable of build.sh).
 
 Route 1 (waf example on the SITL board)
 - The checkout has every submodule empty (`modules/waf`, `modules/mavlink`,
