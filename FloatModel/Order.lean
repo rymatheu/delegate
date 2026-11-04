@@ -1,5 +1,6 @@
 /-
-Float's comparison operators agree with the exact real values on finite floats.
+The comparison operators of a float format agree with the exact real values on finite floats,
+generic over the format (`compare_eq_some_compare_toReal`); the `Float` instances follow.
 -/
 import FloatModel.ToReal
 
@@ -22,28 +23,30 @@ theorem mag_pos {m : Nat} (hm : 0 < m) (e : Int) : 0 < mag m e := by
   unfold mag; positivity
 
 /-- Canonical floats with a smaller exponent have a smaller magnitude. -/
-theorem mag_lt_of_exp_lt {m₁ m₂ : Nat} {e₁ e₂ : Int}
-    (h₁ : m₁ < 2 ^ 53) (h₂ : -1074 < e₂ → 2 ^ 52 ≤ m₂) (h₁' : -1074 ≤ e₁) (he : e₁ < e₂) :
+theorem mag_lt_of_exp_lt {spec : Format} {m₁ m₂ : Nat} {e₁ e₂ : Int}
+    (h₁ : m₁ < 2 ^ spec.mantissaBits)
+    (h₂ : spec.minExponent < e₂ → 2 ^ spec.mantissaBitsWithoutImplicit ≤ m₂)
+    (h₁' : spec.minExponent ≤ e₁) (he : e₁ < e₂) :
     mag m₁ e₁ < mag m₂ e₂ := by
-  have hm₂ : (2 : ℝ) ^ 52 ≤ m₂ := by exact_mod_cast h₂ (by omega)
-  have hm₁ : (m₁ : ℝ) < 2 * 2 ^ 52 := by
-    have : (m₁ : ℝ) < (2 : ℝ) ^ 53 := by exact_mod_cast h₁
-    linarith [show (2 : ℝ) ^ 53 = 2 * 2 ^ 52 by norm_num]
+  have hk : (2 : ℝ) ^ spec.mantissaBitsWithoutImplicit ≤ m₂ := by exact_mod_cast h₂ (by omega)
+  have hm₁ : (m₁ : ℝ) < 2 * 2 ^ spec.mantissaBitsWithoutImplicit := by
+    have : (m₁ : ℝ) < (2 : ℝ) ^ spec.mantissaBits := by exact_mod_cast h₁
+    rwa [Format.mantissaBits_eq, pow_succ, mul_comm] at this
   have hz : (2 : ℝ) ^ e₁ * 2 ≤ (2 : ℝ) ^ e₂ := by
     rw [← zpow_add_one₀ two_ne_zero]
     exact zpow_le_zpow_right₀ one_le_two (by omega)
   have hp : (0 : ℝ) < (2 : ℝ) ^ e₁ := by positivity
   unfold mag
-  calc (m₁ : ℝ) * 2 ^ e₁ < 2 * 2 ^ 52 * 2 ^ e₁ := by gcongr
-    _ = 2 ^ 52 * (2 ^ e₁ * 2) := by ring
-    _ ≤ 2 ^ 52 * 2 ^ e₂ := by gcongr
+  calc (m₁ : ℝ) * 2 ^ e₁ < 2 * 2 ^ spec.mantissaBitsWithoutImplicit * 2 ^ e₁ := by gcongr
+    _ = 2 ^ spec.mantissaBitsWithoutImplicit * (2 ^ e₁ * 2) := by ring
+    _ ≤ 2 ^ spec.mantissaBitsWithoutImplicit * 2 ^ e₂ := by gcongr
     _ ≤ m₂ * 2 ^ e₂ := by gcongr
 
 /-- On canonical positive floats, the lexicographic (exponent, mantissa) comparison used by
 `UnpackedFloat.compare` is the comparison of exact magnitudes. -/
-theorem lex_eq_compare_mag {m₁ m₂ : Nat} {e₁ e₂ : Int}
-    (c₁ : -1074 ≤ e₁ ∧ e₁ ≤ 971 ∧ m₁ < 2 ^ 53 ∧ (-1074 < e₁ → 2 ^ 52 ≤ m₁))
-    (c₂ : -1074 ≤ e₂ ∧ e₂ ≤ 971 ∧ m₂ < 2 ^ 53 ∧ (-1074 < e₂ → 2 ^ 52 ≤ m₂)) :
+theorem lex_eq_compare_mag {spec : Format} {s₁ s₂ : Sign} {m₁ m₂ : Nat} {e₁ e₂ : Int}
+    {hm₁ : 0 < m₁} {hm₂ : 0 < m₂}
+    (c₁ : CanonicalIn spec (.finite s₁ m₁ e₁ hm₁)) (c₂ : CanonicalIn spec (.finite s₂ m₂ e₂ hm₂)) :
     (compare e₁ e₂).then (compare m₁ m₂) = compare (mag m₁ e₁) (mag m₂ e₂) := by
   rcases lt_trichotomy e₁ e₂ with he | he | he
   · rw [Int.compare_eq_lt.2 he, compare_lt_iff_lt.2 (mag_lt_of_exp_lt c₁.2.2.1 c₂.2.2.2 c₁.1 he)]
@@ -75,9 +78,11 @@ theorem toReal_finite_negative (m : Nat) (e : Int) (hm : 0 < m) :
     (UnpackedFloat.finite .negative m e hm).toReal = - mag m e := by
   simp [toReal, Sign.apply, mag]
 
-/-- For canonical finite floats, `UnpackedFloat.compare` is the real comparison of exact values. -/
-theorem compare_eq_some_compare_toReal {u v : UnpackedFloat}
-    (cu : u.Canonical) (cv : v.Canonical) (fu : u.isFinite = true) (fv : v.isFinite = true) :
+/-- For finite floats canonical in the same format, `UnpackedFloat.compare` is the real comparison
+of exact values. -/
+theorem compare_eq_some_compare_toReal {spec : Format} {u v : UnpackedFloat}
+    (cu : CanonicalIn spec u) (cv : CanonicalIn spec v)
+    (fu : u.isFinite = true) (fv : v.isFinite = true) :
     u.compare v = some (compare u.toReal v.toReal) := by
   cases u with
   | infinity _ => simp [isFinite] at fu
@@ -124,6 +129,33 @@ theorem compare_eq_some_compare_toReal {u v : UnpackedFloat}
           ← lex_eq_compare_mag cu cv]
         rfl
 
+/-- `UnpackedFloat.lt` on finite canonical floats is the real order. -/
+theorem lt_eq_true_iff {spec : Format} {u v : UnpackedFloat}
+    (cu : CanonicalIn spec u) (cv : CanonicalIn spec v)
+    (fu : u.isFinite = true) (fv : v.isFinite = true) :
+    u.lt v = true ↔ u.toReal < v.toReal := by
+  rw [UnpackedFloat.lt, compare_eq_some_compare_toReal cu cv fu fv]
+  simp [compare_lt_iff_lt]
+
+/-- `UnpackedFloat.le` on finite canonical floats is the real order. -/
+theorem le_eq_true_iff {spec : Format} {u v : UnpackedFloat}
+    (cu : CanonicalIn spec u) (cv : CanonicalIn spec v)
+    (fu : u.isFinite = true) (fv : v.isFinite = true) :
+    u.le v = true ↔ u.toReal ≤ v.toReal := by
+  rw [UnpackedFloat.le, compare_eq_some_compare_toReal cu cv fu fv]
+  rcases lt_trichotomy u.toReal v.toReal with h | h | h
+  · simp [compare_lt_iff_lt.2 h, h.le]
+  · simp [h]
+  · simp [compare_gt_iff_gt.2 h, h.not_ge]
+
+/-- `UnpackedFloat.beq` on finite canonical floats is equality of exact values. -/
+theorem beq_eq_true_iff {spec : Format} {u v : UnpackedFloat}
+    (cu : CanonicalIn spec u) (cv : CanonicalIn spec v)
+    (fu : u.isFinite = true) (fv : v.isFinite = true) :
+    u.beq v = true ↔ u.toReal = v.toReal := by
+  rw [UnpackedFloat.beq, compare_eq_some_compare_toReal cu cv fu fv]
+  simp
+
 end Float.Model.UnpackedFloat
 
 namespace Float
@@ -138,25 +170,24 @@ theorem le_iff_unpack (a b : Float) : a ≤ b ↔ a.toModel.unpack.le b.toModel.
   simp [Float.le]
   rfl
 
+theorem canonicalIn_unpack (a : Float) : CanonicalIn Format.binary64 a.toModel.unpack :=
+  (canonical_iff _).1 a.toModel.unpack_canonical
+
 theorem compare_toModel_unpack {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
     a.toModel.unpack.compare b.toModel.unpack = some (compare a.toReal b.toReal) :=
-  UnpackedFloat.compare_eq_some_compare_toReal a.toModel.unpack_canonical
-    b.toModel.unpack_canonical ha hb
+  UnpackedFloat.compare_eq_some_compare_toReal a.canonicalIn_unpack b.canonicalIn_unpack ha hb
 
 /-- `Float`'s `<` (hence the runtime `decLt`) agrees with the exact real order on finite floats. -/
 theorem lt_iff_toReal_lt {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
     a < b ↔ a.toReal < b.toReal := by
-  rw [lt_iff_unpack, UnpackedFloat.lt, compare_toModel_unpack ha hb]
-  simp [compare_lt_iff_lt]
+  rw [lt_iff_unpack]
+  exact lt_eq_true_iff a.canonicalIn_unpack b.canonicalIn_unpack ha hb
 
 /-- `Float`'s `≤` (hence the runtime `decLe`) agrees with the exact real order on finite floats. -/
 theorem le_iff_toReal_le {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
     a ≤ b ↔ a.toReal ≤ b.toReal := by
-  rw [le_iff_unpack, UnpackedFloat.le, compare_toModel_unpack ha hb]
-  rcases lt_trichotomy a.toReal b.toReal with h | h | h
-  · simp [compare_lt_iff_lt.2 h, h.le]
-  · simp [h]
-  · simp [compare_gt_iff_gt.2 h, h.not_ge]
+  rw [le_iff_unpack]
+  exact le_eq_true_iff a.canonicalIn_unpack b.canonicalIn_unpack ha hb
 
 /-- The `Bool`-valued `decide` forms, i.e. what compiled code computes via `lean_float_decLt`. -/
 theorem decide_lt_eq {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
@@ -171,7 +202,6 @@ theorem decide_le_eq {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
 theorem beq_iff_toReal_eq {a b : Float} (ha : a.IsFinite) (hb : b.IsFinite) :
     (a == b) = true ↔ a.toReal = b.toReal := by
   show a.toModel.unpack.beq b.toModel.unpack = true ↔ _
-  rw [UnpackedFloat.beq, compare_toModel_unpack ha hb]
-  simp
+  exact beq_eq_true_iff a.canonicalIn_unpack b.canonicalIn_unpack ha hb
 
 end Float
