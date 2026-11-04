@@ -6,19 +6,27 @@
 # root (and to .lake/packages/<dep>/.lake/build/ir/ for modules of dependencies). This script
 # collects the import closure of Copter.Main from the `import` lines of the sources (core modules
 # Init, Std and Lean are left out: their code is in the toolchain's static archives), copies those C
-# files into sim/build/copter-c/ (so the exact C that was compiled stays next to the binary), compiles
+# files into sim/build/copter-c.d/ (so the exact C that was compiled stays next to the binary), compiles
 # each one with the toolchain's `leanc` (the clang shipped with Lean plus the Lean include path and
 # -ffp-contract=off, so no fused multiply-adds change floating-point results), and links them against
 # the static Lean runtime archives. The result, sim/build/copter-c, needs neither Lean nor lake at run
 # time.
 #
 # Usage: sim/build_copter_c.sh     (from anywhere; paths are resolved relative to this script)
+#
+# Environment (optional): EXTRA_CFLAGS, extra flags for every compile (default none: the flags lake
+# uses); BIN, the output binary (default sim/build/copter-c). For example
+#   EXTRA_CFLAGS="-fno-builtin-sinf -fno-builtin-cosf" BIN=build/copter-c-nosincos sim/build_copter_c.sh
+# keeps clang from fusing sinf(x) and cosf(x) into Apple's __sincosf_stret (see README).
 set -euo pipefail
 
 SIM="$(cd "$(dirname "$0")" && pwd)"
 PKG="$(cd "$SIM/.." && pwd)"
 OUT="$SIM/build"
-CDIR="$OUT/copter-c.d"
+BIN="${BIN:-$OUT/copter-c}"
+case "$BIN" in /*) ;; *) BIN="$SIM/$BIN" ;; esac
+CDIR="$BIN.d"
+EXTRA_CFLAGS="${EXTRA_CFLAGS:-}"
 ROOT="Copter.Main"
 
 # Step 1: build the Lean executable target, which makes lake (re)generate the C files.
@@ -44,8 +52,19 @@ c_of() {    # module -> emitted C path (empty if not found)
     if [ -f "$base/.lake/build/ir/$rel" ]; then echo "$base/.lake/build/ir/$rel"; return; fi
   done
 }
-imports_of() {  # source path -> imported modules (handles `public`/`meta`/`private` and `import all`)
-  sed -nE 's/^[[:space:]]*((public|private|meta)[[:space:]]+)*import[[:space:]]+(all[[:space:]]+)?([A-Za-z0-9_.«»]+).*/\4/p' "$1"
+imports_of() {  # source path -> imported modules of its header (handles `public`/`meta`/`private`
+                # and `import all`); the header ends at the first line that is not blank, a comment,
+                # `module`, `prelude` or an import, so `import` at the start of a docstring line is not read
+  awk '
+    incomment { if ($0 ~ /-\//) incomment = 0; next }
+    /^[[:space:]]*$/ || /^[[:space:]]*--/ { next }
+    /^[[:space:]]*\/-/ { if ($0 !~ /-\//) incomment = 1; next }
+    /^[[:space:]]*(module|prelude)[[:space:]]*$/ { next }
+    /^[[:space:]]*((public|private|meta)[[:space:]]+)*import[[:space:]]/ {
+      line = $0; sub(/^[[:space:]]*((public|private|meta)[[:space:]]+)*import[[:space:]]+(all[[:space:]]+)?/, "", line)
+      sub(/[[:space:]].*$/, "", line); print line; next }
+    { exit }
+  ' "$1"
 }
 CLOSURE=()
 SEEN=" "      # space-separated visited modules (bash 3.2, the macOS /bin/bash, has no associative arrays)
@@ -74,14 +93,15 @@ done
 # Step 4: compile each emitted C file to an object file. -O3 -DNDEBUG matches what lake uses;
 # leanc adds -I<sysroot>/include and -ffp-contract=off itself.
 for m in "${CLOSURE[@]}"; do
-  "$LEANC" -c -O3 -DNDEBUG -o "$CDIR/${m//./_}.o" "$CDIR/${m//./_}.c"
+  "$LEANC" -c -O3 -DNDEBUG $EXTRA_CFLAGS -o "$CDIR/${m//./_}.o" "$CDIR/${m//./_}.c"
 done
 
 # Step 5: link. leanc's default link line (see `leanc --print-ldflags`) adds the static archives of
 # the Lean runtime and core library (libleanrt.a, libInit.a, ...); only macOS system libraries remain
 # dynamic.
-"$LEANC" -O3 -o "$OUT/copter-c" "$CDIR"/*.o
+"$LEANC" -O3 -o "$BIN" "$CDIR"/*.o
 
 # Step 6: show what the binary links dynamically (expected: libc++ and libSystem only).
-otool -L "$OUT/copter-c"
-ls -l "$OUT/copter-c"
+otool -L "$BIN"
+ls -l "$BIN"
+echo "libm sine/cosine symbols: $(nm -u "$BIN" | grep -E 'sin|cos' | tr '\n' ' ')"

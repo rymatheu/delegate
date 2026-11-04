@@ -389,6 +389,11 @@ def attach_trace(run: Run, cmd, cwd):
 # --------------------------------------------------------------------------------------------
 # Output
 
+# The 18 trace fields of `copter --trace` (Copter/Main.lean): AC_PosControl's position, velocity and
+# acceleration targets after the tick (NED), the thrust vector, the attitude target Euler angles and
+# the body-rate targets.
+TRACE_FIELDS = ["sp_n", "sp_e", "sp_d", "vsp_n", "vsp_e", "vsp_d", "asp_n", "asp_e", "asp_d",
+                "thr_n", "thr_e", "thr_d", "roll_t", "pitch_t", "yaw_t", "p_t", "q_t", "r_t"]
 FIELDS = ["t", "x_n", "y_e", "z_d", "vx_n", "vy_e", "vz_d", "ax_n", "ay_e", "az_d",
           "q1", "q2", "q3", "q4", "roll", "pitch", "yaw", "p", "q", "r",
           "m1", "m2", "m3", "m4", "tick_us"]
@@ -400,13 +405,21 @@ def write_outputs(out_dir: Path, run: Run):
     ntr = max((len(t) for t in run.trace), default=0)
     with open(out_dir / "flight.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(FIELDS + [f"trace{j}" for j in range(ntr)])
+        names = TRACE_FIELDS if ntr == len(TRACE_FIELDS) else [f"trace{j}" for j in range(ntr)]
+        w.writerow(FIELDS + names)
         for i, row in enumerate(run.rows):
             w.writerow(row + (run.trace[i] if i < len(run.trace) else []))
     (out_dir / "inputs.txt").write_text("\n".join(run.inputs) + "\n")
     (out_dir / "motors.txt").write_text("\n".join(run.outputs) + "\n")
     if run.trace:
         (out_dir / "trace.txt").write_text("\n".join(" ".join(t) for t in run.trace) + "\n")
+
+
+def trace_array(run: Run):
+    """The trace fields as an array (ticks x 18), or None if the trace is missing or of another shape."""
+    if not run.trace or any(len(t) != len(TRACE_FIELDS) for t in run.trace):
+        return None
+    return np.array([[float(v) for v in t] for t in run.trace])
 
 
 def summarize(run: Run, mission, args) -> list[str]:
@@ -429,19 +442,41 @@ def summarize(run: Run, mission, args) -> list[str]:
     vs = np.linalg.norm(a[:, C["vx_n"]:C["vz_d"] + 1], axis=1)
     lines.append(f"max speed {vs.max():.3f} m/s; max altitude {-pos[:, 2].min():.3f} m")
     lines.append(f"waypoints passed in order within {args.pass_tol:g} m: {run.passed} of {len(wps)}")
+    # Closest approach to each waypoint in turn: waypoint i is searched from the closest approach to
+    # waypoint i-1 up to the first tick that is more than halfway along the leg to waypoint i+1
+    # (closer to i+1 than half the leg length); the last one up to the end.
+    j0 = 0
     for i, wp in enumerate(wps):
         d = np.linalg.norm(pos - np.array(wp), axis=1)
-        j = int(np.argmin(d))
-        inside = np.nonzero(d <= args.tol)[0]
-        reach = f", first within {args.tol:g} m at {t[inside[0]]:.3f} s" if len(inside) else \
-            f", never within {args.tol:g} m"
+        j1 = len(d)
+        if i + 1 < len(wps):
+            dn = np.linalg.norm(pos - np.array(wps[i + 1]), axis=1)
+            half = 0.5 * math.dist(wp, wps[i + 1])
+            past = np.nonzero(dn[j0:] < half)[0]
+            if len(past):
+                j1 = j0 + int(past[0]) + 1
+        j = j0 + int(np.argmin(d[j0:j1]))
+        inside = np.nonzero(d[j0:j1] <= args.tol)[0]
+        reach = f", first within {args.tol:g} m at {t[j0 + inside[0]]:.3f} s" if len(inside) else \
+            f", not within {args.tol:g} m"
         lines.append(f"waypoint {i} {wp}: closest {d[j] * 100:.2f} cm at {t[j]:.3f} s{reach}")
+        j0 = j
     if wps:
         d = np.linalg.norm(pos - np.array(wps[-1]), axis=1)
-        inside = np.nonzero(d <= args.tol)[0]
+        inside = np.nonzero(d[j0:] <= args.tol)[0] + j0
         if len(inside):
             lines.append(f"max distance from last waypoint after first reaching it: "
                          f"{d[inside[0]:].max() * 100:.2f} cm")
+    tr = trace_array(run)
+    if tr is not None:
+        e = np.linalg.norm(pos - tr[:, 0:3], axis=1)
+        vt = np.linalg.norm(tr[:, 3:6], axis=1)
+        lines.append(f"max target speed {vt.max():.3f} m/s; max target acceleration "
+                     f"{np.linalg.norm(tr[:, 6:9], axis=1).max():.3f} m/s^2")
+        lines.append(f"distance to AC_PosControl's position target: max {e.max() * 100:.2f} cm, "
+                     f"rms {np.sqrt(np.mean(e ** 2)) * 100:.2f} cm; max |roll - roll target| "
+                     f"{math.degrees(np.abs(roll - tr[:, 12]).max()):.2f} deg, max |pitch - pitch target| "
+                     f"{math.degrees(np.abs(pitch - tr[:, 13]).max()):.2f} deg")
     us = np.array(run.tick_s[1:]) * 1e6
     if len(us):
         lines.append(f"controller round trip per tick (write state line, read actuator line; ticks 2..): "
@@ -468,16 +503,24 @@ def plot(out_dir: Path, run: Run, mission, title: str):
     t = a[:, 0]
     wps = mission["waypoints"]
     fig, ax = plt.subplots(5, 1, figsize=(9, 12), sharex=True, constrained_layout=True)
+    tr = trace_array(run)
     for j, name in enumerate(["north x", "east y", "down z"]):
         ax[0].plot(t, a[:, C["x_n"] + j], color=series[j], label=name)
+        if tr is not None:
+            ax[0].plot(t, tr[:, j], color=series[j], linestyle="--", linewidth=1.0, label=f"{name} target")
     ax[0].set_ylabel("position NED (m)")
     ax[0].legend(ncol=3, loc="upper left", fontsize=8)
     ax[0].set_title(title, color=ink, loc="left")
     for j, name in enumerate(["roll", "pitch"]):
         ax[1].plot(t, np.degrees(a[:, C[name]]), color=series[j], label=name)
+        if tr is not None:
+            ax[1].plot(t, np.degrees(tr[:, 12 + j]), color=series[j], linestyle="--", linewidth=1.0,
+                       label=f"{name} target")
     ax[1].set_ylabel("roll, pitch (deg)")
     ax[1].legend(loc="upper right")
     ax[2].plot(t, np.degrees(a[:, C["yaw"]]), color=series[2], label="yaw")
+    if tr is not None:
+        ax[2].plot(t, np.degrees(tr[:, 14]), color=series[2], linestyle="--", linewidth=1.0, label="yaw target")
     ax[2].set_ylabel("yaw (deg)")
     ax[2].legend(loc="upper left")
     for j, name in enumerate(["ax_n", "ay_e", "az_d"]):
@@ -493,6 +536,9 @@ def plot(out_dir: Path, run: Run, mission, title: str):
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 4.6), constrained_layout=True)
+    tr = trace_array(run)
+    if tr is not None:
+        ax[0].plot(tr[:, 1], tr[:, 0], color=series[1], linestyle="--", linewidth=1.0, label="position target")
     ax[0].plot(a[:, C["y_e"]], a[:, C["x_n"]], color=series[0], label="path")
     for i, w in enumerate(wps):
         ax[0].plot(w[1], w[0], marker="o", markersize=8, color=series[1], linestyle="none",
@@ -504,6 +550,8 @@ def plot(out_dir: Path, run: Run, mission, title: str):
     ax[0].set_title("top-down path", color=ink, loc="left")
     ax[0].legend(loc="lower right")
     ax[1].plot(t, -a[:, C["z_d"]], color=series[0], label="altitude")
+    if tr is not None:
+        ax[1].plot(t, -tr[:, 2], color=series[0], linestyle="--", linewidth=1.0, label="altitude target")
     ax[1].plot(t, np.hypot(a[:, C["x_n"]], a[:, C["y_e"]]), color=series[2],
                label="horizontal distance from origin")
     ax[1].set_xlabel("time (s)")
@@ -550,7 +598,7 @@ def fly_backend(args, backend: str, ctrl_args: list[str], files, out_dir: Path |
         attach_trace(run, cmd, cwd)
     write_outputs(out_dir, run)
     lines = [f"backend {backend}: {' '.join(cmd)} (cwd {cwd})"] + summarize(run, mission, args)
-    if run.crashed or not run.end_reason.startswith("last waypoint"):
+    if run.crashed:
         lines.append("first 20 ticks (input line -> actuator line):")
         lines += [f"  {i}: {run.inputs[i]} -> {run.outputs[i]}" for i in range(min(20, len(run.inputs)))]
     (out_dir / "summary.txt").write_text("\n".join(lines) + "\n")
@@ -562,7 +610,8 @@ def fly_backend(args, backend: str, ctrl_args: list[str], files, out_dir: Path |
 
 def determinism(args, ctrl_args, files):
     backends = ["lake", "bin", "interp"]
-    runs = {b: fly_backend(args, b, ctrl_args, files) for b in backends}
+    base = Path(args.out) if args.out else SIM_DIR / "out"
+    runs = {b: fly_backend(args, b, ctrl_args, files, base / f"copter-{b}") for b in backends}
     ref = runs["lake"]
     report = []
     for b in ["bin", "interp"]:
@@ -584,7 +633,7 @@ def determinism(args, ctrl_args, files):
         report.append(f"batch cost per tick ({b}, parse + step + exact print, no pipe round trip): "
                       f"{replay_cost(cmd, cwd, ref.inputs) * 1e6:.1f} us")
     text = "\n".join(report)
-    (SIM_DIR / "out" / "copter-determinism.txt").write_text(text + "\n")
+    (base / "copter-determinism.txt").write_text(text + "\n")
     print(text)
 
 
