@@ -126,3 +126,67 @@ For each run, in `out/<backend>/` (or `--out`):
 ## Limitations
 
 The navigator's speed profile has no jerk limit, so the acceleration feed-forward steps where the profile switches between accelerating, cruising and braking and where a blend begins or ends; each step shows as a short spike in the motor commands. Corners are cut by the blend (6.6 to 8.0 cm inside the waypoints on the course), there is no loiter time at inner waypoints, and the target does not wait for a vehicle that falls behind (on the course the vehicle never lags by more than 5.2 cm). The heading lags its setpoint through the corners because the yaw rate is limited to 1.57 rad/s. The angle loop uses Euler-angle errors as body-rate errors and the vertical channel uses a fixed hover throttle, as documented in the control modules; both are adequate at the tilts flown here (under 11 degrees). The simulator state is exact (no sensor noise, delay or motor dynamics) and `Physics.PYB` omits drag, ground effect and downwash. Every gain the tuning needed could be expressed through `Params`.
+
+## The copter driver (`run_copter.py`)
+
+`run_copter.py` flies `copter`, the Lean port of ArduCopter (`../Copter/Main.lean`), which replaces `flight`. It keeps the structure of `run_demo.py` (lock-step pipes, three backends, `--exact`, the `--trace` replay, `--determinism`, `summary.txt` and plots) and changes the rates, the input line, the motor map and the parameter files.
+
+- `lake`: `lake exe copter`; `bin`: `build/copter-c`, built by `build_copter_c.sh`; `interp`: `lake env lean --run Copter/Main.lean`; `stub`: a stand-in controller built into `run_copter.py` (`--stub-controller`), which reads the protocol and answers constant actuators (hover, plus optional open-loop roll, pitch, yaw and throttle offsets `--stub-rpyt R P Y T` through the quad X factors), for testing the driver without Lean.
+- Rates: control at 400 Hz (ArduCopter's main loop), physics at 1200 Hz (`--pyb-hz`, 800 also accepted; CtrlAviary needs a multiple of the control rate), so `dt = 0.0025` s and each command is held for three physics steps.
+
+```
+.venv/bin/python run_copter.py --check-frames                      # conversion and motor-map checks
+.venv/bin/python run_copter.py --backend stub --params params/copter-hover.txt --duration 10
+.venv/bin/python run_copter.py --backend lake --params params/copter-hover.txt --duration 10 --hold 99
+.venv/bin/python run_copter.py --backend bin                       # figure-eight course (params/copter-cf2x.txt)
+.venv/bin/python run_copter.py --determinism                       # all three backends, compared
+```
+
+Options are those of `run_demo.py` (`--params`, `--set`, `--duration`, `--hold`, `--tol`, `--pass-tol`, `--init-ned`, `--init-euler`, `--gui`, `--out`, `--no-plots`, `--determinism`) plus `--pyb-hz`, `--ground-timeout` (default 3 s: the run ends if the vehicle is still, or again, on the ground after that), `--no-trace` and `--no-exact`. Outputs go to `out/copter-<backend>/` and `out/copter-determinism.txt`. The mission for the end condition and the summary is read from the controller's `--print-params` (lines `waypoint N E D`) when it supports the option, otherwise from the parameter files.
+
+### Protocol
+
+One input line per control tick, 17 numbers: `x y z vx vy vz ax ay az q1 q2 q3 q4 p q r dt`.
+
+- `x y z`, `vx vy vz`: NED position (m) and velocity (m/s), from `enu_state_to_ned` unchanged. The NED origin is the PyBullet world origin on the ground plane; the vehicle rests with its base at `z = -0.0135`.
+- `ax ay az`: the earth-frame specific force in NED, as `AP_AHRS::get_accel_ef` returns it: the vehicle's true NED acceleration minus the gravity vector `(0, 0, +9.80665)`, so `(0, 0, -9.80665)` at rest and `(0, 0, 0)` in free fall. The acceleration is the backward difference of the NED velocity over the last control period, `(v_k - v_{k-1}) / dt`, which equals the mean of the accelerations of its three physics substeps (the differences telescope). It is therefore the mean over the tick during which the previous command was applied, half a tick behind the instantaneous value. On the first tick there is no previous velocity: the vehicle starts at rest with no thrust yet, so the value is `(0, 0, -9.80665)` on the ground and `(0, 0, 0)` for an airborne start.
+- `q1 q2 q3 q4`: the attitude quaternion in ArduPilot's convention (`q1` scalar, rotating FRD body vectors into NED), computed as the quaternion product `q(T) * q_enu_flu * q(D)` with `q(T) = (0, 1/sqrt2, 1/sqrt2, 0)` (the half turn about the north-east bisector, the matrix `T` above) and `q(D) = (0, 1, 0, 0)` (the half turn about forward, `D` above): the quaternion form of `R_ned_frd = T R_enu_flu D`. It is normalized and its sign chosen with `q1 >= 0`. Level and facing north is `(1, 0, 0, 0)`.
+- `p q r`: body rates about FRD (rad/s), as before; `dt`: 0.0025.
+
+Output line: `m1 m2 m3 m4`, the actuator outputs in [0, 1] of ArduPilot motor slots 0..3 of the quad X frame (`AP_MotorsMatrix::setup_quad_matrix`, `MOTOR_FRAME_TYPE_X`); with `--trace`, further fields follow, which the driver stores as `trace0, trace1, ...` in `flight.csv` and in `trace.txt` after checking that the first four equal the flown ones.
+
+### Motor map (ArduPilot quad X)
+
+| ArduPilot slot (angle from the nose, clockwise positive) | CF2X propeller (`cf2x.urdf`, FLU position) | spin seen from above |
+|---|---|---|
+| 0 at 45 deg, front-right | prop0 (+x, -y) | counter-clockwise |
+| 1 at -135 deg, rear-left | prop2 (-x, +y) | counter-clockwise |
+| 2 at -45 deg, front-left | prop3 (+x, +y) | clockwise |
+| 3 at 135 deg, rear-right | prop1 (-x, -y) | clockwise |
+
+This is the order of the `flight` controller's `m1..m4`, so the propeller assignment `SLOT_TO_SIM = [0, 2, 3, 1]` is unchanged; spin directions as in "Motor map and RPM" above.
+
+An actuator value `a` is taken as the thrust fraction: `rpm = MAX_RPM sqrt(a)`, clipped. In AP_Motors the actuator is the ESC command, and the thrust it produces is the thrust curve of the ESC and motor (`MOT_THST_EXPO`, `MOT_SPIN_MIN`, `MOT_SPIN_MAX`), which the simulator does not model. With `MOT_THST_EXPO 0`, `MOT_SPIN_MIN 0` and `MOT_SPIN_MAX 1` the Lean side's `actuator_to_thrust` is the identity, so the actuator it outputs is the thrust fraction it intends; `params/copter-cf2x.txt` sets these values for the first flights. With any other values, the simulated thrust would not be the thrust the controller linearized for.
+
+### Simulator changes from `run_demo.py`
+
+- Gravity is ArduPilot's `GRAVITY_MSS = 9.80665` instead of the environment's 9.8 (`env.G`, with `GRAVITY`, `HOVER_RPM`, `MAX_RPM` and `MAX_THRUST` recomputed as `BaseAviary.__init__` does), so the thrust-to-weight ratio stays 2.25 and hover is the thrust fraction `1/2.25`, matching `MOT_THST_HOVER 0.4444`.
+- PyBullet's default velocity damping (0.04 linear and angular, a drag-like term the URDF does not ask for) is set to zero with `changeDynamics`; with it, the specific force in free fall was `-0.04 v` instead of zero. The vehicle is now the rigid body of the thrust and drag-torque model only.
+- A vehicle that starts on the ground is first stepped for 0.25 s with the motors off: the URDF base overlaps the ground plane slightly and the contact pushes it out over the first 20 or so ticks, with specific-force transients up to 40 m/s^2. The run's clock starts after that.
+
+### Validation (`--check-frames`, `out/copter-frames.txt`)
+
+- Quaternion against the Euler angles of `enu_state_to_ned`, for 20000 random PyBullet attitudes (|pitch| < 1.5 rad): ArduPilot's `Quaternion::to_euler` of the quaternion differs from them by at most 7.6e-15 rad, and its `rotation_matrix` from `T R_enu_flu D` by at most 1.3e-15. Known poses: PyBullet roll, pitch, yaw `(0.1, 0.2, 0.3)` gives `q = (0.796853, 0.099201, -0.050735, 0.593811)`, whose `to_euler` is `(0.1, -0.2, pi/2 - 0.3)` as for the earlier conversion; facing north gives `(1, 0, 0, 0)`; facing east gives `(cos 45, 0, 0, sin 45)`, a quarter turn about down.
+- Specific force at rest on the ground, motors off, 1 s: the first tick is exactly `0.0 0.0 -9.80665`; on later ticks the contact jitters by at most 0.012 m/s^2, and the mean is `(-7e-10, 1e-9, -9.806650)`.
+- Free fall from 3 m, motors off, 0.5 s: |f| at most 5e-13 m/s^2, and the vertical speed after 199 ticks is `g t` to 6 digits.
+- Hover actuators `1/2.25` at 1 m: `f = (0, 0, -9.80665)` to 4e-15 and the altitude unchanged to 1e-9 after 1 s; tilted start (roll 20, pitch -10, yaw 30 degrees) with hover actuators: `f = R(q) (0, 0, -g)` to 9e-15, so the specific force points along body up as rotated by the reported quaternion.
+- Lift-off with all actuators at 0.4944: `f_z = -0.4944 * 2.25 * 9.80665 = -10.9099` to 5e-7 from the second tick on.
+- Motor map, open loop from a level hover at 2 m, actuators `hover + input * factor` with the normalized quad X factors of `AP_MotorsMatrix` (roll `cos(angle + 90)`, pitch `cos(angle)`, scaled to 0.5; yaw +0.5 for counter-clockwise and -0.5 for clockwise slots): roll input +0.02 gives `p = +1.16 rad/s` and roll +3.27 degrees after 0.1 s with `q`, `r` zero; pitch +0.02 gives `q = +1.16 rad/s` and pitch +3.27 degrees; yaw +0.05 gives `r = +1.68 rad/s` and yaw +4.74 degrees. Positive inputs move the vehicle in the positive NED roll, pitch and yaw senses (right side down, nose up, nose right).
+
+### Parameter files
+
+`params/copter-cf2x.txt` uses the ArduPilot parameter names, one `NAME value` per line, and sets only `MOT_THST_EXPO 0`, `MOT_SPIN_MIN 0`, `MOT_SPIN_MAX 1`, `MOT_BAT_VOLT_MAX 0`, `MOT_HOVER_LEARN 0` and `MOT_THST_HOVER 0.4444`; every other parameter keeps the ArduPilot default. Its mission is the figure-eight course of `cf2x-course.txt` as `waypoint N E D` lines (NED meters, no yaw: ArduCopter's Auto mode sets the heading itself). `params/copter-hover.txt` repeats the motor lines with the single waypoint `(0, 0, -1)` and is passed alone.
+
+### The C route (`build_copter_c.sh`)
+
+As `build_c.sh`, for the `copter` target: `lake build copter`, then the import closure of `Copter.Main` is collected from the `import` lines of the sources (Init, Std and Lean are left out; their code is in the toolchain's static archives), the emitted C files are copied to `build/copter-c.d/`, compiled with `leanc -c -O3 -DNDEBUG` and linked into `build/copter-c`. Checked on `Flight.Main`, where it finds the same thirteen modules that `build_c.sh` lists.

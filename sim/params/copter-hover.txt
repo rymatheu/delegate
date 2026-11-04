@@ -1,0 +1,11 @@
+# Hover test for the Lean port of ArduCopter on the CF2X: the vehicle parameters of copter-cf2x.txt
+# with a single waypoint 1 m above the origin. Passed alone (it repeats the motor lines of
+# copter-cf2x.txt rather than relying on a mission-clearing directive):
+#   run_copter.py --params params/copter-hover.txt --duration 10
+MOT_THST_EXPO 0
+MOT_SPIN_MIN 0
+MOT_SPIN_MAX 1
+MOT_BAT_VOLT_MAX 0
+MOT_HOVER_LEARN 0
+MOT_THST_HOVER 0.4444
+waypoint 0 0 -1
