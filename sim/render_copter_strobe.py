@@ -28,7 +28,7 @@ strobe.png (composite, --dpi, --width-cm wide), labels.txt (time and normalized 
 each instant), filmstrip.png (six instants in a row, vehicle drawn --film-scale times its size) and
 film-labels.txt (normalized position of each tile's label).
 
-    .venv/bin/python render_copter_strobe.py          # the 1 m/s course, 600 dpi, 4x supersampling
+    .venv/bin/python render_copter_strobe.py          # the tuned 1 m/s course, 600 dpi, 4x supersampling
     .venv/bin/python render_copter_strobe.py --dpi 150 --supersample 1 --no-filmstrip   # quick look
 """
 from __future__ import annotations
@@ -46,9 +46,10 @@ from PIL import Image, ImageDraw
 import run_copter as rc
 
 SIM_DIR = Path(__file__).resolve().parent
-DEFAULT_PARAMS = [SIM_DIR / "params" / "copter-cf2x.txt", SIM_DIR / "params" / "copter-course-speed.txt"]
-DEFAULT_REFS = [SIM_DIR / "out" / "copter-course-1ms-det" / "copter-bin" / "motors.txt",
-                SIM_DIR / "out" / "copter-course-1ms" / "copter-bin" / "motors.txt"]
+DEFAULT_PARAMS = [SIM_DIR / "params" / "copter-cf2x.txt", SIM_DIR / "params" / "copter-course-speed.txt",
+                  SIM_DIR / "params" / "copter-cf2x-tuned.txt"]
+DEFAULT_REFS = [SIM_DIR / "out" / "copter-final-tuned" / "copter-bin" / "motors.txt",
+                SIM_DIR / "out" / "copter-final-tuned" / "bin-plots" / "motors.txt"]
 DPI = 600                                 # output resolution (--dpi)
 SS = 4                                    # supersampling factor of every render and drawing (--supersample)
 
@@ -393,10 +394,10 @@ def main():
     ap.add_argument("--bin", default=str(rc.DEFAULT_BIN), help="path of the C-route binary")
     ap.add_argument("--params", action="append", default=None, metavar="FILE",
                     help="parameter files passed to the controller (default: copter-cf2x.txt, "
-                         "copter-course-speed.txt)")
+                         "copter-course-speed.txt, copter-cf2x-tuned.txt)")
     ap.add_argument("--ref", action="append", default=None, metavar="FILE",
                     help="motors.txt to compare the actuator stream with (repeatable; default: "
-                         "out/copter-course-1ms-det/copter-bin and out/copter-course-1ms/copter-bin)")
+                         "out/copter-final-tuned/copter-bin and out/copter-final-tuned/bin-plots)")
     ap.add_argument("--every", type=float, default=0.5, help="seconds between instants (default 0.5)")
     ap.add_argument("--climb", type=float, default=0.05, metavar="M",
                     help="start the instants when the vehicle has climbed M meters, end them at the final "
@@ -412,7 +413,7 @@ def main():
     ap.add_argument("--width-cm", type=float, default=8.2, help="width of the composite (default 8.2 cm)")
     ap.add_argument("--aspect", type=float, default=1.2, help="render aspect ratio w/h (default 1.2)")
     ap.add_argument("--film-scale", type=float, default=7.0, help="vehicle scale in the filmstrip (default 7)")
-    ap.add_argument("--film-times", type=float, nargs="+", default=[0.0, 3.5, 7.0, 11.0, 14.5, 21.0])
+    ap.add_argument("--film-times", type=float, nargs="+", default=[0.0, 3.5, 7.0, 10.5, 14.0, 18.5])
     ap.add_argument("--filmstrip", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--duration", type=float, default=60.0, help="simulated seconds at most (default 60)")
     ap.add_argument("--pyb-hz", type=int, default=1200, help="physics rate (default 1200)")

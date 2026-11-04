@@ -174,14 +174,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--bin", default=str(rc.DEFAULT_BIN))
     ap.add_argument("--params", action="append", default=None, metavar="FILE",
-                    help="parameter files (default: copter-cf2x.txt, copter-course-speed.txt)")
+                    help="parameter files (default: copter-cf2x.txt, copter-course-speed.txt, "
+                    "copter-cf2x-tuned.txt)")
     ap.add_argument("--ref", action="append", default=None, metavar="FILE",
                     help="motors.txt to compare the actuator stream with (repeatable)")
     ap.add_argument("--every", type=float, default=0.5)
     ap.add_argument("--climb", type=float, default=0.05, help="as in render_copter_strobe.py")
     ap.add_argument("--hover-tol", type=float, default=0.1, help="as in render_copter_strobe.py")
-    ap.add_argument("--scale", type=float, default=2.2, help="drawing scale of the vehicle mesh (default 2.2; "
-                    "at 1.3 no vehicle pixel leaves the corridor's image, but the vehicles are hard to read)")
+    ap.add_argument("--scale", type=float, default=2.2, help="drawing scale of the vehicle mesh (default 2.2; on the tuned "
+                    "course no vehicle pixel leaves the corridor's image at this scale)")
     ap.add_argument("--dpi", type=int, default=600)
     ap.add_argument("--supersample", type=int, default=4)
     ap.add_argument("--width-cm", type=float, default=8.2)
