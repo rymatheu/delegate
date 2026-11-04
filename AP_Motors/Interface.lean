@@ -30,6 +30,9 @@ def Limit.set_rpy (l : Limit) (flag : Bool) : Limit := { l with roll := flag, pi
 /-- `set_throttle` (AP_Motors_Class.h:271). -/
 def Limit.set_throttle (l : Limit) (flag : Bool) : Limit := { l with throttle_lower := flag, throttle_upper := flag }
 
+/-- `set_all` (AP_Motors_Class.h:269, AP_Motors_Class.cpp:357-361): `set_rpy` then `set_throttle`. -/
+def Limit.set_all (l : Limit) (flag : Bool) : Limit := (l.set_rpy flag).set_throttle flag
+
 /-- The controller-facing state of the motors object. Fields named as the C++ members. -/
 structure Inputs where
   _roll_in : ftype := 0
