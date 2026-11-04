@@ -13,11 +13,11 @@ satisfy the tick invariant `VInv`, so that `vert_tick` applies from the second t
 
 **The first tick.** The harness stores `_throttle_in = _throttle_filter_value` of value
 `H = 0.4444` (binary32), so the motors' filter keeps its value exactly (`F + (F - F) α = F`). The
-position target is the navigator's stopping point, within `10⁻⁷` of `-1` (binary64), the position
+position target is the navigator's stopping point, within `10⁻⁶` of `-1` (binary64), the position
 reading within `10⁻¹⁵` of `-1`, the velocity reading a zero and the specific force reading within
 `6 · 10⁻⁷` of `-k H`. Then:
 
-* the velocity target and the velocity error filter are within `1.01 · 10⁻⁷` of `0`
+* the velocity target and the velocity error filter are within `1.01 · 10⁻⁶` of `0`
   (`p1d_near0`, `pidv_near0`);
 * the acceleration error filter is within `8 · 10⁻⁷` of `kv Ev + k I*` (`I* = H - 4/9`, so
   `Ea ≈ -9.8 · 10⁻⁴`), the integrator within `10⁻¹³` of `ki dtc Ea` (`≈ -2.4 · 10⁻⁷`), and the
@@ -25,7 +25,7 @@ reading within `10⁻¹⁵` of `-1`, the velocity reading a zero and the specifi
 * the plant moves from `ζ = 0`, `w = 0` with the actuator `H`: `ζ' = 0`, `w' = -k h I*`
   (`≈ 2.45 · 10⁻⁶ m/s`, NED).
 
-The new exact state has `|ζ| = 0`, `|w| ≤ 10⁻⁵`, `|Ev| ≤ 10⁻⁶`, `|Ea| ≤ 10⁻²`, `|ι| ≤ 10⁻⁴`,
+The new exact state has `|ζ| = 0`, `|w| ≤ 10⁻⁵`, `|Ev| ≤ 10⁻⁵`, `|Ea| ≤ 10⁻²`, `|ι| ≤ 10⁻⁴`,
 `|φ| ≤ 10⁻⁴`, on which `V ≤ 1/400` (`V_first`).
 -/
 
@@ -43,30 +43,30 @@ theorem Istar_val : Istar = -(6709 / 150994944) := by
 
 /-! ## The position P controller with the stopping point as target -/
 
-/-- **Position loop at the stopping point.** With the target within `10⁻⁷` of `-1` and the position
+/-- **Position loop at the stopping point.** With the target within `10⁻⁶` of `-1` and the position
 reading within `10⁻¹⁵` of `-1` (binary64), and the error limits and `D1_max` at least `1 cm` away,
-the narrowed error and the velocity target are within `1.01 · 10⁻⁷` of `0`; no clamp applies and
+the narrowed error and the velocity target are within `1.01 · 10⁻⁶` of `0`; no clamp applies and
 the target is returned unchanged. -/
 theorem p1d_near0 (hN : NarrowSpec 1) (s : AC_P_1D.State) {tgt meas : Float}
-    (htgt : Near64 tgt (-1) 1e-7) (hmeas : Near64 meas (-1) 1e-15)
+    (htgt : Near64 tgt (-1) 1e-6) (hmeas : Near64 meas (-1) 1e-15)
     (hmin : s._error_min.IsFinite) (hmin' : s._error_min.toReal ≤ -(1 / 100))
     (hmax : s._error_max.IsFinite) (hmax' : 1 / 100 ≤ s._error_max.toReal)
     (hD1 : s._D1_max.IsFinite) (hD1' : 1 / 100 ≤ s._D1_max.toReal) :
-    Near32 (AC_P_1D.update_all ⟨AC_PosControl.POSCONTROL_D_POS_P⟩ s tgt meas).2.2 0 1.01e-7 ∧
+    Near32 (AC_P_1D.update_all ⟨AC_PosControl.POSCONTROL_D_POS_P⟩ s tgt meas).2.2 0 1.01e-6 ∧
       (AC_P_1D.update_all ⟨AC_PosControl.POSCONTROL_D_POS_P⟩ s tgt meas).2.1 = tgt ∧
       Near32 (AC_P_1D.update_all ⟨AC_PosControl.POSCONTROL_D_POS_P⟩ s tgt meas).1._error
-        0 1.01e-7 := by
+        0 1.01e-6 := by
   have hu := u32_le; have hu0 := u32_nonneg; have hη := η32_le; have hη0 := η32_nonneg
   -- binary64 difference and narrowing
-  have e1 : Near64 (tgt - meas) 0 1.0001e-7 := by
-    have := near64_sub htgt hmeas (B := 1.0001e-7) (by norm_num) (by norm_num)
+  have e1 : Near64 (tgt - meas) 0 1.0001e-6 := by
+    have := near64_sub htgt hmeas (B := 1.0001e-6) (by norm_num) (by norm_num)
     refine ⟨this.1, ?_⟩
     have h2 := this.2
     rw [show (-1 : ℝ) - -1 = 0 by ring] at h2
     refine h2.trans ?_
-    have : (2 : ℝ) ^ (-53 : ℤ) * 1.0001e-7 ≤ 1e-22 := by norm_num
+    have : (2 : ℝ) ^ (-53 : ℤ) * 1.0001e-6 ≤ 1e-21 := by norm_num
     linarith
-  have e2 : Near32 (tofloat (tgt - meas)) 0 1.01e-7 := by
+  have e2 : Near32 (tofloat (tgt - meas)) 0 1.01e-6 := by
     have := near_narrow hN e1 (by norm_num)
     refine this.mono ?_
     rw [abs_zero, zero_add]
@@ -105,7 +105,7 @@ theorem p1d_near0 (hN : NarrowSpec 1) (s : AC_P_1D.State) {tgt meas : Float}
     show (if err > s._D1_max / AP_Math.sq AC_PosControl.POSCONTROL_D_POS_P then _ else
       if err < -(s._D1_max / AP_Math.sq AC_PosControl.POSCONTROL_D_POS_P) then _ else _) = _
     rw [if_neg b3, if_neg b4]
-  have hout : Near32 (err * AC_PosControl.POSCONTROL_D_POS_P) 0 1.01e-7 := e2.mul_one one_p
+  have hout : Near32 (err * AC_PosControl.POSCONTROL_D_POS_P) 0 1.01e-6 := e2.mul_one one_p
   simp only [AC_P_1D.update_all, ← herr, c1, c2, Bool.false_eq_true, if_false, Id.run, hsc]
   exact ⟨hout, rfl, e2⟩
 
@@ -126,29 +126,29 @@ theorem pidv_eval0 (s : AC_PID_Basic.State) {tgt meas : Float32} (ht : tgt.IsFin
     not_isNaN ht, not_isNaN hm, hr, pv_I]
   simp
 
-/-- **Velocity loop in reset.** With the velocity target within `1.01 · 10⁻⁷` of `0` and the
+/-- **Velocity loop in reset.** With the velocity target within `1.01 · 10⁻⁶` of `0` and the
 velocity reading a zero: the new error filter has the value of the target (within
-`1.01 · 10⁻⁷` of `0`), the integrator is `0`, the PID leaves reset, the derivative filter is `0`,
-and the output is within `10⁻¹³` of `kv E'` with `E'` the exact value of the new error filter. -/
+`1.01 · 10⁻⁶` of `0`), the integrator is `0`, the PID leaves reset, the derivative filter is `0`,
+and the output is within `10⁻¹²` of `kv E'` with `E'` the exact value of the new error filter. -/
 theorem pidv_near0 (s : AC_PID_Basic.State) {tgt meas : Float32} (hr : s._reset_filter = true)
-    (ht : Near32 tgt 0 1.01e-7) (hm : Z meas) (ln lp : Bool) :
-    Near32 (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._error 0 1.01e-7 ∧
+    (ht : Near32 tgt 0 1.01e-6) (hm : Z meas) (ln lp : Bool) :
+    Near32 (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._error 0 1.01e-6 ∧
       Z (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._integrator ∧
       (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._reset_filter = false ∧
       (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._derivative.IsFinite ∧
       |(AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._derivative.toReal| ≤ 3 ∧
       Near32 (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).2
-        (kv * (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._error.toReal) 1e-13 := by
+        (kv * (AC_PID_Basic.update_all pv s tgt meas dtF ln lp).1._error.toReal) 1e-12 := by
   obtain ⟨q1, q2, q3, q4, q5⟩ := pidv_eval0 s ht.1 hm.1 hr ln lp
   rw [q1, q2, q3, q4, q5]
   have hu := u32_le; have hu0 := u32_nonneg; have hη := η32_le; have hη0 := η32_nonneg
   have hE := sub_zero_val ht.1 hm
-  have hE1 : Near32 (tgt - meas) 0 1.01e-7 := Near32.of_eq_val hE.1 hE.2 ht
-  have hEb : |(tgt - meas).toReal| ≤ 1.01e-7 := by
+  have hE1 : Near32 (tgt - meas) 0 1.01e-6 := Near32.of_eq_val hE.1 hE.2 ht
+  have hEb : |(tgt - meas).toReal| ≤ 1.01e-6 := by
     have := hE1.bound; rw [abs_zero, zero_add] at this; exact this
-  have o1 : Near32 ((tgt - meas) * pv.P) ((tgt - meas).toReal * kv) 1e-13 := by
+  have o1 : Near32 ((tgt - meas) * pv.P) ((tgt - meas).toReal * kv) 1e-12 := by
     rw [pv_P]
-    have := near_mul_const (Near32.exact hE1.1) near_kv (Ra := 1.01e-7) hEb
+    have := near_mul_const (Near32.exact hE1.1) near_kv (Ra := 1.01e-6) hEb
       (by rw [kv_eq]; norm_num)
     refine this.mono ?_
     rw [kv_eq]; norm_num; linarith
@@ -189,13 +189,13 @@ theorem pida_eval0 (s : AC_PID.State) {tgt meas : Float32} (ht : tgt.IsFinite)
 attribute [irreducible] bI
 
 /-- **Acceleration loop in reset.** With the stored integrator a zero, the target within
-`10⁻¹³` of `A` (`|A| ≤ 6 · 10⁻⁷`) and the measurement within `7.8 · 10⁻⁷` of `-k I*`: the raw
+`10⁻¹²` of `A` (`|A| ≤ 6 · 10⁻⁶`) and the measurement within `7.8 · 10⁻⁷` of `-k I*`: the raw
 error is within `8 · 10⁻⁷` of `A + k I*`, the new integrator within `10⁻¹³` of `ki dtc E` (`E` the
 exact value of the raw error; the clamp is inactive), and the output within `6.7 · 10⁻⁹` of
 `kp E + I'` (`I'` the exact value of the new integrator). -/
 theorem pida_near0 (s : AC_PID.State) {tgt meas : Float32} {A : ℝ}
     (hr : s._flags._reset_filter = true) (hI : Z s._integrator)
-    (ht : Near32 tgt A 1e-13) (hA : |A| ≤ 6e-7) (hm : Near32 meas (-(k * Istar)) 7.8e-7) :
+    (ht : Near32 tgt A 1e-12) (hA : |A| ≤ 6e-6) (hm : Near32 meas (-(k * Istar)) 7.8e-7) :
     Near32 (tgt - meas) (A + k * Istar) 8e-7 ∧
       Near32 (bI s tgt meas) (ki * dtc * (tgt - meas).toReal) 1e-13 ∧
       Near32 (AC_PID.update_all pa s tgt meas dtF false).2
@@ -215,7 +215,7 @@ theorem pida_near0 (s : AC_PID.State) {tgt meas : Float32} {A : ℝ}
     exact (this.congr (by ring)).mono (by linarith)
   have hEb : |(tgt - meas).toReal| ≤ 9.9e-4 := by
     have := hE1.bound
-    have : |A + k * Istar| ≤ 9.82e-4 := by rw [hk, hIs]; apply bnd <;> linarith
+    have : |A + k * Istar| ≤ 9.87e-4 := by rw [hk, hIs]; apply bnd <;> linarith
     linarith
   have hEb' := abs_le.1 hEb
   have hE0 := Near32.exact hE1.1
@@ -273,9 +273,9 @@ theorem pida_near0 (s : AC_PID.State) {tgt meas : Float32} {A : ℝ}
 
 /-! ## The Lyapunov function on the first state -/
 
-/-- `V` on the box of the state after the first tick: `ζ = 0`, `|w| ≤ 10⁻⁵`, `|Ev| ≤ 10⁻⁶`,
+/-- `V` on the box of the state after the first tick: `ζ = 0`, `|w| ≤ 10⁻⁵`, `|Ev| ≤ 10⁻⁵`,
 `|Ea| ≤ 10⁻²`, `|ι| ≤ 10⁻⁴`, `|φ| ≤ 10⁻⁴` give `V ≤ 1/400`. -/
-theorem V_first (x : VX) (hζ : |x.ζ| ≤ 0) (hw : |x.w| ≤ 1 / 100000) (hEv : |x.Ev| ≤ 1 / 1000000)
+theorem V_first (x : VX) (hζ : |x.ζ| ≤ 0) (hw : |x.w| ≤ 1 / 100000) (hEv : |x.Ev| ≤ 1 / 100000)
     (hEa : |x.Ea| ≤ 1 / 100) (hι : |x.ι| ≤ 1 / 10000) (hφ : |x.φ| ≤ 1 / 10000) :
     V x ≤ 1 / 400 := by
   have t0 := term_le_pos (c := 9200) (by norm_num) hζ hζ
@@ -309,7 +309,7 @@ set_option maxHeartbeats 4000000 in
 /-- **The first tick of the controller's vertical path.** Both vertical PIDs in reset (as
 `D_init_controller` leaves them, with the acceleration integrator a zero), the motors' stored
 throttle equal to the throttle filter output of value `H = 0.4444`, the plant at the waypoint and
-at rest (`ζ = 0`, `w = 0`, specific force `-k H`), the position target within `10⁻⁷` of `-1`, and
+at rest (`ζ = 0`, `w = 0`, specific force `-k H`), the position target within `10⁻⁶` of `-1`, and
 the hover sample hypotheses of `vert_tick`: the new throttle filter output has the value `H`, the
 exact values of the new floats together with the plant's `ζ' = 0 + h · 0`, `w' = 0 - k h (H - 4/9)`
 lie in the sublevel set `V ≤ 1/10`, and the tick invariant `VInv` holds for the new floats. -/
@@ -332,7 +332,7 @@ theorem vert_tick0 (hN : NarrowSpec 1)
     -- the plant at the waypoint and at rest
     (hzs : Near64 zs (-1) 1e-15) (hws : Z ws) (hfs : Near32 fs (-(k * Hf)) 6e-7)
     -- the hover sample (navigator's stopping point, zero half, C library)
-    (htgt : Near64 tgt (-1) 1e-7)
+    (htgt : Near64 tgt (-1) 1e-6)
     (hmin : sP._error_min.IsFinite) (hmin' : sP._error_min.toReal ≤ -(1 / 100))
     (hmax : sP._error_max.IsFinite) (hmax' : 1 / 100 ≤ sP._error_max.toReal)
     (hD1 : sP._D1_max.IsFinite) (hD1' : 1 / 100 ≤ sP._D1_max.toReal)
@@ -375,12 +375,12 @@ theorem vert_tick0 (hN : NarrowSpec 1)
     exact ⟨this.1, this.2.trans hFv⟩
   -- position and velocity
   have hp1 := p1d_near0 hN sP htgt hzs hmin hmin' hmax hmax' hD1 hD1'
-  have hvt : Near32 vt 0 1.01e-7 := (hp1.1.mul_one hsc).add_zero hvff
+  have hvt : Near32 vt 0 1.01e-6 := (hp1.1.mul_one hsc).add_zero hvff
   obtain ⟨v1, v2, v3, v4, v5, v6⟩ := pidv_near0 sv hvr hvt hws ln lp
-  have hEvb : |rv.1._error.toReal| ≤ 1.01e-7 := by
+  have hEvb : |rv.1._error.toReal| ≤ 1.01e-6 := by
     have := v1.bound; rw [abs_zero, zero_add] at this; exact this
-  have hat : Near32 atg (kv * rv.1._error.toReal) 1e-13 := (v6.mul_one hsc).add_zero haff
-  have hA : |kv * rv.1._error.toReal| ≤ 6e-7 := by
+  have hat : Near32 atg (kv * rv.1._error.toReal) 1e-12 := (v6.mul_one hsc).add_zero haff
+  have hA : |kv * rv.1._error.toReal| ≤ 6e-6 := by
     rw [abs_mul, kv_eq]; norm_num; linarith
   -- acceleration
   have hfs' : Near32 fs (-(k * (Istar + 4 / 9))) 6e-7 := by
@@ -390,7 +390,7 @@ theorem vert_tick0 (hN : NarrowSpec 1)
   obtain ⟨q1, q2, q3, q4, q5, q6, q7, q8, -⟩ := pida_eval0 sa hat.1 hmeas.1 har
   have hEab : |(atg - (fs + GRAVITY_MSS)).toReal| ≤ 9.9e-4 := by
     have := a1.bound
-    have : |kv * rv.1._error.toReal + k * Istar| ≤ 9.82e-4 := by
+    have : |kv * rv.1._error.toReal + k * Istar| ≤ 9.87e-4 := by
       have := abs_le.1 hA
       rw [k_eq, hIs]; apply bnd <;> linarith
     linarith
