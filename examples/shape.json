@@ -1,0 +1,12 @@
+{
+ "namespace": "Shapes",
+ "classes": [
+  {"class": "Shape", "ctor": ["Kind::Circle", "1.5"],
+   "ranges": {"f": [0.8, 1.25], "times": [-1, 4], "n": [-1, 5], "v": [-3, 3]},
+   "weights": {"resize": 2}, "calls": 20000},
+  {"class": "Tile", "ctor": ["2.0", "1"],
+   "ranges": {"f": [0.8, 1.25], "times": [-1, 4], "n": [-1, 5], "v": [-3, 3], "steps": [-10, 10], "k": [-3, 3],
+              "x": [-3, 3], "m": [-5, 5]},
+   "weights": {"resize": 2, "stats": 2}, "calls": 20000}
+ ]
+}

@@ -1,0 +1,29 @@
+% ==================================================================
+%  Type mapping of cpp2lean -- one sigconf text width (8.5 cm), booktabs,
+%  \footnotesize. Source: cpp2lean/README.md, "Mapping, as implemented"
+%  (/Users/ryan/Research/cpp2lean). Casts, operators and the <cmath>
+%  table are described in the text, not here.
+%  Preamble: \usepackage{booktabs}. Every row fits one line at the
+%  column width, so the two columns are plain l columns (no array package).
+% ==================================================================
+\begin{table}[t]
+\caption{\textnormal{Type mapping. Each C++ type maps to the Lean type of the same representation, so that arithmetic on both sides is the same IEEE 754 or two's-complement operation.}}
+\label{tab:types}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}ll@{}}
+\toprule
+C++, after typedefs & Lean \\
+\midrule
+\texttt{float}, \texttt{double}, \texttt{bool} & \texttt{Float32}, \texttt{Float}, \texttt{Bool} \\
+\texttt{int8\_t} \ldots\ \texttt{int64\_t}; \texttt{int} & \texttt{Int8} \ldots\ \texttt{Int64}; \texttt{Int32} \\
+\texttt{uint8\_t} \ldots\ \texttt{uint64\_t}; \texttt{size\_t} & \texttt{UInt8} \ldots\ \texttt{UInt64}; \texttt{USize} \\
+\texttt{T[N]}, $N$ a constant & \texttt{Array T} of $N$ elements, checked access \\
+plain \texttt{struct S} & \texttt{structure S} \\
+\texttt{class C} & \texttt{C.State}, \texttt{C.Params}, \texttt{C.Inputs}, \texttt{C.Outputs} \\
+\texttt{enum E} & \texttt{inductive E} with \texttt{E.toInt} and \texttt{E.ofInt} \\
+parameter wrapper \texttt{P<T>} & a field of \texttt{C.Params} of type \texttt{T} \\
+bit-field \texttt{bool x : 1} & \texttt{Bool} \\
+\bottomrule
+\end{tabular}
+\end{table}

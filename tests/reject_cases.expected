@@ -1,0 +1,3 @@
+tests/reject_cases.cpp:7:32: rejected: pointer or reference type `const float *`
+tests/reject_cases.cpp:18:16: rejected: recursive call (function `factorial` is on a call cycle)
+tests/reject_cases.cpp:24:5: rejected: `while` loop whose trip count is not a compile-time constant (required: `while (i op C)` with i declared earlier in the block with a constant initializer, not assigned before the loop, stepped only by the body's last statement `i++ / i-- / i += C`, and no `continue`)

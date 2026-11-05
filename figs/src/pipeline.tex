@@ -1,0 +1,164 @@
+% ==================================================================
+%  Pipeline -- the whole procedure: ArduPilot's C++ control classes are
+%  translated into a Lean model, the model is proved against a contract
+%  (proof lane, top), the model is validated against the source by running
+%  both (execution lane, bottom), and the checked result is carried back
+%  to the source
+%  one sigconf text width (8.2 cm), placed as a plain figure in one of the
+%  two text areas, \input{figs/pipeline} at natural size (no \resizebox),
+%  pdfLaTeX
+%  Preamble:  \usepackage{tikz}  \usetikzlibrary{arrows.meta,calc}
+%             (\mathbb and \checkmark come with acmart's newtxmath; outside
+%             acmart add \usepackage{amssymb})
+%  TikZ only, no image. Every label is a plain word; titles \footnotesize,
+%  bodies and labels \scriptsize, nothing smaller; no code body is shown,
+%  the boxes name the artifacts.
+%  Translation row (middle, left to right): the C++ source (ArduPilot's
+%  control classes, AC_*.cpp and AP_*.cpp, e.g. AC_AttitudeControl_Multi),
+%  parsed by clang into the clang AST, translated by cpp2lean into the Lean
+%  model (the same classes as .lean files in the delegate-port worktree,
+%  Float32 arithmetic). The Lean model feeds both lanes.
+%  Proof lane (top): the Lean model lifts to M_ctrl, the plant model (rigid
+%  body over the reals, plant.tex) lifts to M_plant, the closed loop is
+%  M = M_ctrl cap M_plant; with the contract (phi, psi), A from phi and G
+%  from psi, the obligation M cap A subset G is checked in Lean.
+%  Execution lane (bottom): the C++ compiled by clang and the Lean model
+%  compiled by leanc are each run separately, in their own closed loop;
+%  the two trajectories meet at the
+%  numerical validation, executable model against source. The figure keeps
+%  this box generic; the evidence behind it is oracle-diff.tex and the
+%  determinism runs in sim/.
+%  Transfer: the heavy arrow from the proof down into the C++ source,
+%  "holds of the source"; the validation joins it through the dashed
+%  connector up the left edge, "justifies".
+%  Boxes: rounded, white body, title area fwHair at 40 percent; the four
+%  primary boxes (C++ source, Lean model, proof, validation) are the
+%  largest. Lanes tinted fwHair at 15 percent. Accents: ochre for phi and A,
+%  blue for psi and G only.
+%  The earlier full-width version is archive/pipeline-wide.tex.
+% ==================================================================
+\definecolor{fwInk}{HTML}{22252A}%
+\definecolor{fwMute}{HTML}{8A8F96}%
+\definecolor{fwHair}{HTML}{C9CCD1}%
+\definecolor{fwOchre}{HTML}{C4860F}%   assumptions
+\definecolor{fwBlue}{HTML}{1E3F7C}%    guarantees
+\begin{tikzpicture}[
+  x=1cm, y=1cm, line cap=round, line join=round,
+  >={Stealth[length=1.5mm, width=1.25mm]},
+  tick/.style={font=\scriptsize, text=fwMute, inner sep=1pt},
+  fwcap/.style={font=\footnotesize, text=fwInk, inner sep=0},
+  body/.style={font=\scriptsize, text=fwInk, inner sep=0, align=left,
+    execute at begin node={\baselineskip=9pt}},
+  verb/.style={font=\scriptsize\itshape, text=fwMute, inner sep=0.6pt},
+  tool/.style={font=\scriptsize\ttfamily, text=fwMute, inner sep=0.6pt},
+  lane/.style={font=\scriptsize\scshape, text=fwMute, inner sep=0, rotate=90},
+  up/.style={draw=fwMute, line width=0.45pt, -{Stealth[length=1.3mm, width=1.05mm]}},
+  sig/.style={draw=fwInk!70, line width=0.45pt, ->},
+  back/.style={draw=fwInk, line width=0.9pt, -{Stealth[length=2.2mm, width=1.9mm]}},
+  just/.style={draw=fwMute, line width=0.45pt, dash pattern=on 2pt off 1.5pt},
+  boxline/.style={draw=fwInk!55, line width=0.45pt, rounded corners=2pt},
+  tag/.style={draw=fwHair, line width=0.4pt, fill=white, rounded corners=1pt,
+    font=\scriptsize\ttfamily, text=fwMute, inner sep=1.3pt},
+]
+\newcommand{\pipeA}{\textcolor{fwOchre!88!black}{A}}%
+\newcommand{\pipeG}{\textcolor{fwBlue}{G}}%
+% one stage: #1 name, #2 center x, #3 center y, #4 width, #5 height (cm),
+%            #6 title, #7 body, #8 tag (empty = none); title area 0.36
+\newcommand{\pipestage}[8]{%
+  \node[minimum width=#4cm, minimum height=#5cm, inner sep=0, outer sep=0] (#1) at (#2,#3) {};
+  \begin{scope}
+    \clip[rounded corners=2pt] (#1.south west) rectangle (#1.north east);
+    \fill[white] (#1.south west) rectangle (#1.north east);
+    \fill[fwHair!40] ($(#1.north west)+(0,-0.36)$) rectangle (#1.north east);
+  \end{scope}
+  \draw[boxline] (#1.south west) rectangle (#1.north east);
+  \node[fwcap, anchor=base west] at ($(#1.north west)+(0.14,-0.255)$) {#6};
+  \node[body, anchor=north west] at ($(#1.north west)+(0.14,-0.47)$) {#7};
+  \if\relax\detokenize{#8}\relax\else
+    \node[tag, anchor=base east] at ($(#1.north east)+(-0.08,-0.255)$) {#8};\fi}
+% binary icon (as in overview-D): #1 name, #2 lower-left corner
+\newcommand{\pipebin}[2]{%
+  \begin{scope}[shift={#2}]
+    \draw[fill=white, draw=fwInk!70, line width=0.45pt] (0,0) rectangle (0.5,0.3);
+    \draw[fwInk!45, line width=0.4pt] (0.08,0.22) -- (0.34,0.22);
+    \draw[fwInk!45, line width=0.4pt] (0.08,0.15) -- (0.42,0.15);
+    \draw[fwInk!45, line width=0.4pt] (0.08,0.08) -- (0.27,0.08);
+    \coordinate (#1N) at (0.25,0.3);  \coordinate (#1S) at (0.25,0);
+    \coordinate (#1W) at (0,0.15);    \coordinate (#1E) at (0.5,0.15);
+  \end{scope}}
+% ------------------------------------------------------------------
+%  Grid: boxes from x 0.62 to 8.17, the dashed connector at x 0.40, lane
+%  names at x 0.15. Execution lane y 0 ... 1.62 (validation y 0.07 ...
+%  0.53, binaries y 0.93 ... 1.23), translation row y 1.80 ... 2.92,
+%  proof lane y 3.17 ... 6.10 (proof and closed loop centered y 4.18,
+%  contract and plant y 5.16 ... 5.96). Left stack centered at x 1.895,
+%  right stack at x 6.895.
+% ------------------------------------------------------------------
+% ================= lanes ==========================================
+\fill[fwHair!15, rounded corners=3pt] (0,3.17) rectangle (8.20,6.10);
+\fill[fwHair!15, rounded corners=3pt] (0,0) rectangle (8.20,1.62);
+\node[lane] at (0.15,4.635) {proof};
+\node[lane] at (0.15,2.395) {translation};
+\node[lane] at (0.15,0.81) {execution};
+% ================= translation ====================================
+\pipestage{cpp}{1.895}{2.36}{2.55}{1.12}{C++ source}
+  {ArduPilot control classes\\\texttt{AC\_*.cpp}, \texttt{AP\_*.cpp}}{}
+\pipestage{lean}{6.895}{2.36}{2.55}{1.12}{Lean model}
+  {Lean definitions\\\texttt{AC\_*.lean}, \texttt{AP\_*.lean}}{Float32}
+\node[tag, font=\scriptsize, text=fwInk, fill=fwHair!40, draw=fwInk!55, inner xsep=2.5pt, inner ysep=2pt, align=center]
+  (ast) at (4.22,2.36) {Clang\\AST};
+\draw[sig] (cpp.east) -- (ast.west)
+  node[tool, midway, anchor=south, yshift=4pt] {clang};
+\draw[sig] (ast.east) -- (lean.west)
+  node[tool, midway, anchor=north, yshift=-4pt] {cpp2lean};
+% ================= proof lane =====================================
+\pipestage{proof}{2.32}{4.18}{3.40}{1.12}{Proof}
+  {\footnotesize$M \cap \pipeA \subseteq \pipeG$\\Checked in Lean \textcolor{fwBlue}{$\checkmark$}}{}
+\pipestage{loop}{6.895}{4.18}{2.55}{0.80}{Closed loop}
+  {\footnotesize$M = M_\text{ctrl} \cap M_\text{plant}$}{}
+\pipestage{spec}{2.32}{5.56}{2.40}{0.80}{Contract}
+  {\footnotesize$(\textcolor{fwOchre!88!black}{A},\,\textcolor{fwBlue}{G})$}{}
+\pipestage{plant}{6.895}{5.56}{2.40}{0.80}{Plant model}
+  {rigid body over $\mathbb{R}$}{}
+\draw[sig] (loop.west) -- (proof.east |- loop.west)
+  node[tick, midway, anchor=south, yshift=1.2pt] {$M$};
+\draw[sig] (spec.south) -- (proof.north);
+\draw[sig] (plant.south) -- (loop.north)
+  node[verb, midway, anchor=east, xshift=-2pt] {lift}
+  node[tick, midway, anchor=west, xshift=2pt] {$M_\text{plant}$};
+\draw[sig] (lean.north) -- (lean.north |- loop.south)
+  node[verb, midway, anchor=east, xshift=-2pt] {lift}
+  node[tick, midway, anchor=west, xshift=2pt] {$M_\text{ctrl}$};
+% ================= execution lane =================================
+\pipebin{bc}{(1.645,0.93)}
+\pipebin{bl}{(6.645,0.93)}
+\draw[up] (cpp.south -| bcN) -- (bcN)
+  node[verb, midway, anchor=east, xshift=-2pt] {compile}
+  node[tool, midway, anchor=west, xshift=2pt] {clang};
+\draw[up] (lean.south -| blN) -- (blN)
+  node[verb, midway, anchor=east, xshift=-2pt] {compile}
+  node[tool, midway, anchor=west, xshift=2pt] {leanc};
+% validation: one line, title cell tinted, body cell white
+\node[minimum width=6.30cm, minimum height=0.46cm, inner sep=0, outer sep=0] (cmp) at (4.395,0.30) {};
+\node[fwcap, anchor=base west] (cmpt) at ($(cmp.west)+(0.14,-0.085)$) {Numerical validation};
+\coordinate (cmpd) at ($(cmpt.east |- cmp.north)+(0.14,0)$);
+\begin{scope}
+  \clip[rounded corners=2pt] (cmp.south west) rectangle (cmp.north east);
+  \fill[white] (cmp.south west) rectangle (cmp.north east);
+  \fill[fwHair!40] (cmp.south west) rectangle (cmpd);
+\end{scope}
+\draw[boxline] (cmp.south west) rectangle (cmp.north east);
+\node[fwcap, anchor=base west] at ($(cmp.west)+(0.14,-0.085)$) {Numerical validation};
+\node[font=\scriptsize, text=fwInk, inner sep=0, anchor=base west] at ($(cmpd |- cmpt.base)+(0.14,0)$) {Executable model against source};
+\draw[sig] (bcS) -- (bcS |- cmp.north)
+  node[tick, midway, anchor=west, xshift=2pt] {trajectory};
+\draw[sig] (blS) -- (blS |- cmp.north)
+  node[tick, midway, anchor=east, xshift=-2pt] {trajectory};
+% ================= transfer back to the source ====================
+\coordinate (J) at (cpp.north |- 0,3.17);
+\draw[just] (cmp.west) -- (0.40,0 |- cmp.west) -- (0.40,3.17) -- (J);
+\node[verb, anchor=south] at (0.98,3.17) [yshift=1.5pt] {justifies};
+\draw[back] (cpp.north |- proof.south) -- (cpp.north);
+\fill[fwInk] (J) circle (0.05);
+\node[font=\footnotesize\itshape, text=fwInk, inner sep=0.6pt, anchor=west] at ($(cpp.north)!0.62!(cpp.north |- proof.south)+(0.14,0)$) {holds of the source};
+\end{tikzpicture}%

@@ -1,0 +1,67 @@
+% ==================================================================
+%  Case study parameters and results -- one sigconf text width, booktabs
+%  Sources:  vehicle   gym_pybullet_drones/assets/cf2x.urdf (max rotor speed
+%                      from the thrust-to-weight ratio, as BaseAviary computes it)
+%            simulation and mission   sim/run_demo.py, sim/params/cf2x.txt
+%            controller               sim/params/cf2x.txt
+%            build     lean/lean-toolchain, sim/build_c.sh, leanc --version,
+%                      otool -L sim/build/flight-c
+%            results   sim/out/{lake,bin}/summary.txt, sim/out/determinism.txt
+% ==================================================================
+\begin{table}[t]
+\small
+\caption{\textnormal{The case study uses these parameters and yields these results.}}
+\label{tab:params-corner}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}l@{}}
+\toprule
+Quantity & Value \\
+\midrule
+\textsc{vehicle} & \\
+Model & CF2X (Crazyflie 2.x, X layout) \\
+Mass, arm length & 27\,g, 39.7\,mm \\
+Thrust coefficient $k_f$ & $3.16\times10^{-10}$\,N/rpm$^2$ \\
+Torque coefficient $k_m$ & $7.94\times10^{-12}$\,N\,m/rpm$^2$ \\
+Maximum rotor speed & 21\,703\,rpm \\
+Thrust-to-weight ratio & 2.25 \\
+\midrule
+\textsc{simulation} & \\
+Simulator & gym-pybullet-drones 2.2.0 \\
+Physics, control rate & 240\,Hz, 120\,Hz \\
+Integrator & Bullet, semi-implicit Euler \\
+Drag, ground effect, downwash & off \\
+Initial state & at rest on the ground, yaw 0 \\
+\midrule
+\textsc{controller} & \\
+Hover throttle, lean limit & 0.444, 0.35\,rad (20$^\circ$) \\
+Position gains (xy, z) & 1.0, 1.5\,s$^{-1}$ \\
+Velocity PID xy, z ($k_p$, $k_i$, $k_d$) & (3, 0.5, 0.25), (4, 2, 0) \\
+Angle gains (roll, pitch, yaw) & 8.0, 8.0, 4.5\,s$^{-1}$ \\
+Rate PID roll, pitch ($k_p$, $k_i$, $k_d$) & 0.135, 0.135, 0 \\
+Rate PID yaw ($k_p$, $k_i$, $k_d$) & 0.2, 0.02, 0 \\
+Speed limits (xy, z) & 1.0, 1.0\,m/s \\
+Acceleration limits (xy, z) & 3.0, 3.0\,m/s$^2$ \\
+\midrule
+\textsc{mission} & \\
+Waypoints $w_0$, $w_1$, $w_2$ (NED) & (0,\,0,\,$-1$), (2,\,0,\,$-1$), (2,\,2,\,$-1$)\,m \\
+Yaw at $w_0$, $w_1$, $w_2$ & 0$^\circ$, 0$^\circ$, 90$^\circ$ \\
+Acceptance radius & 0.05\,m \\
+Hold at $w_2$ & 3\,s within 0.1\,m \\
+\midrule
+\textsc{build} & \\
+Lean toolchain & v4.33.0-rc1 \\
+C compiler & leanc (clang 22.1.4) \\
+Compiler options & \texttt{-O3 -ffp-contract=off} \\
+Binary size & 2.54\,MB \\
+Linking & Lean runtime static \\
+\midrule
+\textsc{results} & \\
+Final position error & 0.12\,cm \\
+Maximum $|$roll$|$, $|$pitch$|$ & 11.1$^\circ$, 11.9$^\circ$ \\
+Within 0.1\,m of $w_0$, $w_1$, $w_2$ & 1.28, 4.15, 7.10\,s \\
+Tick round trip, lake (median, p99) & 136, 157\,\textmu s \\
+Tick round trip, bin (median, p99) & 140, 157\,\textmu s \\
+Identical motor commands, 3 routes & 1213 of 1213 ticks \\
+\bottomrule
+\end{tabular*}
+\end{table}

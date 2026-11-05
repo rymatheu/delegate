@@ -1,0 +1,5 @@
+# Hover test for the copter vehicles on the CF2X: replaces the mission of copter-cf2x.txt by a
+# single waypoint 1 m above the origin. Pass it after copter-cf2x.txt:
+#   run_copter.py --params params/copter-cf2x.txt --params params/copter-hover.txt --duration 10 --hold 99
+mission.clear
+waypoint 0 0 -1

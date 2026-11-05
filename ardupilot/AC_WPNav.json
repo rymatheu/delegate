@@ -1,0 +1,621 @@
+{
+ "translate": "ardupilot/translate_ac_wpnav.sh",
+ "out": "ardupilot/out/AC_WPNav",
+ "namespace": "AC_WPNav_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-DAP_TERRAIN_AVAILABLE=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-I$HERE/ardupilot",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_overlay": {
+  "AC_AttitudeControl/AC_AttitudeControl.h": "ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h",
+  "AC_AttitudeControl/AC_PosControl.h": "ardupilot/standin/AC_AttitudeControl/AC_PosControl.h"
+ },
+ "cxx_overlay_note": "the position and attitude controllers are the boundary of AC_WPNav; their stand-ins replace the real headers through clang's -ivfsoverlay",
+ "cxx_sources": [
+  "AC_WPNav/AC_WPNav.cpp",
+  "AP_Math/SCurve.cpp",
+  "AP_Math/SplineCurve.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/control.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/location.cpp",
+  "AP_Common/Location.cpp",
+  "AP_Param/AP_ParamT.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ac_wpnav_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "AC_WPNav",
+   "cxx_include": [
+    "<AC_WPNav/AC_WPNav.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_wpnav_env.cpp: the AHRS stub",
+    "extern uint32_t cpp2lean_millis;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AC_PosControl pc_obj;        // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_PosControl.h",
+    "static AC_AttitudeControl att_obj;   // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "pc_obj",
+    "att_obj"
+   ],
+   "inputs": {
+    "get_ang_vel_roll_max_rads": "att_obj.v_ang_vel_roll_max_rads = %s;",
+    "get_ang_vel_pitch_max_rads": "att_obj.v_ang_vel_pitch_max_rads = %s;",
+    "get_input_tc": "att_obj.v_input_tc = %s;",
+    "get_accel_roll_max_radss": "att_obj.v_accel_roll_max_radss = %s;",
+    "get_accel_pitch_max_radss": "att_obj.v_accel_pitch_max_radss = %s;",
+    "get_stopping_point_NE_m_stopping_point_ne_m.x": "pc_obj.v_get_stopping_point_NE_m.x = %s;",
+    "get_stopping_point_NE_m_stopping_point_ne_m.y": "pc_obj.v_get_stopping_point_NE_m.y = %s;",
+    "get_stopping_point_D_m_stopping_point_d_m": "pc_obj.v_get_stopping_point_D_m = %s;",
+    "millis": "cpp2lean_millis = %s;",
+    "NE_get_pos_p_kP": "pc_obj.p2d.v_kP = %s;",
+    "NE_get_max_speed_ms": "pc_obj.v_NE_get_max_speed_ms = %s;",
+    "get_max_speed_up_ms": "pc_obj.v_get_max_speed_up_ms = %s;",
+    "get_max_speed_down_ms": "pc_obj.v_get_max_speed_down_ms = %s;",
+    "D_get_max_accel_mss": "pc_obj.v_D_get_max_accel_mss = %s;",
+    "get_vel_offset_D_ms": "pc_obj.v_get_vel_offset_D_ms = %s;",
+    "terrain_scaler_D_m": "pc_obj.v_terrain_scaler_D_m = %s;",
+    "get_shaping_jerk_NE_msss": "pc_obj.v_get_shaping_jerk_NE_msss = %s;",
+    "get_dt_s": "pc_obj.v_get_dt_s = %s;",
+    "NE_get_max_accel_mss": "pc_obj.v_NE_get_max_accel_mss = %s;",
+    "get_roll_rad": "pc_obj.v_get_roll_rad = %s;",
+    "get_pitch_rad": "pc_obj.v_get_pitch_rad = %s;",
+    "get_yaw_rad": "pc_obj.v_get_yaw_rad = %s;",
+    "crosstrack_error_m": "pc_obj.v_crosstrack_error_m = %s;",
+    "get_vel_desired_NED_ms.x": "pc_obj.v_get_vel_desired_NED_ms.x = %s;",
+    "get_vel_desired_NED_ms.y": "pc_obj.v_get_vel_desired_NED_ms.y = %s;",
+    "get_vel_desired_NED_ms.z": "pc_obj.v_get_vel_desired_NED_ms.z = %s;",
+    "get_pos_estimate_NED_m.x": "pc_obj.v_get_pos_estimate_NED_m.x = %s;",
+    "get_pos_estimate_NED_m.y": "pc_obj.v_get_pos_estimate_NED_m.y = %s;",
+    "get_pos_estimate_NED_m.z": "pc_obj.v_get_pos_estimate_NED_m.z = %s;",
+    "get_pos_offset_NED_m.x": "pc_obj.v_get_pos_offset_NED_m.x = %s;",
+    "get_pos_offset_NED_m.y": "pc_obj.v_get_pos_offset_NED_m.y = %s;",
+    "get_pos_offset_NED_m.z": "pc_obj.v_get_pos_offset_NED_m.z = %s;",
+    "get_pos_error_NED_m.x": "pc_obj.v_get_pos_error_NED_m.x = %s;",
+    "get_pos_error_NED_m.y": "pc_obj.v_get_pos_error_NED_m.y = %s;",
+    "get_pos_error_NED_m.z": "pc_obj.v_get_pos_error_NED_m.z = %s;",
+    "get_vel_estimate_NED_ms.x": "pc_obj.v_get_vel_estimate_NED_ms.x = %s;",
+    "get_vel_estimate_NED_ms.y": "pc_obj.v_get_vel_estimate_NED_ms.y = %s;",
+    "get_vel_estimate_NED_ms.z": "pc_obj.v_get_vel_estimate_NED_ms.z = %s;",
+    "get_thrust_vector.x": "pc_obj.v_get_thrust_vector.x = %s;",
+    "get_thrust_vector.y": "pc_obj.v_get_thrust_vector.y = %s;",
+    "get_thrust_vector.z": "pc_obj.v_get_thrust_vector.z = %s;"
+   },
+   "monotonic": {
+    "millis": [
+     0,
+     10
+    ]
+   },
+   "extra_methods": [
+    "AC_WPNav.calc_scurve_jerk_and_snap"
+   ],
+   "ranges": {
+    "destination_ned_m": [
+     -10,
+     10
+    ],
+    "next_destination_ned_m": [
+     -10,
+     10
+    ],
+    "next_next_destination_ned_m": [
+     -10,
+     10
+    ],
+    "stopping_point_ned_m": [
+     -10,
+     10
+    ],
+    "destination_neu_cm": [
+     -1000,
+     1000
+    ],
+    "center_ne_m": [
+     -10,
+     10
+    ],
+    "arc_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "turns_signed": [
+     -2,
+     2
+    ],
+    "dest_d_m": [
+     -10,
+     10
+    ],
+    "speed_ms": [
+     0.5,
+     10
+    ],
+    "speed_cms": [
+     50,
+     1000
+    ],
+    "speed_up_ms": [
+     0.5,
+     5
+    ],
+    "speed_down_ms": [
+     0.5,
+     5
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "terrain_u_cm": [
+     -500,
+     500
+    ],
+    "terrain_u_m": [
+     -5,
+     5
+    ],
+    "get_stopping_point_NE_m_stopping_point_ne_m": [
+     -10,
+     10
+    ],
+    "get_stopping_point_D_m_stopping_point_d_m": [
+     -10,
+     10
+    ],
+    "NE_get_max_speed_ms": [
+     0.5,
+     10
+    ],
+    "get_max_speed_up_ms": [
+     0.5,
+     5
+    ],
+    "get_max_speed_down_ms": [
+     0.5,
+     5
+    ],
+    "D_get_max_accel_mss": [
+     0.5,
+     5
+    ],
+    "NE_get_max_accel_mss": [
+     0.5,
+     5
+    ],
+    "get_vel_offset_D_ms": [
+     -1,
+     1
+    ],
+    "terrain_scaler_D_m": [
+     0,
+     1
+    ],
+    "get_shaping_jerk_NE_msss": [
+     1,
+     20
+    ],
+    "get_dt_s": [
+     0.0025,
+     0.004
+    ],
+    "get_roll_rad": [
+     -0.5,
+     0.5
+    ],
+    "get_pitch_rad": [
+     -0.5,
+     0.5
+    ],
+    "get_yaw_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "crosstrack_error_m": [
+     -2,
+     2
+    ],
+    "get_vel_desired_NED_ms": [
+     -5,
+     5
+    ],
+    "get_pos_estimate_NED_m": [
+     -10,
+     10
+    ],
+    "get_pos_offset_NED_m": [
+     -1,
+     1
+    ],
+    "get_pos_error_NED_m": [
+     -2,
+     2
+    ],
+    "get_vel_estimate_NED_ms": [
+     -5,
+     5
+    ],
+    "get_thrust_vector": [
+     -10,
+     10
+    ],
+    "NE_get_pos_p_kP": [
+     0.5,
+     2
+    ],
+    "get_ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "get_ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "get_input_tc": [
+     0,
+     1
+    ],
+    "get_accel_roll_max_radss": [
+     1,
+     35
+    ],
+    "get_accel_pitch_max_radss": [
+     1,
+     35
+    ]
+   },
+   "weights": {
+    "AC_WPNav.update_wpnav": 30,
+    "AC_WPNav.advance_wp_target_along_track": 5,
+    "AC_WPNav.set_wp_destination_NED_m": 6,
+    "AC_WPNav.set_wp_destination_next_NED_m": 5,
+    "AC_WPNav.set_spline_destination_NED_m": 3,
+    "AC_WPNav.set_spline_destination_next_NED_m": 3,
+    "AC_WPNav.set_circle_destination_NED_m": 1,
+    "AC_WPNav.wp_and_spline_init_m": 2,
+    "AC_WPNav.set_speed_NE_ms": 1,
+    "AC_WPNav.set_speed_up_ms": 0.5,
+    "AC_WPNav.set_speed_down_ms": 0.5,
+    "AC_WPNav.get_wp_stopping_point_NED_m": 2,
+    "AC_WPNav.reached_wp_destination": 2,
+    "AC_WPNav.force_stop_at_next_wp": 0.5,
+    "AC_WPNav.set_pause": 0.3,
+    "AC_WPNav.set_resume": 0.6,
+    "AC_WPNav.convert_origin_to_alt_frame": 0.3,
+    "AC_WPNav.set_rangefinder_terrain_U_m": 0.3,
+    "AC_WPNav.set_rangefinder_terrain_U_cm": 0.2
+   },
+   "setup": [
+    "AC_WPNav.wp_and_spline_init_m 00000000 0000000000000000 0000000000000000 0000000000000000"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "defaults",
+   "quiet_console": true
+  },
+  {
+   "class": "AC_WPNav",
+   "cxx_include": [
+    "<AC_WPNav/AC_WPNav.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_wpnav_env.cpp: the AHRS stub",
+    "extern uint32_t cpp2lean_millis;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AC_PosControl pc_obj;        // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_PosControl.h",
+    "static AC_AttitudeControl att_obj;   // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "pc_obj",
+    "att_obj"
+   ],
+   "inputs": {
+    "get_ang_vel_roll_max_rads": "att_obj.v_ang_vel_roll_max_rads = %s;",
+    "get_ang_vel_pitch_max_rads": "att_obj.v_ang_vel_pitch_max_rads = %s;",
+    "get_input_tc": "att_obj.v_input_tc = %s;",
+    "get_accel_roll_max_radss": "att_obj.v_accel_roll_max_radss = %s;",
+    "get_accel_pitch_max_radss": "att_obj.v_accel_pitch_max_radss = %s;",
+    "get_stopping_point_NE_m_stopping_point_ne_m.x": "pc_obj.v_get_stopping_point_NE_m.x = %s;",
+    "get_stopping_point_NE_m_stopping_point_ne_m.y": "pc_obj.v_get_stopping_point_NE_m.y = %s;",
+    "get_stopping_point_D_m_stopping_point_d_m": "pc_obj.v_get_stopping_point_D_m = %s;",
+    "millis": "cpp2lean_millis = %s;",
+    "NE_get_pos_p_kP": "pc_obj.p2d.v_kP = %s;",
+    "NE_get_max_speed_ms": "pc_obj.v_NE_get_max_speed_ms = %s;",
+    "get_max_speed_up_ms": "pc_obj.v_get_max_speed_up_ms = %s;",
+    "get_max_speed_down_ms": "pc_obj.v_get_max_speed_down_ms = %s;",
+    "D_get_max_accel_mss": "pc_obj.v_D_get_max_accel_mss = %s;",
+    "get_vel_offset_D_ms": "pc_obj.v_get_vel_offset_D_ms = %s;",
+    "terrain_scaler_D_m": "pc_obj.v_terrain_scaler_D_m = %s;",
+    "get_shaping_jerk_NE_msss": "pc_obj.v_get_shaping_jerk_NE_msss = %s;",
+    "get_dt_s": "pc_obj.v_get_dt_s = %s;",
+    "NE_get_max_accel_mss": "pc_obj.v_NE_get_max_accel_mss = %s;",
+    "get_roll_rad": "pc_obj.v_get_roll_rad = %s;",
+    "get_pitch_rad": "pc_obj.v_get_pitch_rad = %s;",
+    "get_yaw_rad": "pc_obj.v_get_yaw_rad = %s;",
+    "crosstrack_error_m": "pc_obj.v_crosstrack_error_m = %s;",
+    "get_vel_desired_NED_ms.x": "pc_obj.v_get_vel_desired_NED_ms.x = %s;",
+    "get_vel_desired_NED_ms.y": "pc_obj.v_get_vel_desired_NED_ms.y = %s;",
+    "get_vel_desired_NED_ms.z": "pc_obj.v_get_vel_desired_NED_ms.z = %s;",
+    "get_pos_estimate_NED_m.x": "pc_obj.v_get_pos_estimate_NED_m.x = %s;",
+    "get_pos_estimate_NED_m.y": "pc_obj.v_get_pos_estimate_NED_m.y = %s;",
+    "get_pos_estimate_NED_m.z": "pc_obj.v_get_pos_estimate_NED_m.z = %s;",
+    "get_pos_offset_NED_m.x": "pc_obj.v_get_pos_offset_NED_m.x = %s;",
+    "get_pos_offset_NED_m.y": "pc_obj.v_get_pos_offset_NED_m.y = %s;",
+    "get_pos_offset_NED_m.z": "pc_obj.v_get_pos_offset_NED_m.z = %s;",
+    "get_pos_error_NED_m.x": "pc_obj.v_get_pos_error_NED_m.x = %s;",
+    "get_pos_error_NED_m.y": "pc_obj.v_get_pos_error_NED_m.y = %s;",
+    "get_pos_error_NED_m.z": "pc_obj.v_get_pos_error_NED_m.z = %s;",
+    "get_vel_estimate_NED_ms.x": "pc_obj.v_get_vel_estimate_NED_ms.x = %s;",
+    "get_vel_estimate_NED_ms.y": "pc_obj.v_get_vel_estimate_NED_ms.y = %s;",
+    "get_vel_estimate_NED_ms.z": "pc_obj.v_get_vel_estimate_NED_ms.z = %s;",
+    "get_thrust_vector.x": "pc_obj.v_get_thrust_vector.x = %s;",
+    "get_thrust_vector.y": "pc_obj.v_get_thrust_vector.y = %s;",
+    "get_thrust_vector.z": "pc_obj.v_get_thrust_vector.z = %s;"
+   },
+   "monotonic": {
+    "millis": [
+     0,
+     10
+    ]
+   },
+   "extra_methods": [
+    "AC_WPNav.calc_scurve_jerk_and_snap"
+   ],
+   "ranges": {
+    "destination_ned_m": [
+     -10,
+     10
+    ],
+    "next_destination_ned_m": [
+     -10,
+     10
+    ],
+    "next_next_destination_ned_m": [
+     -10,
+     10
+    ],
+    "stopping_point_ned_m": [
+     -10,
+     10
+    ],
+    "destination_neu_cm": [
+     -1000,
+     1000
+    ],
+    "center_ne_m": [
+     -10,
+     10
+    ],
+    "arc_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "turns_signed": [
+     -2,
+     2
+    ],
+    "dest_d_m": [
+     -10,
+     10
+    ],
+    "speed_ms": [
+     0.5,
+     10
+    ],
+    "speed_cms": [
+     50,
+     1000
+    ],
+    "speed_up_ms": [
+     0.5,
+     5
+    ],
+    "speed_down_ms": [
+     0.5,
+     5
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "terrain_u_cm": [
+     -500,
+     500
+    ],
+    "terrain_u_m": [
+     -5,
+     5
+    ],
+    "get_stopping_point_NE_m_stopping_point_ne_m": [
+     -10,
+     10
+    ],
+    "get_stopping_point_D_m_stopping_point_d_m": [
+     -10,
+     10
+    ],
+    "NE_get_max_speed_ms": [
+     0.5,
+     10
+    ],
+    "get_max_speed_up_ms": [
+     0.5,
+     5
+    ],
+    "get_max_speed_down_ms": [
+     0.5,
+     5
+    ],
+    "D_get_max_accel_mss": [
+     0.5,
+     5
+    ],
+    "NE_get_max_accel_mss": [
+     0.5,
+     5
+    ],
+    "get_vel_offset_D_ms": [
+     -1,
+     1
+    ],
+    "terrain_scaler_D_m": [
+     0.5,
+     1
+    ],
+    "get_shaping_jerk_NE_msss": [
+     1,
+     20
+    ],
+    "get_dt_s": [
+     0.0025,
+     0.1
+    ],
+    "get_roll_rad": [
+     -0.5,
+     0.5
+    ],
+    "get_pitch_rad": [
+     -0.5,
+     0.5
+    ],
+    "get_yaw_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "crosstrack_error_m": [
+     -2,
+     2
+    ],
+    "get_vel_desired_NED_ms": [
+     -5,
+     5
+    ],
+    "get_pos_estimate_NED_m": [
+     -10,
+     10
+    ],
+    "get_pos_offset_NED_m": [
+     -1,
+     1
+    ],
+    "get_pos_error_NED_m": [
+     -2,
+     2
+    ],
+    "get_vel_estimate_NED_ms": [
+     -5,
+     5
+    ],
+    "get_thrust_vector": [
+     -10,
+     10
+    ],
+    "NE_get_pos_p_kP": [
+     0.5,
+     2
+    ],
+    "get_ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "get_ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "get_input_tc": [
+     0,
+     1
+    ],
+    "get_accel_roll_max_radss": [
+     1,
+     35
+    ],
+    "get_accel_pitch_max_radss": [
+     1,
+     35
+    ]
+   },
+   "weights": {
+    "AC_WPNav.update_wpnav": 120,
+    "AC_WPNav.advance_wp_target_along_track": 5,
+    "AC_WPNav.set_wp_destination_NED_m": 6,
+    "AC_WPNav.set_wp_destination_next_NED_m": 5,
+    "AC_WPNav.set_spline_destination_NED_m": 3,
+    "AC_WPNav.set_spline_destination_next_NED_m": 3,
+    "AC_WPNav.set_circle_destination_NED_m": 1,
+    "AC_WPNav.wp_and_spline_init_m": 2,
+    "AC_WPNav.set_speed_NE_ms": 1,
+    "AC_WPNav.set_speed_up_ms": 0.5,
+    "AC_WPNav.set_speed_down_ms": 0.5,
+    "AC_WPNav.get_wp_stopping_point_NED_m": 2,
+    "AC_WPNav.reached_wp_destination": 2,
+    "AC_WPNav.force_stop_at_next_wp": 0.5,
+    "AC_WPNav.set_pause": 0.3,
+    "AC_WPNav.set_resume": 0.6,
+    "AC_WPNav.convert_origin_to_alt_frame": 0.3,
+    "AC_WPNav.set_rangefinder_terrain_U_m": 0.3,
+    "AC_WPNav.set_rangefinder_terrain_U_cm": 0.2
+   },
+   "setup": [
+    "AC_WPNav.wp_and_spline_init_m 00000000 0000000000000000 0000000000000000 0000000000000000"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "course",
+   "params": {
+    "_wp_speed_ms": "1.0",
+    "_wp_accel_mss": "1.5"
+   },
+   "params_note": "sim/params/copter-course-speed.txt: WP_SPD 1, WP_ACC 1.5",
+   "quiet_console": true,
+   "run_note": "WP_SPD 1, WP_ACC 1.5 (sim/params/copter-course-speed.txt), weighted to update_wpnav with time steps up to 0.1 s, so that legs are flown to their end"
+  }
+ ]
+}

@@ -1,0 +1,219 @@
+{
+ "mission": "figure-eight course of params/copter-cf2x.txt at WP_SPD 1 m/s with the tuned gains",
+ "params": [
+  "params/copter-cf2x.txt",
+  "params/copter-course-speed.txt",
+  "params/copter-cf2x-tuned.txt"
+ ],
+ "tick_hz": 400,
+ "assumption": {
+  "box_ned_m": {
+   "north": [
+    -0.15,
+    0.15
+   ],
+   "east": [
+    -0.15,
+    0.15
+   ],
+   "down": [
+    -0.3,
+    0.0
+   ]
+  },
+  "attitude": "level: roll 0, pitch 0",
+  "heading": "uniform, any: yaw in [-pi, pi); the attitude quaternion is a rotation about the down axis",
+  "rates": "at rest: zero velocity, zero body rates",
+  "held_actuators": "the actuators held at tick 0 are the hover actuators (MOT_THST_HOVER, run.start_hover 1); an in-air start's tick-0 specific force is (0, 0, -g), the sample of a vehicle at rest (run_copter.py --init-accel hover)"
+ },
+ "r_m": 0.1,
+ "ceiling_m": 2.0,
+ "corridor_radius_m": 0.25,
+ "box_ned_m": {
+  "north": [
+   -0.15,
+   0.15
+  ],
+  "east": [
+   -0.15,
+   0.15
+  ],
+  "down": [
+   -0.3,
+   0.0
+  ]
+ },
+ "waypoints_ned_m": [
+  [
+   0.0,
+   0.0,
+   -0.8
+  ],
+  [
+   1.25,
+   1.25,
+   -1.0
+  ],
+  [
+   0.0,
+   2.5,
+   -1.2
+  ],
+  [
+   -1.25,
+   1.25,
+   -1.4
+  ],
+  [
+   1.25,
+   -1.25,
+   -1.6
+  ],
+  [
+   0.0,
+   -2.5,
+   -1.4
+  ],
+  [
+   -1.25,
+   -1.25,
+   -1.1
+  ],
+  [
+   0.0,
+   0.0,
+   -0.8
+  ]
+ ],
+ "path_ned_m": [
+  [
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   -0.8
+  ],
+  [
+   1.25,
+   1.25,
+   -1.0
+  ],
+  [
+   0.0,
+   2.5,
+   -1.2
+  ],
+  [
+   -1.25,
+   1.25,
+   -1.4
+  ],
+  [
+   1.25,
+   -1.25,
+   -1.6
+  ],
+  [
+   0.0,
+   -2.5,
+   -1.4
+  ],
+  [
+   -1.25,
+   -1.25,
+   -1.1
+  ],
+  [
+   0.0,
+   0.0,
+   -0.8
+  ]
+ ],
+ "path_note": "the takeoff point (origin, on the ground), then w0..w7 in order",
+ "nominal": {
+  "run": "sim/out/lean-course-1ms",
+  "first_within_s": [
+   1.685,
+   3.618,
+   5.463,
+   7.317,
+   10.938,
+   12.79,
+   14.64,
+   16.49
+  ],
+  "leg_s": [
+   1.685,
+   1.933,
+   1.845,
+   1.854,
+   3.621,
+   1.852,
+   1.85,
+   1.85
+  ]
+ },
+ "allowance_rule": "allowance_i = ceil(1.25 * leg_i + 0.5) s, leg_i from the nominal first-within times (leg_0 from t = 0)",
+ "allowances_s": [
+  3,
+  3,
+  3,
+  3,
+  6,
+  3,
+  3,
+  3
+ ],
+ "allowances_ticks": [
+  1200,
+  1200,
+  1200,
+  1200,
+  2400,
+  1200,
+  1200,
+  1200
+ ],
+ "total_s": 27,
+ "total_ticks": 10800,
+ "hold_s": 3,
+ "hold_ticks": 1200,
+ "horizon_ticks": 12000,
+ "sensing": {
+  "note": "not part of the assumption: bounded sensing-noise levels for the Monte Carlo runs (sim/montecarlo.py --noise LEVEL, out/montecarlo-noise-<level>/)",
+  "model": "every tick, independent errors uniform in [-b, b] per component added to the true state in the sample: position bp (m), velocity bv (m/s), specific force bf (m/s^2), body rates bw (rad/s); attitude rotated by a body-frame small rotation with angles uniform in [-bq, bq] (deg), renormalized",
+  "levels": {
+   "L1": {
+    "bp": 0.005,
+    "bv": 0.02,
+    "bq": 0.0,
+    "bw": 0.0,
+    "bf": 0.0
+   },
+   "L2": {
+    "bp": 0.02,
+    "bv": 0.05,
+    "bq": 0.0,
+    "bw": 0.0,
+    "bf": 0.0
+   },
+   "L3": {
+    "bp": 0.02,
+    "bv": 0.05,
+    "bq": 0.5,
+    "bw": 0.01,
+    "bf": 0.0
+   },
+   "L4": {
+    "bp": 0.05,
+    "bv": 0.1,
+    "bq": 1.0,
+    "bw": 0.02,
+    "bf": 0.0
+   }
+  }
+ }
+}

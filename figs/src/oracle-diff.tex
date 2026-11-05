@@ -1,0 +1,39 @@
+% ==================================================================
+%  Actuator difference between ArduPilot's own classes (C++ oracle) and the Lean port,
+%  per tick on the 1 m/s course, open loop on the recorded samples. Before the port's
+%  from_axis_angle half-angle trigonometry was corrected to double precision, the two
+%  differ on 7082 of 8431 ticks by up to 1.1e-4; after the correction they agree on every
+%  tick (0 of 8431 differ), so the "after" trace is the zero line.
+%  Data: oracle-diff-data.tex (max over the four actuators, max over 10-tick bins, 1e-5 units),
+%  from oracle/build/compare/{oracle-nosincos,oracle-diag-floattrig,port-replay}.txt.
+%  one sigconf text width (8.2 cm), pdfLaTeX
+%  Preamble: \usepackage{tikz} \usetikzlibrary{arrows.meta,calc}; \input{oracle-diff-data}
+% ==================================================================
+\input{oracle-diff-data}
+\definecolor{fwInk}{HTML}{22252A}%
+\definecolor{fwMute}{HTML}{8A8F96}%
+\definecolor{fwHair}{HTML}{C9CCD1}%
+\definecolor{fwOchre}{HTML}{C4860F}%
+\definecolor{fwBlue}{HTML}{1E3F7C}%
+\begin{tikzpicture}[
+  x=0.30cm, y=0.19cm, line cap=round, line join=round,
+  >={Stealth[length=1.3mm, width=1.0mm]},
+  tick/.style={font=\scriptsize, text=fwMute, inner sep=1pt},
+  lbl/.style={font=\footnotesize, text=fwInk, inner sep=1pt},
+]
+% axes: t from 0 to 21 s, |Δu| from 0 to 12 (1e-5)
+\draw[fwHair, line width=0.3pt] (0,0) -- (21.5,0);
+\draw[fwHair, line width=0.3pt] (0,0) -- (0,12.5);
+\foreach \t in {0,5,10,15,20} {\draw[fwHair, line width=0.3pt] (\t,0) -- (\t,-0.4); \node[tick, anchor=north] at (\t,-0.5) {\t};}
+\node[tick, anchor=north west] at (20.4,-0.5) {s};
+\foreach \v in {0,4,8,12} {\draw[fwHair, line width=0.3pt] (0,\v) -- (-0.3,\v); \node[tick, anchor=east] at (-0.4,\v) {\v};}
+\node[lbl, anchor=south, rotate=90] at (-1.9,6) {$\max_i\,|u_i^{\text{Lean}}-u_i^{\text{ArduPilot}}|$};
+\node[tick, anchor=south, rotate=90] at (-1.2,6) {$\times10^{-5}$};
+% before the correction: single-precision half-angle trig in the port
+\draw[draw=fwOchre, line width=0.4pt] plot coordinates {\oraclediffpre};
+% after the correction: zero on every tick
+\draw[draw=fwBlue, line width=0.6pt] (0,0) -- (21.08,0);
+% legend, top right, clear of the spikes
+\node[tick, text=fwOchre!85!black, anchor=north east, align=right] at (21.4,12.6) {single-precision \texttt{sinf}/\texttt{cosf} in \texttt{from\_axis\_angle}:\\7082 of 8431 ticks differ};
+\node[tick, text=fwBlue, anchor=north east, align=right] at (21.4,8.6) {double precision, as compiled:\\0 of 8431 ticks differ};
+\end{tikzpicture}%

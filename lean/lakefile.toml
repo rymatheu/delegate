@@ -1,0 +1,28 @@
+name = "cpp2lean_demo"
+# The C that Lean emits is compiled with the code-generation flags of the C++ side
+# (cpp2lean/README.md, "Compilation assumptions"): no FMA contraction (Lean's default, repeated),
+# no fusion of sinf/cosf pairs into __sincosf_stret, no libm call simplification (-fno-builtin).
+moreLeancArgs = ["-ffp-contract=off", "-fno-builtin-sinf", "-fno-builtin-cosf", "-fno-builtin-sin", "-fno-builtin-cos", "-fno-builtin"]
+defaultTargets = ["Translated", "demo"]
+# An unknown name in emitted code must be an error, not an auto-bound implicit argument.
+leanOptions = { autoImplicit = false }
+
+[[lean_lib]]
+name = "Translated"
+roots = ["Numeric", "Mixed", "CppLibm", "Boost", "Pid", "Shapes", "AC_PID_lib", "Motors", "AP_Math_lib", "AP_Motors_lib", "Frame", "AC_Attitude_lib", "AC_PosControl_lib", "Control", "AC_WPNav_lib", "Navigate", "AHRS_View_lib"]
+
+[[lean_exe]]
+name = "demo"
+root = "Main"
+
+[[lean_exe]]
+name = "compose"
+root = "Compose"
+
+[[lean_exe]]
+name = "copter_lean"
+root = "VehicleMain"
+
+[[lean_lib]]
+name = "VehicleLib"
+roots = ["VehicleParams", "Vehicle"]

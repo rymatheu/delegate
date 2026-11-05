@@ -1,0 +1,683 @@
+{
+ "namespace": "Mixed",
+ "source": "examples/mixed.cpp",
+ "functions": [
+  {
+   "name": "trig_mix",
+   "lean": "Mixed.trig_mix",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/mixed.cpp:12-18"
+  },
+  {
+   "name": "trig_mix_d",
+   "lean": "Mixed.trig_mix_d",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/mixed.cpp:20-26"
+  },
+  {
+   "name": "classify",
+   "lean": "Mixed.classify",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/mixed.cpp:28-34"
+  },
+  {
+   "name": "negate",
+   "lean": "Mixed.negate",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/mixed.cpp:37"
+  },
+  {
+   "name": "zero_minus",
+   "lean": "Mixed.zero_minus",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/mixed.cpp:38"
+  },
+  {
+   "name": "int_mix",
+   "lean": "Mixed.int_mix",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "b",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/mixed.cpp:41-56"
+  },
+  {
+   "name": "quantize",
+   "lean": "Mixed.quantize",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "steps",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/mixed.cpp:59-74"
+  },
+  {
+   "name": "effects",
+   "lean": "Mixed.effects",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "n",
+     "int32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/mixed.cpp:77-101"
+  },
+  {
+   "name": "add_u8",
+   "lean": "Mixed.add_u8",
+   "params": [
+    [
+     "a",
+     "uint8_t"
+    ],
+    [
+     "b",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint8_t",
+   "source": "examples/mixed.cpp:104"
+  },
+  {
+   "name": "div_i64",
+   "lean": "Mixed.div_i64",
+   "params": [
+    [
+     "a",
+     "int64_t"
+    ]
+   ],
+   "ret": "int64_t",
+   "source": "examples/mixed.cpp:105"
+  },
+  {
+   "name": "implies_eq",
+   "lean": "Mixed.implies_eq",
+   "params": [
+    [
+     "p",
+     "bool"
+    ],
+    [
+     "q",
+     "bool"
+    ]
+   ],
+   "ret": "bool",
+   "source": "examples/mixed.cpp:106"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "trig_mix",
+   "cxx_call": "trig_mix",
+   "lean": "Mixed.trig_mix",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "trig_mix_d",
+   "cxx_call": "trig_mix_d",
+   "lean": "Mixed.trig_mix_d",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "classify",
+   "cxx_call": "classify",
+   "lean": "Mixed.classify",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "negate",
+   "cxx_call": "negate",
+   "lean": "Mixed.negate",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "zero_minus",
+   "cxx_call": "zero_minus",
+   "lean": "Mixed.zero_minus",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "int_mix",
+   "cxx_call": "int_mix",
+   "lean": "Mixed.int_mix",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "quantize",
+   "cxx_call": "quantize",
+   "lean": "Mixed.quantize",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "steps",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "effects",
+   "cxx_call": "effects",
+   "lean": "Mixed.effects",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "add_u8",
+   "cxx_call": "add_u8",
+   "lean": "Mixed.add_u8",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint8_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "div_i64",
+   "cxx_call": "div_i64",
+   "lean": "Mixed.div_i64",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "implies_eq",
+   "cxx_call": "implies_eq",
+   "lean": "Mixed.implies_eq",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "p",
+     "type": "bool",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "q",
+     "type": "bool",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.1 : Float)",
+   "bits": "3fb999999999999a",
+   "cpp": "0.1",
+   "at": "9:30"
+  },
+  {
+   "lean": "(0.5 : Float32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "10:35"
+  },
+  {
+   "lean": "(0.25 : Float32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "10:41"
+  },
+  {
+   "lean": "(0.125 : Float32)",
+   "bits": "3e000000",
+   "cpp": "0.125f",
+   "at": "10:48"
+  },
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "15:43"
+  },
+  {
+   "lean": "(10.0 : Float32)",
+   "bits": "41200000",
+   "cpp": "10.0f",
+   "at": "16:29"
+  },
+  {
+   "lean": "(0.25 : Float)",
+   "bits": "3fd0000000000000",
+   "cpp": "0.25",
+   "at": "22:42"
+  },
+  {
+   "lean": "(1.0 : Float)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "23:41"
+  },
+  {
+   "lean": "(10.0 : Float)",
+   "bits": "4024000000000000",
+   "cpp": "10.0",
+   "at": "24:28"
+  },
+  {
+   "lean": "(0.5 : Float)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "24:71"
+  },
+  {
+   "lean": "(0.0 : Float)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "33:17"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "38:36"
+  },
+  {
+   "lean": "(1000.0 : Float32)",
+   "bits": "447a0000",
+   "cpp": "1000.0f",
+   "at": "63:21"
+  },
+  {
+   "lean": "(100.0 : Float32)",
+   "bits": "42c80000",
+   "cpp": "100.0f",
+   "at": "64:31"
+  },
+  {
+   "lean": "(1.5 : Float32)",
+   "bits": "3fc00000",
+   "cpp": "1.5f",
+   "at": "97:16"
+  }
+ ],
+ "var_info": {}
+}

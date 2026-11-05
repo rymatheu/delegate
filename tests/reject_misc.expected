@@ -1,0 +1,10 @@
+tests/reject_misc.cpp:5:7: rejected: global variable `global_state` (mutable or non-constant globals are outside the subset)
+tests/reject_misc.cpp:12:5: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body)
+tests/reject_misc.cpp:18:16: rejected: `goto`
+tests/reject_misc.cpp:28:12: rejected: read of `y`, which may be uninitialized
+tests/reject_misc.cpp:33:12: rejected: pointer or reference type `float *`
+tests/reject_misc.cpp:37:6: rejected: function `no_result` returning void without reference parameters (no observable result)
+tests/reject_misc.cpp:40:45: rejected: recursive call (function `mutual_a` is on a call cycle)
+tests/reject_misc.cpp:41:34: rejected: recursive call (function `mutual_b` is on a call cycle)
+tests/reject_misc.cpp:53:5: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body)
+tests/reject_misc.cpp:60:39: rejected: `sizeof`/`alignof`

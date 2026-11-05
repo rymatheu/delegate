@@ -1,0 +1,1071 @@
+{
+ "translate": "ardupilot/translate_ac_poscontrol.sh",
+ "out": "ardupilot/out/AC_PosControl",
+ "namespace": "AC_PosControl_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-I$HERE/ardupilot",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_overlay": {
+  "AC_AttitudeControl/AC_AttitudeControl.h": "ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h"
+ },
+ "cxx_overlay_note": "the attitude controller is the boundary of AC_PosControl; AC_PosControl.h includes \"AC_AttitudeControl.h\" from its own directory, so the stand-in replaces it through clang's -ivfsoverlay",
+ "cxx_sources": [
+  "AC_AttitudeControl/AC_PosControl.cpp",
+  "AC_PID/AC_PID.cpp",
+  "AC_PID/AC_P_1D.cpp",
+  "AC_PID/AC_P_2D.cpp",
+  "AC_PID/AC_PID_Basic.cpp",
+  "AC_PID/AC_PID_2D.cpp",
+  "Filter/SlewLimiter.cpp",
+  "Filter/LowPassFilter.cpp",
+  "Filter/DerivativeFilter.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/control.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Math/quaternion.cpp",
+  "AP_Motors/AP_Motors_Class.cpp",
+  "AP_Motors/AP_MotorsMulticopter.cpp",
+  "AP_Motors/AP_MotorsMatrix.cpp",
+  "AP_Motors/AP_Motors_Thrust_Linearization.cpp",
+  "AP_Param/AP_ParamT.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ac_control_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "AC_PosControl",
+   "cxx_include": [
+    "<AC_AttitudeControl/AC_PosControl.h>",
+    "<AP_Motors/AP_MotorsMatrix.h>",
+    "<AP_Scheduler/AP_Scheduler.h>",
+    "<SITL/SITL.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_control_env.cpp: the AHRS stub (AP::ahrs())",
+    "extern AP_Scheduler cpp2lean_scheduler;",
+    "extern SITL::SIM cpp2lean_sitl;",
+    "extern uint32_t cpp2lean_millis;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AP_MotorsMatrix motors_obj(400);",
+    "static AC_AttitudeControl att_obj;   // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "motors_obj",
+    "att_obj"
+   ],
+   "inputs": {
+    "get_relative_position_NED_origin_vec.x": "oracle_ahrs.sample.pos_ned.x = %s;",
+    "get_relative_position_NED_origin_vec.y": "oracle_ahrs.sample.pos_ned.y = %s;",
+    "get_relative_position_NED_origin_vec.z": "oracle_ahrs.sample.pos_ned.z = %s;",
+    "get_relative_position_D_origin_float_posD": "(void)(%s);   // not read: get_relative_position_NED_origin returns true (the stub)",
+    "get_velocity_NED_vec.x": "oracle_ahrs.sample.vel_ned.x = %s;",
+    "get_velocity_NED_vec.y": "oracle_ahrs.sample.vel_ned.y = %s;",
+    "get_velocity_NED_vec.z": "oracle_ahrs.sample.vel_ned.z = %s;",
+    "get_ang_vel_roll_max_rads": "att_obj.v_ang_vel_roll_max_rads = %s;",
+    "get_ang_vel_pitch_max_rads": "att_obj.v_ang_vel_pitch_max_rads = %s;",
+    "get_accel_roll_max_radss": "att_obj.v_accel_roll_max_radss = %s;",
+    "get_accel_pitch_max_radss": "att_obj.v_accel_pitch_max_radss = %s;",
+    "get_bf_feedforward": "att_obj.v_bf_feedforward = %s;",
+    "millis": "cpp2lean_millis = %s;",
+    "get_att_target_euler_rad.x": "att_obj.v_att_target_euler_rad.x = %s;",
+    "get_att_target_euler_rad.y": "att_obj.v_att_target_euler_rad.y = %s;",
+    "get_att_target_euler_rad.z": "att_obj.v_att_target_euler_rad.z = %s;",
+    "ticks32": "cpp2lean_scheduler._tick_counter32 = %s;",
+    "yaw": "view_obj.yaw = %s;",
+    "get_althold_lean_angle_max_rad": "att_obj.v_althold_lean_angle_max_rad = %s;",
+    "lean_angle_max_rad": "att_obj.v_lean_angle_max_rad = %s;",
+    "has_good_timing": "cpp2lean_sitl.state.is_lock_step_scheduled = %s;",
+    "cos_yaw": "view_obj.trig.cos_yaw = %s;",
+    "sin_yaw": "view_obj.trig.sin_yaw = %s;",
+    "get_accel_ef.x": "oracle_ahrs.sample.accel_ef.x = %s;",
+    "get_accel_ef.y": "oracle_ahrs.sample.accel_ef.y = %s;",
+    "get_accel_ef.z": "oracle_ahrs.sample.accel_ef.z = %s;",
+    "get_throttle_in": "att_obj.v_throttle_in = %s;",
+    "get_throttle_hover": "motors_obj._throttle_hover.set(%s);",
+    "limit_throttle_lower": "motors_obj.limit.throttle_lower = %s;",
+    "limit_throttle_upper": "motors_obj.limit.throttle_upper = %s;"
+   },
+   "input_aliases": {
+    "_pid_accel_d_m._slew_limiter.millis": "millis",
+    "get_vert_pos_rate_D_velocity": "get_velocity_NED_vec.z"
+   },
+   "input_aliases_note": "one HAL clock; the AHRS stub's get_vert_pos_rate_D returns sample.vel_ned.z, which get_velocity_NED also returns",
+   "const_inputs": {
+    "get_relative_position_NED_origin": "1",
+    "get_relative_position_D_origin_float": "1",
+    "get_velocity_NED": "1",
+    "get_vert_pos_rate_D": "1",
+    "get_control_gain_scaler_XY": "3f800000",
+    "get_control_gain_scaler_Z": "3f800000",
+    "get_position_NE_reset_count": "0",
+    "get_position_D_reset_count": "0"
+   },
+   "const_inputs_note": "what the AHRS stub returns (ardupilot/stubs/AP_AHRS/AP_AHRS.h:35-43): every estimate valid, gain scalers 1, no EKF resets",
+   "input_domains": {
+    "get_throttle_hover": [
+     0.125,
+     0.6875
+    ]
+   },
+   "input_domains_note": "get_throttle_hover() is constrain_float(_throttle_hover, 0.125, 0.6875) (AP_MotorsMulticopter.h:55)",
+   "monotonic": {
+    "ticks32": [
+     0,
+     2
+    ],
+    "millis": [
+     0,
+     10
+    ]
+   },
+   "extra_methods": [
+    "AC_PosControl.calculate_yaw_and_rate_yaw",
+    "AC_PosControl.calculate_overspeed_gain",
+    "AC_PosControl.accel_NE_mss_to_lean_angles_rad",
+    "AC_PosControl.lean_angles_to_accel_NE_mss",
+    "AC_PosControl.NE_update_offsets",
+    "AC_PosControl.D_update_offsets",
+    "AC_PosControl.NE_init_offsets",
+    "AC_PosControl.D_init_offsets",
+    "AC_PosControl.update_terrain",
+    "AC_PosControl.init_terrain",
+    "AC_PosControl.get_throttle_with_vibration_override",
+    "AC_PosControl.NE_handle_ekf_reset",
+    "AC_PosControl.D_handle_ekf_reset",
+    "AC_PosControl.NE_init_ekf_reset",
+    "AC_PosControl.D_init_ekf_reset"
+   ],
+   "enum_leaves": true,
+   "ranges": {
+    "pos_ned_m": [
+     -10,
+     10
+    ],
+    "pos_ne_m": [
+     -10,
+     10
+    ],
+    "pos_desired_ne_m": [
+     -10,
+     10
+    ],
+    "pos_offset_target_ne_m": [
+     -1,
+     1
+    ],
+    "pos_d_m": [
+     -10,
+     10
+    ],
+    "pos_u_m": [
+     -10,
+     10
+    ],
+    "pos_desired_u_m": [
+     -10,
+     10
+    ],
+    "pos_offset_d_m": [
+     -1,
+     1
+    ],
+    "pos_offset_target_d_m": [
+     -1,
+     1
+    ],
+    "pos_terrain_d_m": [
+     -2,
+     2
+    ],
+    "pos_terrain_target_d_m": [
+     -2,
+     2
+    ],
+    "pos_ne_cm": [
+     -1000,
+     1000
+    ],
+    "pos_u_cm": [
+     -1000,
+     1000
+    ],
+    "pos_desired_u_cm": [
+     -1000,
+     1000
+    ],
+    "pos_terrain_u_cm": [
+     -200,
+     200
+    ],
+    "pos_terrain_target_u_cm": [
+     -200,
+     200
+    ],
+    "stopping_point_ne_m": [
+     -10,
+     10
+    ],
+    "stopping_point_d_m": [
+     -10,
+     10
+    ],
+    "pos_offset_ned_m": [
+     -1,
+     1
+    ],
+    "vel_ned_ms": [
+     -5,
+     5
+    ],
+    "vel_ne_ms": [
+     -5,
+     5
+    ],
+    "vel_d_ms": [
+     -3,
+     3
+    ],
+    "vel_u_cms": [
+     -300,
+     300
+    ],
+    "vel_ne_cms": [
+     -500,
+     500
+    ],
+    "vel_desired_ned_ms": [
+     -5,
+     5
+    ],
+    "vel_desired_ne_ms": [
+     -5,
+     5
+    ],
+    "vel_desired_d_ms": [
+     -3,
+     3
+    ],
+    "vel_desired_neu_cms": [
+     -500,
+     500
+    ],
+    "vel_offset_target_ne_ms": [
+     -1,
+     1
+    ],
+    "vel_offset_target_d_ms": [
+     -1,
+     1
+    ],
+    "vel_offset_ned_ms": [
+     -1,
+     1
+    ],
+    "vel_target_ned_ms": [
+     -5,
+     5
+    ],
+    "climb_rate_ms": [
+     -3,
+     3
+    ],
+    "climb_rate_cms": [
+     -300,
+     300
+    ],
+    "accel_ned_mss": [
+     -5,
+     5
+    ],
+    "accel_ne_mss": [
+     -5,
+     5
+    ],
+    "accel_d_mss": [
+     -3,
+     3
+    ],
+    "accel_u_cmss": [
+     -300,
+     300
+    ],
+    "accel_ne_cmss": [
+     -500,
+     500
+    ],
+    "accel_desired_ne_mss": [
+     -5,
+     5
+    ],
+    "accel_offset_target_ne_mss": [
+     -1,
+     1
+    ],
+    "accel_offset_target_d_mss": [
+     -1,
+     1
+    ],
+    "accel_offset_ned_mss": [
+     -1,
+     1
+    ],
+    "accel_target_ned_mss": [
+     -5,
+     5
+    ],
+    "disturb_pos_m": [
+     -0.5,
+     0.5
+    ],
+    "disturb_vel_ms": [
+     -0.5,
+     0.5
+    ],
+    "att_target_euler_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "speed_ne_ms": [
+     0.5,
+     10
+    ],
+    "speed_ne_cms": [
+     50,
+     1000
+    ],
+    "NE_set_max_speed_accel_m.accel_ne_mss": [
+     0.5,
+     5
+    ],
+    "NE_set_correction_speed_accel_m.accel_ne_mss": [
+     0.5,
+     5
+    ],
+    "decent_speed_max_ms": [
+     0.5,
+     3
+    ],
+    "climb_speed_max_ms": [
+     0.5,
+     3
+    ],
+    "accel_max_d_mss": [
+     0.5,
+     5
+    ],
+    "decent_speed_max_cms": [
+     50,
+     300
+    ],
+    "climb_speed_max_cms": [
+     50,
+     300
+    ],
+    "accel_max_u_cmss": [
+     50,
+     500
+    ],
+    "error_max_m": [
+     0,
+     5
+    ],
+    "angle_max_rad": [
+     0,
+     1
+    ],
+    "angle_max_deg": [
+     0,
+     60
+    ],
+    "angle_max_cd": [
+     0,
+     6000
+    ],
+    "ne_control_scale_factor": [
+     0,
+     1
+    ],
+    "throttle_setting": [
+     0,
+     1
+    ],
+    "terrain_margin_m": [
+     0,
+     10
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "get_relative_position_NED_origin_vec": [
+     -10,
+     10
+    ],
+    "get_velocity_NED_vec": [
+     -5,
+     5
+    ],
+    "get_accel_ef.x": [
+     -3,
+     3
+    ],
+    "get_accel_ef.y": [
+     -3,
+     3
+    ],
+    "get_accel_ef.z": [
+     -12,
+     -7
+    ],
+    "cos_yaw": [
+     -1,
+     1
+    ],
+    "sin_yaw": [
+     -1,
+     1
+    ],
+    "yaw": [
+     -3.1416,
+     3.1416
+    ],
+    "get_ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "get_ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "get_accel_roll_max_radss": [
+     1,
+     35
+    ],
+    "get_accel_pitch_max_radss": [
+     1,
+     35
+    ],
+    "get_att_target_euler_rad.x": [
+     -1.0472,
+     1.0472
+    ],
+    "get_att_target_euler_rad.y": [
+     -1.0472,
+     1.0472
+    ],
+    "get_att_target_euler_rad.z": [
+     -3.1416,
+     3.1416
+    ],
+    "get_althold_lean_angle_max_rad": [
+     0.2,
+     1.4
+    ],
+    "lean_angle_max_rad": [
+     0.17,
+     1.4
+    ],
+    "get_throttle_in": [
+     0,
+     1
+    ]
+   },
+   "weights": {
+    "AC_PosControl.NE_update_controller": 25,
+    "AC_PosControl.D_update_controller": 25,
+    "AC_PosControl.set_pos_vel_accel_NED_m": 10,
+    "AC_PosControl.update_estimates": 10,
+    "AC_PosControl.set_dt_s": 4,
+    "AC_PosControl.set_pos_terrain_target_D_m": 3,
+    "AC_PosControl.input_pos_vel_accel_NE_m": 3,
+    "AC_PosControl.input_pos_vel_accel_D_m": 3,
+    "AC_PosControl.input_pos_NED_m": 3,
+    "AC_PosControl.input_vel_accel_NE_m": 2,
+    "AC_PosControl.input_vel_accel_D_m": 2,
+    "AC_PosControl.input_accel_NE_m": 1,
+    "AC_PosControl.input_accel_D_m": 1,
+    "AC_PosControl.get_stopping_point_NE_m": 2,
+    "AC_PosControl.get_stopping_point_D_m": 2,
+    "AC_PosControl.set_pos_vel_accel_NE_m": 2,
+    "AC_PosControl.NE_init_controller": 0.3,
+    "AC_PosControl.D_init_controller": 0.3,
+    "AC_PosControl.NE_init_controller_stopping_point": 0.3,
+    "AC_PosControl.D_init_controller_stopping_point": 0.3,
+    "AC_PosControl.D_init_controller_no_descent": 0.2,
+    "AC_PosControl.NED_standby_reset": 0.2,
+    "AC_PosControl.NE_relax_velocity_controller": 0.3,
+    "AC_PosControl.D_relax_controller": 0.3,
+    "AC_PosControl.NE_soften_for_landing": 0.3,
+    "AC_PosControl.NE_set_max_speed_accel_m": 1,
+    "AC_PosControl.NE_set_correction_speed_accel_m": 1,
+    "AC_PosControl.D_set_max_speed_accel_m": 1,
+    "AC_PosControl.D_set_correction_speed_accel_m": 1,
+    "AC_PosControl.set_posvelaccel_offset_target_NE_m": 0.5,
+    "AC_PosControl.set_posvelaccel_offset_target_D_m": 0.5,
+    "AC_PosControl.set_posvelaccel_offset": 0.3,
+    "AC_PosControl.init_pos_terrain_D_m": 0.3,
+    "AC_PosControl.init_pos_terrain_U_cm": 0.2,
+    "AC_PosControl.set_vibe_comp": 0.3,
+    "AC_PosControl.set_disturb_pos_NE_m": 0.3,
+    "AC_PosControl.set_disturb_vel_NE_ms": 0.3,
+    "AC_PosControl.set_reset_handling_method": 0.3
+   },
+   "setup": [
+    "AC_PosControl.set_dt_s 3b23d70a",
+    "AC_PosControl.update_estimates 0",
+    "AC_PosControl.NE_set_max_speed_accel_m 40a00000 3f800000",
+    "AC_PosControl.NE_set_correction_speed_accel_m 40a00000 3f800000",
+    "AC_PosControl.D_set_max_speed_accel_m 3fc00000 40200000 3f800000",
+    "AC_PosControl.D_set_correction_speed_accel_m 3fc00000 40200000 3f800000",
+    "AC_PosControl.D_init_controller_stopping_point",
+    "AC_PosControl.NE_init_controller_stopping_point"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "defaults"
+  },
+  {
+   "class": "AC_PosControl",
+   "cxx_include": [
+    "<AC_AttitudeControl/AC_PosControl.h>",
+    "<AP_Motors/AP_MotorsMatrix.h>",
+    "<AP_Scheduler/AP_Scheduler.h>",
+    "<SITL/SITL.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_control_env.cpp: the AHRS stub (AP::ahrs())",
+    "extern AP_Scheduler cpp2lean_scheduler;",
+    "extern SITL::SIM cpp2lean_sitl;",
+    "extern uint32_t cpp2lean_millis;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AP_MotorsMatrix motors_obj(400);",
+    "static AC_AttitudeControl att_obj;   // the stand-in, ardupilot/standin/AC_AttitudeControl/AC_AttitudeControl.h"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "motors_obj",
+    "att_obj"
+   ],
+   "inputs": {
+    "get_relative_position_NED_origin_vec.x": "oracle_ahrs.sample.pos_ned.x = %s;",
+    "get_relative_position_NED_origin_vec.y": "oracle_ahrs.sample.pos_ned.y = %s;",
+    "get_relative_position_NED_origin_vec.z": "oracle_ahrs.sample.pos_ned.z = %s;",
+    "get_relative_position_D_origin_float_posD": "(void)(%s);   // not read: get_relative_position_NED_origin returns true (the stub)",
+    "get_velocity_NED_vec.x": "oracle_ahrs.sample.vel_ned.x = %s;",
+    "get_velocity_NED_vec.y": "oracle_ahrs.sample.vel_ned.y = %s;",
+    "get_velocity_NED_vec.z": "oracle_ahrs.sample.vel_ned.z = %s;",
+    "get_ang_vel_roll_max_rads": "att_obj.v_ang_vel_roll_max_rads = %s;",
+    "get_ang_vel_pitch_max_rads": "att_obj.v_ang_vel_pitch_max_rads = %s;",
+    "get_accel_roll_max_radss": "att_obj.v_accel_roll_max_radss = %s;",
+    "get_accel_pitch_max_radss": "att_obj.v_accel_pitch_max_radss = %s;",
+    "get_bf_feedforward": "att_obj.v_bf_feedforward = %s;",
+    "millis": "cpp2lean_millis = %s;",
+    "get_att_target_euler_rad.x": "att_obj.v_att_target_euler_rad.x = %s;",
+    "get_att_target_euler_rad.y": "att_obj.v_att_target_euler_rad.y = %s;",
+    "get_att_target_euler_rad.z": "att_obj.v_att_target_euler_rad.z = %s;",
+    "ticks32": "cpp2lean_scheduler._tick_counter32 = %s;",
+    "yaw": "view_obj.yaw = %s;",
+    "get_althold_lean_angle_max_rad": "att_obj.v_althold_lean_angle_max_rad = %s;",
+    "lean_angle_max_rad": "att_obj.v_lean_angle_max_rad = %s;",
+    "has_good_timing": "cpp2lean_sitl.state.is_lock_step_scheduled = %s;",
+    "cos_yaw": "view_obj.trig.cos_yaw = %s;",
+    "sin_yaw": "view_obj.trig.sin_yaw = %s;",
+    "get_accel_ef.x": "oracle_ahrs.sample.accel_ef.x = %s;",
+    "get_accel_ef.y": "oracle_ahrs.sample.accel_ef.y = %s;",
+    "get_accel_ef.z": "oracle_ahrs.sample.accel_ef.z = %s;",
+    "get_throttle_in": "att_obj.v_throttle_in = %s;",
+    "get_throttle_hover": "motors_obj._throttle_hover.set(%s);",
+    "limit_throttle_lower": "motors_obj.limit.throttle_lower = %s;",
+    "limit_throttle_upper": "motors_obj.limit.throttle_upper = %s;"
+   },
+   "input_aliases": {
+    "_pid_accel_d_m._slew_limiter.millis": "millis",
+    "get_vert_pos_rate_D_velocity": "get_velocity_NED_vec.z"
+   },
+   "input_aliases_note": "one HAL clock; the AHRS stub's get_vert_pos_rate_D returns sample.vel_ned.z, which get_velocity_NED also returns",
+   "const_inputs": {
+    "get_relative_position_NED_origin": "1",
+    "get_relative_position_D_origin_float": "1",
+    "get_velocity_NED": "1",
+    "get_vert_pos_rate_D": "1",
+    "get_control_gain_scaler_XY": "3f800000",
+    "get_control_gain_scaler_Z": "3f800000",
+    "get_position_NE_reset_count": "0",
+    "get_position_D_reset_count": "0"
+   },
+   "const_inputs_note": "what the AHRS stub returns (ardupilot/stubs/AP_AHRS/AP_AHRS.h:35-43): every estimate valid, gain scalers 1, no EKF resets",
+   "input_domains": {
+    "get_throttle_hover": [
+     0.125,
+     0.6875
+    ]
+   },
+   "input_domains_note": "get_throttle_hover() is constrain_float(_throttle_hover, 0.125, 0.6875) (AP_MotorsMulticopter.h:55)",
+   "monotonic": {
+    "ticks32": [
+     0,
+     2
+    ],
+    "millis": [
+     0,
+     10
+    ]
+   },
+   "extra_methods": [
+    "AC_PosControl.calculate_yaw_and_rate_yaw",
+    "AC_PosControl.calculate_overspeed_gain",
+    "AC_PosControl.accel_NE_mss_to_lean_angles_rad",
+    "AC_PosControl.lean_angles_to_accel_NE_mss",
+    "AC_PosControl.NE_update_offsets",
+    "AC_PosControl.D_update_offsets",
+    "AC_PosControl.NE_init_offsets",
+    "AC_PosControl.D_init_offsets",
+    "AC_PosControl.update_terrain",
+    "AC_PosControl.init_terrain",
+    "AC_PosControl.get_throttle_with_vibration_override",
+    "AC_PosControl.NE_handle_ekf_reset",
+    "AC_PosControl.D_handle_ekf_reset",
+    "AC_PosControl.NE_init_ekf_reset",
+    "AC_PosControl.D_init_ekf_reset"
+   ],
+   "enum_leaves": true,
+   "ranges": {
+    "pos_ned_m": [
+     -10,
+     10
+    ],
+    "pos_ne_m": [
+     -10,
+     10
+    ],
+    "pos_desired_ne_m": [
+     -10,
+     10
+    ],
+    "pos_offset_target_ne_m": [
+     -1,
+     1
+    ],
+    "pos_d_m": [
+     -10,
+     10
+    ],
+    "pos_u_m": [
+     -10,
+     10
+    ],
+    "pos_desired_u_m": [
+     -10,
+     10
+    ],
+    "pos_offset_d_m": [
+     -1,
+     1
+    ],
+    "pos_offset_target_d_m": [
+     -1,
+     1
+    ],
+    "pos_terrain_d_m": [
+     -2,
+     2
+    ],
+    "pos_terrain_target_d_m": [
+     -2,
+     2
+    ],
+    "pos_ne_cm": [
+     -1000,
+     1000
+    ],
+    "pos_u_cm": [
+     -1000,
+     1000
+    ],
+    "pos_desired_u_cm": [
+     -1000,
+     1000
+    ],
+    "pos_terrain_u_cm": [
+     -200,
+     200
+    ],
+    "pos_terrain_target_u_cm": [
+     -200,
+     200
+    ],
+    "stopping_point_ne_m": [
+     -10,
+     10
+    ],
+    "stopping_point_d_m": [
+     -10,
+     10
+    ],
+    "pos_offset_ned_m": [
+     -1,
+     1
+    ],
+    "vel_ned_ms": [
+     -5,
+     5
+    ],
+    "vel_ne_ms": [
+     -5,
+     5
+    ],
+    "vel_d_ms": [
+     -3,
+     3
+    ],
+    "vel_u_cms": [
+     -300,
+     300
+    ],
+    "vel_ne_cms": [
+     -500,
+     500
+    ],
+    "vel_desired_ned_ms": [
+     -5,
+     5
+    ],
+    "vel_desired_ne_ms": [
+     -5,
+     5
+    ],
+    "vel_desired_d_ms": [
+     -3,
+     3
+    ],
+    "vel_desired_neu_cms": [
+     -500,
+     500
+    ],
+    "vel_offset_target_ne_ms": [
+     -1,
+     1
+    ],
+    "vel_offset_target_d_ms": [
+     -1,
+     1
+    ],
+    "vel_offset_ned_ms": [
+     -1,
+     1
+    ],
+    "vel_target_ned_ms": [
+     -5,
+     5
+    ],
+    "climb_rate_ms": [
+     -3,
+     3
+    ],
+    "climb_rate_cms": [
+     -300,
+     300
+    ],
+    "accel_ned_mss": [
+     -5,
+     5
+    ],
+    "accel_ne_mss": [
+     -5,
+     5
+    ],
+    "accel_d_mss": [
+     -3,
+     3
+    ],
+    "accel_u_cmss": [
+     -300,
+     300
+    ],
+    "accel_ne_cmss": [
+     -500,
+     500
+    ],
+    "accel_desired_ne_mss": [
+     -5,
+     5
+    ],
+    "accel_offset_target_ne_mss": [
+     -1,
+     1
+    ],
+    "accel_offset_target_d_mss": [
+     -1,
+     1
+    ],
+    "accel_offset_ned_mss": [
+     -1,
+     1
+    ],
+    "accel_target_ned_mss": [
+     -5,
+     5
+    ],
+    "disturb_pos_m": [
+     -0.5,
+     0.5
+    ],
+    "disturb_vel_ms": [
+     -0.5,
+     0.5
+    ],
+    "att_target_euler_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "speed_ne_ms": [
+     0.5,
+     10
+    ],
+    "speed_ne_cms": [
+     50,
+     1000
+    ],
+    "NE_set_max_speed_accel_m.accel_ne_mss": [
+     0.5,
+     5
+    ],
+    "NE_set_correction_speed_accel_m.accel_ne_mss": [
+     0.5,
+     5
+    ],
+    "decent_speed_max_ms": [
+     0.5,
+     3
+    ],
+    "climb_speed_max_ms": [
+     0.5,
+     3
+    ],
+    "accel_max_d_mss": [
+     0.5,
+     5
+    ],
+    "decent_speed_max_cms": [
+     50,
+     300
+    ],
+    "climb_speed_max_cms": [
+     50,
+     300
+    ],
+    "accel_max_u_cmss": [
+     50,
+     500
+    ],
+    "error_max_m": [
+     0,
+     5
+    ],
+    "angle_max_rad": [
+     0,
+     1
+    ],
+    "angle_max_deg": [
+     0,
+     60
+    ],
+    "angle_max_cd": [
+     0,
+     6000
+    ],
+    "ne_control_scale_factor": [
+     0,
+     1
+    ],
+    "throttle_setting": [
+     0,
+     1
+    ],
+    "terrain_margin_m": [
+     0,
+     10
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "get_relative_position_NED_origin_vec": [
+     -10,
+     10
+    ],
+    "get_velocity_NED_vec": [
+     -5,
+     5
+    ],
+    "get_accel_ef.x": [
+     -3,
+     3
+    ],
+    "get_accel_ef.y": [
+     -3,
+     3
+    ],
+    "get_accel_ef.z": [
+     -12,
+     -7
+    ],
+    "cos_yaw": [
+     -1,
+     1
+    ],
+    "sin_yaw": [
+     -1,
+     1
+    ],
+    "yaw": [
+     -3.1416,
+     3.1416
+    ],
+    "get_ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "get_ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "get_accel_roll_max_radss": [
+     1,
+     35
+    ],
+    "get_accel_pitch_max_radss": [
+     1,
+     35
+    ],
+    "get_att_target_euler_rad.x": [
+     -1.0472,
+     1.0472
+    ],
+    "get_att_target_euler_rad.y": [
+     -1.0472,
+     1.0472
+    ],
+    "get_att_target_euler_rad.z": [
+     -3.1416,
+     3.1416
+    ],
+    "get_althold_lean_angle_max_rad": [
+     0.2,
+     1.4
+    ],
+    "lean_angle_max_rad": [
+     0.17,
+     1.4
+    ],
+    "get_throttle_in": [
+     0,
+     1
+    ]
+   },
+   "weights": {
+    "AC_PosControl.NE_update_controller": 25,
+    "AC_PosControl.D_update_controller": 25,
+    "AC_PosControl.set_pos_vel_accel_NED_m": 10,
+    "AC_PosControl.update_estimates": 10,
+    "AC_PosControl.set_dt_s": 4,
+    "AC_PosControl.set_pos_terrain_target_D_m": 3,
+    "AC_PosControl.input_pos_vel_accel_NE_m": 3,
+    "AC_PosControl.input_pos_vel_accel_D_m": 3,
+    "AC_PosControl.input_pos_NED_m": 3,
+    "AC_PosControl.input_vel_accel_NE_m": 2,
+    "AC_PosControl.input_vel_accel_D_m": 2,
+    "AC_PosControl.input_accel_NE_m": 1,
+    "AC_PosControl.input_accel_D_m": 1,
+    "AC_PosControl.get_stopping_point_NE_m": 2,
+    "AC_PosControl.get_stopping_point_D_m": 2,
+    "AC_PosControl.set_pos_vel_accel_NE_m": 2,
+    "AC_PosControl.NE_init_controller": 0.3,
+    "AC_PosControl.D_init_controller": 0.3,
+    "AC_PosControl.NE_init_controller_stopping_point": 0.3,
+    "AC_PosControl.D_init_controller_stopping_point": 0.3,
+    "AC_PosControl.D_init_controller_no_descent": 0.2,
+    "AC_PosControl.NED_standby_reset": 0.2,
+    "AC_PosControl.NE_relax_velocity_controller": 0.3,
+    "AC_PosControl.D_relax_controller": 0.3,
+    "AC_PosControl.NE_soften_for_landing": 0.3,
+    "AC_PosControl.NE_set_max_speed_accel_m": 1,
+    "AC_PosControl.NE_set_correction_speed_accel_m": 1,
+    "AC_PosControl.D_set_max_speed_accel_m": 1,
+    "AC_PosControl.D_set_correction_speed_accel_m": 1,
+    "AC_PosControl.set_posvelaccel_offset_target_NE_m": 0.5,
+    "AC_PosControl.set_posvelaccel_offset_target_D_m": 0.5,
+    "AC_PosControl.set_posvelaccel_offset": 0.3,
+    "AC_PosControl.init_pos_terrain_D_m": 0.3,
+    "AC_PosControl.init_pos_terrain_U_cm": 0.2,
+    "AC_PosControl.set_vibe_comp": 0.3,
+    "AC_PosControl.set_disturb_pos_NE_m": 0.3,
+    "AC_PosControl.set_disturb_vel_NE_ms": 0.3,
+    "AC_PosControl.set_reset_handling_method": 0.3
+   },
+   "setup": [
+    "AC_PosControl.set_dt_s 3b23d70a",
+    "AC_PosControl.update_estimates 0",
+    "AC_PosControl.NE_set_max_speed_accel_m 40a00000 3f800000",
+    "AC_PosControl.NE_set_correction_speed_accel_m 40a00000 3f800000",
+    "AC_PosControl.D_set_max_speed_accel_m 3fc00000 40200000 3f800000",
+    "AC_PosControl.D_set_correction_speed_accel_m 3fc00000 40200000 3f800000",
+    "AC_PosControl.D_init_controller_stopping_point",
+    "AC_PosControl.NE_init_controller_stopping_point"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "tuned",
+   "params": {
+    "_p_pos_ne_m._kp": "1.5",
+    "_pid_vel_ne_m._kp": "6.0",
+    "_pid_vel_ne_m._kd": "0.5"
+   },
+   "params_note": "sim/params/copter-cf2x-tuned.txt: PSC_NE_POS_P, PSC_NE_VEL_P, PSC_NE_VEL_D"
+  }
+ ]
+}

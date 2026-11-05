@@ -1,0 +1,11 @@
+tests/reject_phase3.cpp:30:18: rejected: reference member `_owner` to a class that is not a --boundary class (a back-reference to the owner, e.g. `AP_Motors &`, would need the owner's state; only `const` references to numbers are translated, as `Refs`)
+tests/reject_phase3.cpp:38:20: rejected: `memset` other than `memset(&x, 0, sizeof(x))`
+tests/reject_phase3.cpp:39:27: rejected: call of `log_event` (--drop) whose result is used
+tests/reject_phase3.cpp:54:42: rejected: call of `scale` on a temporary object of class `Scaler` with parameters, inputs or references
+tests/reject_phase3.cpp:55:37: rejected: call of boundary function `clock_ms` with arguments
+tests/reject_phase3.cpp:60:5: rejected: reference member `_ref` bound to something other than a constructor parameter
+tests/reject_phase3.cpp:83:5: rejected: constructor that writes outputs to the boundary
+tests/reject_phase3.cpp:85:32: rejected: call of non-const method `take` on a boundary object with a result or reference parameters (only `void` outputs are translated)
+tests/reject_phase3.cpp:86:26: rejected: call of non-const method `swap_out` on a boundary object with a result or reference parameters (only `void` outputs are translated)
+tests/reject_phase3.cpp:87:19: rejected: call of non-const method `ping` without arguments on a boundary object
+tests/reject_phase3.cpp:90:19: rejected: const `void` call on a boundary object without reference parameters (no effect)

@@ -1,0 +1,65 @@
+name = "contracts"
+defaultTargets = ["Contracts", "FloatModel", "Translated", "MissionData", "Mission", "copter_lean36", "mission_world_check"]
+# The C that Lean emits for the translated vehicle is compiled with the code-generation flags of the
+# 4.33 package (cpp2lean/lean/lakefile.toml): no FMA contraction, no libm call simplification.
+moreLeancArgs = ["-ffp-contract=off", "-fno-builtin-sinf", "-fno-builtin-cosf", "-fno-builtin-sin", "-fno-builtin-cos", "-fno-builtin"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0-rc2"
+
+[[require]]
+name = "DynamicalSystems"
+git = "https://github.com/mcdoll/DynamicalSystems"
+rev = "b40b48ffbdf510e279a954ac8bf50ae4f926c71e"
+
+[[lean_lib]]
+name = "FloatModel"
+globs = ["FloatModel.+"]
+
+[[lean_lib]]
+name = "Contracts"
+roots = ["Contracts"]
+
+# The translated vehicle, snapshot of cpp2lean/lean (see TRANSLATED.md); module names unchanged.
+[[lean_lib]]
+name = "Translated"
+srcDir = "Translated"
+roots = ["CppLibm", "AC_PID_lib", "AP_Math_lib", "AP_Motors_lib", "AC_Attitude_lib", "AC_PosControl_lib", "AC_WPNav_lib", "AHRS_View_lib", "VehicleParams", "Vehicle"]
+
+# The mission's parameter texts (copies of sim/params), no Mathlib, so that executables can use them.
+[[lean_lib]]
+name = "MissionData"
+globs = ["MissionData.+"]
+
+# The lock-step vehicle of the 4.33 package, rebuilt on v4.36.0-rc2 (Translated/VehicleMain.lean).
+[[lean_exe]]
+name = "copter_lean36"
+srcDir = "Translated"
+root = "VehicleMain"
+
+# Prints the parameters of the world built from the embedded course texts (as --print-params).
+[[lean_exe]]
+name = "mission_world_check"
+root = "MissionData.Check"
+
+# Evaluated counterexamples to nav_contract (MissionData/NavCex.lean); not a default target.
+[[lean_exe]]
+name = "nav_cex"
+root = "MissionData.NavCex"
+
+# The mission-level contract of the closed loop (MISSION.md); plain files, since they import the
+# translated vehicle, which is not written as modules.
+[[lean_lib]]
+name = "Mission"
+globs = ["Contracts.Mission.+"]
+
+# The track proof campaign (TRACK_PLAN.md): M1 actuators in [0, 1], M2 integrators bounded.
+[[lean_lib]]
+name = "Track"
+globs = ["Contracts.Track.+"]

@@ -1,0 +1,18 @@
+tests/reject_classes.cpp:23:12: rejected: pointer or reference type `float *`
+tests/reject_classes.cpp:30:51: rejected: argument of a call on a boundary object that is not a compile-time constant (only constant arguments of const boundary calls are translated)
+tests/reject_classes.cpp:37:16: rejected: static data member `count` that is mutable or has no constant initializer
+tests/reject_classes.cpp:43:8: rejected: multiple inheritance
+tests/reject_classes.cpp:46:17: rejected: mutable member `_hits`
+tests/reject_classes.cpp:47:14: rejected: bit-field `_bits` of type `uint32_t` (only bool bit-fields are translated)
+tests/reject_classes.cpp:53:11: rejected: overloaded operator `operator()`
+tests/reject_classes.cpp:63:13: rejected: `switch` case that falls through into the next case
+tests/reject_classes.cpp:74:27: rejected: `break` inside a `switch` case other than as the case's last statement
+tests/reject_classes.cpp:86:40: rejected: ordering comparison of enum values
+tests/reject_classes.cpp:94:26: rejected: method `set_and_save` of parameter class `Param` (get, set, the conversion and unary minus are translated)
+tests/reject_classes.cpp:101:38: rejected: method of a local object of class `WithParams`, which has parameters
+tests/reject_classes.cpp:115:38: rejected: recursive call (member function `down` is on a call cycle)
+tests/reject_classes.cpp:120:5: rejected: destructor with a body
+tests/reject_classes.cpp:127:11: rejected: member `_v` hides a member of base class `Delegating`
+tests/reject_classes.cpp:130:7: rejected: union `Bits`
+tests/reject_classes.cpp:135:29: rejected: template `Box` that is not instantiated
+tests/reject_classes.cpp:142:12: rejected: non-const reference member `_r` (only `const` references to numbers are translated, as `Refs`)

@@ -1,0 +1,20 @@
+bin backend, copter_lean: /Users/ryan/Research/cpp2lean/lean/.lake/build/bin/copter_lean --exact --params /Users/ryan/Research/cpp2lean/sim/params/copter-cf2x.txt --params /Users/ryan/Research/cpp2lean/sim/params/copter-course-speed.txt --params /Users/ryan/Research/cpp2lean/sim/params/copter-cf2x-tuned.txt (cwd /Users/ryan/Research/cpp2lean/sim)
+end: last waypoint held 3 s within 0.1 m; 7797 ticks, 19.4925 s simulated (control 400 Hz, physics 1200 Hz); mission from --print-params
+final position error to last waypoint: 2.97 cm (pos NED -0.0015 -0.0008 -0.8297, yaw 45.00 deg)
+max |roll| 14.82 deg, max |pitch| 11.48 deg, max tilt 16.22 deg
+max speed 1.100 m/s; max altitude 1.592 m
+waypoints passed in order within 0.2 m: 8 of 8
+waypoint 0 (0.0, 0.0, -0.8): closest 4.02 cm at 1.812 s, first within 0.1 m at 1.685 s
+waypoint 1 (1.25, 1.25, -1.0): closest 7.28 cm at 3.708 s, first within 0.1 m at 3.618 s
+waypoint 2 (0.0, 2.5, -1.2): closest 7.03 cm at 5.558 s, first within 0.1 m at 5.463 s
+waypoint 3 (-1.25, 1.25, -1.4): closest 7.20 cm at 7.410 s, first within 0.1 m at 7.317 s
+waypoint 4 (1.25, -1.25, -1.6): closest 7.05 cm at 11.033 s, first within 0.1 m at 10.938 s
+waypoint 5 (0.0, -2.5, -1.4): closest 7.34 cm at 12.877 s, first within 0.1 m at 12.790 s
+waypoint 6 (-1.25, -1.25, -1.1): closest 7.23 cm at 14.730 s, first within 0.1 m at 14.640 s
+waypoint 7 (0.0, 0.0, -0.8): closest 1.12 cm at 16.765 s, first within 0.1 m at 16.490 s
+max distance from last waypoint after first reaching it: 4.18 cm
+max target speed 1.014 m/s; max target acceleration 2.137 m/s^2
+distance to AC_PosControl's position target: max 8.70 cm, rms 2.30 cm; max |roll - roll target| 0.71 deg, max |pitch - pitch target| 0.62 deg
+controller round trip per tick (write state line, read actuator line; ticks 2..): median 162.6 us, mean 164.8 us, p99 203.0 us, max 499.1 us; first tick incl. start-up 2.6 ms
+wall clock per simulated second: 0.087 s in all (physics 0.013 s, controller round trips 0.066 s)
+trace fields per line: 18

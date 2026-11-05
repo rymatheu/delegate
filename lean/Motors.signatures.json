@@ -1,0 +1,446 @@
+{
+ "namespace": "Motors",
+ "source": "examples/motors.cpp",
+ "functions": [
+  {
+   "name": "clamp_abs",
+   "lean": "Motors.clamp_abs",
+   "params": [
+    [
+     "v",
+     "float"
+    ],
+    [
+     "lim",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/motors.cpp:35"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "Mixer",
+   "lean": "Mixer",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "get_lean_max_out",
+     "type": "float",
+     "cxx": "_motors.get_lean_max(out) writes out",
+     "leaves": null
+    },
+    {
+     "lean": "get_lean_max",
+     "type": "bool",
+     "cxx": "_motors.get_lean_max()",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [
+    {
+     "lean": "set_roll",
+     "type": "float",
+     "cxx": "v` of `_motors.set_roll(v)",
+     "scalar": true,
+     "leaves": null
+    },
+    {
+     "lean": "set_pitch",
+     "type": "float",
+     "cxx": "v` of `_motors.set_pitch(v)",
+     "scalar": true,
+     "leaves": null
+    }
+   ],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Mixer",
+     "lean": "Mixer.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Mixer",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "motors",
+       "type": "Motors",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "output",
+     "lean": "Mixer.output",
+     "top": false,
+     "kind": "method",
+     "owner": "Mixer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "last_lim",
+     "lean": "Mixer.last_lim",
+     "top": false,
+     "kind": "method",
+     "owner": "Mixer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_last_lim",
+     "cxx": "_last_lim",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Attitude",
+   "lean": "Attitude",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "get_saturation_count",
+     "type": "int32_t",
+     "cxx": "_motors.get_saturation(count, margin) writes count",
+     "leaves": null
+    },
+    {
+     "lean": "get_saturation_margin",
+     "type": "float",
+     "cxx": "_motors.get_saturation(count, margin) writes margin",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [
+    {
+     "field": "_mixer",
+     "class": "Mixer"
+    }
+   ],
+   "outputs": [
+    {
+     "lean": "set_throttle_out_throttle",
+     "type": "float",
+     "cxx": "throttle` of `_motors.set_throttle_out(throttle, apply_angle_boost, filt_cutoff)",
+     "scalar": true,
+     "leaves": null
+    },
+    {
+     "lean": "set_throttle_out_apply_angle_boost",
+     "type": "bool",
+     "cxx": "apply_angle_boost` of `_motors.set_throttle_out(throttle, apply_angle_boost, filt_cutoff)",
+     "scalar": true,
+     "leaves": null
+    },
+    {
+     "lean": "set_throttle_out_filt_cutoff",
+     "type": "float",
+     "cxx": "filt_cutoff` of `_motors.set_throttle_out(throttle, apply_angle_boost, filt_cutoff)",
+     "scalar": true,
+     "leaves": null
+    }
+   ],
+   "sub_outputs": [
+    {
+     "field": "_mixer",
+     "class": "Mixer"
+    }
+   ],
+   "methods": [
+    {
+     "cxx": "Attitude",
+     "lean": "Attitude.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "motors",
+       "type": "Motors",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "run",
+     "lean": "Attitude.run",
+     "top": false,
+     "kind": "method",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [
+      "o",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "throttle",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "boost",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "idle",
+     "lean": "Attitude.idle",
+     "top": false,
+     "kind": "method",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "o"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_mixer._last_lim",
+     "cxx": "_mixer._last_lim",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_saturated",
+     "cxx": "_saturated",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_runs",
+     "cxx": "_runs",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "clamp_abs",
+   "cxx_call": "clamp_abs",
+   "lean": "Motors.clamp_abs",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "lim",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "46:19"
+  },
+  {
+   "lean": "(2.0 : Float32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "50:27"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "51:30"
+  },
+  {
+   "lean": "(0.5 : Float32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "79:57"
+  }
+ ],
+ "var_info": {}
+}

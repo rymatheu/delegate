@@ -1,0 +1,11 @@
+tests/reject_phase3b.cpp:32:44: rejected: pointer cast of `this` to `Other`, whose data members are not the first data members of `V3` (same names and types)
+tests/reject_phase3b.cpp:34:36: rejected: `operator[]` of `V3` with an index that is not a constant in [0, 3) (it indexes the data members from `x` on)
+tests/reject_phase3b.cpp:36:29: rejected: call of non-const `zero` on an object returned by reference (the write would reach the referenced object)
+tests/reject_phase3b.cpp:39:37: rejected: pointer operation `*`
+tests/reject_phase3b.cpp:62:21: rejected: use of the back-reference `host` other than reading a value (`bump`)
+tests/reject_phase3b.cpp:71:9: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body)
+tests/reject_phase3b.cpp:79:22: rejected: local reference `r` to something that may change while it is live (only references into variables that are never assigned, into the object in a const member function, or to the result of a const call on a boundary object are translated, as copies)
+tests/reject_phase3b.cpp:83:35: rejected: read of `Keeper::_hidden`, which is not part of the model (--drop)
+tests/reject_phase3b.cpp:88:35: rejected: argument of a call on a boundary object that is not a compile-time constant, inside a loop (a call site outside loops is one input)
+tests/reject_phase3b.cpp:94:41: rejected: call of non-const `take` on a boundary object whose result is used or with reference parameters (outputs are calls whose result is discarded)
+tests/reject_phase3b.cpp:100:17: rejected: `const char *` without a string literal (its zero value is a null pointer, which is not a string)

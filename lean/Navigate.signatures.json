@@ -1,0 +1,1817 @@
+{
+ "namespace": "Navigate",
+ "source": "examples/navigate.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Leg",
+   "lean": "Navigate.Leg",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "add",
+     "lean": "Navigate.Leg.add",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "index",
+       "type": "uint8_t",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "t",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "Navigate.Leg.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Leg",
+     "lean": "Navigate.Leg.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "extend",
+     "lean": "Navigate.Leg.extend",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "valid",
+     "lean": "Navigate.Leg.valid",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "fill",
+     "lean": "Navigate.Leg.fill",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "first",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "last",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "t",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "cap",
+     "lean": "Navigate.Leg.cap",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "speed_max",
+       "type": "float",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_cap",
+     "lean": "Navigate.Leg.update_cap",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "cap_local",
+     "lean": "Navigate.Leg.cap_local",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_points",
+     "lean": "Navigate.Leg.set_points",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "a",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "b",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "span",
+     "lean": "Navigate.Leg.span",
+     "top": false,
+     "kind": "method",
+     "owner": "Leg",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "num",
+     "cxx": "num",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[0]!.t",
+     "cxx": "seg[0].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[0]!.v",
+     "cxx": "seg[0].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[1]!.t",
+     "cxx": "seg[1].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[1]!.v",
+     "cxx": "seg[1].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[2]!.t",
+     "cxx": "seg[2].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[2]!.v",
+     "cxx": "seg[2].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[3]!.t",
+     "cxx": "seg[3].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[3]!.v",
+     "cxx": "seg[3].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[4]!.t",
+     "cxx": "seg[4].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[4]!.v",
+     "cxx": "seg[4].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[5]!.t",
+     "cxx": "seg[5].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "seg[5]!.v",
+     "cxx": "seg[5].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[0]!.x",
+     "cxx": "pts[0].x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[0]!.y",
+     "cxx": "pts[0].y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[0]!.z",
+     "cxx": "pts[0].z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[1]!.x",
+     "cxx": "pts[1].x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[1]!.y",
+     "cxx": "pts[1].y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pts[1]!.z",
+     "cxx": "pts[1].z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "flags.done",
+     "cxx": "flags.done",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "flags.fast",
+     "cxx": "flags.fast",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "limit",
+     "cxx": "limit",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cap_store",
+     "cxx": "cap_store",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "last",
+     "cxx": "last",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  },
+  {
+   "cxx": "NV3",
+   "lean": "Navigate.NV3",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "NV3",
+     "lean": "Navigate.NV3.init_double3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator+",
+     "lean": "Navigate.NV3.op_add",
+     "top": false,
+     "kind": "method",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "NV3",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator*",
+     "lean": "Navigate.NV3.op_mul",
+     "top": false,
+     "kind": "method",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "k",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "NV3",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator-",
+     "lean": "Navigate.NV3.op_sub",
+     "top": false,
+     "kind": "method",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "NV3",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "length",
+     "lean": "Navigate.NV3.length",
+     "top": false,
+     "kind": "method",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "NV3",
+     "lean": "Navigate.NV3.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "NV3",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  },
+  {
+   "cxx": "Navigator",
+   "lean": "Navigate.Navigator",
+   "has_params": true,
+   "inputs": [
+    {
+     "lean": "stopping_point_out",
+     "type": "NV2",
+     "cxx": "_planner.stopping_point(out) writes out",
+     "leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      }
+     ],
+     "live": {
+      "args": []
+     }
+    },
+    {
+     "lean": "speed_limit",
+     "type": "float",
+     "cxx": "_planner.speed_limit()",
+     "leaves": null,
+     "live": {
+      "args": []
+     }
+    },
+    {
+     "lean": "scaler",
+     "type": "float",
+     "cxx": "_planner.scaler(a, b)",
+     "leaves": null,
+     "live": {
+      "args": [
+       "float",
+       "float"
+      ]
+     }
+    },
+    {
+     "lean": "now_ms",
+     "type": "uint32_t",
+     "cxx": "clk::now_ms.now_ms()",
+     "leaves": null
+    },
+    {
+     "lean": "estimate",
+     "type": "NV3",
+     "cxx": "_planner.estimate()",
+     "leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ],
+     "live": {
+      "args": []
+     }
+    },
+    {
+     "lean": "gain_kP",
+     "type": "float",
+     "cxx": "_planner.gain().kP()",
+     "leaves": null,
+     "live": {
+      "args": []
+     }
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Navigator",
+     "lean": "Navigate.Navigator.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "planner",
+       "type": "Planner",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "speed_now",
+     "lean": "Navigate.Navigator.speed_now",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "olive",
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "start",
+     "lean": "Navigate.Navigator.start",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "o",
+      "olive",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "speed",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "stopping",
+     "lean": "Navigate.Navigator.stopping",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "olive",
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "out",
+       "type": "NV3",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "step",
+     "lean": "Navigate.Navigator.step",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "o",
+      "olive",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "fill",
+     "lean": "Navigate.Navigator.fill",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "first",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "last",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "t",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "cap",
+     "lean": "Navigate.Navigator.cap",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "points",
+     "lean": "Navigate.Navigator.points",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "a",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "b",
+       "type": "NV3",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Navigate.NV3.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "valid",
+     "lean": "Navigate.Navigator.valid",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "span",
+     "lean": "Navigate.Navigator.span",
+     "top": false,
+     "kind": "method",
+     "owner": "Navigator",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "_k",
+     "cxx": "_k.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_dest.x",
+     "cxx": "_dest.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_dest.y",
+     "cxx": "_dest.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_dest.z",
+     "cxx": "_dest.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_offset.x",
+     "cxx": "_offset.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_offset.y",
+     "cxx": "_offset.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_offset.z",
+     "cxx": "_offset.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_gain",
+     "cxx": "_gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_started_ms",
+     "cxx": "_started_ms",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.num",
+     "cxx": "_leg.num",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[0]!.t",
+     "cxx": "_leg.seg[0].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[0]!.v",
+     "cxx": "_leg.seg[0].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[1]!.t",
+     "cxx": "_leg.seg[1].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[1]!.v",
+     "cxx": "_leg.seg[1].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[2]!.t",
+     "cxx": "_leg.seg[2].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[2]!.v",
+     "cxx": "_leg.seg[2].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[3]!.t",
+     "cxx": "_leg.seg[3].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[3]!.v",
+     "cxx": "_leg.seg[3].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[4]!.t",
+     "cxx": "_leg.seg[4].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[4]!.v",
+     "cxx": "_leg.seg[4].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[5]!.t",
+     "cxx": "_leg.seg[5].t",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.seg[5]!.v",
+     "cxx": "_leg.seg[5].v",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[0]!.x",
+     "cxx": "_leg.pts[0].x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[0]!.y",
+     "cxx": "_leg.pts[0].y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[0]!.z",
+     "cxx": "_leg.pts[0].z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[1]!.x",
+     "cxx": "_leg.pts[1].x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[1]!.y",
+     "cxx": "_leg.pts[1].y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.pts[1]!.z",
+     "cxx": "_leg.pts[1].z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.flags.done",
+     "cxx": "_leg.flags.done",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.flags.fast",
+     "cxx": "_leg.flags.fast",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.limit",
+     "cxx": "_leg.limit",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.cap_store",
+     "cxx": "_leg.cap_store",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_leg.last",
+     "cxx": "_leg.last",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  },
+  {
+   "cxx": "NV2",
+   "lean": "Navigate.NV2",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [
+  {
+   "name": "reset",
+   "cxx": "_planner.reset()",
+   "args": []
+  },
+  {
+   "name": "set_limits",
+   "cxx": "_planner.set_limits(float speed, float accel)",
+   "args": [
+    {
+     "name": "speed",
+     "type": "float",
+     "enum": null,
+     "leaves": null
+    },
+    {
+     "name": "accel",
+     "type": "float",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  },
+  {
+   "name": "send",
+   "cxx": "_planner.send(NV3 pos, NV3 vel)",
+   "args": [
+    {
+     "name": "pos",
+     "type": "NV3",
+     "enum": null,
+     "leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "name": "vel",
+     "type": "NV3",
+     "enum": null,
+     "leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "output_ns": "Navigate.",
+ "literals": [
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "58:17"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "59:18"
+  },
+  {
+   "lean": "(2.0 : Float32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "109:25"
+  },
+  {
+   "lean": "(2.0 : Float)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "120:26"
+  },
+  {
+   "lean": "(0.75 : Float32)",
+   "bits": "3f400000",
+   "cpp": "0.75f",
+   "at": "143:62"
+  },
+  {
+   "lean": "(0.5 : Float32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "155:88"
+  }
+ ],
+ "var_info": {}
+}

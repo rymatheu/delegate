@@ -1,0 +1,94 @@
+{
+ "namespace": "Frame",
+ "cpp2lean": [
+  "--nest",
+  "--ap-param",
+  "--boundary",
+  "Servo,Sensor,Notify",
+  "--output-log",
+  "--array-params",
+  "--site-inputs",
+  "--boundary-call",
+  "Host::emit",
+  "--drop",
+  "Host::_singleton",
+  "--drop",
+  "Host::_dropped_count",
+  "--drop",
+  "Host::note_duplicate"
+ ],
+ "classes": [
+  {
+   "class": "Host",
+   "globals": [
+    "#include \"frame_env.h\"",
+    "static bool frame_armed_flag;   // Notify::flags.armed after the last call"
+   ],
+   "ctor": [],
+   "inputs": {
+    "_gain_configured": "frame_param_configured = %s;",
+    "read_at": "frame_sensor_value = %s;",
+    "channel_mask_2": "frame_channel_mask = %s;"
+   },
+   "input_aliases": {
+    "lin_expo_configured": "_gain_configured"
+   },
+   "after_call": [
+    "if (Notify::flags.armed != frame_armed_flag) { frame_armed_flag = Notify::flags.armed; cpp2lean_ev(\"Notify_flags_armed\"); cpp2lean_ev_b(frame_armed_flag); }"
+   ],
+   "member_methods": [
+    {
+     "member": "lin",
+     "class": "Lin",
+     "methods": [
+      "actuator",
+      "relax"
+     ]
+    }
+   ],
+   "ranges": {
+    "thrust": [
+     -0.2,
+     1.2
+    ],
+    "r": [
+     -1,
+     1
+    ],
+    "kind": [
+     0,
+     3
+    ],
+    "m": [
+     0,
+     3
+    ],
+    "k": [
+     0,
+     1
+    ],
+    "i": [
+     -5,
+     5
+    ],
+    "read_at": [
+     -10,
+     10
+    ],
+    "channel_mask_2": [
+     0,
+     16
+    ]
+   },
+   "weights": {
+    "step": 6,
+    "Lin.actuator": 3
+   },
+   "setup": [
+    "Host.setup 0",
+    "Host.arm 1"
+   ],
+   "calls": 20000
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+# The AP_Math functions cpp2lean translates (ardupilot/translate_ap_math.sh, --use @AP_Math.use):
+# what the hand port ../AP_Math/*.lean covers, plus wrap_180/wrap_360, linear_interpolate and the
+# double versions of the wrap functions. One entry per line: a function name (every overload and
+# template specialization in the translation unit), or Class<args>::member, optionally with the
+# parameter types. Everything these call is translated with them.
+
+# ftype.h, AP_Math.h, AP_Math.cpp
+is_zero(float)
+is_zero(double)
+is_positive
+is_negative
+is_equal(float, float)
+constrain_value_line
+safe_sqrt(float)
+safe_asin(float)
+sq(float)
+norm(float, float)
+norm(float, float, float)
+radians(float)
+cd_to_rad
+rad_to_cd
+degrees
+wrap_180(float)
+wrap_180(double)
+wrap_360(float)
+wrap_360(double)
+wrap_2PI(float)
+wrap_2PI(double)
+wrap_PI(float)
+wrap_PI(double)
+linear_interpolate
+calc_lowpass_alpha_dt
+
+# control.cpp
+update_vel_accel
+update_pos_vel_accel
+update_vel_accel_xy
+update_pos_vel_accel_xy
+shape_accel
+shape_accel_xy
+shape_vel_accel
+shape_vel_accel_xy
+shape_pos_vel_accel
+shape_pos_vel_accel_xy
+shape_angle_vel_accel
+limit_accel_xy
+limit_accel_corner_xy
+sqrt_controller
+inv_sqrt_controller
+sqrt_controller_accel
+stopping_distance
+kinematic_limit
+angle_rad_to_accel_mss
+angle_deg_to_accel_mss
+accel_mss_to_angle_rad
+accel_mss_to_angle_deg
+
+# location.h, location.cpp
+get_horizontal_distance
+get_bearing_rad
+get_bearing_cd
+
+# vector2.h, vector2.cpp at float (Vector2f) and double (Vector2p)
+Vector2<float>::Vector2
+Vector2<float>::operator-
+Vector2<float>::operator+
+Vector2<float>::operator*
+Vector2<float>::operator/
+Vector2<float>::operator%
+Vector2<float>::operator+=
+Vector2<float>::operator-=
+Vector2<float>::operator*=
+Vector2<float>::operator/=
+Vector2<float>::dot
+Vector2<float>::zero
+Vector2<float>::length_squared
+Vector2<float>::length
+Vector2<float>::limit_length
+Vector2<float>::normalize
+Vector2<float>::normalized
+Vector2<float>::is_nan
+Vector2<float>::is_inf
+Vector2<float>::is_zero
+Vector2<float>::angle
+Vector2<float>::tofloat
+Vector2<float>::todouble
+Vector2<double>::Vector2
+Vector2<double>::operator-
+Vector2<double>::operator+
+Vector2<double>::operator*
+Vector2<double>::operator/
+Vector2<double>::operator%
+Vector2<double>::operator+=
+Vector2<double>::operator-=
+Vector2<double>::operator*=
+Vector2<double>::operator/=
+Vector2<double>::dot
+Vector2<double>::zero
+Vector2<double>::length_squared
+Vector2<double>::length
+Vector2<double>::limit_length
+Vector2<double>::normalize
+Vector2<double>::normalized
+Vector2<double>::is_nan
+Vector2<double>::is_zero
+Vector2<double>::tofloat
+Vector2<double>::todouble
+
+# vector3.h, vector3.cpp at float (Vector3f) and double (Vector3p)
+Vector3<float>::Vector3
+Vector3<float>::operator-
+Vector3<float>::operator+
+Vector3<float>::operator*
+Vector3<float>::operator/
+Vector3<float>::operator%
+Vector3<float>::operator+=
+Vector3<float>::operator-=
+Vector3<float>::operator*=
+Vector3<float>::operator/=
+Vector3<float>::dot
+Vector3<float>::cross
+Vector3<float>::xy
+Vector3<float>::zero
+Vector3<float>::length_squared
+Vector3<float>::length
+Vector3<float>::limit_length_xy
+Vector3<float>::normalize
+Vector3<float>::normalized
+Vector3<float>::is_nan
+Vector3<float>::is_inf
+Vector3<float>::is_zero
+Vector3<float>::angle
+Vector3<float>::tofloat
+Vector3<float>::todouble
+Vector3<double>::Vector3
+Vector3<double>::operator-
+Vector3<double>::operator+
+Vector3<double>::operator*
+Vector3<double>::operator/
+Vector3<double>::operator+=
+Vector3<double>::operator-=
+Vector3<double>::operator*=
+Vector3<double>::operator/=
+Vector3<double>::dot
+Vector3<double>::xy
+Vector3<double>::zero
+Vector3<double>::length_squared
+Vector3<double>::length
+Vector3<double>::normalize
+Vector3<double>::normalized
+Vector3<double>::is_nan
+Vector3<double>::is_zero
+Vector3<double>::tofloat
+Vector3<double>::todouble
+
+# matrix3.h, matrix3.cpp at float (Matrix3f)
+Matrix3<float>::operator*(Vector3<float>)
+# Matrix3<float>::to_euler(T *roll, T *pitch, T *yaw): pointer parameters, rejected (README, "Known gaps")
+
+# quaternion.h, quaternion.cpp at float (Quaternion)
+QuaternionT<float>::QuaternionT()
+QuaternionT<float>::QuaternionT(float, float, float, float)
+QuaternionT<float>::is_nan
+QuaternionT<float>::initialise
+QuaternionT<float>::rotation_matrix(Matrix3<float>)
+QuaternionT<float>::earth_to_body
+QuaternionT<float>::from_euler
+QuaternionT<float>::from_axis_angle
+QuaternionT<float>::to_axis_angle
+QuaternionT<float>::rotate(Vector3<float>)
+QuaternionT<float>::get_euler_roll
+QuaternionT<float>::get_euler_pitch
+QuaternionT<float>::get_euler_yaw
+QuaternionT<float>::to_euler(float, float, float)
+QuaternionT<float>::to_euler(Vector3<float>)
+QuaternionT<float>::length
+QuaternionT<float>::length_squared
+QuaternionT<float>::inverse
+QuaternionT<float>::invert
+QuaternionT<float>::normalize
+QuaternionT<float>::is_zero
+QuaternionT<float>::zero
+QuaternionT<float>::is_unit_length
+QuaternionT<float>::operator*
+QuaternionT<float>::operator*=
