@@ -4,8 +4,8 @@ import Contracts.Mission.Sub
 # The mission contract
 
 `mission_contract`: the closed loop of the translated controller and the sampled plant implements
-`⟨Atakeoff, lang_t 0 ψmission⟩` for the mission world, under accurate sensing ports and the C library
-hypotheses.
+`⟨Atakeoff, lang_t 0 ψmission⟩` for the mission world, under accurate sensing ports, the C library
+hypotheses and the escape of the climb (`ClimbEscape`, validated, not proved).
 
 The assembly `mission_of_sub` derives it from the two open sub-contracts, taken as hypotheses, and
 is proved without `sorry`:
@@ -122,12 +122,15 @@ theorem mission_of_guarantees {x : ℕ → X} (hT : x ∈ lang_t 0 ψtrack) (hN 
     simp only [sat_or, sat_nearPolyT, sat_inColumnT] at hn
     simp only [takeoffF, sat_imp, sat_and, sat_not, sat_inColumnT, sat_nearPolyT, sat_errLE] at hto
     exact sat_safeF.2 (safe_of_parts hn (sat_errLE.1 he) hto)
-  · -- the waypoints in order
-    refine arrive_lemma (L' := legs) x horizonTicks (fun τ hτ w T hwT hw => ?_) legs 0
-      (fun _ hp => hp) (by rw [span_legs]; omega) hR
-    refine hprox τ hτ w ?_ hw
+  · -- the waypoints in order: the vehicle at `w0`, then the transfer from the target's arrivals
+    obtain ⟨τ, -, hτ, h0, hR'⟩ := hR
+    have hspan : span legs.tail = 9600 := by decide
+    refine ⟨τ, Nat.zero_le _, hτ, h0, ?_⟩
+    refine arrive_lemma (L' := legs.tail) x horizonTicks (fun σ hσ w T hwT hw => ?_) legs.tail τ
+      (fun _ hp => hp) (by rw [hspan, horizonTicks]; omega) hR'
+    refine hprox σ hσ w ?_ hw
     rw [← legs_waypoints]
-    exact List.mem_map_of_mem (f := Prod.fst) hwT
+    exact List.mem_map_of_mem (f := Prod.fst) (List.mem_of_mem_tail hwT)
   · -- the hold
     obtain ⟨τ, -, hτ, hτH⟩ := hH
     refine ⟨τ, Nat.zero_le _, hτ, fun σ h1 h2 => hprox σ (by omega) w7 ?_ (hτH σ h1 h2)⟩
@@ -370,11 +373,13 @@ ports at round-to-nearest accuracy and the C library hypotheses, the closed loop
 controller and the sampled Crazyflie plant implements: from a start at rest in the takeoff box, over
 the 30 s horizon the vehicle stays in the corridor ∪ box below the ceiling, reaches `w0 … w7` in
 order each within `0.1` m and within its allowance, and holds within `0.1` m of `w7` for 3 s within
-the 27 s total. -/
+the 27 s total. The hypothesis `hE` (`ClimbEscape`, the escape of the climb by tick 350) is
+validated on the Monte Carlo runs and not proved (MISSION.md). -/
 theorem mission_contract (sense32 : ℝ → Float32) (senseP : ℝ → Float) (w₀ : Vehicle.World)
-    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec) :
+    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec)
+    (hE : ClimbEscape sense32 senseP w₀) :
     Mloop sense32 senseP w₀ ⊨ ⟨Atakeoff, lang_t 0 ψmission⟩ :=
-  mission_of_sub sense32 senseP w₀ hS (track_contract sense32 senseP w₀ hM hS hL)
+  mission_of_sub sense32 senseP w₀ hS (track_contract sense32 senseP w₀ hM hS hL hE)
     (nav_contract w₀ hM hL)
 
 /-! ## Nonvacuity -/

@@ -63,3 +63,13 @@ globs = ["Contracts.Mission.+"]
 [[lean_lib]]
 name = "Track"
 globs = ["Contracts.Track.+"]
+
+# Quick controller-only contracts (QUICK.md): Q1–Q7.
+[[lean_lib]]
+name = "Quick"
+globs = ["Contracts.Quick.+"]
+
+# Evaluated counterexamples for QUICK.md (Contracts/Quick/Cex.lean); not a default target.
+[[lean_exe]]
+name = "quick_cex"
+root = "Contracts.Quick.Cex"

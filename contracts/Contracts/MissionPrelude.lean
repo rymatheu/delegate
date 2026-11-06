@@ -9,6 +9,8 @@ public import Mathlib.Analysis.Convex.Segment
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 public import Mathlib.Algebra.Order.Round
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 
 /-!
 # Imports of the mission files

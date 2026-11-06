@@ -88,6 +88,18 @@ def dist3 (a b : AC_PosControl_lib.Vector3p.State) : Float :=
 def stateStr : MissionState → String
   | .STOPPED => "STOPPED" | .RUNNING => "RUNNING" | .COMPLETE => "COMPLETE"
 
+/-- The S-curve parameters of a straight leg: `(snap, jerk, accel, vel, L, Jm, tj, t2, t4, t6)`. -/
+def scurveParams (w : World) (o d : AC_WPNav_lib.Vector3p.State) : String := Id.run do
+  let wps := w.wps
+  let inp := wpInputs w
+  let sc := AC_WPNav_lib.SCurve.calculate_track wps._scurve_this_leg o d 0.0
+    (inp.NE_get_max_speed_ms #[]) (inp.get_max_speed_up_ms #[]) (inp.get_max_speed_down_ms #[])
+    (AC_WPNav_lib.AC_WPNav.get_wp_acceleration_mss w.wpp) (AC_WPNav_lib.AC_WPNav.get_accel_D_mss w.wpp)
+    (AC_WPNav_lib.AC_WPNav.get_corner_acceleration_mss w.wpp) wps._scurve_snap_max_mssss wps._scurve_jerk_max_msss
+  let (Jm, tj, t2, t4, t6) := AC_WPNav_lib.SCurve.calculate_path sc.snap_max sc.jerk_max 0.0 sc.accel_max sc.vel_max (sc.seg_length * 0.5) 0 0 0 0 0
+  let seg := sc.segment
+  return s!"Sm {sc.snap_max} J {sc.jerk_max} A {sc.accel_max} V {sc.vel_max} L {sc.seg_length} | Jm {Jm} tj {tj} t2 {t2} t4 {t4} t6 {t6} | P7 {seg[7]!.end_pos} V7 {seg[7]!.end_vel} P14 {seg[14]!.end_pos} T15 {seg[15]!.end_time - seg[14]!.end_time} P22 {seg[22]!.end_pos} V22 {seg[22]!.end_vel} nsegs {sc.num_segs}"
+
 /-- The S-curve of a straight leg from `o` to `d` with the navigator's limits in world `w`, sampled
 in time: `(end position - length, max position - length, min position, largest backward step)`. -/
 def scurveCheck (w : World) (o d : AC_WPNav_lib.Vector3p.State) : Float × Float × Float × Float × Float := Id.run do
@@ -139,6 +151,16 @@ def main (args : List String) : IO UInt32 := do
     let (some w2, _, _) := tickC w₀ (some w1) smp0 | throw (IO.userError "no world")
     IO.println s!"jerk {w2.wps._scurve_jerk_max_msss} snap {w2.wps._scurve_snap_max_mssss} vmax {(wpInputs w2).NE_get_max_speed_ms #[]}"
     let pts := w2.mission
+    if a[4]! == "params" then
+      for i in [0:7] do
+        IO.println s!"leg {i+1}: {scurveParams w2 pts[i]! pts[i+1]!}"
+      for (x, y, z) in [(0.0, 0.0, 0.0), (0.151, 0.151, 0.001), (0.0, 0.0, -0.301), (0.151, -0.151, -0.301)] do
+        IO.println s!"leg 0 from ({x},{y},{z}): {scurveParams w2 { x := x, y := y, z := z } pts[0]!}"
+      for l in [0.001, 0.01, 0.05, 0.1, 0.16] do
+        IO.println s!"loiter {l} horiz: {scurveParams w2 pts[7]! { x := pts[7]!.x + l, y := pts[7]!.y, z := pts[7]!.z }}"
+        IO.println s!"loiter {l} up: {scurveParams w2 pts[7]! { x := pts[7]!.x, y := pts[7]!.y, z := pts[7]!.z - l }}"
+        IO.println s!"loiter {l} down: {scurveParams w2 pts[7]! { x := pts[7]!.x, y := pts[7]!.y, z := pts[7]!.z + l }}"
+      return 0
     for i in [0:7] do
       let (e, m, mn, b, te) := scurveCheck w2 pts[i]! pts[i+1]!
       IO.println s!"leg {i+1}: end-L {e} max-L {m} min {mn} back {b} T {te}"

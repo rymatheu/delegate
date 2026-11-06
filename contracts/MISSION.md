@@ -89,7 +89,8 @@ conversion.
 
 ```lean
 theorem mission_contract (sense32 : ℝ → Float32) (senseP : ℝ → Float) (w₀ : Vehicle.World)
-    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec) :
+    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec)
+    (hE : ClimbEscape sense32 senseP w₀) :
     Mloop sense32 senseP w₀ ⊨ ⟨Atakeoff, lang_t 0 ψmission⟩
 
 def ψmission : Formula X :=
@@ -98,7 +99,8 @@ def ψmission : Formula X :=
 ```
 
 **In words.** Take the vehicle built from the three course parameter files, sensing ports at
-round-to-nearest accuracy, and the C library hypotheses. Then every behavior of the closed loop
+round-to-nearest accuracy, the C library hypotheses, and the escape of the climb (validated, not
+proved; see below). Then every behavior of the closed loop
 that starts at rest in the takeoff box satisfies three things:
 
 * **Safety.** Over the 12000-tick horizon (30 s) the vehicle stays in the safe set `S` and below
@@ -146,12 +148,67 @@ The ceiling conjunct is implied by the corridor: `down_of_inSafe` proves `S` is 
   * `sinf`, `cosf`, `sqrtf`, `atan2f`, `asinf`, `acosf`;
   * `fmaxf`, `fminf`, `fmodf` (exact);
   * the double `sin`, `cos`, `sqrt`, `fmax`, `fmin`;
+  * added for `nav_contract`: `powf` (`powf`: positive base, real exponent, `2⁻²²` relative;
+    `powf2`, `powf3`: any finite base with exponents `2.0`, `3.0`, `2⁻²²` relative plus `2⁻¹⁵⁰`),
+    used by the S-curve (`calculate_path`, `add_segment_*`); `tanf`/`atanf` appear in
+    `AC_PosControl`'s lean-angle limits, which do not move the position target, so they are not
+    needed;
   * added for `nav_contract`: the conversions `(double) f` (exact, `f32ToF64`) and `(float) d`
     (correctly rounded: relative `2⁻²⁴` plus `2⁻¹⁵⁰`, `f64ToF32`; exact on `float` values,
     `f64ToF32_exact`). They are opaque in Lean 4.36 (`Float32.toFloat`, `Float.toFloat32`).
+  * added for `track_contract`: `pi32`, `(float) M_PI = 3.14159274f` (the nearest `float`; the
+    conversion clause `f64ToF32` alone allows both neighbours of π). The controller's filter
+    coefficients use it (`CtrlV.PiF32`).
 
   The trigonometric accuracy is `2⁻²²` for `float` and `2⁻⁵¹` for `double`. `sqrt` is correctly
   rounded.
+* `ClimbEscape sense32 senseP w₀`: **the escape of the climb, a validated but unproved assumption**
+  (added 2026-11-05 for `track_contract`). See "The escape of the climb" below.
+
+### The escape of the climb (`ClimbEscape`, `Spec.lean`)
+
+```lean
+def ClimbEscape (sense32 senseP w₀) : Prop :=
+  ∀ x ∈ Mloop sense32 senseP w₀ ∩ Atakeoff, ∃ t ≤ 350, climbTau w₀ x ≤ navProgress w₀ x t
+```
+
+**In words.** In every behavior of the loop from the takeoff box, by tick 350 the navigator's
+S-curve progress on the climb (leg 0) has reached `τ_v`, the S-curve time at which the climb's
+speed passes `v_min = 0.36` m/s. Everything is read off the controller's own state:
+
+* `ctrlWorld w₀ x t` is the controller's world before tick `t` (the hidden state of `Mctrl`);
+* `navProgress w₀ x t` is the sum of the navigator's track scalers `_track_dt_scalar` after ticks
+  `0 … t`, which is the S-curve time in ticks;
+* `climbTau w₀ x` is `400 ×` the first `float` time at which the leg-0 S-curve
+  (`_scurve_this_leg` after the first tick, evaluated by the code's
+  `get_jerk_accel_vel_pos_at_time`) has speed at least `0.36`.
+
+**Why it is needed.** The navigator slows its S-curve clock by the track scaler
+`clamp(0.05 + (v·d − kP e·d)/|v_T|, 0, 1)`. At the start of the climb `|v_T|` is tiny, so the
+scaler depends on the vehicle's lag to first order. No tick-wise tracking bound excludes a freeze:
+a sample stream that keeps a 3 mm lag at zero velocity holds the target still for all 12000 ticks
+within every tracking tolerance (PACING.md §2). So the escape is a property of the closed-loop
+dynamics: the velocity feed-forward moves the vehicle ahead of the slowed target, and the scaler
+returns to 1.
+
+**Validation.** All 256 Monte Carlo starts escape by tick 291, against the bound 350 (59 ticks of
+margin). The traced flights of PACING.md §4 escape at ticks 280–291. The coupled vertical model escapes at tick
+287–288 and at tick 304 even with a constant `−5·10⁻³` bias on the scaler's numerator
+(VERTICAL.md §9).
+
+**Why it is not proved.** Every cheap certificate fails (VERTICAL.md §9): interval bands on the
+scaler and progress, comparison with the unwarped climb, a sign argument on the feedback kernels,
+and plain Lipschitz bounds. The deviation analysis along a computed nominal works numerically
+(`refined.py`: escape by tick 295 for numerator perturbations up to `10⁻⁵`). But the induction's
+own tube on `ev + 1.5 ez` over the first 350 ticks is about `6·10⁻⁴`, too wide for it.
+
+**Route to a proof.** Certify a tighter tube on the first 350 ticks, then run the deviation
+analysis of VERTICAL.md §9 as a Lean certificate. The early-climb tube needs to be at most about
+`10⁻⁵` on the scaler numerator. In the proof, `pacing_course`'s `hesc` is exactly this hypothesis,
+read through the `Pieces` fields `q_nav` and `τv_nav`. Those fields state that the induction's
+`q` and `τ_v` are `navProgress` and `climbTau`, and they hold by `rfl` in the instance.
+
+`mission_nonvacuous` does not use it.
 
 **Assumption `Atakeoff`:** `∃ p ∈ box, ∃ ψ, (x 0).phys = startP p ψ`. The start state is:
 
@@ -206,7 +263,7 @@ nonnegative exactly on `S` (`safeMargin_nonneg_iff`).
 | `ρ` | 0.155 m: target-to-polyline bound | max 0.071 m |
 | `δ` | 0.095 m: tracking bound | max 0.0870 m |
 | `δ₀` | 0.035 m: tracking bound during the climb out of the box | max 0.012 m up to 0.37 m of climb |
-| `rPass w` | 0.09 m at `w0 = w7` (`rPassEnd`), 0.105 m at `w1 … w6` (`rPassMid`): target radius in the transfer property | the corner cut is 0.1000–0.1006 m; with 0.105 at `w0` the transfer fails on 82 of 256 Monte Carlo runs (`sim/out/montecarlo/CONSTANTS.md`) |
+| `rPass w` | 0.085 m at `w0 = w7` (`rPassEnd`), 0.105 m at `w1 … w6` (`rPassMid`): target radius in the transfer property | the corner cut is 0.1000–0.1006 m; with 0.105 at `w0` the transfer fails on 82 of 256 Monte Carlo runs (`sim/out/montecarlo/CONSTANTS.md`); with 0.085 the vehicle is within 0.0934 m of `w0` (6.6 mm margin) and the loiter target within 0.0282 m of `w7` (see below) |
 | `δs` | 0.096 m: sampled tracking bound the navigator may assume | `δ` plus the sensing error |
 | column | `|n|, |e| ≤ 0.151`, down `∈ [-0.8, 0.002]` | the box enlarged by 0.001 (0.002 below, for the `float` rounding of the start) |
 | `rRest` | 0.001 m and m/s: the rest gate (target within it of `w7`, velocity target at most it) | holds at the completion tick; never before it on this course |
@@ -248,9 +305,13 @@ column.
 ### `track_contract` (open): the loop
 
 ```lean
-theorem track_contract (sense32 senseP w₀) (hM) (hS : Plant.CopterSense sense32 senseP) (hL) :
+theorem track_contract (sense32 senseP w₀) (hM) (hS : Plant.CopterSense sense32 senseP) (hL)
+    (hE : ClimbEscape sense32 senseP w₀) :
     Mloop sense32 senseP w₀ ⊨ ⟨Atakeoff, lang_t 0 ψtrack⟩
 ```
+
+The hypothesis `hE` is the escape of the climb (see "The escape of the climb" above). It is used
+only for T5.
 
 `ψtrack` has two parts.
 
@@ -265,8 +326,21 @@ Over the horizon:
 
 And the target's pacing:
 
-* (T5) `reachSeqF (fun w => nearT w (rPass w)) legs`;
-* `◇_[0,10800] □_[0,1200] ‖target − w7‖ ≤ rPass w7 = 0.09`.
+* (T5) the vehicle within `r` of `w0` within 1200 ticks, and from that tick
+  `reachSeqF (fun w => nearT w (rPass w)) legs.tail` (the target reaches `w1 … w7`);
+* `◇_[0,10800] □_[0,1200] ‖target − w7‖ ≤ rPass w7 = 0.085`.
+
+**Why the chain starts with the vehicle at `w0`** (change of 2026-11-05, M9). On the climb the
+target's closest approach to `w0` is 0.0433–0.0995 m over the 256 Monte Carlo starts (0.0942 m at
+tick 737 on the nominal run `lean-course-1ms`, which first comes within 0.09 m of `w0` only at tick
+6619). An arrival radius at `w0` must therefore be at least 0.0995 m, while the transfer
+"target within the radius → vehicle within 0.1 m" needs less than 0.091 m (with 0.09 the vehicle is
+up to 0.0994 m from `w0`, 0.6 mm of margin; with 0.105 it fails on 82 runs). No single radius serves
+both, so with `rPassEnd = 0.09` the reach conjunct was false on 52 of 256 runs. The vehicle itself
+passes within 0.070–0.073 m of `w0` on the climb (the vertical certificate), so the first link is
+stated on the vehicle; `rPassEnd = 0.085` serves the transfer at `w0 = w7` and the hold. Measured by
+`check_ind.py`/`mc_an.py` (M9 scratchpad, `INDUCTION.md` §2). `ψmission` is unchanged;
+`mission_of_guarantees` takes the first link directly and transfers the rest with `arrive_lemma`.
 
 ### `arrive_lemma` (proved)
 
@@ -345,7 +419,7 @@ those ticks is `0.0407` m/s; `δv = 0.055` (`1.35×`, not `1.5×`: `1.5×` gives
 `δs + rRest + rRest + 0.061 = 0.159 > ρ`). With `δv = 0.055` the bound is
 `0.096 + 0.001 + 0.056 + 10⁻⁵ = 0.15301 ≤ 0.155` (`loiter_dest_near_w7`). The Monte Carlo CSVs
 carry no velocity or setpoint (only `t, x_n, y_e, z_d, yaw, m1..m4`), so `δv` rests on the nominal
-run only. The hold radius `rPass w7 = 0.09` is a closed-loop guarantee of `track_contract` (nominal
+run only. The hold radius `rPass w7 = 0.085` is a closed-loop guarantee of `track_contract` (nominal
 loiter offset 0.028 m); the navigator alone can only give `0.153` from its assumption.
 
 **The S-curve tables** (`nav_cex 0 0 0 scurve 0 0 0`): for legs 1–7, for the first leg from 183
@@ -441,7 +515,7 @@ start puts the target 0.212 m from the climb axis. Points within 0.035 m of the 
 mission_contract
  └─ mission_of_sub                        [proved; hypotheses: htrack, hnav, hS]
      ├─ chain (Basic.lean)                [proved]
-     │   ├─ htrack = track_contract       [OPEN]
+     │   ├─ htrack = track_contract       [OPEN; hypothesis hE = ClimbEscape]
      │   └─ hnav, read on Mloop ⊆ Mctrl:
      │       ├─ nav_contract              [OPEN]
      │       └─ navA_of_loop              [proved]   samples meet ψnavA:
@@ -521,10 +595,15 @@ against the Monte Carlo runs.
 
 * `construct courseLines` is `.ok`, and it builds the same parameters as the binaries
   (`mission_world_check`).
+* `ClimbEscape` is a hypothesis of `track_contract` and `mission_contract`. It was validated on the
+  256 Monte Carlo starts (escape by tick 291 against 350) and is not proved; see "The escape of the
+  climb".
 * `MissionWorld`, `CopterSense` and `LibmSpec` are hypotheses. Their satisfiability is not proved:
   * `MissionWorld` needs the translated `construct` to reduce in the kernel, which `String.splitOn`
     and the `while` loop of `parseDecimal` prevent; its `params` field is the executed check of
-    `mission_world_check` (a trusted step);
+    `mission_world_check` (a trusted step). Since 2026-11-05 it includes the five integrator limits
+    (`kimax_rr/rp/ry = 0.5` for `ATC_RAT_*_IMAX`, `kimax_vd = 10` for `PSC_D_VEL_IMAX`,
+    `kimax_ad = 0.8` for `PSC_D_ACC_IMAX`), for the integrator invariant `IntOK` of the booted world;
   * `CopterSense` needs a round-to-nearest map ℝ → float, which is not constructed;
   * `LibmSpec` concerns the opaque libm externs.
 

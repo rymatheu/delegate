@@ -330,6 +330,13 @@ structure MissionParams (w : Vehicle.World) : Prop where
   acc_r : w.ap._accel_roll_max_degss = 1800
   acc_p : w.ap._accel_pitch_max_degss = 1800
   input_tc : w.ap._input_tc = 0.05
+  /-- The integrator limits (`ATC_RAT_RLL_IMAX`, `…_PIT_IMAX`, `…_YAW_IMAX`, `PSC_D_VEL_IMAX`,
+  `PSC_D_ACC_IMAX`), for the integrator invariant `IntOK` of the booted world. -/
+  kimax_rr : w.ap._pid_rate_roll._kimax = 0.5
+  kimax_rp : w.ap._pid_rate_pitch._kimax = 0.5
+  kimax_ry : w.ap._pid_rate_yaw._kimax = 0.5
+  kimax_vd : w.pp._pid_vel_d_m._kimax = 10
+  kimax_ad : w.pp._pid_accel_d_m._kimax = 0.8
 
 theorem eq_of_eq32 {a b : Float32} (h : MissionData.eq32 a b = true) : a = b :=
   Float32.eq_of_toBits_eq (by simpa [MissionData.eq32] using h)
@@ -359,10 +366,11 @@ theorem eq_of_eqWpp {a b : AC_WPNav_lib.AC_WPNav.Params} (h : MissionData.eqWpp 
 theorem missionParams_of_ok {w : Vehicle.World} (h : MissionData.missionParamsOk w = true) :
     MissionParams w := by
   simp only [MissionData.missionParamsOk, Bool.and_eq_true, beq_iff_eq] at h
-  obtain ⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨hs, m0⟩, m1⟩, m2⟩, m3⟩, m4⟩, m5⟩, m6⟩, m7⟩, hw⟩, k1⟩, k2⟩, j⟩, r1⟩, r2⟩,
-    a1⟩, a2⟩, tc⟩ := h
+  obtain ⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨⟨hs, m0⟩, m1⟩, m2⟩, m3⟩, m4⟩, m5⟩, m6⟩, m7⟩, hw⟩, k1⟩, k2⟩, j⟩, r1⟩, r2⟩,
+    a1⟩, a2⟩, tc⟩, i1⟩, i2⟩, i3⟩, i4⟩, i5⟩ := h
   refine ⟨hs, fun i hi => ?_, eq_of_eqWpp hw, eq_of_eq32 k1, eq_of_eq32 k2, eq_of_eq32 j,
-    eq_of_eq32 r1, eq_of_eq32 r2, eq_of_eq32 a1, eq_of_eq32 a2, eq_of_eq32 tc⟩
+    eq_of_eq32 r1, eq_of_eq32 r2, eq_of_eq32 a1, eq_of_eq32 a2, eq_of_eq32 tc, eq_of_eq32 i1,
+    eq_of_eq32 i2, eq_of_eq32 i3, eq_of_eq32 i4, eq_of_eq32 i5⟩
   interval_cases i
   · exact eq_of_eqP3 m0
   · exact eq_of_eqP3 m1
@@ -446,6 +454,21 @@ structure LibmSpec : Prop where
     (CppLibm.fmax a b).IsFinite ∧ (CppLibm.fmax a b).toReal = max a.toReal b.toReal
   fmin : ∀ a b : Float, a.IsFinite → b.IsFinite →
     (CppLibm.fmin a b).IsFinite ∧ (CppLibm.fmin a b).toReal = min a.toReal b.toReal
+  /-- `powf a b` for a positive finite base, against the real power `a ^ b` (`Real.rpow`), within
+  `2⁻²²` relative, finite while the result is at most `2¹⁰⁰`. Added for `nav_contract`
+  (`SCurve::calculate_path`: exponents `1/4`, `1/3`; `add_segment_*`: `3`). -/
+  powf : ∀ a b : Float32, a.IsFinite → b.IsFinite → 0 < a.toReal →
+    a.toReal ^ b.toReal ≤ 2 ^ (100 : ℤ) →
+    (Float32.pow a b).IsFinite ∧
+      |(Float32.pow a b).toReal - a.toReal ^ b.toReal| ≤ 2 ^ (-22 : ℤ) * a.toReal ^ b.toReal
+  /-- `powf a 2.0` and `powf a 3.0` for any finite base (`calculate_path` squares and cubes signed
+  quantities): `a²`, `a³` within `2⁻²²` relative plus the subnormal half-spacing `2⁻¹⁵⁰`. -/
+  powf2 : ∀ a : Float32, a.IsFinite → |a.toReal| ≤ 2 ^ (40 : ℤ) →
+    (Float32.pow a 2.0).IsFinite ∧
+      |(Float32.pow a 2.0).toReal - a.toReal ^ 2| ≤ 2 ^ (-22 : ℤ) * a.toReal ^ 2 + 2 ^ (-150 : ℤ)
+  powf3 : ∀ a : Float32, a.IsFinite → |a.toReal| ≤ 2 ^ (30 : ℤ) →
+    (Float32.pow a 3.0).IsFinite ∧
+      |(Float32.pow a 3.0).toReal - a.toReal ^ 3| ≤ 2 ^ (-22 : ℤ) * |a.toReal ^ 3| + 2 ^ (-150 : ℤ)
   /-- `(double) f` (`Float32.toFloat`, opaque in Lean ≥ 4.36): widening is exact. Added for
   `nav_contract` (the navigator widens its `float` track to the `double` target). -/
   f32ToF64 : ∀ a : Float32, a.IsFinite →
@@ -459,6 +482,52 @@ structure LibmSpec : Prop where
   `nav_contract`. -/
   f64ToF32_exact : ∀ (a : Float) (b : Float32), a.IsFinite → b.IsFinite → b.toReal = a.toReal →
     (Float.toFloat32 a).IsFinite ∧ (Float.toFloat32 a).toReal = a.toReal
+  /-- `(float) M_PI` is the nearest `float`, `0x40490FDB = 3.14159274f` (correct rounding of the
+  `double` `π`; `f64ToF32` alone allows both neighbours). The controller's filter coefficients
+  (`calc_lowpass_alpha_dt`) use it. Added for `track_contract` (`CtrlV.PiF32`). -/
+  pi32 : Float.toFloat32 (3.1415926535897931 : Float) = (3.14159274 : Float32)
+
+
+/-! ## The escape of the climb (a hypothesis of the main theorem) -/
+
+/-- The controller's world before tick `t` of a behavior `x`: the takeover of `w₀` on the first
+sample, then one `Vehicle.tick` per sample. It is the hidden state of every witness of
+`x ∈ Mctrl w₀` (`Track.Induction.hidden_run`). -/
+def ctrlWorld (w₀ : Vehicle.World) (x : ℕ → X) : ℕ → Vehicle.World
+  | 0 => Vehicle.takeover w₀ (x 0).smp
+  | t + 1 => (Vehicle.tick (ctrlWorld w₀ x t) (x t).smp).1
+
+/-- The navigator's progress after tick `t`, in ticks: the sum of its track scalers
+`_track_dt_scalar` after the ticks `0 … t`. Tick `k` advances the S-curve time by
+`_track_dt_scalar · vel_dt_scalar · dt` (`AC_WPNav::advance_wp_target_along_track`, with
+`vel_dt_scalar = 1` on the mission), so this is the S-curve time in units of `dt` up to the rounding
+of the steps. -/
+def navProgress (w₀ : Vehicle.World) (x : ℕ → X) (t : ℕ) : ℝ :=
+  ∑ k ∈ Finset.range (t + 1), (ctrlWorld w₀ x (k + 1)).wps._track_dt_scalar.toReal
+
+/-- The speed threshold of the climb, `v_min = 0.36` m/s (PACING.md §3). -/
+def vClimb : ℝ := 0.36
+
+/-- The speed of the S-curve `sc` at the `float` time `τ` (seconds), as the code evaluates it
+(`SCurve::get_jerk_accel_vel_pos_at_time`). -/
+def scurveSpeedAt (sc : AC_WPNav_lib.SCurve.State) (τ : Float32) : ℝ :=
+  (AC_WPNav_lib.SCurve.get_jerk_accel_vel_pos_at_time sc τ 0.0 0.0 0.0 0.0).2.2.1.toReal
+
+/-- `τ_v` of a behavior, in ticks: `400` times the infimum of the finite nonnegative `float` times at
+which the leg-0 S-curve (the navigator's `_scurve_this_leg` after the first tick) has speed at least
+`vClimb`. -/
+def climbTau (w₀ : Vehicle.World) (x : ℕ → X) : ℝ :=
+  400 * sInf {τ : ℝ | ∃ f : Float32, f.IsFinite ∧ f.toReal = τ ∧ 0 ≤ τ ∧
+    vClimb ≤ scurveSpeedAt (ctrlWorld w₀ x 1).wps._scurve_this_leg f}
+
+/-- **The escape of the climb.** Every behavior of the loop from the takeoff box has the navigator's
+progress at `τ_v` by tick `350`: the S-curve time of the climb reaches the point where the climb's
+speed passes `vClimb`. It is a hypothesis of `track_contract` and `mission_contract`, validated and
+not proved: all 256 Monte Carlo starts escape by tick 291 (MISSION.md, "The escape of the climb";
+VERTICAL.md §9 has the analysis and the route to a proof). It is a property of the closed loop: a
+sample stream that keeps a small lag at zero velocity freezes the progress (PACING.md §2). -/
+def ClimbEscape (sense32 : ℝ → Float32) (senseP : ℝ → Float) (w₀ : Vehicle.World) : Prop :=
+  ∀ x ∈ Mloop sense32 senseP w₀ ∩ Atakeoff, ∃ t ≤ 350, climbTau w₀ x ≤ navProgress w₀ x t
 
 end
 

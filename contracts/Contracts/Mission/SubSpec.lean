@@ -30,12 +30,16 @@ def δ₀ : ℝ := 0.035
 `0.1006` m, so the target enters it at each corner). -/
 def rPassMid : ℝ := 0.105
 
-/-- The target's arrival radius in the transfer property at `w0 = w7`, m. With `0.105` the transfer
-fails at `w0` on 82 of 256 Monte Carlo runs (on departure toward `w1` the vehicle leaves the `0.1` m
-ball up to 10 ticks before the target leaves the `0.105` m ball; `sim/out/montecarlo/CONSTANTS.md`).
-The target passes through `w0` on the climb and the loiter target sits `0.028` m from `w7`, so the
-smaller ball is still entered. -/
-def rPassEnd : ℝ := 0.09
+/-- The target's arrival radius in the transfer property at `w0 = w7`, m. No single radius at `w0`
+serves both the target's arrival and the transfer: on the climb the target's closest approach to `w0`
+is `0.0433`–`0.0995` m over the 256 Monte Carlo starts (`0.0942` m on the nominal run), so an arrival
+radius must be at least `0.0995`, while the transfer needs less than `0.091` (with `0.105` it fails on
+82 of 256 runs as the vehicle leaves `w0` toward `w1`; `sim/out/montecarlo/CONSTANTS.md`). The reach
+chain of `ψtrack` therefore starts with the vehicle itself at `w0`, and `rPassEnd` serves the
+transfer at `w0 = w7` and the hold: with `0.085` the vehicle is within `0.0934` m of `w0` whenever the
+target is within `0.085` of it (6.6 mm of margin), and the loiter target stays within `0.0282` m
+of `w7`. With these, every conjunct of the new reach chain and the hold holds on all 256 runs. -/
+def rPassEnd : ℝ := 0.085
 
 /-- The target's arrival radius in the transfer property, per waypoint: `rPassEnd` at the point
 `w0 = w7`, `rPassMid` at `w1 … w6`. -/
@@ -145,12 +149,13 @@ def restF : Formula X :=
   ((nearT w7 rRest).and (.atom fun x => rRest - ‖velTarget x‖)).imp (.atom fun x => δv - smpVelErr x)
 
 /-- **The guarantee of `track_contract`**: over the horizon, tracking within `δ`, the envelope,
-the climb-out bound, the transfer near the waypoints, and the rest condition; and the target reaches `w0 … w7` in order
-within `rPass`, within the allowances, and is within `rPass` of `w7` for the hold time within the
-total allowance. -/
+the climb-out bound, the transfer near the waypoints, and the rest condition; the vehicle reaches
+`w0` within `r` within its allowance and from there the target reaches `w1 … w7` in order within
+`rPass`, within the allowances; and the target is within `rPass` of `w7` for the hold time within
+the total allowance. (The first link is the vehicle's: see `rPassEnd`.) -/
 def ψtrack : Formula X :=
   .and (.always 0 horizonTicks (.and (errLE δ) (.and envF (.and takeoffF (.and proxAllF restF)))))
-    (.and (reachSeqF (fun w => nearT w (rPass w)) legs)
+    (.and (.eventually 0 1200 (.and (near (wp 0) rWp) (reachSeqF (fun w => nearT w (rPass w)) legs.tail)))
       (.eventually 0 totalTicks (.always 0 holdTicks (nearT w7 (rPass w7)))))
 
 /-- A `float` is finite and at most `B` in absolute value. -/

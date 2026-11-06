@@ -71,6 +71,19 @@ theorem isFinite_int32_two : (Int32.toFloat32 (2 : Int32)).IsFinite :=
 theorem isFinite_int32_zero : (Int32.toFloat32 (0 : Int32)).IsFinite :=
   isFinite_of_unpack_zero unpack_int32_zero
 
+theorem unpack_lit_eighth :
+    (0.125 : Float32).toModel.unpack = .finite .positive (2 ^ 23) (-26) (by decide) := by f32_unpack
+theorem unpack_lit_0_6875 :
+    (0.6875 : Float32).toModel.unpack = .finite .positive 11534336 (-24) (by decide) := by
+  f32_unpack
+
+@[simp] theorem toReal_lit_eighth : (0.125 : Float32).toReal = 1 / 8 := by
+  rw [toReal_of_unpack unpack_lit_eighth]; simp [Sign.apply]; norm_num
+@[simp] theorem toReal_lit_0_6875 : (0.6875 : Float32).toReal = 11 / 16 := by
+  rw [toReal_of_unpack unpack_lit_0_6875]; simp [Sign.apply]; norm_num
+theorem isFinite_lit_eighth : (0.125 : Float32).IsFinite := isFinite_of_unpack unpack_lit_eighth
+theorem isFinite_lit_0_6875 : (0.6875 : Float32).IsFinite := isFinite_of_unpack unpack_lit_0_6875
+
 /-- The literal `2` of the translated midpoint `(lo + hi) / 2`. -/
 theorem two32 : Two32 := ⟨isFinite_int32_two, toReal_int32_two⟩
 
@@ -93,6 +106,10 @@ theorem isFinite_of_unpack {x : Float} {s : Sign} {m : ℕ} {e : ℤ} {hm : 0 < 
 theorem isFinite_of_unpack_zero {x : Float} {s : Sign} (h : x.toModel.unpack = .zero s) :
     x.IsFinite := by
   rw [isFinite_iff, h]; rfl
+
+theorem unpack_lit_zero : (0.0 : Float).toModel.unpack = .zero .positive := by f32_unpack
+@[simp] theorem toReal_lit_zero : (0.0 : Float).toReal = 0 := toReal_of_unpack_zero unpack_lit_zero
+theorem isFinite_lit_zero : (0.0 : Float).IsFinite := isFinite_of_unpack_zero unpack_lit_zero
 
 theorem unpack_int32_two :
     (Int32.toFloat (2 : Int32)).toModel.unpack = .finite .positive (2 ^ 52) (-51) (by decide) := by

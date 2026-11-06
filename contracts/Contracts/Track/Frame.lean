@@ -38,8 +38,10 @@ namespace Contracts.Track.Frame
 universe u v w
 
 theorem frame_ite {α : Sort u} {P : α → Prop} {c : Prop} [h : Decidable c] {t e : α}
-    (ht : P t) (he : P e) : P (if c then t else e) := by
-  cases h <;> assumption
+    (ht : c → P t) (he : ¬c → P e) : P (if c then t else e) := by
+  cases h with
+  | isTrue hc => exact ht hc
+  | isFalse hc => exact he hc
 
 theorem frame_dite {α : Sort u} {P : α → Prop} {c : Prop} [h : Decidable c] {t : c → α}
     {e : ¬c → α} (ht : ∀ hc, P (t hc)) (he : ∀ hc, P (e hc)) : P (dite c t e) := by
@@ -47,9 +49,11 @@ theorem frame_dite {α : Sort u} {P : α → Prop} {c : Prop} [h : Decidable c] 
   | isTrue hc => exact ht hc
   | isFalse hc => exact he hc
 
-theorem frame_cond {α : Type u} {P : α → Prop} {b : Bool} {t e : α} (ht : P t) (he : P e) :
-    P (cond b t e) := by
-  cases b <;> assumption
+theorem frame_cond {α : Type u} {P : α → Prop} {b : Bool} {t e : α} (ht : b = true → P t)
+    (he : b = false → P e) : P (cond b t e) := by
+  cases b
+  · exact he rfl
+  · exact ht rfl
 
 theorem frame_forIn_list {α : Type u} {β : Type v} {P : β → Prop} (xs : List α) (init : β)
     (f : α → β → Id (ForInStep β)) (h0 : P init) (hf : ∀ a b, P b → P (f a b).value) :
@@ -87,6 +91,9 @@ structure Ctx where
   σP : Array (Expr × Expr)
   leaf : Syntax
   hyps : Array (Expr × Expr) := #[]
+  /-- How many more calls a failed leaf may unfold. -/
+  inline : Nat := 6
+  debug : Bool := false
 
 abbrev M := ReaderT Ctx TacticM
 
@@ -123,12 +130,17 @@ partial def mkStmt (τ x : Expr) : M (Option Expr) := do
 
 /-- Run the leaf tactic on the goal `st`. -/
 def proveLeaf (st : Expr) : M Expr := do
+  let st ← Core.betaReduce st
+  if (← read).debug then logInfo m!"frame_gen: leaf {st}"
   let g ← mkFreshExprSyntheticOpaqueMVar st
-  let rest ← Tactic.run g.mvarId! (evalTactic (← read).leaf)
+  let leaf := (← read).leaf
+  let rest ← Term.withoutErrToSorry <| Tactic.run g.mvarId! (withoutRecover (evalTactic leaf))
   unless rest.isEmpty do
     let msgs ← rest.mapM fun g => do return m!"{← g.getType}"
     throwError "frame_gen: the leaf tactic left goals:{indentD (MessageData.joinSep msgs Format.line)}"
-  instantiateMVars g
+  let prf ← instantiateMVars g
+  if prf.hasSorry then throwError "frame_gen: the leaf tactic used sorry on{indentExpr st}"
+  return prf
 
 /-- Add the variable `x` (and, when its type carries a statement, a hypothesis for it) to the
 context, and run `k` with the variables to abstract. -/
@@ -139,6 +151,17 @@ def withTracked {α} (n : Name) (t : Expr) (k : Expr → Array Expr → M α) : 
     | some sx =>
       withLocalDeclD (n.appendAfter "_frame") sx fun hx =>
         withReader (fun c => { c with hyps := c.hyps.push (x, hx) }) (k x #[x, hx])
+
+/-- Terms that a `let` merely names: variables, constants, literals and projections of them. -/
+partial def isAtom (env : Environment) : Expr → Bool
+  | .fvar .. | .const .. | .lit .. | .sort .. => true
+  | .mdata _ e => isAtom env e
+  | .proj _ _ e => isAtom env e
+  | e@(.app ..) =>
+    match e.getAppFn with
+    | .const n _ => env.isProjectionFn n && e.getAppArgs.all (isAtom env)
+    | _ => false
+  | _ => false
 
 /-- `fun y => P_α y`, the statement of type `α` as a predicate. -/
 def stmtLam (α : Expr) : M Expr :=
@@ -161,23 +184,35 @@ partial def prove (e : Expr) : M (Option Expr) := do
 
 /-- A proof of `st`, the statement of `e`. -/
 partial def proveSt (e : Expr) (st : Expr) : M Expr := do
-  let e := e.consumeMData.headBeta
+  let e := e.consumeMData
+  -- a beta-redex `(fun x => b) v` (how `have` may be elaborated) is a `let`
+  let e := match e with
+    | .app (.lam n t b _) v => Expr.letE n t v b true
+    | _ => e
   match e with
   | .letE n t v b _ =>
-    let pv? ← prove v
-    withTracked n t fun x xs => do
-      let b' := b.instantiate1 x
-      let some pb ← prove b' | throwError "frame_gen: let body carries no statement"
-      let f ← mkLambdaFVars xs pb
-      match pv? with
-      | some pv => return mkApp2 f v pv
-      | none =>
-        if xs.size == 2 then throwError "frame_gen: let value carries no statement"
-        return mkApp f v
+    if isAtom (← getEnv) v then
+      -- an alias: substitute (cheap, and keeps the link to the variable)
+      return ← proveSt (b.instantiate1 v) st
+    -- a value whose statement cannot be proved is bound without one (it may be repaired later,
+    -- e.g. by a clamp)
+    let pv? ← try prove v catch ex => do
+      if (← read).debug then logInfo m!"frame_gen: let {n} left without statement: {ex.toMessageData}"
+      pure none
+    match pv? with
+    | some pv =>
+      withTracked n t fun x xs => do
+        let some pb ← prove (b.instantiate1 x) | throwError "frame_gen: let body carries no statement"
+        let f ← mkLambdaFVars xs pb
+        if xs.size == 2 then return mkApp2 f v pv else return mkApp f v
+    | none =>
+      withLocalDeclD n t fun x => do
+        let some pb ← prove (b.instantiate1 x) | throwError "frame_gen: let body carries no statement"
+        return mkApp (← mkLambdaFVars #[x] pb) v
   | .fvar fv =>
     if let some (_, h) := (← read).hyps.find? (fun (x, _) => x == .fvar fv) then
       return h
-    proveLeaf st
+    proveLeafI e st
   | .lam .. => proveUnder e
   | .proj ``Prod 0 x => proveProj x true st
   | .proj ``Prod 1 x => proveProj x false st
@@ -194,14 +229,17 @@ partial def proveSt (e : Expr) (st : Expr) : M Expr := do
           prf := mkApp prf a
           if let some pa ← prove a then prf := mkApp prf pa
         return prf
-    let .const name _ := fn | proveLeaf st
+    let .const name _ := fn | proveLeafI e st
     match name, args.size with
     | ``ite, 5 =>
       let α := args[0]!
+      let c := args[1]!
       let P' ← stmtLam α
-      let pt ← proveSt args[3]! (P'.beta #[args[3]!])
-      let pe ← proveSt args[4]! (P'.beta #[args[4]!])
-      mkAppOptM ``frame_ite #[α, P', args[1]!, args[2]!, args[3]!, args[4]!, pt, pe]
+      let pt ← withLocalDeclD `hc c fun hc => do
+        mkLambdaFVars #[hc] (← proveSt args[3]! (P'.beta #[args[3]!]))
+      let pe ← withLocalDeclD `hc (mkNot c) fun hc => do
+        mkLambdaFVars #[hc] (← proveSt args[4]! (P'.beta #[args[4]!]))
+      mkAppOptM ``frame_ite #[α, P', c, args[2]!, args[3]!, args[4]!, pt, pe]
     | ``dite, 5 =>
       let α := args[0]!
       let P' ← stmtLam α
@@ -210,12 +248,15 @@ partial def proveSt (e : Expr) (st : Expr) : M Expr := do
       mkAppOptM ``frame_dite #[α, P', args[1]!, args[2]!, args[3]!, args[4]!, pt, pe]
     | ``cond, 4 =>
       let α := args[0]!
+      let b := args[1]!
       let P' ← stmtLam α
-      let pt ← proveSt args[2]! (P'.beta #[args[2]!])
-      let pe ← proveSt args[3]! (P'.beta #[args[3]!])
-      mkAppOptM ``frame_cond #[α, P', args[1]!, args[2]!, args[3]!, pt, pe]
-    | ``Id.run, 2 => proveSt args[1]! st
-    | ``Pure.pure, 4 => proveSt args[3]! st
+      let pt ← withLocalDeclD `hc (← mkEq b (mkConst ``Bool.true)) fun hc => do
+        mkLambdaFVars #[hc] (← proveSt args[2]! (P'.beta #[args[2]!]))
+      let pe ← withLocalDeclD `hc (← mkEq b (mkConst ``Bool.false)) fun hc => do
+        mkLambdaFVars #[hc] (← proveSt args[3]! (P'.beta #[args[3]!]))
+      mkAppOptM ``frame_cond #[α, P', b, args[2]!, args[3]!, pt, pe]
+    | ``Id.run, 2 => proveInner args[1]! st
+    | ``Pure.pure, 4 => proveInner args[3]! st
     | ``Bind.bind, 6 =>
       -- in `Id`: `x >>= k` is `k x`
       let x := args[4]!
@@ -225,8 +266,8 @@ partial def proveSt (e : Expr) (st : Expr) : M Expr := do
       match px? with
       | some px => return mkApp2 pk x px
       | none => return mkApp pk x
-    | ``ForInStep.yield, 2 => proveSt args[1]! st
-    | ``ForInStep.done, 2 => proveSt args[1]! st
+    | ``ForInStep.yield, 2 => proveInner args[1]! st
+    | ``ForInStep.done, 2 => proveInner args[1]! st
     | ``ForIn.forIn, 8 => proveForIn args st
     | ``Prod.mk, 4 => proveMk args[2]! args[3]! st
     | ``MProd.mk, 4 => proveMk args[2]! args[3]! st
@@ -238,7 +279,28 @@ partial def proveSt (e : Expr) (st : Expr) : M Expr := do
       if let some m ← matchMatcherApp? e then
         if m.remaining.isEmpty then
           return ← proveMatch m
-      proveLeaf st
+      proveLeafI e st
+
+/-- The leaf tactic on `st`, the statement of `e`; if it fails and `e` is a call of a definition,
+the definition is unfolded and its body proved instead (at most `inline` levels deep). -/
+partial def proveLeafI (e st : Expr) : M Expr := do
+  try proveLeaf st
+  catch ex =>
+    let c ← read
+    if c.inline == 0 then throw ex
+    let .const _ _ := e.getAppFn | throw ex
+    let some e' ← (try unfoldDefinition? e catch _ => pure none) | throw ex
+    if c.debug then logInfo m!"frame_gen: inlining {e.getAppFn}"
+    let e' := e'.headBeta
+    let some st' ← mkStmt (← inferType e) e' | throw ex
+    withReader (fun c => { c with inline := c.inline - 1 }) (proveSt e' st')
+
+/-- A proof of the statement of `x` (its own statement, read off its type), used as a proof of
+`st`, which is the same statement up to unfolding (`pure x`, `Id.run x`, `ForInStep.yield x`). -/
+partial def proveInner (x st : Expr) : M Expr := do
+  match ← prove x with
+  | some p => return p
+  | none => proveLeafI x st
 
 /-- For `f = fun xs => body` (eta-expanded if needed): `fun xs hxs => proof of body`. -/
 partial def proveUnder (f : Expr) : M Expr := do
@@ -255,17 +317,19 @@ partial def proveUnder (f : Expr) : M Expr := do
       mkLambdaFVars xs pb
 
 partial def proveMk (a b st : Expr) : M Expr := do
+  let e := mkConst ``True
   let pa? ← prove a
   let pb? ← prove b
   match pa?, pb? with
   | some pa, some pb => mkAppM ``And.intro #[pa, pb]
   | some pa, none => return pa
   | none, some pb => return pb
-  | none, none => proveLeaf st
+  | none, none => proveLeafI e st
 
 partial def proveProj (x : Expr) (isFst : Bool) (st : Expr) : M Expr := do
+  let e := mkConst ``True
   let τ ← whnfD (← inferType x)
-  let some px ← prove x | proveLeaf st
+  let some px ← prove x | proveLeafI e st
   let a ← carries (τ.getArg! 0)
   let b ← carries (τ.getArg! 1)
   if a && b then
@@ -273,6 +337,7 @@ partial def proveProj (x : Expr) (isFst : Bool) (st : Expr) : M Expr := do
   return px
 
 partial def proveForIn (args : Array Expr) (st : Expr) : M Expr := do
+  let e := mkConst ``True
   -- `@forIn m ρ α inst β xs init f`
   let ρ ← whnfD args[1]!
   let β := args[4]!
@@ -283,9 +348,9 @@ partial def proveForIn (args : Array Expr) (st : Expr) : M Expr := do
     if ρ.isConstOf ``Std.Legacy.Range then pure ``frame_forIn_range
     else if ρ.isAppOfArity ``List 1 then pure ``frame_forIn_list
     else if ρ.isAppOfArity ``Array 1 then pure ``frame_forIn_array
-    else return ← proveLeaf st
+    else return ← proveLeafI e st
   let P' ← stmtLam β
-  let some p0 ← prove init | proveLeaf st
+  let some p0 ← prove init | proveLeafI e st
   let pf ← proveUnder f
   mkAppOptM lem (if lem == ``frame_forIn_range then #[β, P', xs, init, f, p0, pf]
     else #[none, β, P', xs, init, f, p0, pf])
@@ -304,7 +369,63 @@ partial def registerFrom (xs : Array Expr) (h T : Expr) (acc : Array (Expr × Ex
         return acc.push (x, h)
   return acc
 
+/-- `fun x₁ … xₙ => b` applied to `v₁ … vₙ` (closed in the binders): a component whose type carries
+a statement becomes `let xᵢ := vᵢ` (so that it gets its hypothesis), any other is substituted (so
+that the leaves still see the term it stands for). -/
+partial def lamToLets : Expr → List Expr → M Expr
+  | .lam n t b _, v :: vs => do
+    if ← carries t then return .letE n t v (← lamToLets b vs) false
+    else lamToLets (b.instantiate1 v) vs
+  | e, vs => return mkAppN e vs.toArray
+
+/-- The right-nested projections `x.1, x.2.1, …, x.2…2` of `x`, `n` of them, when the type of `x`
+is a right-nested product with at least `n` components. -/
+partial def nestedProjs (x : Expr) (n : Nat) : MetaM (Option (Array Expr)) := do
+  if n == 1 then return some #[x]
+  let τ ← whnfD (← inferType x)
+  unless τ.isAppOfArity ``Prod 2 do return none
+  let some rest ← nestedProjs (← mkAppM ``Prod.snd #[x]) (n - 1) | return none
+  return some (#[← mkAppM ``Prod.fst #[x]] ++ rest)
+
+/-- A `match` on a value of an enumeration (constructors without fields): case analysis on the
+value, each case reduced to the alternative it selects (so wildcard patterns are handled). -/
+partial def proveEnumMatch? (m : MatcherApp) : M (Option Expr) := do
+  unless m.discrs.size == 1 do return none
+  let d := m.discrs[0]!
+  let dT ← whnfD (← inferType d)
+  let .const indName lvls := dT.getAppFn | return none
+  let some (.inductInfo info) := (← getEnv).find? indName | return none
+  unless dT.getAppArgs.isEmpty && info.numIndices == 0 && info.numParams == 0 do return none
+  for c in info.ctors do
+    let some (.ctorInfo ci) := (← getEnv).find? c | return none
+    unless ci.numFields == 0 do return none
+  let matchOn (x : Expr) := mkAppN (mkConst m.matcherName m.matcherLevels.toList)
+    (m.params ++ #[m.motive, x] ++ m.alts)
+  let motive ← withLocalDeclD `x dT fun x => do
+    let app := matchOn x
+    let some s ← mkStmt (← inferType app) app | throwError "frame_gen: match carries no statement"
+    mkLambdaFVars #[x] s
+  let mut minors := #[]
+  for c in info.ctors do
+    let cv := mkConst c lvls
+    let .reduced red ← reduceMatcher? (matchOn cv) | return none
+    let some p ← prove red.headBeta | throwError "frame_gen: alternative carries no statement"
+    minors := minors.push p
+  -- `casesOn` eliminates into `Prop` here
+  let casesOn := mkConst (Name.mkStr indName "casesOn") (Level.zero :: lvls)
+  return some (mkAppN casesOn (#[motive, d] ++ minors))
+
 partial def proveMatch (m : MatcherApp) : M Expr := do
+  if let some p ← proveEnumMatch? m then return p
+  -- `let (a, b, …) := e` on a product: substitute the projections of `e` (structure eta makes the
+  -- match reduce), which keeps the link between the components and `e`
+  if m.alts.size == 1 && m.discrs.size == 1 then
+    let info := m.altInfos[0]!
+    if !info.hasUnitThunk && info.numFields ≥ 2 then
+      if let some projs ← nestedProjs (← Core.betaReduce m.discrs[0]!) info.numFields then
+        -- `let a := e.1; let b := e.2; …`: each component is a `let`, so it gets its statement
+        let body ← lamToLets m.alts[0]! projs.toList
+        if let some p ← prove body then return p
   -- the statements of the discriminants are passed into the alternatives
   let mut dProofs := #[]
   let mut carriesD := #[]
@@ -344,9 +465,20 @@ partial def proveMatch (m : MatcherApp) : M Expr := do
         let some pb ← prove body | throwError "frame_gen: match alternative carries no statement"
         mkLambdaFVars ys pb
     alts' := alts'.push p
-  return mkAppN (mkAppN mHead alts') dProofs
+  let prf := mkAppN (mkAppN mHead alts') dProofs
+  if (← read).debug then
+    try check prf catch ex => logInfo m!"frame_gen: ill-typed match proof for {m.matcherName}: {ex.toMessageData}"
+  return prf
 
 end
+
+register_option frame_gen.debug : Bool := {
+  defValue := false
+  descr := "log the leaves and inlinings of frame_gen" }
+
+register_option frame_gen.inline : Nat := {
+  defValue := 8
+  descr := "how many nested calls frame_gen may unfold at a failed leaf" }
 
 /-- The hypotheses `h : P x` in the context for the variables `x : σ`; a variable without one gets
 `P x` from the leaf tactic when it can (for an unchanged field: `rfl`). -/
@@ -368,8 +500,9 @@ def contextHyps (σP : Array (Expr × Expr)) (tac : Syntax) : TacticM (Array (Ex
       | none =>
         let gm ← mkFreshExprSyntheticOpaqueMVar want
         try
-          let rest ← Tactic.run gm.mvarId! (evalTactic tac)
-          if rest.isEmpty then hyps := hyps.push (ld.toExpr, ← instantiateMVars gm)
+          let rest ← Term.withoutErrToSorry <| Tactic.run gm.mvarId! (withoutRecover (evalTactic tac))
+          let prf ← instantiateMVars gm
+          if rest.isEmpty && !prf.hasSorry then hyps := hyps.push (ld.toExpr, prf)
         catch _ => pure ()
       break
   return hyps
@@ -380,7 +513,8 @@ def frameGen (σP : Array (Term × Term)) (e : Term) (tac : Syntax) : TacticM Un
     let σPe ← σP.mapM fun (σ, P) => do return (← elabTerm σ none, ← elabTerm P none)
     let ee ← elabTerm e none
     let hyps ← contextHyps σPe tac
-    let ctx : Ctx := { σP := σPe, leaf := tac, hyps }
+    let ctx : Ctx := { σP := σPe, leaf := tac, hyps, debug := frame_gen.debug.get (← getOptions),
+                       inline := frame_gen.inline.get (← getOptions) }
     let some st ← (mkStmt (← inferType ee) ee).run ctx
       | throwError "frame_gen: {ee} carries no statement"
     unless ← isDefEq (← g.getType) st do
@@ -397,9 +531,46 @@ running the frame generator, with `tac` on the leaves. -/
 elab "frame_gen " σ:term:max P:term:max e:term:max " using " tac:tacticSeq : tactic =>
   frameGen #[(σ, P)] e tac
 
-/-- `frame_gen2 σ₁ P₁ σ₂ P₂ e using tac`: the same, tracking two state types. -/
-elab "frame_gen2 " σ₁:term:max P₁:term:max σ₂:term:max P₂:term:max e:term:max " using "
-    tac:tacticSeq : tactic =>
-  frameGen #[(σ₁, P₁), (σ₂, P₂)] e tac
+/-- `frame_genN [σ₁, …] [P₁, …] e using tac`: the same, tracking several state types. -/
+elab "frame_genN " "[" σs:term,* "]" "[" Ps:term,* "]" e:term:max " using " tac:tacticSeq :
+    tactic =>
+  frameGen (σs.getElems.zip Ps.getElems) e tac
+
+/-- The hypothesis `e : ty` and its fields (through `∧` and structures), `d` levels deep. -/
+partial def fieldsOf (e ty : Expr) (d : Nat) : MetaM (Array (Expr × Expr)) := do
+  let mut out := #[(e, ty)]
+  if d == 0 then return out
+  let ty' ← whnfR ty
+  if ty'.isAppOfArity ``And 2 then
+    out := out ++ (← fieldsOf (mkProj ``And 0 e) (ty'.getArg! 0) (d - 1))
+    out := out ++ (← fieldsOf (mkProj ``And 1 e) (ty'.getArg! 1) (d - 1))
+    return out
+  let .const sn _ := ty'.getAppFn | return out
+  let env ← getEnv
+  unless isStructure env sn do return out
+  if sn == ``Float.Model.UnpackedFloat then return out
+  let some info := getStructureInfo? env sn | return out
+  for i in [0:info.fieldNames.size] do
+    let pe := mkProj sn i e
+    let pt ← try inferType pe catch _ => continue
+    if (← isProp pt) then
+      out := out ++ (← fieldsOf pe pt (d - 1))
+  return out
+
+/-- Close the goal with a hypothesis or a field of one (through `∧` and structures, two levels),
+compared at reducible transparency. -/
+elab "field_assumption" : tactic => do
+  let g ← getMainGoal
+  g.withContext do
+    let T ← g.getType
+    for ld in (← getLCtx) do
+      if ld.isImplementationDetail then continue
+      unless ← isProp ld.type do continue
+      for (e, ty) in (← fieldsOf ld.toExpr ld.type 2) do
+        if ← withReducible (withNewMCtxDepth (isDefEq ty T)) then
+          g.assign e
+          replaceMainGoal []
+          return
+    throwError "field_assumption: no hypothesis or field matches"
 
 end Contracts.Track.Frame

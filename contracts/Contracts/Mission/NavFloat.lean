@@ -125,6 +125,68 @@ theorem f64_isFinite_0p5 : (0.5 : Float).IsFinite := by
   rw [Float.isFinite_iff, f64_unpack_0p5]; rfl
 
 
+theorem f32_unpack_4p0 : (4.0 : Float32).toModel.unpack = .finite .positive 8388608 (-21) (by decide) := by rfl
+theorem f32_toReal_4p0 : (4.0 : Float32).toReal = (4 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_4p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_4p0 : (4.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_4p0]; rfl
+
+theorem f32_unpack_8p0 : (8.0 : Float32).toModel.unpack = .finite .positive 8388608 (-20) (by decide) := by rfl
+theorem f32_toReal_8p0 : (8.0 : Float32).toReal = (8 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_8p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_8p0 : (8.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_8p0]; rfl
+
+theorem f32_unpack_6p0 : (6.0 : Float32).toModel.unpack = .finite .positive 12582912 (-21) (by decide) := by rfl
+theorem f32_toReal_6p0 : (6.0 : Float32).toReal = (6 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_6p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_6p0 : (6.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_6p0]; rfl
+
+theorem f32_unpack_0p25 : (0.25 : Float32).toModel.unpack = .finite .positive 8388608 (-25) (by decide) := by rfl
+theorem f32_toReal_0p25 : (0.25 : Float32).toReal = (1 / 4 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_0p25]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_0p25 : (0.25 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_0p25]; rfl
+
+theorem f32_unpack_9p0 : (9.0 : Float32).toModel.unpack = .finite .positive 9437184 (-20) (by decide) := by rfl
+theorem f32_toReal_9p0 : (9.0 : Float32).toReal = (9 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_9p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_9p0 : (9.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_9p0]; rfl
+
+theorem f32_unpack_27p0 : (27.0 : Float32).toModel.unpack = .finite .positive 14155776 (-19) (by decide) := by rfl
+theorem f32_toReal_27p0 : (27.0 : Float32).toReal = (27 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_27p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_27p0 : (27.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_27p0]; rfl
+
+theorem f32_unpack_180p0 : (180.0 : Float32).toModel.unpack = .finite .positive 11796480 (-16) (by decide) := by rfl
+theorem f32_toReal_180p0 : (180.0 : Float32).toReal = (180 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_180p0]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_180p0 : (180.0 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_180p0]; rfl
+
+theorem f64_unpack_3p1415926535897931 : (3.1415926535897931 : Float).toModel.unpack = .finite .positive 7074237752028440 (-51) (by decide) := by rfl
+theorem f64_toReal_3p1415926535897931 : (3.1415926535897931 : Float).toReal = (884279719003555 / 281474976710656 : ℝ) := by
+  rw [Float.toReal, f64_unpack_3p1415926535897931]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f64_isFinite_3p1415926535897931 : (3.1415926535897931 : Float).IsFinite := by
+  rw [Float.isFinite_iff, f64_unpack_3p1415926535897931]; rfl
+
+
+theorem f32_unpack_m1p5 : (-1.5 : Float32).toModel.unpack = .finite .negative 12582912 (-23) (by decide) := by rfl
+theorem f32_toReal_m1p5 : (-1.5 : Float32).toReal = (-3 / 2 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_m1p5]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_m1p5 : (-1.5 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_m1p5]; rfl
+
+theorem f32_unpack_0p333333343 : (0.333333343 : Float32).toModel.unpack = .finite .positive 11184811 (-25) (by decide) := by rfl
+theorem f32_toReal_0p333333343 : (0.333333343 : Float32).toReal = (11184811 / 33554432 : ℝ) := by
+  rw [Float32.toReal, f32_unpack_0p333333343]; simp [UnpackedFloat.toReal, Sign.apply]; norm_num
+theorem f32_isFinite_0p333333343 : (0.333333343 : Float32).IsFinite := by
+  rw [Float32.isFinite_iff, f32_unpack_0p333333343]; rfl
+
+
 theorem f32_toReal_0p0 : (0.0 : Float32).toReal = 0 := by
   rw [Float32.toReal, show (0.0 : Float32).toModel.unpack = .zero .positive from rfl]
   simp [UnpackedFloat.toReal]

@@ -53,7 +53,9 @@ def eqWpp (a b : AC_WPNav_lib.AC_WPNav.Params) : Bool :=
 
 /-- **The parameters of the mission world**, bit for bit: the eight waypoints, the navigator's
 parameters (`wppC`), `PSC_NE_POS_P 1.5`, `PSC_D_POS_P 1`, `PSC_NE_JERK 5`, `ATC_RATE_R_MAX 0`,
-`ATC_RATE_P_MAX 0`, `ATC_ACC_R_MAX 1800`, `ATC_ACC_P_MAX 1800`, `ATC_INPUT_TC 0.05`. -/
+`ATC_RATE_P_MAX 0`, `ATC_ACC_R_MAX 1800`, `ATC_ACC_P_MAX 1800`, `ATC_INPUT_TC 0.05`, and the integrator
+limits `ATC_RAT_RLL_IMAX 0.5`, `ATC_RAT_PIT_IMAX 0.5`, `ATC_RAT_YAW_IMAX 0.5`, `PSC_D_VEL_IMAX 10`,
+`PSC_D_ACC_IMAX 0.8`. -/
 def missionParamsOk (w : World) : Bool :=
   w.mission.size == 8 &&
   eqP3 w.mission[0]! missionWps[0]! && eqP3 w.mission[1]! missionWps[1]! &&
@@ -65,6 +67,9 @@ def missionParamsOk (w : World) : Bool :=
   eq32 w.pp._shaping_jerk_ne_msss 5 &&
   eq32 w.ap._ang_vel_roll_max_degs 0 && eq32 w.ap._ang_vel_pitch_max_degs 0 &&
   eq32 w.ap._accel_roll_max_degss 1800 && eq32 w.ap._accel_pitch_max_degss 1800 &&
-  eq32 w.ap._input_tc 0.05
+  eq32 w.ap._input_tc 0.05 &&
+  eq32 w.ap._pid_rate_roll._kimax 0.5 && eq32 w.ap._pid_rate_pitch._kimax 0.5 &&
+  eq32 w.ap._pid_rate_yaw._kimax 0.5 &&
+  eq32 w.pp._pid_vel_d_m._kimax 10 && eq32 w.pp._pid_accel_d_m._kimax 0.8
 
 end MissionData

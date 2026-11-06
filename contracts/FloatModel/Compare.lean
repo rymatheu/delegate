@@ -24,6 +24,23 @@ public import FloatModel.Float32
 
 open Float.Model UnpackedFloat
 
+namespace Float.Model.UnpackedFloat
+
+theorem canonicalIn_abs {spec : Format} {u : UnpackedFloat} (h : CanonicalIn spec u) :
+    CanonicalIn spec u.abs := by
+  cases u <;> simp_all [CanonicalIn, abs]
+
+theorem toReal_abs (u : UnpackedFloat) : u.abs.toReal = |u.toReal| := by
+  cases u with
+  | finite s m e hm =>
+    cases s <;> simp [abs, toReal, Sign.apply, abs_mul]
+  | _ => simp [abs, toReal]
+
+theorem isFinite_abs (u : UnpackedFloat) : u.abs.isFinite = u.isFinite := by
+  cases u <;> simp [abs, isFinite]
+
+end Float.Model.UnpackedFloat
+
 namespace Float32
 
 /-! ## Finite, NaN, or infinite -/
@@ -46,6 +63,18 @@ theorem not_isNaN_of_isFinite {x : Float32} (h : x.IsFinite) : x.isNaN = false :
   rw [isFinite_iff] at h
   show x.toModel.unpack.isNaN = false
   revert h; cases x.toModel.unpack <;> simp [UnpackedFloat.isNaN, UnpackedFloat.isFinite]
+
+/-! ## Absolute value (`fabsf`) -/
+
+theorem toModel_abs_unpack (x : Float32) : (Float32.abs x).toModel.unpack = x.toModel.unpack.abs :=
+  Float32.Model.unpack_pack_of_canonicalIn (canonicalIn_abs x.canonicalIn_unpack)
+
+/-- `fabsf` is exact. -/
+theorem toReal_abs (x : Float32) : (Float32.abs x).toReal = |x.toReal| := by
+  rw [toReal, toModel_abs_unpack, UnpackedFloat.toReal_abs, toReal]
+
+theorem isFinite_abs (x : Float32) : (Float32.abs x).IsFinite ↔ x.IsFinite := by
+  rw [isFinite_iff, isFinite_iff, toModel_abs_unpack, UnpackedFloat.isFinite_abs]
 
 /-! ## Comparisons with NaN are false -/
 
@@ -211,6 +240,24 @@ theorem cvl_symm (two : Two32) {amt k : Float32} (hk : k.IsFinite) (hk0 : 0 ≤ 
   refine ⟨h1, abs_le.2 ⟨?_, ?_⟩⟩
   · exact (le_min le_rfl (by linarith)).trans h2
   · exact h3.trans (max_le (by linarith) le_rfl)
+
+/-! ## `MIN`/`MAX` as the translator emits them (`if a < b then a else b`) -/
+
+theorem ite_lt_min {a b : Float32} (ha : a.IsFinite) (hb : b.IsFinite) :
+    (if a < b then a else b).IsFinite ∧ (if a < b then a else b).toReal = min a.toReal b.toReal := by
+  by_cases h : a < b
+  · rw [ite_eq_left h]
+    exact ⟨ha, (min_eq_left ((lt_iff_toReal_lt ha hb).1 h).le).symm⟩
+  · rw [ite_eq_right h]
+    exact ⟨hb, (min_eq_right (not_lt.1 ((lt_iff_toReal_lt ha hb).not.1 h))).symm⟩
+
+theorem ite_gt_max {a b : Float32} (ha : a.IsFinite) (hb : b.IsFinite) :
+    (if a > b then a else b).IsFinite ∧ (if a > b then a else b).toReal = max a.toReal b.toReal := by
+  by_cases h : a > b
+  · rw [ite_eq_left h]
+    exact ⟨ha, (max_eq_left ((lt_iff_toReal_lt hb ha).1 h).le).symm⟩
+  · rw [ite_eq_right h]
+    exact ⟨hb, (max_eq_right (not_lt.1 ((lt_iff_toReal_lt hb ha).not.1 h))).symm⟩
 
 end Float32
 

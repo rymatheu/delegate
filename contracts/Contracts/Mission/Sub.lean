@@ -1,5 +1,6 @@
 import Contracts.Mission.SubSpec
 import Contracts.Mission.NavStop
+import Contracts.Track.Induction.Instance
 
 /-!
 # The three sub-contracts
@@ -65,11 +66,13 @@ theorem nav_contract (w₀ : Vehicle.World) (hM : MissionWorld w₀) (hL : LibmS
 tracks the target within `δ` (within `δ₀` during the climb out of the box), stays in the envelope,
 is within `r` of each waypoint whenever the target is within `rPass` of it, keeps the sampled velocity
 within `δv` of the velocity target while the target rests at `w7`, and the target reaches the
-waypoints in order within the allowances and holds near `w7`. -/
+waypoints in order within the allowances and holds near `w7`. The escape of the climb
+(`ClimbEscape`, validated, not proved) is a hypothesis. -/
 theorem track_contract (sense32 : ℝ → Float32) (senseP : ℝ → Float) (w₀ : Vehicle.World)
-    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec) :
-    Mloop sense32 senseP w₀ ⊨ ⟨Atakeoff, lang_t 0 ψtrack⟩ := by
-  sorry
+    (hM : MissionWorld w₀) (hS : Plant.CopterSense sense32 senseP) (hL : LibmSpec)
+    (hE : ClimbEscape sense32 senseP w₀) :
+    Mloop sense32 senseP w₀ ⊨ ⟨Atakeoff, lang_t 0 ψtrack⟩ :=
+  Contracts.Track.Induction.track_contract_proof sense32 senseP w₀ hM hS hL hE
 
 /-- **Arrival** (proved). If at every tick up to `N` the formula `F w` implies `G w` for each point
 `w` of the list, then reaching the points in order through `F` implies reaching them in order
