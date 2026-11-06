@@ -57,14 +57,23 @@ L = r"Contracts\.Track\.Reach\.Leg\."
 SRC_FILES = (["Contracts/Track/Reach/" + f + ".lean" for f in
               ["Leg", "LegTube", "LegGains", "LegGainsData", "LegNav", "LegHold", "LegBox", "GlueTube", "Loop",
                "Leg3", "Leg3Tube", "Leg3Gains", "Leg3GainV", "Leg3Nav", "Leg3Hold", "Leg3Box",
-               "SafeRule", "Safe", "Safe3"]]
+               "SafeRule", "Safe", "Safe3", "Hover", "HoverTube", "HoverModel", "HoverCert",
+               "GlueTick", "GlueNE", "GlueLoop"]]
              + ["Contracts/Mission/NavStop.lean", "Contracts/Track/Induction/Run.lean",
                 "Contracts/Track/Induction/Pieces.lean", "Contracts/Mission/Loop.lean",
-                "Contracts/Track/VerticalHi.lean", "Contracts/Track/VerticalHiCert.lean", "Contracts/Invariant.lean"])
+                "Contracts/Track/VerticalHi.lean", "Contracts/Track/VerticalHiCert.lean", "Contracts/Invariant.lean",
+                "Contracts/Track/Induction/Horiz.lean", "Contracts/Track/Induction/TickGlue.lean"])
+
+
+GREEK = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta", "ε": "varepsilon", "η": "eta", "κ": "kappa",
+         "λ": "lambda", "ξ": "xi", "ρ": "rho", "τ": "tau"}
 
 
 def tt(s: str) -> str:
-    return r"\texttt{" + s.replace("_", r"\_") + "}"
+    s = s.replace("_", r"\_")
+    for g, name in GREEK.items():
+        s = s.replace(g, "\\ensuremath{\\" + name + "}")
+    return r"\texttt{" + s + "}"
 
 
 def ttl(*names: str) -> str:
@@ -385,8 +394,8 @@ def use_safe() -> None:
 %  controller writes, for the 3D world of section 10. Third of the family
 %  with proofgraph-leg.tex and proofgraph-leg3.tex (same lanes, styles and
 %  arrow kinds); it reuses the box machinery of the 3D leg proof.""",
-        size="%%SIZE%%", facts="TrackFacts3", fsec="11.4", legs="950", setting="LegParams3",
-        width="""%  ONE COLUMN, %%SIZE%%: plain figure in ACM sigconf (column 8.2 cm),
+        size="8.19 x 13.80 cm", facts="TrackFacts3", fsec="11.4", legs="950", setting="LegParams3",
+        width="""%  SINGLE WIDTH, %%SIZE%%: plain figure in ACM sigconf (8.2 cm wide),
 %  \\input at natural size; lanes stacked, fewer boxes per lane.""",
         lanes="""%  Lanes, bottom to top: code (the translated ArduPilot modules the
 %  proof's hypothesis is about, in two rows); assumed (TrackFacts3, the one
@@ -411,7 +420,7 @@ def use_safe() -> None:
                       "AP_Math": "not reached (vector coordinates are types)",
                       "Float32": "reached only by LibmSpec's statement (Float32 operations), in the setting"})
     LANES = [("code", 0.50, 2.50), ("assumed", 2.60, 4.30), (r"models,\\gains", 4.40, 6.40),
-             (r"tracking\\bound", 6.50, 7.45), (r"invariant\\rule", 7.55, 9.55), ("theorem", 9.65, 11.70)]
+             (r"tracking\\bound", 6.50, 7.75), (r"invariant\\rule", 7.85, 9.85), ("theorem", 9.95, 12.35)]
     LANE_X1 = 8.20
     yb, ya = 0.98, 1.98
     MODULES = [
@@ -433,7 +442,7 @@ def use_safe() -> None:
          "S-curve tables, the scaler"),
     ]
     c1, c2, c3, cw = 2.075, 4.525, 6.975, 2.25
-    Yg1, Yg2, Yb, Yr1, Yr2, Yt1, Yt2 = 4.92, 5.90, 6.97, 8.05, 9.05, 10.17, 11.18
+    Yg1, Yg2, Yb, Yr1, Yr2, Yt1, Yt2 = 4.92, 5.90, 7.12, 8.35, 9.35, 10.65, 11.85
     NODES = [
         dict(id="checker", kind="hyp", x=4.375, y=0.21, w=7.65, title="Lean's type checker",
              inline="trusted", pat=[]),
@@ -470,7 +479,7 @@ def use_safe() -> None:
                 r"|gainJ_cert|gainC1_cert|gainBV_cert)",
             L3 + r"(refGains3_certified|CertVHi\..*|gainBv3_coord|gainBV3_cert|gainU_cert)"]),
         dict(id="sboxdef", kind="hyp", x=2.05, y=Yb, w=2.20, title=tt("SBox3"),
-             gloss="box of " + tt("leg_box3") + ",\n$|e_a| \\le 0.1433$, $|e_z| \\le 0.1735$",
+             gloss="box of " + tt("leg_box3") + ",\n$|e_a| \\le 0.1433$,\n$|e_z| \\le 0.1735$",
              pat=[S + r"(SBox3|eHS|eVS3)"], ext=["SBox3", "eHS", "eVS3"]),
         dict(id="box", kind="lemma", x=5.75, y=Yb, w=4.70, show=["sbox3_step", "axis_box"], one_line=True,
              gloss="the step of " + tt("leg_box3") + "'s induction, any length",
@@ -479,22 +488,21 @@ def use_safe() -> None:
                   L + r"(boxH_close|boxC1_close|boxRate_close|εHL_nonneg|εVL_nonneg)", L3 + r"εVL3_nonneg"]),
         dict(id="target", kind="lemma", x=1.975, y=Yr1, w=2.05, show=["err_le_of_sbox3"], count_line=True,
              gloss="error at most 0.2668 m", pat=[S + r"(err_le_of_sbox3|norm3_le|sat_track|track|δ3)", L + r"err_eq"]),
-        dict(id="generic", kind="lemma", x=4.975, y=Yr1, w=3.55, show=["implements_always_of_invariant"],
+        dict(id="generic", kind="lemma", x=4.975, y=Yr1, w=3.55, show=["implements_always_of_invariant"], count_line=True,
              gloss="the invariant rule (Invariant.lean)", pat=[
             r"Contracts\.STL\.(implements_always_of_invariant|always_of_invariant|always_of_invariant_const|sat_untimed"
             r"|Untimed(\..*)?|holds)"]),
-        dict(id="hist", kind="lemma", x=4.975, y=Yr2, w=3.55, show=["implements_always_of_prefix"],
+        dict(id="hist", kind="lemma", x=4.975, y=Yr2, w=3.55, show=["implements_always_of_prefix"], count_line=True,
              gloss="the rule on histories (SafeRule.lean)", pat=[
             S + r"(implements_always_of_prefix|hist_step|pre_eq_iff|pre_last|pre_len|Hist(\..*)?|hist|histStep|pre)"]),
-        dict(id="setting", kind="hyp", x=2.175, y=Yt1, w=2.45,
-             title=ttl("Mloop", "Ahover") + r",\\" + ttl("LegParams3") + r",\\" + ttl("LibmSpec", "ReachWorld")
-             + r",\\" + tt("CopterSense"),
+        dict(id="setting", kind="hyp", x=2.475, y=Yt1, w=3.05,
+             title=ttl("Mloop", "Ahover", "LegParams3") + r",\\" + ttl("LibmSpec", "ReachWorld") + r",\\" + tt("CopterSense"),
              gloss="setting of the statement", pat=[
             r"Contracts\.Mission\.(Mloop|Mctrl|Mplant|tickT|CtrlOut(\..*)?)", r"Contracts\.Track\.Reach\.Ahover",
             L3 + r"(LegParams3|DPar3)(\..*)?", L + r"LegParams(\..*)?", r"Contracts\.Mission\.LibmSpec(\..*)?",
             r"Contracts\.Track\.Reach\.(ReachWorld|ReachParams)(\..*)?", r"Contracts\.Plant\.CopterSense(\..*)?"],
              ext=["Mloop", "Ahover", "LegParams3", "ReachWorld", "CopterSense", "LibmSpec"]),
-        dict(id="thm", kind="lemma", x=5.925, y=Yt1, w=4.35, big=True, show=["tracking_safe"], count_line=True,
+        dict(id="thm", kind="lemma", x=6.125, y=Yt1, w=3.95, big=True, show=["tracking_safe"],
              gloss=r"$\Box_{[0,T]}$ within 0.2668 m of the target", pat=[S + r"(tracking_safe|ahover_tick0)"]),
         dict(id="twin", kind="lemma", x=2.45, y=Yt2, w=3.00, show=["tracking_safe_h"],
              gloss="horizontal twin (0.2156 m)", pat=[
@@ -503,7 +511,7 @@ def use_safe() -> None:
         dict(id="forever", kind="lemma", x=6.80, y=Yt2, w=2.60, show=["tracking_safe_forever"],
              gloss="every tick", pat=[S + r"tracking_safe_forever"]),
     ]
-    gap34, gap56 = 6.45, 9.60
+    gap34, gap56 = 6.45, 9.90
     SAFE_EDGES[:] = [
         ("use", "models", "pergain", "(plmodels.east) -- (plpergain.west)"),
         ("use", "pergain", "ff", "(plpergain.east) -- (plff.west)"),
@@ -517,11 +525,11 @@ def use_safe() -> None:
         ("use", "sboxdef", "box", "(plsboxdef.east) -- (plbox.west |- plsboxdef.east)"),
         ("use", "sboxdef", "target", "(pltarget.south |- plsboxdef.north) -- (pltarget.south)"),
         ("use", "generic", "hist", "(plgeneric.north) -- (plhist.south)"),
-        ("use", "hist", "thm", "([xshift=-6mm]plhist.north) -- ([xshift=-6mm]plhist.north |- plthm.south)"),
+        ("use", "hist", "thm", "([xshift=2mm]plhist.north) -- ([xshift=2mm]plhist.north |- plthm.south)"),
         ("use", "target", "thm", f"(pltarget.north) -- (pltarget.north |- 0,{gap56}) -| ([xshift=-17mm]plthm.south)"),
         ("use", "box", "thm", "([xshift=18.5mm]plbox.north) -- ([xshift=18.5mm]plbox.north |- plthm.south)"),
         ("hyp", "setting", "thm", "(plsetting.east) -- (plthm.west |- plsetting.east)"),
-        ("use", "thm", "forever", "([xshift=8.75mm]plthm.north) -- ([xshift=8.75mm]plthm.north |- plforever.south)"),
+        ("use", "thm", "forever", "([xshift=6.75mm]plthm.north) -- ([xshift=6.75mm]plthm.north |- plforever.south)"),
     ]
     EDGES = list(SAFE_EDGES)
     OMITTED = {("*", "twin"): "the horizontal twin tracking_safe_h, the same proof on the world of section 9; "
@@ -529,6 +537,196 @@ def use_safe() -> None:
     PROVED = []
 
 
+HOVER_EDGES: list = []
+
+
+def use_hover() -> None:
+    """The stability theorem Hover.hover_stable (REACH.md §8.7): one column, lanes stacked."""
+    global FIELDS, EDGES, OMITTED, PROVED, NODES, MODULES, MOD_OF_CLASS, LANES, LANE_X1
+    H, G, I, T = (r"Contracts\.Track\.Reach\.Hover\.", r"Contracts\.Track\.Reach\.Glue\.", r"Contracts\.Track\.Induction\.",
+                  r"Contracts\.Track\.")
+    THEOREM.update(
+        key="hover", roots=["Contracts.Track.Reach.Hover.hover_stable", "Contracts.Track.Reach.Hover.hover_stable_box",
+                            "Contracts.Track.Reach.Hover.hover_stable_nonvacuous"],
+        imports="Contracts.Track.Reach.Hover\nimport Contracts.Track.Reach.LegBox\nimport Contracts.Track.Reach.GlueLoop",
+        out=DEFAULT_OUT.with_name("proofgraph-hover.tex"),
+        audit=[("-- Hover stability", r"Contracts\.Track\.Reach\.Hover\.", True),
+               ("-- REACH.md §8: the glue", r"Contracts\.Track\.Reach\.Glue\.", False),
+               ("/-! Track M9, the induction", r"Contracts\.Track\.Induction\.", False),
+               ("/-! The sharp one-period step", r"Contracts\.Plant\.", False),
+               ("/-! Track M6, C-series", r"Contracts\.Track\.HCtl\.", False),
+               (LEG_BLOCK, r"Contracts\.Track\.Reach\.Leg\.", False)],
+        intro="""%  Proof graph of the stability theorem Hover.hover_stable, with the code it
+%  draws on (cpp2lean/contracts, Contracts/Track/Reach/Hover*.lean (four files),
+%  HoverModel, HoverCert, on the hover lemmas of Glue*.lean; REACH.md
+%  section 8.7): from an offset of at most 2.1 cm per axis, at rest, in the
+%  hold, the distance to the held target is at most 3.68 * 0.9997^t times
+%  the start distance plus 3.6 mm at every tick. Fourth of the family with
+%  proofgraph-leg.tex, proofgraph-leg3.tex and proofgraph-safe.tex.""",
+        size="%%SIZE%%", facts="HoverFacts", fsec="8.7", legs="244", setting="LegParams, HoldWorld",
+        width="""%  SINGLE WIDTH, %%SIZE%%: plain figure in ACM sigconf (8.2 cm wide),
+%  \\input at natural size; lanes stacked, fewer boxes per lane.""",
+        lanes="""%  Lanes, bottom to top: assumed (HoverFacts, the one named hypothesis,
+%  with its fields grouped by what they are about); discharge (the setting
+%  of the statement, the plant row, and the horizontal rows from the code:
+%  the tick in the hold, the horizontal controller's row); models, gains
+%  (the channel models, the Lyapunov certificates and per-coordinate gains,
+%  the certified 1728-tick state reused from the leg proof with the decay
+%  constants, the envelopes with a transient excess); tracking bound (the run
+%  as the model, the box); theorem (with the decay, hover_stable_box and
+%  nonvacuity). The code is a strip on the right of the two lowest lanes:
+%  assumed facts enter a module from the left, proved facts from the
+%  right. Under the lanes: Lean's type checker and the legend.""",
+        asrc="""%     about that code. Not derivable from Lean: REACH.md sections 8.6 and
+%     8.7 (the fields of HoverFacts that stay assumed and what each stands
+%     for: hold and ne, INDUCTION's CtrlInv and NERegion; att, M4's
+%     attitude_tracks; vcode, INDUCTION's vglue; vstruct, the coupling of
+%     the transient through the plant and the angle boost).""",
+        facts_header=None, legend="column",
+        code_omitted={"MissionData": "the parameter texts (MissionData), not translated code; reached by the setting only",
+                      "CppLibm": "reached only by LibmSpec's statement, in the setting"})
+    P = r"Contracts\.Plant\."
+    NODES = [
+        dict(id="checker", kind="hyp", x=4.375, y=0.21, w=7.65, title="Lean's type checker", inline="trusted", pat=[]),
+        dict(id="facts", kind="hyp", x=3.05, y=2.725, w=4.80, h=4.45, pat=[
+            H + r"(HoverFacts|HoverRun|BoxTo|offs|neS|εS)(\..*)?",
+            I + r"(run|ξH|ξV|habs|vabs|cmd|accDes|cmdAgo|aLag|refH|refV|refAx)",
+            r"Contracts\.Track\.Reach\.Leg\.(aH|d1H|d2H|aZ|d1Z|d2Z|legWH|legWV)",
+            r"Contracts\.Mission\.(posTarget|velTarget|estPos|estVel|stopPt)",
+            r"Contracts\.Track\.Reach\.wpt", r"Contracts\.Track\.hov"],
+             ext=["HoverRun", "HoverFacts", "BoxTo", "ξV", "ξH", "offs"]),
+        dict(id="setting", kind="hyp", x=4.30, y=5.72, w=2.20,
+             title=ttl("HoldWorld") + r",\\" + ttl("LegParams", "Mloop") + r",\\" + ttl("Ahover", "LibmSpec") + r",\\"
+             + tt("CopterSense"),
+             gloss="offset $\\le 2.1$ cm per axis", pat=[
+            r"Contracts\.Mission\.(Mloop|Mctrl|Mplant|tickT|CtrlOut(\..*)?)", r"Contracts\.Track\.Reach\.Ahover",
+            H + r"HoldWorld(\..*)?", r"Contracts\.Track\.Reach\.Leg\.LegParams(\..*)?", r"Contracts\.Mission\.LibmSpec(\..*)?",
+            r"Contracts\.Track\.Reach\.(ReachWorld|ReachParams)(\..*)?", P + r"CopterSense(\..*)?"],
+             ext=["HoldWorld", "LegParams", "Mloop", "Ahover", "CopterSense", "LibmSpec"]),
+        dict(id="models", kind="hyp", x=2.10, y=8.05, w=2.10, title=ttl("AhR", "BhR", "AvR", "BvR"), gloss="channel models",
+             pat=[r"Contracts\.Track\.(Horizontal\.(AhR|BhR)|Vertical\.(AvR|BvR))"],
+             ext=["Horizontal.AhR", "Horizontal.BhR", "Vertical.AvR", "Vertical.BvR"]),
+        # discharge: the horizontal rows from the code
+        dict(id="discharge", kind="lemma", thm_only=True, x=3.375, y=6.80, w=3.95, show=["tick_hold_ps", "neGlue_hold", "wHβ_bound", "rowH_code"],
+             show_lines=[["tick_hold_ps", "neGlue_hold"], ["wHβ_bound", "rowH_code"]],
+             gloss="the horizontal rows from the code",
+             pat=[G + r"(tick_hold_ps|tick_hold|tick_split|neGlue_hold|auto_run_missionW|mission_update_idle|modeW_auto"
+                  r"|modeW_first|preNav_au|preNav_def|preNav_ps|pre_in_auto|withMotors_au|withMotors_in_auto'"
+                  r"|F64\..*|cy_accd|cy_posd|cy_veld|ne_desired|ne_posd_val|nef_D|nef_refl|pidne_UE|preNav_pid_est)",
+                  I + r"TG\..*", r"Contracts\.Track\.CtrlV\..*", r"Contracts\.Track\.Frame\..*",
+                  I + r"(wHβ_bound|AhR_col|AhR_mulVec_two|axis_dev|sense32_close3|senseP_close|smp_ne)",
+                  r"Contracts\.Track\.HCtl\.(?!(NERegion|OffZero|PIDState|VelGains|VelRegion|PosGains|PosRegion|HFrame)\.).*",
+                  r"Contracts\.Track\.TwoD\..*", r"Contracts\.Quick\..*",
+                  r"Contracts\.Mission\.(A32|B32|A64|Float32|F64)\..*", r"Contracts\.Mission\.(u32_eq|capF_le_max32"
+                  r"|capF_le_max64|div_approx|mul_approx|f32_.*|f64_.*)",
+                  H + r"(rowH_code|excH_le|εHs_split|forceH_zero)"]),
+        dict(id="plant", kind="lemma", thm_only=True, x=1.975, y=5.72, w=2.05, show=["prow_ahover"], count_line=True, gloss="the plant row",
+             pat=[H + r"(prow_ahover|qnorm_one_hover)",
+                  P + r"(?!(CopterSense|PState|Quat|Quaternionf|Sense32Spec|SensePSpec|TorqueBd)\.|vfT_lipschitz$).*",
+                  I + r"(prow_step|Cd_two_le|wB_two_le|wTA_two_le)"]),
+        # models, gains
+        dict(id="cert", kind="lemma", thm_only=True, x=4.45, y=8.05, w=2.20, show=["gainH'", "gainV'"], one_line=True, count_line=True,
+             gloss="certificates, gains", pat=[
+            G + r"(peakH'|gainH'|peakV'|gainV'|respH_decay|respV_decay|Vh_pow_le|V_pow_le|Vh_single|tubeH0|εHh_nonneg)",
+            T + r"(Horizontal|Vertical)\.(certV|certP|certO|V_A|V_nonneg|Dc_nonneg|Do_nonneg|Dp_pos|Lp_mul_inv|AvR_eq|AhR_eq"
+                r"|castM_.*|sq_e_le|sq_ez_le|Ahat_spec|qf_mulVec|qf_nonneg_of_ldl|qf_smul_sub)",
+            I + r"Nominal\..*", r"Contracts\.Track\.Reach\.Vertical_V_single"],
+             ext=["gainH'", "gainV'", "peakH'", "peakV'", "Vh_pow_le", "V_pow_le", "Horizontal.V_nonneg",
+                  "Horizontal.sq_e_le", "Vertical.sq_ez_le"]),
+        dict(id="state", kind="lemma", thm_only=True, x=6.90, y=8.05, w=2.30, show=["respH_e1"], gloss="certified state $A_h^{1728} e_1$\nand decay constants",
+             pat=[H + r"(stateE1|V_E1|VbE1_check|VbE1|xbE1|lam_pow_1728|respH_e1|Vh_le_abs|lam_pow_ge|rat_pow_ge|rat_pow_le"
+                  r"|lam_pos|lam_le_one|lamh_eq|lamv_le|decay_of_min|respV_decay_v|lamv_nonneg|lamv_pow_le|respV_row"
+                  r"|respV_cVd|respH_cHd|mH_le|mV_le|Vh_single_j|Vv_single_j|respH_decay_gen|respV_decay_gen)",
+                  r"Contracts\.Track\.Reach\.Leg\.(CertGainH\..*|state_le)"]),
+        dict(id="excess", kind="lemma", thm_only=True, x=6.90, y=9.15, w=2.30, show=["exc_decay"], gloss="excess envelopes",
+             pat=[H + r"(exc|exc_nonneg|abs_le_exc|exc_le_of|wsum|sum_le_wsum"
+                  r"|tube_exc|exc_peak|exc_decay|chan_tube_exc|wsum_le_wsum|wsum_mul)"]),
+        # tracking bound
+        dict(id="runmodel", kind="lemma", thm_only=True, x=2.075, y=10.27, w=2.05, show=["hoverModelS_of_run"], count_line=True, gloss="the run as the model",
+             pat=[H + r"(hoverModelS_of_run|excV_le|εVs_split|forceV_zero)"]),
+        dict(id="box", kind="lemma", thm_only=True, x=5.675, y=10.27, w=4.75, show=["hover_box_s"], gloss="the box BoxS at every tick",
+             pat=[H + r"(hover_box_s|tubeH_s|tubeV_s|excH_peak|excV_peak|BoxS|regionHs|regionVs|tubeHs"
+                  r"|tubeVs|εVs|εHs|ε0Vs|ε0Hs|κV|κη|κH|κH_eq|bVs|bHs|dinf|le_dinf|dinf_nonneg|dinf_le|εVs_nonneg"
+                  r"|εHs_nonneg|κV_nonneg|κH_nonneg|PV_nonneg|PH_nonneg)"]),
+        dict(id="decay", kind="lemma", thm_only=True, x=6.825, y=11.42, w=2.45, show=["hover_axes_s"], gloss="decay per axis, distance",
+             pat=[H + r"(hover_axes_s|norm_le_axes3)", G + r"norm_le_axes"]),
+        # theorem
+        dict(id="thm", kind="lemma", thm_only=True, x=3.225, y=11.42, w=4.35, big=True, show=["hover_stable"],
+             gloss=r"$\|p_t - w\| \le 3.68 \cdot 0.9997^t \|p_0 - w\| + 3.6$ mm", pat=[H + r"(hover_stable|pos_zero)"]),
+        dict(id="boxthm", kind="lemma", thm_only=True, x=2.325, y=12.45, w=2.55, show=["hover_stable_box"], gloss="the box, every tick",
+             pat=[H + r"hover_stable_box"]),
+        dict(id="nonvac", kind="lemma", thm_only=True, x=6.20, y=12.45, w=3.70, show=["hover_stable_nonvacuous"], count_in_gloss=True, gloss="a run exists",
+             pat=[H + r"hover_stable_nonvacuous", r"Contracts\.Track\.Reach\.(Leg\.waypoint_reach_h_nonvacuous"
+                  r"|waypoint_reach_nonvacuous|witnessAt)"]),
+    ]
+    LANES = [("assumed", 0.45, 5.00, 0.55, 5.55), ("discharge", 5.10, 7.35, 0.55, 5.55),
+             ("code", 0.45, 7.35, 5.65, 8.20, "top"),
+             (r"models,\\gains", 7.50, 9.70), (r"tracking\\bound", 9.80, 10.75), ("theorem", 10.85, 12.95)]
+    LANE_X1 = 8.20
+    mx, mw = 6.80, 2.05
+    MODULES = [
+        ("float", mx, mw, tt("Float32"), "IEEE model", {"Float32"}, 6.75),
+        ("apmath", mx, mw, tt("AP_Math"), "vectors, control", {"AP_Math"}, 6.06),
+        ("ahrs", mx, mw, tt("AP_AHRS_View"), "attitude, estimates", {"AP_AHRS_View"}, 5.37),
+        ("wpnav", mx, mw, tt("AC_WPNav"), "navigator, hold", {"AC_WPNav"}, 4.55),
+        ("vehicle", mx, mw, tt("Vehicle.tick"), "the vehicle tick", {"Vehicle"}, 3.83),
+        ("posctl", mx, mw, tt("AC_PosControl"), "position loop", {"AC_PosControl"}, 3.11),
+        ("pid", mx, mw, ttl("AC_PID", "AC_P"), "PID, P terms", {"AC_PID"}, 2.39),
+        ("motors", mx, mw, tt("AP_MotorsMatrix"), "mixer", {"AP_MotorsMatrix"}, 1.67),
+        ("att", mx, mw, tt("AC_AttitudeControl"), "attitude loop", {"AC_AttitudeControl"}, 0.95),
+    ]
+    MOD_OF_CLASS = {c: m[0] for m in MODULES for c in m[5]}
+    xw = mx - mw / 2          # the modules' west side
+    FIELDS = [
+        ("fa", 2.35, 5.40, ttl("init", "target"), "start table, held target",
+         [("wpnav", f"(plfa.east |- plwpnav.west) -- (plwpnav.west)"),
+          ("vehicle", f"(5.40,4.35) -- (5.58,4.35) -- (5.58,3.95) -- ({xw:.3f},3.95)")],
+         "the hold's start; the navigator holds the target (AC_WPNav), every tick"),
+        ("fb", 2.35, 5.40, ttl("hold", "ne"), "controller mode and region",
+         [("vehicle", f"(5.40,3.73) -- ({xw:.3f},3.73)"), ("posctl", f"(5.40,3.21) -- ({xw:.3f},3.21)")],
+         "hold: mode flags of the tick in Auto (Vehicle.tick); ne: NERegion at NE_update_controller (AC_PosControl)"),
+        ("fe", 2.35, 5.40, ttl("vcode", "vstruct"), "vertical rows",
+         [("posctl", f"(5.40,2.55) -- (5.58,2.55) -- (5.58,3.01) -- ({xw:.3f},3.01)"),
+          ("pid", f"(5.40,2.25) -- ({xw:.3f},2.25)"), ("motors", f"(5.40,1.67) -- ({xw:.3f},1.67)"),
+          ("att", f"(5.40,1.45) -- (5.58,1.45) -- (5.58,1.05) -- ({xw:.3f},1.05)")],
+         "vcode: vglue (D_update_controller, the PIDs, the mixer); vstruct: the transient through the plant, "
+         "the sampled force and the angle boost (AC_AttitudeControl)"),
+        ("fd", 2.35, 5.40, tt("att"), "floor plus transient excess", [("att", f"(5.40,0.88) -- ({xw:.3f},0.88)")],
+         "M4's attitude_tracks in its measured form (AC_AttitudeControl)"),
+        ("fc", 0.75, 2.25, tt("rates"), "body rates", [], "the plant's body rates: not code"),
+    ]
+    THEOREM.update(
+        size="8.19 x 14.36 cm",
+        cell_y={"fa": (4.55, 0.62), "fb": (3.47, 1.34), "fe": (2.03, 1.34), "fd": (0.95, 0.62), "fc": (0.95, 0.62)},
+        facts_header=(tt("HoverFacts") + r"\\{\color{fwMute}per-tick facts}\\{\color{fwMute}of every run of}\\"
+                      + tt("Mloop") + r"\ {\color{fwMute}from}\\{\color{fwMute}the hold; measured}\\"
+                      r"{\color{fwMute}on 244 starts}\\{\color{fwMute}(REACH.md \S8.7)}"),
+        facts_header_at=(1.50, 4.86, "north"),
+        legend_sides=("from the right", "from the left"), module_h="6.0mm")
+    chan, gap = 8.04, 7.42
+    ptex = f"\\draw[plevline] (5.35,6.98) -- (5.58,6.98) -- (5.58,{gap}) -- ({chan},{gap}) -- ({chan},0.95);\n"
+    for m in MODULES:
+        ptex += f"\\draw[plev] ({chan},{m[6]:.2f}) -- ({mx + mw / 2:.3f},{m[6]:.2f});\n"
+    THEOREM["proved_tex"] = ptex
+    EDGES = [
+        ("hyp", "facts", "discharge", "(0.76,0 |- plfacts.north) -- (0.76,6.62) -- (pldischarge.west |- 0,6.62)"),
+        ("hyp", "setting", "plant", "(plsetting.west) -- (plplant.east |- plsetting.west)"),
+        ("use", "plant", "discharge", "(plplant.north) -- (plplant.north |- pldischarge.south)"),
+        ("use", "discharge", "runmodel", "([yshift=2mm]pldischarge.west) -| (0.80,10.27) -- (plrunmodel.west)"),
+        ("use", "models", "cert", "(plmodels.east) -- (plcert.west |- plmodels.east)"),
+        ("use", "cert", "state", "(plcert.east) -- (plstate.west |- plcert.east)"),
+        ("use", "state", "excess", "(plstate.north) -- (plexcess.south)"),
+        ("use", "excess", "box", "(plexcess.north) -- (plexcess.north |- plbox.south)"),
+        ("use", "box", "runmodel", "(plbox.west) -- (plrunmodel.east |- plbox.west)"),
+        ("use", "box", "decay", "([xshift=11.5mm]plbox.north) -- ([xshift=11.5mm]plbox.north |- pldecay.south)"),
+        ("use", "decay", "thm", "(pldecay.west) -- (plthm.east |- pldecay.west)"),
+        ("use", "runmodel", "thm", "(plrunmodel.north) -- (plrunmodel.north |- plthm.south)"),
+        ("use", "thm", "boxthm", "([xshift=-9mm]plthm.north) -- ([xshift=-9mm]plthm.north |- plboxthm.south)"),
+    ]
+    OMITTED = {("plant", "setting"): "the definition of Mplant uses the plant's existence lemmas "
+                                     "(vf_lipschitz_ball, Klip_pos), which this box holds",
+               ("*", "nonvac"): "nonvacuity is about the loop's definitions only; drawn without arrows, as in proofgraph.tex"}
+    PROVED = [("discharge", m) for m in ["float", "apmath", "ahrs", "wpnav", "vehicle", "posctl", "pid", "motors", "att"]]
 # ------------------------------------------------------------------------------------------------
 #  Axiom audit
 # ------------------------------------------------------------------------------------------------
@@ -540,20 +738,34 @@ NODE_RX: dict = {}
 def compile_patterns() -> None:
     NODE_RX.clear()
     NODE_RX.update({n["id"]: [re.compile(p) for p in n.get("pat", [])] for n in NODES})
+    THM_ONLY.clear()
+    THM_ONLY.update(n["id"] for n in NODES if n.get("thm_only"))
 
 
 def parse_axioms(text: str) -> dict[str, set[str]]:
-    out = {}
+    """Lean wraps a long axiom list over several lines (continuations start with a blank): join them."""
+    joined: list[str] = []
     for line in text.splitlines():
+        if line.startswith(" ") and joined:
+            joined[-1] += line
+        else:
+            joined.append(line)
+    out = {}
+    for line in joined:
         m = LINE.match(line.strip())
         if m:
             out[m.group(1)] = {a.strip() for a in (m.group(2) or "").split(",") if a.strip()}
     return out
 
 
+KIND: dict = {}          # constant -> kind, filled from the dump (for boxes that stand for theorems only)
+THM_ONLY: set = set()
+
+
 def box_of(name: str) -> str | None:
     base = AUX.split(name)[0]
-    hits = [i for i, rs in NODE_RX.items() if any(r.fullmatch(base) for r in rs)]
+    hits = [i for i, rs in NODE_RX.items() if any(r.fullmatch(base) for r in rs)
+            and (i not in THM_ONLY or KIND.get(base) == "thm" or (base == name and KIND.get(name) == "thm"))]
     if len(hits) > 1:
         sys.exit(f"{name}: in several boxes {hits}")
     return hits[0] if hits else None
@@ -613,6 +825,8 @@ class Dump:
             self.kind[a], self.mod[a] = ak, am
             self.kind.setdefault(b, bk)
             self.mod[b] = bm
+        KIND.clear()
+        KIND.update(self.kind)
         self.members = collections.defaultdict(set)
         for n in self.kind:
             b = box_of(n)
@@ -637,10 +851,16 @@ class Dump:
         if m.endswith("_lib"):
             p = n.split(".")
             c = p[1] if len(p) > 2 else "(free)"
-            if re.match(r"AC_PID|AC_P(_|$)|LowPass", c):
+            if c in ("Output", "Outputs"):     # the translator's record of a class's calls out: the calling module
+                return {"AC_PosControl_lib": "AC_PosControl", "AC_WPNav_lib": "AC_WPNav",
+                        "AC_Attitude_lib": "AC_AttitudeControl", "AP_Motors_lib": "AP_MotorsMatrix",
+                        "AHRS_View_lib": "AP_AHRS_View"}.get(m, m + ":" + c)
+            if re.match(r"AC_PID|AC_P(_|$)|AP_PIDInfo|LowPass", c):
                 return "AC_PID"
-            if c.startswith(("Vector", "Matrix")) or c == "(free)" or c.startswith("update_pos_vel_accel"):
+            if c.startswith(("Vector", "Matrix")) or c == "(free)" or c[:1].islower():
                 return "AP_Math"
+            if c == "AP_AHRS_View":
+                return "AP_AHRS_View"
             if c == "AC_PosControl":
                 return "AC_PosControl"
             if c in ("AC_WPNav", "SCurve", "SplineCurve"):
@@ -876,7 +1096,8 @@ def node_body(n: dict, counts: dict[str, int]) -> str:
             n = dict(n, gloss=n["gloss"] + (f" ({words})" if words else ""))
         else:
             sep = ", " if n.get("one_line") else r",\\"
-            body = sep.join(tt(s) for s in show) + ((r"\\[-1pt]" if n.get("count_line") else r"\ ") + mute(words)
+            body = (r",\\".join(", ".join(tt(x) for x in line) for line in n["show_lines"]) if n.get("show_lines")
+                    else sep.join(tt(s) for s in show)) + ((r"\\[-1pt]" if n.get("count_line") else r"\ ") + mute(words)
                                                     if words else "")
     if n.get("inline"):
         body += r"\ {\color{fwMute}" + n["inline"] + "}"
@@ -910,8 +1131,9 @@ def legend_column() -> str:
     out, y0 = [], LEGEND_Y[0]
     stat = [("proved", "proved"), ("open", r"open (\texttt{sorry})"), ("hypothesis", "hypothesis, definition"),
             ("code", "translated code")]
-    arrs = [("plarr", "is used by"), ("plharr", "hypothesis of"), ("plev", "proved fact about code (from below)"),
-            ("plas", "assumed fact about code (from above)")]
+    side = THEOREM.get("legend_sides", ("from below", "from above"))
+    arrs = [("plarr", "is used by"), ("plharr", "hypothesis of"), ("plev", f"proved fact about code ({side[0]})"),
+            ("plas", f"assumed fact about code ({side[1]})")]
     for i, ((st, sl), (sty, al)) in enumerate(zip(stat, arrs)):
         y = y0 - 0.30 * i
         out.append(f"\\node[pl{st}, minimum width=3mm, minimum height=2mm, inner sep=0pt] at (0.85,{y:.2f}) {{}};\n")
@@ -938,16 +1160,23 @@ def render(st, members, counts, axsrc, depsrc, audit_line, off, omitted) -> str:
            .replace("%%SETTING%%", THEOREM["setting"]).replace("%%WIDTH%%", THEOREM["width"])
            .replace("%%LANES%%", THEOREM["lanes"]).replace("%%ASRC%%", THEOREM["asrc"]))
     tex += "% ================= lanes ==========================================\n\\begin{scope}[on background layer]\n"
-    for _, y0, y1 in LANES:
-        tex += f"\\fill[pllane] ({LANE_X0:.2f},{y0:.2f}) rectangle ({LANE_X1:.2f},{y1:.2f});\n"
+    for lane in LANES:
+        y0, y1 = lane[1], lane[2]
+        x0, x1 = (lane[3], lane[4]) if len(lane) > 3 else (LANE_X0, LANE_X1)
+        tex += f"\\fill[pllane] ({x0:.2f},{y0:.2f}) rectangle ({x1:.2f},{y1:.2f});\n"
     tex += "\\end{scope}\n"
-    for label, y0, y1 in LANES:
-        tex += f"\\node[pllanelbl] at ({LANE_X0 / 2:.2f},{(y0 + y1) / 2:.2f}) {{{label}}};\n"
+    for lane in LANES:
+        label, y0, y1 = lane[:3]
+        if len(lane) > 5 and lane[5] == "top":      # a column lane: its label across its top
+            tex += (f"\\node[pllanelbl, rotate=-90, anchor=north] at ({(lane[3] + lane[4]) / 2:.2f},{y1 - 0.02:.2f}) "
+                    f"{{{label}}};\n")
+        else:
+            tex += f"\\node[pllanelbl] at ({LANE_X0 / 2:.2f},{(y0 + y1) / 2:.2f}) {{{label}}};\n"
     tex += "% ================= code ===========================================\n"
     for m in MODULES:
         mid, x, w, title, gloss = m[:5]
         y = m[6] if len(m) > 6 else Y_MOD
-        tex += (f"\\node[plcode, minimum width={w:.2f}cm, minimum height=7.4mm] (pl{mid}) at ({x:.2f},{y:.2f}) "
+        tex += (f"\\node[plcode, minimum width={w:.2f}cm, minimum height={THEOREM.get('module_h', '7.4mm')}] (pl{mid}) at ({x:.2f},{y:.2f}) "
                 f"{{{title}\\\\[-1pt]{mute(gloss)}}};\n")
     tex += "% ================= boxes ==========================================\n"
     for n in NODES:
@@ -963,11 +1192,16 @@ def render(st, members, counts, axsrc, depsrc, audit_line, off, omitted) -> str:
     head = THEOREM["facts_header"] or (
         f"{tt(THEOREM['facts'])}\\ {{\\color{{fwMute}}per-tick facts of every run of {tt('Mloop')} from hover, "
         f"each field measured on {THEOREM['legs']} legs (REACH.md \\S{THEOREM['fsec']})}}")
-    tex += (f"\\node[plnote, text=fwInk, anchor=north, align=center] at ({f['x']:.2f},{f['y'] + f['h'] / 2 - 0.04:.2f}) "
-            f"{{{head}}};" "\n")
+    hx, hy, ha = THEOREM.get("facts_header_at") or (f["x"], f["y"] + f["h"] / 2 - 0.04, "north")
+    tex += f"\\node[plnote, text=fwInk, anchor={ha}, align=center] at ({hx:.2f},{hy:.2f}) {{{head}}};\n"
     for cid, x0, x1, title, gloss, _, _ in FIELDS:
-        tex += (f"\\node[plcell, minimum width={x1 - x0:.2f}cm, minimum height=8mm, anchor=south] (pl{cid}) "
-                f"at ({(x0 + x1) / 2:.2f},{f['y'] - f['h'] / 2 + 0.08:.2f}) {{{title}\\\\[-1pt]{mute(gloss)}}};\n")
+        cy = THEOREM.get("cell_y", {}).get(cid)
+        if cy:                             # a cell at its own height (center y, height)
+            tex += (f"\\node[plcell, minimum width={x1 - x0:.2f}cm, minimum height={cy[1]:.2f}cm] (pl{cid}) "
+                    f"at ({(x0 + x1) / 2:.2f},{cy[0]:.2f}) {{{title}\\\\[-1pt]{mute(gloss)}}};\n")
+        else:
+            tex += (f"\\node[plcell, minimum width={x1 - x0:.2f}cm, minimum height=8mm, anchor=south] (pl{cid}) "
+                    f"at ({(x0 + x1) / 2:.2f},{f['y'] - f['h'] / 2 + 0.08:.2f}) {{{title}\\\\[-1pt]{mute(gloss)}}};\n")
     tex += "% ================= is used by (solid), hypothesis of (dashed) =====\n"
     for kind, _, _, path in EDGES:
         tex += f"\\draw[{'plarr' if kind == 'use' else 'plharr'}] {path};\n"
@@ -975,6 +1209,9 @@ def render(st, members, counts, axsrc, depsrc, audit_line, off, omitted) -> str:
     for cid, x0, x1, _, _, targets, _ in FIELDS:
         for m in targets:
             m, xd = m if isinstance(m, tuple) else (m, None)
+            if isinstance(xd, str):        # an explicit path from the cell to the module
+                tex += f"\\draw[plas] {xd};\n"
+                continue
             mod = next(mm for mm in MODULES if mm[0] == m)
             lo, hi = max(x0, mod[1] - mod[2] / 2) + 0.12, min(x1, mod[1] + mod[2] / 2) - 0.12
             if lo > hi or (xd is not None and not lo <= xd <= hi):
@@ -984,7 +1221,9 @@ def render(st, members, counts, axsrc, depsrc, audit_line, off, omitted) -> str:
     if any(n["id"] == "libm" for n in NODES):
         tex += "\\draw[plas] (pllibm.south) -- (pllibm.south |- plcpplibm.north);\n"
     tex += "% ================= proved facts about the code (solid blue, from below)\n"
-    if PROVED:
+    if THEOREM.get("proved_tex"):
+        tex += THEOREM["proved_tex"]
+    elif PROVED:
         xs = [next(mm for mm in MODULES if mm[0] == m)[1] for (_, m) in PROVED]
         tex += (f"\\draw[plevline] ({X_PROVED},0 |- plloitercode.south) -- ({X_PROVED},{CHAN_Y}) -- "
                 f"({max(xs):.2f},{CHAN_Y});\n")
@@ -1075,7 +1314,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--axioms", type=Path, help="saved #print axioms output of the leg block")
     ap.add_argument("--deps", type=Path, help="dependency dump written by deps.lean")
-    ap.add_argument("--theorem", choices=["h", "3d", "safe"], default="h",
+    ap.add_argument("--theorem", choices=["h", "3d", "safe", "hover"], default="h",
                     help="h: Leg.waypoint_reach_h (REACH.md §9); 3d: Leg3.waypoint_reach (§10); "
                          "safe: Safe.tracking_safe (§11)")
     ap.add_argument("--out", type=Path)
@@ -1085,6 +1324,8 @@ def main():
         use_3d()
     elif a.theorem == "safe":
         use_safe()
+    elif a.theorem == "hover":
+        use_hover()
     compile_patterns()
     a.out = a.out or THEOREM["out"]
     if a.write_lean:
