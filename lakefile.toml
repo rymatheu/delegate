@@ -1,0 +1,40 @@
+name = "leanfc"
+version = "0.1.0"
+defaultTargets = ["leanfc"]
+
+# One toolchain for everything: Lean v4.35.0, Mathlib v4.35.0.
+# Mathlib is required explicitly and listed last so that its versions take precedence over the
+# pins in the other packages' manifests (DynamicalSystems' manifest names a release-candidate commit).
+
+[[require]]
+name = "floatlib"
+git = "https://github.com/lean-dojo/FloatLib.git"
+rev = "acba2057e452f32f4ed4f06bb0adbeda5342ba92"
+
+[[require]]
+name = "DynamicalSystems"
+git = "https://github.com/mcdoll/DynamicalSystems"
+rev = "c2a753b74de172aacce2f4aae88b662f6c2cda05"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.35.0"
+
+# The controller (FloatLib Binary32).
+[[lean_lib]]
+name = "Leanfc"
+
+# The ODE plant (copied from cpp2lean contracts/Contracts/Plant). The executable does not import it.
+[[lean_lib]]
+name = "Plant"
+globs = ["Plant.+"]
+
+# The executable's IO helpers (text, the MAVLink UDP link, the MAVLink test drivers).
+[[lean_lib]]
+name = "Shell"
+globs = ["Shell.+"]
+
+[[lean_exe]]
+name = "leanfc"
+root = "Main"

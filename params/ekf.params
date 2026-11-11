@@ -1,0 +1,3 @@
+# Overlay: run the EKF (Leanfc/EKF.lean) instead of the fixed-gain filters.
+# Load after a vehicle file: --params params/cf2x.params --params params/ekf.params
+estimator           ekf

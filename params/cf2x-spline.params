@@ -1,0 +1,8 @@
+# Overlay: the CF2X square flown as SPLINE legs (the same four points as params/cf2x.params; a file
+# with WAYPOINT or SPLINE lines replaces the mission). Each corner is passed at speed on a curve
+# through the waypoint. Load after the vehicle file:
+# --params params/cf2x.params --params params/cf2x-spline.params
+SPLINE  1  0  -1.0
+SPLINE  1  1  -1.5
+SPLINE  0  1  -1.5
+SPLINE  0  0  -1.0

@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+
+<!-- Holybro PX4 Development Kit X500 V2 for gym-pybullet-drones, in the format of the package's
+     assets/cf2x.urdf (BaseAviary._parseURDFParameters reads the <properties> attributes, the base
+     link's mass and inertia, and the base link's collision cylinder; the four propeller links carry
+     the thrust points). Loaded by sim/run_leanfc.py (LeanfcAviary), not installed in the package.
+
+     Sources: PX4-gazebo-models x500_base/model.sdf and x500/model.sdf.
+       mass       base_link 2.0 + rotor_0..3 at 0.016076923076923075 each = 2.0643076923076924 kg
+                  (one rigid body here: the rotors' mass is lumped into the base)
+       inertia    base_link ixx = iyy = 0.02166666666666667, izz = 0.04000000000000001 kg m^2
+                  (the rotors' share, about 0.002 kg m^2 per axis at 0.174 m, is left out, as in the
+                  controller's parameter file)
+       rotors     poses (+-0.174, +-0.174, 0.06) m FLU, arm = 0.174 sqrt 2 = 0.24607 m;
+                  rotor_0 front right ccw, rotor_1 rear left ccw, rotor_2 front left cw,
+                  rotor_3 rear right cw (gz MulticopterMotorModel turningDirection)
+       thrust     motorConstant 8.54858e-06 N/(rad/s)^2, maxRotVelocity 1000 rad/s
+       yaw torque momentConstant 0.016 m x thrust
+     Package units: kf in N/RPM^2 and km in N m/RPM^2:
+       kf = 8.54858e-06 (2 pi / 60)^2 = 9.37456697678494e-08,  km = 0.016 kf = 1.4999307162855904e-09.
+     thrust2weight = 4 x 8.54858 N / (2.0643076923076924 kg x 9.80665 m/s^2) = 1.689113625148385, so that
+       the package's MAX_RPM = sqrt(thrust2weight m g / (4 kf)) = 9549.2966 RPM = 1000 rad/s with the
+       harness's gravity 9.80665, and MAX_THRUST / 4 = 8.54858 N per motor.
+     Propeller links: in cf2x.urdf's order and spin (prop0 front right CCW, prop1 rear right CW,
+       prop2 rear left CCW, prop3 front left CW; the package's _physics sums the drag torques as
+       -t0 + t1 - t2 + t3, so links 0 and 2 must be the CCW ones). PX4's rotor_0..3 are links 0, 2, 3, 1,
+       which is cpp2lean's SLOT_TO_SIM = [0, 2, 3, 1] for motors 1..4. The thrust is applied at each
+       link's inertial origin (PyBullet's link frame), 0.06 m above the base as in the SDF.
+     Collision: one cylinder (the package's parser requires a cylinder) of radius 0.25 m (wheelbase
+       0.49 m) and length 0.22 m centered 0.09 m below the base origin: from 0.20 m below (the SDF's
+       landing gear reaches 0.227 m below) to 0.02 m above the base. At 1 m altitude its bottom is 0.80 m
+       above the ground.
+     Not modeled: rotor drag (rotorDragCoefficient 8.06428e-05 N/(m/s)/(rad/s), the same form as the
+       package's drag_coeff_xy, which Physics.PYB does not use; set here for Physics.PYB_DRAG), the
+       rolling moment, ground effect and downwash (no X500 data: coefficients 0), and the motor time
+       constants 0.0125 s up and 0.025 s down, which the harness applies as a thrust lag.
+     max_speed_kmh 43.2 is PX4's MPC_XY_VEL_MAX default 12 m/s (not used by Physics.PYB). prop_radius
+       0.1396 m is half the SDF's rotor collision box (0.2792 m). -->
+
+<robot name="x500">
+
+  <properties arm="0.24607315985291853" kf="9.37456697678494e-08" km="1.4999307162855904e-09" thrust2weight="1.689113625148385" max_speed_kmh="43.2" gnd_eff_coeff="0" prop_radius="0.1396" drag_coeff_xy="8.06428e-05" drag_coeff_z="0" dw_coeff_1="0" dw_coeff_2="0" dw_coeff_3="0" />
+
+  <link name="base_link">
+
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="2.0643076923076924"/>
+      <inertia ixx="0.02166666666666667" ixy="0.0" ixz="0.0" iyy="0.02166666666666667" iyz="0.0" izz="0.04000000000000001"/>
+    </inertial>
+
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.007"/>
+      <geometry>
+        <box size="0.35355339059327373 0.35355339059327373 0.05"/>
+      </geometry>
+      <material name="grey">
+        <color rgba=".3 .3 .3 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.09"/>
+      <geometry>
+        <cylinder radius="0.25" length="0.22"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <link name="prop0_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.174 -0.174 0.06"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="prop0_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="prop0_link"/>
+  </joint>
+
+  <link name="prop1_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.174 -0.174 0.06"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="prop1_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="prop1_link"/>
+  </joint>
+
+  <link name="prop2_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.174 0.174 0.06"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="prop2_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="prop2_link"/>
+  </joint>
+
+  <link name="prop3_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.174 0.174 0.06"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="prop3_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="prop3_link"/>
+  </joint>
+
+  <link name="center_of_mass_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="center_of_mass_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="center_of_mass_link"/>
+  </joint>
+
+</robot>

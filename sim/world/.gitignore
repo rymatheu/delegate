@@ -1,0 +1,3 @@
+# private environment of the camera payload (fly_gorge_qgc.sh makes it with uv: PyAV, NumPy), not shipped
+.venv-video/
+__pycache__/

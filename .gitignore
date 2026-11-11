@@ -1,0 +1,16 @@
+.lake/
+*.olean
+__pycache__/
+*.pyc
+.DS_Store
+# outputs, verification runs, private environments, local copies
+sim/out/
+sim/verify*/
+sim/world/out/
+sim/mavlink/out/
+sim/mavlink/.venv/
+sim/world/.venv-video/
+sim/world/snapshot/
+sim/mavlink/qgc-5.1.5
+sim/world/snapshot*/
+setup.log

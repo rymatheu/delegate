@@ -1,0 +1,17 @@
+# Overlay for flying from the ground with a ground station (sim/fly_qgc.sh, sim/mavlink/test_services.py):
+# load after a vehicle file, e.g. --params params/x500.params --params params/ground.params
+# (the harness's --ground starts the vehicle resting on the ground plane at start.x, start.y).
+
+# The geodetic origin of the NED frame, for the ground station's map: Pikes Peak summit, Colorado
+# (38 deg 50' 26" N, 105 deg 2' 39" W, 4302 m AMSL). Kept as exact integers (deg 1e7, mm); the
+# controller computes its cosine of latitude once at start.
+ORIGIN  38.8405556  -105.0441667  4302
+
+# Vertical speed limits closer to ArduCopter's (WP_SPD_UP 2.5, WP_SPD_DN 1.5 m/s) for takeoffs, RTL and
+# landings from altitude; the vehicle files keep 0.5 m/s for the square missions they were tuned on.
+nav.vMaxZ           1.0
+position.vMaxZ      1.0
+
+# Ground-station failsafe: RTL when QGroundControl is silent for FS_GCS_TIMEOUT s (ArduCopter's
+# default is 0, off).
+FS_GCS_ENABLE       1

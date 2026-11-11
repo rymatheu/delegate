@@ -1,0 +1,3 @@
+# Overlay: run the fixed-gain filters (attitude filter + nav filter) instead of the EKF.
+# Load after a vehicle file: --params params/x500.params --params params/fixed.params
+estimator           fixed

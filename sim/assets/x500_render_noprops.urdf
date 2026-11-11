@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<robot name="x500_render">
+  <link name="base_link">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+    <visual>
+      <origin xyz="0.0 0.0 0.025" rpy="0.0 0.0 3.141592654"/>
+      <geometry><mesh filename="x500_meshes/NXP-HGD-CF.dae" scale="1 1 1"/></geometry>
+      <material name="m0"><color rgba="0.10 0.10 0.11 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.174 0.174 0.032" rpy="0.0 0.0 -0.45"/>
+      <geometry><mesh filename="x500_meshes/5010Base.dae" scale="1 1 1"/></geometry>
+      <material name="m1"><color rgba="0.55 0.55 0.58 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.174 0.174 0.032" rpy="0.0 0.0 -0.45"/>
+      <geometry><mesh filename="x500_meshes/5010Base.dae" scale="1 1 1"/></geometry>
+      <material name="m2"><color rgba="0.55 0.55 0.58 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="0.174 -0.174 0.032" rpy="0.0 0.0 -0.45"/>
+      <geometry><mesh filename="x500_meshes/5010Base.dae" scale="1 1 1"/></geometry>
+      <material name="m3"><color rgba="0.55 0.55 0.58 1"/></material>
+    </visual>
+    <visual>
+      <origin xyz="-0.174 -0.174 0.032" rpy="0.0 0.0 -0.45"/>
+      <geometry><mesh filename="x500_meshes/5010Base.dae" scale="1 1 1"/></geometry>
+      <material name="m4"><color rgba="0.55 0.55 0.58 1"/></material>
+    </visual>
+  </link>
+  <link name="rotor_0">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+    <visual>
+      <origin xyz="0.0 0.0 -0.032" rpy="0.0 0.0 0.0"/>
+      <geometry><mesh filename="x500_meshes/5010Bell.dae" scale="1 1 1"/></geometry>
+      <material name="m5"><color rgba="0.20 0.20 0.22 1"/></material>
+    </visual>
+  </link>
+  <link name="rotor_1">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+    <visual>
+      <origin xyz="0.0 0.0 -0.032" rpy="0.0 0.0 0.0"/>
+      <geometry><mesh filename="x500_meshes/5010Bell.dae" scale="1 1 1"/></geometry>
+      <material name="m6"><color rgba="0.20 0.20 0.22 1"/></material>
+    </visual>
+  </link>
+  <link name="rotor_2">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+    <visual>
+      <origin xyz="0.0 0.0 -0.032" rpy="0.0 0.0 0.0"/>
+      <geometry><mesh filename="x500_meshes/5010Bell.dae" scale="1 1 1"/></geometry>
+      <material name="m7"><color rgba="0.20 0.20 0.22 1"/></material>
+    </visual>
+  </link>
+  <link name="rotor_3">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+    <visual>
+      <origin xyz="0.0 0.0 -0.032" rpy="0.0 0.0 0.0"/>
+      <geometry><mesh filename="x500_meshes/5010Bell.dae" scale="1 1 1"/></geometry>
+      <material name="m8"><color rgba="0.20 0.20 0.22 1"/></material>
+    </visual>
+  </link>
+  <joint name="rotor_0_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rotor_0"/>
+    <origin xyz="0.174 -0.174 0.06" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="rotor_1_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rotor_1"/>
+    <origin xyz="-0.174 0.174 0.06" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="rotor_2_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rotor_2"/>
+    <origin xyz="0.174 0.174 0.06" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="rotor_3_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rotor_3"/>
+    <origin xyz="-0.174 -0.174 0.06" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+</robot>

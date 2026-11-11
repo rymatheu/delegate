@@ -1,0 +1,8 @@
+# Test mission (overlay after params/cf2x.params): the X500 mixed mission scaled by 1/4 horizontally,
+# altitudes 1.0 to 1.5 m. Every transition between leg kinds once (see x500-mixed.params).
+WAYPOINT  1    0     -1.0
+SPLINE    1.5  0.75  -1.25
+SPLINE    1    1.5   -1.5 stop
+SPLINE    0    1.5   -1.5
+WAYPOINT -0.5  0.75  -1.25
+WAYPOINT  0    0     -1.0

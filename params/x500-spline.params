@@ -1,0 +1,8 @@
+# Overlay: the X500 square flown as SPLINE legs (the same four points as params/x500.params; a file
+# with WAYPOINT or SPLINE lines replaces the mission). Each corner is passed at speed on a curve
+# through the waypoint. Load after the vehicle file:
+# --params params/x500.params --params params/x500-spline.params
+SPLINE  4  0  -2
+SPLINE  4  4  -3
+SPLINE  0  4  -3
+SPLINE  0  0  -2

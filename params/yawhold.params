@@ -1,0 +1,4 @@
+# Overlay: hold the initial heading setpoint (setpoint.hc, setpoint.hs) instead of following the path, the
+# behavior of the stack before the heading setpoint. Load after a vehicle file:
+# --params params/x500.params --params params/yawhold.params
+nav.yawBehavior     0

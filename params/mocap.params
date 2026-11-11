@@ -1,0 +1,19 @@
+# Overlay for the noiseless 100 Hz profile (harness `--noise none`): fix period, the
+# navigation-filter gains of pyfc noisy.py `MOCAP_NAV` (position fixes only, no velocity fix
+# gains) and the EKF noise for noiseless sensors. Load after a vehicle file:
+# --params params/cf2x.params --params params/mocap.params
+
+dtFix               0.01                     # s, 100 Hz fixes
+navFilter.alpha     0.2
+navFilter.beta      0.02
+navFilter.kV        0
+navFilter.kB        0
+
+# EKF: the profile's noise is zero; as pyfc EKFParams.from_noise does, each sigma is floored so
+# that R > 0 and Q > 0 (velocity fixes are present in this profile, so R_vel is floored too).
+ekf.gyroNoise       1e-4                     # rad/s: floor (noise 0)
+ekf.accelNoise      1e-3                     # m/s^2: floor (noise 0)
+ekf.posNE           1e-3                     # m: floor (noise 0)
+ekf.posD            1e-3                     # m: floor (noise 0)
+ekf.vel             1e-3                     # m/s: floor (noise 0)
+ekf.heading         1e-3                     # rad: floor (noise 0)

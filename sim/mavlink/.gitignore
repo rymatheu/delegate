@@ -1,0 +1,7 @@
+# private test environment and outputs (not shipped)
+.venv/
+.gen/
+out/
+__pycache__/
+# read-only export of QGroundControl v5.1.5 sources (git archive v5.1.5 src), for reference
+qgc-5.1.5/
