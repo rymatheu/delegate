@@ -2,7 +2,7 @@
 """A full scripted flight of the gorge session from the ground, video on: the plan file uploaded and
 started as QGroundControl 5.1.5 does it, the gorge flown, the landing and the disarm.
 
-    /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/world/test_gorge_flight.py [--seed 0] [--noise field] [--wind MEAN GUST]
+    sim/.venv/bin/python sim/world/test_gorge_flight.py [--seed 0] [--noise field] [--wind MEAN GUST]
         [--out sim/world/out/test-flight]
 
 Starts `sh sim/world/fly_gorge_qgc.sh` (real time, its own ports: ground station 14592, tiles 8797,

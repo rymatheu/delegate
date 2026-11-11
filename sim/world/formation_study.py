@@ -18,7 +18,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-PY = "/Users/ryan/Research/cpp2lean/sim/.venv/bin/python"
+PY = __import__("os").environ.get("LEANFC_PY") or str(Path(__file__).resolve().parents[2] / "sim" / ".venv" / "bin" / "python")
 WINDS = [None, (4, 1), (6, 2), (-6, 2)]
 SKEWS = [-10, -5, -3, -2, -1, 1, 2, 3, 5, 10]
 

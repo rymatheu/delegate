@@ -2,7 +2,7 @@
 """A full scripted flight of the formation session: two vehicles, two plans, from the ground to touchdown,
 with both camera payloads streaming.
 
-    /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/world/test_formation_flight.py --plan abreast|staggered
+    sim/.venv/bin/python sim/world/test_formation_flight.py --plan abreast|staggered
         [--seed 0] [--noise field] [--wind MEAN GUST] [--skew S] [--out DIR]
 
 Starts `sh sim/world/fly_formation_qgc.sh` (real time) on its own ports, never the defaults (ground station

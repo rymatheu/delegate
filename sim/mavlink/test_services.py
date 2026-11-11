@@ -66,7 +66,7 @@ import apm2  # noqa: E402
 
 M = apm2
 RESULTS = []
-SIM_PY = "/Users/ryan/Research/cpp2lean/sim/.venv/bin/python"
+SIM_PY = os.environ.get("LEANFC_PY") or str(__import__("pathlib").Path(__file__).resolve().parents[2] / "sim" / ".venv" / "bin" / "python")
 
 
 def report(name, ok, detail=""):

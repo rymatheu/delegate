@@ -17,7 +17,7 @@
 #   PLAN=staggered sh sim/world/fly_formation_qgc.sh           # vehicle 2 behind, flying backward (rear view)
 #   WIND="4 1" NOISE=none SEED=3 VIDEO=off RGB=320x240@15 RGB_WORKERS=1 sh sim/world/fly_formation_qgc.sh
 cd "$(dirname "$0")/../.." || exit 1
-PY=${PY:-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python}
+PY=${PY:-sim/.venv/bin/python}
 VPY=sim/world/.venv-video/bin/python
 PLAN=${PLAN:-abreast}
 NOISE=${NOISE:-field}

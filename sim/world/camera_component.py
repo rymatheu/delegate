@@ -70,7 +70,7 @@ import av
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
-SIM_PY = "/Users/ryan/Research/cpp2lean/sim/.venv/bin/python"
+SIM_PY = os.environ.get("LEANFC_PY") or str(Path(__file__).resolve().parents[2] / "sim" / ".venv" / "bin" / "python")
 POSE_FMT = struct.Struct("<Idd3d4d")      # gorge_session.POSE_FMT
 REQ, REP = struct.Struct("<I3d4d"), struct.Struct("<Id")   # camera_render.REQ, REP
 SEI_UUID = uuid.uuid5(uuid.NAMESPACE_URL, "leanfc/sim/world/camera_component").bytes

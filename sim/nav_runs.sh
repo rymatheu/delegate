@@ -5,7 +5,7 @@
 # with a stop mark; WAYPOINT, SPLINE, SPLINE collinear). CSV + JSON in sim/out/flythrough/, tables by
 # sim/nav_tables.py. Runs JOBS (default 4) simulations at a time.
 cd "$(dirname "$0")/.." || exit 1
-PY=${PY:-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python}
+PY=${PY:-sim/.venv/bin/python}
 OUT=sim/out/flythrough
 mkdir -p $OUT
 {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Flight metrics of a ground-start run (sim/run_leanfc.py --ground --trace-vehicle), one line per flight.
 
-    /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/mavlink/flight_metrics.py OUT_DIR [OUT_DIR ...]
+    sim/.venv/bin/python sim/mavlink/flight_metrics.py OUT_DIR [OUT_DIR ...]
     ... flight_metrics.py --summary DET_DIR FIELD_DIR [FIELD_DIR ...]   (a markdown table: the deterministic
         run, then mean / worst over the field runs, per flight)
 

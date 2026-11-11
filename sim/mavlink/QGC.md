@@ -26,7 +26,7 @@ What this checklist rests on:
 1. Build once and start the simulation (it builds if needed):
 
    ```
-   cd /Users/ryan/Research/leanfc
+   # from the repository root
    sh sim/fly_qgc.sh
    ```
 

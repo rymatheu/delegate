@@ -10,7 +10,7 @@
 cd "$(dirname "$0")/.." || exit 1
 VEHICLE=${VEHICLE:-x500}
 NOISE=${NOISE:-field}
-PY=${PY:-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python}
+PY=${PY:-sim/.venv/bin/python}
 LEAN_NUM_THREADS=1 lake build leanfc >/dev/null || { echo "lake build failed"; exit 1; }
 mkdir -p sim/out/qgc
 echo "leanfc: $VEHICLE on the ground at Pikes Peak (params/ground.params), noise $NOISE, real time."

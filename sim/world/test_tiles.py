@@ -1,7 +1,7 @@
 """Test of the map tile server (tile_server.py): tiles at every zoom, the georeference against
 QGroundControl's tile arithmetic, and mosaics.
 
-    /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/world/test_tiles.py [--out sim/world/out/test-tiles]
+    sim/.venv/bin/python sim/world/test_tiles.py [--out sim/world/out/test-tiles]
 
 Starts tile_server.py on a test port (the default ORIGIN of params/ground.params) and fetches with
 urllib:

@@ -82,7 +82,7 @@ def main():
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     vlog = os.path.join(a.out, "vehicle.log")
-    veh = subprocess.Popen(["/Users/ryan/Research/cpp2lean/sim/.venv/bin/python", os.path.join(ROOT, "sim", "run_leanfc.py"),
+    veh = subprocess.Popen([os.environ.get("LEANFC_PY") or os.path.join(ROOT, "sim", ".venv", "bin", "python"), os.path.join(ROOT, "sim", "run_leanfc.py"),
                             "--params", f"params/{a.vehicle}.params", "--params", "params/ground.params",
                             "--noise", a.noise, "--ground", "--mav", "--realtime", "1", "--trace-vehicle",
                             "--seconds", str(a.seconds + 60), "--mav-log", vlog,

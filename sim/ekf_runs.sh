@@ -7,7 +7,7 @@
 # sim/out/ekf-stopping/), tables by sim/ekf_tables.py. Runs JOBS (default 3) simulations at a time; EST
 # (default "fixed ekf") limits the estimators.
 cd "$(dirname "$0")/.." || exit 1
-PY=${PY:-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python}
+PY=${PY:-sim/.venv/bin/python}
 OUT=sim/out/ekf
 mkdir -p $OUT
 {

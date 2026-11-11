@@ -13,7 +13,7 @@ Reads a leanfc parameter file (params/*.params) and prints, for its vehicle:
   (FloatLib's `OfScientific` is round-to-nearest-even, as numpy's float32 conversion). `Checks.hoverCf2x`
   and `Checks.hoverX500` are these values.
 
-Run: /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/mixer_inverse.py params/cf2x.params params/x500.params
+Run: sim/.venv/bin/python sim/mixer_inverse.py params/cf2x.params params/x500.params
 """
 import sys
 from pathlib import Path

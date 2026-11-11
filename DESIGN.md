@@ -228,7 +228,7 @@ m g / (4 T_max): 1/2.25 for the CF2X and 0.592 for the X500.
   `ExecFloat.Binary.ofFloat`/`toFloat` cross to binary64.
 - **Speed.** Software binary32 operations cost 20 to 100 ns each. A 30 s X500 mission at 400 Hz runs
   in about 4 s, controller and PyBullet together.
-- **Python.** `/Users/ryan/Research/cpp2lean/sim/.venv/bin/python`; build with
+- **Python.** `sim/.venv/bin/python`; build with
   `LEAN_NUM_THREADS=1 lake build`.
 
 ## Acceptance

@@ -6,7 +6,7 @@ line per 400 Hz tick) is fed open loop to both filters:
 
 - Lean: `leanfc --params ... --ekf-only --calibrate N`, which prints its derived constants, the state
   after calibration and the whole state (q, omega, p, v, bg, ba, P) after every tick as binary32 hex words;
-- Python: `pyfc.ekf.EKF` imported read-only from /Users/ryan/Research/delegate/staging/pyfc (no bytecode
+- Python: `pyfc.ekf.EKF` imported read-only from $PYFC_DIR (the Python prototype, not part of this repository) (no bytecode
   is written there), with `EKFParams` set to the Lean file's binary32 parameter values.
 
 The inputs are rounded to binary32 once, here, and the Lean side is sent the shortest decimal of each
@@ -29,7 +29,7 @@ from pathlib import Path
 import numpy as np
 
 sys.dont_write_bytecode = True        # write nothing into the pyfc tree
-sys.path.insert(0, "/Users/ryan/Research/delegate/staging/pyfc")
+sys.path.insert(0, __import__("os").environ.get("PYFC_DIR", "pyfc"))   # the Python prototype, not part of this repository
 from pyfc.ekf import EKF, EKFParams   # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent

@@ -100,13 +100,39 @@ On top of the true state, the sensor layer makes these readings:
 The bias directions are constant for a run, and all noise is drawn from
 `numpy.random.default_rng(seed)`. The noise levels are pyfc's `Noise` defaults.
 
+## Set up on a new machine
+
+Requirements: [elan](https://github.com/leanprover/elan) (it installs the Lean toolchain named in
+`lean-toolchain`), a C compiler, git, and for the simulation Python 3.12 (with
+[uv](https://github.com/astral-sh/uv), or with `venv` and `pip`). QGroundControl 5.1.5 is only needed for
+the ground-station sessions. Everything was developed on macOS (Apple silicon).
+
+```
+git clone -b leanfc git@github.com:rymatheu/delegate.git leanfc && cd leanfc
+lake exe cache get                      # prebuilt Mathlib; the versions are pinned in lake-manifest.json
+LEAN_NUM_THREADS=1 lake build           # FloatLib and DynamicalSystems build from source (several minutes)
+.lake/build/bin/leanfc --check --params params/x500.params
+sh sim/setup.sh                         # the three Python environments (sim/requirements.txt and two more)
+sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --noise none --out sim/out/run/x500-det.csv
+```
+
+Do not run `lake update`: it moves the pinned versions. The scripts find the simulator's Python at
+`sim/.venv/bin/python`; `PY` (shell scripts) or `LEANFC_PY` (Python scripts) names another one. Outputs go
+to `sim/out/`, `sim/world/out/` and `sim/mavlink/out/`, which are not tracked. Two tools need material that
+is not in this repository and are not needed to build or fly: `sim/mavlink/gen_messages.py` regenerates
+`Leanfc/Mavlink/Messages.lean` from a clone of the MAVLink definitions (`MAVLINK_DEFS`), and
+`sim/ekf_parity.py` compares the EKF with the Python prototype (`PYFC_DIR`). The controller is software
+floating point and gives the same bits on every machine; the simulator's physics is native double precision
+and may differ in the last digits between platforms, so flights on another machine need not match the
+README's numbers exactly.
+
 ## Build and run
 
 ```
-cd /Users/ryan/Research/leanfc
+# from the repository root
 LEAN_NUM_THREADS=1 lake build
 LEAN_NUM_THREADS=1 lake exe leanfc --check
-PY=/Users/ryan/Research/cpp2lean/sim/.venv/bin/python
+PY=sim/.venv/bin/python
 $PY sim/run_leanfc.py --vehicle x500 --noise none --out sim/out/run/x500-det.csv
 $PY sim/analyze.py sim/out/run/x500-det.csv --plot sim/out/run/x500-det.png
 $PY sim/run_leanfc.py --vehicle x500 --noise field --seed 0 --out sim/out/run/x500-field0.csv
@@ -1097,7 +1123,7 @@ The merged tree has no stand-in and no `leanfc-mav`: the protocol test drivers (
 simulation.
 
 ```
-cd /Users/ryan/Research/leanfc
+# from the repository root
 LEAN_NUM_THREADS=1 lake build
 sh sim/fly_qgc.sh                                    # the simulation from the ground; then open QGroundControl
 .lake/build/bin/leanfc --selftest --params params/x500.params
@@ -1105,7 +1131,7 @@ sh sim/fly_qgc.sh                                    # the simulation from the g
 cd sim/mavlink && uv venv .venv && uv pip install --python .venv/bin/python pymavlink && cd ../..
 sim/mavlink/.venv/bin/python sim/mavlink/test_codec.py          # Lean codec against pymavlink
 sim/mavlink/.venv/bin/python sim/mavlink/test_services.py       # QGroundControl's sequences against the real controller
-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/mavlink/flight_metrics.py sim/mavlink/out/services-x500-none
+sim/.venv/bin/python sim/mavlink/flight_metrics.py sim/mavlink/out/services-x500-none
 sim/mavlink/.venv/bin/python sim/mavlink/run_qgc.py --seconds 100 --out sim/mavlink/out/qgc-real1   # the real app
 python3 sim/mavlink/gen_messages.py                              # regenerate Leanfc/Mavlink/Messages.lean
 ```

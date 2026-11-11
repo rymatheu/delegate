@@ -12,7 +12,7 @@ Physics: gym-pybullet-drones `CtrlAviary` with `Physics.PYB` (PyBullet rigid bod
 effect or downwash), 1200 Hz physics under a 400 Hz control step (3 substeps), gravity 9.80665, set
 up as the cpp2lean harness does: the initial placement, the reset (no PyBullet velocity damping), the
 actuator -> RPM map (RPM = MAX_RPM sqrt(m), slot map SLOT_TO_SIM) and the state extraction are
-imported unmodified from /Users/ryan/Research/cpp2lean/sim/run_copter.py (`place`, `reset_env`,
+imported from sim/run_copter.py, an unmodified copy of the cpp2lean project's harness helpers (`place`, `reset_env`,
 `actuators_to_rpm`, `sim_state`, `SpecificForce`, `enu_state_to_ned`, `quat_ned_frd`); `make_env`
 below repeats its `make_env` with our aviary class.
 
@@ -73,8 +73,8 @@ the wall clock (SPEED 1: real time, 2: twice as fast); `--mav` gives the control
 station can fly it. `--trace-vehicle` adds the vehicle layer's mode, armed, landed state and mission item
 to every row (columns `mode armed landed item`). SIGTERM or Ctrl-C ends the run and writes the CSV.
 
-Run: /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --noise field --seed 0 --out sim/out/run/x500-field0.csv
-     /Users/ryan/Research/cpp2lean/sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --motor-test
+Run: sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --noise field --seed 0 --out sim/out/run/x500-field0.csv
+     sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --motor-test
 """
 import argparse
 import contextlib
@@ -93,8 +93,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.dont_write_bytecode = True   # write nothing into the cpp2lean tree
-sys.path.insert(0, "/Users/ryan/Research/cpp2lean/sim")
+sys.path.insert(0, str(ROOT / "sim"))   # run_copter.py, copied from the cpp2lean project
 from run_copter import (place, reset_env, actuators_to_rpm, sim_state, SpecificForce,  # noqa: E402
                         enu_state_to_ned, quat_ned_frd, GRAVITY_MSS, SIM_DIR, SLOT_TO_SIM)
 warnings.filterwarnings("ignore", module="gymnasium")

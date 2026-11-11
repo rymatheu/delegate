@@ -5,7 +5,7 @@ Usage (from the repository root):
 
     python3 sim/mavlink/gen_messages.py [--xml DIR] [--out Leanfc/Mavlink/Messages.lean]
 
-DIR defaults to /Users/ryan/Research/delegate/mavlink/message_definitions/v1.0 (the MAVLink
+DIR defaults to $MAVLINK_DEFS, else mavlink/message_definitions/v1.0 (the MAVLink
 protocol repository); the dialect read is ardupilotmega.xml with its includes (common.xml,
 standard.xml, minimal.xml, ...). Only the messages named in MESSAGES are emitted.
 
@@ -25,7 +25,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-DEFAULT_XML = "/Users/ryan/Research/delegate/mavlink/message_definitions/v1.0"
+DEFAULT_XML = os.environ.get("MAVLINK_DEFS", "mavlink/message_definitions/v1.0")   # a clone of github.com/mavlink/mavlink
 
 # The supported messages. Keep in sync with README.md ("MAVLink interface").
 MESSAGES = [

@@ -14,3 +14,4 @@ sim/world/snapshot/
 sim/mavlink/qgc-5.1.5
 sim/world/snapshot*/
 setup.log
+sim/.venv

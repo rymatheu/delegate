@@ -43,8 +43,8 @@ imported unmodified.
 ## How to run
 
 ```
-PY=/Users/ryan/Research/cpp2lean/sim/.venv/bin/python
-cd /Users/ryan/Research/leanfc/sim/world
+PY=sim/.venv/bin/python
+cd sim/world          # from the repository root
 $PY -B gorge.py                       # build seed 7, write assets/, print the world summary and corridor clearance
 $PY -B sensors.py                     # self-test: texel pass-through of the thermal twin, band radiance, camera cost
 $PY -B fly_gorge.py --out out/main    # the camera flight (field noise, no wind): flight.csv/json, cams_*.npz, detections.md
@@ -343,8 +343,8 @@ staggered plan look behind the formation. Field noise, seed 0, no wind (the batc
 `out/formation/study/abreast-field-s0-off` and `staggered-field-s0-off`).
 
 ```
-PY=/Users/ryan/Research/cpp2lean/sim/.venv/bin/python
-cd /Users/ryan/Research/leanfc/sim/world
+PY=sim/.venv/bin/python
+cd sim/world          # from the repository root
 $PY -B formation_plan.py --sweep                                # the offsets study (nominal geometry)
 $PY -B formation_plan.py                                        # plan files and overlays -> out/formation/plans/
 $PY -B formation.py --self-check                                # FormationAviary with 1 vehicle = GorgeAviary, bit for bit

@@ -17,7 +17,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-PY = "/Users/ryan/Research/cpp2lean/sim/.venv/bin/python"
+PY = __import__("os").environ.get("LEANFC_PY") or str(Path(__file__).resolve().parents[2] / "sim" / ".venv" / "bin" / "python")
 
 
 def jobs(which, seeds):

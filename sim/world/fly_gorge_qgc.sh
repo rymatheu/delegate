@@ -16,7 +16,7 @@
 #   ORIGIN="46.5576 7.8350 2061" sh sim/world/fly_gorge_qgc.sh  # another geodetic origin (default: ground.params)
 #   NOISE=none SEED=3 VIDEO=off RGB=320x240@20 RGB_WORKERS=1 sh sim/world/fly_gorge_qgc.sh
 cd "$(dirname "$0")/../.." || exit 1
-PY=${PY:-/Users/ryan/Research/cpp2lean/sim/.venv/bin/python}
+PY=${PY:-sim/.venv/bin/python}
 VPY=sim/world/.venv-video/bin/python
 NOISE=${NOISE:-field}
 SEED=${SEED:-0}

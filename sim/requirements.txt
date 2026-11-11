@@ -1,0 +1,9 @@
+# The simulator environment (sim/.venv), Python 3.12. Versions are those the flights in the README were made with.
+numpy==2.5.4
+scipy==1.18.1
+pybullet==3.2.7
+gymnasium==1.4.0
+transforms3d==0.4.2
+matplotlib==3.11.2
+pillow==13.0.0
+gym-pybullet-drones @ https://github.com/utiasDSL/gym-pybullet-drones/archive/15c426c85ac8e7a5db66d8b100f48858133357f6.zip
