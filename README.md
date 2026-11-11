@@ -100,6 +100,29 @@ On top of the true state, the sensor layer makes these readings:
 The bias directions are constant for a run, and all noise is drawn from
 `numpy.random.default_rng(seed)`. The noise levels are pyfc's `Noise` defaults.
 
+## Gallery
+
+Two X500s through the gorge, each flown by its own `leanfc` controller (`sim/world/README.md`, "Two vehicles
+in formation"). The panels under each view are the two onboard cameras, RGB and thermal. Both were rendered
+before the start and landing sites were moved onto level ground, so the first and last seconds differ
+slightly from the current plans.
+
+Staggered, the rear vehicle flying nose-backward so its camera looks behind:
+
+![staggered formation](gallery/formation-staggered.gif)
+
+Side by side, both facing forward:
+
+![abreast formation](gallery/formation-abreast.gif)
+
+One vehicle on the spline route, and the world: [gorge-flight.webp](gallery/gorge-flight.webp),
+[overview.png](gallery/overview.png), [oblique.png](gallery/oblique.png),
+[onboard-rgb.png](gallery/onboard-rgb.png), [onboard-thermal.png](gallery/onboard-thermal.png).
+
+To fly either formation from QGroundControl: `PLAN=staggered sh sim/world/fly_formation_qgc.sh`, then the
+steps in [sim/mavlink/QGC.md](sim/mavlink/QGC.md), "The formation session: two vehicles, two plans" (upload
+one plan per vehicle, then Select All, Arm and Start in the Multi-Vehicle panel).
+
 ## Set up on a new machine
 
 Requirements: [elan](https://github.com/leanprover/elan) (it installs the Lean toolchain named in
