@@ -7,10 +7,16 @@
 #     plan's overlay per vehicle), MAVLink systems 1 and 2, both to QGroundControl's UDP port 14550
 #     (sim/world/formation.py --session); vehicle 2 of the staggered plan has nav.yawReverse 1;
 #   - a camera payload per vehicle, MAVLink components 1/100 and 2/100, RTP/H.264 RGB and thermal streams:
-#     vehicle 1 to UDP 5600 and 5602, vehicle 2 to 5604 and 5606 (sim/world/camera_component.py);
+#     vehicle 1 to UDP 5600 and 5602, vehicle 2 to 5604 and 5606 (sim/world/camera_component.py); by default
+#     (VIDEO_SWITCH=on) both RGB streams use 5600 and only the active vehicle's is sent: QGroundControl stops
+#     one camera's stream and starts the other's when the active vehicle changes, so its video follows it;
 #   - the map tile server on http://127.0.0.1:8765/{z}/{x}/{y}.png (sim/world/tile_server.py).
-# Writes the two plan files, OUT/plans/formation-PLAN-v1.plan (upload to vehicle 1) and -v2.plan (vehicle 2).
-# Then open QGroundControl (manual steps in sim/mavlink/QGC.md). Ctrl-C ends everything; outputs in
+# Each vehicle boots with its complete mission onboard (takeoff, its route as spline waypoints, land at its
+# land site: the TAKEOFF, SPLINE and LAND lines of its overlay OUT/plans/formation-PLAN-vN-ground.params), as an
+# ArduCopter boots with the mission in its storage, so Start Mission works without an upload. The same missions
+# are written as plan files, OUT/plans/formation-PLAN-v1.plan (vehicle 1) and -v2.plan (vehicle 2); uploading
+# them is optional (each replaces its vehicle's onboard mission). Then open QGroundControl (manual steps in
+# sim/mavlink/QGC.md). Ctrl-C ends everything; outputs in
 # sim/world/out/formation/qgc/ (formation.csv, v1.csv, v2.csv, vehicle1.log, vehicle2.log, camera*.json, plans/).
 #
 #   PLAN=abreast sh sim/world/fly_formation_qgc.sh             # side by side, both noses forward (default)
@@ -23,9 +29,12 @@ PLAN=${PLAN:-abreast}
 NOISE=${NOISE:-field}
 SEED=${SEED:-0}
 VIDEO=${VIDEO:-on}
+VIDEO_SWITCH=${VIDEO_SWITCH:-on}   # on: both RGB streams on RGB_PORT1, only the active vehicle's is sent
 RGB=${RGB:-640x480@10}
-RGB_WORKERS=${RGB_WORKERS:-2}
+RGB_WORKERS=${RGB_WORKERS:-2}     # per vehicle; live level of detail: about 150 ms per 640 x 480 frame under load (out/redesign/bench.py)
 THERMAL_FPS=${THERMAL_FPS:-8.7}
+THERMAL_LOD=${THERMAL_LOD:-2}     # the live level of detail (camera_render.py --lod 2): thermal rendered at 320 x 256, about 50 ms
+THERMAL_WORKERS=${THERMAL_WORKERS:-1}     # 2 vehicles x (2 RGB + 1 thermal) = 6 render processes
 GCS_PORT=${GCS_PORT:-14550}
 TILES_PORT=${TILES_PORT:-8765}
 POSE_PORT1=${POSE_PORT1:-14601}
@@ -66,13 +75,17 @@ PIDS="$!"
 POSES="--pose-ports $POSE_PORT1 $POSE_PORT2"
 if [ "$VIDEO" = on ]; then
   L2="V2 forward"
+  G1=""; G2=""
+  if [ "$VIDEO_SWITCH" = on ]; then G1="--rgb-gated on"; G2="--rgb-gated off"; RGB_PORT2=$RGB_PORT1; fi
   [ "$PLAN" = staggered ] && L2="V2 rear-view"
   "$VPY" sim/world/camera_component.py --sysid 1 --label "V1 forward" --gcs "127.0.0.1:$GCS_PORT" --pose-port "$POSE_PORT1" \
-    --rgb "$RGB" --rgb-workers "$RGB_WORKERS" --thermal-fps "$THERMAL_FPS" --rgb-port "$RGB_PORT1" --thermal-port "$THERMAL_PORT1" \
+    --rgb "$RGB" --rgb-workers "$RGB_WORKERS" --thermal-fps "$THERMAL_FPS" --rgb-port "$RGB_PORT1" --thermal-port "$THERMAL_PORT1" $G1 \
+    --thermal-lod "$THERMAL_LOD" --thermal-workers "$THERMAL_WORKERS" \
     --seed "$SEED" --stats "$OUT/camera1.json" --log "$OUT/camera1.log" > "$OUT/camera1.out" 2>&1 &
   PIDS="$PIDS $!"
   "$VPY" sim/world/camera_component.py --sysid 2 --label "$L2" --gcs "127.0.0.1:$GCS_PORT" --pose-port "$POSE_PORT2" \
-    --rgb "$RGB" --rgb-workers "$RGB_WORKERS" --thermal-fps "$THERMAL_FPS" --rgb-port "$RGB_PORT2" --thermal-port "$THERMAL_PORT2" \
+    --rgb "$RGB" --rgb-workers "$RGB_WORKERS" --thermal-fps "$THERMAL_FPS" --rgb-port "$RGB_PORT2" --thermal-port "$THERMAL_PORT2" $G2 \
+    --thermal-lod "$THERMAL_LOD" --thermal-workers "$THERMAL_WORKERS" \
     --seed "$((SEED + 100))" --stats "$OUT/camera2.json" --log "$OUT/camera2.log" > "$OUT/camera2.out" 2>&1 &
   PIDS="$PIDS $!"
 else
@@ -82,6 +95,6 @@ trap 'kill $PIDS 2>/dev/null' EXIT INT TERM
 echo "leanfc formation: plan $PLAN, two x500s on the gorge floor, systems 1 and 2 -> 127.0.0.1:$GCS_PORT, noise $NOISE, seed $SEED, wind ${WIND:-off}, video $VIDEO, real time."
 echo "Video: vehicle 1 RGB $RGB_PORT1 thermal $THERMAL_PORT1; vehicle 2 RGB $RGB_PORT2 thermal $THERMAL_PORT2 (QGroundControl's main view listens on its UDP URL setting, 5600 by default)."
 echo "Map: QGroundControl Application Settings > Maps > Provider CustomURL, Type Custom; Server URL http://127.0.0.1:$TILES_PORT/{z}/{x}/{y}.png"
-echo "Plans: $OUT/plans/formation-$PLAN-v1.plan (vehicle 1) and $OUT/plans/formation-$PLAN-v2.plan (vehicle 2). Ctrl-C here ends the session."
+echo "Missions onboard (takeoff, route, land) on both vehicles: Start Mission works with no upload. Same items as plan files (optional upload): $OUT/plans/formation-$PLAN-v1.plan (vehicle 1) and $OUT/plans/formation-$PLAN-v2.plan (vehicle 2). Ctrl-C here ends the session."
 "$PY" -B sim/world/formation.py --session --plan "$PLAN" ${WIND:+--wind $WIND} $POSES --mav-port "$GCS_PORT" $ORIG \
   --noise "$NOISE" --seed "$SEED" --seconds "$SECONDS_MAX" --out "$OUT" "$@"

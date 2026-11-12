@@ -103,25 +103,31 @@ The bias directions are constant for a run, and all noise is drawn from
 ## Gallery
 
 Two X500s through the gorge, each flown by its own `leanfc` controller (`sim/world/README.md`, "Two vehicles
-in formation"). The panels under each view are the two onboard cameras, RGB and thermal. Both were rendered
-before the start and landing sites were moved onto level ground, so the first and last seconds differ
-slightly from the current plans.
+in formation"). The panels under each view are the two onboard cameras, RGB and thermal. Each picture below is
+one frame of the flight and links to the whole flight as a video (H.264, 20 frames per second, real speed).
 
 Staggered, the rear vehicle flying nose-backward so its camera looks behind:
 
-![staggered formation](gallery/formation-staggered.gif)
+[![staggered formation](gallery/formation-staggered-still.png)](gallery/formation-staggered.mp4)
 
 Side by side, both facing forward:
 
-![abreast formation](gallery/formation-abreast.gif)
+[![abreast formation](gallery/formation-abreast-still.png)](gallery/formation-abreast.mp4)
 
-One vehicle on the spline route, and the world: [gorge-flight.webp](gallery/gorge-flight.webp),
-[overview.png](gallery/overview.png), [oblique.png](gallery/oblique.png),
-[onboard-rgb.png](gallery/onboard-rgb.png), [onboard-thermal.png](gallery/onboard-thermal.png).
+The gorge (generated from a seed by `sim/world/gorge.py`: basalt walls, talus, a dry wash, boulders, eight
+small fires), seen from inside:
+
+![the gorge from the south](gallery/oblique.png)
+
+More of the world and of the two cameras: [overview.png](gallery/overview.png) (from above),
+[gorge-floor.png](gallery/gorge-floor.png), [fire.png](gallery/fire.png),
+[onboard-rgb.png](gallery/onboard-rgb.png), [onboard-thermal.png](gallery/onboard-thermal.png),
+[thermal-fire.png](gallery/thermal-fire.png), [thermal-aerial.png](gallery/thermal-aerial.png).
 
 To fly either formation from QGroundControl: `PLAN=staggered sh sim/world/fly_formation_qgc.sh`, then the
-steps in [sim/mavlink/QGC.md](sim/mavlink/QGC.md), "The formation session: two vehicles, two plans" (upload
-one plan per vehicle, then Select All, Arm and Start in the Multi-Vehicle panel).
+steps in [sim/mavlink/QGC.md](sim/mavlink/QGC.md), "The formation session: two vehicles, two plans" (each
+vehicle boots with its own mission, so nothing has to be uploaded: Select All, Arm and Start in the
+Multi-Vehicle panel).
 
 ## Set up on a new machine
 
@@ -135,13 +141,15 @@ git clone -b leanfc git@github.com:rymatheu/delegate.git leanfc && cd leanfc
 lake exe cache get                      # prebuilt Mathlib; the versions are pinned in lake-manifest.json
 LEAN_NUM_THREADS=1 lake build           # FloatLib and DynamicalSystems build from source (several minutes)
 .lake/build/bin/leanfc --check --params params/x500.params
-sh sim/setup.sh                         # the three Python environments (sim/requirements.txt and two more)
+sh sim/setup.sh                         # the three Python environments, then the gorge world (about 3 minutes, once)
 sim/.venv/bin/python sim/run_leanfc.py --vehicle x500 --noise none --out sim/out/run/x500-det.csv
 ```
 
 Do not run `lake update`: it moves the pinned versions. The scripts find the simulator's Python at
 `sim/.venv/bin/python`; `PY` (shell scripts) or `LEANFC_PY` (Python scripts) names another one. Outputs go
-to `sim/out/`, `sim/world/out/` and `sim/mavlink/out/`, which are not tracked. Two tools need material that
+to `sim/out/`, `sim/world/out/` and `sim/mavlink/out/`, which are not tracked. The gorge world's meshes and
+textures (`sim/world/assets/`, about 300 MB) are not tracked either: `sim/world/gorge.py` generates them from
+the seed. Two tools need material that
 is not in this repository and are not needed to build or fly: `sim/mavlink/gen_messages.py` regenerates
 `Leanfc/Mavlink/Messages.lean` from a clone of the MAVLink definitions (`MAVLINK_DEFS`), and
 `sim/ekf_parity.py` compares the EKF with the Python prototype (`PYFC_DIR`). The controller is software

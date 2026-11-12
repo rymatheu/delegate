@@ -3,7 +3,7 @@
 with both camera payloads streaming.
 
     sim/.venv/bin/python sim/world/test_formation_flight.py --plan abreast|staggered
-        [--seed 0] [--noise field] [--wind MEAN GUST] [--skew S] [--out DIR]
+        [--seed 0] [--noise field] [--wind MEAN GUST] [--skew S] [--no-upload] [--out DIR]
 
 Starts `sh sim/world/fly_formation_qgc.sh` (real time) on its own ports, never the defaults (ground station
 14593, tiles 8799, poses 14604 and 14606, video 5610/5612 for vehicle 1 and 5614/5616 for vehicle 2); it
@@ -15,16 +15,18 @@ each Vehicle: the stream requests (REQUEST_DATA_STREAM to that system), the plan
 (formation-PLAN-vK.plan to system K: home as item 0, then each item as MISSION_ITEM_INT), and Start
 Mission from the ground (GUIDED, arm, MISSION_START). `--skew S`: vehicle 2's start sequence begins S s
 after vehicle 1's (S < 0: before); with 0 both sequences run interleaved, as QGroundControl's
-multi-vehicle Start runs one vehicle after the other.
+multi-vehicle Start runs one vehicle after the other. `--no-upload`: nothing is uploaded; each vehicle's
+onboard mission (the one it booted with) is downloaded as QGroundControl does at connect and compared
+with its plan file (test_gorge_flight.compare_mission), then started as is.
 
 Steps (PASS or FAIL): both vehicles ready to fly; both plans uploaded (MISSION_ACK ACCEPTED, each from
 its own system); each Start Mission: AUTO; per vehicle the landed states ON_GROUND, TAKEOFF, IN_AIR,
-LANDING, ON_GROUND and MISSION_CURRENT / MISSION_ITEM_REACHED 1..11 in order, landed and disarmed; no
+LANDING, ON_GROUND and MISSION_CURRENT / MISSION_ITEM_REACHED 1..n in order (n the plan's items), landed and disarmed; no
 contact between the vehicles; no contact of either with terrain or boulders in the air; the separation
 (centre to centre, simulator truth, every tick) never below 1.0 m while either is in the air; each
 vehicle's clearance in the air at least 0.8 m; video frames received equal frames sent on all four
 streams (within the frames in flight at the end). Then the numbers: separation min / mean / max (both
-in the air; on the route: both on spline items 2..10), its deviation from nominal, the start skew
+in the air; on the route: both on spline items 2..n-1), its deviation from nominal, the start skew
 measured from the two controllers' records, tracking, the rear vehicle's heading against its direction
 of travel, touchdown, frames, real-time factor.
 """
@@ -50,7 +52,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import test_services as TS  # noqa: E402
 import geo  # noqa: E402
-from test_gorge_flight import count_frames, report  # noqa: E402
+from test_gorge_flight import count_frames, report, download, compare_mission  # noqa: E402
 M = TS.M                                  # pymavlink's generated dialect (sim/mavlink/.gen/apm2.py)
 
 PORTS = dict(GCS_PORT=14593, TILES_PORT=8799, POSE_PORT1=14604, POSE_PORT2=14606,
@@ -160,6 +162,14 @@ class Vehicle:
                                              q[0], q[1], q[2], q[3], int(round(q[4] * 1e7)), int(round(q[5] * 1e7)), q[6], 0)
         return None
 
+    def download(self):
+        """The onboard mission, as MissionManager downloads it at connect (item 0 is home)."""
+        mav = self.l.mav
+        return download(self.l, lambda types, cond, t: self.l.wait(self.id, types, cond, t),
+                        lambda q: mav.mission_request_list_send(self.id, 1, 0) if q is None
+                        else mav.mission_request_int_send(self.id, 1, q, 0),
+                        lambda: mav.mission_ack_send(self.id, 1, 0, 0, 0))
+
     def set_mode(self, mode):
         for _ in range(3):
             self.l.command_long(self.id, 176, 1, mode)
@@ -245,7 +255,8 @@ def analyze(out, plan_files, lines, vres, plan_name):
     air = [x == 2 for x in landed]
     either = flying[0] | flying[1]
     both = air[0] & air[1]
-    route = both & (item[0] >= 2) & (item[0] <= 10) & (item[1] >= 2) & (item[1] <= 10)
+    last = len(json.loads(Path(plan_files[0]).read_text())["mission"]["items"]) - 1    # the last spline item
+    route = both & (item[0] >= 2) & (item[0] <= last) & (item[1] >= 2) & (item[1] <= last)
     nominal = fj["nominal_distance"]
     dist = f["dist"]
     res = {}
@@ -268,7 +279,7 @@ def analyze(out, plan_files, lines, vres, plan_name):
                              route=dict(min=float(dr.min()), mean=float(dr.mean()), max=float(dr.max()), dev_p95=float(np.percentile(dev, 95)),
                                         dev_max=float(dev.max()), seconds=float(route.sum() / 400)))
     lines.append(f"      separation, nominal {nominal:.3f} m: both in the air min {dist[both].min():.3f} / mean {dist[both].mean():.3f} / max "
-                 f"{dist[both].max():.3f} m; on the route (both on items 2..10, {route.sum() / 400:.1f} s) min {dr.min():.3f} / mean "
+                 f"{dist[both].max():.3f} m; on the route (both on items 2..{last}, {route.sum() / 400:.1f} s) min {dr.min():.3f} / mean "
                  f"{dr.mean():.3f} / max {dr.max():.3f} m, |d - nominal| p95 {np.percentile(dev, 95):.3f} m, max {dev.max():.3f} m")
     # start skew from the records: the tick each vehicle's route (item 2) starts, and its takeoff start (armed, item 1)
     k2 = [int(np.argmax(x >= 2)) for x in item]
@@ -353,6 +364,8 @@ def main():
                     help="single: each vehicle's Start Mission (GUIDED, arm, MISSION_START), vehicle 2's --skew s after "
                          "vehicle 1's; mv: the Multi-Vehicle panel's Arm (both), 2 s, then its Start (both, in order)")
     ap.add_argument("--rgb", default=None, help="RGB=WxH@FPS for both cameras (default: the launcher's)")
+    ap.add_argument("--no-upload", action="store_true",
+                    help="upload nothing: download each onboard mission, compare it with its plan file, start it")
     ap.add_argument("--out", default=None)
     a = ap.parse_args()
     out = Path(a.out or HERE / "out" / "formation" / f"test-{a.plan}-s{a.seed}" / "session")
@@ -366,12 +379,13 @@ def main():
     for th in counters:
         th.start()
     link = Link(PORTS["GCS_PORT"])
-    env = dict(os.environ, OUT=str(out), PLAN=a.plan, NOISE=a.noise, SEED=str(a.seed), SECONDS_MAX="900", VIDEO=a.video,
+    env = dict(os.environ, OUT=str(out), PLAN=a.plan, NOISE=a.noise, SEED=str(a.seed), SECONDS_MAX="900", VIDEO=a.video, VIDEO_SWITCH="off",
                **{k: str(v) for k, v in PORTS.items()}, **({"WIND": " ".join(a.wind)} if a.wind else {}),
                **({"RGB": a.rgb} if a.rgb else {}))
     sess = subprocess.Popen(["sh", str(HERE / "fly_formation_qgc.sh")], cwd=ROOT, env=env, start_new_session=True,
                             stdout=open(out / "launcher.out", "w"), stderr=subprocess.STDOUT)
-    lines = [f"formation test: plan {a.plan}, noise {a.noise}, seed {a.seed}, wind {a.wind}, skew {a.skew} s, start {a.start}"]
+    lines = [f"formation test: plan {a.plan}, noise {a.noise}, seed {a.seed}, wind {a.wind}, skew {a.skew} s, start {a.start}"
+             + (", no upload (onboard missions)" if a.no_upload else "")]
     vs = [Vehicle(link, 1), Vehicle(link, 2)]
     plan_files = [out / "plans" / f"formation-{a.plan}-v{v}.plan" for v in (1, 2)]
     try:
@@ -386,10 +400,17 @@ def main():
             if a.video != "on" or all(o.exists() and "camera component" in o.read_text() for o in outs):
                 break
             time.sleep(0.5)
-        acks = [v.upload(json.loads(pf.read_text())) for v, pf in zip(vs, plan_files)]
-        lines.append(report("both plans uploaded, each to its own system: MISSION_ACK ACCEPTED from systems 1 and 2",
-                            all(x is not None and x.type == 0 and x.get_srcSystem() == v.id for x, v in zip(acks, vs)),
-                            f"{[str(x) for x in acks]}"))
+        if a.no_upload:
+            for v, pf in zip(vs, plan_files):
+                plan = json.loads(pf.read_text())
+                ok, detail = compare_mission(plan, v.download())
+                lines.append(report(f"vehicle {v.id}, no upload: the onboard mission equals {pf.name}'s "
+                                    f"{len(plan['mission']['items'])} items", ok, detail))
+        else:
+            acks = [v.upload(json.loads(pf.read_text())) for v, pf in zip(vs, plan_files)]
+            lines.append(report("both plans uploaded, each to its own system: MISSION_ACK ACCEPTED from systems 1 and 2",
+                                all(x is not None and x.type == 0 and x.get_srcSystem() == v.id for x, v in zip(acks, vs)),
+                                f"{[str(x) for x in acks]}"))
         if a.start == "mv":
             armed = [v.arm() for v in vs]
             time.sleep(2.0)
@@ -418,8 +439,9 @@ def main():
             th.join()
         for v in vs:
             lines.append(report(f"vehicle {v.id}: landed states ON_GROUND, TAKEOFF, IN_AIR, LANDING, ON_GROUND", v.states == [1, 3, 2, 4, 1], f"{v.states}"))
-            lines.append(report(f"vehicle {v.id}: MISSION_CURRENT and MISSION_ITEM_REACHED 1..11 in order",
-                                v.reached == list(range(1, 12)) and v.currents[:11] == list(range(1, 12)),
+            n_items = len(json.loads(plan_files[v.id - 1].read_text())["mission"]["items"])
+            lines.append(report(f"vehicle {v.id}: MISSION_CURRENT and MISSION_ITEM_REACHED 1..{n_items} in order",
+                                v.reached == list(range(1, n_items + 1)) and v.currents[:n_items] == list(range(1, n_items + 1)),
                                 f"current {v.currents}, reached {v.reached}"))
             lines.append(report(f"vehicle {v.id}: landed and disarmed", v.t_disarm is not None and v.states[-1:] == [1],
                                 f"arm to disarm {v.t_disarm - v.t_arm:.1f} s" if v.t_disarm else "not disarmed"))

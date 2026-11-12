@@ -34,8 +34,10 @@ they would at t = 0. The run ends 2 s after both navigators complete, at any con
 vehicle, terrain or boulder), or at the time limit (60 s + |S|).
 
 Session (`--session`, real time, MAVLink): both vehicles rest on the gorge floor at their routes'
-starts (formation-PLAN-vN-ground.params after x500.params and ground.params), disarmed; controller k
-runs with `--ground --mav --sysid k` to the ground station's port; the true pose of vehicle k is sent
+starts (formation-PLAN-vN-ground.params after x500.params and ground.params), disarmed, each with its
+complete mission onboard (the overlay's TAKEOFF, SPLINE and LAND lines: the items of
+formation-PLAN-vN.plan, so Start Mission works without an upload); controller k runs with
+`--ground --mav --sysid k` to the ground station's port; the true pose of vehicle k is sent
 at 100 Hz to 127.0.0.1:POSE_PORT_k for its camera payload (camera_component.py). Ends on SIGINT or
 SIGTERM or after --seconds; contacts do not end it.
 

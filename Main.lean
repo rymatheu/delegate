@@ -36,7 +36,9 @@ Start:
   at-rest gyro samples (then prints `calibrated`). The output is that of the controller alone.
 - `--ground`: on the ground, disarmed, in STABILIZE (ArduCopter's boot mode); the gyros are
   calibrated from the first second of lines and the estimator starts at the first fixes
-  (`Copter.Fly`).
+  (`Copter.Fly`). The onboard mission is the one the files state, with their `TAKEOFF` and `LAND`
+  lines around the waypoints (`Leanfc/ParamFile.lean`, `Setup.mission`), so that AUTO from the
+  ground (QGroundControl's Start Mission) needs no upload; an upload replaces it.
 
 `--mav` opens the MAVLink link (`--host` 127.0.0.1, `--port` 14550: the ground station;
 `--bind-host` 127.0.0.1, `--bind` 0: our socket; `--sysid N`, default the compatibility parameter
@@ -160,9 +162,11 @@ def main (args : List String) : IO UInt32 := do
   let su ← match ← setup args with
     | .ok su => pure su
     | .error e => IO.eprintln e; return 2
-  let mission := Mission.ofWaypoints P.waypoints
-  let veh := if args.contains "--ground" then Copter.initGround P mission else Copter.initAir P mission
-  let a0 : Autopilot := { cfg := su.cfg, gcs := su.gcs veh.home, veh, origin := su.origin }
+  let ground := args.contains "--ground"
+  let mission := su.mission ground
+  let veh := if ground then Copter.initGround P mission else Copter.initAir P mission
+  let a0 : Autopilot :=
+    { cfg := su.cfg, gcs := su.gcs (su.missionHome ground veh.home) mission, veh, origin := su.origin }
   let cal (smp : Array Vec3) (a : Autopilot) : Autopilot :=
     { a with veh := { a.veh with ctl := Controller.calibrate P smp a.veh.ctl } }
   let line (a : Autopilot) (m : Motors) : String :=

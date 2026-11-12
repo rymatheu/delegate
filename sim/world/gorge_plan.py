@@ -8,18 +8,23 @@ QGroundControl writes those two keys into its offline-editing settings when it l
 geoFence and rallyPoints (version 2). Items (SimpleItem, MissionItem.cc `save`), all in frame 3
 (MAV_FRAME_GLOBAL_RELATIVE_ALT: altitude above home):
   1        NAV_TAKEOFF (22) at the start, to the first waypoint's height;
-  2 .. 10  NAV_SPLINE_WAYPOINT (82) along the gorge (`Gorge.path`: 3.5 m above the floor on the
-           centerline, the waypoints of fly_gorge.py), no hold;
-  11       NAV_LAND (21) at the last waypoint.
+  2 .. n-1 NAV_SPLINE_WAYPOINT (82) along the gorge (`Gorge.path` after its first point: 3.5 m above
+           the floor on the centerline, the waypoints of fly_gorge.py), no hold;
+  n        NAV_LAND (21) at the last waypoint.
 Altitudes are relative to home, which the controller sets at arming from its estimate of the vehicle
 resting on the floor at the start: waypoint height above the floor + floor rise - the start's rest
 height. Latitudes and longitudes are the controller's own `toLatLon` integers (geo.Origin.latlon_e7),
 so the controller's `toNE` gives back each point within 1 cm.
 
 Overlay (the session's parameter file after x500.params and ground.params): the start on the floor at
-the first waypoint, and the same nine waypoints as SPLINE lines, so the onboard mission that
-QGroundControl downloads at connect is the gorge route (AUTO from the ground still needs the uploaded
-plan's takeoff item; "Auto: Missing Takeoff Cmd" otherwise).
+the first waypoint, and the plan's items as the controller's mission lines (Leanfc/ParamFile.lean):
+`TAKEOFF d` (the first waypoint's height, NED down), the same spline waypoints as SPLINE lines, and
+`LAND n e` at the last waypoint. The vehicle boots with that mission onboard, as an ArduCopter boots
+with the mission in its storage: the mission QGroundControl downloads at connect has the plan's
+commands in the plan's order, and the plan's positions and relative altitudes (relative to the start
+point, where the vehicle rests and sets home; within the overlay's 0.1 mm and 1e-7 degree), so Start
+Mission works from the ground without an upload. Uploading gorge.plan is optional and replaces the
+onboard mission with the same items.
 
     python gorge_plan.py [--gorge-seed 7] [--params FILE ...] [--origin LAT LON ALT] [--out gorge.plan]
 """
@@ -85,11 +90,14 @@ def write_overlay(g, out):
     """The session's parameter overlay (NED: north = ENU y, east = x, down = -z)."""
     path = g.path
     lines = ["# gorge session overlay (sim/world/gorge_plan.py): load after x500.params and ground.params",
-             f"# gorge seed {g.seed}: start resting on the floor at the first waypoint; the onboard mission is the",
-             "# gorge route (3.5 m above the floor on the centerline) as SPLINE legs",
+             f"# gorge seed {g.seed}: start resting on the floor at the first waypoint; the onboard mission is",
+             "# gorge.plan's items: TAKEOFF to the first waypoint's height, the gorge route (3.5 m above the floor",
+             "# on the centerline) as SPLINE legs, LAND at the last waypoint",
              f"start.x             {path[0][1]:.4f}", f"start.y             {path[0][0]:.4f}",
-             f"start.z             {-start_rest_z(g, path[0, :2]):.4f}"]
+             f"start.z             {-start_rest_z(g, path[0, :2]):.4f}",
+             f"TAKEOFF {-path[0][2]:.4f}"]
     lines += [f"SPLINE  {w[1]:.4f}  {w[0]:.4f}  {-w[2]:.4f}" for w in path[1:]]
+    lines += [f"LAND    {path[-1][1]:.4f}  {path[-1][0]:.4f}"]
     Path(out).write_text("\n".join(lines) + "\n")
 
 

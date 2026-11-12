@@ -14,9 +14,11 @@ script only replaces its `make_env` with the gorge (and appends one parameter ov
   centerline), level, nose north: its base is placed 5 mm above the highest ground point under its
   collision disc plus the rest height, and cpp2lean's reset_env lets it settle on its contact
   (0.25 s, motors off) before the clock starts; the motor lag starts at zero thrust;
-- the overlay DIR/gorge.params (gorge_plan.write_overlay): that start and the gorge route as the
-  onboard mission; DIR/gorge.plan is the plan file for QGroundControl (gorge_plan.write_plan) for the
-  run's origin (the files' ORIGIN line or --origin);
+- the overlay DIR/gorge.params (gorge_plan.write_overlay): that start and the complete gorge mission
+  (TAKEOFF, the route as SPLINE lines, LAND), which the vehicle boots with onboard, so Start Mission
+  works without an upload; DIR/gorge.plan is the same mission as a plan file for QGroundControl
+  (gorge_plan.write_plan; uploading it is optional) for the run's origin (the files' ORIGIN line or
+  --origin);
 - the camera feed: after every 4th control step (100 Hz) the vehicle's true pose (ENU position,
   PyBullet quaternion), its simulated time and the wall-clock time are sent as one UDP datagram to
   127.0.0.1:POSE_PORT (camera_component.py renders from the latest one; 0 disables);

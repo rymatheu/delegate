@@ -103,9 +103,22 @@ def setup (args : List String) : IO (Except String Setup) := do
     let sysid := (argOne args "--sysid" |>.bind String.toNat?).getD sysidParam
     return .ok { store, cfg := { sysid := sysid.toUInt8 }, origin := makeOrigin lat lon alt }
 
-/-- The services at start: the stored mission is the parameter file's waypoints (home = `home`). -/
-def Setup.gcs (su : Setup) (home : Vec3) : GcsState :=
-  let cmds := Mission.ofWaypoints su.store.params.waypoints
+/-- The onboard mission at start. On the ground (`--ground`), the mission the parameter files state:
+`TAKEOFF`, the waypoints, `LAND` (`Mission.ofParamFile`), as an ArduCopter boots with the mission in
+its storage, so that AUTO from the ground finds its takeoff item without an upload. In the air (the
+batch start, flying the waypoints from item 1 in AUTO), the waypoints alone, as before those lines. -/
+def Setup.mission (su : Setup) (ground : Bool) : Array MissionCmd :=
+  let P := su.store.params
+  if ground then Mission.ofParamFile su.store.ends P.start P.waypoints else Mission.ofWaypoints P.waypoints
+
+/-- The home the stored mission's relative altitudes are measured from: on the ground with a
+`TAKEOFF` line, the files' start point (where the vehicle rests, so where it sets home at boot, up to
+its estimate; the plan files' items are relative to it); otherwise the vehicle's initial home `home`. -/
+def Setup.missionHome (su : Setup) (ground : Bool) (home : Vec3) : Vec3 :=
+  if ground && su.store.ends.takeoff.isSome then su.store.params.start else home
+
+/-- The services at start, storing `cmds` (`Setup.mission`) relative to `home` (`Setup.missionHome`). -/
+def Setup.gcs (su : Setup) (home : Vec3) (cmds : Array MissionCmd) : GcsState :=
   Gcs.init su.store (cmds.map (Mission.storedOf su.origin home))
 
 /-- Sensor readings of a vehicle at rest, level, nose north, at `p` (bench input). -/
@@ -118,10 +131,10 @@ def restSensors (p : Vec3) : Sensors :=
 def bench (args : List String) : IO UInt32 := do
   let .ok su ← setup args | IO.eprintln "setup failed"; return 2
   let P := su.store.params
-  let mission := Mission.ofWaypoints P.waypoints
+  let mission := su.mission true
   let rest := restSensors ⟨P.start.x, P.start.y, 0⟩
   let v0 := (List.range 1200).foldl (fun v _ => (Copter.step v #[] none rest).1) (Copter.initGround P mission)
-  let gcs0 := su.gcs v0.home
+  let gcs0 := su.gcs (su.missionHome true v0.home) mission
   -- parser throughput: a stream of telemetry frames
   let t := Copter.telemetry v0 su.origin
   let msgs := Out.all.map (Gcs.telemetryMsg su.cfg gcs0 t)

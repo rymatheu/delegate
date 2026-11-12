@@ -4,7 +4,7 @@ thermal image inset), from a run directory written by fly_gorge.py.
 
 Rendering only, in PyBullet's TinyRenderer with the gorge's visual meshes; the vehicle is drawn with
 the PX4 X500 meshes (sim/assets/x500_render_noprops.urdf) and render_flight.py's propeller motion
-blur (`draw_props`). Embers are drawn with sensors.glow (emission color plus a bloom). Text uses
+blur (`draw_props`). The scene is sensors.render_rgb with the fires of fire.py (flames, smoke, light). Text uses
 DejaVu Sans from Matplotlib's own data directory.
 
 Run: python render_world.py [--run out/main] [--only overview|oblique|sheets|gif]
@@ -26,6 +26,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE.parent))
 import render_flight as RF  # noqa: E402
 
+import fire as FI  # noqa: E402
 import gorge as G  # noqa: E402
 import sensors as S  # noqa: E402
 
@@ -55,7 +56,7 @@ class Scene:
         self.g = g
         self.c = p.connect(p.DIRECT)
         self.bodies = g.load(self.c, "visual")
-        self.ember_colors = {b: G.ember_rgb(g.firebrands[k].temp_c) for b, (cls, k) in self.bodies.items() if cls == "ember"}
+        self.fires = FI.Fires(g, "still")
         self.d, self.meta, self.wps, self.pos, self.sp, self.quat = RF.load(str(run / "flight.csv"))
         self.t = self.d["t"]
         self.angle, self.speed = RF.prop_state(self.d)
@@ -76,25 +77,19 @@ class Scene:
             p.resetBasePositionAndOrientation(body, self.pos[k].tolist(), RF.quat_xyzw(R), physicsClientId=self.c)
         return body, (self.pos[k], R, self.angle[k], self.speed[k])
 
-    def shoot(self, W, H, eye, target, up, fov_v, near, far, vehicles=(), scale=1.0, bg=None, bloom=(1.5, 1.6)):
+    def shoot(self, W, H, eye, target, up, fov_v, near, far, vehicles=(), scale=1.0, bg=None, bloom=None, t=0.0):
+        eye = np.asarray(eye, float)
+        fwd = np.asarray(target, float) - eye
+        fwd /= np.linalg.norm(fwd)
+        right = np.cross(fwd, up); right /= np.linalg.norm(right)
+        upv = np.cross(right, fwd)
+        hf = 2 * math.degrees(math.atan(math.tan(math.radians(fov_v) / 2) * W / H))
+        rgb, z, _ = S.render_rgb(self.c, eye, fwd, upv, right, hf, W, H, near, far, t, self.fires, haze=bg is None)
+        img = rgb.astype(float)
+        if bg is not None:
+            img[~np.isfinite(z)] = bg
         view = p.computeViewMatrix(list(eye), list(target), list(up), physicsClientId=self.c)
         proj = p.computeProjectionMatrixFOV(fov_v, W / H, near, far, physicsClientId=self.c)
-        _, _, rgb, _, seg = p.getCameraImage(W, H, view, proj, renderer=p.ER_TINY_RENDERER, shadow=0,
-                                             lightDirection=G.SUN.tolist(), physicsClientId=self.c)
-        img = np.reshape(rgb, (H, W, 4))[..., :3].astype(float)
-        seg = np.reshape(seg, (H, W))
-        sky = seg < 0
-        if bg is None:
-            fwd = np.asarray(target, float) - eye
-            fwd /= np.linalg.norm(fwd)
-            right = np.cross(fwd, up); right /= np.linalg.norm(right)
-            upv = np.cross(right, fwd)
-            hf = 2 * math.degrees(math.atan(math.tan(math.radians(fov_v) / 2) * W / H))
-            dirs, _ = S.ray_dirs(W, H, hf, fwd, upv, right)
-            img[sky] = S.sky_rgb(dirs)[sky]
-        else:
-            img[sky] = bg
-        img = S.glow(img, seg, self.ember_colors, *bloom)
         cam = np.asarray(eye, float)
         with prop_scale(scale):
             for v in sorted(vehicles, key=lambda v: -np.linalg.norm(v[0] - cam)):
@@ -196,7 +191,7 @@ def overview(sc, out):
     dr.text((W - 128, 82), "north", font=font(24, True), fill=(255, 255, 255))
     dr.rectangle([0, 0, W, 30], fill=(0, 0, 0, 120))
     dr.text((12, 3), f"Gorge seed {g.seed} from above: X500 with the frozen leanfc controller at three instants (drawn {SCALE:g}x size), "
-            f"red: flown path, blue: waypoints, yellow: thermal camera footprint (57 deg x 44 deg, 30 deg down), orange rings: firebrands",
+            f"red: flown path, blue: waypoints, yellow: thermal camera footprint (54 deg x 45 deg, 30 deg down), orange rings: firebrands",
             font=font(20), fill=(255, 255, 255))
     img.save(out / "overview.png")
     print("wrote", out / "overview.png", img.size)
@@ -346,8 +341,8 @@ def sheets(sc, run, out):
     sheet(rows_rgb, ["forward RGB\n320 x 240, 90 deg\n30 deg down", "downward RGB\n320 x 240, 90 deg"],
           "Onboard RGB, gorge flight (green ring: firebrand in view; dashed white ring: firebrand position, occluded)",
           out / "onboard-rgb.png")
-    sheet(rows_th, ["forward RGB", "thermal 160 x 120\n57 deg, 8.7 Hz\n20-100 C fixed", "thermal\nautomatic gain"],
-          "Onboard RGB above thermal (Lepton 3.5 class; apparent temperature, embers saturate at 400 C)",
+    sheet(rows_th, ["forward RGB", "thermal 640 x 512\n54 deg, 8.7 Hz\n20-100 C fixed", "thermal\nautomatic gain"],
+          "Onboard RGB above thermal (640 x 512 core, shown binned 2 x 2; apparent temperature, flames saturate)",
           out / "onboard-thermal.png", bar=True)
     return picks
 

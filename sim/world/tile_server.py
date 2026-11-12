@@ -10,9 +10,9 @@ The picture: a top-down rendering of the generated gorge (terrain with its baked
 ash beds and embers; gorge.py's assets, nothing else) made once at start with PyBullet's TinyRenderer:
 TinyRenderer has no orthographic projection, so each 1024 x 1024 chunk is rendered by a camera
 20 km straight above the chunk's center with a field of view of one chunk (parallax: a point z m above
-z = 0 at d m from the chunk center is drawn d z / 20000 m off, at most 1.2 cm at the rim). Diffuse light
-from the world's sun direction (cast shadows are baked into the textures); ember pixels get their glow
-color (gorge.ember_rgb) and a small bloom, as sensors.glow does. The raster is RES m per pixel
+z = 0 at d m from the chunk center is drawn d z / 20000 m off, at most 1.2 cm at the rim). Ambient light
+only: the textures carry the lighting (sun, cast shadows, sky light; gorge.py); ember pixels get their
+glow color (gorge.ember_rgb) and a small bloom. Flames and smoke (fire.py) are not drawn on the map. The raster is RES m per pixel
 (default 0.015 m: zoom 23 at the latitude of Pikes Peak is 1.45 cm per pixel) with box-filtered
 mipmaps. Outside the terrain, and on every tile beyond it, a uniform neutral color (BACKGROUND).
 
@@ -24,7 +24,8 @@ flat-earth conversion from the run's ORIGIN (Format.lean toNE), and sampled from
 drawn where QGroundControl draws a vehicle that the controller reports at that point.
 
 Also: GET /seg/{z}/{x}/{y}.png (nearest sample of the class raster: R = class 0 background, 1 terrain,
-2 boulder, 3 ash, 4 ember; G = index) for the georeference test, and GET /stats (requests served).
+2 boulder, 3 ash, 4 ember, 5 rocks; G = index; rendered without the vegetation, so that the objects
+under a crown keep their full outline) for the georeference test, and GET /stats (requests served).
 """
 import argparse
 import io
@@ -51,7 +52,7 @@ import gorge as G  # noqa: E402
 
 BACKGROUND = np.array([138, 132, 118], np.uint8)     # neutral gray-beige, a little darker than the plateau
 CHUNK, HEIGHT = 1024, 20000.0
-CLASS = {"terrain": 1, "boulder": 2, "ash": 3, "ember": 4}
+CLASS = {"terrain": 1, "boulder": 2, "ash": 3, "ember": 4, "rocks": 5, "veg": 6}
 
 
 def render_raster(g, res):
@@ -68,6 +69,7 @@ def render_raster(g, res):
     for b, (k, i) in bodies.items():
         lut_c[b + 1], lut_i[b + 1] = CLASS[k], i
     ember = {b: G.ember_rgb(g.firebrands[i].temp_c) for b, (k, i) in bodies.items() if k == "ember"}
+    veg_ids = [b for b, (k, i) in bodies.items() if k == "veg"]
     half = CHUNK * res / 2
     fov = 2 * math.degrees(math.atan(half / HEIGHT))
     proj = p.computeProjectionMatrixFOV(fov, 1.0, HEIGHT - 80.0, HEIGHT + 20.0, physicsClientId=c)
@@ -76,7 +78,14 @@ def render_raster(g, res):
             cx, cy = x0 + (c0 + CHUNK / 2) * res, y1 - (r0 + CHUNK / 2) * res
             view = p.computeViewMatrix([cx, cy, HEIGHT], [cx, cy, 0.0], [0, 1, 0], physicsClientId=c)
             _, _, im, _, seg = p.getCameraImage(CHUNK, CHUNK, view, proj, renderer=p.ER_TINY_RENDERER, shadow=0,
-                                                lightDirection=G.SUN.tolist(), physicsClientId=c)
+                                                lightAmbientCoeff=1.0, lightDiffuseCoeff=0.0, lightSpecularCoeff=0.0,
+                                                physicsClientId=c)
+            if veg_ids:                                   # the class raster without the vegetation over the objects
+                for b in veg_ids:
+                    p.changeVisualShape(b, -1, rgbaColor=[1, 1, 1, 0], physicsClientId=c)
+                seg = p.getCameraImage(CHUNK, CHUNK, view, proj, renderer=p.ER_TINY_RENDERER, shadow=0, physicsClientId=c)[4]
+                for b in veg_ids:
+                    p.changeVisualShape(b, -1, rgbaColor=[1, 1, 1, 1], physicsClientId=c)
             im = np.reshape(im, (CHUNK, CHUNK, 4))[..., :3].astype(float)
             seg = np.reshape(seg, (CHUNK, CHUNK))
             em = np.zeros_like(im)

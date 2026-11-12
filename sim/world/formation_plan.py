@@ -65,9 +65,13 @@ start its route late. The offset's vertical component is therefore the differenc
 heights, so that both takeoff items have the same relative altitude and both climbs the same length.
 
 Files (`write_all`): per plan and vehicle, the QGroundControl plan `formation-PLAN-vN.plan`, the
-session overlay `formation-PLAN-vN-ground.params` (start resting on the floor, the route as SPLINE
-lines, `nav.yawReverse`) and the batch overlay `formation-PLAN-vN-air.params` (start hovering at the
-route's first point, as fly_gorge.py starts).
+session overlay `formation-PLAN-vN-ground.params` (start resting on the floor, `nav.yawReverse`, and
+the plan's items as the controller's mission lines: `TAKEOFF d` to the first point's height, the route
+as SPLINE lines, `LAND n e` at the land site; the vehicle boots with that mission onboard, so the
+mission QGroundControl downloads from it at connect equals the plan's items and Start Mission works
+from the ground without an upload; uploading the plan is optional) and the batch overlay
+`formation-PLAN-vN-air.params` (start hovering at the route's first point, as fly_gorge.py starts; the
+route only, as the batch start flies it).
 
     python formation_plan.py [--gorge-seed 7] [--out DIR] [--sweep]   # writes the files; --sweep: offsets study
 """
@@ -371,9 +375,11 @@ def write_plan(g, origin, route, out, land=None):
     return plan
 
 
-def write_overlay(g, route, reverse, out, ground, plan, vehicle):
+def write_overlay(g, route, reverse, out, ground, plan, vehicle, land=None):
     """Parameter overlay (NED: north = ENU y, east = x, down = -z) after x500.params (and ground.params for
-    the session): the start (resting on the floor, or hovering at the first point) and the route."""
+    the session): the start (resting on the floor, or hovering at the first point) and the route; on the
+    ground also the plan's takeoff and land items (`TAKEOFF`, `LAND` at `land`, default the last point),
+    so that the onboard mission is write_plan's."""
     start_d = -gorge_plan.start_rest_z(g, route[0, :2]) if ground else -route[0, 2]
     lines = [f"# formation plan {plan}, vehicle {vehicle} (sim/world/formation_plan.py), gorge seed {g.seed}",
              "# start " + ("resting on the floor below the route's first point" if ground else "hovering at the route's first point"),
@@ -382,7 +388,12 @@ def write_overlay(g, route, reverse, out, ground, plan, vehicle):
              f"nav.yawReverse      {reverse}"]
     if not ground:
         lines += ["nav.vMax            2.0", "nav.aMax            2.0", "nav.radius          0.2", "nav.lagMax          0.6"]
+    if ground:
+        lines += [f"TAKEOFF {-route[0][2]:.4f}"]
     lines += [f"SPLINE  {w[1]:.4f}  {w[0]:.4f}  {-w[2]:.4f}" for w in route[1:]]
+    if ground:
+        lp = route[-1] if land is None else land
+        lines += [f"LAND    {lp[1]:.4f}  {lp[0]:.4f}"]
     Path(out).write_text("\n".join(lines) + "\n")
 
 
@@ -397,7 +408,7 @@ def write_all(g, origin, out, plans=PLANS):
         lands = land_sites(g, r1, r2)
         for v, (r, rev) in enumerate(zip((r1, r2), PLANS[name]["reverse"]), start=1):
             write_plan(g, origin, r, out / f"formation-{name}-v{v}.plan", lands[v - 1])
-            write_overlay(g, r, rev, out / f"formation-{name}-v{v}-ground.params", True, name, v)
+            write_overlay(g, r, rev, out / f"formation-{name}-v{v}-ground.params", True, name, v, lands[v - 1])
             write_overlay(g, r, rev, out / f"formation-{name}-v{v}-air.params", False, name, v)
         info[name] = dict(offset_enu=o.tolist(), rest_z=rz, reverse=PLANS[name]["reverse"],
                           start1=r1[0].tolist(), start2=r2[0].tolist(),

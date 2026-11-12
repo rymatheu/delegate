@@ -126,7 +126,8 @@ AIRFRAMES = {
 
 def read_params(paths):
     """Values, waypoints and SIM_VEHICLE of the files, merged as the controller merges them (later
-    files override names; a file with WAYPOINT or SPLINE lines replaces the list). vals["legs"] is the
+    files override names; a file with WAYPOINT or SPLINE lines replaces the list; TAKEOFF and LAND lines,
+    the onboard mission's ends for a ground start, are skipped). vals["legs"] is the
     kind of each leg ("WAYPOINT" or "SPLINE", with " stop" if marked). The controller validates the
     files; this reader takes only what the harness needs."""
     vals, wps, kinds, sim_vehicle = {}, [], [], None
@@ -140,6 +141,8 @@ def read_params(paths):
                 sim_vehicle = ws[1]
             elif ws[0] == "estimator":
                 vals["estimator"] = ws[1]
+            elif ws[0] in ("TAKEOFF", "LAND"):
+                pass                                   # the onboard mission's ends: not the navigator's legs
             elif ws[0] in ("WAYPOINT", "SPLINE"):
                 file_wps.append([float(v) for v in ws[1:4]])
                 file_kinds.append(ws[0] + (" stop" if ws[4:5] == ["stop"] else ""))

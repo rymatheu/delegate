@@ -31,8 +31,8 @@ if it had been in the file; a value `build` rejects is refused and the old value
 over `Params` equals the stored value for every entry except `LFC_HDG_C`/`LFC_HDG_S`, which
 `build` normalizes; the protocol reports the stored value.
 
-The waypoints and the `estimator` line are not parameters (the mission protocol carries the
-waypoints).
+The waypoints, the `TAKEOFF` and `LAND` lines and the `estimator` line are not parameters (the
+mission protocol carries the mission).
 -/
 
 namespace Mavlink.ParamTable
@@ -194,6 +194,8 @@ structure Store where
   values : Array R
   compatValues : Array R
   waypoints : Array Waypoint
+  /-- the `TAKEOFF` and `LAND` lines of the files (the onboard mission's ends) -/
+  ends : ParamFile.Ends
   estimator : Estimator
   /-- the `ORIGIN` line of the files (latitude, longitude ·1e7, altitude AMSL mm), if any -/
   origin : Option (Int × Int × Int)
@@ -218,7 +220,7 @@ def load (files : List (String × String)) : Except String Store := do
   let (g, wps, e) ← ParamFile.complete raw
   let values := entries.map fun en => g en.file
   let params ← rebuild values wps e
-  pure { values, compatValues := compat.map (·.2.2), waypoints := wps, estimator := e,
+  pure { values, compatValues := compat.map (·.2.2), waypoints := wps, ends := raw.ends, estimator := e,
          origin := raw.origin, params }
 
 /-- (name, type, value) of parameter `i` (leanfc's first, then the compatibility table). -/

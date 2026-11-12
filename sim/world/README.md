@@ -1,9 +1,14 @@
 # Gorge world: a windswept mountain gorge with firebrands, for the leanfc test bench
 
 A PyBullet environment in which the X500 flies, with the frozen Lean controller in the loop, up a
-narrow procedural rock gorge (layered walls, boulders, vegetation, small spot fires hidden behind
-boulders), in a wind channeled by the gorge, carrying a forward RGB camera, a downward RGB camera and
-a forward uncooled LWIR thermal camera (FLIR Lepton 3.5 class) whose images are detected for hot spots.
+narrow procedural basalt gorge (columnar walls, talus with shrubs and small trees, a dry wash with
+boulders, cobbles and grass, small surface fires hidden behind boulders), in a wind channeled by the
+gorge, carrying a forward RGB camera, a downward RGB camera and a forward uncooled LWIR thermal camera
+(640 x 512 drone core class) whose images are detected for hot spots.
+
+The world, the fires and the thermal camera were redesigned on 2026-11-11 (screen grabs, the before and
+after comparison and the fire GIF in `out/redesign/grabs/`; `out/redesign/grabs.py` makes them,
+`out/redesign/bench.py` measures the render cost). Results below that predate the redesign are marked.
 Everything in the world is generated from a seed by the scripts here (see ASSETS.md); the harness of
 `sim/run_leanfc.py` (sensors, controller protocol, lock-step loop, X500 model with motor lag) is
 imported unmodified.
@@ -14,17 +19,18 @@ imported unmodified.
 
 | file | lines | concern |
 |---|---|---|
-| `gorge.py` | 765 | the world: centerline, walls, floor, mesh, textures, boulders, firebrands, temperature classes; loading into a PyBullet client; corridor-clearance check |
+| `gorge.py` | 2757 | the world: centerline, columnar walls, talus, wash, mesh, baked textures (lighting, temperature), boulders, rocks, vegetation, fires (burned patches, flame tongues, embers, fire heating), collision compounds; cache; loading into a PyBullet client (with level of detail); corridor-clearance and free-width checks |
+| `fire.py` | 567 | flames, smoke and firelight drawn per frame in image space with the depth buffer, for the RGB and the thermal camera, deterministic in seed and time |
 | `wind.py` | 145 | mean flow, Dryden-style gusts, aerodynamic force, `WindAviary`; wind-off check |
-| `sensors.py` | 348 | camera mounts, RGB camera, thermal camera (radiometry, optics, noise), false color, detection, matching; self-test |
-| `fly_gorge.py` | 287 | the closed-loop flight: `GorgeAviary`, mission overlay, contact, clearance, cameras, detections.md |
+| `sensors.py` | 734 | camera mounts, RGB pipeline (sky, fires, haze, exposure, tone), thermal camera (radiometry, flames, optics with halo, non-uniformity, noise, gain states, quantization), palette, AGC, detection, matching; self-test |
+| `fly_gorge.py` | 294 | the closed-loop flight: `GorgeAviary`, mission overlay, contact, clearance, cameras, detections.md |
 | `wind_study.py` | 164 | wind flights in steps, metrics, wind.md |
-| `render_world.py` | 409 | overview.png, oblique.png, onboard contact sheets, flight.gif |
+| `render_world.py` | 411 | overview.png, oblique.png, onboard contact sheets, flight.gif |
 | `gorge_session.py` | 183 | the gorge as a ground-start, real-time MAVLink session: sim/run_leanfc.py's loop with the gorge world, the vehicle resting on the floor, pose feed for the camera, clearance and real-time record |
 | `gorge_plan.py` | 114 | the gorge mission as a QGroundControl `.plan` and as the session's parameter overlay; the rest height at the start |
-| `camera_component.py` | 522 | the simulated camera payload: MAVLink component N/100 (`--sysid`, default 1), its answers to QGroundControl, two RTP/H.264 streams (libx264 via PyAV), render worker pool |
-| `camera_render.py` | 79 | render worker of the camera (sensors.py's RGB and thermal cameras from the latest pose); the thermal display mapping |
-| `tile_server.py` | 216 | XYZ map tiles of the gorge for QGroundControl's CustomURL provider: top-down rendering, georeference, HTTP |
+| `camera_component.py` | 544 | the simulated camera payload: MAVLink component N/100 (`--sysid`, default 1), its answers to QGroundControl, two RTP/H.264 streams (libx264 via PyAV), render worker pool |
+| `camera_render.py` | 96 | render worker of the camera (sensors.py's RGB and thermal cameras from the latest pose and its simulated time; AGC display; `--lod`) |
+| `tile_server.py` | 225 | XYZ map tiles of the gorge for QGroundControl's CustomURL provider: top-down rendering, georeference, HTTP |
 | `geo.py` | 121 | the controller's NED <-> latitude/longitude conversion and QGroundControl's Web Mercator tile arithmetic |
 | `fly_gorge_qgc.sh` | 59 | the launcher of the session, camera and tile server |
 | `test_camera.py`, `test_tiles.py`, `test_gorge_flight.py`, `run_qgc_gorge.py` | | the camera protocol and stream test, the tile test, the full scripted flight, the real QGroundControl run (`--formation PLAN`: the formation session) |
@@ -34,10 +40,10 @@ imported unmodified.
 | `fly_formation_qgc.sh` | 87 | the launcher of the formation session: two vehicles, two cameras, the tile server, the plan files |
 | `test_formation_flight.py` | 454 | the scripted two-vehicle flight from the ground (one ground-station link as QGroundControl's), its checks and numbers |
 | `formation_tests.py` | 94 | the scripted flights one after the other, and their table (`out/formation/tests/`) |
-| `render_formation.py` | 185 | the formation animations: both vehicles from outside, the four onboard views under them |
+| `render_formation.py` | 186 | the formation animations: both vehicles from outside, the four onboard views under them |
 | `QGC-CAMERA.md` | | what QGroundControl 5.1.5 asks of a MAVLink camera, its streams and a tile server, with the sources |
 | `snapshot/` | | the frozen controller `leanfc` and its parameter files (not modified) |
-| `assets/` | | generated meshes and textures (rewritten from the seed by every script) |
+| `assets/` | | generated meshes and textures (not tracked: about 300 MB, built from the seed on first use by any script, about 3 minutes; `sim/setup.sh` builds them once) |
 | `out/` | | evidence: images, GIF, `detections.md`, `wind.md`, `main/` (the camera flight), `runs/` (wind flights) |
 
 ## How to run
@@ -45,7 +51,8 @@ imported unmodified.
 ```
 PY=sim/.venv/bin/python
 cd sim/world          # from the repository root
-$PY -B gorge.py                       # build seed 7, write assets/, print the world summary and corridor clearance
+$PY -B gorge.py                       # build seed 7 (about 140 s, then cached), write assets/, print the summary
+$PY -B out/redesign/grabs.py          # the screen grabs of the redesign (--only NAME ...)
 $PY -B sensors.py                     # self-test: texel pass-through of the thermal twin, band radiance, camera cost
 $PY -B fly_gorge.py --out out/main    # the camera flight (field noise, no wind): flight.csv/json, cams_*.npz, detections.md
 $PY -B fly_gorge.py --wind 4 1 --cameras off --out out/runs/w4   # options: --wind MEAN GUST, --seed, --gorge-seed,
@@ -55,98 +62,128 @@ $PY -B wind_study.py --jobs 6         # 23 flights -> out/wind.md (--reuse: reco
 $PY -B render_world.py                # out/overview.png, oblique.png, onboard-rgb.png, onboard-thermal.png, flight.gif
 ```
 `fly_gorge.py` defaults: `--noise field`, `--cameras on`, `--seed 0` (sensor noise, gusts, thermal
-noise), `--gorge-seed 7`, no wind. A run takes about 20 s of wall time without cameras and 74 s with
-them for the 47 s flight.
+noise), `--gorge-seed 7`, no wind. With cameras the 49 s flight takes 150 s of wall time (cameras
+rendered at full quality in the loop; without cameras about 20 s, not re-measured after the redesign).
 
 ## The world (`gorge.py`)
 
-All numbers are for seed 7 and are printed by `python gorge.py`.
+All numbers are for seed 7 and are printed by `python gorge.py`. The build takes about 140 s (ray tests
+for the sun's shadow now and at six earlier positions, sky visibility and fire heating, for 6144 x
+4096 terrain texels and every object texel); its result is cached in `assets/gorge_s7.pkl` under a key
+made of the seed and gorge.py's own source, so later scripts load the world in about a second.
+
+Look, and what drove it in the reference photographs (the "important" one most): dark columnar basalt
+whose columns differ in tone from dark grey-brown to buff, with shadowed recesses and vertical stains,
+under a blocky entablature; rock faces alternating along the gorge with vegetated slopes and talus cones
+of fallen column blocks with shrubs between them; conifers, sage and dry grass on the plateau; grey,
+lichen-mottled, angular boulders that belong to the rock around them; a dry floor (the references with a
+river were used for the rock only). Second pass (2026-11-11, after a review): walls, wall variety,
+boulders, texture magnification, flames, burned patches, smoke, vegetation, thermal background and fire,
+automatic gain, all reworked.
 
 - Frame: ENU (PyBullet's), axis toward north from the origin; the flight covers north 0 to 72 m; the
-  terrain runs from 12 m south to 92 m north, beyond the flight at both ends.
-- Centerline: two sines (wavelengths 55 to 70 m and 24 to 32 m) scaled so that the axis heading stays
-  within 22 deg of north (measured: 21.9 deg). The controller snapshot holds the heading north; nothing
-  else assumes it (camera mounts are in the body frame, the FOV wedges use the true attitude).
-- Floor: width 7.2 m +- 1.3 m of slow noise with two Gaussian narrows (minimum 4.2 and 4.6 m), clipped
-  to 4 to 9 m (measured 4.20 to 8.22 m; narrows at N 22.4 and 54.7 m); height rising 3.5 % up the gorge
-  plus 0.35 m of noise (2.13 m over the flight), a 0.3 m deep channel across, 0.12 m of 2D noise.
-- Walls: horizontal strata 0.8 to 2.6 m thick from 8 m below to 45 m above the origin; 45 % are hard
-  (cliff 80 to 88 deg, with a bench 0.3 to 1.2 m wide on top where the layer above is soft), the rest
-  soft (65 to 74 deg); bench widths and angles vary along the axis (smooth noise, +-3 deg). Rim 15.5 to
-  24.5 m above the floor (west 15.5 to 23.5, east 16.5 to 24.5 m); mean angle toe to rim 68.4 to 73.4
-  deg. Roughness: 0.08 m of lateral displacement of the wall vertices.
-- Mesh: rows every 0.8 m along the axis; columns across: 13 floor columns, the toe, one column per
-  height level on each wall (every stratum top, every bench's outer edge and steps of at most 0.7 m),
-  6 plateau columns beyond each rim; offsets are perpendicular to the axis (x shifted by 1/cos of the
-  heading), so the grid never folds. Wall columns at constant height make every stratum boundary a mesh
-  edge: a first version with columns at fixed horizontal offsets gave sawtoothed strata, because a
-  horizontal plane cuts coarse cliff triangles along a zigzag. Levels below the floor edge or above the
-  rim of a row collapse onto the toe or rim; the zero-area faces are dropped: 26,343 triangles.
-  Physics: one static body, `GEOM_MESH` with `GEOM_FORCE_CONCAVE_TRIMESH`, loaded from the OBJ (PyBullet
-  refuses this mesh as an inline vertex list: "createCollisionShape failed").
-- Texture (1536 x 1024): each texel is colored from the 3D point it covers, interpolated on the mesh's
-  own triangles: stratum color by height (six sandstone and limestone tones), a dark line under each
-  stratum top, noise and vertical varnish streaks; gravel floor; vegetation where noise exceeds a
-  threshold that falls toward the floor edges, on benches (normal z > 0.8) and in patches on the
-  plateau; dry grass on the plateau. Cast shadows are baked in (texel color x 0.62 where a ray toward the
-  sun hits terrain or a boulder; 1.57 million ray tests; the whole build takes 3.6 s).
-- Sun: azimuth 225 deg (south-west), elevation 55 deg; the same direction lights TinyRenderer.
-- Boulders: 23, deformed icospheres (320 faces, radial noise 22 %, flattened vertically to 0.65 to
-  0.95, random yaw), sunk 8 % into the ground; seven large ones (1.7 to 2.5 m) are placed first at
-  stations every 8.5 m, then smaller ones (0.5 to 1.7 m); 45 % against a wall. A boulder is rejected if
-  it overlaps another or if any vertex within 1.75 m (horizontally) of the flight path rises above 2.5 m
-  over the floor (corridor margin 0.5 m). Physics: static convex hulls.
-- Flight corridor, verified on the collision geometry (closest points of a 1 cm probe sphere,
-  `Gorge.corridor_clearance`): the planned path at 3.5 m above the floor stays at least 1.89 m from
-  terrain and boulders; the corridor box (+-1.25 m across the path, 3.0 to 4.0 m above the floor,
-  sampled every 0.5 m along) at least 1.29 m.
-- Data exposed by `Gorge`: `y, xc, theta, width, floor0, height[side]` (per row), `xc_fn`, `floor_c(y)`,
-  `width_at(y)`, `axis_dir(y)`, `lateral(x, y)`, `rim_xi`, `rim_z`, `grid` (mesh vertices per row and
-  column), `path` (waypoints) and `path_points`, `boulders` (center, size, height, top, vertices, faces,
-  wall), `firebrands` (center, radius, temp_c, hidden, boulder, pieces), `texel_class` and
-  `texel_temp_k` (per terrain texel), `CLASSES` (temperature classes), `ground_z(xy)`, `rays(a, b)`,
-  `visibility(k, pts)`, `load(client, "physics"|"visual"|"thermal")` returning `{body id: (class,
-  index)}` with classes terrain, boulder, ash, ember.
+  terrain runs from 16 m south to 100 m north; plateau 45 m wide on each side.
+- Centerline: two sines scaled so that the axis heading stays within 22 deg of north (21.9 deg).
+- Wash (floor): 6.30 to 8.59 m wide (narrows at N 22.4 and 54.7 m); rising 2.32 m over the flight; a
+  shallow channel and noise across, flattened in the start and landing zones (ground relief within 0.6 m
+  of the start 0.018 m, of the landing 0.124 m). No water: sand, gravel and pebbles (Voronoi cells of
+  at least 3 texels), patches of low green and straw-colored cover.
+- Walls, per side and row (all profile parameters smoothed over 3 m along the gorge), in two kinds of
+  section that alternate along each side: a cliff section (a talus apron 0.6 to 2.8 m high at the foot,
+  then the colonnade) and a vegetated-slope section (a talus cone of fallen blocks up to about 30 % of
+  the wall, a steep vegetated band with outcrops above it, then the colonnade). Above: a ledge up to 1 m
+  wide with shrubs, a blocky entablature 74 to 82 deg up to the rim 19.3 to 26.0 m above the wash, a
+  rounded soil cap and the plateau. Talus height 1.0 to 5.8 m (west) and 2.2 to 4.8 m (east) over the
+  flight; mean angle toe to rim 64.6 to 79.0 deg.
+- Wall relief: columns (a 1D Voronoi pattern along the wall, 0.5 to 1.3 m wide) with a ridge-shaped
+  front, their own depth, cross joints every 1.5 to 5.5 m where 40 % of the segments step in or out, and
+  their own top height; the entablature as wavy rows (0.22 to 0.65 m high) of irregular blocks (0.25 to
+  1.0 m) with their own depth and tilt. The mesh gets this relief low-passed to its own resolution (rows
+  every 0.35 m), so it shows no stair steps; the texture gets the detail: albedo per column and per block
+  from dark grey-brown (74, 66, 58) to buff (158, 136, 106) (+-25 % around the mean), some greyer, recesses
+  40 to 60 % darker within 4 to 16 cm of a column's or block's edge with a smooth falloff (no dashed
+  lines), a shadow under protruding segments and blocks, dark vertical varnish stains, white mineral
+  streaks on a few columns, pale and orange lichen; the shading normal follows the facets. Soil and
+  plants only on a ledge's flat top.
+- Mesh: rows every 0.35 m; columns across: 21 wash columns, the toe, and per side 12 talus, 6 slope,
+  30 colonnade, 2 ledge, 16 entablature, 4 cap and 12 plateau columns: 62,084 vertices, 123,132 triangles.
+- Terrain texture (6144 x 4096): as above for the walls; talus of dark angular blocks (two scales,
+  irregular outlines) with soil and plants between; wash; golden and olive grass, sage-grey patches and
+  soil on the plateau; contact darkening around each boulder; the burned patches baked in with a noisy,
+  feathered edge. Prefiltered (Gaussian, 0.6 texel), so that no single texel stands out when the
+  renderer magnifies it.
+- Lighting is baked into every texture (the visual world is rendered with the ambient term only):
+  sun with cast shadows, sky light through the unoccluded hemisphere (12 rays per texel at 1/8
+  resolution), warm reflected light. Sun: from the solar position at latitude 39 deg, mid May, about
+  14:00 (azimuth 235 deg, elevation 55 deg).
+- Boulders: 54 (0.6 to 2.5 m): lumpy icospheres cut by 6 to 16 fracture planes, the facets flat-shaded
+  (sharp edges), flattened, tilted, sunk 10 to 30 %; the wall's own basalt palette with mottling, pale
+  grey-green and orange lichen on the upper faces, dark undersides, moss at the base; ten large ones at
+  stations every 6.9 m with smaller companions, the rest on the wash and the talus. Physics: convex hulls.
+- Rocks: 4129: 3259 column fragments (prisms with knocked edges) in rubble clusters on the talus,
+  coarser toward the cliff, and scattered; 757 cobbles on the wash; 113 chips around the boulders. Every
+  small object is placed on the terrain height and rejected where a boulder is above the terrain there
+  (the first pass put grass and stones on boulder tops). The 3297 rocks of 0.1 m or more collide.
+- Vegetation (meshes): 560 shrubs in clusters of 2 to 8 on the talus, the vegetated slopes and the wash
+  edges (a few large lumpy foliage blobs each, normals from the crown center, olive and sage greens),
+  ledge shrubs, 900 sage bushes, pines (102: trunk and 8 to 12 drooping cones) and junipers (136: an
+  irregular column of blobs) on the plateau, along the rim and on the talus, 12 small broadleaf trees,
+  8937 grass tufts (bunchgrass on the plateau, green to straw on the wash and talus). Trunks and foliage
+  collide (compounds of convex hulls); grass and thin branches do not.
+- Keep-out rule (`Gorge.keep_ok`): nothing taller than 2.5 m above the centerline floor within 3.6 m of
+  the flight path (vegetation: 1.6 m), boulders within 2 m of the route at most 1.6 m tall, nothing in
+  the start and landing zones; objects are kept off the open fires' sight lines and out of the patches.
+- Flight corridor on all collision geometry (`Gorge.corridor_clearance`): the path line at least 2.05 m
+  from everything, the corridor box (+-1.25 m, 3.0 to 4.0 m above the floor) at least 1.27 m. Free width
+  across the axis at 3.5 m above the floor (`Gorge.free_width`): 10.32 to 16.84 m (median 14.24 m).
 
-Temperature classes (deg C; a surface's temperature is shade + (sun - shade) x cos(incidence) x lit,
-lit from the baked sun ray test, plus about 1 K of spatial noise):
+Temperature classes (deg C; shade + (sun - shade) x insolation, plus fine-scale variation (about +-2 K),
+plus the fire heating below; emissivity varies by about +-0.012):
 
-| class | shade | full sun | emissivity | reason (assumption) |
+| class | shade | full sun | emissivity | time constant (h) |
 |---|---|---|---|---|
-| floor (gravel, sand) | 29 | 47 | 0.93 | dry mineral surface, air 30 C |
-| rock (walls, boulders) | 28 | 50 | 0.93 | sunlit rock 15 to 25 K above air |
-| vegetation | 27 | 32 | 0.97 | transpiring leaves stay near air temperature |
-| plateau (dry grass, scrub) | 30 | 44 | 0.95 | |
-| ash bed under a fire | 150 | 150 | 0.95 | smoldering ground around a spot fire |
-| ember | per piece, 0.9 to 1.0 x the fire's temperature (600 to 900) | | 0.90 | glowing char |
-| sky | brightness temperature 30 C at the horizon, 50 K colder at the zenith (by sin elevation) | | 1 | clear sky |
+| sand and gravel of the wash | 30 | 52 | 0.92 | 1.0 |
+| rock (basalt walls, blocks, boulders) | 29 | 56 | 0.94 | 2.5 |
+| soil | 30 | 50 | 0.94 | 1.5 |
+| dry grass | 30 | 46 | 0.96 | 0.4 |
+| leaves | 28 | 34 | 0.97 | 0.25 |
+| bark | 29 | 44 | 0.95 | 0.8 |
+| burned ground and ash | 150 to 350, glowing cracks and coals 350 to 750 | | 0.95 | fire model |
+| ember (coals) | 0.55 to 1.0 x the fire's temperature (620 to 900), glowing in its cracks | | 0.90 | |
+| sky | 30 C at the horizon, 50 K colder at the zenith | | 1 | |
 
-## Firebrands: how they are built, drawn and seen
+Thermal inertia: the insolation that sets a surface's temperature is the present one averaged with the
+sun's positions every 30 min over the last 3 h (each ray-tested for shadow), weighted by exp(-age / tau)
+with the class's time constant: rock that has just gone into shade stays warm, sand cools faster, leaves
+follow the present sun. The class parameters are blurred over about 25 cm, so material boundaries blend.
 
-- Geometry (`Gorge._firebrands`, `_add_fire`, `fire_meshes`): 8 spot fires. Each is a disk of ash
-  (16-sided fan, radius 0.15 to 0.35 m, the fire's size, its rim draped 1.5 cm over the ground by ray
-  tests) and 7 to 12 ember pieces (icospheres of 80 faces, radius 2.5 to 6 cm, deformed and flattened to
-  0.4 to 0.7 of their width, half buried, scattered within 0.8 of the disk radius). The fire's
-  temperature is drawn in 600 to 900 C; the hottest piece has it, the others 0.9 to 1.0 times it. Two
-  PyBullet bodies per fire: the ash body and the ember body (visual only, no collision).
-- Placement: 6 hidden, 2 open. A hidden fire sits just beyond a boulder at least 0.9 m tall, on the line
-  from a point 8, 12 or 16 m back along the flight path through the boulder's center, 0.1 m clear of the
-  boulder; it is kept only if it lies on the floor, clear of other boulders and 3 m from other fires,
-  and its hottest piece is out of sight (ray tests against terrain and boulders) from at least 80 % of
-  the path points 3 to 20 m before it. An open fire is in sight from at least 80 % of the path points
-  3 to 25 m before it.
-- Visual drawing: the ash uses a dark char color (38, 34, 32); each ember piece's texel gets a display
-  color interpolated between two hand-chosen control points, dull red (190, 45, 12) at 600 C and
-  orange-yellow (255, 165, 40) at 900 C (not a measured blackbody color). TinyRenderer would shade the
-  embers like any surface, so after rendering, `sensors.glow` sets every pixel whose segmentation is an
-  ember body to the fire's emission color (unlit) and adds a Gaussian bloom of those pixels (sigma 1 px
-  at 320 px width, weight 1.6; in the overview sigma 2 px, weight 5, so that 3 to 6 cm embers show at
-  3 cm per pixel). The bloom is computed from the rendered segmentation, so an ember behind a boulder
-  gets no glow. The orange rings in the overview are annotations.
-- Thermal: the thermal twin of the world gives the ash and every ember piece its own texel holding its
-  temperature and emissivity; they enter the radiometric chain like every other surface (band radiance,
-  emissivity, atmosphere, pixel average, PSF, noise, saturation). Occlusion comes from the rendering
-  only. No flame, smoke or plume is modeled.
+Fire heating (`Gorge.fire_heating`): each fire's radiated power is split over points along its flaming
+front (and its burning shrub or tree); a surface in sight of a point at distance d gets P cos / (4 pi
+d^2) and rises by 0.5 x 0.9 q / (12 + 6.5) K (capped at 250 K; 15 % out of sight), so the ground ahead
+of the front is hotter than the burned interior.
+
+## Fires: how they are built, drawn and seen
+
+- 8 small surface fires: a burned patch of mean radius 0.32 to 0.84 m with a ragged rim; the flaming
+  front is an irregular partial edge (40 to 55 % of the rim on the downwind side, plus one or two short
+  flaming stretches), the rest smolders. Tongues every 4 to 7 cm along the front, 0.18 to 0.5 m wide so
+  that they merge, heights lognormal (a few licks 2 to 2.6 times the median) times a variation along the
+  front; tongues behind the front; on a burning shrub (a charred twig skeleton), a burning log or the
+  base of a small pine. Radiated power 17 to 97 kW.
+- Placement and visibility bookkeeping as before: 6 hidden (in sight from 8 to 20 % of the path points
+  3 to 20 m before; each behind a boulder at least 1.15 m tall), 2 open (in sight from 100 %). Seed 7:
+  litter (N 16.3), grass (N 23.1), burning shrub (open, N 31.4), litter (N 36.2), fire at a pine (open, N
+  42.6), grass (N 42.9), burning log (N 50.5), litter (N 58.9).
+- Burned patch: char baked into the terrain with a feathered edge; over it a mesh inside 0.88 of the rim
+  with char, ash, thin glowing cracks and small coals behind the front; 10 to 15 coal pieces with a crack
+  texture of their own.
+- Flames, smoke and light: `fire.py` (its docstring has the model). Flames are orange-dominant and
+  translucent (color capped at (255, 215, 120), sooty dark-red tips); smoke puffs are at most 12 %
+  opaque, shaded by the sun, bent downwind and flattened into a thin haze drifting up the gorge, faded
+  near the camera; in the thermal image smoke is nearly invisible (emissivity 0.02 x opacity, excess
+  temperature falling as height^(-5/3)) and flames have filaments.
+- Quality: still images use `Fires(g, "still")` (flames at full resolution), the onboard cameras
+  `"live"` (flames at half, smoke at a third).
 
 ## Wind (`wind.py`)
 
@@ -177,84 +214,95 @@ lit from the baked sun ray test, plus about 1 K of spatial noise):
 
 - Mission overlay (`OUT/mission.params`, after the snapshot's x500.params and, for `--noise none`,
   mocap.params): start hovering at the first waypoint (north 0, 3.5 m above the floor), heading north,
-  then 9 waypoints along the centerline 3.5 m above the floor; `nav.vMax 2.0`, `nav.aMax 2.0`,
+  then 10 waypoints along the centerline 3.5 m above the floor; `nav.vMax 2.0`, `nav.aMax 2.0`,
   `nav.radius 0.2`, `nav.lagMax 0.6` (x500 values, restated). Spacing: the navigator stops at every
   waypoint (1 s to accelerate and 1 s to brake at 2 m/s^2, 1 m each), so legs are as long as possible:
-  at most 10 m and with the centerline within 0.35 m of each chord: 9 legs of 6.7 to 10.0 m, path 73.3
-  m. Nominal time sum(L/2 + 1) = 45.6 s, of which the stops cost 9 s (25 %); flown: all waypoints
-  reached at 45.2 s.
+  at most 10 m and with the centerline within 0.35 m of each chord: 10 legs of 4.2 to 10.0 m, path 73.4
+  m (seed 7 after the redesign); flown: all waypoints reached at 46.7 s.
 - Sensors: run_leanfc's `Sensors` and `Noise` (`field`: 10 Hz GPS-like fixes, the field profile;
   `none`: zero noise and 100 Hz fixes). Physics as run_leanfc (1200 Hz, motor lag 12.5/25 ms).
 - Contact: after every tick `getContactPoints` of the vehicle; any contact ends the run with time,
   body class, position, depth, normal force and speed in flight.json. Clearance: `getClosestPoints`
-  from the vehicle's collision cylinder (radius 0.25 m, 0.22 m tall) to the terrain and every boulder,
-  up to 4 m, every tick (CSV column `clearance`).
+  from the vehicle's collision cylinder (radius 0.25 m, 0.22 m tall) to every collision body of the world
+  (terrain, boulders, the rock and vegetation compounds), up to 4 m, every tick (CSV column `clearance`).
 - The run ends 2 s after the last waypoint, or at the time limit 2 x nominal + 10 s (101 s).
-- Cameras (`--cameras on`) render from the true pose after each tick's physics, in two extra PyBullet
-  clients (visual world, thermal twin), at their own rates; they do not feed the controller.
+- Cameras (`--cameras on`) render from the true pose after each tick's physics and at its simulated
+  time, in two extra PyBullet clients (visual world, thermal twin), at their own rates; they do not feed
+  the controller.
 
 ## Sensors (`sensors.py`)
 
 - Mounts (body FLU): FORWARD at (0.20, 0, -0.03) m, 30 deg below the nose; DOWN at (0, 0, -0.10) m
-  looking straight down, image top = forward. Neither sees the airframe (the vehicle is not in the
-  rendering clients).
-- RGB camera: 320 x 240, 90 deg horizontal FOV, 10 Hz, near 0.05 m, far 200 m; TinyRenderer with
-  diffuse light from the sun direction; sky pixels (segmentation -1) painted with a gradient; ember glow;
-  returns RGB, depth in meters (linearized: z = far near / (far - (far - near) d)) and segmentation.
-- Thermal camera, FLIR Lepton 3.5 class (Lepton 3.5 datasheet values): 160 x 120, 57 deg HFOV
-  (44.3 deg vertical), 8.7 Hz, NETD 50 mK (used in low gain too, where it is likely optimistic),
-  low-gain saturation at 400 C (datasheet: up to 400 C, typically 450 C), 8 to 14 um band. PSF: Gaussian,
-  sigma 0.5 px (diffraction of an f/1.1 lens at 10 um gives 0.39 px at 12 um pitch; rounded up for
-  aberrations, an assumption).
-- Radiometry (per frame): render the thermal twin at 4 x 4 samples per pixel (640 x 480) with lighting
-  reduced to the ambient term at 1, so each sample returns its texel exactly (check: 100.000 % of
-  307,200 surface samples equal a texel); decode temperature and emissivity; sky by elevation; band
-  radiance by Planck's law integrated over 8 to 14 um (600-point trapezoid, tabulated every 0.05 K from
-  150 to 1800 K); L = tau [e L(T) + (1 - e) L(T_air)] + (1 - tau) L(T_air), tau = exp(-4e-4 r) (0.96 at
-  100 m, an assumption for humid air); mean of the 16 samples per pixel (sub-pixel fill); PSF; white
-  noise of NETD in radiance at 30 C; clip at L(400 C); invert to apparent (brightness) temperature with
-  emissivity 1. Outputs: radiometric image in C (float), false color with a fixed 20 to 100 C scale, and
-  an automatic-gain version (histogram equalization). Palette: seven control points (black, violet,
-  magenta, red, orange, yellow, near white).
+  looking straight down, image top = forward.
+- RGB camera: TinyRenderer with the ambient term only (the textures carry the lighting); sky by
+  elevation with a glow around the sun and procedural clouds; the fires (fire.py); aerial perspective
+  (haze, 900 m scale); automatic exposure (mean luminance to 118, gain 0.85 to 1.7, damped); a mild tone
+  curve. Returns RGB, z-depth (m) and optionally the segmentation.
+- Thermal camera (`ThermalSpec`, the docstring lists what is modeled): a 640 x 512, 12 um uncooled VOx
+  core with a 7.5 mm f/1.0 lens: 54.2 deg HFOV, 1.6 mrad IFOV, 8.7 Hz. Chain per frame: the thermal twin
+  (100.000 % texel pass-through, `selftest`); band radiance (Planck, 8 to 14 um); emissivity with
+  surroundings at air temperature; atmosphere; flames (soot emissivity, filaments) and smoke (nearly
+  transparent, fire.py); optics with a core PSF and a 2-term halo (the glow around saturated flames);
+  residual non-uniformity (0.4 % gain; 30 mK pixel, 15 mK column, 10 mK row offsets: all below the NETD,
+  so no visible stripes), temporal noise (NETD 40 mK high gain, 100 mK low gain), two gain states with
+  automatic switching, saturation, 14-bit quantization; apparent temperature out. The scene behind it:
+  thermal inertia (insolation of the last 3 h, per-class time constants), blended material boundaries,
+  fine-scale temperature and emissivity variation, fire heating from the flaming front, burned ground at
+  150 to 350 C with hot cracks and coals. Not modeled: motion smear, shutter events, vignetting,
+  narcissus.
+- Display: `PALETTE` (ten control points written in code: deep blue, indigo, purple, magenta, red,
+  orange, yellow, near white). `AGC`: without a fire in view, plateau histogram equalization blended with
+  a linear map; with a fire in view (pixels above 72 C), a two-part mapping: the pixels below 72 C are
+  equalized into the lower 45 % of the palette (blue to magenta), hotter ones mapped linearly in log
+  radiance onto the upper 48 % (red to white), so sunlit sand and boulders stay purple and only the fire
+  and the ground it heats are orange to white; smoothed over frames.
 - Why not T^4: the 8 to 14 um band holds 37.8 % of the total radiance at 30 C but 14.0 % at 600 C and
-  7.5 % at 900 C, so T^4 overstates the contrast of a 600 C ember over 30 C rock by 2.7 x and of a 900 C
-  ember by 5.0 x. With the band integral, an ember lifts a 30 C pixel by the 40 K detection margin at a
-  fill fraction of 2.87 % (600 C) or 1.62 % (900 C).
-- Detection: hot pixels above the frame median + 40 K; connected groups; each placed in the world from
-  its hottest pixel's bearing and the range of that pixel's hottest sample; matched to the nearest
-  firebrand within 1.5 m, otherwise a false positive.
-- Rendering cost per frame (main flight, 473 / 473 / 411 frames, measured in the run): forward RGB 20.8
-  ms, downward RGB 19.6 ms, thermal 84.4 ms (max 24.3, 27.7, 136.5 ms). What limits it: TinyRenderer is
-  a single-threaded CPU rasterizer whose cost grows with the pixel count (`getCameraImage` with the
-  whole world: 8.6 ms at 320 x 240, 32.3 ms at 640 x 480, 134 ms at 1280 x 960; with an empty scene
-  3.1, 14.2 and 72.6 ms, so buffer clearing, readback and the conversion to Python lists are about half
-  of it); the 34k triangles add the other half. The thermal frame is 32 ms of rendering at 4 x 4
-  supersampling plus about 52 ms of NumPy radiometry on 307,200 samples. With cameras the 47 s flight
-  takes 74 s of wall time (20 s without). 8 x 8 supersampling would cost about 134 ms of rendering alone.
+  7.5 % at 900 C, so T^4 overstates the contrast of a 600 C ember over 30 C rock by 2.7 x.
+- Detection: hot pixels above the frame median + 40 K; connected groups placed in the world from the
+  hottest pixel's bearing and range (the flame's depth where a flame is in front, upsampled by nearest
+  neighbor); matched to the fire whose extent (burned patch, 1.5 m of flame) is within 2.0 m.
+- Live level of detail (third pass): the onboard cameras' render workers (`camera_render.py`, default
+  `--lod 2`) load a decimated visual world (`Gorge._live_lod`, `Gorge.load(..., lod=2)`): the same
+  terrain and fires; boulders from their icospheres' subdivision-2 vertices (320 faces each, the same
+  shape); rocks under about 0.12 m left out, cobbles as octahedra; each shrub, juniper and broadleaf
+  tree one rounded crown, sage one small crown, pines a trunk and three cones, the fires' own fuel as it
+  is; no grass. Baked into its own atlas with the same materials (`objectslive_s7_*.png`). Triangles:
+  still 1,247,559 (terrain 123,132, boulders 69,120, rocks 114,172, plants and grass 941,135), live
+  280,337 (terrain 123,132, boulders 17,280, rocks 55,700, plants 84,225). The live world is split into
+  14 chunks of 8.4 m along the gorge (53 bodies); each camera hides the chunks outside its view frustum
+  before a frame (`sensors.Culler`; the image is pixel-identical to the unculled one). The live fire
+  layer draws every second smoke puff (larger, a little more opaque, no noise), distant fires with every
+  second flame tongue, firelight at quarter resolution, cheap 2x upsampling; occlusion culling of fires
+  by sample points; the texel softening at half resolution (`sensors.soften_live`). The live thermal
+  image is the full radiometric chain rendered at 320 x 256 and resized to the 640 x 512 stream.
+  Collision geometry, the still path (grabs, `render_world.py`, `render_formation.py`) and the in-loop
+  cameras of `fly_gorge.py` are unchanged.
+- Rendering cost per frame (`out/redesign/bench.py`, 19 poses along the route, with the empty-frame
+  TinyRenderer baseline at 640 x 480 measured at the same moment; idle machine: 14 ms). Before the
+  redesign (idle): RGB 640 x 480 85.7 ms, thermal 160 x 120 82.8 ms. Second pass, still world (baseline
+  32.5 ms): RGB 278 ms, thermal 640 x 512 242 ms, thermal at half resolution 92 ms. Third pass, live
+  level of detail (baseline 32.4 / 33.1 ms, load average 5.6): RGB 640 x 480 160 ms (p95 222), thermal
+  (320 x 256 rendered, 640 x 512 out) 50 ms (p95 66). Of the live RGB frame under that load: TinyRenderer
+  about 70 ms, the fire layer up to 50 ms where fires are in view, softening 16 ms, tone 6 ms.
+- Launcher defaults: `fly_gorge_qgc.sh` RGB 640 x 480 at 10 Hz with 3 workers and the thermal stream with
+  1 (4 render processes); `fly_formation_qgc.sh` per vehicle RGB 640 x 480 at 10 Hz with 2 workers and
+  thermal with 1 (6 render processes for two vehicles); both use the live level of detail.
 
-## Results (seed 7, field noise seed 0)
+## Results (seed 7, field noise seed 0; after the second pass)
 
-- Flight without wind: completed in 47.2 s; path error max 0.14 m, rms 0.06 m; minimum clearance 1.67 m
-  (north 25.6 m, first narrows); tilt max 22.5 deg; motors 0.282 to 0.953, no saturation. With
-  `--noise none`: path error max 0.024 m, clearance 1.64 m.
-- Thermal detection (`out/detections.md`, the camera flight): all 8 firebrands detected, no false
-  positive in 411 frames. The two open fires are detected in the first frame they enter the image, at
-  30.4 and 22.6 m: their range is limited by the line of sight down the meandering gorge, not by
-  resolution (at 30.4 m the best pixel had an ember fill of 0.375 and read 232 C). The six hidden fires
-  enter the image, and are detected, only at 4.2 to 5.9 m, when the vehicle is nearly over the boulder;
-  two of them (fires 2 and 4) are first detected from their hot ash bed alone (ember fill 0, 122 C), and
-  fire 4's embers are never seen at all. Embers seen at close range saturate at 400 C.
-- Wind (`out/wind.md`, 23 flights): with 4 m/s and gusts of 1 m/s either way the flight is unchanged
-  (path error 0.14 to 0.15 m). The mission completes up to a mean of 9 m/s in both directions (13.8 m/s
-  in the narrows). From 10 m/s the vehicle holds about 0.5 m downwind of a waypoint in a narrows and
-  waits there for a gust to carry its estimate inside `nav.radius` 0.2 m. Measured at -10 m/s: a
-  horizontal aerodynamic force of 4.26 m/s^2 per unit mass against the velocity integrator's limit
-  iMax = 1 m/s^2 needs a steady error of (4.26 - 1) / (1.5 x 4) = 0.54 m; the measured mean is 0.70 m true
-  and 0.66 m estimated. It holds within 3 m of its waypoint up to 12 m/s up-gorge (18.4 m/s in the
-  narrows) and 11 m/s down-gorge (16.9 m/s). Up-gorge at 14 and 16 m/s it is pushed 8 to 11 m past its
-  waypoint; at 16 m/s it comes within 0.23 m of the west wall (north 29.3 m, 3.1 m above the floor) with 12 saturated ticks. At 18 and 20 m/s up-gorge it hits
-  the wall (terrain contact at north 28.5 and 49.1 m). Down-gorge at 18 and 20 m/s it is blown back down
-  the gorge, 40 and 230 m from its waypoint at the time limit.
+- Flight without wind (`out/main`): completed in 48.7 s (all waypoints at 46.7 s), no contact; tracking
+  error max 0.28 m; minimum clearance 1.79 m (north 13.9 m).
+- Thermal detection (`out/main/detections.md`): all 8 fires detected; the open fires at 30.5 and 26.3 m,
+  the hidden ones from 8.1 to 43.1 m (several first from the heated ground or flames over the boulder).
+  40 unmatched detections in 34 of 424 frames, from a flame-depth upsampling error found after the
+  flight (bilinear blending of the flame's depth with the far background placed some detections on the
+  boulder in front of the fire); fixed (nearest-neighbor depth); re-rendering the frames from t 14 to 18.5
+  s of the recorded flight with the fix gave 313 detections, none unmatched. The flight was not rerun.
+- Formation batch flights (`formation.py --plan P --noise field --seed 0`): abreast completed, no contact,
+  separation 1.66 to 2.05 m, clearance at least 1.55 / 1.93 m, tracking max 0.21 / 0.24 m; staggered
+  completed, no contact, separation 2.72 to 3.12 m, clearance at least 1.50 / 1.95 m, tracking max 0.21 /
+  0.23 m; no motor saturation. Plans: nominal clearance abreast 1.55 / 1.92 m, staggered 1.50 / 1.93 m.
+- The wind study (`out/wind.md`) predates the redesign.
 
 ## The gorge with QGroundControl: session, camera payload, map (`fly_gorge_qgc.sh`)
 
@@ -262,18 +310,23 @@ lit from the baked sun ray test, plus about 1 K of spatial noise):
 sh sim/world/fly_gorge_qgc.sh                                   # then open QGroundControl (sim/mavlink/QGC.md)
 sim/world/.venv-video/bin/python sim/world/test_camera.py        # camera protocol and both streams
 $PY -B sim/world/test_tiles.py                                   # tiles and their georeference
-$PY -B sim/world/test_gorge_flight.py --seed 0                   # a full scripted flight, video on
+$PY -B sim/world/test_gorge_flight.py --seed 0                   # a full scripted flight, video on (plan uploaded)
+$PY -B sim/world/test_gorge_flight.py --seed 0 --no-upload       # the same with the onboard mission, no upload
 sim/mavlink/.venv/bin/python sim/world/run_qgc_gorge.py --seconds 90 [--home $(mktemp -d)]   # the real QGroundControl
 ```
 
 - Session (`gorge_session.py`): sim/run_leanfc.py's loop and options with the gorge world in place of
   the ground plane, current build and parameter files (not the snapshot), `--ground --mav --realtime 1
   --trace-vehicle`; the X500 rests on the floor at the first waypoint (its base 5 mm above the highest
-  ground point under its collision disc plus its rest height, then settled); the controller's onboard
-  mission is the gorge route; wind with `WIND="MEAN GUST"` (wind.py; gust seed = noise seed + 1000).
+  ground point under its collision disc plus its rest height, then settled); the vehicle boots with the
+  complete gorge mission onboard, as an ArduCopter boots with the mission in its storage (the overlay
+  `gorge.params` carries it as `TAKEOFF`, `SPLINE` and `LAND` lines, `gorge_plan.write_overlay`): the
+  items of `gorge.plan` in the same order, takeoff, the spline waypoints, land; so after connecting,
+  QGroundControl's Start Mission (Guided, arm, MISSION_START) works from the ground with no upload, and
+  uploading `gorge.plan` is optional (it replaces the onboard mission with the same items); wind with `WIND="MEAN GUST"` (wind.py; gust seed = noise seed + 1000).
 - Camera payload (`camera_component.py`, `camera_render.py`): the forward RGB camera of sensors.py at
-  640 x 480, 90 deg, 15 fps (two render workers, about 90 ms per frame each) and the forward thermal
-  camera at its native 160 x 120, 57 deg, 8.7 fps (one worker, about 90 ms), libx264 constrained baseline,
+  640 x 480, 90 deg, 15 fps (three render workers, about 160 to 230 ms per frame each) and the forward thermal
+  camera at 640 x 512, 54 deg, 8.7 fps (two workers, about 160 ms; before the redesign 160 x 120, 57 deg, one worker, 90 ms), libx264 constrained baseline,
   a keyframe every second; thermal display: apparent temperature 20 C (black) to 80 C (near white)
   through sensors.PALETTE. The workers render from the newest pose of the 100 Hz feed.
 - Map (`tile_server.py`): a top-down rendering of the generated world at 1.5 cm per pixel (4648 x 6934
@@ -281,7 +334,22 @@ sim/mavlink/.venv/bin/python sim/world/run_qgc_gorge.py --seconds 90 [--home $(m
   conversion and QGroundControl's Web Mercator arithmetic; everything outside the terrain is the uniform
   color (138, 132, 118).
 
-Results (outputs in `out/test-camera/`, `out/test-tiles/`, `out/test-flight/`, `out/qgc-real*/`):
+Results after the third pass (live level of detail): `test_camera.py --rgb 640x480@10 --rgb-workers 3`
+(the single-vehicle defaults: 3 RGB and 1 thermal render process; baseline 29.9 ms just before): 32 of
+32; RGB 9.93 fps sent of 10 (4 slots dropped in 35 s), 9.87 fps decoded, render 209 ms mean; thermal
+8.71 fps of 8.7, none dropped, render 65 ms mean; pose to decoded frame 132 ms (RGB) and 49 ms (thermal).
+Detection on the live level of detail (`out/redesign/live_detect.py 9.5 14.5`: the recorded `out/main`
+frames re-rendered): every fire in view detected except hidden fire 5, in view in one frame only; 368
+detections, none unmatched (the full camera on the same frames: 768, none unmatched, hidden fire 7 in
+view in one frame and not detected). The two-vehicle session was not run.
+
+Results after the second pass (2026-11-11): `test_camera.py --rgb 640x480@10 --rgb-workers 4`: 32 of 32
+protocol and stream checks pass, but with six render workers (four RGB, two thermal) on a machine
+already loaded by other work the streams fell far short of their rates: RGB 4.40 fps sent of 10 (210
+slots dropped, render 941 ms mean), thermal 2.72 fps of 8.7 (213 dropped, render 743 ms); the camera drops
+slots rather than stalling. `test_tiles.py`: 15 of 15. The live sessions were not run.
+
+Results before the redesign (outputs in `out/test-camera/`, `out/test-tiles/`, `out/test-flight/`, `out/qgc-real*/`):
 
 - **Camera protocol** (`test_camera.py`, a pymavlink ground station replaying QGroundControl 5.1.5's
   discovery with its timeouts): 22 of 22 protocol steps pass: heartbeat (type CAMERA, 1.00 Hz), each
@@ -354,7 +422,7 @@ $PY -B formation_study.py --set all --jobs 8                    # 82 batch fligh
 $PY -B formation_study.py --set skew --plans staggered --skews -0.5 -0.75 -1.25 -1.5 -1.75 -2.5 --tag skew-fine
 $PY -B render_formation.py --run out/formation/study/staggered-field-s0-off              # out/formation-staggered.*
 PLAN=staggered sh fly_formation_qgc.sh                          # the real-time session for QGroundControl
-$PY -B test_formation_flight.py --plan staggered --seed 0 [--wind 6 2] [--skew -2] [--start mv]
+$PY -B test_formation_flight.py --plan staggered --seed 0 [--wind 6 2] [--skew -2] [--start mv] [--no-upload]
 $PY -B formation_tests.py --set all                             # 30 scripted flights -> out/formation/tests/tests-all.md
 sim/mavlink/.venv/bin/python run_qgc_gorge.py --formation staggered --home "$(mktemp -d)" --out out/formation/qgc-real
 ```
@@ -407,6 +475,12 @@ sim/mavlink/.venv/bin/python run_qgc_gorge.py --formation staggered --home "$(mk
   1.16 m there, and a noisy flight with vehicle 2 starting 1.25 s early came to 0.99 m
   (`out/formation/study-staggered-2.0/`), so the lateral component was raised to 2.2 m at about the same
   centre distance.
+- **After the redesign** (`formation_plan.py` rerun; batch flights `formation.py --plan P --noise field
+  --seed 0`, no wind, `out/formation/P-field-s0/`): nominal clearance abreast 1.61 and 1.82 m, staggered
+  1.57 and 1.94 m; start rest tilt abreast 1.96 / 2.37 deg, staggered 0.68 / 1.30 deg; land 3.0 / 2.4 and
+  4.5 / 3.4 deg. Flights: both completed, no contact; abreast separation 1.67 to 2.06 m, clearance at least
+  1.61 / 1.82 m, tracking max 0.21 / 0.24 m; staggered separation 2.72 to 3.12 m, clearance at least 1.57 /
+  1.96 m, tracking max 0.21 / 0.23 m; no motor saturation. The study tables below predate the redesign.
 - **Route centre.** The pair is centered on the gorge route (3.5 m above the floor on the centerline).
   Re-centering each waypoint to balance the two vehicles' clearances (`--sweep`) raised the smaller
   nominal clearance of abreast from 1.57 to 1.63 m and lowered it for staggered, so it is not used. The
@@ -485,10 +559,9 @@ along-track offset is cancelled); a late vehicle 2 only falls further behind (it
 
 ## Not modeled
 
-- Smoke and flame as participating media (absorption, emission and scattering in the visible and the
-  LWIR), the fire's plume, buoyant updrafts and flame radiation onto the walls.
-- Heat transfer of any kind: fires do not heat the ground or vegetation, do not spread, embers do not
-  cool; temperatures are static per run (no diurnal cycle, no thermal inertia).
+- Smoke and flame as participating media in 3D (they are image-space layers with a soft depth test,
+  fire.py), the plume's buoyancy and updrafts; fires do not spread, burned patches do not grow, embers do
+  not cool; fire heating is a static radiative balance computed at build time; no diurnal cycle.
 - Airborne embers (the optional wind-advected particles were not implemented), rotor wash on embers,
   ash or vegetation.
 - CFD-resolved wind: no separation, recirculation behind boulders, wall shear layers, wake of the
@@ -496,17 +569,16 @@ along-track offset is cancelled); a late vehicle 2 only falls further behind (it
   the cross-gorge component does not vanish at the walls; the drag force has no moment.
 - Terrain-induced GPS degradation (multipath, satellite masking by the walls), barometer errors from
   wind, magnetometer disturbance by rock; the sensor model is run_leanfc's, unchanged.
-- The visual renderer's lack of global illumination, soft shadows, specular reflection, atmospheric
-  haze, motion blur and lens effects; cast shadows are baked into the textures for the fixed sun; the
-  RGB camera has no exposure, noise, rolling shutter or lens distortion.
-- Thermal sensor effects: microbolometer time constant (about 12 ms, i.e. thermal motion blur), fixed
-  pattern noise and shutter (FFC) events, radiometric accuracy (+-5 C or 5 %), 14-bit quantization and
-  TLinear resolution, gain-mode switching, vignetting, lens transmission; the reflected sky and the
-  narcissus effect; the reflected component uses the air temperature for all surroundings.
-- Sub-sample detail: fill fractions are resolved to 1/16 of a pixel (4 x 4 supersampling) by a renderer
-  without antialiasing, so an ember smaller than a sample at range can vanish or flicker between frames.
-- Vegetation and boulders as obstacles of their own shape (vegetation is texture only; boulders collide
-  as convex hulls of their visual meshes); dynamic objects; rockfall.
+- The visual renderer's limits: lighting is baked for the fixed sun (no dynamic shadows of the vehicle or
+  the smoke), no specular reflection, no motion blur; TinyRenderer has no texture filtering or
+  antialiasing, so texels and leaf clumps show as small facets up close; the RGB camera has no noise,
+  rolling shutter or lens distortion.
+- Thermal sensor effects: microbolometer time constant (thermal motion blur), shutter (FFC) events and
+  drift, radiometric accuracy, vignetting, narcissus; the reflected component uses the air temperature
+  for all surroundings. Live frames render one sample per pixel (the stills two).
+- Obstacles: boulders and rocks collide as convex hulls of their meshes, shrubs and trees as compounds of
+  convex hulls of their trunks and leaf clumps; grass and thin branches have no collision; no dynamic
+  objects or rockfall.
 
 ## Deviations from the brief
 

@@ -1,5 +1,6 @@
 import Leanfc.Mavlink.Format
 import Leanfc.Mavlink.Messages
+import Leanfc.ParamFile
 
 /-!
 # Mission (stored mission items ↔ the vehicle's mission and the controller's waypoint list)
@@ -24,7 +25,8 @@ non-INT frame (5 → 0, 6 → 3), and item 0 the home position with frame GLOBAL
 `toWaypoints` turns the vehicle's mission into the navigator's waypoint list (`Waypoint`: NED point,
 leg kind, stop), and `ofWaypoints` turns a waypoint list back into a mission (each point a
 NAV_WAYPOINT or NAV_SPLINE_WAYPOINT; `storedOf` gives the MISSION_ITEM_INT form, relative
-altitude). Latitude and longitude go through
+altitude); `ofParamFile` is the onboard mission a parameter file states (`TAKEOFF`, the
+waypoints, `LAND`; `Leanfc/ParamFile.lean`). Latitude and longitude go through
 `Format.toNE`/`toLatLon` (integer differences, then binary32 scaling with the origin's cosine).
 -/
 
@@ -138,5 +140,17 @@ def ofWaypoints (wps : Array Waypoint) : Array MissionCmd :=
   wps.map fun w => match w.kind with
     | .line => .waypoint w.pos 0
     | .spline => .spline w.pos 0
+
+/-- The onboard mission of a parameter file, for a vehicle started on the ground at `start`: the
+`TAKEOFF` line as NAV_TAKEOFF, the waypoints as `ofWaypoints` gives them, the `LAND` line as
+NAV_LAND (at its north and east, the down coordinate that of `start`, which NAV_LAND ignores; or
+where the last leg ends). Without those lines it is `ofWaypoints wps`. -/
+def ofParamFile (ends : ParamFile.Ends) (start : Vec3) (wps : Array Waypoint) : Array MissionCmd :=
+  let first : Array MissionCmd := match ends.takeoff with | some d => #[.takeoff d] | none => #[]
+  let last : Array MissionCmd := match ends.land with
+    | some .here => #[.land none]
+    | some (.point n e) => #[.land (some ⟨n, e, start.z⟩)]
+    | none => #[]
+  first ++ ofWaypoints wps ++ last
 
 end Mavlink.Mission

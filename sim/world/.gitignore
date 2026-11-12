@@ -1,3 +1,6 @@
 # private environment of the camera payload (fly_gorge_qgc.sh makes it with uv: PyAV, NumPy), not shipped
 .venv-video/
 __pycache__/
+# the generated world: meshes, textures, the build cache and its lock (gorge.py builds them from the seed
+# on first use, about 3 minutes; sim/setup.sh does it once)
+assets/

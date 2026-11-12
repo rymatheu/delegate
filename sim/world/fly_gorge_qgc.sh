@@ -8,8 +8,12 @@
 #     (forward thermal) (sim/world/camera_component.py; its Python environment sim/world/.venv-video is made
 #     on the first run with uv: PyAV and NumPy);
 #   - the map tile server on http://127.0.0.1:8765/{z}/{x}/{y}.png (sim/world/tile_server.py).
-# Then open QGroundControl. Ctrl-C ends everything; outputs in sim/world/out/qgc/ (flight.csv, vehicle.log,
-# session.json, camera.json, gorge.plan, ...).
+# The vehicle boots with the complete gorge mission onboard (takeoff, the gorge route as spline waypoints,
+# land: the TAKEOFF, SPLINE and LAND lines of the overlay OUT/gorge.params), as an ArduCopter boots with the
+# mission in its storage; QGroundControl downloads it at connect. Then open QGroundControl and press Start
+# Mission: no upload needed. OUT/gorge.plan holds the same items; uploading it is optional (it replaces the
+# onboard mission). Ctrl-C ends everything; outputs in sim/world/out/qgc/ (flight.csv, vehicle.log,
+# session.json, camera.json, gorge.plan, gorge.params, ...).
 #
 #   sh sim/world/fly_gorge_qgc.sh
 #   WIND="4 1" sh sim/world/fly_gorge_qgc.sh                 # mean wind 4 m/s up-gorge, gusts 1 m/s
@@ -21,8 +25,8 @@ VPY=sim/world/.venv-video/bin/python
 NOISE=${NOISE:-field}
 SEED=${SEED:-0}
 VIDEO=${VIDEO:-on}
-RGB=${RGB:-640x480@15}
-RGB_WORKERS=${RGB_WORKERS:-2}
+RGB=${RGB:-640x480@10}
+RGB_WORKERS=${RGB_WORKERS:-3}     # + 1 thermal worker = 4 render processes (live level of detail, out/redesign/bench.py)
 GCS_PORT=${GCS_PORT:-14550}
 TILES_PORT=${TILES_PORT:-8765}
 POSE_PORT=${POSE_PORT:-14601}
@@ -53,7 +57,8 @@ fi
 trap 'kill $PIDS 2>/dev/null' EXIT INT TERM
 echo "leanfc: x500 on the gorge floor (params/ground.params origin${ORIGIN:+ overridden: $ORIGIN}), noise $NOISE, seed $SEED, wind ${WIND:-off}, video $VIDEO, real time."
 echo "Map: QGroundControl Application Settings > Maps > Provider CustomURL, Type Custom; Server URL http://127.0.0.1:$TILES_PORT/{z}/{x}/{y}.png"
-echo "Plan: $OUT/gorge.plan. Open QGroundControl now; Ctrl-C here ends the session."
+echo "Mission onboard (takeoff, the gorge route, land): after connecting, Start Mission works with no upload. Same items as a plan file (optional upload): $OUT/gorge.plan."
+echo "Open QGroundControl now; Ctrl-C here ends the session."
 "$PY" -B sim/world/gorge_session.py ${WIND:+--wind $WIND} --pose-port "$POSE_PORT" --session-out "$OUT" $PARAMS $ORIG \
   --noise "$NOISE" --seed "$SEED" --ground --mav --mav-port "$GCS_PORT" --realtime 1 --trace-vehicle \
   --seconds "$SECONDS_MAX" --mav-log "$OUT/vehicle.log" --out "$OUT/flight.csv" "$@"

@@ -207,8 +207,8 @@ def protocol(g, out_lines):
         log(report(f"stream 1: RTPUDP (1), H264 (1), uri 'udp://127.0.0.1:{PORTS[0]}', not thermal, running; hfov 90",
                    a.stream_id == 1 and a.type == 1 and a.encoding == 1 and a.uri == f"udp://127.0.0.1:{PORTS[0]}" and not a.flags & 2 and a.flags & 1 and a.hfov == 90,
                    f"name {a.name!r} {a.resolution_h}x{a.resolution_v} {a.framerate:g} fps {a.bitrate} bit/s flags {a.flags}"))
-        log(report(f"stream 2: RTPUDP (1), H264 (1), uri 'udp://127.0.0.1:{PORTS[1]}', flags THERMAL | RUNNING; hfov 57",
-                   b.stream_id == 2 and b.type == 1 and b.encoding == 1 and b.uri == f"udp://127.0.0.1:{PORTS[1]}" and b.flags & 2 and b.flags & 1 and b.hfov == 57,
+        log(report(f"stream 2: RTPUDP (1), H264 (1), uri 'udp://127.0.0.1:{PORTS[1]}', flags THERMAL | RUNNING; hfov 54 (the 640 x 512 core with its 7.5 mm lens, sensors.ThermalSpec)",
+                   b.stream_id == 2 and b.type == 1 and b.encoding == 1 and b.uri == f"udp://127.0.0.1:{PORTS[1]}" and b.flags & 2 and b.flags & 1 and b.hfov == 54,
                    f"name {b.name!r} {b.resolution_h}x{b.resolution_v} {b.framerate:g} fps {b.bitrate} bit/s flags {b.flags}"))
     req("VIDEO_STREAM_INFORMATION by MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION (2504) for stream 2 only", 2504, (2,),
         "VIDEO_STREAM_INFORMATION", lambda m: m.stream_id == 2)

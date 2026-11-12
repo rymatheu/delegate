@@ -3,7 +3,7 @@
 started as QGroundControl 5.1.5 does it, the gorge flown, the landing and the disarm.
 
     sim/.venv/bin/python sim/world/test_gorge_flight.py [--seed 0] [--noise field] [--wind MEAN GUST]
-        [--out sim/world/out/test-flight]
+        [--no-upload] [--out sim/world/out/test-flight]
 
 Starts `sh sim/world/fly_gorge_qgc.sh` (real time, its own ports: ground station 14592, tiles 8797,
 poses 14602), and is the ground station on 127.0.0.1:14592 with test_services.py's Link (system 255,
@@ -14,8 +14,11 @@ counts the RTP frames (marker bits) that arrive.
 Steps (PASS or FAIL): ready to fly (SYS_STATUS PREARM_CHECK); the plan file (the session's
 gorge.plan) uploaded as QGroundControl's PlanManager sends it (home as item 0, then each SimpleItem as
 MISSION_ITEM_INT, latitude and longitude * 1e7 rounded, frame and params as in the file),
-MISSION_ACK ACCEPTED; Start Mission as GuidedActionsController does from the ground (GUIDED, arm,
-MISSION_START); AUTO; liftoff; MISSION_CURRENT and MISSION_ITEM_REACHED in order through the 11
+MISSION_ACK ACCEPTED (with `--no-upload` instead: nothing uploaded; the onboard mission the vehicle
+booted with downloaded as QGroundControl does at connect, and compared with the plan file's items:
+the same commands and frames in the same order, latitude and longitude within 2e-7 degrees, altitudes
+within 2 mm, the same param1); Start Mission as GuidedActionsController does from the ground (GUIDED, arm,
+MISSION_START); AUTO; liftoff; MISSION_CURRENT and MISSION_ITEM_REACHED in order through the plan's
 items; touchdown and disarm (landed state ON_GROUND, not armed); no contact with the gorge in the air.
 Then, from the session's CSV and records: time from arm to disarm, tracking error (vehicle to the
 controller's target, in the air), distance to the planned route (the takeoff column and the chords of
@@ -87,6 +90,47 @@ def count_frames(port, stop, res):
     res[port] = dict(frames=n, fps=(n - 1) / (last - first) if n > 1 else 0.0)
 
 
+def download(link, wait, request, ack):
+    """MissionManager's download at connect: MISSION_REQUEST_LIST, MISSION_COUNT, each item by
+    MISSION_REQUEST_INT, MISSION_ACK. `wait(types, cond, timeout)` reads the vehicle's messages;
+    `request(seq)` sends MISSION_REQUEST_INT (or, with seq None, MISSION_REQUEST_LIST); `ack()` the ACK."""
+    request(None)
+    c = wait("MISSION_COUNT", lambda m: m.mission_type == 0, 2.0)
+    if c is None:
+        return None
+    items = []
+    for s in range(c.count):
+        it = None
+        for _ in range(6):
+            request(s)
+            it = wait("MISSION_ITEM_INT", lambda m: m.seq == s, 0.5)
+            if it:
+                break
+        if it is None:
+            return None
+        items.append(it)
+    ack()
+    return items
+
+
+def compare_mission(plan, items):
+    """(ok, detail): the downloaded items 1..n against the plan file's items (item 0 is home)."""
+    want = plan["mission"]["items"]
+    got = (items or [])[1:]
+    bad = []
+    if len(got) != len(want):
+        bad.append(f"{len(got)} items, plan {len(want)}")
+    for k, (w, g) in enumerate(zip(want, got), start=1):
+        q = w["params"]
+        dlat, dlon = abs(g.x - round(q[4] * 1e7)), abs(g.y - round(q[5] * 1e7))
+        dz = abs(g.z - q[6])
+        if g.command != w["command"] or g.frame != w["frame"] or dlat > 2 or dlon > 2 or dz > 0.002 \
+                or abs(g.param1 - (q[0] or 0)) > 1e-6:
+            bad.append(f"item {k}: cmd {g.command}/{w['command']} frame {g.frame}/{w['frame']} dlat {dlat} dlon {dlon} dz {dz:.4f}")
+    listing = [(i.seq, i.command, i.frame, i.x, i.y, round(i.z, 3)) for i in (items or [])]
+    return not bad and items is not None, ("; ".join(bad) + " | " if bad else "") + f"downloaded {listing}"
+
+
 def upload(link, plan):
     """PlanManager: MISSION_COUNT, then each requested item as MISSION_ITEM_INT (item 0 is home)."""
     m = plan["mission"]
@@ -116,6 +160,8 @@ def main():
     ap.add_argument("--port", type=int, default=14592)
     ap.add_argument("--video-ports", type=int, nargs=2, default=[5600, 5602], metavar=("RGB", "THERMAL"),
                     help="the camera's stream ports, where this test counts the frames (default 5600 5602)")
+    ap.add_argument("--no-upload", action="store_true",
+                    help="upload nothing: download the onboard mission, compare it with gorge.plan, start it")
     ap.add_argument("--out", default=str(HERE / "out" / "test-flight"))
     a = ap.parse_args()
     out = Path(a.out)
@@ -151,9 +197,19 @@ def main():
                 break
             time.sleep(0.5)
         plan = json.loads((out / "gorge.plan").read_text())
-        ack = upload(link, plan)
-        lines.append(report(f"plan uploaded ({len(plan['mission']['items'])} items + home): MISSION_ACK ACCEPTED",
-                            ack is not None and ack.type == 0, f"{ack}"))
+        if a.no_upload:
+            link.flush()
+            items = download(link, link.wait,
+                             lambda q: link.mav.mission_request_list_send(1, 1, 0) if q is None
+                             else link.mav.mission_request_int_send(1, 1, q, 0),
+                             lambda: link.mav.mission_ack_send(1, 1, 0, 0, 0))
+            ok, detail = compare_mission(plan, items)
+            lines.append(report(f"no upload: the onboard mission (home + {len((items or [None])[1:])} items) equals "
+                                f"gorge.plan's {len(plan['mission']['items'])} items", ok, detail))
+        else:
+            ack = upload(link, plan)
+            lines.append(report(f"plan uploaded ({len(plan['mission']['items'])} items + home): MISSION_ACK ACCEPTED",
+                                ack is not None and ack.type == 0, f"{ack}"))
         ok1, _ = link.set_mode_validated(4)
         ok2, _ = link.arm_validated(True)
         t_arm = link.now()

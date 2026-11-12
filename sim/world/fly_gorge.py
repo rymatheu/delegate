@@ -15,10 +15,12 @@ three 1200 Hz physics substeps, motor lag). What changes:
 - contact: after every tick the vehicle's contacts with the world are read; any contact ends the
   run and is reported; the clearance (closest distance from the vehicle's collision cylinder to the
   terrain and the boulders, up to 4 m) is logged every tick;
-- cameras (`--cameras on`): forward RGB and downward RGB at 10 Hz, forward thermal at 8.7 Hz, from
-  the true pose after the tick's physics, rendered in separate PyBullet clients holding the visual
-  and the thermal twin of the world; they do not feed the controller. Thermal detections are
-  matched against the firebrands online.
+- cameras (`--cameras on`): forward RGB and downward RGB at 10 Hz (320 x 240), forward thermal at
+  8.7 Hz (640 x 512 core, sensors.ThermalSpec), from the true pose after the tick's physics and at the
+  tick's simulated time (the flames flicker with it), rendered in separate PyBullet clients holding the
+  visual and the thermal twin of the world; they do not feed the controller. Thermal detections (on
+  the full image) are matched against the fires online; cams_thermal.npz keeps each frame binned 2 x 2
+  (320 x 256) to stay small.
 
 Outputs in OUT: flight.csv (run_leanfc's columns, then wind w_n w_e w_d and aerodynamic force
 f_n f_e f_d in NED, and the clearance), flight.json (configuration, waypoints, outcome, contact),
@@ -152,7 +154,7 @@ def main():
         vis, th = p.connect(p.DIRECT), p.connect(p.DIRECT)
         bv, bt = g.load(vis, "visual"), g.load(th, "thermal")
         cams = {"rgb_fwd": S.RGBCamera(vis, bv, S.FORWARD, gorge=g), "rgb_down": S.RGBCamera(vis, bv, S.DOWN, gorge=g),
-                "thermal": S.ThermalCamera(th, bt, S.FORWARD, seed=a.seed)}
+                "thermal": S.ThermalCamera(th, bt, S.FORWARD, seed=a.seed, gorge=g, fill=True)}
     rec = {k: dict(t=[], img=[], cost=[]) for k in cams}
     fire_fill = {k: [] for k in range(len(g.firebrands))}       # per thermal frame: max ember fill, peak temp
     dets = []
@@ -191,11 +193,12 @@ def main():
             for name, cam in cams.items():
                 if tk + 1e-9 >= len(rec[name]["t"]) / cam.rate:
                     c0 = time.perf_counter()
-                    fr = cam.capture(Rw, np.array(pw))
+                    fr = cam.capture(Rw, np.array(pw), tk)
                     rec[name]["cost"].append(time.perf_counter() - c0)
                     rec[name]["t"].append(tk)
                     if name == "thermal":
-                        rec[name]["img"].append(fr["temp_c"].astype(np.float16))
+                        tc = fr["temp_c"]
+                        rec[name]["img"].append(tc.reshape(tc.shape[0] // 2, 2, tc.shape[1] // 2, 2).mean(axis=(1, 3)).astype(np.float16))
                         for f in range(len(g.firebrands)):
                             fe, fa = fr["fill"].get(f, (None, None))
                             fire_fill[f].append((float(fe.max()), float(fa.max()), float(fr["temp_c"][fa > 0].max()))
@@ -247,20 +250,23 @@ def main():
 
 
 def write_detections(g, out, dets, fire_fill, tt, rows):
-    """detections.md: per firebrand the first frame in which any part of it (embers or ash bed) is in
-    the image, the first thermal detection (time, range from the vehicle) with the ember fill of the
+    """detections.md: per fire the first frame in which any part of it (flames, embers or burned patch) is
+    in the image, the first thermal detection (time, range from the vehicle) with the hot fill (flames
+    and embers) of the
     best pixel and the detection's apparent temperature at that frame, the number of frames with a
     detection, the peak apparent temperature over its pixels and the peak ember fill of a pixel;
     then the false positives (detections farther than MATCH_RADIUS_M from every firebrand)."""
     t = rows[:, 0]
     pos = np.column_stack([rows[:, 2], rows[:, 1], -rows[:, 3]])
     lines = [f"# Thermal detections, gorge seed {g.seed}", "",
-             f"Forward thermal camera (Lepton 3.5 class, 160 x 120, 57 deg, {S.Lepton().rate_hz} Hz, 30 deg down). Hot pixel: "
+             f"Forward thermal camera ({S.ThermalSpec().width} x {S.ThermalSpec().height} core, {S.ThermalSpec().hfov_deg:.0f} deg, "
+             f"{S.ThermalSpec().rate_hz} Hz, 30 deg down). Hot pixel: "
              f"apparent temperature above the frame median + {S.DETECT_DELTA_K:g} K; a detection is a connected group of hot "
              f"pixels, placed in the world from its hottest pixel's bearing and the range of that pixel's hottest sample, and "
-             f"matched to a firebrand within {S.MATCH_RADIUS_M} m. Ranges are from the vehicle to the firebrand center.", "",
+             f"matched to a fire within {S.MATCH_RADIUS_M} m of its extent (burned patch, 1.5 m of flame). Ranges are from the vehicle to "
+             f"the fire's center. Hot fill: the largest fraction of a pixel covered by flame or glowing embers.", "",
              "| # | position (E, N, U) m | radius m | T C | placement | first in view: t s, range m | first detection: t s, range m "
-             "| at first detection: ember fill, apparent T C | detected frames | peak apparent T C | peak ember fill |",
+             "| at first detection: hot fill, apparent T C | detected frames | peak apparent T C | peak hot fill |",
              "|---|---|---|---|---|---|---|---|---|---|---|"]
     for k, f in enumerate(g.firebrands):
         fe = np.array([q[0] for q in fire_fill[k]])

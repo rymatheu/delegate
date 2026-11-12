@@ -8,15 +8,32 @@ different vehicles. `Main` reads the files (the only IO) and calls `load`, which
 
 Format: one `NAME value` per line; `#` starts a comment; blank lines are ignored. NAME is the path
 of the field in `Params` (`vehicle.mass`, `position.vel.kp`, `start.z`, ...; the list is `names`).
-Four more line kinds: `WAYPOINT n e d [stop]` and `SPLINE n e d [stop]` (a straight leg or a
+More line kinds: `WAYPOINT n e d [stop]` and `SPLINE n e d [stop]` (a straight leg or a
 spline leg to that destination, NED m, repeated, in flying order; `stop`: the target stops there),
-`estimator fixed|ekf` (which estimator the controller runs; required), `ORIGIN lat lon alt` (the
-geodetic origin of the NED frame for the ground station: degrees, degrees, m AMSL, kept as exact
-integers ·1e7, ·1e7, ·1e3; optional) and `SIM_VEHICLE name`, which is for the simulator harness (it
-picks the URDF) and is accepted and ignored here. Several files may be given; a later file
-overrides the names it sets, and replaces the waypoint list if it has any `WAYPOINT` or `SPLINE`
-lines. Within one file a name may appear once. `merge` returns the merged settings (`Raw`), which
-`complete` validates as complete and `build` turns into `Params`; `load` is the three in a row.
+`TAKEOFF d` and `LAND [n e]` (the onboard mission's first and last items, below), `estimator
+fixed|ekf` (which estimator the controller runs; required), `ORIGIN lat lon alt` (the geodetic
+origin of the NED frame for the ground station: degrees, degrees, m AMSL, kept as exact integers
+·1e7, ·1e7, ·1e3; optional) and `SIM_VEHICLE name`, which is for the simulator harness (it picks
+the URDF) and is accepted and ignored here. Several files may be given; a later file overrides the
+names it sets, and replaces the mission (the waypoint list, `TAKEOFF` and `LAND`) if it has any
+`WAYPOINT` or `SPLINE` lines. Within one file a name may appear once. `merge` returns the merged
+settings (`Raw`), which `complete` validates as complete and `build` turns into `Params`; `load` is
+the three in a row.
+
+The onboard mission. The waypoint lines are the navigator's waypoint list (`Params.waypoints`), the
+mission of the batch start (in the air at the start point, armed, in AUTO). A vehicle started on the
+ground (`--ground`) boots with the mission a real ArduCopter keeps in its storage, which ArduCopter
+flies in AUTO from the ground only if its first item is a takeoff: `TAKEOFF d` is a NAV_TAKEOFF
+before the waypoints (climb straight up from the start point to down coordinate `d`, NED m, the
+same frame as the waypoint lines; it must be above the start: `d` < `start.z`), and `LAND n e` a
+NAV_LAND after them (fly to north `n`, east `e` at the altitude reached, then descend and land;
+`LAND` alone lands where the last leg ends). Each may appear once per file, anywhere in it (the
+takeoff is always the first item and the landing the last), and only in a file with waypoint lines.
+With a `TAKEOFF` line the start point is where the vehicle rests on the ground, and the onboard
+mission's relative altitudes (the MISSION_ITEM_INT form, frame GLOBAL_RELATIVE_ALT) are measured
+from it, as the vehicle's home is at boot (`Shell/Tools.lean`, `Main.lean`). Neither line changes
+`Params` (the waypoint list, the navigator, the batch start); they are kept in `Raw.ends` and the
+services' store (`ParamTable.Store.ends`).
 
 The vehicle layer's parameters have ArduCopter's names (`RTL_ALT_M`, `LAND_SPD_MS`, ...;
 `Leanfc/Copter/Params.lean`); `buildCopter` checks their ranges (integers where ArduCopter's are)
@@ -24,7 +41,8 @@ and converts the times to tick counts.
 
 Every value is rounded once from its decimal text to binary32 (the same `Decimal.parseR` the sensor
 lines go through). Unknown names, names set twice in one file, malformed numbers, missing names, an
-empty waypoint list, a leg of zero length (a point equal to the one before it), nonpositive values
+empty waypoint list, `TAKEOFF` or `LAND` set twice in a file or in a file without waypoint
+lines, a `TAKEOFF` not above the start point, a leg of zero length (a point equal to the one before it), nonpositive values
 where a division, a period or a limit needs a positive one (`nav.vMax`, `nav.aMax`, `nav.aLat`,
 `nav.vMaxZ` among them), a `nav.yawBehavior` or `nav.yawReverse` other than 0 or 1 and a negative
 `nav.yawSpeedMin` are errors. The derived constants (mixer inverse, ki·dt, beta/dtFix, the filter coefficient, the
@@ -109,22 +127,37 @@ def names : List String :=
    "FS_GCS_ENABLE", "FS_GCS_TIMEOUT", "FS_EKF_ACTION", "copter.ekfPosMax",
    "MOT_SPIN_ARM", "MOT_SPOOL_TIME", "TKOFF_SLEW_TIME", "TKOFF_THR_MAX"]
 
+/-- Where a `LAND` line lands: where the last leg ends (`LAND`), or at north `n`, east `e` (`LAND n e`). -/
+inductive LandAt where
+  | here
+  | point (n e : R)
+  deriving Inhabited, Repr
+
+/-- The onboard mission's items around the waypoints: the `TAKEOFF` line (the down coordinate to
+climb to) and the `LAND` line, if any. -/
+structure Ends where
+  takeoff : Option R := none
+  land : Option LandAt := none
+  deriving Inhabited, Repr
+
 /-- The content of parameter files before validation: the `NAME value` settings (one per name; a
-later file overrides an earlier one), the waypoints (a later file with `WAYPOINT` or `SPLINE`
-lines replaces the list), the `estimator` line and the `ORIGIN` line (latitude and longitude in
-degrees·1e7, altitude AMSL in mm, exact integers). -/
+later file overrides an earlier one), the waypoints and the mission's ends (a later file with
+`WAYPOINT` or `SPLINE` lines replaces all three), the `estimator` line and the `ORIGIN` line
+(latitude and longitude in degrees·1e7, altitude AMSL in mm, exact integers). -/
 structure Raw where
   vals : List (String × R) := []
   waypoints : Array Waypoint := #[]
+  ends : Ends := {}
   estimator : Option Estimator := none
   origin : Option (Int × Int × Int) := none
   deriving Inhabited
 
-/-- One file: its `NAME value` settings in file order, its waypoints, its `estimator` and `ORIGIN`
-lines. -/
+/-- One file: its `NAME value` settings in file order, its waypoints, its `TAKEOFF`, `LAND`,
+`estimator` and `ORIGIN` lines. -/
 def parseFile (file text : String) : Except String Raw := do
   let mut vals : List (String × R) := []
   let mut wps : Array Waypoint := #[]
+  let mut ends : Ends := {}
   let mut est : Option Estimator := none
   let mut origin : Option (Int × Int × Int) := none
   let mut n := 0
@@ -146,6 +179,17 @@ def parseFile (file text : String) : Except String Raw := do
           origin := some (la, lo, al)
         | _, _, _ => throw s!"{at_}: expected `ORIGIN lat lon alt` (degrees with at most 7 decimals, m AMSL with at most 3)"
       | _ => throw s!"{at_}: expected `ORIGIN lat lon alt`"
+    | "TAKEOFF" :: xs =>
+      if ends.takeoff.isSome then throw s!"{at_}: `TAKEOFF` is set twice in this file"
+      match xs.mapM Decimal.parseR with
+      | some [d] => ends := { ends with takeoff := some d }
+      | _ => throw s!"{at_}: expected `TAKEOFF d` (the down coordinate to climb to, NED m)"
+    | "LAND" :: xs =>
+      if ends.land.isSome then throw s!"{at_}: `LAND` is set twice in this file"
+      match xs.mapM Decimal.parseR with
+      | some [] => ends := { ends with land := some .here }
+      | some [x, y] => ends := { ends with land := some (.point x y) }
+      | _ => throw s!"{at_}: expected `LAND` or `LAND n e` (NED m)"
     | "estimator" :: xs =>
       if est.isSome then throw s!"{at_}: `estimator` is set twice in this file"
       match xs with
@@ -171,7 +215,9 @@ def parseFile (file text : String) : Except String Raw := do
           | some x => vals := vals ++ [(name, x)]
           | none => throw s!"{at_}: `{name}`: malformed number `{v}`"
         | _ => throw s!"{at_}: expected `NAME value`, got `{kw}` with another number of values"
-  return { vals, waypoints := wps, estimator := est, origin }
+  if wps.isEmpty && (ends.takeoff.isSome || ends.land.isSome) then
+    throw s!"{file}: `TAKEOFF` and `LAND` need the mission's `WAYPOINT` or `SPLINE` lines in the same file"
+  return { vals, waypoints := wps, ends, estimator := est, origin }
 
 /-- The files `(name, text)` merged, later files overriding earlier ones (`Raw`); not validated. -/
 def merge (files : List (String × String)) : Except String Raw := do
@@ -180,7 +226,7 @@ def merge (files : List (String × String)) : Except String Raw := do
     let f ← parseFile file text
     for (k, v) in f.vals do
       r := { r with vals := (k, v) :: r.vals.filter (·.1 != k) }
-    if !f.waypoints.isEmpty then r := { r with waypoints := f.waypoints }
+    if !f.waypoints.isEmpty then r := { r with waypoints := f.waypoints, ends := f.ends }
     if f.estimator.isSome then r := { r with estimator := f.estimator }
     if f.origin.isSome then r := { r with origin := f.origin }
   return r
@@ -286,12 +332,15 @@ def build (g : String → R) (wps : Array Waypoint) (est : Estimator) : Except S
           rateYaw := PI.gains (g "attitude.rateYaw.kp") (g "attitude.rateYaw.ki") (g "attitude.rateYaw.iMax") dt } }
 
 /-- The merged settings validated as complete: the value function, the waypoints and the estimator
-(missing names and an empty mission are errors). -/
+(missing names, an empty mission and a `TAKEOFF` not above the start point are errors). -/
 def complete (r : Raw) : Except String ((String → R) × Array Waypoint × Estimator) := do
   let missing := names.filter fun k => !(r.vals.any (·.1 == k))
   let missing := if r.estimator.isNone then missing ++ ["estimator"] else missing
   if !missing.isEmpty then throw s!"missing parameters: {", ".intercalate missing}"
   if r.waypoints.isEmpty then throw "no `WAYPOINT` or `SPLINE` lines"
+  if let some d := r.ends.takeoff then
+    if !(d < r.get "start.z") then
+      throw "`TAKEOFF d` must be above the start point (d < `start.z`, NED down)"
   return (r.get, r.waypoints, r.estimator.getD .fixed)
 
 /-- The configuration of the files `(name, text)`, later files overriding earlier ones. -/

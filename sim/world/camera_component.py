@@ -2,7 +2,8 @@
 MAV_TYPE_CAMERA) with two RTP/H.264 video streams, forward RGB and forward thermal.
 
     sim/world/.venv-video/bin/python sim/world/camera_component.py [--gcs 127.0.0.1:14550]
-        [--pose-port 14601] [--rgb 640x480@15] [--rgb-workers 2] [--thermal-fps 8.7]
+        [--pose-port 14601] [--rgb 640x480@15] [--rgb-workers 2] [--thermal 640x512] [--thermal-fps 8.7]
+        [--thermal-workers 2] [--thermal-lod 0]
         [--rgb-port 5600] [--thermal-port 5602] [--sysid 1] [--label Forward] [--stats FILE] [--log FILE]
 
 It is simulated hardware, separate from the flight controller: its own UDP socket and MAVLink
@@ -14,7 +15,8 @@ what QGroundControl 5.1.5 asks of a MAVLink camera (sim/world/QGC-CAMERA.md has 
   before the message it asks for: REQUEST_MESSAGE (512) and the legacy request commands for
   CAMERA_INFORMATION (521), CAMERA_SETTINGS (522), STORAGE_INFORMATION (525), CAMERA_CAPTURE_STATUS
   (527), VIDEO_STREAM_INFORMATION (2504, stream id, 0 = all), VIDEO_STREAM_STATUS (2505);
-  VIDEO_START_STREAMING / VIDEO_STOP_STREAMING (2502, 2503) ACCEPTED (the streams run continuously);
+  VIDEO_START_STREAMING / VIDEO_STOP_STREAMING (2502, 2503) ACCEPTED (the streams run continuously, unless
+  --rgb-gated on|off: then the RGB stream is sent only between a START and a STOP);
   everything else UNSUPPORTED, in particular REQUEST_MESSAGE CAMERA_FOV_STATUS, whose answer would
   make QGroundControl write the gimbal settings cameraHFov and cameraVFov;
 - CAMERA_INFORMATION: flags CAMERA_CAP_FLAGS_HAS_VIDEO_STREAM only, no camera definition file (a
@@ -72,7 +74,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 SIM_PY = os.environ.get("LEANFC_PY") or str(Path(__file__).resolve().parents[2] / "sim" / ".venv" / "bin" / "python")
 POSE_FMT = struct.Struct("<Idd3d4d")      # gorge_session.POSE_FMT
-REQ, REP = struct.Struct("<I3d4d"), struct.Struct("<Id")   # camera_render.REQ, REP
+REQ, REP = struct.Struct("<I3d4dd"), struct.Struct("<Id")  # camera_render.REQ, REP (the pose and its simulated time)
 SEI_UUID = uuid.uuid5(uuid.NAMESPACE_URL, "leanfc/sim/world/camera_component").bytes
 SEI_FMT = struct.Struct("<Iddd")          # frame index, pose wall time, slot wall time, send wall time
 SYSID, COMPID = 1, 100          # SYSID is set from --sysid in main
@@ -260,7 +262,7 @@ class Worker:
             raise RuntimeError(f"render worker did not start: {line!r}")
 
     def render(self, idx, pose):
-        self.p.stdin.write(REQ.pack(idx, *pose[3:10]))
+        self.p.stdin.write(REQ.pack(idx, *pose[3:10], pose[1]))
         self.p.stdin.flush()
         hdr = self.p.stdout.read(REP.size)
         img = self.p.stdout.read(self.nbytes)
@@ -286,6 +288,7 @@ class Stream:
         self.order, self.results = collections.deque(), {}
         self.next_idx, self.next_t, self.running = 0, None, True
         self.sent = self.dropped = 0
+        self.on = True                                         # see --rgb-gated
         self.render_ms, self.encode_ms, self.t_first = [], [], None
 
     def flags(self):
@@ -342,7 +345,8 @@ class Stream:
             nals = nal_units(data)
             first_vcl = next((k for k, n in enumerate(nals) if n[0] & 0x1F in (1, 5)), len(nals))
             nals.insert(first_vcl, sei_nal(SEI_FMT.pack(idx, pose[2], wall, time.time())))
-            self.rtp.send_au(nals, ts)
+            if self.on:                                         # --rgb-gated: only between START and STOP
+                self.rtp.send_au(nals, ts)
             self.encode_ms.append((time.perf_counter() - t0) * 1000)
             self.render_ms.append(ms)
             self.sent += 1
@@ -411,6 +415,10 @@ class Camera:
             msg, arg = legacy[cmd], int(prm[0]) if cmd in (2504, 2505) else 0
         elif cmd in (2502, 2503):
             self.requests[cmd] += 1
+            if self.a.rgb_gated is not None:                   # VIDEO_START/STOP_STREAMING, param1 = stream id (0: all)
+                for s in self.streams:
+                    if not s.thermal and int(prm[0]) in (0, s.sid):
+                        s.on = cmd == 2502
             return self.ack(cmd, ACCEPTED, sysid, compid)
         else:
             self.requests[cmd] += 1
@@ -460,11 +468,19 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--gcs", default="127.0.0.1:14550")
     ap.add_argument("--pose-port", type=int, default=14601)
-    ap.add_argument("--rgb", default="640x480@15", help="WxH@FPS of the forward RGB stream")
-    ap.add_argument("--rgb-workers", type=int, default=2)
+    ap.add_argument("--rgb", default="640x480@10", help="WxH@FPS of the forward RGB stream")
+    ap.add_argument("--rgb-workers", type=int, default=3)          # with --thermal-workers 1: 4 render processes
     ap.add_argument("--thermal-fps", type=float, default=8.7)
+    ap.add_argument("--thermal", default="640x512", help="WxH of the thermal stream (the core is 640 x 512; 320x256 bins it 2 x 2)")
+    ap.add_argument("--thermal-workers", type=int, default=1)
+    ap.add_argument("--thermal-lod", type=int, default=2, help="camera_render.py --lod of the thermal workers (2: live level of detail)")
+    ap.add_argument("--rgb-lod", type=int, default=2, help="camera_render.py --lod of the RGB workers (2: live level of detail)")
     ap.add_argument("--rgb-port", type=int, default=5600)
     ap.add_argument("--thermal-port", type=int, default=5602)
+    ap.add_argument("--rgb-gated", choices=("on", "off"), default=None,
+                    help="the RGB stream obeys VIDEO_START_STREAMING / VIDEO_STOP_STREAMING, starting on or off "
+                         "(two vehicles' cameras can then share one RGB port: QGroundControl stops the old "
+                         "active vehicle's stream and starts the new one's). Default: it runs continuously")
     ap.add_argument("--uri-form", choices=("url", "port"), default="url",
                     help="VIDEO_STREAM_INFORMATION uri: udp://127.0.0.1:PORT (default) or the bare port")
     ap.add_argument("--seed", type=int, default=0, help="thermal noise seed")
@@ -482,16 +498,23 @@ def main():
     w, h = map(int, size.split("x"))
     poses = Poses(a.pose_port, a.start)
     gs = ["--gorge-seed", str(a.gorge_seed)]
-    rgb_workers = [Worker(["--kind", "rgb", "--width", str(w), "--height", str(h), *gs], w * h * 3) for _ in range(a.rgb_workers)]
-    th_worker = Worker(["--kind", "thermal", "--seed", str(a.seed), *gs], 160 * 120 * 3)
-    for wk in rgb_workers + [th_worker]:
+    rgb_workers = [Worker(["--kind", "rgb", "--width", str(w), "--height", str(h), "--lod", str(a.rgb_lod), *gs], w * h * 3)
+                   for _ in range(a.rgb_workers)]
+    tw, th = map(int, a.thermal.split("x"))
+    th_workers = [Worker(["--kind", "thermal", "--seed", str(a.seed), "--width", str(tw), "--height", str(th),
+                          "--lod", str(a.thermal_lod), *gs], tw * th * 3) for _ in range(a.thermal_workers)]
+    for wk in rgb_workers + th_workers:
         wk.wait_ready()
     vsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     streams = [Stream(1, f"{a.label} RGB", w, h, float(fps), 90.0, False, a.rgb_port, int(w * h * float(fps) * 0.33),
                       rgb_workers, poses, vsock),
-               Stream(2, f"{a.label} thermal", 160, 120, a.thermal_fps, 57.0, True, a.thermal_port, 250000, [th_worker], poses, vsock)]
+               Stream(2, f"{a.label} thermal", tw, th, a.thermal_fps, 54.2, True, a.thermal_port, int(tw * th * a.thermal_fps * 0.15),
+                      th_workers, poses, vsock)]
+    if a.rgb_gated is not None:
+        streams[0].on = a.rgb_gated == "on"
+        streams[0].rtp.ssrc = 0x4C460000 | a.rgb_port          # one RTP source per port, whichever camera is sending
     cam = Camera(a, streams, poses)
-    workers = rgb_workers + [th_worker]
+    workers = rgb_workers + th_workers
 
     def stop(*_):
         for s in streams:
@@ -514,7 +537,8 @@ def main():
     for s in streams:
         s.start()
     print(f"camera component {SYSID}/100: MAVLink -> {a.gcs}; stream 1 RGB {w}x{h}@{fps} -> udp 127.0.0.1:{a.rgb_port} "
-          f"({a.rgb_workers} workers); stream 2 thermal 160x120@{a.thermal_fps} -> udp 127.0.0.1:{a.thermal_port}", flush=True)
+          f"({a.rgb_workers} workers); stream 2 thermal {tw}x{th}@{a.thermal_fps} -> udp 127.0.0.1:{a.thermal_port} "
+          f"({a.thermal_workers} workers)", flush=True)
     cam.run()
 
 

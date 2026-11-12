@@ -168,9 +168,13 @@ instead of on Pikes Peak's flat ground, with a simulated camera payload and the 
   true pose; `VIDEO=off` leaves it out, `RGB=320x240@20 RGB_WORKERS=1` changes the RGB stream;
 - the map tile server: `http://127.0.0.1:8765/{z}/{x}/{y}.png`, a top-down picture of the gorge (terrain,
   boulders, ash beds and embers) placed at the run's origin, and a neutral background everywhere else;
-- the plan file of the gorge mission: `sim/world/out/qgc/gorge.plan` (for the default origin also
-  `sim/world/gorge.plan`): takeoff at the start, the nine gorge waypoints as spline waypoints 3.5 m above
-  the floor, land at the last one; altitudes relative to home.
+- the gorge mission, onboard: the vehicle boots with it, as an ArduCopter boots with the mission in its
+  storage (the overlay's `TAKEOFF`, `SPLINE` and `LAND` lines, `Leanfc/ParamFile.lean`): takeoff at the
+  start, the gorge waypoints as spline waypoints 3.5 m above the floor, land at the last one; altitudes
+  relative to home. QGroundControl downloads it at connect, and shows it on the map;
+- the same mission as a plan file, `sim/world/out/qgc/gorge.plan` (for the default origin also
+  `sim/world/gorge.plan`): the same items in the same order; uploading it is optional (it replaces the
+  onboard mission with the same items).
 
 The first run creates `sim/world/.venv-video` (uv: PyAV, NumPy) for the camera. The world is built in
 every process at start (about 5 s); the camera is up about 15 s after the command, the vehicle is
@@ -197,10 +201,13 @@ camera.json with the frame statistics, tiles.log).
   Server URL can stay; it is used only with CustomURL. QGroundControl fetches tiles only while macOS
   reports the network as online (`QGeoMapReplyQGC.cpp` `_cacheError`), and keeps the tiles in its tile
   cache (Application Settings > Maps > Offline Maps / Tile Cache).
-- **The mission.** Plan view > the file menu (Open) > `sim/world/out/qgc/gorge.plan`, open it while the
+- **The mission.** It is already onboard: after connecting, the Fly view shows the gorge mission on the
+  map and **Start Mission** (slide to confirm) works from the ground with no upload: QGroundControl sets
+  Guided, arms and sends MISSION_START; the vehicle takes off, flies the gorge on spline legs, lands on the
+  floor at the end and disarms. The mission has no flight speed (WP_SPD, 2 m/s, applies). Uploading the
+  plan is optional: Plan view > the file menu (Open) > `sim/world/out/qgc/gorge.plan`, open it while the
   vehicle is connected (QGroundControl changes its offline-editing settings when a plan is opened without a
-  vehicle), Upload, then in the Fly view **Start Mission**: the vehicle takes off, flies the gorge on spline
-  legs, lands on the floor at the end and disarms. The plan has no flight speed (WP_SPD, 2 m/s, applies).
+  vehicle), Upload; it replaces the onboard mission (with the same items, unless the plan was edited).
 
 `sim/world/QGC-CAMERA.md` lists what QGroundControl 5.1.5 asks of the camera, the streams and the tile
 server, with the source of each request.
@@ -271,8 +278,11 @@ What runs: one PyBullet world with both vehicles resting on the floor (`sim/worl
 two controllers, MAVLink systems 1 and 2, both sending to UDP 14550; two camera payloads, components 1/100
 and 2/100, vehicle 1's RGB and thermal streams to UDP 5600 and 5602, vehicle 2's to 5604 and 5606 (RGB
 640 x 480 at 10 fps, two render workers each, thermal 160 x 120 at 8.7 fps: four streams); the tile server on
-8765. The two plan files are written to `sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` (for
-vehicle 1) and `formation-PLAN-v2.plan` (for vehicle 2). Same options as the gorge session (`NOISE`, `SEED`,
+8765. Each vehicle boots with its own route onboard (takeoff, its spline waypoints, land at its land site:
+the `TAKEOFF`, `SPLINE` and `LAND` lines of its overlay), so QGroundControl downloads each vehicle's
+mission at connect and Start Mission works without an upload. The same missions are written as plan files,
+`sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` (for vehicle 1) and `formation-PLAN-v2.plan`
+(for vehicle 2), with the same items; uploading them is optional. Same options as the gorge session (`NOISE`, `SEED`,
 `WIND`, `VIDEO=off`, `RGB`, `RGB_WORKERS`, `ORIGIN`), and the ports (`GCS_PORT`, `TILES_PORT`, `POSE_PORT1`,
 `POSE_PORT2`, `RGB_PORT1`, `THERMAL_PORT1`, `RGB_PORT2`, `THERMAL_PORT2`); it refuses to start when the tile or
 pose ports are taken.
@@ -304,8 +314,14 @@ Paths relative to `sim/mavlink/qgc-5.1.5/src`.
   main receiver's URL is replaced, after the announced one, by the setting Application Settings > Video >
   **UDP URL** (default `0.0.0.0:5600`; `_updateSettings`, `QGC-CAMERA.md` item 18). So with vehicle 2
   active the main view still shows UDP 5600, vehicle 1's RGB, with vehicle 2's thermal blended over it.
-  To see vehicle 2's RGB, set that UDP URL to `0.0.0.0:5604` while vehicle 2 is active (and back to
-  `0.0.0.0:5600` for vehicle 1). This is a setting the user changes; nothing here writes it.
+  That setting cannot be changed while a camera is connected: QGroundControl disables the Video Source
+  drop-down and hides the UDP URL field ("Mavlink camera stream is automatically configured",
+  `AppSettings/pages/Video.SettingsUI.json`). So the launcher's default, `VIDEO_SWITCH=on`, puts both RGB
+  streams on vehicle 1's port and each camera sends its RGB only between VIDEO_START_STREAMING and
+  VIDEO_STOP_STREAMING (`camera_component.py --rgb-gated`; vehicle 1's starts on, vehicle 2's off): choosing
+  the other vehicle in the toolbar then switches the RGB view with the thermal one. `VIDEO_SWITCH=off` keeps
+  the two RGB streams on separate ports (5600 and 5604), for an outside player. The camera side of this is
+  checked (`--rgb-gated`: RTP only between START and STOP); the switch has not been tried in the application.
 - **Plans go to the active vehicle.** Plan view's Upload sends to the active vehicle only
   (`PlanMasterController::sendToVehicle`); there is no vehicle choice in the Plan view. When the active
   vehicle changes while the Plan view holds a plan that was opened from a file and not edited, the editor
@@ -319,15 +335,16 @@ Paths relative to `sim/mavlink/qgc-5.1.5/src`.
 
 ### Manual steps
 
-1. `PLAN=staggered sh sim/world/fly_formation_qgc.sh` (or `abreast`); wait for its "Plans: ..." line.
+1. `PLAN=staggered sh sim/world/fly_formation_qgc.sh` (or `abreast`); wait for its "Missions onboard ..." line.
 2. Open QGroundControl. Both vehicles appear within a few seconds ("Connected to Vehicle 2"); both become
    "Ready To Fly" about 3 s after the simulation starts, and both cameras are discovered (the video shows
    vehicle 1's RGB with its thermal blended over it).
-3. Vehicle 1 is active. Plan view > Open > `sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` >
-   **Upload**.
-4. Toolbar vehicle indicator > **Vehicle 2**. Then (in this order) Plan view > Open >
-   `formation-PLAN-v2.plan` > **Upload**. Each plan holds one vehicle's route; uploading a plan to the
-   wrong vehicle would put both on the same route.
+3. Nothing to upload: each vehicle already has its own mission onboard (takeoff, its route, land), which
+   QGroundControl has downloaded; the map shows both.
+4. Optional, only to replace the onboard missions: vehicle 1 is active, Plan view > Open >
+   `sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` > **Upload**; then toolbar vehicle indicator >
+   **Vehicle 2**, and (in this order) Plan view > Open > `formation-PLAN-v2.plan` > **Upload**. Each plan
+   holds one vehicle's route; uploading a plan to the wrong vehicle would put both on the same route.
 5. Fly view, Multi-Vehicle panel (top right): **Select All**, then **Arm** (slide to confirm), then within
    10 s (DISARM_DELAY: an armed vehicle that has not taken off disarms after 10 s) **Start** (slide to
    confirm). Both take off together, fly their routes and land at the end of the gorge.
@@ -340,5 +357,6 @@ Paths relative to `sim/mavlink/qgc-5.1.5/src`.
    camera1.json, camera2.json).
 
 The scripted equivalent, on other ports, is `sim/world/test_formation_flight.py` (`--start mv` for the
-Multi-Vehicle panel's Arm and Start). The real application has not been run against this session and
+Multi-Vehicle panel's Arm and Start; `--no-upload` starts the onboard missions without uploading, after
+checking that each equals its plan file). The real application has not been run against this session and
 nobody has clicked through these steps.
