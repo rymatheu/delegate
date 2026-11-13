@@ -1,0 +1,102 @@
+# The entry points of the sensor World (ardupilot/translate_sensors.sh, --use @Sensors.use): what the vehicle calls
+# (Copter::init_ardupilot: barometer.init, compass.init, barometer.calibrate; the scheduled tasks: barometer.update
+# through Copter::update_altitude, compass.set_throttle, set_voltage and read through Copter::update_batt_compass).
+# Everything they reach is translated with them; the scheduler stand-in is translated whole.
+AP_Baro::init
+AP_Baro::calibrate
+AP_Baro::update
+Compass::init
+Compass::read
+Compass::set_throttle
+Compass::set_voltage
+# the getters AP_DAL (AP_DAL_Baro, AP_DAL_Compass) and AP_AHRS read
+AP_Baro::num_instances
+AP_Baro::healthy
+AP_Baro::get_pressure
+AP_Baro::get_temperature
+AP_Baro::get_altitude
+AP_Baro::get_ground_pressure
+AP_Baro::get_last_update
+AP_Baro::get_primary
+AP_Baro::get_climb_rate
+AP_Baro::get_EAS2TAS
+Compass::get_count
+Compass::healthy
+Compass::get_field
+Compass::last_update_usec
+Compass::get_offsets
+Compass::use_for_yaw
+Compass::learn_offsets_enabled
+Compass::have_scale_factor
+Compass::get_num_enabled
+Compass::get_first_usable
+Compass::get_declination
+Compass::consistent
+Compass::available
+Compass::auto_declination_enabled
+# AP_InertialSensor: what the vehicle calls (Copter::init_ardupilot: ins.init(loop rate) with the gyro calibration;
+# the scheduler: wait_for_sample; the fast task 0 update; task 30 periodic), and the getters AP_DAL
+# (AP_DAL_InertialSensor::start_frame) and AP_AHRS read
+AP_InertialSensor::init
+AP_InertialSensor::wait_for_sample
+AP_InertialSensor::update
+AP_InertialSensor::periodic
+AP_InertialSensor::set_primary
+AP_InertialSensor::set_board_orientation
+AP_InertialSensor::get_loop_rate_hz
+AP_InertialSensor::get_loop_delta_t
+AP_InertialSensor::get_first_usable_gyro
+AP_InertialSensor::get_first_usable_accel
+AP_InertialSensor::get_accel_count
+AP_InertialSensor::get_gyro_count
+AP_InertialSensor::use_accel
+AP_InertialSensor::use_gyro
+AP_InertialSensor::get_delta_velocity
+AP_InertialSensor::get_delta_angle
+AP_InertialSensor::get_delta_time
+AP_InertialSensor::get_gyro_bias_limit_rads
+AP_InertialSensor::get_gyro_bias_init_dps
+AP_InertialSensor::get_imu_pos_offset
+AP_InertialSensor::get_accel
+AP_InertialSensor::get_gyro
+AP_InertialSensor::get_accel_health
+AP_InertialSensor::get_gyro_health
+AP_InertialSensor::get_accel_health_all
+AP_InertialSensor::get_gyro_health_all
+AP_InertialSensor::healthy
+AP_InertialSensor::get_last_update_usec
+AP_InertialSensor::get_gyro_drift_rate
+AP_InertialSensor::get_vibration_levels
+AP_InertialSensor::get_accel_clip_count
+AP_InertialSensor::get_accel_peak_hold_neg_x
+AP_InertialSensor::gyro_calibrated_ok_all
+AP_InertialSensor::calibrating
+# AP_GPS: Copter::init_ardupilot's gps.init, task 12's update, and the getters AP_DAL (AP_DAL_GPS::start_frame) and
+# AP_AHRS read
+AP_GPS::init
+AP_GPS::update
+AP_GPS::primary_sensor
+AP_GPS::num_sensors
+AP_GPS::status
+AP_GPS::get_antenna_offset
+AP_GPS::location
+AP_GPS::last_message_time_ms
+AP_GPS::last_fix_time_ms
+AP_GPS::have_vertical_velocity
+AP_GPS::horizontal_accuracy
+AP_GPS::vertical_accuracy
+AP_GPS::speed_accuracy
+AP_GPS::get_hdop
+AP_GPS::num_sats
+AP_GPS::get_lag
+AP_GPS::velocity
+AP_GPS::ground_speed
+AP_GPS::ground_course
+AP_GPS::gps_yaw_deg
+AP_GPS::time_week
+AP_GPS::time_week_ms
+# read by the replay's comparison with the reference's probe (reference/hal/est_probe.cpp)
+AP_InertialSensor::get_gyro_offsets
+AP_InertialSensor::get_accel_offsets
+AP_InertialSensor::gyro_calibrated_ok
+AP_GPS::get_vdop

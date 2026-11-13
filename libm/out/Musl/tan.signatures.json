@@ -1,0 +1,240 @@
+{
+ "namespace": "Musl.tan",
+ "source": "libm/unity/unity_tan.c",
+ "functions": [
+  {
+   "name": "__tan",
+   "lean": "Musl.tan.__tan",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ],
+    [
+     "odd",
+     "int32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_tan.c:66-110"
+  },
+  {
+   "name": "tan",
+   "lean": "Musl.tan.tan",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_tan.c:44-70"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "__tan",
+   "cxx_call": "__tan",
+   "lean": "Musl.tan.__tan",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "odd",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "tan",
+   "cxx_call": "tan",
+   "lean": "Musl.tan.tan",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(3.33333333333334091986e-01 : Binary64)",
+   "bits": "3fd5555555555563",
+   "cpp": "3.33333333333334091986e-01",
+   "at": "49:14"
+  },
+  {
+   "lean": "(1.33333333333201242699e-01 : Binary64)",
+   "bits": "3fc111111110fe7a",
+   "cpp": "1.33333333333201242699e-01",
+   "at": "50:14"
+  },
+  {
+   "lean": "(5.39682539762260521377e-02 : Binary64)",
+   "bits": "3faba1ba1bb341fe",
+   "cpp": "5.39682539762260521377e-02",
+   "at": "51:14"
+  },
+  {
+   "lean": "(2.18694882948595424599e-02 : Binary64)",
+   "bits": "3f9664f48406d637",
+   "cpp": "2.18694882948595424599e-02",
+   "at": "52:14"
+  },
+  {
+   "lean": "(8.86323982359930005737e-03 : Binary64)",
+   "bits": "3f8226e3e96e8493",
+   "cpp": "8.86323982359930005737e-03",
+   "at": "53:14"
+  },
+  {
+   "lean": "(3.59207910759131235356e-03 : Binary64)",
+   "bits": "3f6d6d22c9560328",
+   "cpp": "3.59207910759131235356e-03",
+   "at": "54:14"
+  },
+  {
+   "lean": "(1.45620945432529025516e-03 : Binary64)",
+   "bits": "3f57dbc8fee08315",
+   "cpp": "1.45620945432529025516e-03",
+   "at": "55:14"
+  },
+  {
+   "lean": "(5.88041240820264096874e-04 : Binary64)",
+   "bits": "3f4344d8f2f26501",
+   "cpp": "5.88041240820264096874e-04",
+   "at": "56:14"
+  },
+  {
+   "lean": "(2.46463134818469906812e-04 : Binary64)",
+   "bits": "3f3026f71a8d1068",
+   "cpp": "2.46463134818469906812e-04",
+   "at": "57:14"
+  },
+  {
+   "lean": "(7.81794442939557092300e-05 : Binary64)",
+   "bits": "3f147e88a03792a6",
+   "cpp": "7.81794442939557092300e-05",
+   "at": "58:14"
+  },
+  {
+   "lean": "(7.14072491382608190305e-05 : Binary64)",
+   "bits": "3f12b80f32f0a7e9",
+   "cpp": "7.14072491382608190305e-05",
+   "at": "59:14"
+  },
+  {
+   "lean": "(1.85586374855275456654e-05 : Binary64)",
+   "bits": "3ef375cbdb605373",
+   "cpp": "1.85586374855275456654e-05",
+   "at": "60:14"
+  },
+  {
+   "lean": "(2.59073051863633712884e-05 : Binary64)",
+   "bits": "3efb2a7074bf7ad4",
+   "cpp": "2.59073051863633712884e-05",
+   "at": "61:14"
+  },
+  {
+   "lean": "(7.85398163397448278999e-01 : Binary64)",
+   "bits": "3fe921fb54442d18",
+   "cpp": "7.85398163397448278999e-01",
+   "at": "63:14"
+  },
+  {
+   "lean": "(3.06161699786838301793e-17 : Binary64)",
+   "bits": "3c81a62633145c07",
+   "cpp": "3.06161699786838301793e-17",
+   "at": "64:14"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "82:7"
+  },
+  {
+   "lean": "(2.0 : Binary64)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "98:11"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "107:12"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

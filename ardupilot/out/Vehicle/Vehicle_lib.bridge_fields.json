@@ -1,0 +1,24 @@
+[
+ {
+  "q": "AP_AHRS::yaw_sensor",
+  "adapter": "VehicleBridge.AP_AHRS.yaw_sensor'field",
+  "type": {
+   "kind": "int",
+   "lean": "Int32",
+   "size": 4,
+   "signed": true,
+   "name": null
+  }
+ },
+ {
+  "q": "AP_AHRS_View::yaw",
+  "adapter": "VehicleBridge.AP_AHRS_View.yaw'field",
+  "type": {
+   "kind": "float",
+   "lean": "Binary32",
+   "size": 4,
+   "signed": false,
+   "name": null
+  }
+ }
+]

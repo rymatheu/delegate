@@ -1,0 +1,1891 @@
+{
+ "namespace": "StorageManager_lib",
+ "source": "ardupilot/unity_storage.cpp",
+ "functions": [
+  {
+   "name": "sm_size",
+   "lean": "StorageManager_lib.sm_size",
+   "params": [
+    [
+     "type",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "ardupilot/unity_storage.cpp:41-45"
+  },
+  {
+   "name": "MIN",
+   "lean": "StorageManager_lib.MIN_uint16_t2",
+   "params": [
+    [
+     "one",
+     "uint16_t"
+    ],
+    [
+     "two",
+     "uint16_t"
+    ]
+   ],
+   "ret": "uint16_t",
+   "source": "ardupilot/unity_storage.cpp:300-303"
+  },
+  {
+   "name": "MIN",
+   "lean": "StorageManager_lib.MIN_uint64_t_uint16_t",
+   "params": [
+    [
+     "one",
+     "uint64_t"
+    ],
+    [
+     "two",
+     "uint16_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "ardupilot/unity_storage.cpp:300-303"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "StorageManager",
+   "lean": "StorageManager_lib.StorageManager",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [],
+   "output_log": false
+  },
+  {
+   "cxx": "StorageAccess",
+   "lean": "StorageManager_lib.StorageAccess",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "StorageAccess",
+     "lean": "StorageManager_lib.StorageAccess.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_type",
+       "type": "StorageManager::StorageType",
+       "ref": null,
+       "boundary": false,
+       "enum": "StorageManager_lib.StorageManager.StorageType",
+       "under": "uint32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "StorageManager_lib.StorageAccess.size",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_block",
+     "lean": "StorageManager_lib.StorageAccess.write_block",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "addr",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "data",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "array_elem": "uint8_t"
+      },
+      {
+       "name": "n",
+       "type": "size_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_byte",
+     "lean": "StorageManager_lib.StorageAccess.write_byte",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "value",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_uint8",
+     "lean": "StorageManager_lib.StorageAccess.write_uint8",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "value",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_block",
+     "lean": "StorageManager_lib.StorageAccess.read_block",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "data",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "array_elem": "uint8_t"
+      },
+      {
+       "name": "addr",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "n",
+       "type": "size_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_byte",
+     "lean": "StorageManager_lib.StorageAccess.read_byte",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_uint8",
+     "lean": "StorageManager_lib.StorageAccess.read_uint8",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_uint16",
+     "lean": "StorageManager_lib.StorageAccess.write_uint16",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "value",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_uint16",
+     "lean": "StorageManager_lib.StorageAccess.read_uint16",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_uint32",
+     "lean": "StorageManager_lib.StorageAccess.write_uint32",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "value",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_uint32",
+     "lean": "StorageManager_lib.StorageAccess.read_uint32",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write_float",
+     "lean": "StorageManager_lib.StorageAccess.write_float",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "value",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read_float",
+     "lean": "StorageManager_lib.StorageAccess.read_float",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "copy_area",
+     "lean": "StorageManager_lib.StorageAccess.copy_area",
+     "top": false,
+     "kind": "method",
+     "owner": "StorageAccess",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "source",
+       "type": "StorageAccess",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "StorageManager_lib.StorageAccess.State",
+       "leaves": [
+        {
+         "lean": "type",
+         "cxx": "type",
+         "type": "uint32_t",
+         "enum": "StorageManager_lib.StorageManager.StorageType"
+        },
+        {
+         "lean": "total_size",
+         "cxx": "total_size",
+         "type": "uint16_t",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "hal'storage",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "hidden": {
+        "kind": "hal_storage",
+        "size": 16384
+       }
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "type",
+     "cxx": "type",
+     "type": "uint32_t",
+     "enum": "StorageManager_lib.StorageManager.StorageType"
+    },
+    {
+     "root": "s",
+     "lean": "total_size",
+     "cxx": "total_size",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "StorageManager::StorageType",
+   "lean": "StorageManager_lib.StorageManager.StorageType",
+   "under": "uint32_t",
+   "values": [
+    [
+     "StorageParam",
+     0,
+     "StorageParam"
+    ],
+    [
+     "StorageFence",
+     1,
+     "StorageFence"
+    ],
+    [
+     "StorageRally",
+     2,
+     "StorageRally"
+    ],
+    [
+     "StorageMission",
+     3,
+     "StorageMission"
+    ],
+    [
+     "StorageKeys",
+     4,
+     "StorageKeys"
+    ],
+    [
+     "StorageBindInfo",
+     5,
+     "StorageBindInfo"
+    ],
+    [
+     "StorageCANDNA",
+     6,
+     "StorageCANDNA"
+    ],
+    [
+     "StorageParamBak",
+     7,
+     "StorageParamBak"
+    ]
+   ]
+  },
+  {
+   "cxx": "Rotation",
+   "lean": "StorageManager_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "storage_reset",
+   "cxx_call": "storage_reset",
+   "lean": "StorageManager_lib.storage_reset",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "storage_hash",
+   "cxx_call": "storage_hash",
+   "lean": "StorageManager_lib.storage_hash",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_size",
+   "cxx_call": "sm_size",
+   "lean": "StorageManager_lib.sm_size",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_byte",
+   "cxx_call": "sm_byte",
+   "lean": "StorageManager_lib.sm_byte",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "loc",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "v",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_u16",
+   "cxx_call": "sm_u16",
+   "lean": "StorageManager_lib.sm_u16",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "loc",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "v",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_u32",
+   "cxx_call": "sm_u32",
+   "lean": "StorageManager_lib.sm_u32",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "loc",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_float",
+   "cxx_call": "sm_float",
+   "lean": "StorageManager_lib.sm_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "loc",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "v",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_block",
+   "cxx_call": "sm_block",
+   "lean": "StorageManager_lib.sm_block",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "src",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "dst",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sm_copy",
+   "cxx_call": "sm_copy",
+   "lean": "StorageManager_lib.sm_copy",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "from",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "to",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "hal'storage",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "hidden": {
+      "kind": "hal_storage",
+      "size": 16384
+     }
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "MIN",
+   "cxx_call": "MIN<unsigned short, unsigned short>",
+   "lean": "StorageManager_lib.MIN_uint16_t2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "one",
+     "type": "uint16_t",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "two",
+     "type": "uint16_t",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint16_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "MIN",
+   "cxx_call": "MIN<unsigned long, unsigned short>",
+   "lean": "StorageManager_lib.MIN_uint64_t_uint16_t",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "one",
+     "type": "uint64_t",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "two",
+     "type": "uint16_t",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [],
+ "var_info": {},
+ "world": []
+}

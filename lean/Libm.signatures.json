@@ -1,0 +1,2117 @@
+{
+ "namespace": "Libm",
+ "source": "examples/libm.cpp",
+ "functions": [
+  {
+   "name": "f_sinf",
+   "lean": "Libm.f_sinf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:9"
+  },
+  {
+   "name": "f_cosf",
+   "lean": "Libm.f_cosf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:10"
+  },
+  {
+   "name": "f_tanf",
+   "lean": "Libm.f_tanf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:11"
+  },
+  {
+   "name": "f_asinf",
+   "lean": "Libm.f_asinf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:12"
+  },
+  {
+   "name": "f_acosf",
+   "lean": "Libm.f_acosf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:13"
+  },
+  {
+   "name": "f_atanf",
+   "lean": "Libm.f_atanf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:14"
+  },
+  {
+   "name": "f_atan2f",
+   "lean": "Libm.f_atan2f",
+   "params": [
+    [
+     "y",
+     "float"
+    ],
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:15"
+  },
+  {
+   "name": "f_expf",
+   "lean": "Libm.f_expf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:16"
+  },
+  {
+   "name": "f_logf",
+   "lean": "Libm.f_logf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:17"
+  },
+  {
+   "name": "f_log2f",
+   "lean": "Libm.f_log2f",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:18"
+  },
+  {
+   "name": "f_powf",
+   "lean": "Libm.f_powf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:19"
+  },
+  {
+   "name": "f_fmodf",
+   "lean": "Libm.f_fmodf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:20"
+  },
+  {
+   "name": "f_sin",
+   "lean": "Libm.f_sin",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:21"
+  },
+  {
+   "name": "f_cos",
+   "lean": "Libm.f_cos",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:22"
+  },
+  {
+   "name": "f_tan",
+   "lean": "Libm.f_tan",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:23"
+  },
+  {
+   "name": "f_asin",
+   "lean": "Libm.f_asin",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:24"
+  },
+  {
+   "name": "f_acos",
+   "lean": "Libm.f_acos",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:25"
+  },
+  {
+   "name": "f_atan",
+   "lean": "Libm.f_atan",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:26"
+  },
+  {
+   "name": "f_atan2",
+   "lean": "Libm.f_atan2",
+   "params": [
+    [
+     "y",
+     "double"
+    ],
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:27"
+  },
+  {
+   "name": "f_exp",
+   "lean": "Libm.f_exp",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:28"
+  },
+  {
+   "name": "f_log",
+   "lean": "Libm.f_log",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:29"
+  },
+  {
+   "name": "f_log2",
+   "lean": "Libm.f_log2",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:30"
+  },
+  {
+   "name": "f_pow",
+   "lean": "Libm.f_pow",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:31"
+  },
+  {
+   "name": "f_fmod",
+   "lean": "Libm.f_fmod",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:32"
+  },
+  {
+   "name": "f_sqrtf",
+   "lean": "Libm.f_sqrtf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:35"
+  },
+  {
+   "name": "f_fabsf",
+   "lean": "Libm.f_fabsf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:36"
+  },
+  {
+   "name": "f_fminf",
+   "lean": "Libm.f_fminf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:37"
+  },
+  {
+   "name": "f_fmaxf",
+   "lean": "Libm.f_fmaxf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:38"
+  },
+  {
+   "name": "f_floorf",
+   "lean": "Libm.f_floorf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:39"
+  },
+  {
+   "name": "f_ceilf",
+   "lean": "Libm.f_ceilf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:40"
+  },
+  {
+   "name": "f_truncf",
+   "lean": "Libm.f_truncf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:41"
+  },
+  {
+   "name": "f_roundf",
+   "lean": "Libm.f_roundf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:42"
+  },
+  {
+   "name": "f_copysignf",
+   "lean": "Libm.f_copysignf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:43"
+  },
+  {
+   "name": "f_scalbnf",
+   "lean": "Libm.f_scalbnf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "n",
+     "int32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/libm.cpp:44"
+  },
+  {
+   "name": "f_sqrt",
+   "lean": "Libm.f_sqrt",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:45"
+  },
+  {
+   "name": "f_fabs",
+   "lean": "Libm.f_fabs",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:46"
+  },
+  {
+   "name": "f_fmin",
+   "lean": "Libm.f_fmin",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:47"
+  },
+  {
+   "name": "f_fmax",
+   "lean": "Libm.f_fmax",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:48"
+  },
+  {
+   "name": "f_floor",
+   "lean": "Libm.f_floor",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:49"
+  },
+  {
+   "name": "f_ceil",
+   "lean": "Libm.f_ceil",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:50"
+  },
+  {
+   "name": "f_trunc",
+   "lean": "Libm.f_trunc",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:51"
+  },
+  {
+   "name": "f_round",
+   "lean": "Libm.f_round",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:52"
+  },
+  {
+   "name": "f_copysign",
+   "lean": "Libm.f_copysign",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:53"
+  },
+  {
+   "name": "f_scalbn",
+   "lean": "Libm.f_scalbn",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "n",
+     "int32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/libm.cpp:54"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "f_sinf",
+   "cxx_call": "f_sinf",
+   "lean": "Libm.f_sinf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_cosf",
+   "cxx_call": "f_cosf",
+   "lean": "Libm.f_cosf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_tanf",
+   "cxx_call": "f_tanf",
+   "lean": "Libm.f_tanf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_asinf",
+   "cxx_call": "f_asinf",
+   "lean": "Libm.f_asinf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_acosf",
+   "cxx_call": "f_acosf",
+   "lean": "Libm.f_acosf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_atanf",
+   "cxx_call": "f_atanf",
+   "lean": "Libm.f_atanf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_atan2f",
+   "cxx_call": "f_atan2f",
+   "lean": "Libm.f_atan2f",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_expf",
+   "cxx_call": "f_expf",
+   "lean": "Libm.f_expf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_logf",
+   "cxx_call": "f_logf",
+   "lean": "Libm.f_logf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_log2f",
+   "cxx_call": "f_log2f",
+   "lean": "Libm.f_log2f",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_powf",
+   "cxx_call": "f_powf",
+   "lean": "Libm.f_powf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fmodf",
+   "cxx_call": "f_fmodf",
+   "lean": "Libm.f_fmodf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_sin",
+   "cxx_call": "f_sin",
+   "lean": "Libm.f_sin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_cos",
+   "cxx_call": "f_cos",
+   "lean": "Libm.f_cos",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_tan",
+   "cxx_call": "f_tan",
+   "lean": "Libm.f_tan",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_asin",
+   "cxx_call": "f_asin",
+   "lean": "Libm.f_asin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_acos",
+   "cxx_call": "f_acos",
+   "lean": "Libm.f_acos",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_atan",
+   "cxx_call": "f_atan",
+   "lean": "Libm.f_atan",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_atan2",
+   "cxx_call": "f_atan2",
+   "lean": "Libm.f_atan2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_exp",
+   "cxx_call": "f_exp",
+   "lean": "Libm.f_exp",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_log",
+   "cxx_call": "f_log",
+   "lean": "Libm.f_log",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_log2",
+   "cxx_call": "f_log2",
+   "lean": "Libm.f_log2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_pow",
+   "cxx_call": "f_pow",
+   "lean": "Libm.f_pow",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fmod",
+   "cxx_call": "f_fmod",
+   "lean": "Libm.f_fmod",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_sqrtf",
+   "cxx_call": "f_sqrtf",
+   "lean": "Libm.f_sqrtf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fabsf",
+   "cxx_call": "f_fabsf",
+   "lean": "Libm.f_fabsf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fminf",
+   "cxx_call": "f_fminf",
+   "lean": "Libm.f_fminf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fmaxf",
+   "cxx_call": "f_fmaxf",
+   "lean": "Libm.f_fmaxf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_floorf",
+   "cxx_call": "f_floorf",
+   "lean": "Libm.f_floorf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_ceilf",
+   "cxx_call": "f_ceilf",
+   "lean": "Libm.f_ceilf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_truncf",
+   "cxx_call": "f_truncf",
+   "lean": "Libm.f_truncf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_roundf",
+   "cxx_call": "f_roundf",
+   "lean": "Libm.f_roundf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_copysignf",
+   "cxx_call": "f_copysignf",
+   "lean": "Libm.f_copysignf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_scalbnf",
+   "cxx_call": "f_scalbnf",
+   "lean": "Libm.f_scalbnf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_sqrt",
+   "cxx_call": "f_sqrt",
+   "lean": "Libm.f_sqrt",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fabs",
+   "cxx_call": "f_fabs",
+   "lean": "Libm.f_fabs",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fmin",
+   "cxx_call": "f_fmin",
+   "lean": "Libm.f_fmin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_fmax",
+   "cxx_call": "f_fmax",
+   "lean": "Libm.f_fmax",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_floor",
+   "cxx_call": "f_floor",
+   "lean": "Libm.f_floor",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_ceil",
+   "cxx_call": "f_ceil",
+   "lean": "Libm.f_ceil",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_trunc",
+   "cxx_call": "f_trunc",
+   "lean": "Libm.f_trunc",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_round",
+   "cxx_call": "f_round",
+   "lean": "Libm.f_round",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_copysign",
+   "cxx_call": "f_copysign",
+   "lean": "Libm.f_copysign",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "f_scalbn",
+   "cxx_call": "f_scalbn",
+   "lean": "Libm.f_scalbn",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [],
+ "var_info": {},
+ "world": []
+}

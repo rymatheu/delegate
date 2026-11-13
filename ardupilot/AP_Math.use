@@ -155,7 +155,6 @@ Vector3<double>::todouble
 
 # matrix3.h, matrix3.cpp at float (Matrix3f)
 Matrix3<float>::operator*(Vector3<float>)
-# Matrix3<float>::to_euler(T *roll, T *pitch, T *yaw): pointer parameters, rejected (README, "Known gaps")
 
 # quaternion.h, quaternion.cpp at float (Quaternion)
 QuaternionT<float>::QuaternionT()
@@ -183,3 +182,129 @@ QuaternionT<float>::zero
 QuaternionT<float>::is_unit_length
 QuaternionT<float>::operator*
 QuaternionT<float>::operator*=
+
+# Phase 2 (README.md, "Phase 2"): the rest of matrix3.cpp and quaternion.cpp at float and double, the
+# rotations of vector3.cpp, matrix_alg.cpp (pointer parameters: --pointer-params), crc.cpp,
+# location_double.cpp, div1000.h
+Matrix3<float>::from_euler
+Matrix3<float>::to_euler
+Matrix3<float>::from_rotation
+Matrix3<float>::to_euler312
+Matrix3<float>::from_euler312
+Matrix3<float>::rotate
+Matrix3<float>::normalize
+Matrix3<float>::operator*
+Matrix3<float>::mulXY
+Matrix3<float>::mul_transpose
+Matrix3<float>::transposed
+Matrix3<float>::det
+Matrix3<float>::inverse
+Matrix3<float>::invert
+Matrix3<float>::from_axis_angle
+Matrix3<double>::from_euler
+Matrix3<double>::to_euler
+Matrix3<double>::from_rotation
+Matrix3<double>::to_euler312
+Matrix3<double>::from_euler312
+Matrix3<double>::rotate
+Matrix3<double>::normalize
+Matrix3<double>::operator*
+Matrix3<double>::mulXY
+Matrix3<double>::mul_transpose
+Matrix3<double>::transposed
+Matrix3<double>::det
+Matrix3<double>::inverse
+Matrix3<double>::invert
+Matrix3<double>::from_axis_angle
+QuaternionT<float>::rotation_matrix
+QuaternionT<float>::from_rotation_matrix
+QuaternionT<float>::from_rotation
+QuaternionT<float>::rotate
+QuaternionT<float>::from_euler
+QuaternionT<float>::from_vector312
+QuaternionT<float>::from_axis_angle
+QuaternionT<float>::from_axis_angle_fast
+QuaternionT<float>::from_angular_velocity
+QuaternionT<float>::rotate_fast
+QuaternionT<float>::to_euler
+QuaternionT<float>::to_vector312
+QuaternionT<float>::operator/
+QuaternionT<float>::angular_difference
+QuaternionT<float>::roll_pitch_difference
+QuaternionT<double>::QuaternionT
+QuaternionT<double>::is_nan
+QuaternionT<double>::initialise
+QuaternionT<double>::rotation_matrix
+QuaternionT<double>::from_rotation_matrix
+QuaternionT<double>::from_rotation
+QuaternionT<double>::rotate
+QuaternionT<double>::earth_to_body
+QuaternionT<double>::from_euler
+QuaternionT<double>::from_vector312
+QuaternionT<double>::from_axis_angle
+QuaternionT<double>::to_axis_angle
+QuaternionT<double>::from_axis_angle_fast
+QuaternionT<double>::from_angular_velocity
+QuaternionT<double>::rotate_fast
+QuaternionT<double>::get_euler_roll
+QuaternionT<double>::get_euler_pitch
+QuaternionT<double>::get_euler_yaw
+QuaternionT<double>::to_euler
+QuaternionT<double>::to_vector312
+QuaternionT<double>::length
+QuaternionT<double>::length_squared
+QuaternionT<double>::inverse
+QuaternionT<double>::invert
+QuaternionT<double>::normalize
+QuaternionT<double>::is_zero
+QuaternionT<double>::zero
+QuaternionT<double>::is_unit_length
+QuaternionT<double>::operator*
+QuaternionT<double>::operator*=
+QuaternionT<double>::operator/
+QuaternionT<double>::angular_difference
+QuaternionT<double>::roll_pitch_difference
+Vector3<float>::rotate
+Vector3<float>::rotate_inverse
+Vector3<double>::rotate
+Vector3<double>::rotate_inverse
+
+# matrix_alg.cpp (the float and double instantiations it builds)
+mat_inverse
+mat_mul
+mat_identity
+
+# crc.cpp
+crc_crc4
+crc_crc8
+crc8_generic
+crc8_dvb_s2
+crc8_dvb
+crc8_dvb_s2_update
+crc8_dvb_update
+crc8_maxim
+crc8_sae
+crc8_rds02uf
+crc_xor_of_bytes
+crc_xmodem_update
+crc_xmodem
+crc_crc32
+crc32_small
+crc16_ccitt
+crc16_ccitt_r
+crc16_ccitt_GDL90
+calc_crc_modbus
+crc_fletcher16
+hash_fnv_1a
+crc_crc24
+crc_sum8_with_carry
+crc_crc16_ibm
+crc_crc64
+parity
+crc_sum_of_bytes_16
+crc_sum_of_bytes
+
+# location_double.cpp, div1000.h
+wgsllh2ecef
+wgsecef2llh
+uint64_div1000

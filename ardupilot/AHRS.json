@@ -1,0 +1,283 @@
+{
+ "harness": "ardupilot/ahrs_difftest.py",
+ "translate": "ardupilot/translate_ahrs.sh",
+ "out": "ardupilot/out/AHRS",
+ "namespace": "AHRS_lib",
+ "ref_flags": "AP_NavEKF3/AP_NavEKF3_core.cpp",
+ "cxx_sources": [
+  "AP_NavEKF/EKF_Buffer.cpp",
+  "AP_NavEKF/EKFGSF_yaw.cpp",
+  "AP_NavEKF/AP_NavEKF_Source.cpp",
+  "AP_NavEKF/AP_NavEKF_core_common.cpp",
+  "AP_NavEKF3/AP_NavEKF3.cpp",
+  "AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Control.cpp",
+  "AP_NavEKF3/AP_NavEKF3_GyroBias.cpp",
+  "AP_NavEKF3/AP_NavEKF3_MagFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Measurements.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Outputs.cpp",
+  "AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp",
+  "AP_NavEKF3/AP_NavEKF3_core.cpp",
+  "AP_DAL/AP_DAL.cpp",
+  "AP_DAL/AP_DAL_Airspeed.cpp",
+  "AP_DAL/AP_DAL_Baro.cpp",
+  "AP_DAL/AP_DAL_Compass.cpp",
+  "AP_DAL/AP_DAL_GPS.cpp",
+  "AP_DAL/AP_DAL_InertialSensor.cpp",
+  "AP_AHRS/AP_AHRS.cpp",
+  "AP_AHRS/AP_AHRS_Backend.cpp",
+  "AP_AHRS/AP_AHRS_DCM.cpp",
+  "AP_AHRS/AP_AHRS_NavEKF3.cpp",
+  "AP_AHRS/AP_AHRS_View.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Math/quaternion.cpp",
+  "AP_Math/location.cpp",
+  "AP_Math/control.cpp",
+  "AP_Common/Location.cpp",
+  "AP_Declination/AP_Declination.cpp",
+  "AP_Declination/tables.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ahrs_env.cpp",
+  "ardupilot/ahrs_env_param.cpp"
+ ],
+ "getters": [
+  {
+   "name": "get_quaternion"
+  },
+  {
+   "name": "get_roll_rad"
+  },
+  {
+   "name": "get_pitch_rad"
+  },
+  {
+   "name": "get_yaw_rad"
+  },
+  {
+   "name": "get_rotation_body_to_ned"
+  },
+  {
+   "name": "get_velocity_NED"
+  },
+  {
+   "name": "get_relative_position_NED_origin"
+  },
+  {
+   "name": "get_relative_position_D_origin"
+  },
+  {
+   "name": "get_location"
+  },
+  {
+   "name": "get_gyro"
+  },
+  {
+   "name": "get_gyro_drift"
+  },
+  {
+   "name": "get_accel_ef"
+  },
+  {
+   "name": "get_last_attitude_reset_count"
+  },
+  {
+   "name": "get_yaw_reset_count"
+  },
+  {
+   "name": "get_position_NE_reset_count"
+  },
+  {
+   "name": "get_position_D_reset_count"
+  },
+  {
+   "name": "healthy"
+  },
+  {
+   "name": "initialised"
+  },
+  {
+   "name": "get_origin"
+  },
+  {
+   "name": "active_EKF_type"
+  },
+  {
+   "name": "configured_ekf_type"
+  },
+  {
+   "name": "get_filter_status_for_configured_backend"
+  },
+  {
+   "name": "configured_backend_has_status",
+   "args": {
+    "status": 1
+   }
+  },
+  {
+   "name": "get_variances_for_configured_backend"
+  },
+  {
+   "name": "get_innovations"
+  },
+  {
+   "name": "home_is_set"
+  },
+  {
+   "name": "home_is_locked"
+  },
+  {
+   "name": "get_home"
+  },
+  {
+   "name": "get_posvelyaw_source_set"
+  },
+  {
+   "name": "have_inertial_nav"
+  },
+  {
+   "name": "is_vibration_affected"
+  },
+  {
+   "name": "using_noncompass_for_yaw"
+  },
+  {
+   "name": "get_trim"
+  },
+  {
+   "name": "get_vehicle_class"
+  },
+  {
+   "name": "get_fly_forward"
+  }
+ ],
+ "cxx_param_types": {
+  "get_filter_status_for_configured_backend.status": [
+   "nav_filter_status",
+   ".value"
+  ]
+ },
+ "runs": [
+  {
+   "name": "one_core",
+   "imus": 1,
+   "steps": 24000,
+   "still": 40.0,
+   "seed": 1,
+   "events": [
+    [
+     6000,
+     "H"
+    ],
+    [
+     16000,
+     "T",
+     1
+    ],
+    [
+     16400,
+     "K",
+     1
+    ],
+    [
+     16800,
+     "K",
+     0
+    ],
+    [
+     19600,
+     "T",
+     0
+    ],
+    [
+     20000,
+     "E",
+     10
+    ],
+    [
+     21000,
+     "E",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "two_cores",
+   "imus": 2,
+   "steps": 24000,
+   "still": 40.0,
+   "seed": 2,
+   "fault": 0.05,
+   "accel_fault": 3.0,
+   "glitch": [
+    18000,
+    19200,
+    60.0
+   ],
+   "events": [
+    [
+     6000,
+     "H"
+    ],
+    [
+     6400,
+     "L"
+    ],
+    [
+     9000,
+     "O"
+    ],
+    [
+     15800,
+     "D"
+    ],
+    [
+     16000,
+     "T",
+     1
+    ],
+    [
+     17000,
+     "Y"
+    ],
+    [
+     17200,
+     "C"
+    ],
+    [
+     19600,
+     "T",
+     0
+    ],
+    [
+     20000,
+     "E",
+     10
+    ],
+    [
+     21000,
+     "E",
+     3
+    ],
+    [
+     21400,
+     "W",
+     1
+    ],
+    [
+     21800,
+     "W",
+     0
+    ]
+   ],
+   "imu_nan": [
+    22000,
+    1
+   ]
+  }
+ ]
+}

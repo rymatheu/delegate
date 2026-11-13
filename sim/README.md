@@ -252,3 +252,49 @@ per line with `--exact` and 70 us without, against 16 us for `copter_ref` and th
 alone (`BENCH.md`), so its decimal input parsing and exact decimal output take about 150 us per
 tick, and the pipe itself little.
 
+
+## The translated whole vehicle: scenario suite and live sessions (Phase 5d)
+
+`fly_reference.py` flies a lock-step vehicle binary (default `build/reference/copter_ref`); `sim/lean_vehicle.py` puts the
+translated whole vehicle (`lean/.lake/build/bin/vehicle_replay` in live mode) in that place (`--bin sim/lean_vehicle.py`).
+README.md's "Phase 5c summary" and "Phase 5d summary" have the results.
+
+### The scenario suite (`sim/scenarios.py`)
+
+Six short sessions, recorded with the reference through `fly_reference.py --script NAME` (the scripted ground station of
+`lockstep_gcs.py`; the scripts are `fly_reference.py`'s `SCENARIOS`), each booting from `build/reference/storage-cf2x.bin`
+and waiting for EKF3 to use GPS (41.8 s on every session from this image) before its own part:
+
+| name | what it does | simulated |
+|---|---|---|
+| loiter | GUIDED takeoff to 3 m, LOITER with roll, pitch, yaw and climb stick input, LAND, disarm | 71 s |
+| brake | GUIDED toward a point 8 m north (SET_POSITION_TARGET_LOCAL_NED), BRAKE while moving, ALT_HOLD with sticks, LAND | 71 s |
+| rtl | RTL_ALT_M 4 and RTL_LOIT_TIME 1 s set over MAVLink, GUIDED 12 m north (SET_POSITION_TARGET_GLOBAL_INT), RTL to landing | 80 s |
+| guided | DO_REPOSITION (COMMAND_INT), CONDITION_YAW, DO_CHANGE_SPEED, a velocity target, NAV_LAND | 71 s |
+| battery | BATT_FS_LOW_ACT 1 and BATT_LOW_TIMER 2 set, the battery reading dropped to 10.2 V in flight: battery failsafe, LAND | 67 s |
+| prearm | arming refused at 3 s (`Arm: EKF attitude is bad`, `Arm: AHRS: not using configured AHRS type`), armed in STABILIZE after the origin is set and auto-disarmed, then GUIDED takeoff and the receiver silenced (FS_THR_ENABLE 3): radio failsafe, LAND | 66 s |
+
+The scenario scripts change only what the ground station sends and two sensor-layer inputs, through the `GCS` object:
+`gcs.rc` (the RC frame sent every 8th step, instead of the neutral one), `gcs.rc_off` (no RC frame: the receiver silent)
+and `gcs.bat` (the battery's voltage and current).
+
+```
+python3 sim/scenarios.py --record          # the reference recordings (sim/out/scenario-NAME) and their --est traces (build/scenarios/NAME/est.txt)
+python3 sim/scenarios.py                   # the whole-vehicle replay of each recording: one line per scenario
+python3 sim/scenarios.py --live            # and one closed-loop flight per scenario with the translated vehicle (cmp of inputs.txt and outputs.txt)
+```
+
+### A live QGroundControl session with the translated vehicle
+
+```
+build/reference/venv/bin/python sim/run_qgc_reference.py --vehicle lean --seconds 120 --out sim/out/lockstep-qgc-lean
+```
+
+This is `run_qgc_reference.py`'s procedure (`fly_reference.py --udp`: the vehicle resting on the ground in
+gym-pybullet-drones in real time, SERIAL0 bridged to UDP 127.0.0.1:14550; then the installed QGroundControl with console
+logging; QGroundControl terminated first at the end, then the harness) with `--bin sim/lean_vehicle.py`. The session is
+recorded (`OUT/harness/inputs.txt`, `outputs.txt`) and can be replayed afterwards through either vehicle. The translated
+vehicle has to keep up with the 400 Hz real-time pace: a step slower than 2.5 ms delays the next ones (nothing is
+dropped; the harness catches up), so a loaded machine shows up as a lag of the vehicle's clock against the wall clock, not
+as a different session. Without QGroundControl, `--gcs scripted` runs `sim/udp_gcs_check.py` (pymavlink on the same port:
+heartbeat, PARAM_REQUEST_LIST, the first PARAM_VALUEs) for `--seconds` and prints what it received.

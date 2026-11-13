@@ -1,0 +1,559 @@
+{
+ "namespace": "BitFields",
+ "source": "examples/bitfields.cpp",
+ "functions": [
+  {
+   "name": "header_word",
+   "lean": "BitFields.header_word",
+   "params": [
+    [
+     "key",
+     "uint16_t"
+    ],
+    [
+     "type",
+     "uint8_t"
+    ],
+    [
+     "group",
+     "uint32_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/bitfields.cpp:38-49"
+  },
+  {
+   "name": "header_fields",
+   "lean": "BitFields.header_fields",
+   "params": [
+    [
+     "w",
+     "uint32_t"
+    ],
+    [
+     "type",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/bitfields.cpp:52-61"
+  },
+  {
+   "name": "frame_bytes",
+   "lean": "BitFields.frame_bytes",
+   "params": [
+    [
+     "checksum",
+     "uint16_t"
+    ],
+    [
+     "sysid",
+     "uint32_t"
+    ],
+    [
+     "msgid",
+     "uint32_t"
+    ],
+    [
+     "p",
+     "uint8_t"
+    ],
+    [
+     "w",
+     "uint16_t"
+    ],
+    [
+     "target",
+     "uint32_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/bitfields.cpp:73-93"
+  },
+  {
+   "name": "cross_bytes",
+   "lean": "BitFields.cross_bytes",
+   "params": [
+    [
+     "a",
+     "uint8_t"
+    ],
+    [
+     "b",
+     "uint16_t"
+    ],
+    [
+     "c",
+     "uint16_t"
+    ],
+    [
+     "e",
+     "uint32_t"
+    ],
+    [
+     "f",
+     "uint32_t"
+    ],
+    [
+     "g",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/bitfields.cpp:96-112"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "header_word",
+   "cxx_call": "header_word",
+   "lean": "BitFields.header_word",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "key",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "group",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "header_fields",
+   "cxx_call": "header_fields",
+   "lean": "BitFields.header_fields",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "w",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "type",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "hash_bytes",
+   "cxx_call": "hash_bytes",
+   "lean": "BitFields.hash_bytes",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "b",
+     "type": "uint8_t[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "uint8_t"
+    },
+    {
+     "name": "n",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "frame_bytes",
+   "cxx_call": "frame_bytes",
+   "lean": "BitFields.frame_bytes",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "checksum",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sysid",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "msgid",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "p",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "w",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "target",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "cross_bytes",
+   "cxx_call": "cross_bytes",
+   "lean": "BitFields.cross_bytes",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "e",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "f",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "g",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [],
+ "var_info": {},
+ "world": [],
+ "layouts": [
+  {
+   "record": "Cross",
+   "cxx": "Cross",
+   "size": 12,
+   "align": 4,
+   "fields": [
+    [
+     "a",
+     0,
+     1,
+     false
+    ],
+    [
+     "b",
+     8,
+     3,
+     true
+    ],
+    [
+     "c",
+     16,
+     12,
+     true
+    ],
+    [
+     "d",
+     4,
+     1,
+     false
+    ],
+    [
+     "e",
+     40,
+     20,
+     true
+    ],
+    [
+     "f",
+     64,
+     20,
+     true
+    ],
+    [
+     "g",
+     88,
+     7,
+     true
+    ]
+   ]
+  },
+  {
+   "record": "Frame",
+   "cxx": "Frame",
+   "size": 23,
+   "align": 1,
+   "fields": [
+    [
+     "checksum",
+     0,
+     2,
+     false
+    ],
+    [
+     "len",
+     2,
+     1,
+     false
+    ],
+    [
+     "sysid",
+     3,
+     4,
+     false
+    ],
+    [
+     "msgid",
+     56,
+     24,
+     true
+    ],
+    [
+     "payload",
+     10,
+     5,
+     false
+    ],
+    [
+     "words",
+     15,
+     4,
+     false
+    ],
+    [
+     "target",
+     19,
+     4,
+     false
+    ]
+   ]
+  },
+  {
+   "record": "Header",
+   "cxx": "Header",
+   "size": 4,
+   "align": 4,
+   "fields": [
+    [
+     "key_low",
+     0,
+     8,
+     true
+    ],
+    [
+     "type",
+     8,
+     5,
+     true
+    ],
+    [
+     "key_high",
+     13,
+     1,
+     true
+    ],
+    [
+     "group_element",
+     14,
+     18,
+     true
+    ]
+   ]
+  }
+ ]
+}

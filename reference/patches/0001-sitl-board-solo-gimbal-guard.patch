@@ -1,0 +1,14 @@
+diff --git a/libraries/AP_HAL/board/sitl.h b/libraries/AP_HAL/board/sitl.h
+index 9c07dd8719..6ddfc936ab 100644
+--- a/libraries/AP_HAL/board/sitl.h
++++ b/libraries/AP_HAL/board/sitl.h
+@@ -105,7 +105,9 @@
+ #define AP_FILTER_ENABLED 1
+ #endif
+ 
++#ifndef HAL_SOLO_GIMBAL_ENABLED
+ #define HAL_SOLO_GIMBAL_ENABLED 1
++#endif
+ 
+ #ifndef HAL_OS_POSIX_IO
+ #define HAL_OS_POSIX_IO 1

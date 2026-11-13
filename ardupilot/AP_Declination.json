@@ -1,0 +1,120 @@
+{
+ "translate": "ardupilot/translate_ap_declination.sh",
+ "out": "ardupilot/out/AP_Declination",
+ "namespace": "AP_Declination_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-DAP_CUSTOMROTATIONS_ENABLED=0",
+  "-DAP_TERRAIN_AVAILABLE=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_sources": [
+  "AP_Declination/AP_Declination.cpp",
+  "AP_Declination/tables.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Common/Location.cpp",
+  "AP_Math/location.cpp",
+  "AP_Math/vector2.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ap_math_env.cpp"
+ ],
+ "cxx_include": [
+  "<AP_Declination/AP_Declination.h>"
+ ],
+ "free": {
+  "calls": 20000,
+  "leaf_domains": {
+   "relative_alt": [
+    0,
+    1
+   ],
+   "loiter_ccw": [
+    0,
+    1
+   ],
+   "terrain_alt": [
+    0,
+    1
+   ],
+   "origin_alt": [
+    0,
+    1
+   ],
+   "loiter_xtrack": [
+    0,
+    1
+   ]
+  },
+  "ranges": {
+   "latitude_deg": [
+    -95,
+    95
+   ],
+   "longitude_deg": [
+    -190,
+    190
+   ],
+   "loc.lat": [
+    -950000000,
+    950000000
+   ],
+   "loc.lng": [
+    -1900000000,
+    1900000000
+   ],
+   "deg": [
+    -400,
+    400
+   ],
+   "amt": [
+    -100,
+    100
+   ],
+   "low": [
+    -100,
+    0
+   ],
+   "high": [
+    0,
+    100
+   ]
+  }
+ }
+}

@@ -1,0 +1,243 @@
+{
+ "namespace": "AC_CommandModel_lib",
+ "source": "ardupilot/unity_ac_commandmodel.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "AC_CommandModel",
+   "lean": "AC_CommandModel_lib.AC_CommandModel",
+   "has_params": true,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "AC_CommandModel",
+     "lean": "AC_CommandModel_lib.AC_CommandModel.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AC_CommandModel",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "initial_rate",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_expo",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_tc",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_rate_tc",
+     "lean": "AC_CommandModel_lib.AC_CommandModel.get_rate_tc",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_CommandModel",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_rate",
+     "lean": "AC_CommandModel_lib.AC_CommandModel.get_rate",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_CommandModel",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_expo",
+     "lean": "AC_CommandModel_lib.AC_CommandModel.get_expo",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_CommandModel",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_rate",
+     "lean": "AC_CommandModel_lib.AC_CommandModel.set_rate",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_CommandModel",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "input",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "rate_tc",
+     "cxx": "rate_tc.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "rate",
+     "cxx": "rate.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "expo",
+     "cxx": "expo.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_rate_tc",
+     "cxx": "default_rate_tc",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_rate",
+     "cxx": "default_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_expo",
+     "cxx": "default_expo",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [],
+ "var_info": {
+  "AC_CommandModel": [
+   {
+    "name": "RATE",
+    "param": "rate",
+    "type": "float",
+    "enum": null,
+    "storage": null
+   },
+   {
+    "name": "EXPO",
+    "param": "expo",
+    "type": "float",
+    "enum": null,
+    "storage": null
+   },
+   {
+    "name": "RATE_TC",
+    "param": "rate_tc",
+    "type": "float",
+    "enum": null,
+    "storage": null
+   }
+  ]
+ },
+ "world": []
+}

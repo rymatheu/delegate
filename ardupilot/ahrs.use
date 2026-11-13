@@ -1,0 +1,53 @@
+# The entry points of the AP_AHRS translation (README.md, "Phase 3: AP_AHRS, and speed"): what the vehicle calls on
+# AP_AHRS (ArduCopter, AP_Vehicle, AP_Arming, GCS_MAVLink; REFERENCE.md "Inputs from the rest of the vehicle") and what
+# the --est probe reads (reference/hal/est_probe.cpp), translated with everything they reach (EKF3 through
+# AP_AHRS_NavEKF3, DCM, the view).
+AP_AHRS::init
+AP_AHRS::reset
+AP_AHRS::update
+AP_AHRS::create_view
+AP_AHRS::set_vehicle_class
+AP_AHRS::set_home
+AP_AHRS::lock_home
+AP_AHRS::set_terrain_hgt_stable
+AP_AHRS::set_takeoff_expected
+AP_AHRS::set_touchdown_expected
+AP_AHRS::resetHeightDatum
+AP_AHRS::request_yaw_reset
+AP_AHRS::check_lane_switch
+AP_AHRS::set_origin
+AP_AHRS::get_quaternion
+AP_AHRS::get_roll_rad
+AP_AHRS::get_pitch_rad
+AP_AHRS::get_yaw_rad
+AP_AHRS::get_rotation_body_to_ned
+AP_AHRS::get_velocity_NED
+AP_AHRS::get_relative_position_NED_origin
+AP_AHRS::get_location
+AP_AHRS::get_gyro
+AP_AHRS::get_accel_ef
+AP_AHRS::get_last_attitude_reset_count
+AP_AHRS::get_yaw_reset_count
+AP_AHRS::get_position_NE_reset_count
+AP_AHRS::get_position_D_reset_count
+AP_AHRS::healthy
+AP_AHRS::initialised
+AP_AHRS::get_origin
+AP_AHRS::active_EKF_type
+AP_AHRS::configured_ekf_type
+AP_AHRS::get_filter_status_for_configured_backend
+AP_AHRS::configured_backend_has_status
+AP_AHRS::get_variances_for_configured_backend
+AP_AHRS::home_is_set
+AP_AHRS::home_is_locked
+AP_AHRS::get_home
+AP_AHRS::get_vehicle_class
+AP_AHRS::get_fly_forward
+AP_AHRS::get_posvelyaw_source_set
+AP_AHRS::get_trim
+AP_AHRS::have_inertial_nav
+AP_AHRS::get_gyro_drift
+AP_AHRS::get_innovations
+AP_AHRS::get_relative_position_D_home
+AP_AHRS::is_vibration_affected
+AP_AHRS::using_noncompass_for_yaw

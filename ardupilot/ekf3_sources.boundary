@@ -1,0 +1,3 @@
+AP_NavEKF_Source::getPosXYSource,AP_NavEKF_Source::getPosZSource,AP_NavEKF_Source::getVelXYSource,AP_NavEKF_Source::getVelZSource
+AP_NavEKF_Source::useVelXYSource,AP_NavEKF_Source::useVelZSource,AP_NavEKF_Source::haveVelZSource,AP_NavEKF_Source::getYawSource
+AP_NavEKF_Source::usingGPS,AP_NavEKF_Source::ext_nav_enabled,AP_NavEKF_Source::gps_yaw_enabled,AP_NavEKF_Source::wheel_encoder_enabled

@@ -1,0 +1,5 @@
+tests/reject_world.cpp:21:40: rejected: local reference `r` to the result of a call with arguments on a World object
+tests/reject_world.cpp:38:18: rejected: call of `poke` that reaches `loop_obj` (this object) through the World: the caller's state is not stored there during its own call
+tests/reject_world.cpp:49:14: rejected: constructor that reaches other World objects (--world)
+tests/reject_world.cpp:57:13: rejected: assignment to a static singleton pointer other than `_singleton = this;` in a constructor
+tests/reject_world.cpp:68:5: rejected: two objects of class `Tap` whose reference members refer to different objects (--world)

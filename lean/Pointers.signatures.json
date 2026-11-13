@@ -1,0 +1,1510 @@
+{
+ "namespace": "Pointers",
+ "source": "examples/pointers.cpp",
+ "functions": [
+  {
+   "name": "pipeline",
+   "lean": "Pointers.pipeline",
+   "params": [
+    [
+     "a",
+     "float"
+    ],
+    [
+     "b",
+     "float"
+    ],
+    [
+     "c",
+     "float"
+    ],
+    [
+     "d",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/pointers.cpp:74-84"
+  },
+  {
+   "name": "checksum4",
+   "lean": "Pointers.checksum4",
+   "params": [
+    [
+     "a",
+     "uint8_t"
+    ],
+    [
+     "b",
+     "uint8_t"
+    ],
+    [
+     "c",
+     "uint8_t"
+    ],
+    [
+     "d",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/pointers.cpp:86-90"
+  },
+  {
+   "name": "accumulate3",
+   "lean": "Pointers.accumulate3",
+   "params": [
+    [
+     "a",
+     "uint32_t"
+    ],
+    [
+     "b",
+     "uint32_t"
+    ],
+    [
+     "c",
+     "uint32_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/pointers.cpp:92-99"
+  },
+  {
+   "name": "same_prefix",
+   "lean": "Pointers.same_prefix",
+   "params": [
+    [
+     "a",
+     "uint32_t"
+    ],
+    [
+     "b",
+     "uint32_t"
+    ],
+    [
+     "c",
+     "uint32_t"
+    ]
+   ],
+   "ret": "bool",
+   "source": "examples/pointers.cpp:101-107"
+  },
+  {
+   "name": "triangle",
+   "lean": "Pointers.triangle",
+   "params": [
+    [
+     "n",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/pointers.cpp:110-120"
+  },
+  {
+   "name": "written_first",
+   "lean": "Pointers.written_first",
+   "params": [
+    [
+     "a",
+     "float"
+    ],
+    [
+     "b",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/pointers.cpp:128-140"
+  },
+  {
+   "name": "byte_of",
+   "lean": "Pointers.byte_of",
+   "params": [
+    [
+     "v",
+     "uint32_t"
+    ],
+    [
+     "j",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint8_t",
+   "source": "examples/pointers.cpp:143-146"
+  },
+  {
+   "name": "lookup",
+   "lean": "Pointers.lookup",
+   "params": [
+    [
+     "i",
+     "uint8_t"
+    ],
+    [
+     "j",
+     "uint8_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/pointers.cpp:154-157"
+  },
+  {
+   "name": "bits",
+   "lean": "Pointers.bits",
+   "params": [
+    [
+     "v",
+     "uint32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/pointers.cpp:159-162"
+  },
+  {
+   "name": "magnitude",
+   "lean": "Pointers.magnitude",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "b",
+     "int32_t"
+    ]
+   ],
+   "ret": "int64_t",
+   "source": "examples/pointers.cpp:164-167"
+  },
+  {
+   "name": "bearing",
+   "lean": "Pointers.bearing",
+   "params": [
+    [
+     "dy",
+     "int32_t"
+    ],
+    [
+     "dx",
+     "int32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "examples/pointers.cpp:169-172"
+  },
+  {
+   "name": "int_nan",
+   "lean": "Pointers.int_nan",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ]
+   ],
+   "ret": "bool",
+   "source": "examples/pointers.cpp:174-177"
+  },
+  {
+   "name": "trap_mask",
+   "lean": "Pointers.trap_mask",
+   "params": [
+    [
+     "m",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/pointers.cpp:180-183"
+  },
+  {
+   "name": "guarded",
+   "lean": "Pointers.guarded",
+   "params": [
+    [
+     "a",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/pointers.cpp:185-196"
+  },
+  {
+   "name": "grid_demo",
+   "lean": "Pointers.grid_demo",
+   "params": [
+    [
+     "a",
+     "float"
+    ],
+    [
+     "b",
+     "float"
+    ],
+    [
+     "i",
+     "uint8_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/pointers.cpp:235-244"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "Grid",
+   "lean": "Grid",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clear",
+     "lean": "Grid.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Grid",
+     "lean": "Grid.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "put",
+     "lean": "Grid.put",
+     "top": false,
+     "kind": "method",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "Grid.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Grid",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Grid.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Grid",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "weighted",
+     "lean": "Grid.weighted",
+     "top": false,
+     "kind": "method",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Grid",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Grid.State",
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "Grid.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Grid",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "cells[0]!",
+     "cxx": "cells[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!",
+     "cxx": "cells[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!",
+     "cxx": "cells[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[3]!",
+     "cxx": "cells[3]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "sum",
+   "cxx_call": "sum",
+   "lean": "Pointers.sum",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "float"
+    },
+    {
+     "name": "n",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "scale",
+   "cxx_call": "scale",
+   "lean": "Pointers.scale",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "y",
+     "type": "float[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "float"
+    },
+    {
+     "name": "n",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "k",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "checksum",
+   "cxx_call": "checksum",
+   "lean": "Pointers.checksum",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "p",
+     "type": "uint8_t[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "uint8_t"
+    },
+    {
+     "name": "len",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "xor_bytes",
+   "cxx_call": "xor_bytes",
+   "lean": "Pointers.xor_bytes",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "data",
+     "type": "uint8_t[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "uint8_t"
+    },
+    {
+     "name": "length",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint8_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "accumulate",
+   "cxx_call": "accumulate",
+   "lean": "Pointers.accumulate",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "acc",
+     "type": "uint64_t",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null,
+     "by_pointer": true
+    },
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "make",
+   "cxx_call": "make",
+   "lean": "Pointers.make",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "n",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float[0]",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "pipeline",
+   "cxx_call": "pipeline",
+   "lean": "Pointers.pipeline",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "d",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "checksum4",
+   "cxx_call": "checksum4",
+   "lean": "Pointers.checksum4",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "d",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "accumulate3",
+   "cxx_call": "accumulate3",
+   "lean": "Pointers.accumulate3",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "same_prefix",
+   "cxx_call": "same_prefix",
+   "lean": "Pointers.same_prefix",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "triangle",
+   "cxx_call": "triangle",
+   "lean": "Pointers.triangle",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "n",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "written_first",
+   "cxx_call": "written_first",
+   "lean": "Pointers.written_first",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "byte_of",
+   "cxx_call": "byte_of",
+   "lean": "Pointers.byte_of",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "j",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint8_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "lookup",
+   "cxx_call": "lookup",
+   "lean": "Pointers.lookup",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "i",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "j",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "bits",
+   "cxx_call": "bits",
+   "lean": "Pointers.bits",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "magnitude",
+   "cxx_call": "magnitude",
+   "lean": "Pointers.magnitude",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "bearing",
+   "cxx_call": "bearing",
+   "lean": "Pointers.bearing",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "dy",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "dx",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "int_nan",
+   "cxx_call": "int_nan",
+   "lean": "Pointers.int_nan",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "trap_mask",
+   "cxx_call": "trap_mask",
+   "lean": "Pointers.trap_mask",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "m",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "guarded",
+   "cxx_call": "guarded",
+   "lean": "Pointers.guarded",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "grid_demo",
+   "cxx_call": "grid_demo",
+   "lean": "Pointers.grid_demo",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "i",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "unit",
+   "cxx_call": "Grid::unit",
+   "lean": "Grid.unit",
+   "kind": "free",
+   "top": false,
+   "owner": "Grid",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "i",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.5 : Binary32)",
+   "bits": "3fc00000",
+   "cpp": "1.5f",
+   "at": "149:6"
+  },
+  {
+   "lean": "(2.5 : Binary32)",
+   "bits": "40200000",
+   "cpp": "2.5f",
+   "at": "149:12"
+  },
+  {
+   "lean": "(3.5 : Binary32)",
+   "bits": "40600000",
+   "cpp": "3.5f",
+   "at": "149:18"
+  },
+  {
+   "lean": "(4.5 : Binary32)",
+   "bits": "40900000",
+   "cpp": "4.5f",
+   "at": "149:24"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "150:7"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "150:14"
+  },
+  {
+   "lean": "(3.0 : Binary32)",
+   "bits": "40400000",
+   "cpp": "3.0f",
+   "at": "150:21"
+  },
+  {
+   "lean": "(4.0 : Binary32)",
+   "bits": "40800000",
+   "cpp": "4.0f",
+   "at": "150:28"
+  },
+  {
+   "lean": "(0.25 : Binary32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "151:6"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "151:13"
+  },
+  {
+   "lean": "(0.75 : Binary32)",
+   "bits": "3f400000",
+   "cpp": "0.75f",
+   "at": "151:19"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "26:15"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

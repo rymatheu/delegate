@@ -1,0 +1,4 @@
+{
+ "namespace": "BitFields",
+ "cpp2lean": ["--pointer-params", "--runtime-loops", "--c-strings", "--byte-objects", "--mavlink"]
+}

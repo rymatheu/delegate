@@ -34,16 +34,18 @@ for s in "$HERE/compose_env.cpp" "$L/AP_Math/AP_Math.cpp" "$L/AP_Math/vector2.cp
   clang++ "${FLAGS[@]}" -c "$s" -o "$o"
   objs+=("$o")
 done
-clang++ -o "$B/compose_env" "${objs[@]}" -Wl,-dead_strip
+# musl's math functions, as in the reference vehicle (libm/build_musl.sh)
+MUSL=($(cat "$("$ROOT/libm/build_musl.sh")"))
+clang++ -o "$B/compose_env" "${objs[@]}" "${MUSL[@]}" -Wl,-dead_strip
 "$B/compose_env" "$RUN/inputs.txt" "$RUN/trace.txt" "$N" > "$B/env.txt"
 
 # 2. the Lean side: the translations and Compose.lean in the Lean package, executable `compose`
 D="$ROOT/lean"
-for d in AP_Motors AC_Attitude AC_PosControl; do cp "$ROOT/ardupilot/out/$d/"*.lean "$D/"; done
+cp "$ROOT/ardupilot/out/Copter/"*.lean "$D/"
 cp "$HERE/Compose.lean" "$D/Compose.lean"
 if [ -n "${CPP2LEAN_MUTATE:-}" ]; then
   # sensitivity check (README.md): [regex, replacement] pairs applied to one translation's copy
-  python3 - "$D/${CPP2LEAN_MUTATE_FILE:-AC_Attitude_lib.lean}" <<'PY'
+  python3 - "$D/${CPP2LEAN_MUTATE_FILE:-Copter_lib.lean}" <<'PY'
 import json, os, re, sys
 t = open(sys.argv[1]).read()
 for pat, rep in json.loads(os.environ["CPP2LEAN_MUTATE"]):

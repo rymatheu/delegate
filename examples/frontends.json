@@ -1,0 +1,55 @@
+{
+ "namespace": "FrontEnds",
+ "cpp2lean": [
+  "--nest",
+  "--world",
+  "--world-pointers",
+  "--front-ends",
+  "--pointer-params",
+  "--runtime-loops",
+  "--general-loops",
+  "--ekf-types",
+  "--boundary",
+  "HAL",
+  "--world-class",
+  "SimNS::Sim"
+ ],
+ "world": {
+  "calls": 20000,
+  "exclude": [
+   "front.init"
+  ],
+  "setup": [
+   "front.init"
+  ],
+  "weights": {
+   "front.update": 4,
+   "front.calibrate": 2,
+   "front.publish": 1
+  },
+  "domains": {
+   "i": [
+    0,
+    2
+   ]
+  },
+  "ranges": {
+   "v": [
+    -10,
+    10
+   ],
+   "s": [
+    -2,
+    2
+   ]
+  },
+  "globals": [
+   "static Util cpp2lean_util;",
+   "static HAL cpp2lean_hal{&sched, &cpp2lean_util};",
+   "const HAL &hal = cpp2lean_hal;"
+  ],
+  "inputs": {
+   "heap'SimBackend.armed": "cpp2lean_util._armed = %s;"
+  }
+ }
+}

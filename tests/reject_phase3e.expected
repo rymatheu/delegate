@@ -1,0 +1,10 @@
+tests/reject_phase3e.cpp:24:9: rejected: `memcpy` in a type-erased container other than the forms of README.md "Phase 3: EKF data structures"
+tests/reject_phase3e.cpp:45:11: rejected: member function `first` of type-erased class `erased2` returning `void *` that is not an element accessor
+tests/reject_phase3e.cpp:56:9: rejected: `while` loop whose trip count is not a compile-time constant (required: `while (i op C)` with i declared earlier in the block with a constant initializer, not assigned before the loop, stepped only by the body's last statement `i++ / i-- / i += C`, and no `continue`) (or `while (x > 0)` whose body decrements x once, at its top level)
+tests/reject_phase3e.cpp:63:9: rejected: `memset` of a row of an array
+tests/reject_phase3e.cpp:66:17: rejected: local reference variable `e` bound to something other than a data member (through data members only) of this object or of a local variable
+tests/reject_phase3e.cpp:72:9: rejected: `memcpy` between objects whose scalars in the bytes copied differ in offset or type
+tests/reject_phase3e.cpp:85:5: rejected: union of `float[3]` and `Mixed` whose members are not the array's elements in order
+tests/reject_phase3e.cpp:89:5: rejected: union `(anonymous)`
+tests/reject_phase3e.cpp:95:7: rejected: type `union (unnamed union at tests/reject_phase3e.cpp:89:5)`
+tests/reject_phase3e.cpp:96:15: rejected: mutable static data member `shared` of type `V3` (numbers and arrays of numbers only)

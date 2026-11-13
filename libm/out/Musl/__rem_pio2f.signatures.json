@@ -1,0 +1,258 @@
+{
+ "namespace": "Musl.__rem_pio2f",
+ "source": "libm/unity/unity___rem_pio2f.c",
+ "functions": [],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "__rem_pio2_large",
+   "cxx_call": "__rem_pio2_large",
+   "lean": "Musl.__rem_pio2f.__rem_pio2_large",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "e0",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "nx",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "prec",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__rem_pio2f",
+   "cxx_call": "__rem_pio2f",
+   "lean": "Musl.__rem_pio2f.__rem_pio2f",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.5 : Binary64)",
+   "bits": "3ff8000000000000",
+   "cpp": "1.5",
+   "at": "37:11"
+  },
+  {
+   "lean": "(2.2204460492503131e-16 : Binary64)",
+   "bits": "3cb0000000000000",
+   "cpp": "2.2204460492503131E-16",
+   "at": "37:15"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe921fb60000000",
+   "bits": "3fe921fb60000000",
+   "cpp": "0x1.921fb6p-1",
+   "at": "38:11"
+  },
+  {
+   "lean": "(6.36619772367581382433e-01 : Binary64)",
+   "bits": "3fe45f306dc9c883",
+   "cpp": "6.36619772367581382433e-01",
+   "at": "39:11"
+  },
+  {
+   "lean": "(1.57079631090164184570e+00 : Binary64)",
+   "bits": "3ff921fb50000000",
+   "cpp": "1.57079631090164184570e+00",
+   "at": "40:11"
+  },
+  {
+   "lean": "(1.58932547735281966916e-08 : Binary64)",
+   "bits": "3e5110b4611a6263",
+   "cpp": "1.58932547735281966916e-08",
+   "at": "41:11"
+  },
+  {
+   "lean": "(1.57079625129699707031e+00 : Binary64)",
+   "bits": "3ff921fb40000000",
+   "cpp": "1.57079625129699707031e+00",
+   "at": "263:3"
+  },
+  {
+   "lean": "(7.54978941586159635335e-08 : Binary64)",
+   "bits": "3e74442d00000000",
+   "cpp": "7.54978941586159635335e-08",
+   "at": "264:3"
+  },
+  {
+   "lean": "(5.39030252995776476554e-15 : Binary64)",
+   "bits": "3cf8469880000000",
+   "cpp": "5.39030252995776476554e-15",
+   "at": "265:3"
+  },
+  {
+   "lean": "(3.28200341580791294123e-22 : Binary64)",
+   "bits": "3b78cc5160000000",
+   "cpp": "3.28200341580791294123e-22",
+   "at": "266:3"
+  },
+  {
+   "lean": "(1.27065575308067607349e-29 : Binary64)",
+   "bits": "39f01b8380000000",
+   "cpp": "1.27065575308067607349e-29",
+   "at": "267:3"
+  },
+  {
+   "lean": "(1.22933308981111328932e-36 : Binary64)",
+   "bits": "387a252040000000",
+   "cpp": "1.22933308981111328932e-36",
+   "at": "268:3"
+  },
+  {
+   "lean": "(2.73370053816464559624e-44 : Binary64)",
+   "bits": "36e3822280000000",
+   "cpp": "2.73370053816464559624e-44",
+   "at": "269:3"
+  },
+  {
+   "lean": "(2.16741683877804819444e-51 : Binary64)",
+   "bits": "3569f31d00000000",
+   "cpp": "2.16741683877804819444e-51",
+   "at": "270:3"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "290:16"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3e70000000000000",
+   "bits": "3e70000000000000",
+   "cpp": "0x1p-24",
+   "at": "303:29"
+  },
+  {
+   "lean": "Binary64.ofBits 0x4170000000000000",
+   "bits": "4170000000000000",
+   "cpp": "0x1p24",
+   "at": "304:25"
+  },
+  {
+   "lean": "(8.0 : Binary64)",
+   "bits": "4020000000000000",
+   "cpp": "8.0",
+   "at": "310:7"
+  },
+  {
+   "lean": "(0.125 : Binary64)",
+   "bits": "3fc0000000000000",
+   "cpp": "0.125",
+   "at": "310:19"
+  },
+  {
+   "lean": "(0.5 : Binary64)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "320:16"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "343:8"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

@@ -1,0 +1,81 @@
+{
+ "translate": "ardupilot/translate_text.sh",
+ "out": "ardupilot/out/Text",
+ "namespace": "Text_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-DAP_CUSTOMROTATIONS_ENABLED=0",
+  "-DAP_TERRAIN_AVAILABLE=0",
+  "-I$HERE/ardupilot",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_sources": [
+  "AP_HAL/utility/BetterStream.cpp",
+  "AP_InternalError/AP_InternalError.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/unity_text.cpp",
+  "ardupilot/text_env.cpp"
+ ],
+ "cxx_include": [
+  "\"unity_text.h\""
+ ],
+ "free": {
+  "calls": 40000,
+  "array_len": {
+   "out": "40"
+  },
+  "domains": {
+   "fmt_16.a0": [
+    -9223372036854775807,
+    9223372036854775807
+   ],
+   "fmt_63.a0": [
+    -9223372036854775807,
+    9223372036854775807
+   ],
+   "fmt_70.a0": [
+    -9223372036854775807,
+    9223372036854775807
+   ],
+   "fmt_76.a1": [
+    -9223372036854775807,
+    9223372036854775807
+   ]
+  }
+ }
+}

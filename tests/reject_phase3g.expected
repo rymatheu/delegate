@@ -1,0 +1,5 @@
+tests/reject_phase3g.cpp:29:28: rejected: argument of a call on a boundary object that is not a compile-time constant (only constant arguments of const boundary calls are translated)
+tests/reject_phase3g.cpp:32:25: rejected: static local variable `calls` with an initializer other than zero
+tests/reject_phase3g.cpp:36:21: rejected: static local variable `last` of type `Pair` (numbers and arrays of numbers only)
+tests/reject_phase3g.cpp:41:9: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body) (a bound of type `uint8_t` may make the counter of type `uint8_t` wrap)
+tests/reject_phase3g.cpp:47:9: rejected: call of `Log::write` (--drop) with arguments that have effects

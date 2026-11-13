@@ -1,0 +1,4615 @@
+{
+ "namespace": "LowPassFilter2p_lib",
+ "source": "ardupilot/unity_lowpassfilter2p.cpp",
+ "functions": [
+  {
+   "name": "is_positive",
+   "lean": "LowPassFilter2p_lib.is_positive_float",
+   "params": [
+    [
+     "fVal1",
+     "float"
+    ]
+   ],
+   "ret": "bool",
+   "source": "ardupilot/unity_lowpassfilter2p.cpp:65-69"
+  },
+  {
+   "name": "MIN",
+   "lean": "LowPassFilter2p_lib.MIN_float2",
+   "params": [
+    [
+     "one",
+     "float"
+    ],
+    [
+     "two",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_lowpassfilter2p.cpp:300-303"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "Vector2<float>",
+   "lean": "LowPassFilter2p_lib.Vector2f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector2",
+     "lean": "LowPassFilter2p_lib.Vector2f.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Vector2",
+     "lean": "LowPassFilter2p_lib.Vector2f.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*",
+     "lean": "LowPassFilter2p_lib.Vector2f.op_mul_float",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator-",
+     "lean": "LowPassFilter2p_lib.Vector2f.op_sub_Vector2f",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator+",
+     "lean": "LowPassFilter2p_lib.Vector2f.op_add",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<float>",
+   "lean": "LowPassFilter2p_lib.Vector3f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector3",
+     "lean": "LowPassFilter2p_lib.Vector3f.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Vector3",
+     "lean": "LowPassFilter2p_lib.Vector3f.init_float3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*",
+     "lean": "LowPassFilter2p_lib.Vector3f.op_mul_float",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator-",
+     "lean": "LowPassFilter2p_lib.Vector3f.op_sub_Vector3f",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator+",
+     "lean": "LowPassFilter2p_lib.Vector3f.op_add",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter2p<int>",
+   "lean": "LowPassFilter2p_lib.LowPassFilter2pInt",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_cutoff_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.get_cutoff_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_sample_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.get_sample_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "int32_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pInt.reset_int32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "int32_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_params.cutoff_freq",
+     "cxx": "_params.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.sample_freq",
+     "cxx": "_params.sample_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a1",
+     "cxx": "_params.a1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a2",
+     "cxx": "_params.a2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b0",
+     "cxx": "_params.b0",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b1",
+     "cxx": "_params.b1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b2",
+     "cxx": "_params.b2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1",
+     "cxx": "_filter._delay_element_1",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2",
+     "cxx": "_filter._delay_element_2",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter.initialised",
+     "cxx": "_filter.initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter2p<long>",
+   "lean": "LowPassFilter2p_lib.LowPassFilter2pLong",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_cutoff_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.get_cutoff_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_sample_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.get_sample_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "int64_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "int64_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pLong.reset_int64_t",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "int64_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_params.cutoff_freq",
+     "cxx": "_params.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.sample_freq",
+     "cxx": "_params.sample_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a1",
+     "cxx": "_params.a1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a2",
+     "cxx": "_params.a2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b0",
+     "cxx": "_params.b0",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b1",
+     "cxx": "_params.b1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b2",
+     "cxx": "_params.b2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1",
+     "cxx": "_filter._delay_element_1",
+     "type": "int64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2",
+     "cxx": "_filter._delay_element_2",
+     "type": "int64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter.initialised",
+     "cxx": "_filter.initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter2p<float>",
+   "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_cutoff_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.get_cutoff_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_sample_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.get_sample_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2pFloat.reset_float",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_params.cutoff_freq",
+     "cxx": "_params.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.sample_freq",
+     "cxx": "_params.sample_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a1",
+     "cxx": "_params.a1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a2",
+     "cxx": "_params.a2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b0",
+     "cxx": "_params.b0",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b1",
+     "cxx": "_params.b1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b2",
+     "cxx": "_params.b2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1",
+     "cxx": "_filter._delay_element_1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2",
+     "cxx": "_filter._delay_element_2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter.initialised",
+     "cxx": "_filter.initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter2p<Vector2<float>>",
+   "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_cutoff_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.get_cutoff_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_sample_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.get_sample_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector2_float.reset_Vector2f",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_params.cutoff_freq",
+     "cxx": "_params.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.sample_freq",
+     "cxx": "_params.sample_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a1",
+     "cxx": "_params.a1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a2",
+     "cxx": "_params.a2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b0",
+     "cxx": "_params.b0",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b1",
+     "cxx": "_params.b1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b2",
+     "cxx": "_params.b2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1.x",
+     "cxx": "_filter._delay_element_1.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1.y",
+     "cxx": "_filter._delay_element_1.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2.x",
+     "cxx": "_filter._delay_element_2.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2.y",
+     "cxx": "_filter._delay_element_2.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter.initialised",
+     "cxx": "_filter.initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter2p<Vector3<float>>",
+   "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter2p",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "cutoff_freq",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_cutoff_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.get_cutoff_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_sample_freq",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.get_sample_freq",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.LowPassFilter2p_Vector3_float.reset_Vector3f",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter2p<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_params.cutoff_freq",
+     "cxx": "_params.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.sample_freq",
+     "cxx": "_params.sample_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a1",
+     "cxx": "_params.a1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.a2",
+     "cxx": "_params.a2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b0",
+     "cxx": "_params.b0",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b1",
+     "cxx": "_params.b1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_params.b2",
+     "cxx": "_params.b2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1.x",
+     "cxx": "_filter._delay_element_1.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1.y",
+     "cxx": "_filter._delay_element_1.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_1.z",
+     "cxx": "_filter._delay_element_1.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2.x",
+     "cxx": "_filter._delay_element_2.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2.y",
+     "cxx": "_filter._delay_element_2.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter._delay_element_2.z",
+     "cxx": "_filter._delay_element_2.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filter.initialised",
+     "cxx": "_filter.initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "DigitalBiquadFilter<Vector2<float>>",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalBiquadFilter",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "DigitalBiquadFilter<Vector2<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float.reset_Vector2f_DigitalBiquadFilter_Vector2_float_biquad_params",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<Vector2<float>>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<Vector2<float>>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector2<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_delay_element_1.x",
+     "cxx": "_delay_element_1.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_1.y",
+     "cxx": "_delay_element_1.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2.x",
+     "cxx": "_delay_element_2.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2.y",
+     "cxx": "_delay_element_2.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "DigitalBiquadFilter<Vector3<float>>",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalBiquadFilter",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "DigitalBiquadFilter<Vector3<float>>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float.reset_Vector3f_DigitalBiquadFilter_Vector3_float_biquad_params",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<Vector3<float>>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<Vector3<float>>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<Vector3<float>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_delay_element_1.x",
+     "cxx": "_delay_element_1.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_1.y",
+     "cxx": "_delay_element_1.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_1.z",
+     "cxx": "_delay_element_1.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2.x",
+     "cxx": "_delay_element_2.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2.y",
+     "cxx": "_delay_element_2.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2.z",
+     "cxx": "_delay_element_2.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "DigitalBiquadFilter<float>",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalBiquadFilter",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "DigitalBiquadFilter<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float.reset_float_DigitalBiquadFilter_float_biquad_params",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<float>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<float>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_float_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_delay_element_1",
+     "cxx": "_delay_element_1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2",
+     "cxx": "_delay_element_2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "DigitalBiquadFilter<int>",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalBiquadFilter",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "DigitalBiquadFilter<int>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int.reset_int32_t_DigitalBiquadFilter_int_biquad_params",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "int32_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<int>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_int_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "int32_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<int>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_int_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<int>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_delay_element_1",
+     "cxx": "_delay_element_1",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2",
+     "cxx": "_delay_element_2",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "DigitalBiquadFilter<long>",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalBiquadFilter",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "DigitalBiquadFilter<long>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long.reset_int64_t_DigitalBiquadFilter_long_biquad_params",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "int64_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<long>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_long_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "int64_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "params",
+       "type": "DigitalBiquadFilter<long>::biquad_params",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_long_biquad_params",
+       "leaves": [
+        {
+         "lean": "cutoff_freq",
+         "cxx": "cutoff_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "sample_freq",
+         "cxx": "sample_freq",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a1",
+         "cxx": "a1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a2",
+         "cxx": "a2",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b0",
+         "cxx": "b0",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b1",
+         "cxx": "b1",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b2",
+         "cxx": "b2",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "int64_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long.reset_void",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalBiquadFilter<long>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_delay_element_1",
+     "cxx": "_delay_element_1",
+     "type": "int64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delay_element_2",
+     "cxx": "_delay_element_2",
+     "type": "int64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "Rotation",
+   "lean": "LowPassFilter2p_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "is_positive",
+   "cxx_call": "is_positive<float>",
+   "lean": "LowPassFilter2p_lib.is_positive_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "fVal1",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "MIN",
+   "cxx_call": "MIN<float, float>",
+   "lean": "LowPassFilter2p_lib.MIN_float2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "one",
+     "type": "float",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "two",
+     "type": "float",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "compute_params",
+   "cxx_call": "DigitalBiquadFilter<float>::compute_params",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_float.compute_params",
+   "kind": "free",
+   "top": false,
+   "owner": "DigitalBiquadFilter<float>",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sample_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cutoff_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ret",
+     "type": "DigitalBiquadFilter<float>::biquad_params",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_float_biquad_params",
+     "leaves": [
+      {
+       "lean": "cutoff_freq",
+       "cxx": "cutoff_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sample_freq",
+       "cxx": "sample_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a1",
+       "cxx": "a1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a2",
+       "cxx": "a2",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b0",
+       "cxx": "b0",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b1",
+       "cxx": "b1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b2",
+       "cxx": "b2",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "compute_params",
+   "cxx_call": "DigitalBiquadFilter<Vector2<float>>::compute_params",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float.compute_params",
+   "kind": "free",
+   "top": false,
+   "owner": "DigitalBiquadFilter<Vector2<float>>",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sample_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cutoff_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ret",
+     "type": "DigitalBiquadFilter<Vector2<float>>::biquad_params",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector2_float_biquad_params",
+     "leaves": [
+      {
+       "lean": "cutoff_freq",
+       "cxx": "cutoff_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sample_freq",
+       "cxx": "sample_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a1",
+       "cxx": "a1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a2",
+       "cxx": "a2",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b0",
+       "cxx": "b0",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b1",
+       "cxx": "b1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b2",
+       "cxx": "b2",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "compute_params",
+   "cxx_call": "DigitalBiquadFilter<Vector3<float>>::compute_params",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float.compute_params",
+   "kind": "free",
+   "top": false,
+   "owner": "DigitalBiquadFilter<Vector3<float>>",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sample_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cutoff_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ret",
+     "type": "DigitalBiquadFilter<Vector3<float>>::biquad_params",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_Vector3_float_biquad_params",
+     "leaves": [
+      {
+       "lean": "cutoff_freq",
+       "cxx": "cutoff_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sample_freq",
+       "cxx": "sample_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a1",
+       "cxx": "a1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a2",
+       "cxx": "a2",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b0",
+       "cxx": "b0",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b1",
+       "cxx": "b1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b2",
+       "cxx": "b2",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "compute_params",
+   "cxx_call": "DigitalBiquadFilter<int>::compute_params",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_int.compute_params",
+   "kind": "free",
+   "top": false,
+   "owner": "DigitalBiquadFilter<int>",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sample_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cutoff_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ret",
+     "type": "DigitalBiquadFilter<int>::biquad_params",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_int_biquad_params",
+     "leaves": [
+      {
+       "lean": "cutoff_freq",
+       "cxx": "cutoff_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sample_freq",
+       "cxx": "sample_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a1",
+       "cxx": "a1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a2",
+       "cxx": "a2",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b0",
+       "cxx": "b0",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b1",
+       "cxx": "b1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b2",
+       "cxx": "b2",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "compute_params",
+   "cxx_call": "DigitalBiquadFilter<long>::compute_params",
+   "lean": "LowPassFilter2p_lib.DigitalBiquadFilter_long.compute_params",
+   "kind": "free",
+   "top": false,
+   "owner": "DigitalBiquadFilter<long>",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sample_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cutoff_freq",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ret",
+     "type": "DigitalBiquadFilter<long>::biquad_params",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "LowPassFilter2p_lib.DigitalBiquadFilter_long_biquad_params",
+     "leaves": [
+      {
+       "lean": "cutoff_freq",
+       "cxx": "cutoff_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sample_freq",
+       "cxx": "sample_freq",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a1",
+       "cxx": "a1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a2",
+       "cxx": "a2",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b0",
+       "cxx": "b0",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b1",
+       "cxx": "b1",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b2",
+       "cxx": "b2",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.4 : Binary64)",
+   "bits": "3fd999999999999a",
+   "cpp": "0.4",
+   "at": "51:54"
+  },
+  {
+   "lean": "(1.1920929e-7 : Binary32)",
+   "bits": "34000000",
+   "cpp": "1.1920929E-7",
+   "at": "68:42"
+  },
+  {
+   "lean": "(3.1415926535897931 : Binary64)",
+   "bits": "400921fb54442d18",
+   "cpp": "3.1415926535897931",
+   "at": "59:22"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "60:15"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "60:20"
+  },
+  {
+   "lean": "(4.0 : Binary32)",
+   "bits": "40800000",
+   "cpp": "4.0f",
+   "at": "60:35"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x40800000 /- 4.0f -/)",
+   "bits": "4010000000000000",
+   "cpp": "4.0f",
+   "at": "60:35"
+  },
+  {
+   "lean": "Binary64.toBinary32 ((Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/) / (Binary64.ofBits 0x4010000000000000 /- 4.0f -/))",
+   "bits": "3f490fdb",
+   "cpp": "(float)884279719003555/1125899906842624",
+   "at": "60:30"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "44:52"
+  },
+  {
+   "lean": "Int32.toBinary32 (1 : Int32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "44:59"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "51:13"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

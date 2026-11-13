@@ -1,0 +1,883 @@
+{
+ "namespace": "Bytes",
+ "source": "examples/bytes.cpp",
+ "functions": [
+  {
+   "name": "g_forward",
+   "lean": "Bytes.g_forward",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "b",
+     "int32_t"
+    ],
+    [
+     "n",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/bytes.cpp:18-48"
+  },
+  {
+   "name": "g_branches",
+   "lean": "Bytes.g_branches",
+   "params": [
+    [
+     "c",
+     "int32_t"
+    ],
+    [
+     "x",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/bytes.cpp:50-65"
+  },
+  {
+   "name": "g_switch",
+   "lean": "Bytes.g_switch",
+   "params": [
+    [
+     "c",
+     "int32_t"
+    ],
+    [
+     "v",
+     "uint32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/bytes.cpp:67-95"
+  },
+  {
+   "name": "g_loop",
+   "lean": "Bytes.g_loop",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "b",
+     "int32_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/bytes.cpp:97-117"
+  },
+  {
+   "name": "g_continue",
+   "lean": "Bytes.g_continue",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "n",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/bytes.cpp:119-141"
+  },
+  {
+   "name": "b_scalar",
+   "lean": "Bytes.b_scalar",
+   "params": [
+    [
+     "at",
+     "uint16_t"
+    ],
+    [
+     "which",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/bytes.cpp:153-166"
+  },
+  {
+   "name": "b_float",
+   "lean": "Bytes.b_float",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/bytes.cpp:168-177"
+  },
+  {
+   "name": "b_struct",
+   "lean": "Bytes.b_struct",
+   "params": [
+    [
+     "kind",
+     "uint8_t"
+    ],
+    [
+     "value",
+     "float"
+    ],
+    [
+     "id",
+     "uint16_t"
+    ],
+    [
+     "d0",
+     "int8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/bytes.cpp:186-209"
+  },
+  {
+   "name": "p_digits",
+   "lean": "Bytes.p_digits",
+   "params": [
+    [
+     "v",
+     "uint32_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/bytes.cpp:221-230"
+  },
+  {
+   "name": "p_sink",
+   "lean": "Bytes.p_sink",
+   "params": [
+    [
+     "v",
+     "uint32_t"
+    ],
+    [
+     "size",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/bytes.cpp:260-272"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "BufSink",
+   "lean": "BufSink",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "BufSink",
+     "lean": "BufSink.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "BufSink",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "buf",
+       "type": "char[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "array_elem": "char"
+      },
+      {
+       "name": "size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "put",
+     "lean": "BufSink.put",
+     "top": false,
+     "kind": "method",
+     "owner": "BufSink",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "c",
+       "type": "char",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_n",
+     "cxx": "_n",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_size",
+     "cxx": "_size",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "g_forward",
+   "cxx_call": "g_forward",
+   "lean": "Bytes.g_forward",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "g_branches",
+   "cxx_call": "g_branches",
+   "lean": "Bytes.g_branches",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "c",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "g_switch",
+   "cxx_call": "g_switch",
+   "lean": "Bytes.g_switch",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "c",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "g_loop",
+   "cxx_call": "g_loop",
+   "lean": "Bytes.g_loop",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "g_continue",
+   "cxx_call": "g_continue",
+   "lean": "Bytes.g_continue",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "read_bytes",
+   "cxx_call": "read_bytes",
+   "lean": "Bytes.read_bytes",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "dst",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "uint8_t"
+    },
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "b_scalar",
+   "cxx_call": "b_scalar",
+   "lean": "Bytes.b_scalar",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "at",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "which",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "b_float",
+   "cxx_call": "b_float",
+   "lean": "Bytes.b_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "b_struct",
+   "cxx_call": "b_struct",
+   "lean": "Bytes.b_struct",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "kind",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "value",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "id",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "d0",
+     "type": "int8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "put_digits",
+   "cxx_call": "put_digits",
+   "lean": "Bytes.put_digits",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "s",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    }
+   ],
+   "ret": "nat",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "p_digits",
+   "cxx_call": "p_digits",
+   "lean": "Bytes.p_digits",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "emit",
+   "cxx_call": "emit",
+   "lean": "Bytes.emit",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "s",
+     "type": "BufSink",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "BufSink.State",
+     "leaves": [
+      {
+       "lean": "_n",
+       "cxx": "_n",
+       "type": "uint8_t",
+       "enum": null
+      },
+      {
+       "lean": "_size",
+       "cxx": "_size",
+       "type": "uint8_t",
+       "enum": null
+      }
+     ],
+     "by_pointer": true
+    },
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "p_sink",
+   "cxx_call": "p_sink",
+   "lean": "Bytes.p_sink",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "size",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "157:15"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "208:50"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

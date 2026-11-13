@@ -1,0 +1,903 @@
+{
+ "namespace": "Worlds",
+ "source": "examples/world.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Clock",
+   "lean": "Clock",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Clock",
+     "lean": "Clock.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Clock",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "advance",
+     "lean": "Clock.advance",
+     "top": false,
+     "kind": "method",
+     "owner": "Clock",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "now_ms",
+     "lean": "Clock.now_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "Clock",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_now_ms",
+     "cxx": "_now_ms",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Logbook",
+   "lean": "Logbook",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "note",
+     "lean": "Logbook.note",
+     "top": false,
+     "kind": "method",
+     "owner": "Logbook",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "code",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "Logbook.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Logbook",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_last",
+     "cxx": "_last",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Motors",
+   "lean": "Motors",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Motors",
+     "lean": "Motors.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Motors",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "gain",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_roll",
+     "lean": "Motors.set_roll",
+     "top": false,
+     "kind": "method",
+     "owner": "Motors",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "output",
+     "lean": "Motors.output",
+     "top": false,
+     "kind": "method",
+     "owner": "Motors",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_out",
+     "lean": "Motors.get_out",
+     "top": false,
+     "kind": "method",
+     "owner": "Motors",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_count",
+     "lean": "Motors.get_count",
+     "top": false,
+     "kind": "method",
+     "owner": "Motors",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_limit",
+     "cxx": "_limit",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_gain",
+     "cxx": "_gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll",
+     "cxx": "_roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_out",
+     "cxx": "_out",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AttitudeMulti",
+   "lean": "AttitudeMulti",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "rate_gain",
+     "lean": "AttitudeMulti.Attitude.rate_gain",
+     "top": false,
+     "kind": "method",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "rate_gain",
+     "lean": "AttitudeMulti.rate_gain",
+     "top": false,
+     "kind": "method",
+     "owner": "AttitudeMulti",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "run",
+     "lean": "AttitudeMulti.run",
+     "top": false,
+     "kind": "method",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "last",
+     "lean": "AttitudeMulti.last",
+     "top": false,
+     "kind": "method",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Attitude",
+     "lean": "AttitudeMulti.Attitude.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Attitude",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "motors",
+       "type": "Motors",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Motors.State",
+       "leaves": [
+        {
+         "lean": "_limit",
+         "cxx": "_limit",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_gain",
+         "cxx": "_gain",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_roll",
+         "cxx": "_roll",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_out",
+         "cxx": "_out",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_count",
+         "cxx": "_count",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "AttitudeMulti",
+     "lean": "AttitudeMulti.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AttitudeMulti",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "motors",
+       "type": "Motors",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Motors.State",
+       "leaves": [
+        {
+         "lean": "_limit",
+         "cxx": "_limit",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_gain",
+         "cxx": "_gain",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_roll",
+         "cxx": "_roll",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_out",
+         "cxx": "_out",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_count",
+         "cxx": "_count",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "out",
+     "lean": "AttitudeMulti.out",
+     "top": false,
+     "kind": "method",
+     "owner": "AttitudeMulti",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_err",
+     "cxx": "_err",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last",
+     "cxx": "_last",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Nav",
+   "lean": "Nav",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Nav",
+     "lean": "Nav.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Nav",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "att",
+       "type": "Attitude",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Attitude.State",
+       "leaves": null
+      },
+      {
+       "name": "motors",
+       "type": "Motors",
+       "ref": "const",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Motors.State",
+       "leaves": [
+        {
+         "lean": "_limit",
+         "cxx": "_limit",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_gain",
+         "cxx": "_gain",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_roll",
+         "cxx": "_roll",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_out",
+         "cxx": "_out",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "_count",
+         "cxx": "_count",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "Nav.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Nav",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "target",
+     "lean": "Nav.target",
+     "top": false,
+     "kind": "method",
+     "owner": "Nav",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_target",
+     "cxx": "_target",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_steps",
+     "cxx": "_steps",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(4.0 : Binary32)",
+   "bits": "40800000",
+   "cpp": "4.0f",
+   "at": "53:20"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "65:46"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "85:47"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "95:24"
+  },
+  {
+   "lean": "(10.0 : Binary32)",
+   "bits": "41200000",
+   "cpp": "10.0f",
+   "at": "97:27"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "98:23"
+  },
+  {
+   "lean": "(0.75 : Binary32)",
+   "bits": "3f400000",
+   "cpp": "0.75f",
+   "at": "116:15"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "book",
+   "cxx": "book",
+   "class": "Logbook",
+   "lean": "Logbook",
+   "parts": [
+    [
+     "book",
+     "Logbook.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "clock_obj",
+   "cxx": "clock_obj",
+   "class": "Clock",
+   "lean": "Clock",
+   "parts": [
+    [
+     "clock_obj",
+     "Clock.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "motors",
+   "cxx": "motors",
+   "class": "Motors",
+   "lean": "Motors",
+   "parts": [
+    [
+     "motors",
+     "Motors.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "attitude",
+   "cxx": "attitude",
+   "class": "AttitudeMulti",
+   "lean": "AttitudeMulti",
+   "parts": [
+    [
+     "attitude",
+     "AttitudeMulti.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "nav",
+   "cxx": "nav",
+   "class": "Nav",
+   "lean": "Nav",
+   "parts": [
+    [
+     "nav",
+     "Nav.State",
+     "state"
+    ]
+   ]
+  }
+ ]
+}

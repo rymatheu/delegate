@@ -1,0 +1,181 @@
+import ParamMemory
+
+/-!
+Written by hand for cpp2lean; copied by `cpp2lean.py --param-memory` next to a translation whose configuration
+names it (`imports`: the GCS translation, README.md "Phase 4: GCS_MAVLink"). Do not edit the copies.
+
+The HAL and vehicle boundary of the GCS translation over the byte memory of `ParamMemory.lean`. It holds no
+protocol logic: what lockstep.cpp's UART does (reference/hal/lockstep.cpp, `class UART`: SERIAL0 is connected,
+`txspace()` is 16384 minus the bytes written since the last output line, a read returns the next received
+byte or -1), and the boundary's records:
+
+* `unreached`: a function outside this slice that the recorded sessions do not reach was called (the harness
+  reports it);
+* `bframe`: a message whose content is on the Phase 5 side (telemetry that reads the vehicle and the
+  estimator): the next recorded frame of that message id is written to the UART where the translated code
+  sends it, after checking that its sequence number is the channel's next one (`seqAddr`), which it then
+  advances, as `_mav_finalize_message_chan_send` would;
+* `answer`: the vehicle's answer to a call of the GCS into the vehicle (a mode change, arming), in the order
+  of the calls, supplied by the harness from the recording.
+-/
+
+namespace PMem
+
+def unreached (name : String) : M Unit :=
+  modify fun s => { s with unreached := s.unreached.push name }
+
+/-- `UARTDriver::available()` -/
+def uartAvailable (this : UInt64) : M UInt32 := do
+  if this != 0x10 then return 0      -- SERIAL1.. are not connected
+  let s ← get
+  return (s.rx.size - s.rxPos).toUInt32
+
+/-- `UARTDriver::read()`: the next byte, -1 when none -/
+def uartRead (this : UInt64) : M Int16 := do
+  if this != 0x10 then return -1
+  let s ← get
+  if s.rxPos < s.rx.size then
+    set { s with rxPos := s.rxPos + 1 }
+    return (s.rx.get! s.rxPos).toUInt16.toInt16
+  return -1
+
+def txSize : Nat := 16384
+
+/-- `UARTDriver::txspace()` -/
+def uartTxspace (this : UInt64) : M UInt32 := do
+  if this != 0x10 then return 0
+  let s ← get
+  return (txSize - s.tx.size).toUInt32
+
+/-- `UARTDriver::write(buf, len)`: as much as fits -/
+def uartWrite (this : UInt64) (buf : UInt64) (len : UInt64) : M UInt64 := do
+  if this != 0x10 then return 0
+  let s ← get
+  let n := min len.toNat (txSize - s.tx.size)
+  let mut out := s.tx
+  for k in [0:n] do
+    out := out.push (← rd (buf + k.toUInt64))
+  modify fun s => { s with tx := out }
+  return n.toUInt64
+
+/-- A boundary frame (see above). Each recorded frame carries the step it was recorded in (its first 4 bytes, little
+endian): the function sends the next frame of its id only when that frame was recorded in the current step
+(`curStep`), i.e. whether the vehicle side sends is the recording's decision, when the translated scheduler tries is
+the translation's; frames of earlier steps the translation never asked for are skipped (and logged). -/
+def bframe (this : UInt64) (msgid : UInt32) : M Unit := do
+  let s ← get
+  -- a channel other than SERIAL0's (its UART is not connected: the reference writes nothing there)
+  if this != 0 && this != s.chan0 then return
+  match s.frames.findIdx? (·.1 == msgid) with
+  | none => modify fun s => { s with log := s.log.push s!"bframe {msgid}: no recorded frame" }
+  | some i =>
+    let fs := s.frames[i]!.2
+    let stepOf (f : ByteArray) : Nat :=
+      (f.get! 0).toNat ||| ((f.get! 1).toNat <<< 8) ||| ((f.get! 2).toNat <<< 16) ||| ((f.get! 3).toNat <<< 24)
+    let mut pos := s.framePos[i]!
+    while h : pos < fs.size do
+      if stepOf fs[pos] < s.curStep then
+        modify fun s => { s with log := s.log.push s!"bframe {msgid}: recorded frame of step {stepOf fs[pos]} not asked for" }
+        pos := pos + 1
+      else
+        break
+    modify fun s => { s with framePos := s.framePos.set! i pos }
+    if h : pos < fs.size then
+      let f0 := fs[pos]
+      if stepOf f0 == s.curStep then
+        let f := f0.extract 4 f0.size
+        let seq ← ldU8 s.seqAddr
+        if f.size < 5 || f.get! 4 != seq then
+          modify fun s => { s with log := s.log.push s!"bframe {msgid}: recorded sequence {f.get! 4} where the channel's is {seq}" }
+        let s1 ← get
+        if s1.tx.size + f.size ≤ txSize then
+          set { s1 with tx := s1.tx ++ f, framePos := s1.framePos.set! i (pos + 1), bfAt := s1.bfAt.push s1.tx.size }
+          stU8 s.seqAddr (seq + 1)
+        else
+          modify fun s => { s with log := s.log.push s!"bframe {msgid}: no transmit space" }
+
+/-- The vehicle's next answer for a boundary call `key` (see above); 0 and a log line when none is left. -/
+def answer (key : String) : M UInt64 := do
+  let s ← get
+  match s.answers.findIdx? (·.1 == key) with
+  | none =>
+    modify fun s => { s with log := s.log.push s!"answer {key}: none recorded" }
+    return 0
+  | some i =>
+    let pos := s.answerPos[i]!
+    let vs := s.answers[i]!.2
+    if h : pos < vs.size then
+      modify fun s => { s with answerPos := s.answerPos.set! i (pos + 1) }
+      return vs[pos]
+    modify fun s => { s with log := s.log.push s!"answer {key}: exhausted" }
+    return 0
+
+/-- GCC's `__builtin_ffs` (1 + the index of the lowest set bit, 0 for 0) and `__builtin_popcount`. -/
+def ffs (x : Int32) : M Int32 := do
+  let v := x.toUInt32
+  if v == 0 then return 0
+  let mut i : UInt32 := 0
+  while (v >>> i) &&& 1 == 0 do
+    i := i + 1
+  return (i + 1).toInt32
+
+def popcount (x : UInt32) : M Int32 := do
+  let mut n : UInt32 := 0
+  for k in [0:32] do
+    n := n + ((x >>> k.toUInt32) &&& 1)
+  return n.toInt32
+
+/-- STATUSTEXT (the queue is filled by vehicle code, the Phase 5 side): the recorded STATUSTEXT frames of this
+step (`textQuota`, set by the harness from the recorded output line) are sent where `GCS::service_statustext`
+runs. -/
+def statustexts (this : UInt64) : M Unit := do
+  let n := (← get).textQuota
+  for _ in [0:n] do
+    bframe this 253
+  modify fun s => { s with textQuota := 0 }
+
+/-- C's `abs` on `int` -/
+def iabs (x : Int32) : M Int32 := return (if x < 0 then -x else x)
+
+/-- C's `labs` on `long` -/
+def labs (x : Int64) : M Int64 := return (if x < 0 then -x else x)
+
+/-- `std::atomic<uint32_t>` (one thread): its store, returning the value stored -/
+def atomicStU32 (a : UInt64) (v : UInt32) : M UInt32 := do
+  stU32 a v
+  return v
+
+/-- A boundary frame sent by a function whose result is a count of the vehicle's (`send_available_mode`: the
+number of flight modes, 9 in the reference configuration) -/
+def bframeCount (this : UInt64) (msgid : UInt32) (n : UInt8) : M UInt8 := do
+  bframe this msgid
+  return n
+
+/-- `AP_SerialManager::find_serial(MAVLink, i)` / `find_protocol_instance(MAVLink, i)`: SERIAL0 is the one MAVLink
+ports of the reference are SERIAL0-2 (SERIALn_PROTOCOL 2 by default; SERIAL1 and 2 not connected, as lockstep.cpp's
+UARTs 1-9): the addresses 0x10 + n (the boundary's UARTs and UARTStates are not in the memory: every call on them is
+a boundary call; only 0x10 is connected), null from the fourth -/
+def findSerial (inst : UInt8) : M UInt64 := return (if inst < 3 then 0x10 + inst.toUInt64 else 0)
+
+/-- `hal.scheduler->delay(ms)` inside the translated code (GCS_MAVLINK::init's SiK reset): recorded with the transmit
+position (the harness maps it to the input lines the reference consumes there) -/
+def delayMark (ms : UInt16) : M Unit :=
+  modify fun s => { s with delayMarks := s.delayMarks.push (s.tx.size, ms.toUInt32) }
+
+/-- `calloc(n, size)`: the heap, zeroed -/
+def calloc (n size : UInt64) : M UInt64 := alloc (n * size).toNat
+
+/-- `UARTDriver::write(uint8_t c)` -/
+def uartWrite1 (this : UInt64) (c : UInt8) : M UInt64 := do
+  if this != 0x10 then return 0
+  let s ← get
+  if s.tx.size < txSize then
+    set { s with tx := s.tx.push c }
+    return 1
+  return 0
+
+/-- `UARTState::get_device_id()` of SERIALn (the boundary's UARTState 0x10 + n): `make_bus_id(BUS_TYPE_SERIAL, n, 0,
+DeviceType::UART)`, 0x10006 + 0x100 n, as the reference reports MAV1-3_DEVID (65542, 65798, 66054) -/
+def serialDevId (this : UInt64) : M UInt32 := return (0x10006 + 0x100 * (this - 0x10)).toUInt32
+
+end PMem

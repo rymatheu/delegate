@@ -15,6 +15,6 @@ waypoint 7 (0.0, 0.0, -0.8): closest 1.12 cm at 16.765 s, first within 0.1 m at 
 max distance from last waypoint after first reaching it: 4.18 cm
 max target speed 1.014 m/s; max target acceleration 2.137 m/s^2
 distance to AC_PosControl's position target: max 8.70 cm, rms 2.30 cm; max |roll - roll target| 0.71 deg, max |pitch - pitch target| 0.62 deg
-controller round trip per tick (write state line, read actuator line; ticks 2..): median 162.6 us, mean 164.8 us, p99 203.0 us, max 499.1 us; first tick incl. start-up 2.6 ms
-wall clock per simulated second: 0.087 s in all (physics 0.013 s, controller round trips 0.066 s)
+controller round trip per tick (write state line, read actuator line; ticks 2..): median 263.7 us, mean 265.4 us, p99 297.8 us, max 409.4 us; first tick incl. start-up 26.1 ms
+wall clock per simulated second: 0.130 s in all (physics 0.014 s, controller round trips 0.106 s)
 trace fields per line: 18

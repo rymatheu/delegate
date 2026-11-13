@@ -33,6 +33,7 @@ void AP_InternalError::error(const AP_InternalError::error_t e, uint16_t line)
     oracle_internal_errors++;
 }
 
+#if AP_CUSTOMROTATIONS_ENABLED   // (0 since phase 2, as the reference vehicle's hwdef: the calls are compiled out)
 // ---- copied from ardupilot/stubs/oracle_env.cpp: AP_CustomRotations (vector3.cpp:264, quaternion.cpp:386):
 // only for ROTATION_CUSTOM_*, never reached by the functions under test
 static AP_CustomRotations *oracle_custom_rotations;
@@ -41,3 +42,4 @@ void AP_CustomRotations::rotate(Rotation r, Vector3f &v) { AP_HAL::panic("custom
 void AP_CustomRotations::rotate(Rotation r, Vector3d &v) { AP_HAL::panic("custom rotation"); }
 void AP_CustomRotations::from_rotation(Rotation r, Quaternion &q) { AP_HAL::panic("custom rotation"); }
 void AP_CustomRotations::from_rotation(Rotation r, QuaternionD &q) { AP_HAL::panic("custom rotation"); }
+#endif

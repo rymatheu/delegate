@@ -1,0 +1,639 @@
+{
+ "translate": "ardupilot/translate_mavlink.sh",
+ "out": "ardupilot/out/Mavlink",
+ "namespace": "Mavlink_lib",
+ "ref_flags": "GCS_MAVLink/GCS_MAVLink.cpp",
+ "cxx_flags": [
+  "-I$HERE/ardupilot"
+ ],
+ "cxx_sources": [],
+ "cxx_env": [
+  "ardupilot/unity_mavlink.cpp",
+  "ardupilot/mavlink_env.cpp"
+ ],
+ "cxx_include": [
+  "\"unity_mavlink.h\""
+ ],
+ "free": {
+  "calls": 30000,
+  "only": "(pk|sd|dc)_[a-z0-9_]+|ps_stream|msg_entry|crc_buf|chan_ops|bench_parse|bench_pack",
+  "weights": {
+   "ps_stream": 40,
+   "msg_entry": 5,
+   "crc_buf": 5,
+   "chan_ops": 2,
+   "bench_parse": 3,
+   "bench_pack": 3
+  },
+  "domains": {
+   "pk_heartbeat.mode_": [
+    0,
+    7
+   ],
+   "sd_heartbeat.mode_": [
+    0,
+    3
+   ],
+   "dc_heartbeat.flags": [
+    0,
+    7
+   ],
+   "pk_param_value.mode_": [
+    0,
+    7
+   ],
+   "sd_param_value.mode_": [
+    0,
+    3
+   ],
+   "dc_param_value.flags": [
+    0,
+    7
+   ],
+   "pk_param_set.mode_": [
+    0,
+    7
+   ],
+   "sd_param_set.mode_": [
+    0,
+    3
+   ],
+   "dc_param_set.flags": [
+    0,
+    7
+   ],
+   "pk_param_request_read.mode_": [
+    0,
+    7
+   ],
+   "sd_param_request_read.mode_": [
+    0,
+    3
+   ],
+   "dc_param_request_read.flags": [
+    0,
+    7
+   ],
+   "pk_param_request_list.mode_": [
+    0,
+    7
+   ],
+   "sd_param_request_list.mode_": [
+    0,
+    3
+   ],
+   "dc_param_request_list.flags": [
+    0,
+    7
+   ],
+   "pk_mission_count.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_count.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_count.flags": [
+    0,
+    7
+   ],
+   "pk_mission_request_int.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_request_int.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_request_int.flags": [
+    0,
+    7
+   ],
+   "pk_mission_request.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_request.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_request.flags": [
+    0,
+    7
+   ],
+   "pk_mission_item_int.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_item_int.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_item_int.flags": [
+    0,
+    7
+   ],
+   "pk_mission_item.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_item.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_item.flags": [
+    0,
+    7
+   ],
+   "pk_mission_ack.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_ack.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_ack.flags": [
+    0,
+    7
+   ],
+   "pk_mission_request_list.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_request_list.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_request_list.flags": [
+    0,
+    7
+   ],
+   "pk_mission_current.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_current.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_current.flags": [
+    0,
+    7
+   ],
+   "pk_mission_item_reached.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_item_reached.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_item_reached.flags": [
+    0,
+    7
+   ],
+   "pk_mission_clear_all.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_clear_all.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_clear_all.flags": [
+    0,
+    7
+   ],
+   "pk_mission_set_current.mode_": [
+    0,
+    7
+   ],
+   "sd_mission_set_current.mode_": [
+    0,
+    3
+   ],
+   "dc_mission_set_current.flags": [
+    0,
+    7
+   ],
+   "pk_command_long.mode_": [
+    0,
+    7
+   ],
+   "sd_command_long.mode_": [
+    0,
+    3
+   ],
+   "dc_command_long.flags": [
+    0,
+    7
+   ],
+   "pk_command_int.mode_": [
+    0,
+    7
+   ],
+   "sd_command_int.mode_": [
+    0,
+    3
+   ],
+   "dc_command_int.flags": [
+    0,
+    7
+   ],
+   "pk_command_ack.mode_": [
+    0,
+    7
+   ],
+   "sd_command_ack.mode_": [
+    0,
+    3
+   ],
+   "dc_command_ack.flags": [
+    0,
+    7
+   ],
+   "pk_statustext.mode_": [
+    0,
+    7
+   ],
+   "sd_statustext.mode_": [
+    0,
+    3
+   ],
+   "dc_statustext.flags": [
+    0,
+    7
+   ],
+   "pk_timesync.mode_": [
+    0,
+    7
+   ],
+   "sd_timesync.mode_": [
+    0,
+    3
+   ],
+   "dc_timesync.flags": [
+    0,
+    7
+   ],
+   "pk_system_time.mode_": [
+    0,
+    7
+   ],
+   "sd_system_time.mode_": [
+    0,
+    3
+   ],
+   "dc_system_time.flags": [
+    0,
+    7
+   ],
+   "pk_request_data_stream.mode_": [
+    0,
+    7
+   ],
+   "sd_request_data_stream.mode_": [
+    0,
+    3
+   ],
+   "dc_request_data_stream.flags": [
+    0,
+    7
+   ],
+   "pk_autopilot_version.mode_": [
+    0,
+    7
+   ],
+   "sd_autopilot_version.mode_": [
+    0,
+    3
+   ],
+   "dc_autopilot_version.flags": [
+    0,
+    7
+   ],
+   "pk_file_transfer_protocol.mode_": [
+    0,
+    7
+   ],
+   "sd_file_transfer_protocol.mode_": [
+    0,
+    3
+   ],
+   "dc_file_transfer_protocol.flags": [
+    0,
+    7
+   ],
+   "pk_attitude.mode_": [
+    0,
+    7
+   ],
+   "sd_attitude.mode_": [
+    0,
+    3
+   ],
+   "dc_attitude.flags": [
+    0,
+    7
+   ],
+   "pk_ahrs2.mode_": [
+    0,
+    7
+   ],
+   "sd_ahrs2.mode_": [
+    0,
+    3
+   ],
+   "dc_ahrs2.flags": [
+    0,
+    7
+   ],
+   "pk_vfr_hud.mode_": [
+    0,
+    7
+   ],
+   "sd_vfr_hud.mode_": [
+    0,
+    3
+   ],
+   "dc_vfr_hud.flags": [
+    0,
+    7
+   ],
+   "pk_global_position_int.mode_": [
+    0,
+    7
+   ],
+   "sd_global_position_int.mode_": [
+    0,
+    3
+   ],
+   "dc_global_position_int.flags": [
+    0,
+    7
+   ],
+   "pk_ahrs.mode_": [
+    0,
+    7
+   ],
+   "sd_ahrs.mode_": [
+    0,
+    3
+   ],
+   "dc_ahrs.flags": [
+    0,
+    7
+   ],
+   "pk_ekf_status_report.mode_": [
+    0,
+    7
+   ],
+   "sd_ekf_status_report.mode_": [
+    0,
+    3
+   ],
+   "dc_ekf_status_report.flags": [
+    0,
+    7
+   ],
+   "pk_vibration.mode_": [
+    0,
+    7
+   ],
+   "sd_vibration.mode_": [
+    0,
+    3
+   ],
+   "dc_vibration.flags": [
+    0,
+    7
+   ],
+   "pk_battery_status.mode_": [
+    0,
+    7
+   ],
+   "sd_battery_status.mode_": [
+    0,
+    3
+   ],
+   "dc_battery_status.flags": [
+    0,
+    7
+   ],
+   "pk_wind.mode_": [
+    0,
+    7
+   ],
+   "sd_wind.mode_": [
+    0,
+    3
+   ],
+   "dc_wind.flags": [
+    0,
+    7
+   ],
+   "pk_local_position_ned.mode_": [
+    0,
+    7
+   ],
+   "sd_local_position_ned.mode_": [
+    0,
+    3
+   ],
+   "dc_local_position_ned.flags": [
+    0,
+    7
+   ],
+   "pk_raw_imu.mode_": [
+    0,
+    7
+   ],
+   "sd_raw_imu.mode_": [
+    0,
+    3
+   ],
+   "dc_raw_imu.flags": [
+    0,
+    7
+   ],
+   "pk_scaled_pressure.mode_": [
+    0,
+    7
+   ],
+   "sd_scaled_pressure.mode_": [
+    0,
+    3
+   ],
+   "dc_scaled_pressure.flags": [
+    0,
+    7
+   ],
+   "pk_sys_status.mode_": [
+    0,
+    7
+   ],
+   "sd_sys_status.mode_": [
+    0,
+    3
+   ],
+   "dc_sys_status.flags": [
+    0,
+    7
+   ],
+   "pk_power_status.mode_": [
+    0,
+    7
+   ],
+   "sd_power_status.mode_": [
+    0,
+    3
+   ],
+   "dc_power_status.flags": [
+    0,
+    7
+   ],
+   "pk_meminfo.mode_": [
+    0,
+    7
+   ],
+   "sd_meminfo.mode_": [
+    0,
+    3
+   ],
+   "dc_meminfo.flags": [
+    0,
+    7
+   ],
+   "pk_nav_controller_output.mode_": [
+    0,
+    7
+   ],
+   "sd_nav_controller_output.mode_": [
+    0,
+    3
+   ],
+   "dc_nav_controller_output.flags": [
+    0,
+    7
+   ],
+   "pk_servo_output_raw.mode_": [
+    0,
+    7
+   ],
+   "sd_servo_output_raw.mode_": [
+    0,
+    3
+   ],
+   "dc_servo_output_raw.flags": [
+    0,
+    7
+   ],
+   "pk_rc_channels.mode_": [
+    0,
+    7
+   ],
+   "sd_rc_channels.mode_": [
+    0,
+    3
+   ],
+   "dc_rc_channels.flags": [
+    0,
+    7
+   ],
+   "pk_gps_raw_int.mode_": [
+    0,
+    7
+   ],
+   "sd_gps_raw_int.mode_": [
+    0,
+    3
+   ],
+   "dc_gps_raw_int.flags": [
+    0,
+    7
+   ],
+   "pk_extended_sys_state.mode_": [
+    0,
+    7
+   ],
+   "sd_extended_sys_state.mode_": [
+    0,
+    3
+   ],
+   "dc_extended_sys_state.flags": [
+    0,
+    7
+   ],
+   "pk_home_position.mode_": [
+    0,
+    7
+   ],
+   "sd_home_position.mode_": [
+    0,
+    3
+   ],
+   "dc_home_position.flags": [
+    0,
+    7
+   ],
+   "pk_gps_global_origin.mode_": [
+    0,
+    7
+   ],
+   "sd_gps_global_origin.mode_": [
+    0,
+    3
+   ],
+   "dc_gps_global_origin.flags": [
+    0,
+    7
+   ],
+   "pk_available_modes.mode_": [
+    0,
+    7
+   ],
+   "sd_available_modes.mode_": [
+    0,
+    3
+   ],
+   "dc_available_modes.flags": [
+    0,
+    7
+   ],
+   "ps_stream.nbytes": [
+    1,
+    700
+   ],
+   "ps_stream.mode": [
+    0,
+    1
+   ],
+   "msg_entry.msgid": [
+    0,
+    13000
+   ],
+   "chan_ops.version": [
+    0,
+    3
+   ],
+   "bench_parse.nbytes": [
+    1,
+    300
+   ],
+   "bench_parse.doparse": [
+    0,
+    1
+   ],
+   "bench_pack.count": [
+    1,
+    20
+   ],
+   "bench_pack.dopack": [
+    0,
+    1
+   ]
+  }
+ }
+}

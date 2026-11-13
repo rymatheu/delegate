@@ -1,0 +1,1525 @@
+{
+ "namespace": "AP_InternalError_lib",
+ "source": "ardupilot/unity_internalerror.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "BufferPrinter",
+   "lean": "AP_InternalError_lib.BufferPrinter",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "BufferPrinter",
+     "lean": "AP_InternalError_lib.BufferPrinter.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "BufferPrinter",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "str",
+       "type": "char[0]",
+       "ref": "cptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "array_elem": "char"
+      },
+      {
+       "name": "size",
+       "type": "size_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "write",
+     "lean": "AP_InternalError_lib.BufferPrinter.write_uint8_t",
+     "top": false,
+     "kind": "method",
+     "owner": "BufferPrinter",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "c",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "size_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_offs",
+     "cxx": "_offs",
+     "type": "size_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_size",
+     "cxx": "_size",
+     "type": "size_t",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  },
+  {
+   "cxx": "AP_InternalError",
+   "lean": "AP_InternalError_lib.AP_InternalError",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "errors_as_string",
+     "lean": "AP_InternalError_lib.AP_InternalError.errors_as_string",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_InternalError",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "buffer",
+       "type": "uint8_t[0]",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null,
+       "array_elem": "uint8_t"
+      },
+      {
+       "name": "len",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "errors",
+     "lean": "AP_InternalError_lib.AP_InternalError.\u00aberrors\u00bb",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_InternalError",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_InternalError_lib.AP_InternalError.count",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_InternalError",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "last_error_line",
+     "lean": "AP_InternalError_lib.AP_InternalError.last_error_line",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_InternalError",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "error",
+     "lean": "AP_InternalError_lib.AP_InternalError.error",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_InternalError",
+     "access": "public",
+     "reads": [
+      "o",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "e",
+       "type": "AP_InternalError::error_t",
+       "ref": null,
+       "boundary": false,
+       "enum": "AP_InternalError_lib.AP_InternalError.error_t",
+       "under": "uint32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "line",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "internal_errors",
+     "cxx": "internal_errors",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "total_error_count",
+     "cxx": "total_error_count",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "last_line",
+     "cxx": "last_line",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "AP_InternalError::error_t",
+   "lean": "AP_InternalError_lib.AP_InternalError.error_t",
+   "under": "uint32_t",
+   "values": [
+    [
+     "logger_mapfailure",
+     1,
+     "logger_mapfailure"
+    ],
+    [
+     "logger_missing_logstructure",
+     2,
+     "logger_missing_logstructure"
+    ],
+    [
+     "logger_logwrite_missingfmt",
+     4,
+     "logger_logwrite_missingfmt"
+    ],
+    [
+     "logger_too_many_deletions",
+     8,
+     "logger_too_many_deletions"
+    ],
+    [
+     "logger_bad_getfilename",
+     16,
+     "logger_bad_getfilename"
+    ],
+    [
+     "panic",
+     32,
+     "panic"
+    ],
+    [
+     "logger_flushing_without_sem",
+     64,
+     "logger_flushing_without_sem"
+    ],
+    [
+     "logger_bad_current_block",
+     128,
+     "logger_bad_current_block"
+    ],
+    [
+     "logger_blockcount_mismatch",
+     256,
+     "logger_blockcount_mismatch"
+    ],
+    [
+     "logger_dequeue_failure",
+     512,
+     "logger_dequeue_failure"
+    ],
+    [
+     "constraining_nan",
+     1024,
+     "constraining_nan"
+    ],
+    [
+     "watchdog_reset",
+     2048,
+     "watchdog_reset"
+    ],
+    [
+     "iomcu_reset",
+     4096,
+     "iomcu_reset"
+    ],
+    [
+     "iomcu_fail",
+     8192,
+     "iomcu_fail"
+    ],
+    [
+     "spi_fail",
+     16384,
+     "spi_fail"
+    ],
+    [
+     "main_loop_stuck",
+     32768,
+     "main_loop_stuck"
+    ],
+    [
+     "gcs_bad_missionprotocol_link",
+     65536,
+     "gcs_bad_missionprotocol_link"
+    ],
+    [
+     "bitmask_range",
+     131072,
+     "bitmask_range"
+    ],
+    [
+     "gcs_offset",
+     262144,
+     "gcs_offset"
+    ],
+    [
+     "i2c_isr",
+     524288,
+     "i2c_isr"
+    ],
+    [
+     "flow_of_control",
+     1048576,
+     "flow_of_control"
+    ],
+    [
+     "switch_full_sector_recursion",
+     2097152,
+     "switch_full_sector_recursion"
+    ],
+    [
+     "bad_rotation",
+     4194304,
+     "bad_rotation"
+    ],
+    [
+     "stack_overflow",
+     8388608,
+     "stack_overflow"
+    ],
+    [
+     "imu_reset",
+     16777216,
+     "imu_reset"
+    ],
+    [
+     "gpio_isr",
+     33554432,
+     "gpio_isr"
+    ],
+    [
+     "mem_guard",
+     67108864,
+     "mem_guard"
+    ],
+    [
+     "dma_fail",
+     134217728,
+     "dma_fail"
+    ],
+    [
+     "params_restored",
+     268435456,
+     "params_restored"
+    ],
+    [
+     "invalid_arg_or_result",
+     536870912,
+     "invalid_arg_or_result"
+    ],
+    [
+     "__LAST__",
+     1073741824,
+     "__LAST__"
+    ]
+   ]
+  },
+  {
+   "cxx": "AnalogIn::PowerStatusFlag",
+   "lean": "AP_InternalError_lib.AnalogIn.PowerStatusFlag",
+   "under": "uint16_t",
+   "values": [
+    [
+     "BRICK_VALID",
+     1,
+     "BRICK_VALID"
+    ],
+    [
+     "SERVO_VALID",
+     2,
+     "SERVO_VALID"
+    ],
+    [
+     "USB_CONNECTED",
+     4,
+     "USB_CONNECTED"
+    ],
+    [
+     "PERIPH_OVERCURRENT",
+     8,
+     "PERIPH_OVERCURRENT"
+    ],
+    [
+     "PERIPH_HIPOWER_OVERCURRENT",
+     16,
+     "PERIPH_HIPOWER_OVERCURRENT"
+    ],
+    [
+     "CHANGED",
+     32,
+     "CHANGED"
+    ]
+   ]
+  },
+  {
+   "cxx": "GPIO::INTERRUPT_TRIGGER_TYPE",
+   "lean": "AP_InternalError_lib.GPIO.INTERRUPT_TRIGGER_TYPE",
+   "under": "uint32_t",
+   "values": [
+    [
+     "INTERRUPT_NONE",
+     0,
+     "INTERRUPT_NONE"
+    ],
+    [
+     "INTERRUPT_FALLING",
+     1,
+     "INTERRUPT_FALLING"
+    ],
+    [
+     "INTERRUPT_RISING",
+     2,
+     "INTERRUPT_RISING"
+    ],
+    [
+     "INTERRUPT_BOTH",
+     3,
+     "INTERRUPT_BOTH"
+    ]
+   ]
+  },
+  {
+   "cxx": "RCOutput::output_mode",
+   "lean": "AP_InternalError_lib.RCOutput.output_mode",
+   "under": "uint32_t",
+   "values": [
+    [
+     "MODE_PWM_NONE",
+     0,
+     "MODE_PWM_NONE"
+    ],
+    [
+     "MODE_PWM_NORMAL",
+     1,
+     "MODE_PWM_NORMAL"
+    ],
+    [
+     "MODE_PWM_ONESHOT",
+     2,
+     "MODE_PWM_ONESHOT"
+    ],
+    [
+     "MODE_PWM_ONESHOT125",
+     3,
+     "MODE_PWM_ONESHOT125"
+    ],
+    [
+     "MODE_PWM_BRUSHED",
+     4,
+     "MODE_PWM_BRUSHED"
+    ],
+    [
+     "MODE_PWM_DSHOT150",
+     5,
+     "MODE_PWM_DSHOT150"
+    ],
+    [
+     "MODE_PWM_DSHOT300",
+     6,
+     "MODE_PWM_DSHOT300"
+    ],
+    [
+     "MODE_PWM_DSHOT600",
+     7,
+     "MODE_PWM_DSHOT600"
+    ],
+    [
+     "MODE_PWM_DSHOT1200",
+     8,
+     "MODE_PWM_DSHOT1200"
+    ],
+    [
+     "MODE_NEOPIXEL",
+     9,
+     "MODE_NEOPIXEL"
+    ],
+    [
+     "MODE_PROFILED",
+     10,
+     "MODE_PROFILED"
+    ],
+    [
+     "MODE_NEOPIXELRGB",
+     11,
+     "MODE_NEOPIXELRGB"
+    ]
+   ]
+  },
+  {
+   "cxx": "RCOutput::BLHeliDshotCommand",
+   "lean": "AP_InternalError_lib.RCOutput.BLHeliDshotCommand",
+   "under": "uint8_t",
+   "values": [
+    [
+     "DSHOT_RESET",
+     0,
+     "DSHOT_RESET"
+    ],
+    [
+     "DSHOT_BEEP1",
+     1,
+     "DSHOT_BEEP1"
+    ],
+    [
+     "DSHOT_BEEP2",
+     2,
+     "DSHOT_BEEP2"
+    ],
+    [
+     "DSHOT_BEEP3",
+     3,
+     "DSHOT_BEEP3"
+    ],
+    [
+     "DSHOT_BEEP4",
+     4,
+     "DSHOT_BEEP4"
+    ],
+    [
+     "DSHOT_BEEP5",
+     5,
+     "DSHOT_BEEP5"
+    ],
+    [
+     "DSHOT_ESC_INFO",
+     6,
+     "DSHOT_ESC_INFO"
+    ],
+    [
+     "DSHOT_ROTATE",
+     7,
+     "DSHOT_ROTATE"
+    ],
+    [
+     "DSHOT_ROTATE_ALTERNATE",
+     8,
+     "DSHOT_ROTATE_ALTERNATE"
+    ],
+    [
+     "DSHOT_3D_OFF",
+     9,
+     "DSHOT_3D_OFF"
+    ],
+    [
+     "DSHOT_3D_ON",
+     10,
+     "DSHOT_3D_ON"
+    ],
+    [
+     "DSHOT_SAVE",
+     12,
+     "DSHOT_SAVE"
+    ],
+    [
+     "DSHOT_EXTENDED_TELEMETRY_ENABLE",
+     13,
+     "DSHOT_EXTENDED_TELEMETRY_ENABLE"
+    ],
+    [
+     "DSHOT_EXTENDED_TELEMETRY_DISABLE",
+     14,
+     "DSHOT_EXTENDED_TELEMETRY_DISABLE"
+    ],
+    [
+     "DSHOT_NORMAL",
+     20,
+     "DSHOT_NORMAL"
+    ],
+    [
+     "DSHOT_REVERSE",
+     21,
+     "DSHOT_REVERSE"
+    ],
+    [
+     "DSHOT_LED0_ON",
+     22,
+     "DSHOT_LED0_ON"
+    ],
+    [
+     "DSHOT_LED1_ON",
+     23,
+     "DSHOT_LED1_ON"
+    ],
+    [
+     "DSHOT_LED2_ON",
+     24,
+     "DSHOT_LED2_ON"
+    ],
+    [
+     "DSHOT_LED3_ON",
+     25,
+     "DSHOT_LED3_ON"
+    ],
+    [
+     "DSHOT_LED0_OFF",
+     26,
+     "DSHOT_LED0_OFF"
+    ],
+    [
+     "DSHOT_LED1_OFF",
+     27,
+     "DSHOT_LED1_OFF"
+    ],
+    [
+     "DSHOT_LED2_OFF",
+     28,
+     "DSHOT_LED2_OFF"
+    ],
+    [
+     "DSHOT_LED3_OFF",
+     29,
+     "DSHOT_LED3_OFF"
+    ]
+   ]
+  },
+  {
+   "cxx": "RCOutput::DshotEscType",
+   "lean": "AP_InternalError_lib.RCOutput.DshotEscType",
+   "under": "uint32_t",
+   "values": [
+    [
+     "DSHOT_ESC_NONE",
+     0,
+     "DSHOT_ESC_NONE"
+    ],
+    [
+     "DSHOT_ESC_BLHELI",
+     1,
+     "DSHOT_ESC_BLHELI"
+    ],
+    [
+     "DSHOT_ESC_BLHELI_S",
+     2,
+     "DSHOT_ESC_BLHELI_S"
+    ],
+    [
+     "DSHOT_ESC_BLHELI_EDT",
+     3,
+     "DSHOT_ESC_BLHELI_EDT"
+    ],
+    [
+     "DSHOT_ESC_BLHELI_EDT_S",
+     4,
+     "DSHOT_ESC_BLHELI_EDT_S"
+    ]
+   ]
+  },
+  {
+   "cxx": "Device::BusType",
+   "lean": "AP_InternalError_lib.Device.BusType",
+   "under": "uint32_t",
+   "values": [
+    [
+     "BUS_TYPE_UNKNOWN",
+     0,
+     "BUS_TYPE_UNKNOWN"
+    ],
+    [
+     "BUS_TYPE_I2C",
+     1,
+     "BUS_TYPE_I2C"
+    ],
+    [
+     "BUS_TYPE_SPI",
+     2,
+     "BUS_TYPE_SPI"
+    ],
+    [
+     "BUS_TYPE_UAVCAN",
+     3,
+     "BUS_TYPE_UAVCAN"
+    ],
+    [
+     "BUS_TYPE_SITL",
+     4,
+     "BUS_TYPE_SITL"
+    ],
+    [
+     "BUS_TYPE_MSP",
+     5,
+     "BUS_TYPE_MSP"
+    ],
+    [
+     "BUS_TYPE_SERIAL",
+     6,
+     "BUS_TYPE_SERIAL"
+    ],
+    [
+     "BUS_TYPE_WSPI",
+     7,
+     "BUS_TYPE_WSPI"
+    ]
+   ]
+  },
+  {
+   "cxx": "Device::Speed",
+   "lean": "AP_InternalError_lib.Device.Speed",
+   "under": "uint32_t",
+   "values": [
+    [
+     "SPEED_HIGH",
+     0,
+     "SPEED_HIGH"
+    ],
+    [
+     "SPEED_LOW",
+     1,
+     "SPEED_LOW"
+    ]
+   ]
+  },
+  {
+   "cxx": "UARTDriver::Option",
+   "lean": "AP_InternalError_lib.UARTDriver.Option",
+   "under": "uint32_t",
+   "values": [
+    [
+     "OPTION_RXINV",
+     1,
+     "OPTION_RXINV"
+    ],
+    [
+     "OPTION_TXINV",
+     2,
+     "OPTION_TXINV"
+    ],
+    [
+     "OPTION_HDPLEX",
+     4,
+     "OPTION_HDPLEX"
+    ],
+    [
+     "OPTION_SWAP",
+     8,
+     "OPTION_SWAP"
+    ],
+    [
+     "OPTION_PULLDOWN_RX",
+     16,
+     "OPTION_PULLDOWN_RX"
+    ],
+    [
+     "OPTION_PULLUP_RX",
+     32,
+     "OPTION_PULLUP_RX"
+    ],
+    [
+     "OPTION_PULLDOWN_TX",
+     64,
+     "OPTION_PULLDOWN_TX"
+    ],
+    [
+     "OPTION_PULLUP_TX",
+     128,
+     "OPTION_PULLUP_TX"
+    ],
+    [
+     "OPTION_NODMA_RX",
+     256,
+     "OPTION_NODMA_RX"
+    ],
+    [
+     "OPTION_NODMA_TX",
+     512,
+     "OPTION_NODMA_TX"
+    ],
+    [
+     "OPTION_MAVLINK_NO_FORWARD_old",
+     1024,
+     "OPTION_MAVLINK_NO_FORWARD_old"
+    ],
+    [
+     "OPTION_NOFIFO",
+     2048,
+     "OPTION_NOFIFO"
+    ],
+    [
+     "OPTION_NOSTREAMOVERRIDE_old",
+     4096,
+     "OPTION_NOSTREAMOVERRIDE_old"
+    ]
+   ]
+  },
+  {
+   "cxx": "UARTDriver::flow_control",
+   "lean": "AP_InternalError_lib.UARTDriver.flow_control",
+   "under": "uint32_t",
+   "values": [
+    [
+     "FLOW_CONTROL_DISABLE",
+     0,
+     "FLOW_CONTROL_DISABLE"
+    ],
+    [
+     "FLOW_CONTROL_ENABLE",
+     1,
+     "FLOW_CONTROL_ENABLE"
+    ],
+    [
+     "FLOW_CONTROL_AUTO",
+     2,
+     "FLOW_CONTROL_AUTO"
+    ],
+    [
+     "FLOW_CONTROL_RTS_DE",
+     3,
+     "FLOW_CONTROL_RTS_DE"
+    ]
+   ]
+  },
+  {
+   "cxx": "DSP::FrequencyPeak",
+   "lean": "AP_InternalError_lib.DSP.FrequencyPeak",
+   "under": "uint8_t",
+   "values": [
+    [
+     "CENTER",
+     0,
+     "CENTER"
+    ],
+    [
+     "LOWER_SHOULDER",
+     1,
+     "LOWER_SHOULDER"
+    ],
+    [
+     "UPPER_SHOULDER",
+     2,
+     "UPPER_SHOULDER"
+    ],
+    [
+     "MAX_TRACKED_PEAKS",
+     3,
+     "MAX_TRACKED_PEAKS"
+    ],
+    [
+     "NONE",
+     4,
+     "NONE"
+    ]
+   ]
+  },
+  {
+   "cxx": "Scheduler::priority_base",
+   "lean": "AP_InternalError_lib.Scheduler.priority_base",
+   "under": "uint32_t",
+   "values": [
+    [
+     "PRIORITY_BOOST",
+     0,
+     "PRIORITY_BOOST"
+    ],
+    [
+     "PRIORITY_MAIN",
+     1,
+     "PRIORITY_MAIN"
+    ],
+    [
+     "PRIORITY_SPI",
+     2,
+     "PRIORITY_SPI"
+    ],
+    [
+     "PRIORITY_I2C",
+     3,
+     "PRIORITY_I2C"
+    ],
+    [
+     "PRIORITY_CAN",
+     4,
+     "PRIORITY_CAN"
+    ],
+    [
+     "PRIORITY_TIMER",
+     5,
+     "PRIORITY_TIMER"
+    ],
+    [
+     "PRIORITY_RCOUT",
+     6,
+     "PRIORITY_RCOUT"
+    ],
+    [
+     "PRIORITY_LED",
+     7,
+     "PRIORITY_LED"
+    ],
+    [
+     "PRIORITY_RCIN",
+     8,
+     "PRIORITY_RCIN"
+    ],
+    [
+     "PRIORITY_IO",
+     9,
+     "PRIORITY_IO"
+    ],
+    [
+     "PRIORITY_UART",
+     10,
+     "PRIORITY_UART"
+    ],
+    [
+     "PRIORITY_STORAGE",
+     11,
+     "PRIORITY_STORAGE"
+    ],
+    [
+     "PRIORITY_SCRIPTING",
+     12,
+     "PRIORITY_SCRIPTING"
+    ],
+    [
+     "PRIORITY_NET",
+     13,
+     "PRIORITY_NET"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "ie_string",
+   "cxx_call": "ie_string",
+   "lean": "AP_InternalError_lib.ie_string",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "buf",
+     "type": "uint8_t[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "uint8_t"
+    },
+    {
+     "name": "errors",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "count",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "line",
+     "type": "uint16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "len",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "snprintf",
+   "cxx_call": "snprintf",
+   "lean": "AP_InternalError_lib.Util_snprintf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "str",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "size",
+     "type": "size_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "format",
+     "type": "char[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "...",
+     "type": "args",
+     "ref": "va",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "vsnprintf",
+   "cxx_call": "vsnprintf",
+   "lean": "AP_InternalError_lib.Util_vsnprintf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "str",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "size",
+     "type": "size_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "format",
+     "type": "char[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "ap",
+     "type": "va_list",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "ftoa_engine",
+   "cxx_call": "ftoa_engine",
+   "lean": "AP_InternalError_lib.ftoa_engine",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "buf",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "precision",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "maxDecimals",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int16_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "print_vprintf",
+   "cxx_call": "print_vprintf",
+   "lean": "AP_InternalError_lib.print_vprintf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "s",
+     "type": "BufferPrinter",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "AP_InternalError_lib.BufferPrinter.State",
+     "leaves": [
+      {
+       "lean": "_offs",
+       "cxx": "_offs",
+       "type": "size_t",
+       "enum": null
+      },
+      {
+       "lean": "_size",
+       "cxx": "_size",
+       "type": "size_t",
+       "enum": null
+      }
+     ],
+     "by_pointer": true
+    },
+    {
+     "name": "fmt",
+     "type": "char[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "ap",
+     "type": "va_list",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "ultoa_invert",
+   "cxx_call": "ultoa_invert",
+   "lean": "AP_InternalError_lib.ultoa_invert",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "s",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "base",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "nat",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "ulltoa_invert",
+   "cxx_call": "ulltoa_invert",
+   "lean": "AP_InternalError_lib.ulltoa_invert",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "s",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "base",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "nat",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [
+  {
+   "name": "hal_util_persistent_data_internal_errors",
+   "cxx": "hal.util.persistent_data.internal_errors = uint32_t",
+   "args": [
+    {
+     "name": "internal_errors",
+     "type": "uint32_t",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  },
+  {
+   "name": "hal_util_persistent_data_internal_error_count",
+   "cxx": "hal.util.persistent_data.internal_error_count = uint16_t",
+   "args": [
+    {
+     "name": "internal_error_count",
+     "type": "uint16_t",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  },
+  {
+   "name": "hal_util_persistent_data_internal_error_last_line",
+   "cxx": "hal.util.persistent_data.internal_error_last_line = uint16_t",
+   "args": [
+    {
+     "name": "internal_error_last_line",
+     "type": "uint16_t",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  }
+ ],
+ "output_ns": "AP_InternalError_lib.",
+ "literals": [
+  {
+   "lean": "Int32.toBinary32 (9999999 : Int32)",
+   "bits": "4b18967f",
+   "cpp": "9999999",
+   "at": "193:59"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

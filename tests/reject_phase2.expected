@@ -1,0 +1,18 @@
+tests/reject_phase2.cpp:10:71: rejected: pointer `p` used other than by `*p`, `p[i]`, a step (`p++`, `p += k`), a comparison with a pointer into the same array, as an argument for a pointer parameter, or as the initializer of a local pointer (in `q - p`)
+tests/reject_phase2.cpp:22:14: rejected: two pointer arguments into the same array `v`, one of them written (aliasing)
+tests/reject_phase2.cpp:29:5: rejected: `memset` of an array with a value other than 0
+tests/reject_phase2.cpp:36:5: rejected: byte count that is not `k * sizeof(T)` with T the element type `float`
+tests/reject_phase2.cpp:43:5: rejected: `memcpy` within one array (overlap is undefined)
+tests/reject_phase2.cpp:51:12: rejected: `memcmp` other than `memcmp(p, q, k * sizeof(T)) == 0` (or `!= 0`) on integer arrays
+tests/reject_phase2.cpp:56:16: rejected: `new` of one object (only arrays `new T[k]`, held by a local pointer, are translated)
+tests/reject_phase2.cpp:65:12: rejected: local pointer `q` to an array of its own that is moved (`++`, `+=`)
+tests/reject_phase2.cpp:75:5: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body) (a bound of type `uint16_t` may make the counter of type `uint8_t` wrap)
+tests/reject_phase2.cpp:84:5: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body) (the bound may change in the loop)
+tests/reject_phase2.cpp:94:5: rejected: `while (k--)` loop with a `break`
+tests/reject_phase2.cpp:106:5: rejected: `while (k--)` loop with k not a variable of an unsigned type that the body does not assign
+tests/reject_phase2.cpp:116:5: rejected: `continue` in a pointer loop (it would skip the step)
+tests/reject_phase2.cpp:134:12: rejected: local reference variable `r` bound to something other than a data member (through data members only) of this object or of a local variable
+tests/reject_phase2.cpp:141:11: rejected: multidimensional array `float[2][2]`
+tests/reject_phase2.cpp:148:5: rejected: write through a byte view (`((uint8_t *)&x)[j] = v`: the object representation is not modeled)
+tests/reject_phase2.cpp:155:12: rejected: read of `old`, which is not part of the model (--drop)
+tests/reject_phase2.cpp:158:60: rejected: comparison of pointers that are not into the same array

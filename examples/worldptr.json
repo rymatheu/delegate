@@ -1,0 +1,6 @@
+{
+ "namespace": "WorldPtrs",
+ "cpp2lean": ["--nest", "--world", "--world-pointers", "--pointer-params", "--runtime-loops", "--general-loops", "--semaphores", "Semaphore,WithSemaphore"],
+ "world": {"calls": 20000, "weights": {"barometer.init": 0.05, "barometer.update": 4, "barometer.accumulate": 6, "filter.init": 0.2, "filter.update": 4},
+           "ranges": {"nsim": [0, 3], "pressure": [90000, 110000], "x": [-10, 10], "n": [0, 3], "i": [0, 3], "instance": [0, 3]}}
+}

@@ -1,0 +1,5859 @@
+{
+ "namespace": "AP_Common_lib",
+ "source": "ardupilot/unity_ap_common.cpp",
+ "functions": [
+  {
+   "name": "radians",
+   "lean": "AP_Common_lib.radians_double",
+   "params": [
+    [
+     "deg",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ap_common.cpp:227-230"
+  },
+  {
+   "name": "rad_to_cd",
+   "lean": "AP_Common_lib.rad_to_cd",
+   "params": [
+    [
+     "rad",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ap_common.cpp:249-252"
+  },
+  {
+   "name": "sq",
+   "lean": "AP_Common_lib.sq_double",
+   "params": [
+    [
+     "val",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ap_common.cpp:261-265"
+  },
+  {
+   "name": "sq",
+   "lean": "AP_Common_lib.sq_float",
+   "params": [
+    [
+     "val",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ap_common.cpp:266-269"
+  },
+  {
+   "name": "sq",
+   "lean": "AP_Common_lib.sq_double2",
+   "params": [
+    [
+     "first",
+     "double"
+    ],
+    [
+     "parameters",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ap_common.cpp:276-279"
+  },
+  {
+   "name": "norm",
+   "lean": "AP_Common_lib.norm_double2",
+   "params": [
+    [
+     "first",
+     "double"
+    ],
+    [
+     "second",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ap_common.cpp:286-289"
+  },
+  {
+   "name": "MAX",
+   "lean": "AP_Common_lib.MAX_double_float",
+   "params": [
+    [
+     "one",
+     "double"
+    ],
+    [
+     "two",
+     "float"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ap_common.cpp:307-310"
+  },
+  {
+   "name": "check_lat",
+   "lean": "AP_Common_lib.check_lat_int32_t",
+   "params": [
+    [
+     "lat",
+     "int32_t"
+    ]
+   ],
+   "ret": "bool",
+   "source": "ardupilot/unity_ap_common.cpp:47-50"
+  },
+  {
+   "name": "check_lng",
+   "lean": "AP_Common_lib.check_lng_int32_t",
+   "params": [
+    [
+     "lng",
+     "int32_t"
+    ]
+   ],
+   "ret": "bool",
+   "source": "ardupilot/unity_ap_common.cpp:51-54"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "Bitmask<32>",
+   "lean": "AP_Common_lib.Bitmask_32",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clearall",
+     "lean": "AP_Common_lib.Bitmask_32.clearall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Bitmask",
+     "lean": "AP_Common_lib.Bitmask_32.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "AP_Common_lib.Bitmask_32.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<32>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_32.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Bitmask<32>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator==",
+     "lean": "AP_Common_lib.Bitmask_32.op_eq",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<32>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_32.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator!=",
+     "lean": "AP_Common_lib.Bitmask_32.op_ne",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<32>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_32.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "validate",
+     "lean": "AP_Common_lib.Bitmask_32.validate",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set",
+     "lean": "AP_Common_lib.Bitmask_32.set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setall",
+     "lean": "AP_Common_lib.Bitmask_32.setall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "AP_Common_lib.Bitmask_32.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setonoff",
+     "lean": "AP_Common_lib.Bitmask_32.setonoff",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "onoff",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "AP_Common_lib.Bitmask_32.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "empty",
+     "lean": "AP_Common_lib.Bitmask_32.empty",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_Common_lib.Bitmask_32.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_set",
+     "lean": "AP_Common_lib.Bitmask_32.first_set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "AP_Common_lib.Bitmask_32.size",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<32>",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "bits[0]!",
+     "cxx": "bits[0]",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Bitmask<102>",
+   "lean": "AP_Common_lib.Bitmask_102",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clearall",
+     "lean": "AP_Common_lib.Bitmask_102.clearall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Bitmask",
+     "lean": "AP_Common_lib.Bitmask_102.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "AP_Common_lib.Bitmask_102.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<102>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_102.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Bitmask<102>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator==",
+     "lean": "AP_Common_lib.Bitmask_102.op_eq",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<102>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_102.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator!=",
+     "lean": "AP_Common_lib.Bitmask_102.op_ne",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<102>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_102.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "validate",
+     "lean": "AP_Common_lib.Bitmask_102.validate",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set",
+     "lean": "AP_Common_lib.Bitmask_102.set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setall",
+     "lean": "AP_Common_lib.Bitmask_102.setall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "AP_Common_lib.Bitmask_102.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setonoff",
+     "lean": "AP_Common_lib.Bitmask_102.setonoff",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "onoff",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "AP_Common_lib.Bitmask_102.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "empty",
+     "lean": "AP_Common_lib.Bitmask_102.empty",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_Common_lib.Bitmask_102.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_set",
+     "lean": "AP_Common_lib.Bitmask_102.first_set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "AP_Common_lib.Bitmask_102.size",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<102>",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "bits[0]!",
+     "cxx": "bits[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[1]!",
+     "cxx": "bits[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[2]!",
+     "cxx": "bits[2]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[3]!",
+     "cxx": "bits[3]",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Bitmask<190>",
+   "lean": "AP_Common_lib.Bitmask_190",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clearall",
+     "lean": "AP_Common_lib.Bitmask_190.clearall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Bitmask",
+     "lean": "AP_Common_lib.Bitmask_190.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "AP_Common_lib.Bitmask_190.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<190>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_190.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Bitmask<190>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator==",
+     "lean": "AP_Common_lib.Bitmask_190.op_eq",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<190>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_190.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator!=",
+     "lean": "AP_Common_lib.Bitmask_190.op_ne",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<190>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_190.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "validate",
+     "lean": "AP_Common_lib.Bitmask_190.validate",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set",
+     "lean": "AP_Common_lib.Bitmask_190.set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setall",
+     "lean": "AP_Common_lib.Bitmask_190.setall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "AP_Common_lib.Bitmask_190.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setonoff",
+     "lean": "AP_Common_lib.Bitmask_190.setonoff",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "onoff",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "AP_Common_lib.Bitmask_190.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "empty",
+     "lean": "AP_Common_lib.Bitmask_190.empty",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_Common_lib.Bitmask_190.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_set",
+     "lean": "AP_Common_lib.Bitmask_190.first_set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "AP_Common_lib.Bitmask_190.size",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<190>",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "bits[0]!",
+     "cxx": "bits[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[1]!",
+     "cxx": "bits[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[2]!",
+     "cxx": "bits[2]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[3]!",
+     "cxx": "bits[3]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[4]!",
+     "cxx": "bits[4]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[5]!",
+     "cxx": "bits[5]",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Bitmask<317>",
+   "lean": "AP_Common_lib.Bitmask_317",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clearall",
+     "lean": "AP_Common_lib.Bitmask_317.clearall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Bitmask",
+     "lean": "AP_Common_lib.Bitmask_317.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "AP_Common_lib.Bitmask_317.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<317>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_317.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Bitmask<317>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator==",
+     "lean": "AP_Common_lib.Bitmask_317.op_eq",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<317>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_317.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator!=",
+     "lean": "AP_Common_lib.Bitmask_317.op_ne",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<317>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_317.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "validate",
+     "lean": "AP_Common_lib.Bitmask_317.validate",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set",
+     "lean": "AP_Common_lib.Bitmask_317.set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setall",
+     "lean": "AP_Common_lib.Bitmask_317.setall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "AP_Common_lib.Bitmask_317.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setonoff",
+     "lean": "AP_Common_lib.Bitmask_317.setonoff",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "onoff",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "AP_Common_lib.Bitmask_317.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "empty",
+     "lean": "AP_Common_lib.Bitmask_317.empty",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_Common_lib.Bitmask_317.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_set",
+     "lean": "AP_Common_lib.Bitmask_317.first_set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "AP_Common_lib.Bitmask_317.size",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<317>",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "bits[0]!",
+     "cxx": "bits[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[1]!",
+     "cxx": "bits[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[2]!",
+     "cxx": "bits[2]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[3]!",
+     "cxx": "bits[3]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[4]!",
+     "cxx": "bits[4]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[5]!",
+     "cxx": "bits[5]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[6]!",
+     "cxx": "bits[6]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[7]!",
+     "cxx": "bits[7]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[8]!",
+     "cxx": "bits[8]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[9]!",
+     "cxx": "bits[9]",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Bitmask<634>",
+   "lean": "AP_Common_lib.Bitmask_634",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "clearall",
+     "lean": "AP_Common_lib.Bitmask_634.clearall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Bitmask",
+     "lean": "AP_Common_lib.Bitmask_634.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator=",
+     "lean": "AP_Common_lib.Bitmask_634.op_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<634>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_634.State",
+       "leaves": null
+      }
+     ],
+     "ret": "Bitmask<634>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator==",
+     "lean": "AP_Common_lib.Bitmask_634.op_eq",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<634>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_634.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator!=",
+     "lean": "AP_Common_lib.Bitmask_634.op_ne",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Bitmask<634>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Bitmask_634.State",
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "validate",
+     "lean": "AP_Common_lib.Bitmask_634.validate",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set",
+     "lean": "AP_Common_lib.Bitmask_634.set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setall",
+     "lean": "AP_Common_lib.Bitmask_634.setall",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "AP_Common_lib.Bitmask_634.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setonoff",
+     "lean": "AP_Common_lib.Bitmask_634.setonoff",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "onoff",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "AP_Common_lib.Bitmask_634.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bit",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "empty",
+     "lean": "AP_Common_lib.Bitmask_634.empty",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "AP_Common_lib.Bitmask_634.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_set",
+     "lean": "AP_Common_lib.Bitmask_634.first_set",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "size",
+     "lean": "AP_Common_lib.Bitmask_634.size",
+     "top": false,
+     "kind": "method",
+     "owner": "Bitmask<634>",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "bits[0]!",
+     "cxx": "bits[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[1]!",
+     "cxx": "bits[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[2]!",
+     "cxx": "bits[2]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[3]!",
+     "cxx": "bits[3]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[4]!",
+     "cxx": "bits[4]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[5]!",
+     "cxx": "bits[5]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[6]!",
+     "cxx": "bits[6]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[7]!",
+     "cxx": "bits[7]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[8]!",
+     "cxx": "bits[8]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[9]!",
+     "cxx": "bits[9]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[10]!",
+     "cxx": "bits[10]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[11]!",
+     "cxx": "bits[11]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[12]!",
+     "cxx": "bits[12]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[13]!",
+     "cxx": "bits[13]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[14]!",
+     "cxx": "bits[14]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[15]!",
+     "cxx": "bits[15]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[16]!",
+     "cxx": "bits[16]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[17]!",
+     "cxx": "bits[17]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[18]!",
+     "cxx": "bits[18]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bits[19]!",
+     "cxx": "bits[19]",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Location",
+   "lean": "AP_Common_lib.Location",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "zero",
+     "lean": "AP_Common_lib.Location.zero",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Location",
+     "lean": "AP_Common_lib.Location.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Location",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_alt_cm",
+     "lean": "AP_Common_lib.Location.set_alt_cm",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "alt_cm",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "frame",
+       "type": "Location::AltFrame",
+       "ref": null,
+       "boundary": false,
+       "enum": "AP_Common_lib.Location.AltFrame",
+       "under": "int32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Location",
+     "lean": "AP_Common_lib.Location.init_int32_t3_AltFrame",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Location",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "latitude",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "longitude",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "alt_in_cm",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "frame",
+       "type": "Location::AltFrame",
+       "ref": null,
+       "boundary": false,
+       "enum": "AP_Common_lib.Location.AltFrame",
+       "under": "int32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_alt_m",
+     "lean": "AP_Common_lib.Location.set_alt_m",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "alt_m",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "frame",
+       "type": "Location::AltFrame",
+       "ref": null,
+       "boundary": false,
+       "enum": "AP_Common_lib.Location.AltFrame",
+       "under": "int32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "copy_alt_from",
+     "lean": "AP_Common_lib.Location.copy_alt_from",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "other",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_distance",
+     "lean": "AP_Common_lib.Location.get_distance",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_distance_NED",
+     "lean": "AP_Common_lib.Location.get_distance_NED",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NED_postype",
+     "lean": "AP_Common_lib.Location.get_distance_NED_postype",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NED_double",
+     "lean": "AP_Common_lib.Location.get_distance_NED_double",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NE",
+     "lean": "AP_Common_lib.Location.get_distance_NE",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NE_postype",
+     "lean": "AP_Common_lib.Location.get_distance_NE_postype",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NE_double",
+     "lean": "AP_Common_lib.Location.get_distance_NE_double",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_distance_NE_ftype",
+     "lean": "AP_Common_lib.Location.get_distance_NE_ftype",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "offset",
+     "lean": "AP_Common_lib.Location.offset_double2",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "ofs_north",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "ofs_east",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "offset",
+     "lean": "AP_Common_lib.Location.offset_Vector3p",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "ofs_ned",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "offset_up_cm",
+     "lean": "AP_Common_lib.Location.offset_up_cm",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "alt_offset_cm",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "offset_up_m",
+     "lean": "AP_Common_lib.Location.offset_up_m",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "alt_offset_m",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "offset_bearing",
+     "lean": "AP_Common_lib.Location.offset_bearing",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bearing_deg",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "distance",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "offset_bearing_and_pitch",
+     "lean": "AP_Common_lib.Location.offset_bearing_and_pitch",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "bearing_deg",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch_deg",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "distance",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_bearing",
+     "lean": "AP_Common_lib.Location.get_bearing",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_bearing_to",
+     "lean": "AP_Common_lib.Location.get_bearing_to",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "same_latlon_as",
+     "lean": "AP_Common_lib.Location.same_latlon_as",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "loc2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "check_latlng",
+     "lean": "AP_Common_lib.Location.check_latlng",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "line_path_proportion",
+     "lean": "AP_Common_lib.Location.line_path_proportion",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "point1",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "point2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "past_interval_finish_line",
+     "lean": "AP_Common_lib.Location.past_interval_finish_line",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "point1",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "point2",
+       "type": "Location",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Location.State",
+       "leaves": [
+        {
+         "lean": "relative_alt",
+         "cxx": "relative_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_ccw",
+         "cxx": "loiter_ccw",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "terrain_alt",
+         "cxx": "terrain_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "origin_alt",
+         "cxx": "origin_alt",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "loiter_xtrack",
+         "cxx": "loiter_xtrack",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "alt",
+         "cxx": "alt",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "initialised",
+     "lean": "AP_Common_lib.Location.initialised",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "alt_is_zero",
+     "lean": "AP_Common_lib.Location.alt_is_zero",
+     "top": false,
+     "kind": "method",
+     "owner": "Location",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "relative_alt",
+     "cxx": "relative_alt",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "loiter_ccw",
+     "cxx": "loiter_ccw",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "terrain_alt",
+     "cxx": "terrain_alt",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "origin_alt",
+     "cxx": "origin_alt",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "loiter_xtrack",
+     "cxx": "loiter_xtrack",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "alt",
+     "cxx": "alt",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "lat",
+     "cxx": "lat",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "lng",
+     "cxx": "lng",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector2<float>",
+   "lean": "AP_Common_lib.Vector2f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector2",
+     "lean": "AP_Common_lib.Vector2f.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*",
+     "lean": "AP_Common_lib.Vector2f.op_mul_Vector2f",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector2<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AP_Common_lib.Vector2f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector2<double>",
+   "lean": "AP_Common_lib.Vector2p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector2",
+     "lean": "AP_Common_lib.Vector2p.init_double2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<float>",
+   "lean": "AP_Common_lib.Vector3f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector3",
+     "lean": "AP_Common_lib.Vector3f.init_float3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<double>",
+   "lean": "AP_Common_lib.Vector3p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector3",
+     "lean": "AP_Common_lib.Vector3p.init_double3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "Rotation",
+   "lean": "AP_Common_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  },
+  {
+   "cxx": "Location::AltFrame",
+   "lean": "AP_Common_lib.Location.AltFrame",
+   "under": "int32_t",
+   "values": [
+    [
+     "ABSOLUTE",
+     0,
+     "ABSOLUTE"
+    ],
+    [
+     "ABOVE_HOME",
+     1,
+     "ABOVE_HOME"
+    ],
+    [
+     "ABOVE_ORIGIN",
+     2,
+     "ABOVE_ORIGIN"
+    ],
+    [
+     "ABOVE_TERRAIN",
+     3,
+     "ABOVE_TERRAIN"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "radians",
+   "cxx_call": "radians",
+   "lean": "AP_Common_lib.radians_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "deg",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "rad_to_cd",
+   "cxx_call": "rad_to_cd",
+   "lean": "AP_Common_lib.rad_to_cd",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "rad",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq<double>",
+   "lean": "AP_Common_lib.sq_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq",
+   "lean": "AP_Common_lib.sq_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq<double, double>",
+   "lean": "AP_Common_lib.sq_double2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "parameters",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "norm",
+   "cxx_call": "norm",
+   "lean": "AP_Common_lib.norm_double2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "second",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "MAX",
+   "cxx_call": "MAX<double, float>",
+   "lean": "AP_Common_lib.MAX_double_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "one",
+     "type": "double",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "two",
+     "type": "float",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "check_lat",
+   "cxx_call": "check_lat",
+   "lean": "AP_Common_lib.check_lat_int32_t",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lat",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "check_lng",
+   "cxx_call": "check_lng",
+   "lean": "AP_Common_lib.check_lng_int32_t",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lng",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "offset_latlng",
+   "cxx_call": "Location::offset_latlng",
+   "lean": "AP_Common_lib.Location.offset_latlng",
+   "kind": "free",
+   "top": false,
+   "owner": "Location",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lat",
+     "type": "int32_t",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "lng",
+     "type": "int32_t",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ofs_north",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ofs_east",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "longitude_scale",
+   "cxx_call": "Location::longitude_scale",
+   "lean": "AP_Common_lib.Location.longitude_scale",
+   "kind": "free",
+   "top": false,
+   "owner": "Location",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lat",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "limit_lattitude",
+   "cxx_call": "Location::limit_lattitude",
+   "lean": "AP_Common_lib.Location.limit_lattitude",
+   "kind": "free",
+   "top": false,
+   "owner": "Location",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lat",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "wrap_longitude",
+   "cxx_call": "Location::wrap_longitude",
+   "lean": "AP_Common_lib.Location.wrap_longitude",
+   "kind": "free",
+   "top": false,
+   "owner": "Location",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lon",
+     "type": "int64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "diff_longitude",
+   "cxx_call": "Location::diff_longitude",
+   "lean": "AP_Common_lib.Location.diff_longitude",
+   "kind": "free",
+   "top": false,
+   "owner": "Location",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "lon1",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "lon2",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.011131884502145034 : Binary64)",
+   "bits": "3f86cc503f0957e3",
+   "cpp": "0.011131884502145034",
+   "at": "217:54"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3f86cc503f0957e3 /- 0.011131884502145034 -/)",
+   "bits": "3c366282",
+   "cpp": "(float)6417094514661347/576460752303423488",
+   "at": "217:54"
+  },
+  {
+   "lean": "(89.832049533689215 : Binary64)",
+   "bits": "405675404caff639",
+   "cpp": "89.832049533689215",
+   "at": "219:58"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x405675404caff639 /- 89.832049533689215 -/)",
+   "bits": "42b3aa02",
+   "cpp": "(float)6321368512591417/70368744177664",
+   "at": "219:58"
+  },
+  {
+   "lean": "(9.9999999999999995e-8 : Binary64)",
+   "bits": "3e7ad7f29abcaf48",
+   "cpp": "9.9999999999999995E-8",
+   "at": "530:19"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3e7ad7f29abcaf48 /- 9.9999999999999995E-8 -/)",
+   "bits": "33d6bf95",
+   "cpp": "(float)944473296573929/9444732965739290427392",
+   "at": "530:19"
+  },
+  {
+   "lean": "(3.1415926535897931 : Binary64)",
+   "bits": "400921fb54442d18",
+   "cpp": "3.1415926535897931",
+   "at": "530:19"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/)",
+   "bits": "40490fdb",
+   "cpp": "(float)884279719003555/281474976710656",
+   "at": "530:19"
+  },
+  {
+   "lean": "(180.0 : Binary32)",
+   "bits": "43340000",
+   "cpp": "180",
+   "at": "530:19"
+  },
+  {
+   "lean": "(0.01 : Binary64)",
+   "bits": "3f847ae147ae147b",
+   "cpp": "0.01",
+   "at": "531:23"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3f847ae147ae147b /- 0.01 -/)",
+   "bits": "3c23d70a",
+   "cpp": "0.01",
+   "at": "531:23"
+  },
+  {
+   "lean": "Int32.toBinary32 (100 : Int32)",
+   "bits": "42c80000",
+   "cpp": "100",
+   "at": "44:26"
+  },
+  {
+   "lean": "Int32.toBinary64 (100 : Int32)",
+   "bits": "4059000000000000",
+   "cpp": "100",
+   "at": "500:25"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x40490fdb /- (float)884279719003555/281474976710656 -/) / (Binary32.ofBits 0x43340000 /- 180 -/))",
+   "bits": "3f91df46a0000000",
+   "cpp": "(double)9370165/536870912",
+   "at": "229:18"
+  },
+  {
+   "lean": "(100.0 : Binary32)",
+   "bits": "42c80000",
+   "cpp": "100.0f",
+   "at": "523:64"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x42c80000 /- 100.0f -/)",
+   "bits": "4059000000000000",
+   "cpp": "100.0f",
+   "at": "523:64"
+  },
+  {
+   "lean": "(0.5 : Binary64)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "571:27"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3fe0000000000000 /- 0.5 -/)",
+   "bits": "3f000000",
+   "cpp": "0.5",
+   "at": "571:27"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x40490fdb /- (float)884279719003555/281474976710656 -/) * (Binary32.ofBits 0x3f000000 /- 0.5 -/))",
+   "bits": "3ff921fb60000000",
+   "cpp": "(M_PI*0.5)",
+   "at": "571:21"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "572:19"
+  },
+  {
+   "lean": "Int32.toBinary32 (2 : Int32)",
+   "bits": "40000000",
+   "cpp": "2",
+   "at": "573:20"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x40000000 /- 2 -/) * (Binary32.ofBits 0x40490fdb /- (float)884279719003555/281474976710656 -/))",
+   "bits": "401921fb60000000",
+   "cpp": "(double)13176795/2097152",
+   "at": "573:20"
+  },
+  {
+   "lean": "(18000.0 : Binary32)",
+   "bits": "468ca000",
+   "cpp": "18000",
+   "at": "251:18"
+  },
+  {
+   "lean": "Int32.toBinary32 (90 : Int32)",
+   "bits": "42b40000",
+   "cpp": "90",
+   "at": "49:25"
+  },
+  {
+   "lean": "(1.0e7 : Binary64)",
+   "bits": "416312d000000000",
+   "cpp": "1e7",
+   "at": "49:28"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x416312d000000000 /- 1e7 -/)",
+   "bits": "4b189680",
+   "cpp": "1e7",
+   "at": "49:28"
+  },
+  {
+   "lean": "Int32.toBinary32 (180 : Int32)",
+   "bits": "43340000",
+   "cpp": "180",
+   "at": "53:25"
+  },
+  {
+   "lean": "(0.001 : Binary32)",
+   "bits": "3a83126f",
+   "cpp": "0.001f",
+   "at": "627:20"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x3a83126f /- 0.001f -/)",
+   "bits": "3f50624de0000000",
+   "cpp": "0.001f",
+   "at": "627:20"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "629:16"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

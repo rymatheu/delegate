@@ -1,0 +1,1537 @@
+{
+ "namespace": "NavEKF_Source_lib",
+ "source": "ardupilot/unity_navekf_source.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "AP_NavEKF_Source",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "get_num_enabled",
+     "type": "uint8_t",
+     "cxx": "AP::dal().compass().get_num_enabled()",
+     "leaves": null
+    },
+    {
+     "lean": "source_set_0_posxy_configured",
+     "type": "bool",
+     "cxx": "_source_set[0].posxy.configured()",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "option_is_set",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.option_is_set",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "option",
+       "type": "AP_NavEKF_Source::SourceOptions",
+       "ref": null,
+       "boundary": false,
+       "enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceOptions",
+       "under": "int32_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getActiveSourceSet",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getActiveSourceSet",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getPosXYSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getPosXYSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "AP_NavEKF_Source::SourceXY",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceXY",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getPosZSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getPosZSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "AP_NavEKF_Source::SourceZ",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceZ",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setPosVelYawSourceSet",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.setPosVelYawSourceSet",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "source_set_idx",
+       "type": "AP_NavEKF_Source::SourceSetSelection",
+       "ref": null,
+       "boundary": false,
+       "enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceSetSelection",
+       "under": "uint8_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getVelXYSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getVelXYSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "AP_NavEKF_Source::SourceXY",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceXY",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getVelZSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getVelZSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "AP_NavEKF_Source::SourceZ",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceZ",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "useVelXYSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.useVelXYSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "velxy_source",
+       "type": "AP_NavEKF_Source::SourceXY",
+       "ref": null,
+       "boundary": false,
+       "enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceXY",
+       "under": "uint8_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "useVelZSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.useVelZSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "velz_source",
+       "type": "AP_NavEKF_Source::SourceZ",
+       "ref": null,
+       "boundary": false,
+       "enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceZ",
+       "under": "uint8_t",
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "haveVelZSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.haveVelZSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getYawSource",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.getYawSource",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "AP_NavEKF_Source::SourceYaw",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceYaw",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "usingGPS",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.usingGPS",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "core_index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "configured",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.configured",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ext_nav_enabled",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.ext_nav_enabled",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "gps_yaw_enabled",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.gps_yaw_enabled",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "wheel_encoder_enabled",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.wheel_encoder_enabled",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_active_source_set",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.get_active_source_set",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "AP_NavEKF_Source",
+     "lean": "NavEKF_Source_lib.AP_NavEKF_Source.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AP_NavEKF_Source",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_source_set[0]!.posxy._value",
+     "cxx": "_source_set[0].posxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[0]!.velxy._value",
+     "cxx": "_source_set[0].velxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[0]!.posz._value",
+     "cxx": "_source_set[0].posz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[0]!.velz._value",
+     "cxx": "_source_set[0].velz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[0]!.yaw._value",
+     "cxx": "_source_set[0].yaw._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[1]!.posxy._value",
+     "cxx": "_source_set[1].posxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[1]!.velxy._value",
+     "cxx": "_source_set[1].velxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[1]!.posz._value",
+     "cxx": "_source_set[1].posz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[1]!.velz._value",
+     "cxx": "_source_set[1].velz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[1]!.yaw._value",
+     "cxx": "_source_set[1].yaw._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[2]!.posxy._value",
+     "cxx": "_source_set[2].posxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[2]!.velxy._value",
+     "cxx": "_source_set[2].velxy._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[2]!.posz._value",
+     "cxx": "_source_set[2].posz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[2]!.velz._value",
+     "cxx": "_source_set[2].velz._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_source_set[2]!.yaw._value",
+     "cxx": "_source_set[2].yaw._value",
+     "type": "int8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_options._value",
+     "cxx": "_options._value",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "active_source_set",
+     "cxx": "active_source_set",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_configured",
+     "cxx": "_configured",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AP_ParamT<unsigned short, 2>",
+   "lean": "NavEKF_Source_lib.AP_ParamT_unsigned_short_2",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "get",
+     "lean": "NavEKF_Source_lib.AP_ParamT_unsigned_short_2.get_void",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_ParamTBase<unsigned short, 2>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_value",
+     "cxx": "_value",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AP_Enum<AP_NavEKF_Source::SourceXY>",
+   "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceXY",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "operator const AP_NavEKF_Source::SourceXY",
+     "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceXY.op_to_AP_NavEKF_Source_SourceXY",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_Enum<AP_NavEKF_Source::SourceXY>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "AP_NavEKF_Source::SourceXY",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceXY",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_value",
+     "cxx": "_value",
+     "type": "int8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AP_Enum<AP_NavEKF_Source::SourceYaw>",
+   "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceYaw",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "operator const AP_NavEKF_Source::SourceYaw",
+     "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceYaw.op_to_AP_NavEKF_Source_SourceYaw",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_Enum<AP_NavEKF_Source::SourceYaw>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "AP_NavEKF_Source::SourceYaw",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceYaw",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get",
+     "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceYaw.get_void",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_ParamTBase<signed char, 1>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_value",
+     "cxx": "_value",
+     "type": "int8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AP_Enum<AP_NavEKF_Source::SourceZ>",
+   "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceZ",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "operator const AP_NavEKF_Source::SourceZ",
+     "lean": "NavEKF_Source_lib.AP_Enum_AP_NavEKF_Source_SourceZ.op_to_AP_NavEKF_Source_SourceZ",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_Enum<AP_NavEKF_Source::SourceZ>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "AP_NavEKF_Source::SourceZ",
+     "ret_enum": "NavEKF_Source_lib.AP_NavEKF_Source.SourceZ",
+     "ret_under": "uint8_t",
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_value",
+     "cxx": "_value",
+     "type": "int8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "ap_var_type",
+   "lean": "NavEKF_Source_lib.ap_var_type",
+   "under": "uint32_t",
+   "values": [
+    [
+     "AP_PARAM_NONE",
+     0,
+     "AP_PARAM_NONE"
+    ],
+    [
+     "AP_PARAM_INT8",
+     1,
+     "AP_PARAM_INT8"
+    ],
+    [
+     "AP_PARAM_INT16",
+     2,
+     "AP_PARAM_INT16"
+    ],
+    [
+     "AP_PARAM_INT32",
+     3,
+     "AP_PARAM_INT32"
+    ],
+    [
+     "AP_PARAM_FLOAT",
+     4,
+     "AP_PARAM_FLOAT"
+    ],
+    [
+     "AP_PARAM_VECTOR3F",
+     5,
+     "AP_PARAM_VECTOR3F"
+    ],
+    [
+     "AP_PARAM_GROUP",
+     6,
+     "AP_PARAM_GROUP"
+    ]
+   ]
+  },
+  {
+   "cxx": "AP_NavEKF_Source::SourceXY",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source.SourceXY",
+   "under": "uint8_t",
+   "values": [
+    [
+     "NONE",
+     0,
+     "NONE"
+    ],
+    [
+     "GPS",
+     3,
+     "GPS"
+    ],
+    [
+     "BEACON",
+     4,
+     "BEACON"
+    ],
+    [
+     "OPTFLOW",
+     5,
+     "OPTFLOW"
+    ],
+    [
+     "EXTNAV",
+     6,
+     "EXTNAV"
+    ],
+    [
+     "WHEEL_ENCODER",
+     7,
+     "WHEEL_ENCODER"
+    ]
+   ]
+  },
+  {
+   "cxx": "AP_NavEKF_Source::SourceZ",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source.SourceZ",
+   "under": "uint8_t",
+   "values": [
+    [
+     "NONE",
+     0,
+     "NONE"
+    ],
+    [
+     "BARO",
+     1,
+     "BARO"
+    ],
+    [
+     "RANGEFINDER",
+     2,
+     "RANGEFINDER"
+    ],
+    [
+     "GPS",
+     3,
+     "GPS"
+    ],
+    [
+     "BEACON",
+     4,
+     "BEACON"
+    ],
+    [
+     "EXTNAV",
+     6,
+     "EXTNAV"
+    ]
+   ]
+  },
+  {
+   "cxx": "AP_NavEKF_Source::SourceYaw",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source.SourceYaw",
+   "under": "uint8_t",
+   "values": [
+    [
+     "NONE",
+     0,
+     "NONE"
+    ],
+    [
+     "COMPASS",
+     1,
+     "COMPASS"
+    ],
+    [
+     "GPS",
+     2,
+     "GPS"
+    ],
+    [
+     "GPS_COMPASS_FALLBACK",
+     3,
+     "GPS_COMPASS_FALLBACK"
+    ],
+    [
+     "EXTNAV",
+     6,
+     "EXTNAV"
+    ],
+    [
+     "GSF",
+     8,
+     "GSF"
+    ]
+   ]
+  },
+  {
+   "cxx": "AP_NavEKF_Source::SourceOptions",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source.SourceOptions",
+   "under": "int32_t",
+   "values": [
+    [
+     "FUSE_ALL_VELOCITIES",
+     1,
+     "FUSE_ALL_VELOCITIES"
+    ],
+    [
+     "ALIGN_EXTNAV_POS_WHEN_USING_OPTFLOW",
+     2,
+     "ALIGN_EXTNAV_POS_WHEN_USING_OPTFLOW"
+    ],
+    [
+     "SRC_PER_CORE",
+     8,
+     "SRC_PER_CORE"
+    ]
+   ]
+  },
+  {
+   "cxx": "AP_NavEKF_Source::SourceSetSelection",
+   "lean": "NavEKF_Source_lib.AP_NavEKF_Source.SourceSetSelection",
+   "under": "uint8_t",
+   "values": [
+    [
+     "PRIMARY",
+     0,
+     "PRIMARY"
+    ],
+    [
+     "SECONDARY",
+     1,
+     "SECONDARY"
+    ],
+    [
+     "TERTIARY",
+     2,
+     "TERTIARY"
+    ]
+   ]
+  },
+  {
+   "cxx": "Rotation",
+   "lean": "NavEKF_Source_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  },
+  {
+   "cxx": "Location::AltFrame",
+   "lean": "NavEKF_Source_lib.Location.AltFrame",
+   "under": "int32_t",
+   "values": [
+    [
+     "ABSOLUTE",
+     0,
+     "ABSOLUTE"
+    ],
+    [
+     "ABOVE_HOME",
+     1,
+     "ABOVE_HOME"
+    ],
+    [
+     "ABOVE_ORIGIN",
+     2,
+     "ABOVE_ORIGIN"
+    ],
+    [
+     "ABOVE_TERRAIN",
+     3,
+     "ABOVE_TERRAIN"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavFilterStatusBit",
+   "lean": "NavEKF_Source_lib.NavFilterStatusBit",
+   "under": "int32_t",
+   "values": [
+    [
+     "ATTITUDE_VALID",
+     1,
+     "ATTITUDE_VALID"
+    ],
+    [
+     "HORIZ_VEL",
+     2,
+     "HORIZ_VEL"
+    ],
+    [
+     "VERT_VEL",
+     4,
+     "VERT_VEL"
+    ],
+    [
+     "HORIZ_POS_REL",
+     8,
+     "HORIZ_POS_REL"
+    ],
+    [
+     "HORIZ_POS_ABS",
+     16,
+     "HORIZ_POS_ABS"
+    ],
+    [
+     "VERT_POS",
+     32,
+     "VERT_POS"
+    ],
+    [
+     "TERRAIN_ALT",
+     64,
+     "TERRAIN_ALT"
+    ],
+    [
+     "CONST_POS_MODE",
+     128,
+     "CONST_POS_MODE"
+    ],
+    [
+     "PRED_HORIZ_POS_REL",
+     256,
+     "PRED_HORIZ_POS_REL"
+    ],
+    [
+     "PRED_HORIZ_POS_ABS",
+     512,
+     "PRED_HORIZ_POS_ABS"
+    ],
+    [
+     "TAKEOFF_DETECTED",
+     1024,
+     "TAKEOFF_DETECTED"
+    ],
+    [
+     "TAKEOFF_EXPECTED",
+     2048,
+     "TAKEOFF_EXPECTED"
+    ],
+    [
+     "TOUCHDOWN_EXPECTED",
+     4096,
+     "TOUCHDOWN_EXPECTED"
+    ],
+    [
+     "USING_GPS",
+     8192,
+     "USING_GPS"
+    ],
+    [
+     "GPS_GLITCHING",
+     16384,
+     "GPS_GLITCHING"
+    ],
+    [
+     "GPS_QUALITY_GOOD",
+     32768,
+     "GPS_QUALITY_GOOD"
+    ],
+    [
+     "INITALIZED",
+     65536,
+     "INITALIZED"
+    ],
+    [
+     "REJECTING_AIRSPEED",
+     131072,
+     "REJECTING_AIRSPEED"
+    ],
+    [
+     "DEAD_RECKONING",
+     262144,
+     "DEAD_RECKONING"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavFilterFaultBit",
+   "lean": "NavEKF_Source_lib.NavFilterFaultBit",
+   "under": "int32_t",
+   "values": [
+    [
+     "BAD_QUATERNION",
+     1,
+     "BAD_QUATERNION"
+    ],
+    [
+     "BAD_VELOCITY",
+     2,
+     "BAD_VELOCITY"
+    ],
+    [
+     "BAD_XMAG",
+     4,
+     "BAD_XMAG"
+    ],
+    [
+     "BAD_YMAG",
+     8,
+     "BAD_YMAG"
+    ],
+    [
+     "BAD_ZMAG",
+     16,
+     "BAD_ZMAG"
+    ],
+    [
+     "BAD_AIRSPEED",
+     32,
+     "BAD_AIRSPEED"
+    ],
+    [
+     "BAD_SIDESLIP",
+     64,
+     "BAD_SIDESLIP"
+    ],
+    [
+     "NOT_INITIALISED",
+     128,
+     "NOT_INITIALISED"
+    ]
+   ]
+  }
+ ],
+ "free": [],
+ "output_log": [],
+ "output_ns": "NavEKF_Source_lib.",
+ "literals": [
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "(float)0",
+   "at": "141:5"
+  }
+ ],
+ "var_info": {
+  "AP_NavEKF_Source": []
+ },
+ "world": [
+  {
+   "name": "sources",
+   "cxx": "sources",
+   "class": "AP_NavEKF_Source",
+   "lean": "AP_NavEKF_Source",
+   "parts": [
+    [
+     "sources",
+     "AP_NavEKF_Source.State",
+     "state"
+    ],
+    [
+     "sources'inp",
+     "AP_NavEKF_Source.Inputs",
+     "boundary inputs"
+    ]
+   ]
+  }
+ ],
+ "heap": [],
+ "funcs": []
+}

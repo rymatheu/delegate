@@ -1,0 +1,140 @@
+{
+ "namespace": "Musl.atan2f",
+ "source": "libm/unity/unity_atan2f.c",
+ "functions": [
+  {
+   "name": "atan2f",
+   "lean": "Musl.atan2f.atan2f",
+   "params": [
+    [
+     "y",
+     "float"
+    ],
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_atan2f.c:22-83"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "atan2f",
+   "cxx_call": "atan2f",
+   "lean": "Musl.atan2f.atan2f",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(3.1415927410e+00 : Binary64)",
+   "bits": "400921fb5fff9168",
+   "cpp": "3.1415927410e+00",
+   "at": "19:10"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x400921fb5fff9168 /- 3.1415927410e+00 -/)",
+   "bits": "40490fdb",
+   "cpp": "3.1415927410e+00",
+   "at": "19:10"
+  },
+  {
+   "lean": "(8.7422776573e-08 : Binary64)",
+   "bits": "3e7777a5bfff738d",
+   "cpp": "8.7422776573e-08",
+   "at": "20:11"
+  },
+  {
+   "lean": "Binary64.toBinary32 (-(Binary64.ofBits 0x3e7777a5bfff738d /- 8.7422776573e-08 -/))",
+   "bits": "b3bbbd2e",
+   "cpp": "-8.7422776573e-08",
+   "at": "20:10"
+  },
+  {
+   "lean": "Int32.toBinary32 (2 : Int32)",
+   "bits": "40000000",
+   "cpp": "2",
+   "at": "48:20"
+  },
+  {
+   "lean": "Int32.toBinary32 (4 : Int32)",
+   "bits": "40800000",
+   "cpp": "4",
+   "at": "53:23"
+  },
+  {
+   "lean": "Int32.toBinary32 (3 : Int32)",
+   "bits": "40400000",
+   "cpp": "3",
+   "at": "55:19"
+  },
+  {
+   "lean": "Int32.toBinary32 (-(3 : Int32))",
+   "bits": "c0400000",
+   "cpp": "-3",
+   "at": "56:19"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "60:20"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "73:7"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x0000000000000000 /- 0.0 -/)",
+   "bits": "00000000",
+   "cpp": "0.0",
+   "at": "73:7"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

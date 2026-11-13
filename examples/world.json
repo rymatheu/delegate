@@ -1,0 +1,6 @@
+{
+ "namespace": "Worlds",
+ "cpp2lean": ["--world"],
+ "world": {"calls": 20000, "weights": {"nav.update": 6, "motors.output": 3},
+           "ranges": {"x": [-4, 4], "roll": [-10, 10], "target": [-20, 20]}}
+}

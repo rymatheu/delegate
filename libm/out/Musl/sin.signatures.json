@@ -1,0 +1,280 @@
+{
+ "namespace": "Musl.sin",
+ "source": "libm/unity/unity_sin.c",
+ "functions": [
+  {
+   "name": "__cos",
+   "lean": "Musl.sin.__cos",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_sin.c:61-71"
+  },
+  {
+   "name": "__sin",
+   "lean": "Musl.sin.__sin",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ],
+    [
+     "iy",
+     "int32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_sin.c:52-64"
+  },
+  {
+   "name": "sin",
+   "lean": "Musl.sin.sin",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_sin.c:45-78"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "__cos",
+   "cxx_call": "__cos",
+   "lean": "Musl.sin.__cos",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__sin",
+   "cxx_call": "__sin",
+   "lean": "Musl.sin.__sin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "iy",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sin",
+   "cxx_call": "sin",
+   "lean": "Musl.sin.sin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.66666666666666324348e-01 : Binary64)",
+   "bits": "3fc5555555555549",
+   "cpp": "1.66666666666666324348e-01",
+   "at": "45:8"
+  },
+  {
+   "lean": "(8.33333333332248946124e-03 : Binary64)",
+   "bits": "3f8111111110f8a6",
+   "cpp": "8.33333333332248946124e-03",
+   "at": "46:8"
+  },
+  {
+   "lean": "(1.98412698298579493134e-04 : Binary64)",
+   "bits": "3f2a01a019c161d5",
+   "cpp": "1.98412698298579493134e-04",
+   "at": "47:8"
+  },
+  {
+   "lean": "(2.75573137070700676789e-06 : Binary64)",
+   "bits": "3ec71de357b1fe7d",
+   "cpp": "2.75573137070700676789e-06",
+   "at": "48:8"
+  },
+  {
+   "lean": "(2.50507602534068634195e-08 : Binary64)",
+   "bits": "3e5ae5e68a2b9ceb",
+   "cpp": "2.50507602534068634195e-08",
+   "at": "49:8"
+  },
+  {
+   "lean": "(1.58969099521155010221e-10 : Binary64)",
+   "bits": "3de5d93a5acfd57c",
+   "cpp": "1.58969099521155010221e-10",
+   "at": "50:8"
+  },
+  {
+   "lean": "(4.16666666666666019037e-02 : Binary64)",
+   "bits": "3fa555555555554c",
+   "cpp": "4.16666666666666019037e-02",
+   "at": "54:8"
+  },
+  {
+   "lean": "(1.38888888888741095749e-03 : Binary64)",
+   "bits": "3f56c16c16c15177",
+   "cpp": "1.38888888888741095749e-03",
+   "at": "55:8"
+  },
+  {
+   "lean": "(2.48015872894767294178e-05 : Binary64)",
+   "bits": "3efa01a019cb1590",
+   "cpp": "2.48015872894767294178e-05",
+   "at": "56:8"
+  },
+  {
+   "lean": "(2.75573143513906633035e-07 : Binary64)",
+   "bits": "3e927e4f809c52ad",
+   "cpp": "2.75573143513906633035e-07",
+   "at": "57:8"
+  },
+  {
+   "lean": "(2.08757232129817482790e-09 : Binary64)",
+   "bits": "3e21ee9ebdb4b1c4",
+   "cpp": "2.08757232129817482790e-09",
+   "at": "58:8"
+  },
+  {
+   "lean": "(1.13596475577881948265e-11 : Binary64)",
+   "bits": "3da8fae9be8838d4",
+   "cpp": "1.13596475577881948265e-11",
+   "at": "59:8"
+  },
+  {
+   "lean": "(0.5 : Binary64)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "63:19"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "62:19"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "69:7"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

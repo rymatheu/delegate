@@ -1,0 +1,6674 @@
+[
+ {
+  "q": "AP_AHRS::active_backend_configured_to_use_gps",
+  "adapter": "VehicleBridge.AP_AHRS.active_backend_configured_to_use_gps'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::add_trim",
+  "adapter": "VehicleBridge.AP_AHRS.add_trim'3",
+  "sig": "void (float, float, bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::airspeed_vector_TAS",
+  "adapter": "VehicleBridge.AP_AHRS.airspeed_vector_TAS'1",
+  "sig": "bool (Vector3f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::body_to_earth2D",
+  "adapter": "VehicleBridge.AP_AHRS.body_to_earth2D'1",
+  "sig": "Vector2f (const Vector2f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector2<float>",
+     "size": 8,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": true
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector2<float>",
+    "size": 8,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": false
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::body_to_earth2D_p",
+  "adapter": "VehicleBridge.AP_AHRS.body_to_earth2D_p'1",
+  "sig": "Vector2p (const Vector2p &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector2<double>",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "double"
+      },
+      {
+       "path": "y",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "double"
+      }
+     ]
+    },
+    "const": true
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector2<double>",
+    "size": 16,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "double"
+     },
+     {
+      "path": "y",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "double"
+     }
+    ]
+   },
+   "ref": false
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::check_lane_switch",
+  "adapter": "VehicleBridge.AP_AHRS.check_lane_switch'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::configured_backend_has_status",
+  "adapter": "VehicleBridge.AP_AHRS.configured_backend_has_status'1",
+  "sig": "bool (Status) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": "NavFilterStatusBit"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::configured_ekf_type",
+  "adapter": "VehicleBridge.AP_AHRS.configured_ekf_type'0",
+  "sig": "EKFType () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "enum",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": "AP_AHRS::EKFType"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::cos_pitch",
+  "adapter": "VehicleBridge.AP_AHRS.cos_pitch'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::cos_roll",
+  "adapter": "VehicleBridge.AP_AHRS.cos_roll'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::cos_yaw",
+  "adapter": "VehicleBridge.AP_AHRS.cos_yaw'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::create_view",
+  "adapter": "VehicleBridge.AP_AHRS.create_view'2",
+  "sig": "AP_AHRS_View *(enum Rotation, float)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": "Rotation"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "ptr",
+    "lean": "UInt64",
+    "size": 8,
+    "signed": false,
+    "name": "AP_AHRS_View"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_accel_ef",
+  "adapter": "VehicleBridge.AP_AHRS.get_accel_ef'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_air_density_ratio",
+  "adapter": "VehicleBridge.AP_AHRS.get_air_density_ratio'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_control_gain_scaler_XY",
+  "adapter": "VehicleBridge.AP_AHRS.get_control_gain_scaler_XY'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_control_gain_scaler_Z",
+  "adapter": "VehicleBridge.AP_AHRS.get_control_gain_scaler_Z'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_control_ground_speed_limit_ms",
+  "adapter": "VehicleBridge.AP_AHRS.get_control_ground_speed_limit_ms'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_error_rp",
+  "adapter": "VehicleBridge.AP_AHRS.get_error_rp'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_error_yaw",
+  "adapter": "VehicleBridge.AP_AHRS.get_error_yaw'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_filter_status_for_configured_backend",
+  "adapter": "VehicleBridge.AP_AHRS.get_filter_status_for_configured_backend'1",
+  "sig": "bool (nav_filter_status &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "nav_filter_status",
+     "size": 4,
+     "leaves": [
+      {
+       "path": "flags.attitude",
+       "off": 0,
+       "bitoff": 0,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.horiz_vel",
+       "off": 0,
+       "bitoff": 1,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.vert_vel",
+       "off": 0,
+       "bitoff": 2,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.horiz_pos_rel",
+       "off": 0,
+       "bitoff": 3,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.horiz_pos_abs",
+       "off": 0,
+       "bitoff": 4,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.vert_pos",
+       "off": 0,
+       "bitoff": 5,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.terrain_alt",
+       "off": 0,
+       "bitoff": 6,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.const_pos_mode",
+       "off": 0,
+       "bitoff": 7,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.pred_horiz_pos_rel",
+       "off": 1,
+       "bitoff": 8,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.pred_horiz_pos_abs",
+       "off": 1,
+       "bitoff": 9,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.takeoff_detected",
+       "off": 1,
+       "bitoff": 10,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.takeoff",
+       "off": 1,
+       "bitoff": 11,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.touchdown",
+       "off": 1,
+       "bitoff": 12,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.using_gps",
+       "off": 1,
+       "bitoff": 13,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.gps_glitching",
+       "off": 1,
+       "bitoff": 14,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.gps_quality_good",
+       "off": 1,
+       "bitoff": 15,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.initalized",
+       "off": 2,
+       "bitoff": 16,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.rejecting_airspeed",
+       "off": 2,
+       "bitoff": 17,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "flags.dead_reckoning",
+       "off": 2,
+       "bitoff": 18,
+       "width": 1,
+       "type": "_Bool"
+      },
+      {
+       "path": "value",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_gyro",
+  "adapter": "VehicleBridge.AP_AHRS.get_gyro'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_gyro_drift",
+  "adapter": "VehicleBridge.AP_AHRS.get_gyro_drift'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_home",
+  "adapter": "VehicleBridge.AP_AHRS.get_home'0",
+  "sig": "const Location &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Location",
+    "size": 16,
+    "leaves": [
+     {
+      "path": "relative_alt",
+      "off": 0,
+      "bitoff": 0,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "loiter_ccw",
+      "off": 0,
+      "bitoff": 1,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "terrain_alt",
+      "off": 0,
+      "bitoff": 2,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "origin_alt",
+      "off": 0,
+      "bitoff": 3,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "loiter_xtrack",
+      "off": 0,
+      "bitoff": 4,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "alt",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "lat",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "lng",
+      "off": 12,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_innovations",
+  "adapter": "VehicleBridge.AP_AHRS.get_innovations'5",
+  "sig": "bool (Vector3f &, Vector3f &, Vector3f &, float &, float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_last_attitude_reset_count",
+  "adapter": "VehicleBridge.AP_AHRS.get_last_attitude_reset_count'0",
+  "sig": "uint16_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_location",
+  "adapter": "VehicleBridge.AP_AHRS.get_location'1",
+  "sig": "bool (Location &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Location",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "relative_alt",
+       "off": 0,
+       "bitoff": 0,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_ccw",
+       "off": 0,
+       "bitoff": 1,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "terrain_alt",
+       "off": 0,
+       "bitoff": 2,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "origin_alt",
+       "off": 0,
+       "bitoff": 3,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_xtrack",
+       "off": 0,
+       "bitoff": 4,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "alt",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lat",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lng",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_origin",
+  "adapter": "VehicleBridge.AP_AHRS.get_origin'1",
+  "sig": "bool (Location &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Location",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "relative_alt",
+       "off": 0,
+       "bitoff": 0,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_ccw",
+       "off": 0,
+       "bitoff": 1,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "terrain_alt",
+       "off": 0,
+       "bitoff": 2,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "origin_alt",
+       "off": 0,
+       "bitoff": 3,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_xtrack",
+       "off": 0,
+       "bitoff": 4,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "alt",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lat",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lng",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_pitch_rad",
+  "adapter": "VehicleBridge.AP_AHRS.get_pitch_rad'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_pos_vel_uncertainty",
+  "adapter": "VehicleBridge.AP_AHRS.get_pos_vel_uncertainty'3",
+  "sig": "bool (float &, float &, float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_quaternion",
+  "adapter": "VehicleBridge.AP_AHRS.get_quaternion'1",
+  "sig": "bool (Quaternion &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "QuaternionT<float>",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "q1",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q2",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q3",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q4",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_relative_position_D_home",
+  "adapter": "VehicleBridge.AP_AHRS.get_relative_position_D_home'1",
+  "sig": "void (float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_relative_position_D_origin_float",
+  "adapter": "VehicleBridge.AP_AHRS.get_relative_position_D_origin_float'1",
+  "sig": "bool (float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_relative_position_NED_origin",
+  "adapter": "VehicleBridge.AP_AHRS.get_relative_position_NED_origin'1",
+  "sig": "bool (Vector3p &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<double>",
+     "size": 24,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "double"
+      },
+      {
+       "path": "y",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "double"
+      },
+      {
+       "path": "z",
+       "off": 16,
+       "bitoff": null,
+       "width": null,
+       "type": "double"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_relative_position_NED_origin_float",
+  "adapter": "VehicleBridge.AP_AHRS.get_relative_position_NED_origin_float'1",
+  "sig": "bool (Vector3f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_relative_position_NE_origin_float",
+  "adapter": "VehicleBridge.AP_AHRS.get_relative_position_NE_origin_float'1",
+  "sig": "bool (Vector2f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector2<float>",
+     "size": 8,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_roll_rad",
+  "adapter": "VehicleBridge.AP_AHRS.get_roll_rad'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_rotation_body_to_ned",
+  "adapter": "VehicleBridge.AP_AHRS.get_rotation_body_to_ned'0",
+  "sig": "const Matrix3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Matrix3<float>",
+    "size": 36,
+    "leaves": [
+     {
+      "path": "a.x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "a.y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "a.z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "b.x",
+      "off": 12,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "b.y",
+      "off": 16,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "b.z",
+      "off": 20,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "c.x",
+      "off": 24,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "c.y",
+      "off": 28,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "c.z",
+      "off": 32,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_secondary_estimates",
+  "adapter": "VehicleBridge.AP_AHRS.get_secondary_estimates'0",
+  "sig": "const AP_AHRS_Backend::Estimates *() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "copy",
+   "type": {
+    "kind": "rec",
+    "name": "AP_AHRS_Backend::Estimates",
+    "size": 328,
+    "leaves": [
+     {
+      "path": "healthy",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "initialised",
+      "off": 1,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_faults",
+      "off": 2,
+      "bitoff": null,
+      "width": null,
+      "type": "uint16_t"
+     },
+     {
+      "path": "primary_gyro",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "uint8_t"
+     },
+     {
+      "path": "attitude_valid",
+      "off": 5,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "roll_rad",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "pitch_rad",
+      "off": 12,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "yaw_rad",
+      "off": 16,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.a.x",
+      "off": 20,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.a.y",
+      "off": 24,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.a.z",
+      "off": 28,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.b.x",
+      "off": 32,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.b.y",
+      "off": 36,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.b.z",
+      "off": 40,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.c.x",
+      "off": 44,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.c.y",
+      "off": 48,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "dcm_matrix.c.z",
+      "off": 52,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "quaternion.q1",
+      "off": 56,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "quaternion.q2",
+      "off": 60,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "quaternion.q3",
+      "off": 64,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "quaternion.q4",
+      "off": 68,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "attitude_reset_count",
+      "off": 72,
+      "bitoff": null,
+      "width": null,
+      "type": "uint16_t"
+     },
+     {
+      "path": "yaw_reset_count",
+      "off": 74,
+      "bitoff": null,
+      "width": null,
+      "type": "uint16_t"
+     },
+     {
+      "path": "is_vibration_affected",
+      "off": 76,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "gyro_estimate.x",
+      "off": 80,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "gyro_estimate.y",
+      "off": 84,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "gyro_estimate.z",
+      "off": 88,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "gyro_drift.x",
+      "off": 92,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "gyro_drift.y",
+      "off": 96,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "gyro_drift.z",
+      "off": 100,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "primary_accel",
+      "off": 104,
+      "bitoff": null,
+      "width": null,
+      "type": "uint8_t"
+     },
+     {
+      "path": "accel_ef.x",
+      "off": 108,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "accel_ef.y",
+      "off": 112,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "accel_ef.z",
+      "off": 116,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "accel_bias.x",
+      "off": 120,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "accel_bias.y",
+      "off": 124,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "accel_bias.z",
+      "off": 128,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "velocity_NED.x",
+      "off": 132,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "velocity_NED.y",
+      "off": 136,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "velocity_NED.z",
+      "off": 140,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "velocity_NED_valid",
+      "off": 144,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "have_velocity_source",
+      "off": 145,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "velocity_NE.x",
+      "off": 148,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "velocity_NE.y",
+      "off": 152,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "vert_pos_rate_D",
+      "off": 156,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "vert_pos_rate_D_valid",
+      "off": 160,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "location.relative_alt",
+      "off": 164,
+      "bitoff": 1312,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "location.loiter_ccw",
+      "off": 164,
+      "bitoff": 1313,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "location.terrain_alt",
+      "off": 164,
+      "bitoff": 1314,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "location.origin_alt",
+      "off": 164,
+      "bitoff": 1315,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "location.loiter_xtrack",
+      "off": 164,
+      "bitoff": 1316,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "location.alt",
+      "off": 168,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "location.lat",
+      "off": 172,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "location.lng",
+      "off": 176,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "location_valid",
+      "off": 180,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "provides_common_origin",
+      "off": 181,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "position_NE.x",
+      "off": 184,
+      "bitoff": null,
+      "width": null,
+      "type": "double"
+     },
+     {
+      "path": "position_NE.y",
+      "off": 192,
+      "bitoff": null,
+      "width": null,
+      "type": "double"
+     },
+     {
+      "path": "position_NE_valid",
+      "off": 200,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "position_NE_reset_count",
+      "off": 202,
+      "bitoff": null,
+      "width": null,
+      "type": "uint16_t"
+     },
+     {
+      "path": "position_D",
+      "off": 208,
+      "bitoff": null,
+      "width": null,
+      "type": "postype_t"
+     },
+     {
+      "path": "position_D_valid",
+      "off": 216,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "position_D_reset_count",
+      "off": 218,
+      "bitoff": null,
+      "width": null,
+      "type": "uint16_t"
+     },
+     {
+      "path": "wind.x",
+      "off": 220,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "wind.y",
+      "off": 224,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "wind.z",
+      "off": 228,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "wind_valid",
+      "off": 232,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "airspeed_EAS",
+      "off": 236,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "airspeed_EAS_ok",
+      "off": 240,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "airspeed_estimate_type",
+      "off": 241,
+      "bitoff": null,
+      "width": null,
+      "type": "AirspeedEstimateType"
+     },
+     {
+      "path": "airspeed_TAS",
+      "off": 244,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "airspeed_TAS_ok",
+      "off": 248,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "configured_to_use_gps",
+      "off": 249,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "configured_to_use_gps_for_pos_XY",
+      "off": 250,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "using_extnav_for_yaw",
+      "off": 251,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "using_noncompass_for_yaw",
+      "off": 252,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.attitude",
+      "off": 256,
+      "bitoff": 2048,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.horiz_vel",
+      "off": 256,
+      "bitoff": 2049,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.vert_vel",
+      "off": 256,
+      "bitoff": 2050,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.horiz_pos_rel",
+      "off": 256,
+      "bitoff": 2051,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.horiz_pos_abs",
+      "off": 256,
+      "bitoff": 2052,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.vert_pos",
+      "off": 256,
+      "bitoff": 2053,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.terrain_alt",
+      "off": 256,
+      "bitoff": 2054,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.const_pos_mode",
+      "off": 256,
+      "bitoff": 2055,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.pred_horiz_pos_rel",
+      "off": 257,
+      "bitoff": 2056,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.pred_horiz_pos_abs",
+      "off": 257,
+      "bitoff": 2057,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.takeoff_detected",
+      "off": 257,
+      "bitoff": 2058,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.takeoff",
+      "off": 257,
+      "bitoff": 2059,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.touchdown",
+      "off": 257,
+      "bitoff": 2060,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.using_gps",
+      "off": 257,
+      "bitoff": 2061,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.gps_glitching",
+      "off": 257,
+      "bitoff": 2062,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.gps_quality_good",
+      "off": 257,
+      "bitoff": 2063,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.initalized",
+      "off": 258,
+      "bitoff": 2064,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.rejecting_airspeed",
+      "off": 258,
+      "bitoff": 2065,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.flags.dead_reckoning",
+      "off": 258,
+      "bitoff": 2066,
+      "width": 1,
+      "type": "_Bool"
+     },
+     {
+      "path": "filter_status.value",
+      "off": 256,
+      "bitoff": null,
+      "width": null,
+      "type": "uint32_t"
+     },
+     {
+      "path": "filter_status_valid",
+      "off": 260,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "velVar",
+      "off": 264,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "posVar",
+      "off": 268,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "hgtVar",
+      "off": 272,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "tasVar",
+      "off": 276,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "magVar.x",
+      "off": 280,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "magVar.y",
+      "off": 284,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "magVar.z",
+      "off": 288,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "variances_valid",
+      "off": 292,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "terrain_alt_variance",
+      "off": 296,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "terrain_alt_variance_valid",
+      "off": 300,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "control_ground_speed_limit_ms",
+      "off": 304,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "control_gain_scaler_XY",
+      "off": 308,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "control_gain_scaler_Z",
+      "off": 312,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "control_height_limit_m",
+      "off": 316,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "control_height_limit_valid",
+      "off": 320,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "hagl_valid",
+      "off": 321,
+      "bitoff": null,
+      "width": null,
+      "type": "_Bool"
+     },
+     {
+      "path": "hagl",
+      "off": 324,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_variances_for_configured_backend",
+  "adapter": "VehicleBridge.AP_AHRS.get_variances_for_configured_backend'5",
+  "sig": "bool (float &, float &, float &, Vector3f &, float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_velocity_D",
+  "adapter": "VehicleBridge.AP_AHRS.get_velocity_D'2",
+  "sig": "bool (float &, bool) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_velocity_NED",
+  "adapter": "VehicleBridge.AP_AHRS.get_velocity_NED'1",
+  "sig": "bool (Vector3f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_vert_pos_rate_D",
+  "adapter": "VehicleBridge.AP_AHRS.get_vert_pos_rate_D'1",
+  "sig": "bool (float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_wind",
+  "adapter": "VehicleBridge.AP_AHRS.get_wind'1",
+  "sig": "bool (Vector3f &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Vector3<float>",
+     "size": 12,
+     "leaves": [
+      {
+       "path": "x",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "y",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "z",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_yaw_deg",
+  "adapter": "VehicleBridge.AP_AHRS.get_yaw_deg'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_yaw_rad",
+  "adapter": "VehicleBridge.AP_AHRS.get_yaw_rad'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::get_yaw_reset_count",
+  "adapter": "VehicleBridge.AP_AHRS.get_yaw_reset_count'0",
+  "sig": "uint16_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::groundspeed",
+  "adapter": "VehicleBridge.AP_AHRS.groundspeed'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::have_inertial_nav",
+  "adapter": "VehicleBridge.AP_AHRS.have_inertial_nav'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::healthy",
+  "adapter": "VehicleBridge.AP_AHRS.healthy'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::home_is_locked",
+  "adapter": "VehicleBridge.AP_AHRS.home_is_locked'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::home_is_set",
+  "adapter": "VehicleBridge.AP_AHRS.home_is_set'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::init",
+  "adapter": "VehicleBridge.AP_AHRS.init'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::initialised",
+  "adapter": "VehicleBridge.AP_AHRS.initialised'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::is_vibration_affected",
+  "adapter": "VehicleBridge.AP_AHRS.is_vibration_affected'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::lock_home",
+  "adapter": "VehicleBridge.AP_AHRS.lock_home'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::pre_arm_check",
+  "adapter": "VehicleBridge.AP_AHRS.pre_arm_check'3",
+  "sig": "bool (bool, char *, uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::request_yaw_reset",
+  "adapter": "VehicleBridge.AP_AHRS.request_yaw_reset'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::reset",
+  "adapter": "VehicleBridge.AP_AHRS.reset'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::resetHeightDatum",
+  "adapter": "VehicleBridge.AP_AHRS.resetHeightDatum'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::reset_configured_backend",
+  "adapter": "VehicleBridge.AP_AHRS.reset_configured_backend'0",
+  "sig": "bool ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::send_ekf_status_report",
+  "adapter": "VehicleBridge.AP_AHRS.send_ekf_status_report'1",
+  "sig": "void (class GCS_MAVLINK &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "GCS_MAVLINK",
+     "size": 880,
+     "leaves": [
+      {
+       "path": "pointer)",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "(GCS_MAVLINK vtable"
+      },
+      {
+       "path": "last_heartbeat_time",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "mission_item_reached_index",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "flight_info.last_landed_state",
+       "off": 16,
+       "bitoff": null,
+       "width": null,
+       "type": "MAV_LANDED_STATE"
+      },
+      {
+       "path": "flight_info.takeoff_time_us",
+       "off": 24,
+       "bitoff": null,
+       "width": null,
+       "type": "uint64_t"
+      },
+      {
+       "path": "_queued_parameter",
+       "off": 32,
+       "bitoff": null,
+       "width": null,
+       "type": "AP_Param *"
+      },
+      {
+       "path": "chan",
+       "off": 40,
+       "bitoff": null,
+       "width": null,
+       "type": "mavlink_channel_t"
+      },
+      {
+       "path": "streamRates",
+       "off": 44,
+       "bitoff": null,
+       "width": null,
+       "type": "AP_Int16[10]"
+      },
+      {
+       "path": "devid._value",
+       "off": 64,
+       "bitoff": null,
+       "width": null,
+       "type": "unsigned int"
+      },
+      {
+       "path": "options._value",
+       "off": 68,
+       "bitoff": null,
+       "width": null,
+       "type": "unsigned short"
+      },
+      {
+       "path": "options_were_converted._value",
+       "off": 70,
+       "bitoff": null,
+       "width": null,
+       "type": "signed char"
+      },
+      {
+       "path": "_timesync_request.sent_ts1",
+       "off": 72,
+       "bitoff": null,
+       "width": null,
+       "type": "int64_t"
+      },
+      {
+       "path": "_timesync_request.sent_time_ns",
+       "off": 80,
+       "bitoff": null,
+       "width": null,
+       "type": "uint64_t"
+      },
+      {
+       "path": "_timesync_request.last_sent_ms",
+       "off": 88,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_timesync_request.interval_ms",
+       "off": 92,
+       "bitoff": null,
+       "width": null,
+       "type": "const uint16_t"
+      },
+      {
+       "path": "statustext_chunking.last_src_system",
+       "off": 96,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "statustext_chunking.last_src_component",
+       "off": 100,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "statustext_chunking.last_id",
+       "off": 101,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "statustext_chunking.msg_id",
+       "off": 102,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.checksum",
+       "off": 104,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "_channel_buffer.magic",
+       "off": 106,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.len",
+       "off": 107,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.incompat_flags",
+       "off": 108,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.compat_flags",
+       "off": 109,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.seq",
+       "off": 110,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.sysid",
+       "off": 112,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_channel_buffer.compid",
+       "off": 116,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_buffer.msgid",
+       "off": 117,
+       "bitoff": 936,
+       "width": 24,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_channel_buffer.payload64",
+       "off": 120,
+       "bitoff": null,
+       "width": null,
+       "type": "uint64_t[33]"
+      },
+      {
+       "path": "_channel_buffer.ck",
+       "off": 384,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t[2]"
+      },
+      {
+       "path": "_channel_buffer.signature",
+       "off": 386,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t[13]"
+      },
+      {
+       "path": "_channel_buffer.target_sysid",
+       "off": 400,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_channel_status.msg_received",
+       "off": 408,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.buffer_overrun",
+       "off": 409,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.parse_error",
+       "off": 410,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.parse_state",
+       "off": 412,
+       "bitoff": null,
+       "width": null,
+       "type": "mavlink_parse_state_t"
+      },
+      {
+       "path": "_channel_status.packet_idx",
+       "off": 416,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.current_rx_seq",
+       "off": 417,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.current_tx_seq",
+       "off": 418,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.packet_rx_success_count",
+       "off": 420,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "_channel_status.packet_rx_drop_count",
+       "off": 422,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "_channel_status.flags",
+       "off": 424,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.signature_wait",
+       "off": 425,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_channel_status.signing",
+       "off": 432,
+       "bitoff": null,
+       "width": null,
+       "type": "__mavlink_signing *"
+      },
+      {
+       "path": "_channel_status.signing_streams",
+       "off": 440,
+       "bitoff": null,
+       "width": null,
+       "type": "__mavlink_signing_streams *"
+      },
+      {
+       "path": "uartstate",
+       "off": 448,
+       "bitoff": null,
+       "width": null,
+       "type": "const class AP_SerialManager::UARTState *"
+      },
+      {
+       "path": "last_deprecation_warning_send_time_ms",
+       "off": 456,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "last_deprecation_message",
+       "off": 464,
+       "bitoff": null,
+       "width": null,
+       "type": "const char *"
+      },
+      {
+       "path": "_sysid_gcs_last_seen_time_ms",
+       "off": 472,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_port",
+       "off": 480,
+       "bitoff": null,
+       "width": null,
+       "type": "AP_HAL::UARTDriver *"
+      },
+      {
+       "path": "_queued_parameter_type",
+       "off": 488,
+       "bitoff": null,
+       "width": null,
+       "type": "enum ap_var_type"
+      },
+      {
+       "path": "_queued_parameter_token.key",
+       "off": 492,
+       "bitoff": 3936,
+       "width": 9,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_queued_parameter_token.idx",
+       "off": 493,
+       "bitoff": 3945,
+       "width": 4,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_queued_parameter_token.group_element",
+       "off": 493,
+       "bitoff": 3949,
+       "width": 18,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_queued_parameter_token.last_disabled",
+       "off": 495,
+       "bitoff": 3967,
+       "width": 1,
+       "type": "uint32_t"
+      },
+      {
+       "path": "_queued_parameter_index",
+       "off": 496,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "_queued_parameter_count",
+       "off": 498,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "_queued_parameter_send_time_ms",
+       "off": 500,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "stream_slowdown_ms",
+       "off": 504,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "deferred_message",
+       "off": 506,
+       "bitoff": null,
+       "width": null,
+       "type": "deferred_message_t[3]"
+      },
+      {
+       "path": "next_deferred_message_to_send_cache",
+       "off": 524,
+       "bitoff": null,
+       "width": null,
+       "type": "int8_t"
+      },
+      {
+       "path": "deferred_message_bucket",
+       "off": 528,
+       "bitoff": null,
+       "width": null,
+       "type": "deferred_message_bucket_t[10]"
+      },
+      {
+       "path": "sending_bucket_id",
+       "off": 728,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "bucket_message_ids_to_send.bits",
+       "off": 732,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t[4]"
+      },
+      {
+       "path": "pushed_ap_message_ids.bits",
+       "off": 748,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t[4]"
+      },
+      {
+       "path": "deferred_messages_initialised",
+       "off": 764,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "default_intervals_from_files",
+       "off": 768,
+       "bitoff": null,
+       "width": null,
+       "type": "DefaultIntervalsFromFiles *"
+      },
+      {
+       "path": "alternative.handler._obj",
+       "off": 776,
+       "bitoff": null,
+       "width": null,
+       "type": "void *"
+      },
+      {
+       "path": "alternative.handler._method",
+       "off": 784,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool (*)(void *, unsigned char, class AP_HAL::UARTDriver *)"
+      },
+      {
+       "path": "alternative.last_mavlink_ms",
+       "off": 792,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "alternative.last_alternate_ms",
+       "off": 796,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "alternative.active",
+       "off": 800,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "lag_correction.max_lag_ms",
+       "off": 808,
+       "bitoff": null,
+       "width": null,
+       "type": "const uint16_t"
+      },
+      {
+       "path": "lag_correction.convergence_loops",
+       "off": 810,
+       "bitoff": null,
+       "width": null,
+       "type": "const uint16_t"
+      },
+      {
+       "path": "lag_correction.link_offset_usec",
+       "off": 816,
+       "bitoff": null,
+       "width": null,
+       "type": "int64_t"
+      },
+      {
+       "path": "lag_correction.min_sample_us",
+       "off": 824,
+       "bitoff": null,
+       "width": null,
+       "type": "int64_t"
+      },
+      {
+       "path": "lag_correction.initialised",
+       "off": 832,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "lag_correction.min_sample_counter",
+       "off": 834,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "global_position_current_loc.relative_alt",
+       "off": 840,
+       "bitoff": 6720,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "global_position_current_loc.loiter_ccw",
+       "off": 840,
+       "bitoff": 6721,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "global_position_current_loc.terrain_alt",
+       "off": 840,
+       "bitoff": 6722,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "global_position_current_loc.origin_alt",
+       "off": 840,
+       "bitoff": 6723,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "global_position_current_loc.loiter_xtrack",
+       "off": 840,
+       "bitoff": 6724,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "global_position_current_loc.alt",
+       "off": 844,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "global_position_current_loc.lat",
+       "off": 848,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "global_position_current_loc.lng",
+       "off": 852,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "last_tx_seq",
+       "off": 856,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "send_packet_count",
+       "off": 858,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "out_of_space_to_send_count",
+       "off": 860,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "last_mavlink_stats_logged",
+       "off": 864,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "last_battery_status_idx",
+       "off": 868,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "proximity_ever_valid_bitmask",
+       "off": 869,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "_locked",
+       "off": 870,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "available_modes.requested",
+       "off": 871,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "available_modes.should_send",
+       "off": 872,
+       "bitoff": null,
+       "width": null,
+       "type": "_Bool"
+      },
+      {
+       "path": "available_modes.requested_index",
+       "off": 873,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "available_modes.next_index",
+       "off": 874,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "available_modes.available_modes_sequence",
+       "off": 875,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": [
+   [
+    "link_chan",
+    "GCS_MAVLINK::get_chan"
+   ]
+  ]
+ },
+ {
+  "q": "AP_AHRS::set_home",
+  "adapter": "VehicleBridge.AP_AHRS.set_home'1",
+  "sig": "bool (const Location &)",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Location",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "relative_alt",
+       "off": 0,
+       "bitoff": 0,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_ccw",
+       "off": 0,
+       "bitoff": 1,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "terrain_alt",
+       "off": 0,
+       "bitoff": 2,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "origin_alt",
+       "off": 0,
+       "bitoff": 3,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_xtrack",
+       "off": 0,
+       "bitoff": 4,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "alt",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lat",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lng",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      }
+     ]
+    },
+    "const": true
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::set_posvelyaw_source_set",
+  "adapter": "VehicleBridge.AP_AHRS.set_posvelyaw_source_set'1",
+  "sig": "void (AP_NavEKF_Source::SourceSetSelection)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": "AP_NavEKF_Source::SourceSetSelection"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::set_terrain_hgt_stable",
+  "adapter": "VehicleBridge.AP_AHRS.set_terrain_hgt_stable'1",
+  "sig": "void (bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::set_vehicle_class",
+  "adapter": "VehicleBridge.AP_AHRS.set_vehicle_class'1",
+  "sig": "void (VehicleClass)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": "AP_AHRS::VehicleClass"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::sin_yaw",
+  "adapter": "VehicleBridge.AP_AHRS.sin_yaw'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::update",
+  "adapter": "VehicleBridge.AP_AHRS.update'1",
+  "sig": "void (bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": [
+   [
+    "time_flying_ms",
+    "AP_Vehicle::get_time_flying_ms"
+   ]
+  ]
+ },
+ {
+  "q": "AP_AHRS::use_compass",
+  "adapter": "VehicleBridge.AP_AHRS.use_compass'0",
+  "sig": "bool ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS::using_noncompass_for_yaw",
+  "adapter": "VehicleBridge.AP_AHRS.using_noncompass_for_yaw'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::cos_pitch",
+  "adapter": "VehicleBridge.AP_AHRS_View.cos_pitch'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::cos_roll",
+  "adapter": "VehicleBridge.AP_AHRS_View.cos_roll'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::cos_yaw",
+  "adapter": "VehicleBridge.AP_AHRS_View.cos_yaw'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::get_accel_ef",
+  "adapter": "VehicleBridge.AP_AHRS_View.get_accel_ef'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::get_gyro_latest",
+  "adapter": "VehicleBridge.AP_AHRS_View.get_gyro_latest'0",
+  "sig": "Vector3f () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": false
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::get_position_D_reset_count",
+  "adapter": "VehicleBridge.AP_AHRS_View.get_position_D_reset_count'0",
+  "sig": "uint16_t ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::get_position_NE_reset_count",
+  "adapter": "VehicleBridge.AP_AHRS_View.get_position_NE_reset_count'0",
+  "sig": "uint16_t ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::get_quat_body_to_ned",
+  "adapter": "VehicleBridge.AP_AHRS_View.get_quat_body_to_ned'1",
+  "sig": "void (Quaternion &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "QuaternionT<float>",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "q1",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q2",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q3",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      },
+      {
+       "path": "q4",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "float"
+      }
+     ]
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_AHRS_View::sin_yaw",
+  "adapter": "VehicleBridge.AP_AHRS_View.sin_yaw'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::all_healthy",
+  "adapter": "VehicleBridge.AP_Baro.all_healthy'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::arming_checks",
+  "adapter": "VehicleBridge.AP_Baro.arming_checks'2",
+  "sig": "bool (size_t, char *) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::calibrate",
+  "adapter": "VehicleBridge.AP_Baro.calibrate'1",
+  "sig": "void (bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_altitude",
+  "adapter": "VehicleBridge.AP_Baro.get_altitude'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_altitude_AMSL",
+  "adapter": "VehicleBridge.AP_Baro.get_altitude_AMSL'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_ground_pressure",
+  "adapter": "VehicleBridge.AP_Baro.get_ground_pressure'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_pressure",
+  "adapter": "VehicleBridge.AP_Baro.get_pressure'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_pressure",
+  "adapter": "VehicleBridge.AP_Baro.get_pressure'1",
+  "sig": "float (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_temperature",
+  "adapter": "VehicleBridge.AP_Baro.get_temperature'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::get_temperature",
+  "adapter": "VehicleBridge.AP_Baro.get_temperature'1",
+  "sig": "float (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::init",
+  "adapter": "VehicleBridge.AP_Baro.init'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::num_instances",
+  "adapter": "VehicleBridge.AP_Baro.num_instances'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::set_log_baro_bit",
+  "adapter": "VehicleBridge.AP_Baro.set_log_baro_bit'1",
+  "sig": "void (uint32_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Baro::update",
+  "adapter": "VehicleBridge.AP_Baro.update'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_Declination::get_earth_field_ga",
+  "adapter": "VehicleBridge.AP_Declination.get_earth_field_ga'1",
+  "sig": "Vector3f (const Location &)",
+  "method": false,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "Location",
+     "size": 16,
+     "leaves": [
+      {
+       "path": "relative_alt",
+       "off": 0,
+       "bitoff": 0,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_ccw",
+       "off": 0,
+       "bitoff": 1,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "terrain_alt",
+       "off": 0,
+       "bitoff": 2,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "origin_alt",
+       "off": 0,
+       "bitoff": 3,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "loiter_xtrack",
+       "off": 0,
+       "bitoff": 4,
+       "width": 1,
+       "type": "uint8_t"
+      },
+      {
+       "path": "alt",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lat",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      },
+      {
+       "path": "lng",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "int32_t"
+      }
+     ]
+    },
+    "const": true
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": false
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::all_consistent",
+  "adapter": "VehicleBridge.AP_GPS.all_consistent'1",
+  "sig": "bool (float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::broadcast_first_configuration_failure_reason",
+  "adapter": "VehicleBridge.AP_GPS.broadcast_first_configuration_failure_reason'0",
+  "sig": "void () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::first_unconfigured_gps",
+  "adapter": "VehicleBridge.AP_GPS.first_unconfigured_gps'1",
+  "sig": "bool (uint8_t &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::force_disable",
+  "adapter": "VehicleBridge.AP_GPS.force_disable'1",
+  "sig": "void (bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::get_auto_switch_type",
+  "adapter": "VehicleBridge.AP_GPS.get_auto_switch_type'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::get_hdop",
+  "adapter": "VehicleBridge.AP_GPS.get_hdop'0",
+  "sig": "uint16_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::get_type",
+  "adapter": "VehicleBridge.AP_GPS.get_type'1",
+  "sig": "GPS_Type (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "enum",
+    "lean": "UInt32",
+    "size": 4,
+    "signed": false,
+    "name": "AP_GPS::GPS_Type"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::get_undulation",
+  "adapter": "VehicleBridge.AP_GPS.get_undulation'1",
+  "sig": "bool (float &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::ground_speed",
+  "adapter": "VehicleBridge.AP_GPS.ground_speed'0",
+  "sig": "float () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::handle_msg",
+  "adapter": "VehicleBridge.AP_GPS.handle_msg'2",
+  "sig": "void (mavlink_channel_t, const mavlink_message_t &)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": "mavlink_channel_t"
+    }
+   },
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "rec",
+     "name": "__mavlink_message",
+     "size": 304,
+     "leaves": [
+      {
+       "path": "checksum",
+       "off": 0,
+       "bitoff": null,
+       "width": null,
+       "type": "uint16_t"
+      },
+      {
+       "path": "magic",
+       "off": 2,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "len",
+       "off": 3,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "incompat_flags",
+       "off": 4,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "compat_flags",
+       "off": 5,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "seq",
+       "off": 6,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "sysid",
+       "off": 8,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      },
+      {
+       "path": "compid",
+       "off": 12,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t"
+      },
+      {
+       "path": "msgid",
+       "off": 13,
+       "bitoff": 104,
+       "width": 24,
+       "type": "uint32_t"
+      },
+      {
+       "path": "payload64",
+       "off": 16,
+       "bitoff": null,
+       "width": null,
+       "type": "uint64_t[33]"
+      },
+      {
+       "path": "ck",
+       "off": 280,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t[2]"
+      },
+      {
+       "path": "signature",
+       "off": 282,
+       "bitoff": null,
+       "width": null,
+       "type": "uint8_t[13]"
+      },
+      {
+       "path": "target_sysid",
+       "off": 296,
+       "bitoff": null,
+       "width": null,
+       "type": "uint32_t"
+      }
+     ]
+    },
+    "const": true
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::init",
+  "adapter": "VehicleBridge.AP_GPS.init'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": [
+   [
+    "pre_convert_parameters",
+    "AP_GPS::convert_parameters"
+   ]
+  ]
+ },
+ {
+  "q": "AP_GPS::is_healthy",
+  "adapter": "VehicleBridge.AP_GPS.is_healthy'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::is_healthy",
+  "adapter": "VehicleBridge.AP_GPS.is_healthy'1",
+  "sig": "bool (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::location",
+  "adapter": "VehicleBridge.AP_GPS.location'0",
+  "sig": "const Location &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Location",
+    "size": 16,
+    "leaves": [
+     {
+      "path": "relative_alt",
+      "off": 0,
+      "bitoff": 0,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "loiter_ccw",
+      "off": 0,
+      "bitoff": 1,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "terrain_alt",
+      "off": 0,
+      "bitoff": 2,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "origin_alt",
+      "off": 0,
+      "bitoff": 3,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "loiter_xtrack",
+      "off": 0,
+      "bitoff": 4,
+      "width": 1,
+      "type": "uint8_t"
+     },
+     {
+      "path": "alt",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "lat",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     },
+     {
+      "path": "lng",
+      "off": 12,
+      "bitoff": null,
+      "width": null,
+      "type": "int32_t"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::num_sensors",
+  "adapter": "VehicleBridge.AP_GPS.num_sensors'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::pre_arm_checks",
+  "adapter": "VehicleBridge.AP_GPS.pre_arm_checks'2",
+  "sig": "bool (char *, uint16_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt16",
+     "size": 2,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::prepare_for_arming",
+  "adapter": "VehicleBridge.AP_GPS.prepare_for_arming'0",
+  "sig": "bool ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::primary_sensor",
+  "adapter": "VehicleBridge.AP_GPS.primary_sensor'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::send_mavlink_gps2_raw",
+  "adapter": "VehicleBridge.AP_GPS.send_mavlink_gps2_raw'1",
+  "sig": "void (mavlink_channel_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": "mavlink_channel_t"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::send_mavlink_gps_raw",
+  "adapter": "VehicleBridge.AP_GPS.send_mavlink_gps_raw'1",
+  "sig": "void (mavlink_channel_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": "mavlink_channel_t"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::set_force_disable_yaw",
+  "adapter": "VehicleBridge.AP_GPS.set_force_disable_yaw'1",
+  "sig": "void (bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::set_log_gps_bit",
+  "adapter": "VehicleBridge.AP_GPS.set_log_gps_bit'1",
+  "sig": "void (uint32_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::status",
+  "adapter": "VehicleBridge.AP_GPS.status'0",
+  "sig": "AP_GPS_FixType () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "enum",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": "AP_GPS_FixType"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::status",
+  "adapter": "VehicleBridge.AP_GPS.status'1",
+  "sig": "AP_GPS_FixType (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "enum",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": "AP_GPS_FixType"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_GPS::update",
+  "adapter": "VehicleBridge.AP_GPS.update'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::accel_cal_requires_reboot",
+  "adapter": "VehicleBridge.AP_InertialSensor.accel_cal_requires_reboot'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::accel_calibrated_ok_all",
+  "adapter": "VehicleBridge.AP_InertialSensor.accel_calibrated_ok_all'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::accels_consistent",
+  "adapter": "VehicleBridge.AP_InertialSensor.accels_consistent'1",
+  "sig": "bool (float) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::calibrating",
+  "adapter": "VehicleBridge.AP_InertialSensor.calibrating'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_accel",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_accel'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_accel",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_accel'1",
+  "sig": "const Vector3f &(uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_accel_clip_count",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_accel_clip_count'1",
+  "sig": "uint32_t (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_accel_count",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_accel_count'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_accel_health_all",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_accel_health_all'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_first_usable_accel",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_first_usable_accel'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_gyro",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_gyro'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_gyro",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_gyro'1",
+  "sig": "const Vector3f &(uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_gyro_count",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_gyro_count'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_gyro_health_all",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_gyro_health_all'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_output_banner",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_output_banner'3",
+  "sig": "bool (uint8_t, char *, uint8_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_temperature",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_temperature'1",
+  "sig": "float (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "float",
+    "lean": "Binary32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::get_vibration_levels",
+  "adapter": "VehicleBridge.AP_InertialSensor.get_vibration_levels'0",
+  "sig": "Vector3f () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": false
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::gyro_calibrated_ok_all",
+  "adapter": "VehicleBridge.AP_InertialSensor.gyro_calibrated_ok_all'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::gyros_consistent",
+  "adapter": "VehicleBridge.AP_InertialSensor.gyros_consistent'1",
+  "sig": "bool (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::init",
+  "adapter": "VehicleBridge.AP_InertialSensor.init'1",
+  "sig": "void (uint16_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt16",
+     "size": 2,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::periodic",
+  "adapter": "VehicleBridge.AP_InertialSensor.periodic'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::pre_arm_check_gyro_backend_rate_hz",
+  "adapter": "VehicleBridge.AP_InertialSensor.pre_arm_check_gyro_backend_rate_hz'2",
+  "sig": "bool (char *, uint16_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt16",
+     "size": 2,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::set_imu_out_uart",
+  "adapter": "VehicleBridge.AP_InertialSensor.set_imu_out_uart'1",
+  "sig": "void (AP_HAL::UARTDriver *)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "AP_HAL::UARTDriver"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::set_log_raw_bit",
+  "adapter": "VehicleBridge.AP_InertialSensor.set_log_raw_bit'1",
+  "sig": "void (uint32_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::temperature_cal_running",
+  "adapter": "VehicleBridge.AP_InertialSensor.temperature_cal_running'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::update",
+  "adapter": "VehicleBridge.AP_InertialSensor.update'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_InertialSensor::wait_for_sample",
+  "adapter": "VehicleBridge.AP_InertialSensor.wait_for_sample'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_RTC::get_time_utc",
+  "adapter": "VehicleBridge.AP_RTC.get_time_utc'4",
+  "sig": "uint32_t (int32_t, int32_t, int32_t, int32_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt32",
+    "size": 4,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_RTC::get_utc_usec",
+  "adapter": "VehicleBridge.AP_RTC.get_utc_usec'1",
+  "sig": "bool (uint64_t &) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "ref",
+    "type": {
+     "kind": "int",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": null
+    },
+    "const": false
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "AP_RTC::set_utc_usec",
+  "adapter": "VehicleBridge.AP_RTC.set_utc_usec'2",
+  "sig": "void (uint64_t, source_type)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": null
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": "AP_RTC::source_type"
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::available",
+  "adapter": "VehicleBridge.Compass.available'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::configured",
+  "adapter": "VehicleBridge.Compass.configured'2",
+  "sig": "bool (char *, uint8_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "ptr",
+     "lean": "UInt64",
+     "size": 8,
+     "signed": false,
+     "name": "char"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::consistent",
+  "adapter": "VehicleBridge.Compass.consistent'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_count",
+  "adapter": "VehicleBridge.Compass.get_count'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_field",
+  "adapter": "VehicleBridge.Compass.get_field'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_field",
+  "adapter": "VehicleBridge.Compass.get_field'1",
+  "sig": "const Vector3f &(uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_first_usable",
+  "adapter": "VehicleBridge.Compass.get_first_usable'0",
+  "sig": "uint8_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt8",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_offsets",
+  "adapter": "VehicleBridge.Compass.get_offsets'0",
+  "sig": "const Vector3f &() const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "sret",
+   "type": {
+    "kind": "rec",
+    "name": "Vector3<float>",
+    "size": 12,
+    "leaves": [
+     {
+      "path": "x",
+      "off": 0,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "y",
+      "off": 4,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     },
+     {
+      "path": "z",
+      "off": 8,
+      "bitoff": null,
+      "width": null,
+      "type": "float"
+     }
+    ]
+   },
+   "ref": true
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::get_offsets_max",
+  "adapter": "VehicleBridge.Compass.get_offsets_max'0",
+  "sig": "uint16_t () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "int",
+    "lean": "UInt16",
+    "size": 2,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::healthy",
+  "adapter": "VehicleBridge.Compass.healthy'0",
+  "sig": "bool () const",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::init",
+  "adapter": "VehicleBridge.Compass.init'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::per_motor_calibration_end",
+  "adapter": "VehicleBridge.Compass.per_motor_calibration_end'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::per_motor_calibration_update",
+  "adapter": "VehicleBridge.Compass.per_motor_calibration_update'0",
+  "sig": "void ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::read",
+  "adapter": "VehicleBridge.Compass.read'0",
+  "sig": "bool ()",
+  "method": true,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::set_learn_type",
+  "adapter": "VehicleBridge.Compass.set_learn_type'2",
+  "sig": "void (LearnType, bool)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "enum",
+     "lean": "Int32",
+     "size": 4,
+     "signed": true,
+     "name": "Compass::LearnType"
+    }
+   },
+   {
+    "pass": "value",
+    "type": {
+     "kind": "bool",
+     "lean": "Bool",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::set_log_bit",
+  "adapter": "VehicleBridge.Compass.set_log_bit'1",
+  "sig": "void (uint32_t)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::set_throttle",
+  "adapter": "VehicleBridge.Compass.set_throttle'1",
+  "sig": "void (float)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::set_voltage",
+  "adapter": "VehicleBridge.Compass.set_voltage'1",
+  "sig": "void (float)",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "float",
+     "lean": "Binary32",
+     "size": 4,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "void"
+  },
+  "inputs": []
+ },
+ {
+  "q": "Compass::use_for_yaw",
+  "adapter": "VehicleBridge.Compass.use_for_yaw'1",
+  "sig": "bool (uint8_t) const",
+  "method": true,
+  "params": [
+   {
+    "pass": "value",
+    "type": {
+     "kind": "int",
+     "lean": "UInt8",
+     "size": 1,
+     "signed": false,
+     "name": null
+    }
+   }
+  ],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "bool",
+    "lean": "Bool",
+    "size": 1,
+    "signed": false,
+    "name": null
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "ahrs",
+  "adapter": "VehicleBridge.ahrs'0",
+  "sig": "AP_AHRS &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "AP_AHRS"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "baro",
+  "adapter": "VehicleBridge.baro'0",
+  "sig": "AP_Baro &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "AP_Baro"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "compass",
+  "adapter": "VehicleBridge.compass'0",
+  "sig": "Compass &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "Compass"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "gps",
+  "adapter": "VehicleBridge.gps'0",
+  "sig": "AP_GPS &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "AP_GPS"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "ins",
+  "adapter": "VehicleBridge.ins'0",
+  "sig": "AP_InertialSensor &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "AP_InertialSensor"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "rtc",
+  "adapter": "VehicleBridge.rtc'0",
+  "sig": "AP_RTC &()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "object",
+   "type": {
+    "kind": "rec",
+    "name": "AP_RTC"
+   }
+  },
+  "inputs": []
+ },
+ {
+  "q": "sitl",
+  "adapter": "VehicleBridge.sitl'0",
+  "sig": "SITL::SIM *()",
+  "method": false,
+  "params": [],
+  "ret": {
+   "pass": "value",
+   "type": {
+    "kind": "ptr",
+    "lean": "UInt64",
+    "size": 8,
+    "signed": false,
+    "name": "SITL::SIM"
+   }
+  },
+  "inputs": []
+ }
+]

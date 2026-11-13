@@ -1222,47 +1222,54 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(3.14159265 : Float32)",
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "21:17"
+  },
+  {
+   "lean": "(3.14159265 : Binary32)",
    "bits": "40490fdb",
    "cpp": "3.14159265f",
    "at": "30:34"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "11:37"
   },
   {
-   "lean": "Float32.ofBits 0x7fc00000",
+   "lean": "Binary32.ofBits 0x7fc00000",
    "bits": "7fc00000",
    "cpp": "__builtin_nanf",
    "at": "76:58"
   },
   {
-   "lean": "(1.0e6 : Float32)",
+   "lean": "(1.0e6 : Binary32)",
    "bits": "49742400",
    "cpp": "1e6f",
    "at": "76:69"
   },
   {
-   "lean": "Float32.ofBits 0x7f800000",
+   "lean": "Binary32.ofBits 0x7f800000",
    "bits": "7f800000",
    "cpp": "__builtin_huge_valf",
    "at": "76:76"
   },
   {
-   "lean": "(0.4330127 : Float32)",
+   "lean": "(0.4330127 : Binary32)",
    "bits": "3eddb3d7",
    "cpp": "0.4330127f",
    "at": "43:20"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "67:21"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

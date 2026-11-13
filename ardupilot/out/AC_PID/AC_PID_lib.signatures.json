@@ -237,51 +237,34 @@
  ],
  "classes": [
   {
-   "cxx": "SlewLimiter",
-   "lean": "SlewLimiter",
-   "has_params": false,
-   "inputs": [
-    {
-     "lean": "millis",
-     "type": "uint32_t",
-     "cxx": "AP_HAL::millis.millis()",
-     "leaves": null
-    }
-   ],
+   "cxx": "AC_P",
+   "lean": "AC_P",
+   "has_params": true,
+   "inputs": [],
    "sub_inputs": [],
    "outputs": [],
    "sub_outputs": [],
    "methods": [
     {
-     "cxx": "SlewLimiter",
-     "lean": "SlewLimiter.init",
+     "cxx": "AC_P",
+     "lean": "AC_P.init",
      "top": true,
      "kind": "ctor",
-     "owner": "SlewLimiter",
+     "owner": "AC_P",
      "access": "public",
      "reads": [],
      "writes": [
+      "p",
       "s"
      ],
      "uses_inp": false,
      "uses_own": false,
      "params": [
       {
-       "name": "_slew_rate_max",
+       "name": "initial_p",
        "type": "float",
        "ref": "const",
-       "boundary": true,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "_slew_rate_tau",
-       "type": "float",
-       "ref": "const",
-       "boundary": true,
+       "boundary": false,
        "enum": null,
        "under": null,
        "scalar": true,
@@ -296,35 +279,21 @@
      "ret_leaves": null
     },
     {
-     "cxx": "modifier",
-     "lean": "SlewLimiter.modifier",
+     "cxx": "get_p",
+     "lean": "AC_P.get_p",
      "top": false,
      "kind": "method",
-     "owner": "SlewLimiter",
+     "owner": "AC_P",
      "access": "public",
      "reads": [
-      "r",
-      "s"
+      "p"
      ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": true,
+     "writes": [],
+     "uses_inp": false,
      "uses_own": false,
      "params": [
       {
-       "name": "sample",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "dt",
+       "name": "error",
        "type": "float",
        "ref": null,
        "boundary": false,
@@ -342,14 +311,14 @@
      "ret_leaves": null
     },
     {
-     "cxx": "get_slew_rate",
-     "lean": "SlewLimiter.get_slew_rate",
+     "cxx": "kP",
+     "lean": "AC_P.kP",
      "top": false,
      "kind": "method",
-     "owner": "SlewLimiter",
+     "owner": "AC_P",
      "access": "public",
      "reads": [
-      "s"
+      "p"
      ],
      "writes": [],
      "uses_inp": false,
@@ -360,209 +329,27 @@
      "ret_under": null,
      "ret_scalar": true,
      "ret_leaves": null
-    }
-   ],
-   "leaves": [
-    {
-     "root": "s",
-     "lean": "slew_filter.output",
-     "cxx": "slew_filter.output",
-     "type": "float",
-     "enum": null
     },
     {
-     "root": "s",
-     "lean": "slew_filter.initialised",
-     "cxx": "slew_filter.initialised",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "slew_filter.cutoff_freq",
-     "cxx": "slew_filter.cutoff_freq",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_output_slew_rate",
-     "cxx": "_output_slew_rate",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_modifier_slew_rate",
-     "cxx": "_modifier_slew_rate",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "last_sample",
-     "cxx": "last_sample",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_max_pos_slew_rate",
-     "cxx": "_max_pos_slew_rate",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_max_neg_slew_rate",
-     "cxx": "_max_neg_slew_rate",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_max_pos_slew_event_ms",
-     "cxx": "_max_pos_slew_event_ms",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_max_neg_slew_event_ms",
-     "cxx": "_max_neg_slew_event_ms",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pos_event_index",
-     "cxx": "_pos_event_index",
-     "type": "uint8_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_neg_event_index",
-     "cxx": "_neg_event_index",
-     "type": "uint8_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pos_event_ms[0]!",
-     "cxx": "_pos_event_ms[0]",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pos_event_ms[1]!",
-     "cxx": "_pos_event_ms[1]",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_neg_event_ms[0]!",
-     "cxx": "_neg_event_ms[0]",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_neg_event_ms[1]!",
-     "cxx": "_neg_event_ms[1]",
-     "type": "uint32_t",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pos_event_stored",
-     "cxx": "_pos_event_stored",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_neg_event_stored",
-     "cxx": "_neg_event_stored",
-     "type": "bool",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
-   "cxx": "LowPassFilter<float>",
-   "lean": "LowPassFilterFloat",
-   "has_params": false,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "DigitalLPF",
-     "lean": "LowPassFilterFloat.DigitalLPF_float.init",
-     "top": false,
-     "kind": "ctor",
-     "owner": "DigitalLPF<float>",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "LowPassFilter",
-     "lean": "LowPassFilterFloat.init_void",
-     "top": true,
-     "kind": "ctor",
-     "owner": "LowPassFilter<float>",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_cutoff_frequency",
-     "lean": "LowPassFilterFloat.set_cutoff_frequency",
+     "cxx": "set_kP",
+     "lean": "AC_P.set_kP",
      "top": false,
      "kind": "method",
-     "owner": "LowPassFilter<float>",
+     "owner": "AC_P",
      "access": "public",
      "reads": [
-      "s"
+      "p"
      ],
      "writes": [
-      "s"
+      "p"
      ],
      "uses_inp": false,
      "uses_own": false,
      "params": [
       {
-       "name": "new_cutoff_freq",
+       "name": "v",
        "type": "float",
-       "ref": "const",
+       "ref": null,
        "boundary": false,
        "enum": null,
        "under": null,
@@ -575,152 +362,21 @@
      "ret_enum": null,
      "ret_under": null,
      "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "reset",
-     "lean": "LowPassFilterFloat.reset_float",
-     "top": false,
-     "kind": "method",
-     "owner": "DigitalLPF<float>",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "value",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "_apply",
-     "lean": "LowPassFilterFloat._apply",
-     "top": false,
-     "kind": "method",
-     "owner": "DigitalLPF<float>",
-     "access": "protected",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "sample",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "alpha",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "apply",
-     "lean": "LowPassFilterFloat.apply",
-     "top": false,
-     "kind": "method",
-     "owner": "LowPassFilter<float>",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "sample",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
      "ret_leaves": null
     }
    ],
    "leaves": [
     {
-     "root": "s",
-     "lean": "output",
-     "cxx": "output",
+     "root": "p",
+     "lean": "_kp",
+     "cxx": "_kp.get()",
      "type": "float",
      "enum": null
     },
     {
      "root": "s",
-     "lean": "initialised",
-     "cxx": "initialised",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "cutoff_freq",
-     "cxx": "cutoff_freq",
+     "lean": "default_kp",
+     "cxx": "default_kp",
      "type": "float",
      "enum": null
     }
@@ -2841,1895 +2497,6 @@
    "output_log": false
   },
   {
-   "cxx": "AC_P",
-   "lean": "AC_P",
-   "has_params": true,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "AC_P",
-     "lean": "AC_P.init",
-     "top": true,
-     "kind": "ctor",
-     "owner": "AC_P",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "p",
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "initial_p",
-       "type": "float",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_p",
-     "lean": "AC_P.get_p",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "error",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kP",
-     "lean": "AC_P.kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_kP",
-     "lean": "AC_P.set_kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    }
-   ],
-   "leaves": [
-    {
-     "root": "p",
-     "lean": "_kp",
-     "cxx": "_kp.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kp",
-     "cxx": "default_kp",
-     "type": "float",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
-   "cxx": "AC_P_1D",
-   "lean": "AC_P_1D",
-   "has_params": true,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "AC_P_1D",
-     "lean": "AC_P_1D.init",
-     "top": true,
-     "kind": "ctor",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "p",
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "initial_p",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "update_all",
-     "lean": "AC_P_1D.update_all",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "target",
-       "type": "double",
-       "ref": "mut",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "measurement",
-       "type": "double",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_limits",
-     "lean": "AC_P_1D.set_limits",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "output_min",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "output_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "D_Out_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "D2_Out_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_error_limits",
-     "lean": "AC_P_1D.set_error_limits",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "error_min",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "error_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error_min",
-     "lean": "AC_P_1D.get_error_min",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error_max",
-     "lean": "AC_P_1D.get_error_max",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kP",
-     "lean": "AC_P_1D.kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error",
-     "lean": "AC_P_1D.get_error",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_kP",
-     "lean": "AC_P_1D.set_kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_1D",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    }
-   ],
-   "leaves": [
-    {
-     "root": "p",
-     "lean": "_kp",
-     "cxx": "_kp.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error",
-     "cxx": "_error",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error_min",
-     "cxx": "_error_min",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error_max",
-     "cxx": "_error_max",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_D1_max",
-     "cxx": "_D1_max",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kp",
-     "cxx": "default_kp",
-     "type": "float",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
-   "cxx": "AC_PID_Basic",
-   "lean": "AC_PID_Basic",
-   "has_params": true,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "AC_PID_Basic",
-     "lean": "AC_PID_Basic.init",
-     "top": true,
-     "kind": "ctor",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "p",
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "initial_p",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_i",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_d",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_ff",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_imax",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_filt_E_hz",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "initial_filt_D_hz",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_filt_E_alpha",
-     "lean": "AC_PID_Basic.get_filt_E_alpha",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_filt_D_alpha",
-     "lean": "AC_PID_Basic.get_filt_D_alpha",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "update_i",
-     "lean": "AC_PID_Basic.update_i",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "limit_neg",
-       "type": "bool",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "limit_pos",
-       "type": "bool",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "update_all",
-     "lean": "AC_PID_Basic.update_all_float3_bool2",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "target",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "measurement",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "limit_neg",
-       "type": "bool",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "limit_pos",
-       "type": "bool",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "update_all",
-     "lean": "AC_PID_Basic.update_all_float3_bool",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "target",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "measurement",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "dt",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "limit",
-       "type": "bool",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_p",
-     "lean": "AC_PID_Basic.get_p",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_i",
-     "lean": "AC_PID_Basic.get_i",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_d",
-     "lean": "AC_PID_Basic.get_d",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_ff",
-     "lean": "AC_PID_Basic.get_ff",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error",
-     "lean": "AC_PID_Basic.get_error",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "reset_I",
-     "lean": "AC_PID_Basic.reset_I",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "reset_filter",
-     "lean": "AC_PID_Basic.reset_filter",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kP",
-     "lean": "AC_PID_Basic.kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kI",
-     "lean": "AC_PID_Basic.kI",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kD",
-     "lean": "AC_PID_Basic.kD",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "ff",
-     "lean": "AC_PID_Basic.ff",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "filt_E_hz",
-     "lean": "AC_PID_Basic.filt_E_hz",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "filt_D_hz",
-     "lean": "AC_PID_Basic.filt_D_hz",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "imax",
-     "lean": "AC_PID_Basic.imax",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_kP",
-     "lean": "AC_PID_Basic.set_kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_kI",
-     "lean": "AC_PID_Basic.set_kI",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_kD",
-     "lean": "AC_PID_Basic.set_kD",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_ff",
-     "lean": "AC_PID_Basic.set_ff",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_imax",
-     "lean": "AC_PID_Basic.set_imax",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_filt_E_hz",
-     "lean": "AC_PID_Basic.set_filt_E_hz",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "hz",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_filt_D_hz",
-     "lean": "AC_PID_Basic.set_filt_D_hz",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "hz",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_integrator",
-     "lean": "AC_PID_Basic.set_integrator_float",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "i",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_integrator",
-     "lean": "AC_PID_Basic.set_integrator_float2",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "error",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "i",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_integrator",
-     "lean": "AC_PID_Basic.set_integrator_float3",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "target",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "measurement",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "i",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_pid_info",
-     "lean": "AC_PID_Basic.get_pid_info",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_PID_Basic",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "AP_PIDInfo",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": [
-      {
-       "lean": "target",
-       "cxx": "target",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "actual",
-       "cxx": "actual",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "error",
-       "cxx": "error",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "P",
-       "cxx": "P",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "I",
-       "cxx": "I",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "D",
-       "cxx": "D",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "FF",
-       "cxx": "FF",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "DFF",
-       "cxx": "DFF",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "Dmod",
-       "cxx": "Dmod",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "slew_rate",
-       "cxx": "slew_rate",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "limit",
-       "cxx": "limit",
-       "type": "bool",
-       "enum": null
-      },
-      {
-       "lean": "PD_limit",
-       "cxx": "PD_limit",
-       "type": "bool",
-       "enum": null
-      },
-      {
-       "lean": "reset",
-       "cxx": "reset",
-       "type": "bool",
-       "enum": null
-      },
-      {
-       "lean": "I_term_set",
-       "cxx": "I_term_set",
-       "type": "bool",
-       "enum": null
-      }
-     ]
-    }
-   ],
-   "leaves": [
-    {
-     "root": "p",
-     "lean": "_kp",
-     "cxx": "_kp.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_ki",
-     "cxx": "_ki.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_kd",
-     "cxx": "_kd.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_kff",
-     "cxx": "_kff.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_kimax",
-     "cxx": "_kimax.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_filt_E_hz",
-     "cxx": "_filt_E_hz.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "p",
-     "lean": "_filt_D_hz",
-     "cxx": "_filt_D_hz.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_target",
-     "cxx": "_target",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error",
-     "cxx": "_error",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_derivative",
-     "cxx": "_derivative",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_integrator",
-     "cxx": "_integrator",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_reset_filter",
-     "cxx": "_reset_filter",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.target",
-     "cxx": "_pid_info.target",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.actual",
-     "cxx": "_pid_info.actual",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.error",
-     "cxx": "_pid_info.error",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.P",
-     "cxx": "_pid_info.P",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.I",
-     "cxx": "_pid_info.I",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.D",
-     "cxx": "_pid_info.D",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.FF",
-     "cxx": "_pid_info.FF",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.DFF",
-     "cxx": "_pid_info.DFF",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.Dmod",
-     "cxx": "_pid_info.Dmod",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.slew_rate",
-     "cxx": "_pid_info.slew_rate",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.limit",
-     "cxx": "_pid_info.limit",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.PD_limit",
-     "cxx": "_pid_info.PD_limit",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.reset",
-     "cxx": "_pid_info.reset",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_pid_info.I_term_set",
-     "cxx": "_pid_info.I_term_set",
-     "type": "bool",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kp",
-     "cxx": "default_kp",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_ki",
-     "cxx": "default_ki",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kd",
-     "cxx": "default_kd",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kff",
-     "cxx": "default_kff",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kimax",
-     "cxx": "default_kimax",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_filt_E_hz",
-     "cxx": "default_filt_E_hz",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_filt_D_hz",
-     "cxx": "default_filt_D_hz",
-     "type": "float",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
    "cxx": "AC_PID_2D",
    "lean": "AC_PID_2D",
    "has_params": true,
@@ -6653,6 +4420,2120 @@
    "output_log": false
   },
   {
+   "cxx": "AC_PID_Basic",
+   "lean": "AC_PID_Basic",
+   "has_params": true,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "AC_PID_Basic",
+     "lean": "AC_PID_Basic.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "initial_p",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_i",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_d",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_ff",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_imax",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_filt_E_hz",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "initial_filt_D_hz",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_filt_E_alpha",
+     "lean": "AC_PID_Basic.get_filt_E_alpha",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_filt_D_alpha",
+     "lean": "AC_PID_Basic.get_filt_D_alpha",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_i",
+     "lean": "AC_PID_Basic.update_i",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "limit_neg",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "limit_pos",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_all",
+     "lean": "AC_PID_Basic.update_all_float3_bool2",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "measurement",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "limit_neg",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "limit_pos",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_all",
+     "lean": "AC_PID_Basic.update_all_float3_bool",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "measurement",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "limit",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_p",
+     "lean": "AC_PID_Basic.get_p",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_i",
+     "lean": "AC_PID_Basic.get_i",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_d",
+     "lean": "AC_PID_Basic.get_d",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_ff",
+     "lean": "AC_PID_Basic.get_ff",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error",
+     "lean": "AC_PID_Basic.get_error",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset_I",
+     "lean": "AC_PID_Basic.reset_I",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset_filter",
+     "lean": "AC_PID_Basic.reset_filter",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kP",
+     "lean": "AC_PID_Basic.kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kI",
+     "lean": "AC_PID_Basic.kI",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kD",
+     "lean": "AC_PID_Basic.kD",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ff",
+     "lean": "AC_PID_Basic.ff",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "filt_E_hz",
+     "lean": "AC_PID_Basic.filt_E_hz",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "filt_D_hz",
+     "lean": "AC_PID_Basic.filt_D_hz",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "imax",
+     "lean": "AC_PID_Basic.imax",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_kP",
+     "lean": "AC_PID_Basic.set_kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_kI",
+     "lean": "AC_PID_Basic.set_kI",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_kD",
+     "lean": "AC_PID_Basic.set_kD",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_ff",
+     "lean": "AC_PID_Basic.set_ff",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_imax",
+     "lean": "AC_PID_Basic.set_imax",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_filt_E_hz",
+     "lean": "AC_PID_Basic.set_filt_E_hz",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "hz",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_filt_D_hz",
+     "lean": "AC_PID_Basic.set_filt_D_hz",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "hz",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_integrator",
+     "lean": "AC_PID_Basic.set_integrator_float",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_integrator",
+     "lean": "AC_PID_Basic.set_integrator_float2",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "error",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "i",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_integrator",
+     "lean": "AC_PID_Basic.set_integrator_float3",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "measurement",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "i",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_pid_info",
+     "lean": "AC_PID_Basic.get_pid_info",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_PID_Basic",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "AP_PIDInfo",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "target",
+       "cxx": "target",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "actual",
+       "cxx": "actual",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "error",
+       "cxx": "error",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "P",
+       "cxx": "P",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "I",
+       "cxx": "I",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "D",
+       "cxx": "D",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "FF",
+       "cxx": "FF",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "DFF",
+       "cxx": "DFF",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "Dmod",
+       "cxx": "Dmod",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "slew_rate",
+       "cxx": "slew_rate",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "limit",
+       "cxx": "limit",
+       "type": "bool",
+       "enum": null
+      },
+      {
+       "lean": "PD_limit",
+       "cxx": "PD_limit",
+       "type": "bool",
+       "enum": null
+      },
+      {
+       "lean": "reset",
+       "cxx": "reset",
+       "type": "bool",
+       "enum": null
+      },
+      {
+       "lean": "I_term_set",
+       "cxx": "I_term_set",
+       "type": "bool",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "_kp",
+     "cxx": "_kp.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_ki",
+     "cxx": "_ki.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_kd",
+     "cxx": "_kd.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_kff",
+     "cxx": "_kff.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_kimax",
+     "cxx": "_kimax.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_filt_E_hz",
+     "cxx": "_filt_E_hz.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_filt_D_hz",
+     "cxx": "_filt_D_hz.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_target",
+     "cxx": "_target",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error",
+     "cxx": "_error",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_derivative",
+     "cxx": "_derivative",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_integrator",
+     "cxx": "_integrator",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_reset_filter",
+     "cxx": "_reset_filter",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.target",
+     "cxx": "_pid_info.target",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.actual",
+     "cxx": "_pid_info.actual",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.error",
+     "cxx": "_pid_info.error",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.P",
+     "cxx": "_pid_info.P",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.I",
+     "cxx": "_pid_info.I",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.D",
+     "cxx": "_pid_info.D",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.FF",
+     "cxx": "_pid_info.FF",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.DFF",
+     "cxx": "_pid_info.DFF",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.Dmod",
+     "cxx": "_pid_info.Dmod",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.slew_rate",
+     "cxx": "_pid_info.slew_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.limit",
+     "cxx": "_pid_info.limit",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.PD_limit",
+     "cxx": "_pid_info.PD_limit",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.reset",
+     "cxx": "_pid_info.reset",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pid_info.I_term_set",
+     "cxx": "_pid_info.I_term_set",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kp",
+     "cxx": "default_kp",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_ki",
+     "cxx": "default_ki",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kd",
+     "cxx": "default_kd",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kff",
+     "cxx": "default_kff",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kimax",
+     "cxx": "default_kimax",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_filt_E_hz",
+     "cxx": "default_filt_E_hz",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_filt_D_hz",
+     "cxx": "default_filt_D_hz",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AC_P_1D",
+   "lean": "AC_P_1D",
+   "has_params": true,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "AC_P_1D",
+     "lean": "AC_P_1D.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "initial_p",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_all",
+     "lean": "AC_P_1D.update_all",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "measurement",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_limits",
+     "lean": "AC_P_1D.set_limits",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "output_min",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "output_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "D_Out_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "D2_Out_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_error_limits",
+     "lean": "AC_P_1D.set_error_limits",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "error_min",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "error_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error_min",
+     "lean": "AC_P_1D.get_error_min",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error_max",
+     "lean": "AC_P_1D.get_error_max",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kP",
+     "lean": "AC_P_1D.kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error",
+     "lean": "AC_P_1D.get_error",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_kP",
+     "lean": "AC_P_1D.set_kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_1D",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "_kp",
+     "cxx": "_kp.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error",
+     "cxx": "_error",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error_min",
+     "cxx": "_error_min",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error_max",
+     "cxx": "_error_max",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_D1_max",
+     "cxx": "_D1_max",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kp",
+     "cxx": "default_kp",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "AC_P_2D",
+   "lean": "AC_P_2D",
+   "has_params": true,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "AC_P_2D",
+     "lean": "AC_P_2D.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "initial_p",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_all",
+     "lean": "AC_P_2D.update_all",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "target",
+       "type": "Vector2<double>",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Vector2_double.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "measurement",
+       "type": "Vector2<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Vector2_double.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "set_limits",
+     "lean": "AC_P_2D.set_limits",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "output_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "D_Out_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "D2_Out_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_error_max",
+     "lean": "AC_P_2D.set_error_max",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "error_max",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error_max",
+     "lean": "AC_P_2D.get_error_max",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kP",
+     "lean": "AC_P_2D.kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_error",
+     "lean": "AC_P_2D.get_error",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "set_kP",
+     "lean": "AC_P_2D.set_kP",
+     "top": false,
+     "kind": "method",
+     "owner": "AC_P_2D",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "_kp",
+     "cxx": "_kp.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error.x",
+     "cxx": "_error.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error.y",
+     "cxx": "_error.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_error_max",
+     "cxx": "_error_max",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_D1_max",
+     "cxx": "_D1_max",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "default_kp",
+     "cxx": "default_kp",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
    "cxx": "Vector2<float>",
    "lean": "Vector2f",
    "has_params": false,
@@ -7204,378 +7085,6 @@
    "output_log": false
   },
   {
-   "cxx": "AC_P_2D",
-   "lean": "AC_P_2D",
-   "has_params": true,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "AC_P_2D",
-     "lean": "AC_P_2D.init",
-     "top": true,
-     "kind": "ctor",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "p",
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "initial_p",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "update_all",
-     "lean": "AC_P_2D.update_all",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "target",
-       "type": "Vector2<double>",
-       "ref": "mut",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": false,
-       "lean_type": "Vector2_double.State",
-       "leaves": [
-        {
-         "lean": "x",
-         "cxx": "x",
-         "type": "double",
-         "enum": null
-        },
-        {
-         "lean": "y",
-         "cxx": "y",
-         "type": "double",
-         "enum": null
-        }
-       ]
-      },
-      {
-       "name": "measurement",
-       "type": "Vector2<double>",
-       "ref": "const",
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": false,
-       "lean_type": "Vector2_double.State",
-       "leaves": [
-        {
-         "lean": "x",
-         "cxx": "x",
-         "type": "double",
-         "enum": null
-        },
-        {
-         "lean": "y",
-         "cxx": "y",
-         "type": "double",
-         "enum": null
-        }
-       ]
-      }
-     ],
-     "ret": "Vector2<float>",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": [
-      {
-       "lean": "x",
-       "cxx": "x",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "y",
-       "cxx": "y",
-       "type": "float",
-       "enum": null
-      }
-     ]
-    },
-    {
-     "cxx": "set_limits",
-     "lean": "AC_P_2D.set_limits",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "p",
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "output_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "D_Out_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "D2_Out_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "set_error_max",
-     "lean": "AC_P_2D.set_error_max",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "error_max",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error_max",
-     "lean": "AC_P_2D.get_error_max",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "kP",
-     "lean": "AC_P_2D.kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "get_error",
-     "lean": "AC_P_2D.get_error",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "Vector2<float>",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": [
-      {
-       "lean": "x",
-       "cxx": "x",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "y",
-       "cxx": "y",
-       "type": "float",
-       "enum": null
-      }
-     ]
-    },
-    {
-     "cxx": "set_kP",
-     "lean": "AC_P_2D.set_kP",
-     "top": false,
-     "kind": "method",
-     "owner": "AC_P_2D",
-     "access": "public",
-     "reads": [
-      "p"
-     ],
-     "writes": [
-      "p"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "v",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    }
-   ],
-   "leaves": [
-    {
-     "root": "p",
-     "lean": "_kp",
-     "cxx": "_kp.get()",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error.x",
-     "cxx": "_error.x",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error.y",
-     "cxx": "_error.y",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_error_max",
-     "cxx": "_error_max",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "_D1_max",
-     "cxx": "_D1_max",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "default_kp",
-     "cxx": "default_kp",
-     "type": "float",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
    "cxx": "Vector2<double>",
    "lean": "Vector2_double",
    "has_params": false,
@@ -7824,6 +7333,497 @@
      "lean": "z",
      "cxx": "z",
      "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "LowPassFilter<float>",
+   "lean": "LowPassFilterFloat",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "DigitalLPF",
+     "lean": "LowPassFilterFloat.DigitalLPF_float.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "DigitalLPF<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "LowPassFilter",
+     "lean": "LowPassFilterFloat.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "LowPassFilter<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_cutoff_frequency",
+     "lean": "LowPassFilterFloat.set_cutoff_frequency",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "new_cutoff_freq",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "LowPassFilterFloat.reset_float",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalLPF<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "value",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "_apply",
+     "lean": "LowPassFilterFloat._apply",
+     "top": false,
+     "kind": "method",
+     "owner": "DigitalLPF<float>",
+     "access": "protected",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "alpha",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "LowPassFilterFloat.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "LowPassFilter<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "output",
+     "cxx": "output",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cutoff_freq",
+     "cxx": "cutoff_freq",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SlewLimiter",
+   "lean": "SlewLimiter",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "millis",
+     "type": "uint32_t",
+     "cxx": "AP_HAL::millis.millis()",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "SlewLimiter",
+     "lean": "SlewLimiter.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SlewLimiter",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_slew_rate_max",
+       "type": "float",
+       "ref": "const",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "_slew_rate_tau",
+       "type": "float",
+       "ref": "const",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "modifier",
+     "lean": "SlewLimiter.modifier",
+     "top": false,
+     "kind": "method",
+     "owner": "SlewLimiter",
+     "access": "public",
+     "reads": [
+      "r",
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "sample",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "dt",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_slew_rate",
+     "lean": "SlewLimiter.get_slew_rate",
+     "top": false,
+     "kind": "method",
+     "owner": "SlewLimiter",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "slew_filter.output",
+     "cxx": "slew_filter.output",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "slew_filter.initialised",
+     "cxx": "slew_filter.initialised",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "slew_filter.cutoff_freq",
+     "cxx": "slew_filter.cutoff_freq",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_output_slew_rate",
+     "cxx": "_output_slew_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_modifier_slew_rate",
+     "cxx": "_modifier_slew_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "last_sample",
+     "cxx": "last_sample",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_max_pos_slew_rate",
+     "cxx": "_max_pos_slew_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_max_neg_slew_rate",
+     "cxx": "_max_neg_slew_rate",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_max_pos_slew_event_ms",
+     "cxx": "_max_pos_slew_event_ms",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_max_neg_slew_event_ms",
+     "cxx": "_max_neg_slew_event_ms",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pos_event_index",
+     "cxx": "_pos_event_index",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_neg_event_index",
+     "cxx": "_neg_event_index",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pos_event_ms[0]!",
+     "cxx": "_pos_event_ms[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pos_event_ms[1]!",
+     "cxx": "_pos_event_ms[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_neg_event_ms[0]!",
+     "cxx": "_neg_event_ms[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_neg_event_ms[1]!",
+     "cxx": "_neg_event_ms[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pos_event_stored",
+     "cxx": "_pos_event_stored",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_neg_event_stored",
+     "cxx": "_neg_event_stored",
+     "type": "bool",
      "enum": null
     }
    ],
@@ -8788,81 +8788,123 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(25.0 : Float32)",
+   "lean": "(25.0 : Binary32)",
    "bits": "41c80000",
    "cpp": "25",
    "at": "37:38"
   },
   {
-   "lean": "(0.0 : Float)",
+   "lean": "(0.0 : Binary64)",
    "bits": "0000000000000000",
-   "cpp": "0",
+   "cpp": "0.0",
    "at": "38:23"
   },
   {
-   "lean": "(1.0 : Float)",
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x0000000000000000 /- 0.0 -/)",
+   "bits": "00000000",
+   "cpp": "0.0",
+   "at": "38:23"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "(float)0",
+   "at": "73:5"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
    "bits": "3ff0000000000000",
    "cpp": "1.0",
    "at": "43:55"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3ff0000000000000 /- 1.0 -/)",
+   "bits": "3f800000",
+   "cpp": "1.0",
+   "at": "43:55"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "200:16"
   },
   {
-   "lean": "(1.1920929e-7 : Float32)",
+   "lean": "(1.1920929e-7 : Binary32)",
    "bits": "34000000",
    "cpp": "1.1920929E-7",
    "at": "79:50"
   },
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x34000000 /- 1.1920929E-7 -/)",
+   "bits": "3e80000000000000",
+   "cpp": "(double)1/8388608",
+   "at": "79:50"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
-   "cpp": "1",
+   "cpp": "1.0f",
    "at": "430:16"
   },
   {
-   "lean": "(3.1415926535897931 : Float)",
+   "lean": "(3.1415926535897931 : Binary64)",
    "bits": "400921fb54442d18",
    "cpp": "3.1415926535897931",
    "at": "430:24"
   },
   {
-   "lean": "(2.0 : Float32)",
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/)",
+   "bits": "40490fdb",
+   "cpp": "(float)884279719003555/281474976710656",
+   "at": "430:24"
+  },
+  {
+   "lean": "Int32.toBinary32 (2 : Int32)",
    "bits": "40000000",
-   "cpp": "2",
+   "cpp": "(float)2",
+   "at": "430:24"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
    "at": "61:38"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
-   "cpp": "0.5",
+   "cpp": "0.5f",
    "at": "79:33"
   },
   {
-   "lean": "(10.0 : Float32)",
+   "lean": "(10.0 : Binary32)",
    "bits": "41200000",
-   "cpp": "10",
+   "cpp": "10.0f",
    "at": "88:73"
   },
   {
-   "lean": "(0.00100000005 : Float32)",
+   "lean": "(0.001 : Binary32)",
    "bits": "3a83126f",
-   "cpp": "0.00100000005",
+   "cpp": "0.001f",
    "at": "124:47"
   },
   {
-   "lean": "(1.5 : Float32)",
+   "lean": "(1.5 : Binary32)",
    "bits": "3fc00000",
    "cpp": "1.5",
    "at": "134:48"
   },
   {
-   "lean": "(2.0 : Float)",
+   "lean": "(2.0 : Binary64)",
    "bits": "4000000000000000",
-   "cpp": "2",
+   "cpp": "2.0",
+   "at": "584:41"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x4000000000000000 /- 2.0 -/)",
+   "bits": "40000000",
+   "cpp": "2.0",
    "at": "584:41"
   }
  ],
@@ -9075,5 +9117,6 @@
     "storage": null
    }
   ]
- }
+ },
+ "world": []
 }

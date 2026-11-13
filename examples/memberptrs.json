@@ -1,0 +1,7 @@
+{
+ "namespace": "MemberPtrs",
+ "cpp2lean": ["--nest", "--world", "--world-pointers", "--member-objects", "--member-pointers", "--reachable",
+              "--use", "Ahrs::update", "--use", "Ahrs::reset", "--use", "Ahrs::set_origin", "--use", "Ahrs::healthy", "--use", "Ahrs::get_origin"],
+ "world": {"calls": 20000, "weights": {"ahrs.update": 6, "ahrs.reset": 0.1, "ahrs.set_origin": 0.2, "ahrs.healthy": 0.5, "ahrs.get_origin": 0.5},
+           "ranges": {"x": [-1, 2], "type": [0, 4], "o": [-100, 100]}}
+}

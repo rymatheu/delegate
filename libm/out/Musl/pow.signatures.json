@@ -1,0 +1,2788 @@
+{
+ "namespace": "Musl.pow",
+ "source": "libm/unity/unity_pow.c",
+ "functions": [
+  {
+   "name": "eval_as_double",
+   "lean": "Musl.pow.eval_as_double",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:110-114"
+  },
+  {
+   "name": "fp_barrier",
+   "lean": "Musl.pow.fp_barrier",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:131-135"
+  },
+  {
+   "name": "__math_invalid",
+   "lean": "Musl.pow.__math_invalid",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:3-6"
+  },
+  {
+   "name": "__math_oflow",
+   "lean": "Musl.pow.__math_oflow",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:3-6"
+  },
+  {
+   "name": "__math_uflow",
+   "lean": "Musl.pow.__math_uflow",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:3-6"
+  },
+  {
+   "name": "__math_xflow",
+   "lean": "Musl.pow.__math_xflow",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:3-6"
+  },
+  {
+   "name": "top12",
+   "lean": "Musl.pow.top12",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "libm/unity/unity_pow.c:28-31"
+  },
+  {
+   "name": "specialcase",
+   "lean": "Musl.pow.specialcase",
+   "params": [
+    [
+     "tmp",
+     "double"
+    ],
+    [
+     "sbits",
+     "uint64_t"
+    ],
+    [
+     "ki",
+     "uint64_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:124-160"
+  },
+  {
+   "name": "exp_inline",
+   "lean": "Musl.pow.exp_inline",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "xtail",
+     "double"
+    ],
+    [
+     "sign_bias",
+     "uint32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:166-231"
+  },
+  {
+   "name": "checkint",
+   "lean": "Musl.pow.checkint",
+   "params": [
+    [
+     "iy",
+     "uint64_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "libm/unity/unity_pow.c:235-247"
+  },
+  {
+   "name": "zeroinfnan",
+   "lean": "Musl.pow.zeroinfnan",
+   "params": [
+    [
+     "i",
+     "uint64_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "libm/unity/unity_pow.c:250-253"
+  },
+  {
+   "name": "pow",
+   "lean": "Musl.pow.pow",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "y",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_pow.c:255-343"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "eval_as_double",
+   "cxx_call": "eval_as_double",
+   "lean": "Musl.pow.eval_as_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "fp_barrier",
+   "cxx_call": "fp_barrier",
+   "lean": "Musl.pow.fp_barrier",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_invalid",
+   "cxx_call": "__math_invalid",
+   "lean": "Musl.pow.__math_invalid",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_oflow",
+   "cxx_call": "__math_oflow",
+   "lean": "Musl.pow.__math_oflow",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_uflow",
+   "cxx_call": "__math_uflow",
+   "lean": "Musl.pow.__math_uflow",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_xflow",
+   "cxx_call": "__math_xflow",
+   "lean": "Musl.pow.__math_xflow",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "top12",
+   "cxx_call": "top12",
+   "lean": "Musl.pow.top12",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "log_inline",
+   "cxx_call": "log_inline",
+   "lean": "Musl.pow.log_inline",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "ix",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "tail",
+     "type": "double",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "specialcase",
+   "cxx_call": "specialcase",
+   "lean": "Musl.pow.specialcase",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "tmp",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sbits",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "ki",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "exp_inline",
+   "cxx_call": "exp_inline",
+   "lean": "Musl.pow.exp_inline",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "xtail",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sign_bias",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "checkint",
+   "cxx_call": "checkint",
+   "lean": "Musl.pow.checkint",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "iy",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "zeroinfnan",
+   "cxx_call": "zeroinfnan",
+   "lean": "Musl.pow.zeroinfnan",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "i",
+     "type": "uint64_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "pow",
+   "cxx_call": "pow",
+   "lean": "Musl.pow.pow",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Binary64.ofBits 0x3fe62e42fefa3800",
+   "bits": "3fe62e42fefa3800",
+   "cpp": "0x1.62e42fefa3800p-1",
+   "at": "13:10"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3d2ef35793c76730",
+   "bits": "3d2ef35793c76730",
+   "cpp": "0x1.ef35793c76730p-45",
+   "at": "14:10"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe0000000000000",
+   "bits": "3fe0000000000000",
+   "cpp": "0x1p-1",
+   "at": "19:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd5555555555560",
+   "bits": "3fd5555555555560",
+   "cpp": "0x1.555555555556p-2",
+   "at": "20:1"
+  },
+  {
+   "lean": "Int32.toBinary64 (-(2 : Int32))",
+   "bits": "c000000000000000",
+   "cpp": "-2",
+   "at": "20:23"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd0000000000006",
+   "bits": "3fd0000000000006",
+   "cpp": "0x1.0000000000006p-2",
+   "at": "21:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc999999959554e",
+   "bits": "3fc999999959554e",
+   "cpp": "0x1.999999959554ep-3",
+   "at": "22:1"
+  },
+  {
+   "lean": "Int32.toBinary64 (4 : Int32)",
+   "bits": "4010000000000000",
+   "cpp": "4",
+   "at": "22:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc555555529a47a",
+   "bits": "3fc555555529a47a",
+   "cpp": "0x1.555555529a47ap-3",
+   "at": "23:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc2495b9b4845e9",
+   "bits": "3fc2495b9b4845e9",
+   "cpp": "0x1.2495b9b4845e9p-3",
+   "at": "24:1"
+  },
+  {
+   "lean": "Int32.toBinary64 (-(8 : Int32))",
+   "bits": "c020000000000000",
+   "cpp": "-8",
+   "at": "24:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc0002b8b263fc3",
+   "bits": "3fc0002b8b263fc3",
+   "cpp": "0x1.0002b8b263fc3p-3",
+   "at": "25:2"
+  },
+  {
+   "lean": "(1.4140625 : Binary64)",
+   "bits": "3ff6a00000000000",
+   "cpp": "1.4140625",
+   "at": "51:1"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "(double)0",
+   "at": "51:1"
+  },
+  {
+   "lean": "(0.34646676734621451 : Binary64)",
+   "bits": "3fd62c82f2b9c800",
+   "cpp": "0.34646676734621451",
+   "at": "51:1"
+  },
+  {
+   "lean": "(5.9294073458896252e-15 : Binary64)",
+   "bits": "3cfab42428375680",
+   "cpp": "5.9294073458896252E-15",
+   "at": "51:1"
+  },
+  {
+   "lean": "(1.40625 : Binary64)",
+   "bits": "3ff6800000000000",
+   "cpp": "1.40625",
+   "at": "52:1"
+  },
+  {
+   "lean": "(0.34092658697056777 : Binary64)",
+   "bits": "3fd5d1bdbf580800",
+   "cpp": "0.34092658697056777",
+   "at": "52:1"
+  },
+  {
+   "lean": "(2.544157440035963e-14 : Binary64)",
+   "bits": "3d1ca508d8e0f720",
+   "cpp": "2.544157440035963E-14",
+   "at": "52:1"
+  },
+  {
+   "lean": "(1.3984375 : Binary64)",
+   "bits": "3ff6600000000000",
+   "cpp": "1.3984375",
+   "at": "53:1"
+  },
+  {
+   "lean": "(0.33535554192110339 : Binary64)",
+   "bits": "3fd5767717455800",
+   "cpp": "0.33535554192110339",
+   "at": "53:1"
+  },
+  {
+   "lean": "(3.4435259407750449e-14 : Binary64)",
+   "bits": "3d2362a4d5b6506d",
+   "cpp": "3.4435259407750449E-14",
+   "at": "53:1"
+  },
+  {
+   "lean": "(1.390625 : Binary64)",
+   "bits": "3ff6400000000000",
+   "cpp": "1.390625",
+   "at": "54:1"
+  },
+  {
+   "lean": "(0.32975328637246548 : Binary64)",
+   "bits": "3fd51aad872df800",
+   "cpp": "0.32975328637246548",
+   "at": "54:1"
+  },
+  {
+   "lean": "(2.500123826022799e-15 : Binary64)",
+   "bits": "3ce684e49eb067d5",
+   "cpp": "2.500123826022799E-15",
+   "at": "54:1"
+  },
+  {
+   "lean": "(1.3828125 : Binary64)",
+   "bits": "3ff6200000000000",
+   "cpp": "1.3828125",
+   "at": "55:1"
+  },
+  {
+   "lean": "(0.32411946865420305 : Binary64)",
+   "bits": "3fd4be5f95777800",
+   "cpp": "0.32411946865420305",
+   "at": "55:1"
+  },
+  {
+   "lean": "(8.9293371338506168e-15 : Binary64)",
+   "bits": "3d041b6993293ee0",
+   "cpp": "8.9293371338506168E-15",
+   "at": "55:1"
+  },
+  {
+   "lean": "(1.375 : Binary64)",
+   "bits": "3ff6000000000000",
+   "cpp": "1.375",
+   "at": "56:1"
+  },
+  {
+   "lean": "(0.31845373111855224 : Binary64)",
+   "bits": "3fd4618bc21c6000",
+   "cpp": "0.31845373111855224",
+   "at": "56:1"
+  },
+  {
+   "lean": "(1.7625431312172662e-14 : Binary64)",
+   "bits": "3d13d82f484c84cc",
+   "cpp": "1.7625431312172662E-14",
+   "at": "56:1"
+  },
+  {
+   "lean": "(1.3671875 : Binary64)",
+   "bits": "3ff5e00000000000",
+   "cpp": "1.3671875",
+   "at": "57:1"
+  },
+  {
+   "lean": "(0.31275571000389846 : Binary64)",
+   "bits": "3fd404308686a800",
+   "cpp": "0.31275571000389846",
+   "at": "57:1"
+  },
+  {
+   "lean": "(1.5688303180062087e-15 : Binary64)",
+   "bits": "3cdc42f3ed820b3a",
+   "cpp": "1.5688303180062087E-15",
+   "at": "57:1"
+  },
+  {
+   "lean": "(1.359375 : Binary64)",
+   "bits": "3ff5c00000000000",
+   "cpp": "1.359375",
+   "at": "58:1"
+  },
+  {
+   "lean": "(0.30702503529494152 : Binary64)",
+   "bits": "3fd3a64c55694800",
+   "cpp": "0.30702503529494152",
+   "at": "58:1"
+  },
+  {
+   "lean": "(2.9655274673691784e-14 : Binary64)",
+   "bits": "3d20b1c686519460",
+   "cpp": "2.9655274673691784E-14",
+   "at": "58:1"
+  },
+  {
+   "lean": "(1.3515625 : Binary64)",
+   "bits": "3ff5a00000000000",
+   "cpp": "1.3515625",
+   "at": "59:1"
+  },
+  {
+   "lean": "(0.3012613305781997 : Binary64)",
+   "bits": "3fd347dd9a988000",
+   "cpp": "0.3012613305781997",
+   "at": "59:1"
+  },
+  {
+   "lean": "(3.7923164802093147e-14 : Binary64)",
+   "bits": "3d25594dd4c58092",
+   "cpp": "3.7923164802093147E-14",
+   "at": "59:1"
+  },
+  {
+   "lean": "(1.34375 : Binary64)",
+   "bits": "3ff5800000000000",
+   "cpp": "1.34375",
+   "at": "60:1"
+  },
+  {
+   "lean": "(0.29546421289387581 : Binary64)",
+   "bits": "3fd2e8e2bae12000",
+   "cpp": "0.29546421289387581",
+   "at": "60:1"
+  },
+  {
+   "lean": "(3.9934163843878439e-14 : Binary64)",
+   "bits": "3d267b1e99b72bd8",
+   "cpp": "3.9934163843878439E-14",
+   "at": "60:1"
+  },
+  {
+   "lean": "(1.3359375 : Binary64)",
+   "bits": "3ff5600000000000",
+   "cpp": "1.3359375",
+   "at": "61:1"
+  },
+  {
+   "lean": "(0.28963329258306203 : Binary64)",
+   "bits": "3fd2895a13de8800",
+   "cpp": "0.28963329258306203",
+   "at": "61:1"
+  },
+  {
+   "lean": "(1.9352855826489123e-14 : Binary64)",
+   "bits": "3d15ca14b6cfb03f",
+   "cpp": "1.9352855826489123E-14",
+   "at": "61:1"
+  },
+  {
+   "lean": "(1.328125 : Binary64)",
+   "bits": "3ff5400000000000",
+   "cpp": "1.328125",
+   "at": "63:1"
+  },
+  {
+   "lean": "(0.28376817313062475 : Binary64)",
+   "bits": "3fd22941fbcf7800",
+   "cpp": "0.28376817313062475",
+   "at": "63:1"
+  },
+  {
+   "lean": "(1.9852665484979036e-14 : Binary64)",
+   "bits": "3d165a242853da76",
+   "cpp": "1.9852665484979036E-14",
+   "at": "63:1"
+  },
+  {
+   "lean": "(1.3203125 : Binary64)",
+   "bits": "3ff5200000000000",
+   "cpp": "1.3203125",
+   "at": "64:1"
+  },
+  {
+   "lean": "(0.27786845100342816 : Binary64)",
+   "bits": "3fd1c898c1699800",
+   "cpp": "0.27786845100342816",
+   "at": "64:1"
+  },
+  {
+   "lean": "(2.814323765595281e-14 : Binary64)",
+   "bits": "3d1fafbc68e75404",
+   "cpp": "2.814323765595281E-14",
+   "at": "64:1"
+  },
+  {
+   "lean": "(1.3125 : Binary64)",
+   "bits": "3ff5000000000000",
+   "cpp": "1.3125",
+   "at": "65:1"
+  },
+  {
+   "lean": "(0.2719337154836694 : Binary64)",
+   "bits": "3fd1675cababa800",
+   "cpp": "0.2719337154836694",
+   "at": "65:1"
+  },
+  {
+   "lean": "(2.7643769993528702e-14 : Binary64)",
+   "bits": "3d1f1fc63382a8f0",
+   "cpp": "2.7643769993528702E-14",
+   "at": "65:1"
+  },
+  {
+   "lean": "(1.3046875 : Binary64)",
+   "bits": "3ff4e00000000000",
+   "cpp": "1.3046875",
+   "at": "66:1"
+  },
+  {
+   "lean": "(0.26596354849709769 : Binary64)",
+   "bits": "3fd1058bf9ae4800",
+   "cpp": "0.26596354849709769",
+   "at": "66:1"
+  },
+  {
+   "lean": "(4.0250924022938059e-14 : Binary64)",
+   "bits": "3d26a8c4fd055a66",
+   "cpp": "4.0250924022938059E-14",
+   "at": "66:1"
+  },
+  {
+   "lean": "(1.296875 : Binary64)",
+   "bits": "3ff4c00000000000",
+   "cpp": "1.296875",
+   "at": "67:1"
+  },
+  {
+   "lean": "(0.25995752443691345 : Binary64)",
+   "bits": "3fd0a324e2739000",
+   "cpp": "0.25995752443691345",
+   "at": "67:1"
+  },
+  {
+   "lean": "(1.2621729398885316e-14 : Binary64)",
+   "bits": "3d0c6bee7ef4030e",
+   "cpp": "1.2621729398885316E-14",
+   "at": "67:1"
+  },
+  {
+   "lean": "(1.2890625 : Binary64)",
+   "bits": "3ff4a00000000000",
+   "cpp": "1.2890625",
+   "at": "68:1"
+  },
+  {
+   "lean": "(0.25391520998095984 : Binary64)",
+   "bits": "3fd0402594b4d000",
+   "cpp": "0.25391520998095984",
+   "at": "68:1"
+  },
+  {
+   "lean": "(3.6001767326373346e-15 : Binary64)",
+   "bits": "3cf036b89ef42d7f",
+   "cpp": "3.6001767326373346E-15",
+   "at": "68:1"
+  },
+  {
+   "lean": "(1.28125 : Binary64)",
+   "bits": "3ff4800000000000",
+   "cpp": "1.28125",
+   "at": "70:1"
+  },
+  {
+   "lean": "(0.24783616390459429 : Binary64)",
+   "bits": "3fcfb9186d5e4000",
+   "cpp": "0.24783616390459429",
+   "at": "70:1"
+  },
+  {
+   "lean": "(1.3029797173308663e-14 : Binary64)",
+   "bits": "3d0d572aab993c87",
+   "cpp": "1.3029797173308663E-14",
+   "at": "70:1"
+  },
+  {
+   "lean": "(1.2734375 : Binary64)",
+   "bits": "3ff4600000000000",
+   "cpp": "1.2734375",
+   "at": "71:1"
+  },
+  {
+   "lean": "(0.2417199368871934 : Binary64)",
+   "bits": "3fcef0adcbdc6000",
+   "cpp": "0.2417199368871934",
+   "at": "71:1"
+  },
+  {
+   "lean": "(4.8230289429940886e-14 : Binary64)",
+   "bits": "3d2b26b79c86af24",
+   "cpp": "4.8230289429940886E-14",
+   "at": "71:1"
+  },
+  {
+   "lean": "(1.265625 : Binary64)",
+   "bits": "3ff4400000000000",
+   "cpp": "1.265625",
+   "at": "72:1"
+  },
+  {
+   "lean": "(0.23556607131274632 : Binary64)",
+   "bits": "3fce27076e2af000",
+   "cpp": "0.23556607131274632",
+   "at": "72:1"
+  },
+  {
+   "lean": "(2.0592242769647135e-14 : Binary64)",
+   "bits": "3d172f4f543fff10",
+   "cpp": "2.0592242769647135E-14",
+   "at": "72:1"
+  },
+  {
+   "lean": "(1.2578125 : Binary64)",
+   "bits": "3ff4200000000000",
+   "cpp": "1.2578125",
+   "at": "73:1"
+  },
+  {
+   "lean": "(0.22937410106487732 : Binary64)",
+   "bits": "3fcd5c216b4fc000",
+   "cpp": "0.22937410106487732",
+   "at": "73:1"
+  },
+  {
+   "lean": "(3.1492650651914838e-14 : Binary64)",
+   "bits": "3d21ba91bbca681b",
+   "cpp": "3.1492650651914838E-14",
+   "at": "73:1"
+  },
+  {
+   "lean": "(1.25 : Binary64)",
+   "bits": "3ff4000000000000",
+   "cpp": "1.25",
+   "at": "74:1"
+  },
+  {
+   "lean": "(0.22314355131425145 : Binary64)",
+   "bits": "3fcc8ff7c79aa000",
+   "cpp": "0.22314355131425145",
+   "at": "74:1"
+  },
+  {
+   "lean": "(4.1697965845271953e-14 : Binary64)",
+   "bits": "3d27794f689f8434",
+   "cpp": "4.1697965845271953E-14",
+   "at": "74:1"
+  },
+  {
+   "lean": "(1.2421875 : Binary64)",
+   "bits": "3ff3e00000000000",
+   "cpp": "1.2421875",
+   "at": "76:1"
+  },
+  {
+   "lean": "(0.21687393830063684 : Binary64)",
+   "bits": "3fcbc286742d9000",
+   "cpp": "0.21687393830063684",
+   "at": "76:1"
+  },
+  {
+   "lean": "(2.2477465222466186e-14 : Binary64)",
+   "bits": "3d194eb0318bb78f",
+   "cpp": "2.2477465222466186E-14",
+   "at": "76:1"
+  },
+  {
+   "lean": "(1.234375 : Binary64)",
+   "bits": "3ff3c00000000000",
+   "cpp": "1.234375",
+   "at": "77:1"
+  },
+  {
+   "lean": "(0.21056476910735 : Binary64)",
+   "bits": "3fcaf3c94e80c000",
+   "cpp": "0.21056476910735",
+   "at": "77:1"
+  },
+  {
+   "lean": "(3.6507188831790577e-16 : Binary64)",
+   "bits": "3cba4e633fcd9066",
+   "cpp": "3.6507188831790577E-16",
+   "at": "77:1"
+  },
+  {
+   "lean": "(1.2265625 : Binary64)",
+   "bits": "3ff3a00000000000",
+   "cpp": "1.2265625",
+   "at": "78:1"
+  },
+  {
+   "lean": "(0.20421554142865261 : Binary64)",
+   "bits": "3fca23bc1fe2b000",
+   "cpp": "0.20421554142865261",
+   "at": "78:1"
+  },
+  {
+   "lean": "(3.8277672602054141e-14 : Binary64)",
+   "bits": "3d258c64dc46c1ea",
+   "cpp": "3.8277672602054141E-14",
+   "at": "78:1"
+  },
+  {
+   "lean": "(1.21875 : Binary64)",
+   "bits": "3ff3800000000000",
+   "cpp": "1.21875",
+   "at": "80:1"
+  },
+  {
+   "lean": "(0.19782574332987224 : Binary64)",
+   "bits": "3fc9525a9cf45000",
+   "cpp": "0.19782574332987224",
+   "at": "80:1"
+  },
+  {
+   "lean": "(4.7641388950792196e-14 : Binary64)",
+   "bits": "3d2ad1d904c1d4e3",
+   "cpp": "4.7641388950792196E-14",
+   "at": "80:1"
+  },
+  {
+   "lean": "(1.2109375 : Binary64)",
+   "bits": "3ff3600000000000",
+   "cpp": "1.2109375",
+   "at": "81:1"
+  },
+  {
+   "lean": "(0.19139485299967873 : Binary64)",
+   "bits": "3fc87fa06520d000",
+   "cpp": "0.19139485299967873",
+   "at": "81:1"
+  },
+  {
+   "lean": "(4.9278276214647115e-14 : Binary64)",
+   "bits": "3d2bbdbf7fdbfa09",
+   "cpp": "4.9278276214647115E-14",
+   "at": "81:1"
+  },
+  {
+   "lean": "(1.203125 : Binary64)",
+   "bits": "3ff3400000000000",
+   "cpp": "1.203125",
+   "at": "82:1"
+  },
+  {
+   "lean": "(0.18492233849406148 : Binary64)",
+   "bits": "3fc7ab890210e000",
+   "cpp": "0.18492233849406148",
+   "at": "82:1"
+  },
+  {
+   "lean": "(4.9485167661250996e-14 : Binary64)",
+   "bits": "3d2bdb9072534a58",
+   "cpp": "4.9485167661250996E-14",
+   "at": "82:1"
+  },
+  {
+   "lean": "(1.1953125 : Binary64)",
+   "bits": "3ff3200000000000",
+   "cpp": "1.1953125",
+   "at": "84:1"
+  },
+  {
+   "lean": "(0.17840765747280329 : Binary64)",
+   "bits": "3fc6d60fe719d000",
+   "cpp": "0.17840765747280329",
+   "at": "84:1"
+  },
+  {
+   "lean": "(1.5003333854266542e-14 : Binary64)",
+   "bits": "3d10e46aa3b2e266",
+   "cpp": "1.5003333854266542E-14",
+   "at": "84:1"
+  },
+  {
+   "lean": "(1.1875 : Binary64)",
+   "bits": "3ff3000000000000",
+   "cpp": "1.1875",
+   "at": "85:1"
+  },
+  {
+   "lean": "(0.17185025692663203 : Binary64)",
+   "bits": "3fc5ff3070a79000",
+   "cpp": "0.17185025692663203",
+   "at": "85:1"
+  },
+  {
+   "lean": "(2.7194441649495324e-14 : Binary64)",
+   "bits": "3d1e9e439f105039",
+   "cpp": "2.7194441649495324E-14",
+   "at": "85:1"
+  },
+  {
+   "lean": "(1.1796875 : Binary64)",
+   "bits": "3ff2e00000000000",
+   "cpp": "1.1796875",
+   "at": "87:1"
+  },
+  {
+   "lean": "(0.1652495728952772 : Binary64)",
+   "bits": "3fc526e5e3a1b000",
+   "cpp": "0.1652495728952772",
+   "at": "87:1"
+  },
+  {
+   "lean": "(2.9965926729256903e-14 : Binary64)",
+   "bits": "3d20de8b90075b8f",
+   "cpp": "2.9965926729256903E-14",
+   "at": "87:1"
+  },
+  {
+   "lean": "(1.171875 : Binary64)",
+   "bits": "3ff2c00000000000",
+   "cpp": "1.171875",
+   "at": "88:1"
+  },
+  {
+   "lean": "(0.15860503017665906 : Binary64)",
+   "bits": "3fc44d2b6ccb8000",
+   "cpp": "0.15860503017665906",
+   "at": "88:1"
+  },
+  {
+   "lean": "(2.0472357800461955e-14 : Binary64)",
+   "bits": "3d170cc16135783c",
+   "cpp": "2.0472357800461955E-14",
+   "at": "88:1"
+  },
+  {
+   "lean": "(1.1640625 : Binary64)",
+   "bits": "3ff2a00000000000",
+   "cpp": "1.1640625",
+   "at": "90:1"
+  },
+  {
+   "lean": "(0.15191604202584585 : Binary64)",
+   "bits": "3fc371fc201e9000",
+   "cpp": "0.15191604202584585",
+   "at": "90:1"
+  },
+  {
+   "lean": "(3.8792967230636458e-15 : Binary64)",
+   "bits": "3cf178864d27543a",
+   "cpp": "3.8792967230636458E-15",
+   "at": "90:1"
+  },
+  {
+   "lean": "(1.15625 : Binary64)",
+   "bits": "3ff2800000000000",
+   "cpp": "1.15625",
+   "at": "91:1"
+  },
+  {
+   "lean": "(0.14518200984446139 : Binary64)",
+   "bits": "3fc29552f81ff000",
+   "cpp": "0.14518200984446139",
+   "at": "91:1"
+  },
+  {
+   "lean": "(3.6506824353335045e-14 : Binary64)",
+   "bits": "3d248d301771c408",
+   "cpp": "3.6506824353335045E-14",
+   "at": "91:1"
+  },
+  {
+   "lean": "(1.1484375 : Binary64)",
+   "bits": "3ff2600000000000",
+   "cpp": "1.1484375",
+   "at": "92:1"
+  },
+  {
+   "lean": "(0.13840232285906495 : Binary64)",
+   "bits": "3fc1b72ad52f6000",
+   "cpp": "0.13840232285906495",
+   "at": "92:1"
+  },
+  {
+   "lean": "(5.4183331379008994e-14 : Binary64)",
+   "bits": "3d2e80a41811a396",
+   "cpp": "5.4183331379008994E-14",
+   "at": "92:1"
+  },
+  {
+   "lean": "(1.140625 : Binary64)",
+   "bits": "3ff2400000000000",
+   "cpp": "1.140625",
+   "at": "94:1"
+  },
+  {
+   "lean": "(0.131576357788731 : Binary64)",
+   "bits": "3fc0d77e7cd09000",
+   "cpp": "0.131576357788731",
+   "at": "94:1"
+  },
+  {
+   "lean": "(1.1729485484531301e-14 : Binary64)",
+   "bits": "3d0a699688e85bf4",
+   "cpp": "1.1729485484531301E-14",
+   "at": "94:1"
+  },
+  {
+   "lean": "(1.1328125 : Binary64)",
+   "bits": "3ff2200000000000",
+   "cpp": "1.1328125",
+   "at": "96:1"
+  },
+  {
+   "lean": "(0.12470347850091912 : Binary64)",
+   "bits": "3fbfec9131dbe000",
+   "cpp": "0.12470347850091912",
+   "at": "96:1"
+  },
+  {
+   "lean": "(3.8117630847102661e-14 : Binary64)",
+   "bits": "3d2575545ca333f2",
+   "cpp": "3.8117630847102661E-14",
+   "at": "96:1"
+  },
+  {
+   "lean": "(1.125 : Binary64)",
+   "bits": "3ff2000000000000",
+   "cpp": "1.125",
+   "at": "97:1"
+  },
+  {
+   "lean": "(0.11778303565643 : Binary64)",
+   "bits": "3fbe27076e2b0000",
+   "cpp": "0.11778303565643",
+   "at": "97:1"
+  },
+  {
+   "lean": "(4.6547297475984447e-14 : Binary64)",
+   "bits": "3d2a342c2af0003c",
+   "cpp": "4.6547297475984447E-14",
+   "at": "97:1"
+  },
+  {
+   "lean": "(1.1171875 : Binary64)",
+   "bits": "3ff1e00000000000",
+   "cpp": "1.1171875",
+   "at": "99:1"
+  },
+  {
+   "lean": "(0.11081436634026431 : Binary64)",
+   "bits": "3fbc5e548f5bc000",
+   "cpp": "0.11081436634026431",
+   "at": "99:1"
+  },
+  {
+   "lean": "(2.5799991283069902e-14 : Binary64)",
+   "bits": "3d1d0c57585fbe06",
+   "cpp": "2.5799991283069902E-14",
+   "at": "99:1"
+  },
+  {
+   "lean": "(1.109375 : Binary64)",
+   "bits": "3ff1c00000000000",
+   "cpp": "1.109375",
+   "at": "100:1"
+  },
+  {
+   "lean": "(0.10379679368168127 : Binary64)",
+   "bits": "3fba926d3a4ae000",
+   "cpp": "0.10379679368168127",
+   "at": "100:1"
+  },
+  {
+   "lean": "(3.7700471749674615e-14 : Binary64)",
+   "bits": "3d253935e85baac8",
+   "cpp": "3.7700471749674615E-14",
+   "at": "100:1"
+  },
+  {
+   "lean": "(1.1015625 : Binary64)",
+   "bits": "3ff1a00000000000",
+   "cpp": "1.1015625",
+   "at": "102:1"
+  },
+  {
+   "lean": "(0.096729626458568418 : Binary64)",
+   "bits": "3fb8c345d631a000",
+   "cpp": "0.096729626458568418",
+   "at": "102:1"
+  },
+  {
+   "lean": "(1.7306161136093256e-14 : Binary64)",
+   "bits": "3d137c294d2f5668",
+   "cpp": "1.7306161136093256E-14",
+   "at": "102:1"
+  },
+  {
+   "lean": "(1.09375 : Binary64)",
+   "bits": "3ff1800000000000",
+   "cpp": "1.09375",
+   "at": "104:1"
+  },
+  {
+   "lean": "(0.089612158689647003 : Binary64)",
+   "bits": "3fb6f0d28ae56000",
+   "cpp": "0.089612158689647003",
+   "at": "104:1"
+  },
+  {
+   "lean": "(4.0129135527265743e-14 : Binary64)",
+   "bits": "3d269737c93373da",
+   "cpp": "4.0129135527265743E-14",
+   "at": "104:1"
+  },
+  {
+   "lean": "(1.0859375 : Binary64)",
+   "bits": "3ff1600000000000",
+   "cpp": "1.0859375",
+   "at": "105:1"
+  },
+  {
+   "lean": "(0.082443669211102133 : Binary64)",
+   "bits": "3fb51b073f062000",
+   "cpp": "0.082443669211102133",
+   "at": "105:1"
+  },
+  {
+   "lean": "(2.7541708360737882e-14 : Binary64)",
+   "bits": "3d1f025b61c65e57",
+   "cpp": "2.7541708360737882E-14",
+   "at": "105:1"
+  },
+  {
+   "lean": "(1.078125 : Binary64)",
+   "bits": "3ff1400000000000",
+   "cpp": "1.078125",
+   "at": "107:1"
+  },
+  {
+   "lean": "(0.075223421237637922 : Binary64)",
+   "bits": "3fb341d7961be000",
+   "cpp": "0.075223421237637922",
+   "at": "107:1"
+  },
+  {
+   "lean": "(5.0396178134370583e-14 : Binary64)",
+   "bits": "3d2c5edaccf913df",
+   "cpp": "5.0396178134370583E-14",
+   "at": "107:1"
+  },
+  {
+   "lean": "(1.0703125 : Binary64)",
+   "bits": "3ff1200000000000",
+   "cpp": "1.0703125",
+   "at": "109:1"
+  },
+  {
+   "lean": "(0.067950661908525944 : Binary64)",
+   "bits": "3fb16536eea38000",
+   "cpp": "0.067950661908525944",
+   "at": "109:1"
+  },
+  {
+   "lean": "(1.8195060030168815e-14 : Binary64)",
+   "bits": "3d147c5e768fa309",
+   "cpp": "1.8195060030168815E-14",
+   "at": "109:1"
+  },
+  {
+   "lean": "(1.0625 : Binary64)",
+   "bits": "3ff1000000000000",
+   "cpp": "1.0625",
+   "at": "110:1"
+  },
+  {
+   "lean": "(0.060624621816486979 : Binary64)",
+   "bits": "3faf0a30c0118000",
+   "cpp": "0.060624621816486979",
+   "at": "110:1"
+  },
+  {
+   "lean": "(5.2136206391365041e-14 : Binary64)",
+   "bits": "3d2d599e83368e91",
+   "cpp": "5.2136206391365041E-14",
+   "at": "110:1"
+  },
+  {
+   "lean": "(1.0546875 : Binary64)",
+   "bits": "3ff0e00000000000",
+   "cpp": "1.0546875",
+   "at": "112:1"
+  },
+  {
+   "lean": "(0.053244514518837605 : Binary64)",
+   "bits": "3fab42dd71198000",
+   "cpp": "0.053244514518837605",
+   "at": "112:1"
+  },
+  {
+   "lean": "(2.532168943117445e-14 : Binary64)",
+   "bits": "3d1c827ae5d6704c",
+   "cpp": "2.532168943117445E-14",
+   "at": "112:1"
+  },
+  {
+   "lean": "(1.046875 : Binary64)",
+   "bits": "3ff0c00000000000",
+   "cpp": "1.046875",
+   "at": "114:1"
+  },
+  {
+   "lean": "(0.045809536031242715 : Binary64)",
+   "bits": "3fa77458f632c000",
+   "cpp": "0.045809536031242715",
+   "at": "114:1"
+  },
+  {
+   "lean": "(5.1488495726858107e-14 : Binary64)",
+   "bits": "3d2cfc4634f2a1ee",
+   "cpp": "5.1488495726858107E-14",
+   "at": "114:1"
+  },
+  {
+   "lean": "(1.0390625 : Binary64)",
+   "bits": "3ff0a00000000000",
+   "cpp": "1.0390625",
+   "at": "116:1"
+  },
+  {
+   "lean": "(0.038318864302141264 : Binary64)",
+   "bits": "3fa39e87b9fec000",
+   "cpp": "0.038318864302141264",
+   "at": "116:1"
+  },
+  {
+   "lean": "(4.6652946995830086e-15 : Binary64)",
+   "bits": "3cf502b7f526feaa",
+   "cpp": "4.6652946995830086E-15",
+   "at": "116:1"
+  },
+  {
+   "lean": "(1.03125 : Binary64)",
+   "bits": "3ff0800000000000",
+   "cpp": "1.03125",
+   "at": "118:1"
+  },
+  {
+   "lean": "(0.03077165866670839 : Binary64)",
+   "bits": "3f9f829b0e780000",
+   "cpp": "0.03077165866670839",
+   "at": "118:1"
+  },
+  {
+   "lean": "(4.5298142577909288e-14 : Binary64)",
+   "bits": "3d2980267c7e09e4",
+   "cpp": "4.5298142577909288E-14",
+   "at": "118:1"
+  },
+  {
+   "lean": "(1.0234375 : Binary64)",
+   "bits": "3ff0600000000000",
+   "cpp": "1.0234375",
+   "at": "120:1"
+  },
+  {
+   "lean": "(0.023167059281490765 : Binary64)",
+   "bits": "3f97b91b07d58000",
+   "cpp": "0.023167059281490765",
+   "at": "120:1"
+  },
+  {
+   "lean": "(4.3613240678515679e-14 : Binary64)",
+   "bits": "3d288d5493faa639",
+   "cpp": "4.3613240678515679E-14",
+   "at": "120:1"
+  },
+  {
+   "lean": "(1.015625 : Binary64)",
+   "bits": "3ff0400000000000",
+   "cpp": "1.015625",
+   "at": "121:1"
+  },
+  {
+   "lean": "(0.015504186535963527 : Binary64)",
+   "bits": "3f8fc0a8b0fc0000",
+   "cpp": "0.015504186535963527",
+   "at": "121:1"
+  },
+  {
+   "lean": "(1.7274567499706107e-15 : Binary64)",
+   "bits": "3cdf1e7cf6d3a69c",
+   "cpp": "1.7274567499706107E-15",
+   "at": "121:1"
+  },
+  {
+   "lean": "(1.0078125 : Binary64)",
+   "bits": "3ff0200000000000",
+   "cpp": "1.0078125",
+   "at": "123:1"
+  },
+  {
+   "lean": "(0.0077821404420319595 : Binary64)",
+   "bits": "3f7fe02a6b100000",
+   "cpp": "0.0077821404420319595",
+   "at": "123:1"
+  },
+  {
+   "lean": "(2.2989410046203511e-14 : Binary64)",
+   "bits": "3d19e23f0dda40e4",
+   "cpp": "2.2989410046203511E-14",
+   "at": "123:1"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "125:1"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "125:1"
+  },
+  {
+   "lean": "(0.9921875 : Binary64)",
+   "bits": "3fefc00000000000",
+   "cpp": "0.9921875",
+   "at": "127:1"
+  },
+  {
+   "lean": "(0.0078431774610407956 : Binary64)",
+   "bits": "3f80101575890000",
+   "cpp": "0.0078431774610407956",
+   "at": "127:1"
+  },
+  {
+   "lean": "(1.4902732911301337e-14 : Binary64)",
+   "bits": "3d10c76b999d2be8",
+   "cpp": "1.4902732911301337E-14",
+   "at": "127:1"
+  },
+  {
+   "lean": "(0.984375 : Binary64)",
+   "bits": "3fef800000000000",
+   "cpp": "0.984375",
+   "at": "128:1"
+  },
+  {
+   "lean": "(0.015748356968174448 : Binary64)",
+   "bits": "3f90205658938000",
+   "cpp": "0.015748356968174448",
+   "at": "128:1"
+  },
+  {
+   "lean": "(3.5279803896553249e-14 : Binary64)",
+   "bits": "3d23dc5b06e2f7d2",
+   "cpp": "3.5279803896553249E-14",
+   "at": "128:1"
+  },
+  {
+   "lean": "(0.9765625 : Binary64)",
+   "bits": "3fef400000000000",
+   "cpp": "0.9765625",
+   "at": "129:1"
+  },
+  {
+   "lean": "(0.023716526617363343 : Binary64)",
+   "bits": "3f98492528c90000",
+   "cpp": "0.023716526617363343",
+   "at": "129:1"
+  },
+  {
+   "lean": "(4.7300547720332489e-14 : Binary64)",
+   "bits": "3d2aa0ba325a0c34",
+   "cpp": "4.7300547720332489E-14",
+   "at": "129:1"
+  },
+  {
+   "lean": "(0.96875 : Binary64)",
+   "bits": "3fef000000000000",
+   "cpp": "0.96875",
+   "at": "130:1"
+  },
+  {
+   "lean": "(0.031748698314572721 : Binary64)",
+   "bits": "3fa0415d89e74000",
+   "cpp": "0.031748698314572721",
+   "at": "130:1"
+  },
+  {
+   "lean": "(7.5803103693751609e-15 : Binary64)",
+   "bits": "3d0111c05cf1d753",
+   "cpp": "7.5803103693751609E-15",
+   "at": "130:1"
+  },
+  {
+   "lean": "(0.9609375 : Binary64)",
+   "bits": "3feec00000000000",
+   "cpp": "0.9609375",
+   "at": "131:1"
+  },
+  {
+   "lean": "(0.039845908547249564 : Binary64)",
+   "bits": "3fa466aed42e0000",
+   "cpp": "0.039845908547249564",
+   "at": "131:1"
+  },
+  {
+   "lean": "(4.9893776716773285e-14 : Binary64)",
+   "bits": "3d2c167375bdfd28",
+   "cpp": "4.9893776716773285E-14",
+   "at": "131:1"
+  },
+  {
+   "lean": "(0.953125 : Binary64)",
+   "bits": "3fee800000000000",
+   "cpp": "0.953125",
+   "at": "132:1"
+  },
+  {
+   "lean": "(0.048009219186383234 : Binary64)",
+   "bits": "3fa894aa149fc000",
+   "cpp": "0.048009219186383234",
+   "at": "132:1"
+  },
+  {
+   "lean": "(2.2626293930306741e-14 : Binary64)",
+   "bits": "3d197995d05a267d",
+   "cpp": "2.2626293930306741E-14",
+   "at": "132:1"
+  },
+  {
+   "lean": "(0.9453125 : Binary64)",
+   "bits": "3fee400000000000",
+   "cpp": "0.9453125",
+   "at": "133:1"
+  },
+  {
+   "lean": "(0.056239718322899535 : Binary64)",
+   "bits": "3faccb73cdddc000",
+   "cpp": "0.056239718322899535",
+   "at": "133:1"
+  },
+  {
+   "lean": "(2.3456744910186991e-14 : Binary64)",
+   "bits": "3d1a68f247d82807",
+   "cpp": "2.3456744910186991E-14",
+   "at": "133:1"
+  },
+  {
+   "lean": "(0.94140625 : Binary64)",
+   "bits": "3fee200000000000",
+   "cpp": "0.94140625",
+   "at": "134:1"
+  },
+  {
+   "lean": "(0.060380510988920832 : Binary64)",
+   "bits": "3faeea31c006c000",
+   "cpp": "0.060380510988920832",
+   "at": "134:1"
+  },
+  {
+   "lean": "(1.3352588834854848e-14 : Binary64)",
+   "bits": "3d0e113e4fc93b7b",
+   "cpp": "1.3352588834854848E-14",
+   "at": "134:1"
+  },
+  {
+   "lean": "(0.93359375 : Binary64)",
+   "bits": "3fede00000000000",
+   "cpp": "0.93359375",
+   "at": "135:1"
+  },
+  {
+   "lean": "(0.068713892548089461 : Binary64)",
+   "bits": "3fb1973bd1466000",
+   "cpp": "0.068713892548089461",
+   "at": "135:1"
+  },
+  {
+   "lean": "(3.7652968203888748e-14 : Binary64)",
+   "bits": "3d25325d560d9e9b",
+   "cpp": "3.7652968203888748E-14",
+   "at": "135:1"
+  },
+  {
+   "lean": "(0.92578125 : Binary64)",
+   "bits": "3feda00000000000",
+   "cpp": "0.92578125",
+   "at": "136:1"
+  },
+  {
+   "lean": "(0.077117303344380161 : Binary64)",
+   "bits": "3fb3bdf5a7d1e000",
+   "cpp": "0.077117303344380161",
+   "at": "136:1"
+  },
+  {
+   "lean": "(5.1128335719851986e-14 : Binary64)",
+   "bits": "3d2cc85ea5db4ed7",
+   "cpp": "5.1128335719851986E-14",
+   "at": "136:1"
+  },
+  {
+   "lean": "(0.91796875 : Binary64)",
+   "bits": "3fed600000000000",
+   "cpp": "0.91796875",
+   "at": "137:1"
+  },
+  {
+   "lean": "(0.085591930335453981 : Binary64)",
+   "bits": "3fb5e95a4d97a000",
+   "cpp": "0.085591930335453981",
+   "at": "137:1"
+  },
+  {
+   "lean": "(5.0466744384701189e-14 : Binary64)",
+   "bits": "3d2c69063c5d1d1e",
+   "cpp": "5.0466744384701189E-14",
+   "at": "137:1"
+  },
+  {
+   "lean": "(0.9140625 : Binary64)",
+   "bits": "3fed400000000000",
+   "cpp": "0.9140625",
+   "at": "138:1"
+  },
+  {
+   "lean": "(0.089856329121857925 : Binary64)",
+   "bits": "3fb700d30aeac000",
+   "cpp": "0.089856329121857925",
+   "at": "138:1"
+  },
+  {
+   "lean": "(3.1218748807418837e-15 : Binary64)",
+   "bits": "3cec1e8da99ded32",
+   "cpp": "3.1218748807418837E-15",
+   "at": "138:1"
+  },
+  {
+   "lean": "(0.90625 : Binary64)",
+   "bits": "3fed000000000000",
+   "cpp": "0.90625",
+   "at": "139:1"
+  },
+  {
+   "lean": "(0.098440072813218648 : Binary64)",
+   "bits": "3fb9335e5d594000",
+   "cpp": "0.098440072813218648",
+   "at": "139:1"
+  },
+  {
+   "lean": "(3.3871241029241416e-14 : Binary64)",
+   "bits": "3d23115c3abd47da",
+   "cpp": "3.3871241029241416E-14",
+   "at": "139:1"
+  },
+  {
+   "lean": "(0.8984375 : Binary64)",
+   "bits": "3fecc00000000000",
+   "cpp": "0.8984375",
+   "at": "140:1"
+  },
+  {
+   "lean": "(0.10709813555638448 : Binary64)",
+   "bits": "3fbb6ac88dad6000",
+   "cpp": "0.10709813555638448",
+   "at": "140:1"
+  },
+  {
+   "lean": "(1.7376727386423858e-14 : Binary64)",
+   "bits": "3d1390802bf768e5",
+   "cpp": "1.7376727386423858E-14",
+   "at": "140:1"
+  },
+  {
+   "lean": "(0.89453125 : Binary64)",
+   "bits": "3feca00000000000",
+   "cpp": "0.89453125",
+   "at": "141:1"
+  },
+  {
+   "lean": "(0.11145544092528326 : Binary64)",
+   "bits": "3fbc885801bc4000",
+   "cpp": "0.11145544092528326",
+   "at": "141:1"
+  },
+  {
+   "lean": "(3.9571258997998038e-14 : Binary64)",
+   "bits": "3d2646d1c65aacd3",
+   "cpp": "3.9571258997998038E-14",
+   "at": "141:1"
+  },
+  {
+   "lean": "(0.88671875 : Binary64)",
+   "bits": "3fec600000000000",
+   "cpp": "0.88671875",
+   "at": "142:1"
+  },
+  {
+   "lean": "(0.12022742699821265 : Binary64)",
+   "bits": "3fbec739830a2000",
+   "cpp": "0.12022742699821265",
+   "at": "142:1"
+  },
+  {
+   "lean": "(5.2849453521890294e-14 : Binary64)",
+   "bits": "3d2dc068afe645e0",
+   "cpp": "5.2849453521890294E-14",
+   "at": "142:1"
+  },
+  {
+   "lean": "(0.8828125 : Binary64)",
+   "bits": "3fec400000000000",
+   "cpp": "0.8828125",
+   "at": "143:1"
+  },
+  {
+   "lean": "(0.12464244520731427 : Binary64)",
+   "bits": "3fbfe89139dbe000",
+   "cpp": "0.12464244520731427",
+   "at": "143:1"
+  },
+  {
+   "lean": "(3.7670125023087379e-14 : Binary64)",
+   "bits": "3d2534d64fa10afd",
+   "cpp": "3.7670125023087379E-14",
+   "at": "143:1"
+  },
+  {
+   "lean": "(0.875 : Binary64)",
+   "bits": "3fec000000000000",
+   "cpp": "0.875",
+   "at": "144:1"
+  },
+  {
+   "lean": "(0.13353139262449076 : Binary64)",
+   "bits": "3fc1178e8227e000",
+   "cpp": "0.13353139262449076",
+   "at": "144:1"
+  },
+  {
+   "lean": "(3.1859736349078334e-14 : Binary64)",
+   "bits": "3d21ef78ce2d07f2",
+   "cpp": "3.1859736349078334E-14",
+   "at": "144:1"
+  },
+  {
+   "lean": "(0.87109375 : Binary64)",
+   "bits": "3febe00000000000",
+   "cpp": "0.87109375",
+   "at": "145:1"
+  },
+  {
+   "lean": "(0.13800567301939282 : Binary64)",
+   "bits": "3fc1aa2b7e23f000",
+   "cpp": "0.13800567301939282",
+   "at": "145:1"
+  },
+  {
+   "lean": "(5.0900642926060466e-14 : Binary64)",
+   "bits": "3d2ca78e44389934",
+   "cpp": "5.0900642926060466E-14",
+   "at": "145:1"
+  },
+  {
+   "lean": "(0.86328125 : Binary64)",
+   "bits": "3feba00000000000",
+   "cpp": "0.86328125",
+   "at": "146:1"
+  },
+  {
+   "lean": "(0.14701474296180095 : Binary64)",
+   "bits": "3fc2d1610c868000",
+   "cpp": "0.14701474296180095",
+   "at": "146:1"
+  },
+  {
+   "lean": "(8.710783796122478e-15 : Binary64)",
+   "bits": "3d039d6ccb81b4a1",
+   "cpp": "8.710783796122478E-15",
+   "at": "146:1"
+  },
+  {
+   "lean": "(0.859375 : Binary64)",
+   "bits": "3feb800000000000",
+   "cpp": "0.859375",
+   "at": "147:1"
+  },
+  {
+   "lean": "(0.15154989812720032 : Binary64)",
+   "bits": "3fc365fcb0159000",
+   "cpp": "0.15154989812720032",
+   "at": "147:1"
+  },
+  {
+   "lean": "(6.1578962291229762e-16 : Binary64)",
+   "bits": "3cc62fa8234b7289",
+   "cpp": "6.1578962291229762E-16",
+   "at": "147:1"
+  },
+  {
+   "lean": "(0.8515625 : Binary64)",
+   "bits": "3feb400000000000",
+   "cpp": "0.8515625",
+   "at": "148:1"
+  },
+  {
+   "lean": "(0.16068238169043525 : Binary64)",
+   "bits": "3fc4913d8333b000",
+   "cpp": "0.16068238169043525",
+   "at": "148:1"
+  },
+  {
+   "lean": "(3.8215777439167963e-14 : Binary64)",
+   "bits": "3d25837954fdb678",
+   "cpp": "3.8215777439167963E-14",
+   "at": "148:1"
+  },
+  {
+   "lean": "(0.84765625 : Binary64)",
+   "bits": "3feb200000000000",
+   "cpp": "0.84765625",
+   "at": "149:1"
+  },
+  {
+   "lean": "(0.16528009093906348 : Binary64)",
+   "bits": "3fc527e5e4a1b000",
+   "cpp": "0.16528009093906348",
+   "at": "149:1"
+  },
+  {
+   "lean": "(3.9440046718453496e-14 : Binary64)",
+   "bits": "3d2633e8e5697dc7",
+   "cpp": "3.9440046718453496E-14",
+   "at": "149:1"
+  },
+  {
+   "lean": "(0.83984375 : Binary64)",
+   "bits": "3feae00000000000",
+   "cpp": "0.83984375",
+   "at": "150:1"
+  },
+  {
+   "lean": "(0.17453941635187675 : Binary64)",
+   "bits": "3fc6574ebe8c1000",
+   "cpp": "0.17453941635187675",
+   "at": "150:1"
+  },
+  {
+   "lean": "(2.2924522154618074e-14 : Binary64)",
+   "bits": "3d19cf8b2c3c2e78",
+   "cpp": "2.2924522154618074E-14",
+   "at": "150:1"
+  },
+  {
+   "lean": "(0.8359375 : Binary64)",
+   "bits": "3feac00000000000",
+   "cpp": "0.8359375",
+   "at": "151:1"
+  },
+  {
+   "lean": "(0.17920142945774842 : Binary64)",
+   "bits": "3fc6f0128b757000",
+   "cpp": "0.17920142945774842",
+   "at": "151:1"
+  },
+  {
+   "lean": "(3.7425300947322631e-14 : Binary64)",
+   "bits": "3d25118de59c21e1",
+   "cpp": "3.7425300947322631E-14",
+   "at": "151:1"
+  },
+  {
+   "lean": "(0.83203125 : Binary64)",
+   "bits": "3feaa00000000000",
+   "cpp": "0.83203125",
+   "at": "152:1"
+  },
+  {
+   "lean": "(0.18388527877016259 : Binary64)",
+   "bits": "3fc7898d85445000",
+   "cpp": "0.18388527877016259",
+   "at": "152:1"
+  },
+  {
+   "lean": "(2.5223102140407338e-14 : Binary64)",
+   "bits": "3d1c661070914305",
+   "cpp": "2.5223102140407338E-14",
+   "at": "152:1"
+  },
+  {
+   "lean": "(0.82421875 : Binary64)",
+   "bits": "3fea600000000000",
+   "cpp": "0.82421875",
+   "at": "153:1"
+  },
+  {
+   "lean": "(0.1933193110035063 : Binary64)",
+   "bits": "3fc8beafeb390000",
+   "cpp": "0.1933193110035063",
+   "at": "153:1"
+  },
+  {
+   "lean": "(1.0320443688698849e-14 : Binary64)",
+   "bits": "3d073d54aae92cd1",
+   "cpp": "1.0320443688698849E-14",
+   "at": "153:1"
+  },
+  {
+   "lean": "(0.8203125 : Binary64)",
+   "bits": "3fea400000000000",
+   "cpp": "0.8203125",
+   "at": "154:1"
+  },
+  {
+   "lean": "(0.19806991376208316 : Binary64)",
+   "bits": "3fc95a5adcf70000",
+   "cpp": "0.19806991376208316",
+   "at": "154:1"
+  },
+  {
+   "lean": "(1.0634128304268335e-14 : Binary64)",
+   "bits": "3d07f22858a0ff6f",
+   "cpp": "1.0634128304268335E-14",
+   "at": "154:1"
+  },
+  {
+   "lean": "(0.8125 : Binary64)",
+   "bits": "3fea000000000000",
+   "cpp": "0.8125",
+   "at": "155:1"
+  },
+  {
+   "lean": "(0.20763936477828793 : Binary64)",
+   "bits": "3fca93ed3c8ae000",
+   "cpp": "0.20763936477828793",
+   "at": "155:1"
+  },
+  {
+   "lean": "(4.3425422595242564e-14 : Binary64)",
+   "bits": "3d28724350562169",
+   "cpp": "4.3425422595242564E-14",
+   "at": "155:1"
+  },
+  {
+   "lean": "(0.80859375 : Binary64)",
+   "bits": "3fe9e00000000000",
+   "cpp": "0.80859375",
+   "at": "156:1"
+  },
+  {
+   "lean": "(0.21245865121420593 : Binary64)",
+   "bits": "3fcb31d8575bd000",
+   "cpp": "0.21245865121420593",
+   "at": "156:1"
+  },
+  {
+   "lean": "(1.2527395755711364e-14 : Binary64)",
+   "bits": "3d0c358d4eace1aa",
+   "cpp": "1.2527395755711364E-14",
+   "at": "156:1"
+  },
+  {
+   "lean": "(0.8046875 : Binary64)",
+   "bits": "3fe9c00000000000",
+   "cpp": "0.8046875",
+   "at": "157:1"
+  },
+  {
+   "lean": "(0.21730127569003344 : Binary64)",
+   "bits": "3fcbd087383be000",
+   "cpp": "0.21730127569003344",
+   "at": "157:1"
+  },
+  {
+   "lean": "(5.2040087434058838e-14 : Binary64)",
+   "bits": "3d2d4bc4595412b6",
+   "cpp": "5.2040087434058838E-14",
+   "at": "157:1"
+  },
+  {
+   "lean": "(0.80078125 : Binary64)",
+   "bits": "3fe9a00000000000",
+   "cpp": "0.80078125",
+   "at": "158:1"
+  },
+  {
+   "lean": "(0.22216746534115828 : Binary64)",
+   "bits": "3fcc6ffbc6f01000",
+   "cpp": "0.22216746534115828",
+   "at": "158:1"
+  },
+  {
+   "lean": "(3.9798445159517019e-15 : Binary64)",
+   "bits": "3cf1ec72c5962bd2",
+   "cpp": "3.9798445159517019E-15",
+   "at": "158:1"
+  },
+  {
+   "lean": "(0.79296875 : Binary64)",
+   "bits": "3fe9600000000000",
+   "cpp": "0.79296875",
+   "at": "159:1"
+  },
+  {
+   "lean": "(0.2319714654378231 : Binary64)",
+   "bits": "3fcdb13db0d49000",
+   "cpp": "0.2319714654378231",
+   "at": "159:1"
+  },
+  {
+   "lean": "(4.7955860343296286e-14 : Binary64)",
+   "bits": "3d2aff2af715b035",
+   "cpp": "4.7955860343296286E-14",
+   "at": "159:1"
+  },
+  {
+   "lean": "(0.7890625 : Binary64)",
+   "bits": "3fe9400000000000",
+   "cpp": "0.7890625",
+   "at": "160:1"
+  },
+  {
+   "lean": "(0.23690974707835721 : Binary64)",
+   "bits": "3fce530effe71000",
+   "cpp": "0.23690974707835721",
+   "at": "160:1"
+  },
+  {
+   "lean": "(5.0156860137916023e-16 : Binary64)",
+   "bits": "3cc212276041f430",
+   "cpp": "5.0156860137916023E-16",
+   "at": "160:1"
+  },
+  {
+   "lean": "(0.78515625 : Binary64)",
+   "bits": "3fe9200000000000",
+   "cpp": "0.78515625",
+   "at": "161:1"
+  },
+  {
+   "lean": "(0.24187253642048745 : Binary64)",
+   "bits": "3fcef5ade4dd0000",
+   "cpp": "0.24187253642048745",
+   "at": "161:1"
+  },
+  {
+   "lean": "(7.2523189532402926e-16 : Binary64)",
+   "bits": "3cca211565bb8e11",
+   "cpp": "7.2523189532402926E-16",
+   "at": "161:1"
+  },
+  {
+   "lean": "(0.78125 : Binary64)",
+   "bits": "3fe9000000000000",
+   "cpp": "0.78125",
+   "at": "162:1"
+  },
+  {
+   "lean": "(0.24686007793150111 : Binary64)",
+   "bits": "3fcf991c6cb3b000",
+   "cpp": "0.24686007793150111",
+   "at": "162:1"
+  },
+  {
+   "lean": "(2.4688324156011588e-14 : Binary64)",
+   "bits": "3d1bcbecca0cdf30",
+   "cpp": "2.4688324156011588E-14",
+   "at": "162:1"
+  },
+  {
+   "lean": "(0.7734375 : Binary64)",
+   "bits": "3fe8c00000000000",
+   "cpp": "0.7734375",
+   "at": "163:1"
+  },
+  {
+   "lean": "(0.25691041378502177 : Binary64)",
+   "bits": "3fd07138604d5800",
+   "cpp": "0.25691041378502177",
+   "at": "163:1"
+  },
+  {
+   "lean": "(5.4651212536247919e-15 : Binary64)",
+   "bits": "3cf89cdb16ed4e91",
+   "cpp": "5.4651212536247919E-15",
+   "at": "163:1"
+  },
+  {
+   "lean": "(0.76953125 : Binary64)",
+   "bits": "3fe8a00000000000",
+   "cpp": "0.76953125",
+   "at": "164:1"
+  },
+  {
+   "lean": "(0.26197371574153294 : Binary64)",
+   "bits": "3fd0c42d67616000",
+   "cpp": "0.26197371574153294",
+   "at": "164:1"
+  },
+  {
+   "lean": "(4.1026510716984462e-14 : Binary64)",
+   "bits": "3d27188b163ceae9",
+   "cpp": "4.1026510716984462E-14",
+   "at": "164:1"
+  },
+  {
+   "lean": "(0.765625 : Binary64)",
+   "bits": "3fe8800000000000",
+   "cpp": "0.765625",
+   "at": "165:1"
+  },
+  {
+   "lean": "(0.26706278524909521 : Binary64)",
+   "bits": "3fd1178e8227e800",
+   "cpp": "0.26706278524909521",
+   "at": "165:1"
+  },
+  {
+   "lean": "(4.9967365023459362e-14 : Binary64)",
+   "bits": "3d2c210e63a5f01c",
+   "cpp": "4.9967365023459362E-14",
+   "at": "165:1"
+  },
+  {
+   "lean": "(0.76171875 : Binary64)",
+   "bits": "3fe8600000000000",
+   "cpp": "0.76171875",
+   "at": "166:1"
+  },
+  {
+   "lean": "(0.27217788591576664 : Binary64)",
+   "bits": "3fd16b5ccbacf800",
+   "cpp": "0.27217788591576664",
+   "at": "166:1"
+  },
+  {
+   "lean": "(4.9035807081563468e-14 : Binary64)",
+   "bits": "3d2b9acdf7a51681",
+   "cpp": "4.9035807081563468E-14",
+   "at": "166:1"
+  },
+  {
+   "lean": "(0.7578125 : Binary64)",
+   "bits": "3fe8400000000000",
+   "cpp": "0.7578125",
+   "at": "167:1"
+  },
+  {
+   "lean": "(0.27731928541618345 : Binary64)",
+   "bits": "3fd1bf99635a6800",
+   "cpp": "0.27731928541618345",
+   "at": "167:1"
+  },
+  {
+   "lean": "(5.0896280395007593e-14 : Binary64)",
+   "bits": "3d2ca6ed5147bdb7",
+   "cpp": "5.0896280395007593E-14",
+   "at": "167:1"
+  },
+  {
+   "lean": "(0.75390625 : Binary64)",
+   "bits": "3fe8200000000000",
+   "cpp": "0.75390625",
+   "at": "168:1"
+  },
+  {
+   "lean": "(0.28248725557466514 : Binary64)",
+   "bits": "3fd214456d0eb800",
+   "cpp": "0.28248725557466514",
+   "at": "168:1"
+  },
+  {
+   "lean": "(1.1782016386565151e-14 : Binary64)",
+   "bits": "3d0a87deba46baea",
+   "cpp": "1.1782016386565151E-14",
+   "at": "168:1"
+  },
+  {
+   "lean": "(0.74609375 : Binary64)",
+   "bits": "3fe7e00000000000",
+   "cpp": "0.74609375",
+   "at": "169:1"
+  },
+  {
+   "lean": "(0.29290401643288533 : Binary64)",
+   "bits": "3fd2bef07cdc9000",
+   "cpp": "0.29290401643288533",
+   "at": "169:1"
+  },
+  {
+   "lean": "(4.7274529405144063e-14 : Binary64)",
+   "bits": "3d2a9cfa4a5004f4",
+   "cpp": "4.7274529405144063E-14",
+   "at": "169:1"
+  },
+  {
+   "lean": "(0.7421875 : Binary64)",
+   "bits": "3fe7c00000000000",
+   "cpp": "0.7421875",
+   "at": "170:1"
+  },
+  {
+   "lean": "(0.29815337231912054 : Binary64)",
+   "bits": "3fd314f1e1d36000",
+   "cpp": "0.29815337231912054",
+   "at": "170:1"
+  },
+  {
+   "lean": "(4.4204083338755686e-14 : Binary64)",
+   "bits": "3d28e27ad3213cb8",
+   "cpp": "4.4204083338755686E-14",
+   "at": "170:1"
+  },
+  {
+   "lean": "(0.73828125 : Binary64)",
+   "bits": "3fe7a00000000000",
+   "cpp": "0.73828125",
+   "at": "171:1"
+  },
+  {
+   "lean": "(0.30343042941990461 : Binary64)",
+   "bits": "3fd36b6776be1000",
+   "cpp": "0.30343042941990461",
+   "at": "171:1"
+  },
+  {
+   "lean": "(1.5483459934980831e-14 : Binary64)",
+   "bits": "3d116ecdb0f177c8",
+   "cpp": "1.5483459934980831E-14",
+   "at": "171:1"
+  },
+  {
+   "lean": "(0.734375 : Binary64)",
+   "bits": "3fe7800000000000",
+   "cpp": "0.734375",
+   "at": "172:1"
+  },
+  {
+   "lean": "(0.30873548164959175 : Binary64)",
+   "bits": "3fd3c25277333000",
+   "cpp": "0.30873548164959175",
+   "at": "172:1"
+  },
+  {
+   "lean": "(2.1522127491642888e-14 : Binary64)",
+   "bits": "3d183b54b606bd5c",
+   "cpp": "2.1522127491642888E-14",
+   "at": "172:1"
+  },
+  {
+   "lean": "(0.73046875 : Binary64)",
+   "bits": "3fe7600000000000",
+   "cpp": "0.73046875",
+   "at": "173:1"
+  },
+  {
+   "lean": "(0.3140688276249648 : Binary64)",
+   "bits": "3fd419b423d5e800",
+   "cpp": "0.3140688276249648",
+   "at": "173:1"
+  },
+  {
+   "lean": "(1.1054030169005386e-14 : Binary64)",
+   "bits": "3d08e436ec90e09d",
+   "cpp": "1.1054030169005386E-14",
+   "at": "173:1"
+  },
+  {
+   "lean": "(0.7265625 : Binary64)",
+   "bits": "3fe7400000000000",
+   "cpp": "0.7265625",
+   "at": "174:1"
+  },
+  {
+   "lean": "(0.31943077076641657 : Binary64)",
+   "bits": "3fd4718dc271c800",
+   "cpp": "0.31943077076641657",
+   "at": "174:1"
+  },
+  {
+   "lean": "(5.5343263520706788e-14 : Binary64)",
+   "bits": "3d2f27ce0967d675",
+   "cpp": "5.5343263520706788E-14",
+   "at": "174:1"
+  },
+  {
+   "lean": "(0.72265625 : Binary64)",
+   "bits": "3fe7200000000000",
+   "cpp": "0.72265625",
+   "at": "175:1"
+  },
+  {
+   "lean": "(0.32482161940129117 : Binary64)",
+   "bits": "3fd4c9e09e173000",
+   "cpp": "0.32482161940129117",
+   "at": "175:1"
+  },
+  {
+   "lean": "(5.351646604259541e-14 : Binary64)",
+   "bits": "3d2e20891b0ad8a4",
+   "cpp": "5.351646604259541E-14",
+   "at": "175:1"
+  },
+  {
+   "lean": "(0.71875 : Binary64)",
+   "bits": "3fe7000000000000",
+   "cpp": "0.71875",
+   "at": "176:1"
+  },
+  {
+   "lean": "(0.33024168687052224 : Binary64)",
+   "bits": "3fd522ae0738a000",
+   "cpp": "0.33024168687052224",
+   "at": "176:1"
+  },
+  {
+   "lean": "(5.4612144489920215e-14 : Binary64)",
+   "bits": "3d2ebe708164c759",
+   "cpp": "5.4612144489920215E-14",
+   "at": "176:1"
+  },
+  {
+   "lean": "(0.71484375 : Binary64)",
+   "bits": "3fe6e00000000000",
+   "cpp": "0.71484375",
+   "at": "177:1"
+  },
+  {
+   "lean": "(0.3356912916381134 : Binary64)",
+   "bits": "3fd57bf753c8d000",
+   "cpp": "0.3356912916381134",
+   "at": "177:1"
+  },
+  {
+   "lean": "(2.8136969901227338e-14 : Binary64)",
+   "bits": "3d1fadedee5d40ef",
+   "cpp": "2.8136969901227338E-14",
+   "at": "177:1"
+  },
+  {
+   "lean": "(0.7109375 : Binary64)",
+   "bits": "3fe6c00000000000",
+   "cpp": "0.7109375",
+   "at": "178:1"
+  },
+  {
+   "lean": "(0.34117075740277869 : Binary64)",
+   "bits": "3fd5d5bddf596000",
+   "cpp": "0.34117075740277869",
+   "at": "178:1"
+  },
+  {
+   "lean": "(1.156568624616423e-14 : Binary64)",
+   "bits": "3d0a0b2a08a465dc",
+   "cpp": "1.156568624616423E-14",
+   "at": "178:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff71547652b82fe",
+   "bits": "3ff71547652b82fe",
+   "cpp": "0x1.71547652b82fep0",
+   "at": "14:12"
+  },
+  {
+   "lean": "Binary64.ofBits 0x4338000000000000",
+   "bits": "4338000000000000",
+   "cpp": "0x1.8p52",
+   "at": "22:10"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f762e42fefa0000",
+   "bits": "3f762e42fefa0000",
+   "cpp": "0x1.62e42fefa0000p-8",
+   "at": "16:15"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3d0cf79abc9e3b3a",
+   "bits": "3d0cf79abc9e3b3a",
+   "cpp": "0x1.cf79abc9e3b3ap-47",
+   "at": "17:15"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdffffffffffdbd",
+   "bits": "3fdffffffffffdbd",
+   "cpp": "0x1.ffffffffffdbdp-2",
+   "at": "31:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc555555555543c",
+   "bits": "3fc555555555543c",
+   "cpp": "0x1.555555555543cp-3",
+   "at": "32:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fa55555cf172b91",
+   "bits": "3fa55555cf172b91",
+   "cpp": "0x1.55555cf172b91p-5",
+   "at": "33:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f81111167a4d017",
+   "bits": "3f81111167a4d017",
+   "cpp": "0x1.1111167a4d017p-7",
+   "at": "34:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe62e42fefa39ef",
+   "bits": "3fe62e42fefa39ef",
+   "cpp": "0x1.62e42fefa39efp-1",
+   "at": "43:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcebfbdff82c424",
+   "bits": "3fcebfbdff82c424",
+   "cpp": "0x1.ebfbdff82c424p-3",
+   "at": "44:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fac6b08d70cf4b5",
+   "bits": "3fac6b08d70cf4b5",
+   "cpp": "0x1.c6b08d70cf4b5p-5",
+   "at": "45:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f83b2abd24650cc",
+   "bits": "3f83b2abd24650cc",
+   "cpp": "0x1.3b2abd24650ccp-7",
+   "at": "46:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f55d7e09b4e3a84",
+   "bits": "3f55d7e09b4e3a84",
+   "cpp": "0x1.5d7e09b4e3a84p-10",
+   "at": "47:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x7f00000000000000",
+   "bits": "7f00000000000000",
+   "cpp": "0x1p1009",
+   "at": "132:7"
+  },
+  {
+   "lean": "Binary64.ofBits 0x0010000000000000",
+   "bits": "0010000000000000",
+   "cpp": "0x1p-1022",
+   "at": "158:6"
+  },
+  {
+   "lean": "(5.5511151231257827e-17 : Binary64)",
+   "bits": "3c90000000000000",
+   "cpp": "5.5511151231257827E-17",
+   "at": "174:6"
+  },
+  {
+   "lean": "(512.0 : Binary64)",
+   "bits": "4080000000000000",
+   "cpp": "512",
+   "at": "174:6"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3c90000000000000",
+   "bits": "3c90000000000000",
+   "cpp": "0x1p-54",
+   "at": "176:22"
+  },
+  {
+   "lean": "(1024.0 : Binary64)",
+   "bits": "4090000000000000",
+   "cpp": "1024.0",
+   "at": "182:23"
+  },
+  {
+   "lean": "Binary64.ofBits 0x1000000000000000",
+   "bits": "1000000000000000",
+   "cpp": "0x1p-767",
+   "at": "5:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x7000000000000000",
+   "bits": "7000000000000000",
+   "cpp": "0x1p769",
+   "at": "5:28"
+  },
+  {
+   "lean": "Binary32.ofBits 0x7f800000",
+   "bits": "7f800000",
+   "cpp": "__builtin_inff",
+   "at": "252:26"
+  },
+  {
+   "lean": "Int32.toBinary64 (1 : Int32)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "291:33"
+  },
+  {
+   "lean": "(4503599627370496.0 : Binary64)",
+   "bits": "4330000000000000",
+   "cpp": "4503599627370496",
+   "at": "322:9"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

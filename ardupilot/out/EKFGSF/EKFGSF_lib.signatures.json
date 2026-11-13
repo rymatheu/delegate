@@ -1,0 +1,4834 @@
+{
+ "namespace": "EKFGSF_lib",
+ "source": "ardupilot/unity_ekfgsf.cpp",
+ "functions": [
+  {
+   "name": "safe_asin",
+   "lean": "EKFGSF_lib.safe_asin_double",
+   "params": [
+    [
+     "v",
+     "double"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ekfgsf.cpp:50-63"
+  },
+  {
+   "name": "wrap_2PI",
+   "lean": "EKFGSF_lib.wrap_2PI_double",
+   "params": [
+    [
+     "radian",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:260-267"
+  },
+  {
+   "name": "wrap_PI",
+   "lean": "EKFGSF_lib.wrap_PI_double",
+   "params": [
+    [
+     "radian",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:270-277"
+  },
+  {
+   "name": "constrain_value_line",
+   "lean": "EKFGSF_lib.constrain_value_line_double",
+   "params": [
+    [
+     "amt",
+     "double"
+    ],
+    [
+     "low",
+     "double"
+    ],
+    [
+     "high",
+     "double"
+    ],
+    [
+     "line",
+     "uint32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:283-304"
+  },
+  {
+   "name": "is_positive",
+   "lean": "EKFGSF_lib.is_positive_double",
+   "params": [
+    [
+     "fVal1",
+     "double"
+    ]
+   ],
+   "ret": "bool",
+   "source": "ardupilot/unity_ekfgsf.cpp:85-87"
+  },
+  {
+   "name": "radians",
+   "lean": "EKFGSF_lib.radians_float",
+   "params": [
+    [
+     "deg",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ekfgsf.cpp:232-235"
+  },
+  {
+   "name": "sq",
+   "lean": "EKFGSF_lib.sq_double",
+   "params": [
+    [
+     "val",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:261-265"
+  },
+  {
+   "name": "sq",
+   "lean": "EKFGSF_lib.sq_float",
+   "params": [
+    [
+     "val",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ekfgsf.cpp:266-269"
+  },
+  {
+   "name": "sq",
+   "lean": "EKFGSF_lib.sq_double3",
+   "params": [
+    [
+     "first",
+     "double"
+    ],
+    [
+     "parameters",
+     "double"
+    ],
+    [
+     "parameters",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:276-279"
+  },
+  {
+   "name": "sq",
+   "lean": "EKFGSF_lib.sq_double2",
+   "params": [
+    [
+     "first",
+     "double"
+    ],
+    [
+     "parameters",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:276-279"
+  },
+  {
+   "name": "norm",
+   "lean": "EKFGSF_lib.norm_double3",
+   "params": [
+    [
+     "first",
+     "double"
+    ],
+    [
+     "second",
+     "double"
+    ],
+    [
+     "parameters",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:286-289"
+  },
+  {
+   "name": "MAX",
+   "lean": "EKFGSF_lib.MAX_double_float",
+   "params": [
+    [
+     "one",
+     "double"
+    ],
+    [
+     "two",
+     "float"
+    ]
+   ],
+   "ret": "double",
+   "source": "ardupilot/unity_ekfgsf.cpp:307-310"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "Matrix3<double>",
+   "lean": "EKFGSF_lib.Matrix3_double",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Matrix3",
+     "lean": "EKFGSF_lib.Matrix3_double.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*",
+     "lean": "EKFGSF_lib.Matrix3_double.op_mul_Vector3p",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "to_euler",
+     "lean": "EKFGSF_lib.Matrix3_double.to_euler",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "double",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "double",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "yaw",
+       "type": "double",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "from_euler",
+     "lean": "EKFGSF_lib.Matrix3_double.from_euler",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "yaw",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "to_euler312",
+     "lean": "EKFGSF_lib.Matrix3_double.to_euler312",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "from_euler312",
+     "lean": "EKFGSF_lib.Matrix3_double.from_euler312",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "yaw",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "a.x",
+     "cxx": "a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.y",
+     "cxx": "a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.z",
+     "cxx": "a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.x",
+     "cxx": "b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.y",
+     "cxx": "b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.z",
+     "cxx": "b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.x",
+     "cxx": "c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.y",
+     "cxx": "c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.z",
+     "cxx": "c.z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector2<double>",
+   "lean": "EKFGSF_lib.Vector2p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector2",
+     "lean": "EKFGSF_lib.Vector2p.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<float>",
+   "lean": "EKFGSF_lib.Vector3f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "todouble",
+     "lean": "EKFGSF_lib.Vector3f.todouble",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<double>",
+   "lean": "EKFGSF_lib.Vector3p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector3",
+     "lean": "EKFGSF_lib.Vector3p.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Vector3",
+     "lean": "EKFGSF_lib.Vector3p.init_double3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator/",
+     "lean": "EKFGSF_lib.Vector3p.op_div",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator*",
+     "lean": "EKFGSF_lib.Vector3p.op_mul_double",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator+",
+     "lean": "EKFGSF_lib.Vector3p.op_add",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator*",
+     "lean": "EKFGSF_lib.Vector3p.op_mul_Vector3p",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "length_squared",
+     "lean": "EKFGSF_lib.Vector3p.length_squared",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator-",
+     "lean": "EKFGSF_lib.Vector3p.op_sub_void",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator/=",
+     "lean": "EKFGSF_lib.Vector3p.op_div_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "length",
+     "lean": "EKFGSF_lib.Vector3p.length",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "normalize",
+     "lean": "EKFGSF_lib.Vector3p.normalize",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator-",
+     "lean": "EKFGSF_lib.Vector3p.op_sub_Vector3p",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator%",
+     "lean": "EKFGSF_lib.Vector3p.op_mod",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator-=",
+     "lean": "EKFGSF_lib.Vector3p.op_sub_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "is_nan",
+     "lean": "EKFGSF_lib.Vector3p.is_nan",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "zero",
+     "lean": "EKFGSF_lib.Vector3p.zero",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*=",
+     "lean": "EKFGSF_lib.Vector3p.op_mul_assign_double",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector3<double>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKFGSF_yaw",
+   "lean": "EKFGSF_lib.EKFGSF_yaw",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "EKFGSF_yaw",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "alignTilt",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.alignTilt",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "updateRotMat",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.updateRotMat",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "R",
+       "type": "Matrix3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Matrix3_double.State",
+       "leaves": [
+        {
+         "lean": "a.x",
+         "cxx": "a.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "a.y",
+         "cxx": "a.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "a.z",
+         "cxx": "a.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "b.x",
+         "cxx": "b.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "b.y",
+         "cxx": "b.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "b.z",
+         "cxx": "b.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "c.x",
+         "cxx": "c.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "c.y",
+         "cxx": "c.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "c.z",
+         "cxx": "c.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "g",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Matrix3<double>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "a.x",
+       "cxx": "a.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "a.y",
+       "cxx": "a.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "a.z",
+       "cxx": "a.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "b.x",
+       "cxx": "b.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "b.y",
+       "cxx": "b.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "b.z",
+       "cxx": "b.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "c.x",
+       "cxx": "c.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "c.y",
+       "cxx": "c.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "c.z",
+       "cxx": "c.z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "predictAHRS",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.predictAHRS",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "mdl_idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "forceSymmetry",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.forceSymmetry",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "mdl_idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "predict",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.predict",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "mdl_idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.update",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "delAng",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "delVel",
+       "type": "Vector3<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "delAngDT",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "delVelDT",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "runEKF",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "TAS",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "resetEKFGSF",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.resetEKFGSF",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "alignYaw",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.alignYaw",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "correct",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.correct",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "mdl_idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "vel",
+       "type": "Vector2<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector2p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "velObsVar",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "gaussianDensity",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.gaussianDensity",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "mdl_idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "fuseVelData",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.fuseVelData",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "vel",
+       "type": "Vector2<double>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector2p.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "velAcc",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setGyroBias",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.setGyroBias",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "gyroBias",
+       "type": "Vector3<float>",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFGSF_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getYawData",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.getYawData",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "yaw",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "yawVariance",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "_n_clips",
+       "type": "uint8_t",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "getVelInnovLength",
+     "lean": "EKFGSF_lib.EKFGSF_yaw.getVelInnovLength",
+     "top": false,
+     "kind": "method",
+     "owner": "EKFGSF_yaw",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "velInnovLength",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "EKFGSF_gyroNoise",
+     "cxx": "EKFGSF_gyroNoise",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKFGSF_accelNoise",
+     "cxx": "EKFGSF_accelNoise",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKFGSF_tiltGain",
+     "cxx": "EKFGSF_tiltGain",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKFGSF_gyroBiasGain",
+     "cxx": "EKFGSF_gyroBiasGain",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKFGSF_accelFiltRatio",
+     "cxx": "EKFGSF_accelFiltRatio",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_angle.x",
+     "cxx": "delta_angle.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_angle.y",
+     "cxx": "delta_angle.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_angle.z",
+     "cxx": "delta_angle.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_velocity.x",
+     "cxx": "delta_velocity.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_velocity.y",
+     "cxx": "delta_velocity.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "delta_velocity.z",
+     "cxx": "delta_velocity.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "angle_dt",
+     "cxx": "angle_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "velocity_dt",
+     "cxx": "velocity_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.a.x",
+     "cxx": "AHRS[0].R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.a.y",
+     "cxx": "AHRS[0].R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.a.z",
+     "cxx": "AHRS[0].R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.b.x",
+     "cxx": "AHRS[0].R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.b.y",
+     "cxx": "AHRS[0].R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.b.z",
+     "cxx": "AHRS[0].R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.c.x",
+     "cxx": "AHRS[0].R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.c.y",
+     "cxx": "AHRS[0].R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.R.c.z",
+     "cxx": "AHRS[0].R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.gyro_bias.x",
+     "cxx": "AHRS[0].gyro_bias.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.gyro_bias.y",
+     "cxx": "AHRS[0].gyro_bias.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.gyro_bias.z",
+     "cxx": "AHRS[0].gyro_bias.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.aligned",
+     "cxx": "AHRS[0].aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.accel_FR[0]!",
+     "cxx": "AHRS[0].accel_FR[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.accel_FR[1]!",
+     "cxx": "AHRS[0].accel_FR[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.vel_NE[0]!",
+     "cxx": "AHRS[0].vel_NE[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.vel_NE[1]!",
+     "cxx": "AHRS[0].vel_NE[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.fuse_gps",
+     "cxx": "AHRS[0].fuse_gps",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[0]!.accel_dt",
+     "cxx": "AHRS[0].accel_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.a.x",
+     "cxx": "AHRS[1].R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.a.y",
+     "cxx": "AHRS[1].R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.a.z",
+     "cxx": "AHRS[1].R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.b.x",
+     "cxx": "AHRS[1].R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.b.y",
+     "cxx": "AHRS[1].R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.b.z",
+     "cxx": "AHRS[1].R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.c.x",
+     "cxx": "AHRS[1].R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.c.y",
+     "cxx": "AHRS[1].R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.R.c.z",
+     "cxx": "AHRS[1].R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.gyro_bias.x",
+     "cxx": "AHRS[1].gyro_bias.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.gyro_bias.y",
+     "cxx": "AHRS[1].gyro_bias.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.gyro_bias.z",
+     "cxx": "AHRS[1].gyro_bias.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.aligned",
+     "cxx": "AHRS[1].aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.accel_FR[0]!",
+     "cxx": "AHRS[1].accel_FR[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.accel_FR[1]!",
+     "cxx": "AHRS[1].accel_FR[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.vel_NE[0]!",
+     "cxx": "AHRS[1].vel_NE[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.vel_NE[1]!",
+     "cxx": "AHRS[1].vel_NE[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.fuse_gps",
+     "cxx": "AHRS[1].fuse_gps",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[1]!.accel_dt",
+     "cxx": "AHRS[1].accel_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.a.x",
+     "cxx": "AHRS[2].R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.a.y",
+     "cxx": "AHRS[2].R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.a.z",
+     "cxx": "AHRS[2].R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.b.x",
+     "cxx": "AHRS[2].R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.b.y",
+     "cxx": "AHRS[2].R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.b.z",
+     "cxx": "AHRS[2].R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.c.x",
+     "cxx": "AHRS[2].R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.c.y",
+     "cxx": "AHRS[2].R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.R.c.z",
+     "cxx": "AHRS[2].R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.gyro_bias.x",
+     "cxx": "AHRS[2].gyro_bias.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.gyro_bias.y",
+     "cxx": "AHRS[2].gyro_bias.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.gyro_bias.z",
+     "cxx": "AHRS[2].gyro_bias.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.aligned",
+     "cxx": "AHRS[2].aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.accel_FR[0]!",
+     "cxx": "AHRS[2].accel_FR[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.accel_FR[1]!",
+     "cxx": "AHRS[2].accel_FR[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.vel_NE[0]!",
+     "cxx": "AHRS[2].vel_NE[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.vel_NE[1]!",
+     "cxx": "AHRS[2].vel_NE[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.fuse_gps",
+     "cxx": "AHRS[2].fuse_gps",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[2]!.accel_dt",
+     "cxx": "AHRS[2].accel_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.a.x",
+     "cxx": "AHRS[3].R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.a.y",
+     "cxx": "AHRS[3].R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.a.z",
+     "cxx": "AHRS[3].R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.b.x",
+     "cxx": "AHRS[3].R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.b.y",
+     "cxx": "AHRS[3].R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.b.z",
+     "cxx": "AHRS[3].R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.c.x",
+     "cxx": "AHRS[3].R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.c.y",
+     "cxx": "AHRS[3].R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.R.c.z",
+     "cxx": "AHRS[3].R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.gyro_bias.x",
+     "cxx": "AHRS[3].gyro_bias.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.gyro_bias.y",
+     "cxx": "AHRS[3].gyro_bias.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.gyro_bias.z",
+     "cxx": "AHRS[3].gyro_bias.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.aligned",
+     "cxx": "AHRS[3].aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.accel_FR[0]!",
+     "cxx": "AHRS[3].accel_FR[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.accel_FR[1]!",
+     "cxx": "AHRS[3].accel_FR[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.vel_NE[0]!",
+     "cxx": "AHRS[3].vel_NE[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.vel_NE[1]!",
+     "cxx": "AHRS[3].vel_NE[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.fuse_gps",
+     "cxx": "AHRS[3].fuse_gps",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[3]!.accel_dt",
+     "cxx": "AHRS[3].accel_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.a.x",
+     "cxx": "AHRS[4].R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.a.y",
+     "cxx": "AHRS[4].R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.a.z",
+     "cxx": "AHRS[4].R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.b.x",
+     "cxx": "AHRS[4].R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.b.y",
+     "cxx": "AHRS[4].R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.b.z",
+     "cxx": "AHRS[4].R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.c.x",
+     "cxx": "AHRS[4].R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.c.y",
+     "cxx": "AHRS[4].R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.R.c.z",
+     "cxx": "AHRS[4].R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.gyro_bias.x",
+     "cxx": "AHRS[4].gyro_bias.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.gyro_bias.y",
+     "cxx": "AHRS[4].gyro_bias.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.gyro_bias.z",
+     "cxx": "AHRS[4].gyro_bias.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.aligned",
+     "cxx": "AHRS[4].aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.accel_FR[0]!",
+     "cxx": "AHRS[4].accel_FR[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.accel_FR[1]!",
+     "cxx": "AHRS[4].accel_FR[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.vel_NE[0]!",
+     "cxx": "AHRS[4].vel_NE[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.vel_NE[1]!",
+     "cxx": "AHRS[4].vel_NE[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.fuse_gps",
+     "cxx": "AHRS[4].fuse_gps",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "AHRS[4]!.accel_dt",
+     "cxx": "AHRS[4].accel_dt",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ahrs_tilt_aligned",
+     "cxx": "ahrs_tilt_aligned",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "accel_gain",
+     "cxx": "accel_gain",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ahrs_accel.x",
+     "cxx": "ahrs_accel.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ahrs_accel.y",
+     "cxx": "ahrs_accel.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ahrs_accel.z",
+     "cxx": "ahrs_accel.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ahrs_accel_norm",
+     "cxx": "ahrs_accel_norm",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "true_airspeed",
+     "cxx": "true_airspeed",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.X[0]!",
+     "cxx": "EKF[0].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.X[1]!",
+     "cxx": "EKF[0].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.X[2]!",
+     "cxx": "EKF[0].X[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[0]!",
+     "cxx": "EKF[0].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[1]!",
+     "cxx": "EKF[0].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[2]!",
+     "cxx": "EKF[0].P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[3]!",
+     "cxx": "EKF[0].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[4]!",
+     "cxx": "EKF[0].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[5]!",
+     "cxx": "EKF[0].P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[6]!",
+     "cxx": "EKF[0].P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[7]!",
+     "cxx": "EKF[0].P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.P[8]!",
+     "cxx": "EKF[0].P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.S[0]!",
+     "cxx": "EKF[0].S[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.S[1]!",
+     "cxx": "EKF[0].S[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.S[2]!",
+     "cxx": "EKF[0].S[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.S[3]!",
+     "cxx": "EKF[0].S[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.innov[0]!",
+     "cxx": "EKF[0].innov[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[0]!.innov[1]!",
+     "cxx": "EKF[0].innov[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.X[0]!",
+     "cxx": "EKF[1].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.X[1]!",
+     "cxx": "EKF[1].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.X[2]!",
+     "cxx": "EKF[1].X[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[0]!",
+     "cxx": "EKF[1].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[1]!",
+     "cxx": "EKF[1].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[2]!",
+     "cxx": "EKF[1].P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[3]!",
+     "cxx": "EKF[1].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[4]!",
+     "cxx": "EKF[1].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[5]!",
+     "cxx": "EKF[1].P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[6]!",
+     "cxx": "EKF[1].P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[7]!",
+     "cxx": "EKF[1].P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.P[8]!",
+     "cxx": "EKF[1].P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.S[0]!",
+     "cxx": "EKF[1].S[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.S[1]!",
+     "cxx": "EKF[1].S[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.S[2]!",
+     "cxx": "EKF[1].S[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.S[3]!",
+     "cxx": "EKF[1].S[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.innov[0]!",
+     "cxx": "EKF[1].innov[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[1]!.innov[1]!",
+     "cxx": "EKF[1].innov[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.X[0]!",
+     "cxx": "EKF[2].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.X[1]!",
+     "cxx": "EKF[2].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.X[2]!",
+     "cxx": "EKF[2].X[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[0]!",
+     "cxx": "EKF[2].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[1]!",
+     "cxx": "EKF[2].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[2]!",
+     "cxx": "EKF[2].P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[3]!",
+     "cxx": "EKF[2].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[4]!",
+     "cxx": "EKF[2].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[5]!",
+     "cxx": "EKF[2].P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[6]!",
+     "cxx": "EKF[2].P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[7]!",
+     "cxx": "EKF[2].P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.P[8]!",
+     "cxx": "EKF[2].P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.S[0]!",
+     "cxx": "EKF[2].S[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.S[1]!",
+     "cxx": "EKF[2].S[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.S[2]!",
+     "cxx": "EKF[2].S[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.S[3]!",
+     "cxx": "EKF[2].S[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.innov[0]!",
+     "cxx": "EKF[2].innov[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[2]!.innov[1]!",
+     "cxx": "EKF[2].innov[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.X[0]!",
+     "cxx": "EKF[3].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.X[1]!",
+     "cxx": "EKF[3].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.X[2]!",
+     "cxx": "EKF[3].X[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[0]!",
+     "cxx": "EKF[3].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[1]!",
+     "cxx": "EKF[3].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[2]!",
+     "cxx": "EKF[3].P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[3]!",
+     "cxx": "EKF[3].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[4]!",
+     "cxx": "EKF[3].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[5]!",
+     "cxx": "EKF[3].P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[6]!",
+     "cxx": "EKF[3].P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[7]!",
+     "cxx": "EKF[3].P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.P[8]!",
+     "cxx": "EKF[3].P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.S[0]!",
+     "cxx": "EKF[3].S[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.S[1]!",
+     "cxx": "EKF[3].S[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.S[2]!",
+     "cxx": "EKF[3].S[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.S[3]!",
+     "cxx": "EKF[3].S[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.innov[0]!",
+     "cxx": "EKF[3].innov[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[3]!.innov[1]!",
+     "cxx": "EKF[3].innov[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.X[0]!",
+     "cxx": "EKF[4].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.X[1]!",
+     "cxx": "EKF[4].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.X[2]!",
+     "cxx": "EKF[4].X[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[0]!",
+     "cxx": "EKF[4].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[1]!",
+     "cxx": "EKF[4].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[2]!",
+     "cxx": "EKF[4].P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[3]!",
+     "cxx": "EKF[4].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[4]!",
+     "cxx": "EKF[4].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[5]!",
+     "cxx": "EKF[4].P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[6]!",
+     "cxx": "EKF[4].P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[7]!",
+     "cxx": "EKF[4].P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.P[8]!",
+     "cxx": "EKF[4].P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.S[0]!",
+     "cxx": "EKF[4].S[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.S[1]!",
+     "cxx": "EKF[4].S[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.S[2]!",
+     "cxx": "EKF[4].S[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.S[3]!",
+     "cxx": "EKF[4].S[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.innov[0]!",
+     "cxx": "EKF[4].innov[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "EKF[4]!.innov[1]!",
+     "cxx": "EKF[4].innov[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "vel_fuse_running",
+     "cxx": "vel_fuse_running",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "run_ekf_gsf",
+     "cxx": "run_ekf_gsf",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.yaw",
+     "cxx": "GSF.yaw",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.yaw_variance",
+     "cxx": "GSF.yaw_variance",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.weights[0]!",
+     "cxx": "GSF.weights[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.weights[1]!",
+     "cxx": "GSF.weights[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.weights[2]!",
+     "cxx": "GSF.weights[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.weights[3]!",
+     "cxx": "GSF.weights[3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "GSF.weights[4]!",
+     "cxx": "GSF.weights[4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "n_clips",
+     "cxx": "n_clips",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "Rotation",
+   "lean": "EKFGSF_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "safe_asin",
+   "cxx_call": "safe_asin<double>",
+   "lean": "EKFGSF_lib.safe_asin_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "wrap_2PI",
+   "cxx_call": "wrap_2PI",
+   "lean": "EKFGSF_lib.wrap_2PI_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "radian",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "wrap_PI",
+   "cxx_call": "wrap_PI<double>",
+   "lean": "EKFGSF_lib.wrap_PI_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "radian",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "constrain_value_line",
+   "cxx_call": "constrain_value_line<double>",
+   "lean": "EKFGSF_lib.constrain_value_line_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "amt",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "low",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "high",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "line",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "is_positive",
+   "cxx_call": "is_positive",
+   "lean": "EKFGSF_lib.is_positive_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "fVal1",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "radians",
+   "cxx_call": "radians",
+   "lean": "EKFGSF_lib.radians_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "deg",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq<double>",
+   "lean": "EKFGSF_lib.sq_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq",
+   "lean": "EKFGSF_lib.sq_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq<double, double, double>",
+   "lean": "EKFGSF_lib.sq_double3",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "parameters",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "parameters",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq<double, double>",
+   "lean": "EKFGSF_lib.sq_double2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "parameters",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "norm",
+   "cxx_call": "norm<double, double, double>",
+   "lean": "EKFGSF_lib.norm_double3",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "second",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "parameters",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "MAX",
+   "cxx_call": "MAX<double, float>",
+   "lean": "EKFGSF_lib.MAX_double_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "one",
+     "type": "double",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "two",
+     "type": "float",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.0e-1 : Binary64)",
+   "bits": "3fb999999999999a",
+   "cpp": "1.0e-1",
+   "at": "62:34"
+  },
+  {
+   "lean": "(Binary64.ofBits 0x3fb999999999999a /- 1.0e-1 -/)",
+   "bits": "3fb999999999999a",
+   "cpp": "1.0e-1",
+   "at": "62:34"
+  },
+  {
+   "lean": "(2.0 : Binary64)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "63:35"
+  },
+  {
+   "lean": "(Binary64.ofBits 0x4000000000000000 /- 2.0 -/)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "63:35"
+  },
+  {
+   "lean": "(0.2 : Binary64)",
+   "bits": "3fc999999999999a",
+   "cpp": "0.2",
+   "at": "64:33"
+  },
+  {
+   "lean": "(Binary64.ofBits 0x3fc999999999999a /- 0.2 -/)",
+   "bits": "3fc999999999999a",
+   "cpp": "0.2",
+   "at": "64:33"
+  },
+  {
+   "lean": "(0.04 : Binary64)",
+   "bits": "3fa47ae147ae147b",
+   "cpp": "0.04",
+   "at": "65:37"
+  },
+  {
+   "lean": "(Binary64.ofBits 0x3fa47ae147ae147b /- 0.04 -/)",
+   "bits": "3fa47ae147ae147b",
+   "cpp": "0.04",
+   "at": "65:37"
+  },
+  {
+   "lean": "(10.0 : Binary64)",
+   "bits": "4024000000000000",
+   "cpp": "10.0",
+   "at": "66:39"
+  },
+  {
+   "lean": "(Binary64.ofBits 0x4024000000000000 /- 10.0 -/)",
+   "bits": "4024000000000000",
+   "cpp": "10.0",
+   "at": "66:39"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "80:13"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "48:31"
+  },
+  {
+   "lean": "(0.00100000005 : Binary32)",
+   "bits": "3a83126f",
+   "cpp": "0.00100000005",
+   "at": "49:37"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x3f800000 /- 1.0f -/)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0f",
+   "at": "50:32"
+  },
+  {
+   "lean": "(9.80665016 : Binary32)",
+   "bits": "411ce80a",
+   "cpp": "9.80665016",
+   "at": "55:41"
+  },
+  {
+   "lean": "(1.1 : Binary32)",
+   "bits": "3f8ccccd",
+   "cpp": "1.1f",
+   "at": "55:55"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x411ce80a /- 9.80665016 -/) * (Binary32.ofBits 0x3f8ccccd /- 1.1f -/))",
+   "bits": "4025931b00000000",
+   "cpp": "(double)1413915/131072",
+   "at": "55:41"
+  },
+  {
+   "lean": "(0.9 : Binary32)",
+   "bits": "3f666666",
+   "cpp": "0.9f",
+   "at": "56:55"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x411ce80a /- 9.80665016 -/) * (Binary32.ofBits 0x3f666666 /- 0.9f -/))",
+   "bits": "4021a6e780000000",
+   "cpp": "(double)2313679/262144",
+   "at": "56:41"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "264:34"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x00000000 /- 0.0f -/)",
+   "bits": "0000000000000000",
+   "cpp": "0.0f",
+   "at": "264:34"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x411ce80a /- 9.80665016 -/)",
+   "bits": "40239d0140000000",
+   "cpp": "(double)5141509/524288",
+   "at": "73:46"
+  },
+  {
+   "lean": "(1.1920929e-7 : Binary32)",
+   "bits": "34000000",
+   "cpp": "1.1920929E-7",
+   "at": "86:42"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x34000000 /- 1.1920929E-7 -/)",
+   "bits": "3e80000000000000",
+   "cpp": "(double)1/8388608",
+   "at": "86:42"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "78:51"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x40000000 /- 2.0f -/)",
+   "bits": "4000000000000000",
+   "cpp": "2.0f",
+   "at": "78:51"
+  },
+  {
+   "lean": "(1.5 : Binary32)",
+   "bits": "3fc00000",
+   "cpp": "1.5f",
+   "at": "79:38"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x3fc00000 /- 1.5f -/)",
+   "bits": "3ff8000000000000",
+   "cpp": "1.5f",
+   "at": "79:38"
+  },
+  {
+   "lean": "(3.0 : Binary32)",
+   "bits": "40400000",
+   "cpp": "3.0f",
+   "at": "81:47"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x40400000 /- 3.0f -/)",
+   "bits": "4008000000000000",
+   "cpp": "3.0f",
+   "at": "81:47"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "86:33"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x3f000000 /- 0.5f -/)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5f",
+   "at": "86:33"
+  },
+  {
+   "lean": "(3.1415926535897931 : Binary64)",
+   "bits": "400921fb54442d18",
+   "cpp": "3.1415926535897931",
+   "at": "234:18"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/)",
+   "bits": "40490fdb",
+   "cpp": "(float)884279719003555/281474976710656",
+   "at": "234:18"
+  },
+  {
+   "lean": "(180.0 : Binary32)",
+   "bits": "43340000",
+   "cpp": "180",
+   "at": "234:18"
+  },
+  {
+   "lean": "(5.0 : Binary32)",
+   "bits": "40a00000",
+   "cpp": "5.0f",
+   "at": "230:43"
+  },
+  {
+   "lean": "(0.175 : Binary32)",
+   "bits": "3e333333",
+   "cpp": "0.175f",
+   "at": "232:31"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "292:31"
+  },
+  {
+   "lean": "(1.0e-6 : Binary32)",
+   "bits": "358637bd",
+   "cpp": "1e-6f",
+   "at": "381:27"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x358637bd /- 1e-6f -/)",
+   "bits": "3eb0c6f7a0000000",
+   "cpp": "1e-6f",
+   "at": "381:27"
+  },
+  {
+   "lean": "Int32.toBinary32 (2 : Int32)",
+   "bits": "40000000",
+   "cpp": "(float)2",
+   "at": "262:31"
+  },
+  {
+   "lean": "Binary32.toBinary64 ((Binary32.ofBits 0x40490fdb /- (float)884279719003555/281474976710656 -/) * (Binary32.ofBits 0x40000000 /- (float)2 -/))",
+   "bits": "401921fb60000000",
+   "cpp": "(double)13176795/2097152",
+   "at": "264:16"
+  },
+  {
+   "lean": "UInt32.toBinary64 (5 : UInt32)",
+   "bits": "4014000000000000",
+   "cpp": "(double)5",
+   "at": "553:48"
+  },
+  {
+   "lean": "Binary32.toBinary64 (-(Binary32.ofBits 0x40490fdb /- (float)884279719003555/281474976710656 -/))",
+   "bits": "c00921fb60000000",
+   "cpp": "(double)-13176795/4194304",
+   "at": "556:29"
+  },
+  {
+   "lean": "Binary64.toBinary32 ((Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/) / (Binary64.ofBits 0x4000000000000000 /- (double)2 -/))",
+   "bits": "3fc90fdb",
+   "cpp": "(float)884279719003555/562949953421312",
+   "at": "57:35"
+  },
+  {
+   "lean": "Binary64.toBinary32 (-((Binary64.ofBits 0x400921fb54442d18 /- 3.1415926535897931 -/) / (Binary64.ofBits 0x4000000000000000 /- (double)2 -/)))",
+   "bits": "bfc90fdb",
+   "cpp": "(float)-884279719003555/562949953421312",
+   "at": "60:35"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x358637bd /- 1E-6f -/)",
+   "bits": "3eb0c6f7a0000000",
+   "cpp": "1E-6f",
+   "at": "424:28"
+  },
+  {
+   "lean": "(25.0 : Binary32)",
+   "bits": "41c80000",
+   "cpp": "25.0f",
+   "at": "436:26"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x41c80000 /- 25.0f -/)",
+   "bits": "4039000000000000",
+   "cpp": "25.0f",
+   "at": "436:26"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x41c80000 /- 25 -/)",
+   "bits": "4039000000000000",
+   "cpp": "(double)25",
+   "at": "437:39"
+  },
+  {
+   "lean": "(1.0e-5 : Binary32)",
+   "bits": "3727c5ac",
+   "cpp": "1e-5f",
+   "at": "168:42"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x3727c5ac /- 1e-5f -/)",
+   "bits": "3ee4f8b580000000",
+   "cpp": "1e-5f",
+   "at": "168:42"
+  },
+  {
+   "lean": "(1.0e-12 : Binary32)",
+   "bits": "2b8cbccc",
+   "cpp": "1e-12f",
+   "at": "573:37"
+  },
+  {
+   "lean": "Binary32.toBinary64 (-(Binary32.ofBits 0x3f000000 /- 0.5f -/))",
+   "bits": "bfe0000000000000",
+   "cpp": "-0.5f",
+   "at": "591:21"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

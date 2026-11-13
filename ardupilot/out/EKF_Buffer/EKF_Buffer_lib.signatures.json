@@ -1,0 +1,7171 @@
+{
+ "namespace": "EKF_Buffer_lib",
+ "source": "ardupilot/unity_ekf_buffer.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+   "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.init_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "size",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push_youngest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.push_youngest_element_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::imu_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.imu_elements",
+       "leaves": [
+        {
+         "lean": "delAng.x",
+         "cxx": "delAng.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.y",
+         "cxx": "delAng.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.z",
+         "cxx": "delAng.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.x",
+         "cxx": "delVel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.y",
+         "cxx": "delVel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.z",
+         "cxx": "delVel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAngDT",
+         "cxx": "delAngDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVelDT",
+         "cxx": "delVelDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "gyro_index",
+         "cxx": "gyro_index",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "accel_index",
+         "cxx": "accel_index",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_filled",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.ekf_imu_buffer.is_filled",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_oldest_element_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::imu_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.imu_elements",
+       "leaves": [
+        {
+         "lean": "delAng.x",
+         "cxx": "delAng.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.y",
+         "cxx": "delAng.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.z",
+         "cxx": "delAng.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.x",
+         "cxx": "delVel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.y",
+         "cxx": "delVel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.z",
+         "cxx": "delVel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAngDT",
+         "cxx": "delAngDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVelDT",
+         "cxx": "delVelDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "gyro_index",
+         "cxx": "gyro_index",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "accel_index",
+         "cxx": "accel_index",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset_history",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.reset_history_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::imu_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.imu_elements",
+       "leaves": [
+        {
+         "lean": "delAng.x",
+         "cxx": "delAng.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.y",
+         "cxx": "delAng.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.z",
+         "cxx": "delAng.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.x",
+         "cxx": "delVel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.y",
+         "cxx": "delVel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.z",
+         "cxx": "delVel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAngDT",
+         "cxx": "delAngDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVelDT",
+         "cxx": "delVelDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "gyro_index",
+         "cxx": "gyro_index",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "accel_index",
+         "cxx": "accel_index",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.ekf_imu_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.ekf_imu_buffer.get_oldest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_youngest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.ekf_imu_buffer.get_youngest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_imu_buffer",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.ekf_imu_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_IMU_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.init_uint8_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push_youngest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.push_youngest_element_imu_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::imu_elements",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.imu_elements",
+       "leaves": [
+        {
+         "lean": "delAng.x",
+         "cxx": "delAng.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.y",
+         "cxx": "delAng.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.z",
+         "cxx": "delAng.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.x",
+         "cxx": "delVel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.y",
+         "cxx": "delVel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.z",
+         "cxx": "delVel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAngDT",
+         "cxx": "delAngDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVelDT",
+         "cxx": "delVelDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "gyro_index",
+         "cxx": "gyro_index",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "accel_index",
+         "cxx": "accel_index",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_filled",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.is_filled",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_oldest_element_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "NavEKF3_core::imu_elements",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "delAng.x",
+       "cxx": "delAng.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAng.y",
+       "cxx": "delAng.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAng.z",
+       "cxx": "delAng.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.x",
+       "cxx": "delVel.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.y",
+       "cxx": "delVel.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.z",
+       "cxx": "delVel.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAngDT",
+       "cxx": "delAngDT",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVelDT",
+       "cxx": "delVelDT",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "time_ms",
+       "cxx": "time_ms",
+       "type": "uint32_t",
+       "enum": null
+      },
+      {
+       "lean": "gyro_index",
+       "cxx": "gyro_index",
+       "type": "uint8_t",
+       "enum": null
+      },
+      {
+       "lean": "accel_index",
+       "cxx": "accel_index",
+       "type": "uint8_t",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset_history",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.reset_history_imu_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::imu_elements",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.imu_elements",
+       "leaves": [
+        {
+         "lean": "delAng.x",
+         "cxx": "delAng.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.y",
+         "cxx": "delAng.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAng.z",
+         "cxx": "delAng.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.x",
+         "cxx": "delVel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.y",
+         "cxx": "delVel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVel.z",
+         "cxx": "delVel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delAngDT",
+         "cxx": "delAngDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delVelDT",
+         "cxx": "delVelDT",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "gyro_index",
+         "cxx": "gyro_index",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "accel_index",
+         "cxx": "accel_index",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator[]",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.op_index",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "index",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "NavEKF3_core::imu_elements",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "delAng.x",
+       "cxx": "delAng.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAng.y",
+       "cxx": "delAng.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAng.z",
+       "cxx": "delAng.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.x",
+       "cxx": "delVel.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.y",
+       "cxx": "delVel.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVel.z",
+       "cxx": "delVel.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delAngDT",
+       "cxx": "delAngDT",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "delVelDT",
+       "cxx": "delVelDT",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "time_ms",
+       "cxx": "time_ms",
+       "type": "uint32_t",
+       "enum": null
+      },
+      {
+       "lean": "gyro_index",
+       "cxx": "gyro_index",
+       "type": "uint8_t",
+       "enum": null
+      },
+      {
+       "lean": "accel_index",
+       "cxx": "accel_index",
+       "type": "uint8_t",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_oldest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_oldest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_youngest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_youngest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_size",
+     "cxx": "_size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_oldest",
+     "cxx": "_oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_youngest",
+     "cxx": "_youngest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filled",
+     "cxx": "_filled",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+   "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.init_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "size",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push_youngest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.push_youngest_element_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::output_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.output_elements",
+       "leaves": [
+        {
+         "lean": "quat.q1",
+         "cxx": "quat.q1",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q2",
+         "cxx": "quat.q2",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q3",
+         "cxx": "quat.q3",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q4",
+         "cxx": "quat.q4",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.x",
+         "cxx": "velocity.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.y",
+         "cxx": "velocity.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.z",
+         "cxx": "velocity.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.x",
+         "cxx": "position.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.y",
+         "cxx": "position.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.z",
+         "cxx": "position.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_filled",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.ekf_imu_buffer.is_filled",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_oldest_element_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::output_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.output_elements",
+       "leaves": [
+        {
+         "lean": "quat.q1",
+         "cxx": "quat.q1",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q2",
+         "cxx": "quat.q2",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q3",
+         "cxx": "quat.q3",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q4",
+         "cxx": "quat.q4",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.x",
+         "cxx": "velocity.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.y",
+         "cxx": "velocity.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.z",
+         "cxx": "velocity.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.x",
+         "cxx": "position.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.y",
+         "cxx": "position.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.z",
+         "cxx": "position.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset_history",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.reset_history_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::output_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.output_elements",
+       "leaves": [
+        {
+         "lean": "quat.q1",
+         "cxx": "quat.q1",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q2",
+         "cxx": "quat.q2",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q3",
+         "cxx": "quat.q3",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q4",
+         "cxx": "quat.q4",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.x",
+         "cxx": "velocity.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.y",
+         "cxx": "velocity.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.z",
+         "cxx": "velocity.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.x",
+         "cxx": "position.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.y",
+         "cxx": "position.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.z",
+         "cxx": "position.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.ekf_imu_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.ekf_imu_buffer.get_oldest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_youngest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.ekf_imu_buffer.get_youngest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_imu_buffer",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.ekf_imu_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_imu_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_IMU_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.init_uint8_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push_youngest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.push_youngest_element_output_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::output_elements",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.output_elements",
+       "leaves": [
+        {
+         "lean": "quat.q1",
+         "cxx": "quat.q1",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q2",
+         "cxx": "quat.q2",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q3",
+         "cxx": "quat.q3",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q4",
+         "cxx": "quat.q4",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.x",
+         "cxx": "velocity.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.y",
+         "cxx": "velocity.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.z",
+         "cxx": "velocity.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.x",
+         "cxx": "position.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.y",
+         "cxx": "position.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.z",
+         "cxx": "position.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_filled",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.is_filled",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_oldest_element",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_oldest_element_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "NavEKF3_core::output_elements",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "quat.q1",
+       "cxx": "quat.q1",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q2",
+       "cxx": "quat.q2",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q3",
+       "cxx": "quat.q3",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q4",
+       "cxx": "quat.q4",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.x",
+       "cxx": "velocity.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.y",
+       "cxx": "velocity.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.z",
+       "cxx": "velocity.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.x",
+       "cxx": "position.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.y",
+       "cxx": "position.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.z",
+       "cxx": "position.z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "reset_history",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.reset_history_output_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::output_elements",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.output_elements",
+       "leaves": [
+        {
+         "lean": "quat.q1",
+         "cxx": "quat.q1",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q2",
+         "cxx": "quat.q2",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q3",
+         "cxx": "quat.q3",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "quat.q4",
+         "cxx": "quat.q4",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.x",
+         "cxx": "velocity.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.y",
+         "cxx": "velocity.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velocity.z",
+         "cxx": "velocity.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.x",
+         "cxx": "position.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.y",
+         "cxx": "position.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "position.z",
+         "cxx": "position.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator[]",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.op_index",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "index",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "NavEKF3_core::output_elements",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "quat.q1",
+       "cxx": "quat.q1",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q2",
+       "cxx": "quat.q2",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q3",
+       "cxx": "quat.q3",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "quat.q4",
+       "cxx": "quat.q4",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.x",
+       "cxx": "velocity.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.y",
+       "cxx": "velocity.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "velocity.z",
+       "cxx": "velocity.z",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.x",
+       "cxx": "position.x",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.y",
+       "cxx": "position.y",
+       "type": "double",
+       "enum": null
+      },
+      {
+       "lean": "position.z",
+       "cxx": "position.z",
+       "type": "double",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "get_oldest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_oldest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_youngest_index",
+     "lean": "EKF_Buffer_lib.EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_youngest_index_void",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_size",
+     "cxx": "_size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_oldest",
+     "cxx": "_oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_youngest",
+     "cxx": "_youngest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_filled",
+     "cxx": "_filled",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::gps_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.gps_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "sensor_idx",
+         "cxx": "sensor_idx",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "corrected",
+         "cxx": "corrected",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "have_vz",
+         "cxx": "have_vz",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::gps_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.gps_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "sensor_idx",
+         "cxx": "sensor_idx",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "corrected",
+         "cxx": "corrected",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "have_vz",
+         "cxx": "have_vz",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.recall_gps_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::gps_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.gps_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "sensor_idx",
+         "cxx": "sensor_idx",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "corrected",
+         "cxx": "corrected",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "have_vz",
+         "cxx": "have_vz",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.push_gps_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::gps_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.gps_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "lat",
+         "cxx": "lat",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "lng",
+         "cxx": "lng",
+         "type": "int32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "sensor_idx",
+         "cxx": "sensor_idx",
+         "type": "uint8_t",
+         "enum": null
+        },
+        {
+         "lean": "corrected",
+         "cxx": "corrected",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "have_vz",
+         "cxx": "have_vz",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_gps_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::mag_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.mag_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "mag.x",
+         "cxx": "mag.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.y",
+         "cxx": "mag.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.z",
+         "cxx": "mag.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::mag_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.mag_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "mag.x",
+         "cxx": "mag.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.y",
+         "cxx": "mag.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.z",
+         "cxx": "mag.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.recall_mag_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::mag_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.mag_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "mag.x",
+         "cxx": "mag.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.y",
+         "cxx": "mag.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.z",
+         "cxx": "mag.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.push_mag_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::mag_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.mag_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "mag.x",
+         "cxx": "mag.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.y",
+         "cxx": "mag.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "mag.z",
+         "cxx": "mag.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_mag_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::baro_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.baro_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::baro_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.baro_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.recall_baro_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::baro_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.baro_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.push_baro_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::baro_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.baro_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "hgt",
+         "cxx": "hgt",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_baro_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::tas_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.tas_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "tas",
+         "cxx": "tas",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "tasVariance",
+         "cxx": "tasVariance",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "allowFusion",
+         "cxx": "allowFusion",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::tas_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.tas_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "tas",
+         "cxx": "tas",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "tasVariance",
+         "cxx": "tasVariance",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "allowFusion",
+         "cxx": "allowFusion",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.recall_tas_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::tas_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.tas_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "tas",
+         "cxx": "tas",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "tasVariance",
+         "cxx": "tasVariance",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "allowFusion",
+         "cxx": "allowFusion",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.push_tas_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::tas_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.tas_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "tas",
+         "cxx": "tas",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "tasVariance",
+         "cxx": "tasVariance",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "allowFusion",
+         "cxx": "allowFusion",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_tas_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::of_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.of_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.x",
+         "cxx": "flowRadXY.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.y",
+         "cxx": "flowRadXY.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.x",
+         "cxx": "flowRadXYcomp.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.y",
+         "cxx": "flowRadXYcomp.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.x",
+         "cxx": "bodyRadXYZ.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.y",
+         "cxx": "bodyRadXYZ.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.z",
+         "cxx": "bodyRadXYZ.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "heightOverride",
+         "cxx": "heightOverride",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::of_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.of_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.x",
+         "cxx": "flowRadXY.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.y",
+         "cxx": "flowRadXY.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.x",
+         "cxx": "flowRadXYcomp.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.y",
+         "cxx": "flowRadXYcomp.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.x",
+         "cxx": "bodyRadXYZ.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.y",
+         "cxx": "bodyRadXYZ.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.z",
+         "cxx": "bodyRadXYZ.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "heightOverride",
+         "cxx": "heightOverride",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.recall_of_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::of_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.of_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.x",
+         "cxx": "flowRadXY.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.y",
+         "cxx": "flowRadXY.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.x",
+         "cxx": "flowRadXYcomp.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.y",
+         "cxx": "flowRadXYcomp.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.x",
+         "cxx": "bodyRadXYZ.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.y",
+         "cxx": "bodyRadXYZ.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.z",
+         "cxx": "bodyRadXYZ.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "heightOverride",
+         "cxx": "heightOverride",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.push_of_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::of_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.of_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.x",
+         "cxx": "flowRadXY.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXY.y",
+         "cxx": "flowRadXY.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.x",
+         "cxx": "flowRadXYcomp.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "flowRadXYcomp.y",
+         "cxx": "flowRadXYcomp.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.x",
+         "cxx": "bodyRadXYZ.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.y",
+         "cxx": "bodyRadXYZ.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "bodyRadXYZ.z",
+         "cxx": "bodyRadXYZ.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "heightOverride",
+         "cxx": "heightOverride",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_of_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::vel_odm_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.vel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velErr",
+         "cxx": "velErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.x",
+         "cxx": "angRate.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.y",
+         "cxx": "angRate.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.z",
+         "cxx": "angRate.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::vel_odm_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.vel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velErr",
+         "cxx": "velErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.x",
+         "cxx": "angRate.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.y",
+         "cxx": "angRate.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.z",
+         "cxx": "angRate.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.recall_vel_odm_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::vel_odm_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.vel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velErr",
+         "cxx": "velErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.x",
+         "cxx": "angRate.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.y",
+         "cxx": "angRate.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.z",
+         "cxx": "angRate.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.push_vel_odm_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::vel_odm_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.vel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "vel.x",
+         "cxx": "vel.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.y",
+         "cxx": "vel.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "vel.z",
+         "cxx": "vel.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "velErr",
+         "cxx": "velErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.x",
+         "cxx": "body_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.y",
+         "cxx": "body_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "body_offset.z",
+         "cxx": "body_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.x",
+         "cxx": "angRate.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.y",
+         "cxx": "angRate.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "angRate.z",
+         "cxx": "angRate.z",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::wheel_odm_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.wheel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "delAng",
+         "cxx": "delAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "radius",
+         "cxx": "radius",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.x",
+         "cxx": "hub_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.y",
+         "cxx": "hub_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.z",
+         "cxx": "hub_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delTime",
+         "cxx": "delTime",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::wheel_odm_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.wheel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "delAng",
+         "cxx": "delAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "radius",
+         "cxx": "radius",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.x",
+         "cxx": "hub_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.y",
+         "cxx": "hub_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.z",
+         "cxx": "hub_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delTime",
+         "cxx": "delTime",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.recall_wheel_odm_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::wheel_odm_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.wheel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "delAng",
+         "cxx": "delAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "radius",
+         "cxx": "radius",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.x",
+         "cxx": "hub_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.y",
+         "cxx": "hub_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.z",
+         "cxx": "hub_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delTime",
+         "cxx": "delTime",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.push_wheel_odm_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::wheel_odm_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.wheel_odm_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "delAng",
+         "cxx": "delAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "radius",
+         "cxx": "radius",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.x",
+         "cxx": "hub_offset.x",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.y",
+         "cxx": "hub_offset.y",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "hub_offset.z",
+         "cxx": "hub_offset.z",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "delTime",
+         "cxx": "delTime",
+         "type": "double",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+   "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.ekf_ring_buffer.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.ekf_ring_buffer.init",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "time_ms",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.time_ms",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.recall_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::yaw_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.yaw_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "yawAng",
+         "cxx": "yawAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "yawAngErr",
+         "cxx": "yawAngErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "order",
+         "cxx": "order",
+         "type": "int32_t",
+         "enum": "EKF_Buffer_lib.NavEKF3_core.rotationOrder"
+        }
+       ]
+      },
+      {
+       "name": "sample_time_ms",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::yaw_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.yaw_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "yawAng",
+         "cxx": "yawAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "yawAngErr",
+         "cxx": "yawAngErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "order",
+         "cxx": "order",
+         "type": "int32_t",
+         "enum": "EKF_Buffer_lib.NavEKF3_core.rotationOrder"
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ekf_ring_buffer",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.ekf_ring_buffer.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "ekf_ring_buffer",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "EKF_obs_buffer_t",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.init",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "recall",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.recall_yaw_elements_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::yaw_elements",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.yaw_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "yawAng",
+         "cxx": "yawAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "yawAngErr",
+         "cxx": "yawAngErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "order",
+         "cxx": "order",
+         "type": "int32_t",
+         "enum": "EKF_Buffer_lib.NavEKF3_core.rotationOrder"
+        }
+       ]
+      },
+      {
+       "name": "sample_time",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.push_yaw_elements",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "NavEKF3_core::yaw_elements",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKF_Buffer_lib.NavEKF3_core.yaw_elements",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "yawAng",
+         "cxx": "yawAng",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "yawAngErr",
+         "cxx": "yawAngErr",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "order",
+         "cxx": "order",
+         "type": "int32_t",
+         "enum": "EKF_Buffer_lib.NavEKF3_core.rotationOrder"
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "EKF_Buffer_lib.EKF_obs_buffer_t_NavEKF3_core_yaw_elements.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "QuaternionT<double>",
+   "lean": "EKF_Buffer_lib.QuaternionT_double",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "q1",
+     "cxx": "q1",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q2",
+     "cxx": "q2",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q3",
+     "cxx": "q3",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q4",
+     "cxx": "q4",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector2<double>",
+   "lean": "EKF_Buffer_lib.Vector2p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<double>",
+   "lean": "EKF_Buffer_lib.Vector3p",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "Rotation",
+   "lean": "EKF_Buffer_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::MagCal",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.MagCal",
+   "under": "int32_t",
+   "values": [
+    [
+     "WHEN_FLYING",
+     0,
+     "WHEN_FLYING"
+    ],
+    [
+     "WHEN_MANOEUVRING",
+     1,
+     "WHEN_MANOEUVRING"
+    ],
+    [
+     "NEVER",
+     2,
+     "NEVER"
+    ],
+    [
+     "AFTER_FIRST_CLIMB",
+     3,
+     "AFTER_FIRST_CLIMB"
+    ],
+    [
+     "ALWAYS",
+     4,
+     "ALWAYS"
+    ],
+    [
+     "GROUND_AND_INFLIGHT",
+     7,
+     "GROUND_AND_INFLIGHT"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::MagFuseSel",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.MagFuseSel",
+   "under": "int32_t",
+   "values": [
+    [
+     "NOT_FUSING",
+     0,
+     "NOT_FUSING"
+    ],
+    [
+     "FUSE_YAW",
+     1,
+     "FUSE_YAW"
+    ],
+    [
+     "FUSE_MAG",
+     2,
+     "FUSE_MAG"
+    ],
+    [
+     "FUSE_MAG_ANCHORED",
+     3,
+     "FUSE_MAG_ANCHORED"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::rotationOrder",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.rotationOrder",
+   "under": "int32_t",
+   "values": [
+    [
+     "TAIT_BRYAN_321",
+     0,
+     "TAIT_BRYAN_321"
+    ],
+    [
+     "TAIT_BRYAN_312",
+     1,
+     "TAIT_BRYAN_312"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::resetDataSource",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.resetDataSource",
+   "under": "int32_t",
+   "values": [
+    [
+     "DEFAULT",
+     0,
+     "DEFAULT"
+    ],
+    [
+     "GPS",
+     1,
+     "GPS"
+    ],
+    [
+     "RNGBCN",
+     2,
+     "RNGBCN"
+    ],
+    [
+     "FLOW",
+     3,
+     "FLOW"
+    ],
+    [
+     "BARO",
+     4,
+     "BARO"
+    ],
+    [
+     "MAG",
+     5,
+     "MAG"
+    ],
+    [
+     "RNGFND",
+     6,
+     "RNGFND"
+    ],
+    [
+     "EXTNAV",
+     7,
+     "EXTNAV"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::yawFusionMethod",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.yawFusionMethod",
+   "under": "int32_t",
+   "values": [
+    [
+     "MAGNETOMETER",
+     0,
+     "MAGNETOMETER"
+    ],
+    [
+     "GPS",
+     1,
+     "GPS"
+    ],
+    [
+     "GSF",
+     2,
+     "GSF"
+    ],
+    [
+     "STATIC",
+     3,
+     "STATIC"
+    ],
+    [
+     "PREDICTED",
+     4,
+     "PREDICTED"
+    ],
+    [
+     "EXTNAV",
+     5,
+     "EXTNAV"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::AidingMode",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.AidingMode",
+   "under": "uint32_t",
+   "values": [
+    [
+     "AID_ABSOLUTE",
+     0,
+     "AID_ABSOLUTE"
+    ],
+    [
+     "AID_NONE",
+     1,
+     "AID_NONE"
+    ],
+    [
+     "AID_RELATIVE",
+     2,
+     "AID_RELATIVE"
+    ]
+   ]
+  },
+  {
+   "cxx": "NavEKF3_core::ekf_affinity",
+   "lean": "EKF_Buffer_lib.NavEKF3_core.ekf_affinity",
+   "under": "uint32_t",
+   "values": [
+    [
+     "EKF_AFFINITY_GPS",
+     1,
+     "EKF_AFFINITY_GPS"
+    ],
+    [
+     "EKF_AFFINITY_BARO",
+     2,
+     "EKF_AFFINITY_BARO"
+    ],
+    [
+     "EKF_AFFINITY_MAG",
+     4,
+     "EKF_AFFINITY_MAG"
+    ],
+    [
+     "EKF_AFFINITY_ARSP",
+     8,
+     "EKF_AFFINITY_ARSP"
+    ]
+   ]
+  }
+ ],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [],
+ "var_info": {},
+ "world": []
+}

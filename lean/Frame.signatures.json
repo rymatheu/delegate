@@ -822,65 +822,120 @@
  "output_ns": "Frame.",
  "literals": [
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
    "cpp": "1.0f",
    "at": "65:31"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "229:41"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "85:28"
   },
   {
-   "lean": "(0.25 : Float32)",
+   "lean": "(0.25 : Binary32)",
    "bits": "3e800000",
    "cpp": "0.25f",
    "at": "86:30"
   },
   {
-   "lean": "(2.0 : Float32)",
+   "lean": "(2.0 : Binary32)",
    "bits": "40000000",
    "cpp": "2.0f",
    "at": "94:42"
   },
   {
-   "lean": "(90.0 : Float32)",
+   "lean": "Int32.toBinary32 (45 : Int32)",
+   "bits": "42340000",
+   "cpp": "45",
+   "at": "106:17"
+  },
+  {
+   "lean": "Int32.toBinary32 (1 : Int32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "106:21"
+  },
+  {
+   "lean": "Int32.toBinary32 (-(135 : Int32))",
+   "bits": "c3070000",
+   "cpp": "-135",
+   "at": "107:15"
+  },
+  {
+   "lean": "Int32.toBinary32 (-(45 : Int32))",
+   "bits": "c2340000",
+   "cpp": "-45",
+   "at": "108:16"
+  },
+  {
+   "lean": "Int32.toBinary32 (-(1 : Int32))",
+   "bits": "bf800000",
+   "cpp": "-1",
+   "at": "108:21"
+  },
+  {
+   "lean": "Int32.toBinary32 (135 : Int32)",
+   "bits": "43070000",
+   "cpp": "135",
+   "at": "109:16"
+  },
+  {
+   "lean": "Int32.toBinary32 (60 : Int32)",
+   "bits": "42700000",
+   "cpp": "60",
+   "at": "112:17"
+  },
+  {
+   "lean": "Int32.toBinary32 (-(60 : Int32))",
+   "bits": "c2700000",
+   "cpp": "-60",
+   "at": "113:16"
+  },
+  {
+   "lean": "Int32.toBinary32 (180 : Int32)",
+   "bits": "43340000",
+   "cpp": "180",
+   "at": "114:16"
+  },
+  {
+   "lean": "(90.0 : Binary32)",
    "bits": "42b40000",
    "cpp": "90.0f",
    "at": "142:44"
   },
   {
-   "lean": "(0.0174532925 : Float32)",
+   "lean": "(0.0174532925 : Binary32)",
    "bits": "3c8efa35",
    "cpp": "0.0174532925f",
    "at": "142:53"
   },
   {
-   "lean": "(1000.0 : Float32)",
+   "lean": "(1000.0 : Binary32)",
    "bits": "447a0000",
    "cpp": "1000.0f",
    "at": "153:44"
   },
   {
-   "lean": "(0.1 : Float32)",
+   "lean": "(0.1 : Binary32)",
    "bits": "3dcccccd",
    "cpp": "0.1f",
    "at": "159:19"
   },
   {
-   "lean": "(0.75 : Float32)",
+   "lean": "(0.75 : Binary32)",
    "bits": "3f400000",
    "cpp": "0.75f",
    "at": "192:61"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

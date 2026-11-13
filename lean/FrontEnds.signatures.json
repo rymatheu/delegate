@@ -1,0 +1,1199 @@
+{
+ "namespace": "FrontEnds",
+ "source": "examples/frontends.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Util",
+   "lean": "FrontEnds.Util",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "armed",
+     "lean": "FrontEnds.Util.armed",
+     "top": false,
+     "kind": "method",
+     "owner": "Util",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_armed",
+     "cxx": "_armed",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SimNS::Sim",
+   "lean": "FrontEnds.SimNS.Sim",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Sim",
+     "lean": "FrontEnds.SimNS.Sim.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SimNS::Sim",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "bias",
+     "cxx": "bias",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SchedImpl",
+   "lean": "FrontEnds.SchedImpl",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "delay",
+     "lean": "FrontEnds.SchedImpl.delay",
+     "top": false,
+     "kind": "method",
+     "owner": "SchedImpl",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "ms",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_clock_ms",
+     "cxx": "_clock_ms",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_delays",
+     "cxx": "_delays",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "typesafe_index<unsigned char, TAG_Slot>",
+   "lean": "FrontEnds.SlotIndex",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "typesafe_index",
+     "lean": "FrontEnds.SlotIndex.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "typesafe_index<unsigned char, TAG_Slot>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator<",
+     "lean": "FrontEnds.SlotIndex.op_lt",
+     "top": false,
+     "kind": "method",
+     "owner": "typesafe_index<unsigned char, TAG_Slot>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "val",
+       "type": "uint8_t",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_int",
+     "lean": "FrontEnds.SlotIndex.get_int",
+     "top": false,
+     "kind": "method",
+     "owner": "typesafe_index<unsigned char, TAG_Slot>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator++",
+     "lean": "FrontEnds.SlotIndex.op_inc",
+     "top": false,
+     "kind": "method",
+     "owner": "typesafe_index<unsigned char, TAG_Slot>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "unnamed'0",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "typesafe_index<unsigned char, TAG_Slot>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "p",
+       "cxx": "p",
+       "type": "uint8_t",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "p",
+     "cxx": "p",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "RestrictArray<Slot, 3, typesafe_index<unsigned char, TAG_Slot>>",
+   "lean": "FrontEnds.RestrictArray_Slot_3_typesafe_index_unsigned_char_TAG_Slot",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "operator[]",
+     "lean": "FrontEnds.RestrictArray_Slot_3_typesafe_index_unsigned_char_TAG_Slot.op_index",
+     "top": false,
+     "kind": "method",
+     "owner": "RestrictArray<Slot, 3, typesafe_index<unsigned char, TAG_Slot>>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "index",
+       "type": "typesafe_index<unsigned char, TAG_Slot>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "FrontEnds.SlotIndex.State",
+       "leaves": [
+        {
+         "lean": "p",
+         "cxx": "p",
+         "type": "uint8_t",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Slot",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "value",
+       "cxx": "value",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "sum",
+       "cxx": "sum",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "bus_id",
+       "cxx": "bus_id",
+       "type": "uint32_t",
+       "enum": null
+      },
+      {
+       "lean": "healthy",
+       "cxx": "healthy",
+       "type": "bool",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_priv_instance[0]!.value",
+     "cxx": "_priv_instance[0].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[0]!.sum",
+     "cxx": "_priv_instance[0].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[0]!.bus_id",
+     "cxx": "_priv_instance[0].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[0]!.healthy",
+     "cxx": "_priv_instance[0].healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[1]!.value",
+     "cxx": "_priv_instance[1].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[1]!.sum",
+     "cxx": "_priv_instance[1].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[1]!.bus_id",
+     "cxx": "_priv_instance[1].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[1]!.healthy",
+     "cxx": "_priv_instance[1].healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[2]!.value",
+     "cxx": "_priv_instance[2].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[2]!.sum",
+     "cxx": "_priv_instance[2].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[2]!.bus_id",
+     "cxx": "_priv_instance[2].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_priv_instance[2]!.healthy",
+     "cxx": "_priv_instance[2].healthy",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Front",
+   "lean": "FrontEnds.Front",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "weighted",
+     "lean": "FrontEnds.Front.weighted",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "scale",
+       "type": "float",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "FrontEnds.Front.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "publish",
+     "lean": "FrontEnds.Front.publish",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "FrontEnds.Front.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "calibrate",
+     "lean": "FrontEnds.Front.calibrate",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "sum_healthy",
+     "lean": "FrontEnds.Front.sum_healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_unhealthy",
+     "lean": "FrontEnds.Front.first_unhealthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "count",
+     "lean": "FrontEnds.Front.count",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[0]!.value",
+     "cxx": "_slots._priv_instance[0].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[0]!.sum",
+     "cxx": "_slots._priv_instance[0].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[0]!.bus_id",
+     "cxx": "_slots._priv_instance[0].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[0]!.healthy",
+     "cxx": "_slots._priv_instance[0].healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[1]!.value",
+     "cxx": "_slots._priv_instance[1].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[1]!.sum",
+     "cxx": "_slots._priv_instance[1].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[1]!.bus_id",
+     "cxx": "_slots._priv_instance[1].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[1]!.healthy",
+     "cxx": "_slots._priv_instance[1].healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[2]!.value",
+     "cxx": "_slots._priv_instance[2].value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[2]!.sum",
+     "cxx": "_slots._priv_instance[2].sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[2]!.bus_id",
+     "cxx": "_slots._priv_instance[2].bus_id",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_slots._priv_instance[2]!.healthy",
+     "cxx": "_slots._priv_instance[2].healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_backends[0]!",
+     "cxx": "_backends[0]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_backends[1]!",
+     "cxx": "_backends[1]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_backends[2]!",
+     "cxx": "_backends[2]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_weights[0]!",
+     "cxx": "_weights[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_weights[1]!",
+     "cxx": "_weights[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_weights[2]!",
+     "cxx": "_weights[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_calibrations",
+     "cxx": "_calibrations",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SimBackend",
+   "lean": "FrontEnds.SimBackend",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "armed",
+     "type": "bool",
+     "cxx": "hal.util.armed()",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Backend",
+     "lean": "FrontEnds.SimBackend.Backend.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "front",
+       "type": "Front",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "FrontEnds.Front.State",
+       "leaves": null
+      },
+      {
+       "name": "index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "SimBackend",
+     "lean": "FrontEnds.SimBackend.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SimBackend",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "front",
+       "type": "Front",
+       "ref": "world:front",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "FrontEnds.Front.State",
+       "leaves": null
+      },
+      {
+       "name": "index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "FrontEnds.SimBackend.update",
+     "top": false,
+     "kind": "method",
+     "owner": "SimBackend",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_index",
+     "cxx": "_index",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_copy_of_index",
+     "cxx": "_copy_of_index",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_updates",
+     "cxx": "_updates",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "BusKind",
+   "lean": "FrontEnds.BusKind",
+   "under": "uint32_t",
+   "values": [
+    [
+     "BUS_NONE",
+     0,
+     "BUS_NONE"
+    ],
+    [
+     "BUS_I2C",
+     1,
+     "BUS_I2C"
+    ],
+    [
+     "BUS_SPI",
+     2,
+     "BUS_SPI"
+    ],
+    [
+     "BUS_SIM",
+     4,
+     "BUS_SIM"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "make_bus_id",
+   "cxx_call": "make_bus_id",
+   "lean": "FrontEnds.make_bus_id",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "kind",
+     "type": "BusKind",
+     "ref": null,
+     "boundary": false,
+     "enum": "FrontEnds.BusKind",
+     "under": "uint32_t",
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "bus",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "address",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "devtype",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(100.0 : Binary32)",
+   "bits": "42c80000",
+   "cpp": "100.0f",
+   "at": "120:8"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "120:16"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "121:7"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "121:13"
+  },
+  {
+   "lean": "(1000.0 : Binary32)",
+   "bits": "447a0000",
+   "cpp": "1000.0f",
+   "at": "122:7"
+  },
+  {
+   "lean": "(1.5 : Binary32)",
+   "bits": "3fc00000",
+   "cpp": "1.5f",
+   "at": "122:16"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "225:31"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "sim",
+   "cxx": "sim",
+   "class": "SimNS::Sim",
+   "lean": "SimNS.Sim",
+   "parts": [
+    [
+     "sim",
+     "SimNS.Sim.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "sched",
+   "cxx": "sched",
+   "class": "SchedImpl",
+   "lean": "SchedImpl",
+   "parts": [
+    [
+     "sched",
+     "SchedImpl.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "front",
+   "cxx": "front",
+   "class": "Front",
+   "lean": "Front",
+   "parts": [
+    [
+     "front",
+     "Front.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "SimBackend'created",
+   "cxx": "created",
+   "class": null,
+   "lean": null,
+   "parts": [
+    [
+     "SimBackend'created",
+     "UInt8",
+     "static data member of `SimBackend`"
+    ]
+   ],
+   "static": "SimBackend",
+   "leaves": [
+    {
+     "root": "w",
+     "lean": "",
+     "cxx": "",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ]
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'SimBackend",
+   "class": "SimBackend",
+   "lean": "SimBackend",
+   "placement": false,
+   "inputs": true
+  }
+ ],
+ "funcs": []
+}

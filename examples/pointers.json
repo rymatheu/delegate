@@ -1,0 +1,9 @@
+{
+ "namespace": "Pointers",
+ "cpp2lean": [
+  "--pointer-params",
+  "--runtime-loops",
+  "--drop",
+  "trap_mask"
+ ]
+}

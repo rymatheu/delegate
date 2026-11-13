@@ -1,0 +1,351 @@
+{
+ "translate": "ardupilot/translate_ekf_buffer.sh",
+ "out": "ardupilot/out/EKF_Buffer",
+ "namespace": "EKF_Buffer_lib",
+ "ref_flags": "AP_NavEKF3/AP_NavEKF3_core.cpp",
+ "access_control": false,
+ "cxx_sources": [
+  "AP_NavEKF/EKF_Buffer.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ekf_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "EKF_IMU_buffer_t<NavEKF3_core::imu_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "setup": [
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.init_uint8_t 16"
+   ],
+   "weights": {
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.push_youngest_element_imu_elements": 6,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_oldest_element_void": 3,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.op_index": 3,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.reset_history_imu_elements": 0.3,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.reset": 0.3,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.is_filled": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_oldest_index_void": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.get_youngest_index_void": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_imu_elements.init_uint8_t": 0.2
+   },
+   "domains": {
+    "size": [
+     10,
+     40
+    ],
+    "index": [
+     0,
+     9
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1500
+    ]
+   }
+  },
+  {
+   "class": "EKF_IMU_buffer_t<NavEKF3_core::output_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "setup": [
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.init_uint8_t 16"
+   ],
+   "weights": {
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.push_youngest_element_output_elements": 6,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_oldest_element_void": 3,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.op_index": 3,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.reset_history_output_elements": 0.3,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.reset": 0.3,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.is_filled": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_oldest_index_void": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.get_youngest_index_void": 1,
+    "EKF_IMU_buffer_t_NavEKF3_core_output_elements.init_uint8_t": 0.2
+   },
+   "domains": {
+    "size": [
+     10,
+     40
+    ],
+    "index": [
+     0,
+     9
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1500
+    ]
+   }
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::gps_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_gps_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_gps_elements.push_gps_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_gps_elements.recall_gps_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_gps_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_gps_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::mag_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_mag_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_mag_elements.push_mag_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_mag_elements.recall_mag_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_mag_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_mag_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::baro_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_baro_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_baro_elements.push_baro_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_baro_elements.recall_baro_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_baro_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_baro_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::tas_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_tas_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_tas_elements.push_tas_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_tas_elements.recall_tas_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_tas_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_tas_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::of_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_of_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_of_elements.push_of_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_of_elements.recall_of_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_of_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_of_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::vel_odm_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.push_vel_odm_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.recall_vel_odm_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_vel_odm_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::wheel_odm_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": true,
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.push_wheel_odm_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.recall_wheel_odm_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_wheel_odm_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  },
+  {
+   "class": "EKF_obs_buffer_t<NavEKF3_core::yaw_elements>",
+   "cxx_include": "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "calls": 3000,
+   "only_own": true,
+   "enum_leaves": "all",
+   "setup": [
+    "EKF_obs_buffer_t_NavEKF3_core_yaw_elements.init 20"
+   ],
+   "weights": {
+    "EKF_obs_buffer_t_NavEKF3_core_yaw_elements.push_yaw_elements": 6,
+    "EKF_obs_buffer_t_NavEKF3_core_yaw_elements.recall_yaw_elements_uint32_t": 4,
+    "EKF_obs_buffer_t_NavEKF3_core_yaw_elements.init": 0.2,
+    "EKF_obs_buffer_t_NavEKF3_core_yaw_elements.reset": 0.3
+   },
+   "domains": {
+    "_size": [
+     1,
+     60
+    ]
+   },
+   "ranges": {
+    "element.time_ms": [
+     1000,
+     1150
+    ],
+    "sample_time": [
+     1000,
+     1150
+    ]
+   },
+   "range_prob": 0.95
+  }
+ ]
+}

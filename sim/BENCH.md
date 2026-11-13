@@ -34,18 +34,45 @@ lean/.lake/build/bin/copter_lean   --params $P/copter-cf2x.txt --params $P/copte
   -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -fno-builtin -cl-single-precision-constant ...`
   (`ardupilot/vehicle/build.sh`), the flags of the translations plus the code-generation flags of the
   compilation assumptions.
-- Lean: Lake's release build, `leanc -O3 -DNDEBUG` plus `moreLeancArgs = -ffp-contract=off
-  -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -fno-builtin`
-  (`lean/lakefile.toml`), Lean `v4.33.0-rc1`.
+- Lean: Lake's release build, `leanc -O3 -DNDEBUG`. Before the FloatLib port (results of 2026-11-05):
+  Lean `v4.33.0-rc1`, `Float32`/`Float` on the FPU, `moreLeancArgs = -ffp-contract=off
+  -fno-builtin-sinf -fno-builtin-cosf -fno-builtin-sin -fno-builtin-cos -fno-builtin`, the platform's
+  libm on both sides. Since the port (results of 2026-11-11): Lean `v4.35.0`, FloatLib `acba2057`
+  (every float is a `Binary32`/`Binary64` computed in software), musl's math functions on both sides
+  (the C++ links musl's sources, the Lean runs their translation: README.md, "The C library").
 
-The floating-point flags are the same on both sides; the optimization levels are each toolchain's
-default release level and were not changed for the measurement.
+The optimization levels are each toolchain's default release level and were not changed for the
+measurement.
 
 ## Machine
 
 Apple M4 (10 cores), 16 GB, macOS 15.6.1, Apple clang 17.0.0 (clang-1700.6.4.2), 2026-11-05.
 
-## Results
+## Results since the FloatLib port (2026-11-11)
+
+Microseconds per tick, `copter_ref` over 27 launches (30 minus 3 warm-up), `copter_lean` over 5 (6
+minus 1; a course launch takes 22 s), on the flights of `sim/out/` flown on 2026-11-11 with musl's
+functions; the two vehicles' checksums agree on each mission (`00000f5a8e37c004` hover,
+`00001dee4e46dcdc` course).
+
+| mission (ticks) | vehicle | mean | sd | median | min | max |
+|---|---|---|---|---|---|---|
+| hover (4000) | `copter_ref` | 0.82 | 0.00 | 0.82 | 0.82 | 0.83 |
+| hover (4000) | `copter_lean` | 2633.30 | 12.38 | 2629.45 | 2619.95 | 2653.26 |
+| course-1ms (7797) | `copter_ref` | 1.04 | 0.01 | 1.04 | 1.03 | 1.05 |
+| course-1ms (7797) | `copter_lean` | 2810.29 | 20.24 | 2814.37 | 2776.86 | 2831.62 |
+
+`copter_lean` now takes longer than the 2500 µs control period of the 400 Hz loop (2.6 ms on the
+hover, 2.8 ms on the course; ratio to C++ about 3200 and 2700). Where the time goes (a sample profile;
+README.md, "The two vehicles", "Speed"): FloatLib's comparisons, which align two dyadic numbers with
+big integers (about 2 µs each), half of it; the rounding of rationals for literals and conversions
+of integer constants (about 1 µs each), a third; the arithmetic itself (FloatLib's word kernels,
+7 to 20 ns per operation) 2%, musl's functions 3%. Emitting literals and constant conversions as bit
+patterns brings the recorded flight from 2.88 to 1.91 ms per tick (measured, same checksum);
+comparisons and conversions on the bit patterns, proved equal to FloatLib's specifications, would
+remove most of the rest.
+
+## Results before the FloatLib port (2026-11-05)
 
 Microseconds per tick over 27 launches (30 minus 3 warm-up); the two vehicles' checksums agree on
 each mission (`00000f5a8e37bff7` hover, `00001dee4e46deba` course).
@@ -57,7 +84,7 @@ each mission (`00000f5a8e37bff7` hover, `00001dee4e46deba` course).
 | course-1ms (7797) | `copter_ref` | 1.04 | 0.32 | 0.98 | 0.92 | 2.62 |
 | course-1ms (7797) | `copter_lean` | 10.31 | 0.18 | 10.29 | 10.02 | 10.86 |
 
-Ratio of means, Lean to C++: 11.3 on the hover, 9.9 on the course. Both are far inside the 2500 µs
+Ratio of means, Lean to C++: 11.3 on the hover, 9.9 on the course. Both were far inside the 2500 µs
 control period of the 400 Hz loop. The one slow `copter_ref` launch on the course (2.62 µs per tick)
 is a single outlier; the median is unaffected.
 

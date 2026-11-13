@@ -1,0 +1,453 @@
+{
+ "namespace": "Musl.expf",
+ "source": "libm/unity/unity_expf.c",
+ "functions": [
+  {
+   "name": "eval_as_float",
+   "lean": "Musl.expf.eval_as_float",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:104-108"
+  },
+  {
+   "name": "eval_as_double",
+   "lean": "Musl.expf.eval_as_double",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_expf.c:110-114"
+  },
+  {
+   "name": "fp_barrierf",
+   "lean": "Musl.expf.fp_barrierf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:122-126"
+  },
+  {
+   "name": "__math_oflowf",
+   "lean": "Musl.expf.__math_oflowf",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:3-6"
+  },
+  {
+   "name": "__math_uflowf",
+   "lean": "Musl.expf.__math_uflowf",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:3-6"
+  },
+  {
+   "name": "__math_xflowf",
+   "lean": "Musl.expf.__math_xflowf",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:3-6"
+  },
+  {
+   "name": "top12",
+   "lean": "Musl.expf.top12",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "libm/unity/unity_expf.c:28-31"
+  },
+  {
+   "name": "expf",
+   "lean": "Musl.expf.expf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_expf.c:33-80"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "eval_as_float",
+   "cxx_call": "eval_as_float",
+   "lean": "Musl.expf.eval_as_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "eval_as_double",
+   "cxx_call": "eval_as_double",
+   "lean": "Musl.expf.eval_as_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "fp_barrierf",
+   "cxx_call": "fp_barrierf",
+   "lean": "Musl.expf.fp_barrierf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_oflowf",
+   "cxx_call": "__math_oflowf",
+   "lean": "Musl.expf.__math_oflowf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_uflowf",
+   "cxx_call": "__math_uflowf",
+   "lean": "Musl.expf.__math_uflowf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_xflowf",
+   "cxx_call": "__math_xflowf",
+   "lean": "Musl.expf.__math_xflowf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "top12",
+   "cxx_call": "top12",
+   "lean": "Musl.expf.top12",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "expf",
+   "cxx_call": "expf",
+   "lean": "Musl.expf.expf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Binary64.ofBits 0x4338000000000000",
+   "bits": "4338000000000000",
+   "cpp": "0x1.8p+52",
+   "at": "26:19"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fac6af84b912394",
+   "bits": "3fac6af84b912394",
+   "cpp": "0x1.c6af84b912394p-5",
+   "at": "28:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcebfce50fac4f3",
+   "bits": "3fcebfce50fac4f3",
+   "cpp": "0x1.ebfce50fac4f3p-3",
+   "at": "28:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe62e42ff0c52d6",
+   "bits": "3fe62e42ff0c52d6",
+   "cpp": "0x1.62e42ff0c52d6p-1",
+   "at": "28:47"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff71547652b82fe",
+   "bits": "3ff71547652b82fe",
+   "cpp": "0x1.71547652b82fep+0",
+   "at": "31:20"
+  },
+  {
+   "lean": "(88.0 : Binary32)",
+   "bits": "42b00000",
+   "cpp": "88",
+   "at": "41:6"
+  },
+  {
+   "lean": "Binary32.ofBits 0x7f800000",
+   "bits": "7f800000",
+   "cpp": "__builtin_inff",
+   "at": "43:20"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "44:11"
+  },
+  {
+   "lean": "Binary32.ofBits 0x42b17217",
+   "bits": "42b17217",
+   "cpp": "0x1.62e42ep6f",
+   "at": "47:11"
+  },
+  {
+   "lean": "Binary32.ofBits 0x70000000",
+   "bits": "70000000",
+   "cpp": "0x1p97f",
+   "at": "5:29"
+  },
+  {
+   "lean": "Binary32.ofBits 0x42cff1b4",
+   "bits": "42cff1b4",
+   "cpp": "0x1.9fe368p6f",
+   "at": "49:12"
+  },
+  {
+   "lean": "Binary32.ofBits 0x10000000",
+   "bits": "10000000",
+   "cpp": "0x1p-95f",
+   "at": "5:29"
+  },
+  {
+   "lean": "Int32.toBinary64 (1 : Int32)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "76:17"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

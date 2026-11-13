@@ -1,0 +1,4 @@
+{
+ "namespace": "Bytes",
+ "cpp2lean": ["--pointer-params", "--runtime-loops", "--c-strings", "--byte-objects", "--gotos", "--general-loops", "--uninit-reads"]
+}

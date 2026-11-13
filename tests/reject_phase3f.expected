@@ -1,0 +1,8 @@
+tests/reject_phase3f.cpp:47:40: rejected: `this` used as a value in a member function of `Point`, which has neither one file-scope object nor heap objects
+tests/reject_phase3f.cpp:67:34: rejected: access through a pointer to `Part`, which may point to 2 objects (only member function calls are dispatched)
+tests/reject_phase3f.cpp:69:35: rejected: call of `get` through a pointer to `Orphan`, of which the program has no object
+tests/reject_phase3f.cpp:71:20: rejected: placement `new` of `Cell` somewhere other than a slot of its heap objects
+tests/reject_phase3f.cpp:73:30: rejected: allocation whose size is not `sizeof(Cell) * k`
+tests/reject_phase3f.cpp:75:37: rejected: member function `count` of a semaphore with a result of type `uint32_t`
+tests/reject_phase3f.cpp:77:28: rejected: pointer cast to `Cell *` of something other than a pointer to its objects
+tests/reject_phase3f.cpp:92:10: rejected: access in a constructor through a pointer that may point to the heap object being constructed (`Leaf`)

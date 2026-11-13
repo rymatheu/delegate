@@ -1,0 +1,666 @@
+{
+ "translate": "ardupilot/translate_estimation.sh",
+ "out": "ardupilot/out/Estimation",
+ "namespace": "Estimation_lib",
+ "ref_flags": "AP_NavEKF3/AP_NavEKF3_core.cpp",
+ "access_control": false,
+ "skip_leaves": {
+  "EstScheduler": [
+   "_recs["
+  ]
+ },
+ "cxx_sources": [
+  "AP_Baro/AP_Baro.cpp",
+  "AP_Baro/AP_Baro_Backend.cpp",
+  "AP_Baro/AP_Baro_atmosphere.cpp",
+  "AP_Param/AP_ParamT.cpp",
+  "AP_Common/Location.cpp",
+  "AP_HAL/Device.cpp",
+  "Filter/DerivativeFilter.cpp",
+  "Filter/LowPassFilter.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Math/quaternion.cpp",
+  "AP_Math/location.cpp",
+  "AP_HAL/Util.cpp",
+  "AP_HAL/Scheduler.cpp",
+  "AP_HAL/Semaphores.cpp",
+  "AP_Compass/AP_Compass.cpp",
+  "AP_Compass/AP_Compass_Backend.cpp",
+  "AP_Compass/Compass_PerMotor.cpp",
+  "AP_Declination/AP_Declination.cpp",
+  "AP_Declination/tables.cpp",
+  "AP_HAL/RCOutput.cpp",
+  "AP_InertialSensor/AP_InertialSensor.cpp",
+  "AP_InertialSensor/AP_InertialSensor_Backend.cpp",
+  "AP_InertialSensor/AP_InertialSensor_Params.cpp",
+  "AP_GPS/AP_GPS.cpp",
+  "AP_GPS/GPS_Backend.cpp",
+  "AP_GPS/AP_GPS_Params.cpp",
+  "AP_RTC/AP_RTC.cpp",
+  "AP_RTC/JitterCorrection.cpp",
+  "Filter/LowPassFilter2p.cpp",
+  "AP_HAL/UARTDriver.cpp",
+  "AP_HAL/utility/BetterStream.cpp",
+  "AP_HAL/utility/print_vprintf.cpp",
+  "AP_HAL/utility/RingBuffer.cpp",
+  "AP_Math/crc.cpp",
+  "AP_HAL/utility/ftoa_engine.cpp",
+  "AP_HAL/utility/utoa_invert.cpp",
+  "AP_NavEKF/EKF_Buffer.cpp",
+  "AP_NavEKF/EKFGSF_yaw.cpp",
+  "AP_NavEKF/AP_NavEKF_Source.cpp",
+  "AP_NavEKF/AP_NavEKF_core_common.cpp",
+  "AP_NavEKF3/AP_NavEKF3.cpp",
+  "AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Control.cpp",
+  "AP_NavEKF3/AP_NavEKF3_GyroBias.cpp",
+  "AP_NavEKF3/AP_NavEKF3_MagFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Measurements.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Outputs.cpp",
+  "AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp",
+  "AP_NavEKF3/AP_NavEKF3_core.cpp",
+  "AP_DAL/AP_DAL.cpp",
+  "AP_DAL/AP_DAL_Airspeed.cpp",
+  "AP_DAL/AP_DAL_Baro.cpp",
+  "AP_DAL/AP_DAL_Compass.cpp",
+  "AP_DAL/AP_DAL_GPS.cpp",
+  "AP_DAL/AP_DAL_InertialSensor.cpp",
+  "AP_Math/control.cpp"
+ ],
+ "cxx_env": [
+  "reference/hal/sensors.cpp",
+  "reference/hal/sensors_baro.cpp",
+  "reference/hal/sensors_compass.cpp",
+  "reference/hal/sensors_ins.cpp",
+  "reference/hal/sensors_gps.cpp",
+  "reference/hal/est_scheduler.cpp",
+  "reference/hal/est_uart.cpp",
+  "ardupilot/estimation_env.cpp"
+ ],
+ "world": {
+  "cxx_include": [
+   "<AP_Baro/AP_Baro.h>",
+   "<AP_Baro/AP_Baro_SITL.h>",
+   "<AP_Compass/AP_Compass.h>",
+   "<AP_Compass/AP_Compass_SITL.h>",
+   "<SITL/SITL.h>",
+   "<AP_InertialSensor/AP_InertialSensor.h>",
+   "<AP_InertialSensor/AP_InertialSensor_SITL.h>",
+   "<AP_GPS/AP_GPS.h>",
+   "<AP_GPS/AP_GPS_SITL.h>",
+   "<AP_RTC/AP_RTC.h>",
+   "\"est_scheduler.h\"",
+   "\"est_uart.h\"",
+   "\"cpp2lean_events.h\"",
+   "<AP_NavEKF3/AP_NavEKF3.h>",
+   "<AP_NavEKF3/AP_NavEKF3_core.h>",
+   "<AP_NavEKF/EKFGSF_yaw.h>",
+   "<AP_DAL/AP_DAL.h>"
+  ],
+  "cxx_world": {
+   "unity": "ardupilot/unity_estimation.cpp"
+  },
+  "globals": [
+   "extern bool cpp2lean_watchdog_reset;",
+   "extern Location cpp2lean_origin;",
+   "extern bool cpp2lean_origin_ok;",
+   "extern Location cpp2lean_location;",
+   "extern bool cpp2lean_location_ok;",
+   "extern float cpp2lean_current;",
+   "extern bool cpp2lean_current_ok;",
+   "void cpp2lean_set_armed(bool v);",
+   "extern bool cpp2lean_find_serial[2];",
+   "extern bool cpp2lean_gyro_id_loaded;",
+   "extern bool cpp2lean_accel_id_loaded;",
+   "void *cpp2lean_env_raw_alloc(size_t n) { void *p = malloc(n); if (p) memset(p, 0, n); return p; }",
+   "extern uint32_t cpp2lean_available_memory;",
+   "void cpp2lean_ahrs_home(int part, long long v);",
+   "void cpp2lean_ahrs_vehicle_class(unsigned v);",
+   "void cpp2lean_ahrs_fly_forward(bool v);",
+   "void cpp2lean_ahrs_takeoff_expected(bool v);",
+   "void cpp2lean_ahrs_touchdown_expected(bool v);",
+   "void cpp2lean_ahrs_ekf_type(int v);",
+   "void cpp2lean_ahrs_trim(int k, float v);",
+   "void cpp2lean_ahrs_rot(int row, int k, float v);",
+   "void cpp2lean_time_flying(uint32_t ms);"
+  ],
+  "inputs": {
+   "barometer.was_watchdog_reset": "cpp2lean_watchdog_reset = %s;",
+   "barometer.get_soft_armed": "cpp2lean_set_armed(%s);",
+   "barometer.get_origin_ret.relative_alt": "cpp2lean_origin.relative_alt = %s;",
+   "barometer.get_origin_ret.loiter_ccw": "cpp2lean_origin.loiter_ccw = %s;",
+   "barometer.get_origin_ret.terrain_alt": "cpp2lean_origin.terrain_alt = %s;",
+   "barometer.get_origin_ret.origin_alt": "cpp2lean_origin.origin_alt = %s;",
+   "barometer.get_origin_ret.loiter_xtrack": "cpp2lean_origin.loiter_xtrack = %s;",
+   "barometer.get_origin_ret.alt": "cpp2lean_origin.alt = %s;",
+   "barometer.get_origin_ret.lat": "cpp2lean_origin.lat = %s;",
+   "barometer.get_origin_ret.lng": "cpp2lean_origin.lng = %s;",
+   "barometer.get_origin": "cpp2lean_origin_ok = %s;",
+   "compass.get_location_loc.relative_alt": "cpp2lean_location.relative_alt = %s;",
+   "compass.get_location_loc.loiter_ccw": "cpp2lean_location.loiter_ccw = %s;",
+   "compass.get_location_loc.terrain_alt": "cpp2lean_location.terrain_alt = %s;",
+   "compass.get_location_loc.origin_alt": "cpp2lean_location.origin_alt = %s;",
+   "compass.get_location_loc.loiter_xtrack": "cpp2lean_location.loiter_xtrack = %s;",
+   "compass.get_location_loc.alt": "cpp2lean_location.alt = %s;",
+   "compass.get_location_loc.lat": "cpp2lean_location.lat = %s;",
+   "compass.get_location_loc.lng": "cpp2lean_location.lng = %s;",
+   "compass.get_location": "cpp2lean_location_ok = %s;",
+   "compass._per_motor.find_channel_chan": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.find_channel_k_motor1": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.find_channel_k_motor2": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.find_channel_k_motor3": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.find_channel_k_motor4": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "heap'AP_Compass_SITL.current_amps_current": "cpp2lean_current = %s;",
+   "heap'AP_Compass_SITL.current_amps_0": "cpp2lean_current_ok = %s;",
+   "ins.gyro_id__gyro_count_loaded": "cpp2lean_gyro_id_loaded = %s;",
+   "ins.accel_id__accel_count_loaded": "cpp2lean_accel_id_loaded = %s;",
+   "gps.find_serial_found_SerialProtocol_GPS_at1[1]": "cpp2lean_find_serial[1] = %s;",
+   "heap'AP_DAL.get_time_flying_ms": "cpp2lean_time_flying(%s);",
+   "heap'AP_DAL.get_home.relative_alt": "cpp2lean_ahrs_home(0, %s);",
+   "heap'AP_DAL.get_home.loiter_ccw": "cpp2lean_ahrs_home(1, %s);",
+   "heap'AP_DAL.get_home.terrain_alt": "cpp2lean_ahrs_home(2, %s);",
+   "heap'AP_DAL.get_home.origin_alt": "cpp2lean_ahrs_home(3, %s);",
+   "heap'AP_DAL.get_home.loiter_xtrack": "cpp2lean_ahrs_home(4, %s);",
+   "heap'AP_DAL.get_home.alt": "cpp2lean_ahrs_home(5, %s);",
+   "heap'AP_DAL.get_home.lat": "cpp2lean_ahrs_home(6, %s);",
+   "heap'AP_DAL.get_home.lng": "cpp2lean_ahrs_home(7, %s);",
+   "heap'AP_DAL.get_vehicle_class": "cpp2lean_ahrs_vehicle_class(%s);",
+   "heap'AP_DAL.get_fly_forward": "cpp2lean_ahrs_fly_forward(%s);",
+   "heap'AP_DAL.get_takeoff_expected": "cpp2lean_ahrs_takeoff_expected(%s);",
+   "heap'AP_DAL.get_touchdown_expected": "cpp2lean_ahrs_touchdown_expected(%s);",
+   "heap'AP_DAL.available_memory": "cpp2lean_available_memory = %s;",
+   "heap'AP_DAL.get_trim.x": "cpp2lean_ahrs_trim(0, %s);",
+   "heap'AP_DAL.get_trim.y": "cpp2lean_ahrs_trim(1, %s);",
+   "heap'AP_DAL.get_trim.z": "cpp2lean_ahrs_trim(2, %s);",
+   "heap'AP_DAL.configured_ekf_type": "cpp2lean_ahrs_ekf_type(%s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.a.x": "cpp2lean_ahrs_rot(0, 0, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.a.y": "cpp2lean_ahrs_rot(0, 1, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.a.z": "cpp2lean_ahrs_rot(0, 2, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.b.x": "cpp2lean_ahrs_rot(1, 0, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.b.y": "cpp2lean_ahrs_rot(1, 1, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.b.z": "cpp2lean_ahrs_rot(1, 2, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.c.x": "cpp2lean_ahrs_rot(2, 0, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.c.y": "cpp2lean_ahrs_rot(2, 1, %s);",
+   "heap'AP_DAL.get_rotation_vehicle_body_to_autopilot_body.c.z": "cpp2lean_ahrs_rot(2, 2, %s);",
+   "compass._per_motor.read_last_sent_at[0]": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.read_last_sent_at[1]": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.scale_esc_to_unity_at[0]": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets",
+   "compass._per_motor.scale_esc_to_unity_at[1]": "(void)(%s);   // read with COMPASS_PMOT_EN 1 only, which no call sets"
+  },
+  "calls": 600,
+  "exclude": [
+   "barometer.init",
+   "barometer.calibrate",
+   "barometer.register_sensor",
+   "barometer._add_backend",
+   "compass.init",
+   "ins.init",
+   "ins.init_gyro",
+   "ins._init_gyro",
+   "est_scheduler.feed_baro_lines",
+   "EKF3.coreBetterScore",
+   "EKF3.resetCoreErrors",
+   "EKF3.switchLane",
+   "EKF3.updateCoreErrorScores",
+   "EKF3.updateCoreRelativeErrors",
+   "EKF3.updateLaneSwitchPosDownResetData",
+   "EKF3.updateLaneSwitchPosResetData",
+   "EKF3.updateLaneSwitchYawResetData",
+   "EKF3.init"
+  ],
+  "exclude_note": "init (a second init registers more back ends than BARO_MAX_DRIVERS: AP_HAL::panic), calibrate (its second loop has no delay: it ends only when samples arrive, so it runs in the setup, after lines with samples are fed), register_sensor and _add_backend (beyond BARO_MAX_INSTANCES: panic) are called in the setup only; ins.init and its gyro calibration (it waits for samples until it converges or 30 s of lines pass) in the setup only; NavEKF3's private helpers (called by its entry points)",
+  "domains": {
+   "instance": [
+    0,
+    2
+   ],
+   "n0": [
+    1,
+    3
+   ],
+   "i": [
+    0,
+    2
+   ],
+   "loop_rate": [
+    50,
+    400
+   ],
+   "ms": [
+    0,
+    20
+   ],
+   "usec": [
+    0,
+    5000
+   ],
+   "us": [
+    0,
+    5000
+   ],
+   "n": [
+    0,
+    40
+   ]
+  },
+  "ranges": {
+   "pa": [
+    90000,
+    110000
+   ],
+   "dpa": [
+    -2,
+    2
+   ],
+   "degc": [
+    -20,
+    50
+   ],
+   "dt_us": [
+    100,
+    5000
+   ],
+   "k": [
+    1,
+    8
+   ],
+   "pressure": [
+    90000,
+    110000
+   ],
+   "base_pressure": [
+    90000,
+    110000
+   ],
+   "altitude": [
+    -100,
+    3000
+   ],
+   "hz": [
+    400,
+    2000
+   ],
+   "@barometer.get_origin_ret.alt": [
+    0,
+    100000
+   ],
+   "@barometer.get_origin_ret.lat": [
+    -900000000,
+    900000000
+   ],
+   "@barometer.get_origin_ret.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "thr_pct": [
+    0,
+    1
+   ],
+   "voltage": [
+    3,
+    17
+   ],
+   "mx": [
+    -600,
+    600
+   ],
+   "my": [
+    -600,
+    600
+   ],
+   "mz": [
+    -600,
+    600
+   ],
+   "@heap'AP_Compass_SITL.current_amps_current": [
+    0,
+    30
+   ],
+   "@compass.get_location_loc.lat": [
+    -900000000,
+    900000000
+   ],
+   "@compass.get_location_loc.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "@heap'AP_DAL.get_time_flying_ms": [
+    0,
+    100000
+   ],
+   "@heap'AP_DAL.get_home.lat": [
+    -900000000,
+    900000000
+   ],
+   "@heap'AP_DAL.get_home.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "@heap'AP_DAL.get_home.alt": [
+    0,
+    100000
+   ],
+   "@heap'AP_DAL.get_vehicle_class": [
+    0,
+    4
+   ],
+   "@heap'AP_DAL.configured_ekf_type": [
+    0,
+    3
+   ]
+  },
+  "weights": {
+   "est_scheduler.feed_line": 40,
+   "est_scheduler.feed_baro_lines": 3,
+   "barometer.update": 20,
+   "est_scheduler.delay": 12,
+   "est_scheduler.delay_microseconds": 8,
+   "est_scheduler.delay_microseconds_boost": 2,
+   "compass.read": 15,
+   "est_scheduler.feed_imu_lines": 2,
+   "ins.update": 15,
+   "ins.wait_for_sample": 4,
+   "gps.update": 10,
+   "EKF3.UpdateFilter": 20,
+   "EKF3.InitialiseFilter": 5
+  },
+  "input_corners": "readers",
+  "input_aliases": {
+   "ins.was_watchdog_reset": "barometer.was_watchdog_reset",
+   "rtc.get_soft_armed": "barometer.get_soft_armed",
+   "heap'AP_InertialSensor_SITL.get_soft_armed": "barometer.get_soft_armed",
+   "heap'AP_DAL.get_soft_armed": "barometer.get_soft_armed"
+  },
+  "input_aliases_note": "one C++ value read by several objects: the HAL's watchdog flag (the barometer, the inertial sensor's calibration timing) and armed flag (the barometer, AP_RTC, the IMU back end's convergence)",
+  "const_inputs": {
+   "gps.params_0_type_configured": "1",
+   "gps.find_serial_found_SerialProtocol_GPS_at1[0]": "1",
+   "heap'AP_DAL.nonnull": "0",
+   "heap'AP_DAL.num_sensors": "0",
+   "heap'AP_DAL.available_memory": "524288"
+  },
+  "const_inputs_note": "what the environment returns: GPS1_TYPE stored in storage (AP_Param::configured() of gps.params[0].type, sensors_env.cpp), the GPS protocol's first port found (the GPS port stand-in est_uart, as the reference's SERIAL3); AP::wheelencoder() is null (AP_WHEELENCODER_ENABLED 0): its count is not read; the HAL's free memory is the reference HAL's constant (reference/hal/lockstep.cpp, 512 KiB: a value below the cores' size disables EKF3 for good, AP_NavEKF3.cpp:842)",
+  "indexed_input_lengths": {
+   "gps.find_serial_found_SerialProtocol_GPS_at1": 2
+  },
+  "unlogged_outputs": [
+   "AP_Notify_flags_initialising",
+   "AP_Notify_flags_gyro_calibrated",
+   "AP_Notify_flags_gps_status",
+   "AP_Notify_flags_gps_num_sats"
+  ],
+  "unlogged_outputs_note": "AP_Notify's LED and buzzer flags (a static struct of a class outside the World): the C++ side cannot observe a write to it",
+  "state_params": {
+   "gps.params[0].type._value": "100"
+  },
+  "guards": {
+   "ins.update": {
+    "cxx": "est_scheduler._count >= 16",
+    "lean": "w.est_scheduler._count.toNat ≥ 16"
+   },
+   "ins.wait_for_sample": {
+    "cxx": "est_scheduler._count >= 16",
+    "lean": "w.est_scheduler._count.toNat ≥ 16"
+   },
+   "EKF3.checkLaneSwitch": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.configuredToUseGPSForPosXY": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getAccelBias": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getActiveAirspeed": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getEkfControlLimits": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getEulerAngles": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getFilterFaults": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getFilterStatus": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getGyroBias": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getHAGL": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getHeightControlLimit": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getInnovations": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getLLH": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getMagNED": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getMagOffsets": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getMagXYZ": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getOriginLLH": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPosD": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPosDownDerivative": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPosDownResetCount": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPosNE": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPosNorthEastResetCount": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPrimaryCoreIMUIndex": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getPrimaryCoreIndex": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getQuaternion": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getRotationBodyToNED": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getTerrainAltVariance": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getVariances": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getVelNED": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getWind": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.getYawResetCount": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.healthy": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.isVibrationAffected": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.option_is_enabled": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.requestYawReset": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.resetGyroBias": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.resetHeightDatum": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.setOriginLLH": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.setTerrainHgtStable": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.use_compass": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.using_extnav_for_yaw": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.using_gps": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   },
+   "EKF3.using_noncompass_for_yaw": {
+    "cxx": "EKF3.core != nullptr",
+    "lean": "w.EKF3.core != Estimation_lib.WPtr.null"
+   }
+  },
+  "guards_note": "AP_InertialSensor::wait_for_sample (also inside update) loops until IMU samples arrive: called only while at least 16 input records are fed (every random line has an IMU sample); random barometer-only lines (feed_baro_lines) are fed in the setups only; NavEKF3's entry points other than InitialiseFilter and UpdateFilter are called only once it has cores (AP_AHRS calls them only after EKF3 started; several index core[] without a null test, e.g. checkLaneSwitch, AP_NavEKF3.cpp)",
+  "cxx_union_params": {
+   "EKF3.getFilterStatus.status": "nav_filter_status"
+  },
+  "cxx_union_params_note": "NavEKF3::getFilterStatus's out-parameter, the union nav_filter_status, is its uint32_t `value` in the model (--ekf-types)",
+  "input_domains": {
+   "heap'AP_DAL.get_home.relative_alt": [
+    0,
+    1
+   ],
+   "heap'AP_DAL.get_home.loiter_ccw": [
+    0,
+    1
+   ],
+   "heap'AP_DAL.get_home.terrain_alt": [
+    0,
+    1
+   ],
+   "heap'AP_DAL.get_home.origin_alt": [
+    0,
+    1
+   ],
+   "heap'AP_DAL.get_home.loiter_xtrack": [
+    0,
+    1
+   ]
+  },
+  "input_domains_note": "the home's frame flags are one-bit bit-fields of Location (AP_Common/Location.h): AP_AHRS::get_home returns 0 or 1",
+  "leaf_domains": {
+   "relative_alt": [
+    0,
+    1
+   ],
+   "loiter_ccw": [
+    0,
+    1
+   ],
+   "terrain_alt": [
+    0,
+    1
+   ],
+   "origin_alt": [
+    0,
+    1
+   ],
+   "loiter_xtrack": [
+    0,
+    1
+   ]
+  },
+  "leaf_domains_note": "Location's frame flags are one-bit bit-fields (AP_Common/Location.h): the struct arguments of EKF3's getters (getLLH, getOriginLLH, setOriginLLH)"
+ },
+ "world_runs": [
+  {
+   "run": "calibrated",
+   "setup": [
+    "est_scheduler.feed_baro_lines 900 4 47b893d4 3d4ccccd 41a00000",
+    "barometer.init",
+    "compass.init",
+    "gps.init",
+    "barometer.calibrate 1",
+    "est_scheduler.feed_imu_lines 300 4 3c23d70a bc23d70a c11ce80a 3a83126f ba83126f 3b03126f 47b893d4 41a00000",
+    "ins.init 400",
+    "EKF3.InitialiseFilter"
+   ],
+   "range_prob": 1.0,
+   "run_note": "plausible samples: 900 lines with a pressure sample every 4th (about 94500 Pa, 20 deg C) before init and calibrate, GPS1_TYPE 100 (the GPS stand-in), then 300 lines with three samples of each IMU (level, small gyro rates) for the gyro calibration of ins.init(400), then random lines (at least one IMU sample each), updates, delays and getters with values in the ranges; then EKF3.InitialiseFilter (the cores allocated and set up; random calls of InitialiseFilter, UpdateFilter and the other entry points follow)"
+  },
+  {
+   "run": "wild",
+   "setup": [
+    "est_scheduler.feed_baro_lines 900 3 47c35000 bf800000 c1a00000",
+    "barometer.init",
+    "compass.init",
+    "gps.init",
+    "barometer.calibrate 0",
+    "est_scheduler.feed_imu_lines 300 3 00000000 00000000 c11ce80a 00000000 00000000 00000000 47c35000 c1a00000",
+    "ins.init 400",
+    "EKF3.InitialiseFilter"
+   ],
+   "range_prob": 0.85,
+   "run_note": "the same with 15% of the random values outside the ranges (NaN, infinities, huge values) and the corner values of every argument and input; then EKF3.InitialiseFilter (the cores allocated and set up; random calls of InitialiseFilter, UpdateFilter and the other entry points follow)"
+  }
+ ]
+}

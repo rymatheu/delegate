@@ -1,0 +1,477 @@
+{
+ "namespace": "Musl.log2f",
+ "source": "libm/unity/unity_log2f.c",
+ "functions": [
+  {
+   "name": "eval_as_float",
+   "lean": "Musl.log2f.eval_as_float",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_log2f.c:104-108"
+  },
+  {
+   "name": "fp_barrierf",
+   "lean": "Musl.log2f.fp_barrierf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_log2f.c:122-126"
+  },
+  {
+   "name": "__math_divzerof",
+   "lean": "Musl.log2f.__math_divzerof",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_log2f.c:3-6"
+  },
+  {
+   "name": "__math_invalidf",
+   "lean": "Musl.log2f.__math_invalidf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_log2f.c:3-6"
+  },
+  {
+   "name": "log2f",
+   "lean": "Musl.log2f.log2f",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_log2f.c:26-72"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "eval_as_float",
+   "cxx_call": "eval_as_float",
+   "lean": "Musl.log2f.eval_as_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "fp_barrierf",
+   "cxx_call": "fp_barrierf",
+   "lean": "Musl.log2f.fp_barrierf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_divzerof",
+   "cxx_call": "__math_divzerof",
+   "lean": "Musl.log2f.__math_divzerof",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_invalidf",
+   "cxx_call": "__math_invalidf",
+   "lean": "Musl.log2f.__math_invalidf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "log2f",
+   "cxx_call": "log2f",
+   "lean": "Musl.log2f.log2f",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Binary64.ofBits 0x3ff661ec79f8f3be",
+   "bits": "3ff661ec79f8f3be",
+   "cpp": "0x1.661ec79f8f3bep+0",
+   "at": "12:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdefec65b963019",
+   "bits": "3fdefec65b963019",
+   "cpp": "0x1.efec65b963019p-2",
+   "at": "12:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff571ed4aaf883d",
+   "bits": "3ff571ed4aaf883d",
+   "cpp": "0x1.571ed4aaf883dp+0",
+   "at": "13:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdb0b6832d4fca4",
+   "bits": "3fdb0b6832d4fca4",
+   "cpp": "0x1.b0b6832d4fca4p-2",
+   "at": "13:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff49539f0f010b0",
+   "bits": "3ff49539f0f010b0",
+   "cpp": "0x1.49539f0f010bp+0",
+   "at": "14:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd7418b0a1fb77b",
+   "bits": "3fd7418b0a1fb77b",
+   "cpp": "0x1.7418b0a1fb77bp-2",
+   "at": "14:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff3c995b0b80385",
+   "bits": "3ff3c995b0b80385",
+   "cpp": "0x1.3c995b0b80385p+0",
+   "at": "15:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd39de91a6dcf7b",
+   "bits": "3fd39de91a6dcf7b",
+   "cpp": "0x1.39de91a6dcf7bp-2",
+   "at": "15:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff30d190c8864a5",
+   "bits": "3ff30d190c8864a5",
+   "cpp": "0x1.30d190c8864a5p+0",
+   "at": "16:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd01d9bf3f2b631",
+   "bits": "3fd01d9bf3f2b631",
+   "cpp": "0x1.01d9bf3f2b631p-2",
+   "at": "16:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff25e227b0b8ea0",
+   "bits": "3ff25e227b0b8ea0",
+   "cpp": "0x1.25e227b0b8eap+0",
+   "at": "17:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc97c1d1b3b7af0",
+   "bits": "3fc97c1d1b3b7af0",
+   "cpp": "0x1.97c1d1b3b7afp-3",
+   "at": "17:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff1bb4a4a1a343f",
+   "bits": "3ff1bb4a4a1a343f",
+   "cpp": "0x1.1bb4a4a1a343fp+0",
+   "at": "18:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc2f9e393af3c9f",
+   "bits": "3fc2f9e393af3c9f",
+   "cpp": "0x1.2f9e393af3c9fp-3",
+   "at": "18:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff12358f08ae5ba",
+   "bits": "3ff12358f08ae5ba",
+   "cpp": "0x1.12358f08ae5bap+0",
+   "at": "19:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb960cbbf788d5c",
+   "bits": "3fb960cbbf788d5c",
+   "cpp": "0x1.960cbbf788d5cp-4",
+   "at": "19:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0953f419900a7",
+   "bits": "3ff0953f419900a7",
+   "cpp": "0x1.0953f419900a7p+0",
+   "at": "20:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3faa6f9db6475fce",
+   "bits": "3faa6f9db6475fce",
+   "cpp": "0x1.a6f9db6475fcep-5",
+   "at": "20:28"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0000000000000",
+   "bits": "3ff0000000000000",
+   "cpp": "0x1p+0",
+   "at": "21:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x0000000000000000",
+   "bits": "0000000000000000",
+   "cpp": "0x0p+0",
+   "at": "21:13"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fee608cfd9a47ac",
+   "bits": "3fee608cfd9a47ac",
+   "cpp": "0x1.e608cfd9a47acp-1",
+   "at": "22:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb338ca9f24f53d",
+   "bits": "3fb338ca9f24f53d",
+   "cpp": "0x1.338ca9f24f53dp-4",
+   "at": "22:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feca4b31f026aa0",
+   "bits": "3feca4b31f026aa0",
+   "cpp": "0x1.ca4b31f026aap-1",
+   "at": "23:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc476a9543891ba",
+   "bits": "3fc476a9543891ba",
+   "cpp": "0x1.476a9543891bap-3",
+   "at": "23:26"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feb2036576afce6",
+   "bits": "3feb2036576afce6",
+   "cpp": "0x1.b2036576afce6p-1",
+   "at": "24:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fce840b4ac4e4d2",
+   "bits": "3fce840b4ac4e4d2",
+   "cpp": "0x1.e840b4ac4e4d2p-3",
+   "at": "24:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe9c2d163a1aa2d",
+   "bits": "3fe9c2d163a1aa2d",
+   "cpp": "0x1.9c2d163a1aa2dp-1",
+   "at": "25:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd40645f0c6651c",
+   "bits": "3fd40645f0c6651c",
+   "cpp": "0x1.40645f0c6651cp-2",
+   "at": "25:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe886e6037841ed",
+   "bits": "3fe886e6037841ed",
+   "cpp": "0x1.886e6037841edp-1",
+   "at": "26:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd88e9c2c1b9ff8",
+   "bits": "3fd88e9c2c1b9ff8",
+   "cpp": "0x1.88e9c2c1b9ff8p-2",
+   "at": "26:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe767dcf5534862",
+   "bits": "3fe767dcf5534862",
+   "cpp": "0x1.767dcf5534862p-1",
+   "at": "27:5"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdce0a44eb17bcc",
+   "bits": "3fdce0a44eb17bcc",
+   "cpp": "0x1.ce0a44eb17bccp-2",
+   "at": "27:27"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd712b6f70a7e4d",
+   "bits": "3fd712b6f70a7e4d",
+   "cpp": "0x1.712b6f70a7e4dp-2",
+   "at": "30:4"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdecabf496832e0",
+   "bits": "3fdecabf496832e0",
+   "cpp": "0x1.ecabf496832ep-2",
+   "at": "30:26"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe715479ffae3de",
+   "bits": "3fe715479ffae3de",
+   "cpp": "0x1.715479ffae3dep-1",
+   "at": "30:48"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff715475f35c8b8",
+   "bits": "3ff715475f35c8b8",
+   "cpp": "0x1.715475f35c8b8p0",
+   "at": "31:3"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "35:10"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "5:29"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "5:44"
+  },
+  {
+   "lean": "(8388608.0 : Binary32)",
+   "bits": "4b000000",
+   "cpp": "8388608",
+   "at": "45:8"
+  },
+  {
+   "lean": "Int32.toBinary64 (1 : Int32)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "62:17"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

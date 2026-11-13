@@ -1,0 +1,4 @@
+tests/reject_phase3h.cpp:8:13: rejected: bit-field `kind` of type `uint8_t` (only bool bit-fields are translated)
+tests/reject_phase3h.cpp:9:13: rejected: bit-field `rest` of type `uint8_t` (only bool bit-fields are translated)
+tests/reject_phase3h.cpp:18:16: rejected: local reference variable `r` bound to something other than a data member (through data members only) of this object or of a local variable
+tests/reject_phase3h.cpp:22:9: rejected: range-based `for` over something other than an array member or variable

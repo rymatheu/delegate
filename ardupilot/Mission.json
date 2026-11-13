@@ -1,0 +1,163 @@
+{
+ "translate": "ardupilot/translate_mission.sh",
+ "out": "ardupilot/out/Mission",
+ "namespace": "Mission_lib",
+ "ref_flags": "AP_Mission/AP_Mission.cpp",
+ "access_control": false,
+ "cxx_flags": [
+  "-I$HERE/ardupilot",
+  "-DAP_SDCARD_STORAGE_ENABLED=0"
+ ],
+ "cxx_sources": [
+  "AP_Mission/AP_Mission.cpp",
+  "StorageManager/StorageManager.cpp",
+  "AP_Param/AP_ParamT.cpp",
+  "AP_Math/location.cpp",
+  "AP_Common/Location.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_HAL/Storage.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/mission_env.cpp"
+ ],
+ "world": {
+  "cxx_include": [
+   "\"mission_driver.h\""
+  ],
+  "cxx_world": {
+   "unity": "ardupilot/unity_mission.cpp"
+  },
+  "objects": [
+   "tester"
+  ],
+  "globals": [
+   "void cpp2lean_set_armed(bool b);",
+   "extern uint32_t cpp2lean_millis;",
+   "Location &cpp2lean_home();"
+  ],
+  "inputs": {
+   "mission.get_soft_armed": "cpp2lean_set_armed(%s);",
+   "mission.millis": "cpp2lean_millis = %s;",
+   "mission.get_home.relative_alt": "cpp2lean_home().relative_alt = %s;",
+   "mission.get_home.loiter_ccw": "cpp2lean_home().loiter_ccw = %s;",
+   "mission.get_home.terrain_alt": "cpp2lean_home().terrain_alt = %s;",
+   "mission.get_home.origin_alt": "cpp2lean_home().origin_alt = %s;",
+   "mission.get_home.loiter_xtrack": "cpp2lean_home().loiter_xtrack = %s;",
+   "mission.get_home.alt": "cpp2lean_home().alt = %s;",
+   "mission.get_home.lat": "cpp2lean_home().lat = %s;",
+   "mission.get_home.lng": "cpp2lean_home().lng = %s;"
+  },
+  "calls": 3000,
+  "range_prob": 1.0,
+  "domains": {
+   "tester.t_boot.total": [
+    -3,
+    450
+   ],
+   "tester.t_boot.mode": [
+    0,
+    5
+   ],
+   "tester.t_boot.options": [
+    0,
+    15
+   ],
+   "tester.t_add.kind": [
+    0,
+    7
+   ],
+   "tester.t_replace.index": [
+    0,
+    60
+   ],
+   "tester.t_replace.kind": [
+    0,
+    7
+   ],
+   "tester.t_raw.index": [
+    0,
+    60
+   ],
+   "tester.t_raw.tag": [
+    0,
+    7
+   ],
+   "tester.t_read.index": [
+    0,
+    60
+   ],
+   "tester.t_truncate.index": [
+    0,
+    60
+   ],
+   "tester.t_next.start": [
+    0,
+    60
+   ],
+   "tester.t_conv.kind": [
+    0,
+    15
+   ],
+   "tester.t_item.kind": [
+    0,
+    15
+   ],
+   "@relative_alt": [
+    0,
+    1
+   ],
+   "@loiter_ccw": [
+    0,
+    1
+   ],
+   "@terrain_alt": [
+    0,
+    1
+   ],
+   "@origin_alt": [
+    0,
+    1
+   ],
+   "@loiter_xtrack": [
+    0,
+    1
+   ],
+   "tester.t_get.index": [
+    0,
+    60
+   ]
+  },
+  "ranges": {
+   "relative_alt": [
+    0,
+    1
+   ],
+   "loiter_ccw": [
+    0,
+    1
+   ],
+   "terrain_alt": [
+    0,
+    1
+   ],
+   "origin_alt": [
+    0,
+    1
+   ],
+   "loiter_xtrack": [
+    0,
+    1
+   ],
+   "millis": [
+    0,
+    100000000
+   ]
+  }
+ },
+ "world_runs": [
+  {
+   "run": "defaults",
+   "run_note": "random command sequences, raw records and conversions from the boot images t_boot makes"
+  }
+ ]
+}

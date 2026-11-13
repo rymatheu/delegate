@@ -34,6 +34,7 @@
   "-DHAL_WITH_POSTYPE_DOUBLE=1",
   "-DHAL_WITH_EKF_DOUBLE=1",
   "-DAP_FILTER_ENABLED=0",
+  "-DAP_CUSTOMROTATIONS_ENABLED=0",
   "-I$STUBS",
   "-I$L/AP_Common/missing",
   "-I$L",
@@ -47,13 +48,17 @@
   "AP_Math/vector3.cpp",
   "AP_Math/matrix3.cpp",
   "AP_Math/quaternion.cpp",
-  "AP_Math/location.cpp"
+  "AP_Math/location.cpp",
+  "AP_Math/matrix_alg.cpp",
+  "AP_Math/crc.cpp",
+  "AP_Math/location_double.cpp"
  ],
  "cxx_env": [
   "ardupilot/ap_math_env.cpp"
  ],
  "cxx_include": [
-  "<AP_Math/AP_Math.h>"
+  "<AP_Math/AP_Math.h>",
+  "<AP_Math/div1000.h>"
  ],
  "free": {
   "calls": 20000,
@@ -473,12 +478,228 @@
    "c.z": [
     -1,
     1
+   ],
+   "mat_inverse_float.x": [
+    -3,
+    3
+   ],
+   "mat_inverse_float.y": [
+    -3,
+    3
+   ],
+   "mat_mul_float.A": [
+    -3,
+    3
+   ],
+   "mat_mul_float.B": [
+    -3,
+    3
+   ],
+   "mat_mul_float.C": [
+    -3,
+    3
+   ],
+   "mat_identity_float.A": [
+    -3,
+    3
+   ],
+   "mat_inverse_double.x": [
+    -3,
+    3
+   ],
+   "mat_inverse_double.y": [
+    -3,
+    3
+   ],
+   "mat_mul_double.A": [
+    -3,
+    3
+   ],
+   "mat_mul_double.B": [
+    -3,
+    3
+   ],
+   "mat_mul_double.C": [
+    -3,
+    3
+   ],
+   "mat_identity_double.A": [
+    -3,
+    3
+   ],
+   "llh": [
+    -1.6,
+    1.6
+   ],
+   "ecef": [
+    -7000000,
+    7000000
    ]
   },
   "unit_args": {
    "axis": 0.9
   },
-  "weights": {}
+  "weights": {},
+  "array_len": {
+   "crc_crc8.p": "len",
+   "crc8_generic.buf": "buf_len",
+   "crc8_dvb_s2_update.data": "length",
+   "crc8_dvb_update.buf": "buf_len",
+   "crc8_maxim.data": "length",
+   "crc8_sae.data": "length",
+   "crc8_rds02uf.data": "length",
+   "crc_xor_of_bytes.data": "length",
+   "crc_xmodem.data": "len",
+   "crc_crc32.buf": "size",
+   "crc32_small.buf": "size",
+   "crc16_ccitt.buf": "len",
+   "crc16_ccitt_r.buf": "len",
+   "crc16_ccitt_GDL90.buf": "len",
+   "calc_crc_modbus.buf": "len",
+   "crc_fletcher16.buffer": "len",
+   "hash_fnv_1a.buf": "len",
+   "crc_crc24.bytes": "len",
+   "crc_sum8_with_carry.p": "len",
+   "crc_crc16_ibm.data_blk_ptr": "data_blk_size",
+   "crc_crc64.data": "num_words",
+   "crc_sum_of_bytes_16.data": "count",
+   "crc_sum_of_bytes.data": "count",
+   "crc_crc4.data": "8",
+   "mat_inverse_float.x": "dim*dim",
+   "mat_inverse_float.y": "dim*dim",
+   "mat_mul_float.A": "n*n",
+   "mat_mul_float.B": "n*n",
+   "mat_mul_float.C": "n*n",
+   "mat_identity_float.A": "n*n",
+   "mat_inverse_double.x": "dim*dim",
+   "mat_inverse_double.y": "dim*dim",
+   "mat_mul_double.A": "n*n",
+   "mat_mul_double.B": "n*n",
+   "mat_mul_double.C": "n*n",
+   "mat_identity_double.A": "n*n"
+  },
+  "domains": {
+   "crc_crc8.len": [
+    0,
+    96
+   ],
+   "crc8_generic.buf_len": [
+    0,
+    96
+   ],
+   "crc8_dvb_s2_update.length": [
+    0,
+    96
+   ],
+   "crc8_dvb_update.buf_len": [
+    0,
+    96
+   ],
+   "crc8_maxim.length": [
+    0,
+    96
+   ],
+   "crc8_sae.length": [
+    0,
+    96
+   ],
+   "crc8_rds02uf.length": [
+    0,
+    96
+   ],
+   "crc_xor_of_bytes.length": [
+    0,
+    96
+   ],
+   "crc_xmodem.len": [
+    0,
+    96
+   ],
+   "crc_crc32.size": [
+    0,
+    96
+   ],
+   "crc32_small.size": [
+    0,
+    96
+   ],
+   "crc16_ccitt.len": [
+    0,
+    96
+   ],
+   "crc16_ccitt_r.len": [
+    0,
+    96
+   ],
+   "crc16_ccitt_GDL90.len": [
+    0,
+    96
+   ],
+   "calc_crc_modbus.len": [
+    0,
+    96
+   ],
+   "crc_fletcher16.len": [
+    0,
+    96
+   ],
+   "hash_fnv_1a.len": [
+    0,
+    96
+   ],
+   "crc_crc24.len": [
+    0,
+    96
+   ],
+   "crc_sum8_with_carry.len": [
+    0,
+    96
+   ],
+   "crc_crc16_ibm.data_blk_size": [
+    0,
+    96
+   ],
+   "crc_crc64.num_words": [
+    0,
+    96
+   ],
+   "crc_sum_of_bytes_16.count": [
+    0,
+    96
+   ],
+   "crc_sum_of_bytes.count": [
+    0,
+    96
+   ],
+   "mat_inverse_float.dim": [
+    0,
+    10
+   ],
+   "mat_mul_float.n": [
+    0,
+    10
+   ],
+   "mat_identity_float.n": [
+    0,
+    10
+   ],
+   "mat_inverse_double.dim": [
+    0,
+    10
+   ],
+   "mat_mul_double.n": [
+    0,
+    10
+   ],
+   "mat_identity_double.n": [
+    0,
+    10
+   ],
+   "uint64_div1000.x": [
+    0,
+    18446744073709551615
+   ]
+  }
  },
  "classes": [
   {
@@ -3056,6 +3277,862 @@
      "q4"
     ],
     "prob": 0.7
+   }
+  },
+  {
+   "class": "Matrix3<double>",
+   "cxx_include": "<AP_Math/AP_Math.h>",
+   "state_from_line": true,
+   "calls": 20000,
+   "ranges": {
+    "dt": [
+     0.0,
+     0.05
+    ],
+    "accel_max": [
+     0,
+     20
+    ],
+    "accel_min": [
+     -20,
+     0
+    ],
+    "jerk_max": [
+     0,
+     100
+    ],
+    "vel_max": [
+     0,
+     20
+    ],
+    "vel_min": [
+     -20,
+     0
+    ],
+    "pos": [
+     -100,
+     100
+    ],
+    "pos_desired": [
+     -100,
+     100
+    ],
+    "vel": [
+     -10,
+     10
+    ],
+    "vel_desired": [
+     -10,
+     10
+    ],
+    "accel": [
+     -10,
+     10
+    ],
+    "accel_desired": [
+     -10,
+     10
+    ],
+    "limit": [
+     -1,
+     1
+    ],
+    "vel_error": [
+     -5,
+     5
+    ],
+    "pos_error": [
+     -5,
+     5
+    ],
+    "error": [
+     -20,
+     20
+    ],
+    "p": [
+     0,
+     10
+    ],
+    "second_ord_lim": [
+     0,
+     50
+    ],
+    "output": [
+     -20,
+     20
+    ],
+    "D_max": [
+     0,
+     50
+    ],
+    "rate_cmd": [
+     -10,
+     10
+    ],
+    "rate_state": [
+     -10,
+     10
+    ],
+    "velocity": [
+     -10,
+     10
+    ],
+    "direction": [
+     -5,
+     5
+    ],
+    "max_xy": [
+     0,
+     10
+    ],
+    "max_z_neg": [
+     0,
+     10
+    ],
+    "max_z_pos": [
+     0,
+     10
+    ],
+    "dir_xy": [
+     -1,
+     5
+    ],
+    "dir_z": [
+     -5,
+     5
+    ],
+    "vel_norm": [
+     -2,
+     2
+    ],
+    "accel_desired_2f": [
+     -10,
+     10
+    ],
+    "angle_desired": [
+     -7,
+     7
+    ],
+    "angle_vel_desired": [
+     -5,
+     5
+    ],
+    "angle_accel_desired": [
+     -5,
+     5
+    ],
+    "angle_vel": [
+     -5,
+     5
+    ],
+    "angle_accel": [
+     -5,
+     5
+    ],
+    "angle_vel_min": [
+     -5,
+     0
+    ],
+    "angle_vel_max": [
+     0,
+     5
+    ],
+    "angle_accel_max": [
+     0,
+     20
+    ],
+    "angle_jerk_max": [
+     0,
+     100
+    ],
+    "angle": [
+     -800,
+     800
+    ],
+    "radian": [
+     -20,
+     20
+    ],
+    "angle_rad": [
+     -1.5,
+     1.5
+    ],
+    "angle_deg": [
+     -89,
+     89
+    ],
+    "accel_mss": [
+     -20,
+     20
+    ],
+    "deg": [
+     -400,
+     400
+    ],
+    "cdeg": [
+     -40000,
+     40000
+    ],
+    "rad": [
+     -7,
+     7
+    ],
+    "cutoff_freq": [
+     0,
+     100
+    ],
+    "output_low": [
+     -10,
+     10
+    ],
+    "output_high": [
+     -10,
+     10
+    ],
+    "input_value": [
+     -10,
+     10
+    ],
+    "input_low": [
+     -10,
+     10
+    ],
+    "input_high": [
+     -10,
+     10
+    ],
+    "amt": [
+     -10,
+     10
+    ],
+    "low": [
+     -10,
+     0
+    ],
+    "high": [
+     0,
+     10
+    ],
+    "line": [
+     0,
+     1000
+    ],
+    "val": [
+     -10,
+     10
+    ],
+    "v": [
+     -5,
+     5
+    ],
+    "fVal1": [
+     -1e-06,
+     1e-06
+    ],
+    "x": [
+     -1e-06,
+     1e-06
+    ],
+    "first": [
+     -10,
+     10
+    ],
+    "second": [
+     -10,
+     10
+    ],
+    "third": [
+     -10,
+     10
+    ],
+    "one": [
+     -10,
+     10
+    ],
+    "two": [
+     -10,
+     10
+    ],
+    "v_1": [
+     -1,
+     1
+    ],
+    "v_2": [
+     -1,
+     1
+    ],
+    "origin": [
+     -100,
+     100
+    ],
+    "destination": [
+     -100,
+     100
+    ],
+    "max_length": [
+     0,
+     10
+    ],
+    "num": [
+     -5,
+     5
+    ],
+    "v2": [
+     -5,
+     5
+    ],
+    "roll": [
+     -7,
+     7
+    ],
+    "pitch": [
+     -7,
+     7
+    ],
+    "yaw": [
+     -7,
+     7
+    ],
+    "theta": [
+     -7,
+     7
+    ],
+    "axis": [
+     -1,
+     1
+    ],
+    "rpy": [
+     -7,
+     7
+    ],
+    "m": [
+     -1,
+     1
+    ],
+    "x0": [
+     -10,
+     10
+    ],
+    "y0": [
+     -10,
+     10
+    ],
+    "z0": [
+     -10,
+     10
+    ],
+    "v0": [
+     -10,
+     10
+    ],
+    "_q1": [
+     -1,
+     1
+    ],
+    "_q2": [
+     -1,
+     1
+    ],
+    "_q3": [
+     -1,
+     1
+    ],
+    "_q4": [
+     -1,
+     1
+    ],
+    "q1": [
+     -1,
+     1
+    ],
+    "q2": [
+     -1,
+     1
+    ],
+    "q3": [
+     -1,
+     1
+    ],
+    "q4": [
+     -1,
+     1
+    ],
+    "y": [
+     -10,
+     10
+    ],
+    "z": [
+     -10,
+     10
+    ],
+    "a.x": [
+     -1,
+     1
+    ],
+    "a.y": [
+     -1,
+     1
+    ],
+    "a.z": [
+     -1,
+     1
+    ],
+    "b.x": [
+     -1,
+     1
+    ],
+    "b.y": [
+     -1,
+     1
+    ],
+    "b.z": [
+     -1,
+     1
+    ],
+    "c.x": [
+     -1,
+     1
+    ],
+    "c.y": [
+     -1,
+     1
+    ],
+    "c.z": [
+     -1,
+     1
+    ]
+   },
+   "unit_args": {
+    "axis": 0.9,
+    "v": 0.3
+   }
+  },
+  {
+   "class": "QuaternionT<double>",
+   "cxx_include": "<AP_Math/AP_Math.h>",
+   "state_from_line": true,
+   "calls": 20000,
+   "ranges": {
+    "dt": [
+     0.0,
+     0.05
+    ],
+    "accel_max": [
+     0,
+     20
+    ],
+    "accel_min": [
+     -20,
+     0
+    ],
+    "jerk_max": [
+     0,
+     100
+    ],
+    "vel_max": [
+     0,
+     20
+    ],
+    "vel_min": [
+     -20,
+     0
+    ],
+    "pos": [
+     -100,
+     100
+    ],
+    "pos_desired": [
+     -100,
+     100
+    ],
+    "vel": [
+     -10,
+     10
+    ],
+    "vel_desired": [
+     -10,
+     10
+    ],
+    "accel": [
+     -10,
+     10
+    ],
+    "accel_desired": [
+     -10,
+     10
+    ],
+    "limit": [
+     -1,
+     1
+    ],
+    "vel_error": [
+     -5,
+     5
+    ],
+    "pos_error": [
+     -5,
+     5
+    ],
+    "error": [
+     -20,
+     20
+    ],
+    "p": [
+     0,
+     10
+    ],
+    "second_ord_lim": [
+     0,
+     50
+    ],
+    "output": [
+     -20,
+     20
+    ],
+    "D_max": [
+     0,
+     50
+    ],
+    "rate_cmd": [
+     -10,
+     10
+    ],
+    "rate_state": [
+     -10,
+     10
+    ],
+    "velocity": [
+     -10,
+     10
+    ],
+    "direction": [
+     -5,
+     5
+    ],
+    "max_xy": [
+     0,
+     10
+    ],
+    "max_z_neg": [
+     0,
+     10
+    ],
+    "max_z_pos": [
+     0,
+     10
+    ],
+    "dir_xy": [
+     -1,
+     5
+    ],
+    "dir_z": [
+     -5,
+     5
+    ],
+    "vel_norm": [
+     -2,
+     2
+    ],
+    "accel_desired_2f": [
+     -10,
+     10
+    ],
+    "angle_desired": [
+     -7,
+     7
+    ],
+    "angle_vel_desired": [
+     -5,
+     5
+    ],
+    "angle_accel_desired": [
+     -5,
+     5
+    ],
+    "angle_vel": [
+     -5,
+     5
+    ],
+    "angle_accel": [
+     -5,
+     5
+    ],
+    "angle_vel_min": [
+     -5,
+     0
+    ],
+    "angle_vel_max": [
+     0,
+     5
+    ],
+    "angle_accel_max": [
+     0,
+     20
+    ],
+    "angle_jerk_max": [
+     0,
+     100
+    ],
+    "angle": [
+     -800,
+     800
+    ],
+    "radian": [
+     -20,
+     20
+    ],
+    "angle_rad": [
+     -1.5,
+     1.5
+    ],
+    "angle_deg": [
+     -89,
+     89
+    ],
+    "accel_mss": [
+     -20,
+     20
+    ],
+    "deg": [
+     -400,
+     400
+    ],
+    "cdeg": [
+     -40000,
+     40000
+    ],
+    "rad": [
+     -7,
+     7
+    ],
+    "cutoff_freq": [
+     0,
+     100
+    ],
+    "output_low": [
+     -10,
+     10
+    ],
+    "output_high": [
+     -10,
+     10
+    ],
+    "input_value": [
+     -10,
+     10
+    ],
+    "input_low": [
+     -10,
+     10
+    ],
+    "input_high": [
+     -10,
+     10
+    ],
+    "amt": [
+     -10,
+     10
+    ],
+    "low": [
+     -10,
+     0
+    ],
+    "high": [
+     0,
+     10
+    ],
+    "line": [
+     0,
+     1000
+    ],
+    "val": [
+     -10,
+     10
+    ],
+    "v": [
+     -5,
+     5
+    ],
+    "fVal1": [
+     -1e-06,
+     1e-06
+    ],
+    "x": [
+     -1e-06,
+     1e-06
+    ],
+    "first": [
+     -10,
+     10
+    ],
+    "second": [
+     -10,
+     10
+    ],
+    "third": [
+     -10,
+     10
+    ],
+    "one": [
+     -10,
+     10
+    ],
+    "two": [
+     -10,
+     10
+    ],
+    "v_1": [
+     -1,
+     1
+    ],
+    "v_2": [
+     -1,
+     1
+    ],
+    "origin": [
+     -100,
+     100
+    ],
+    "destination": [
+     -100,
+     100
+    ],
+    "max_length": [
+     0,
+     10
+    ],
+    "num": [
+     -5,
+     5
+    ],
+    "v2": [
+     -5,
+     5
+    ],
+    "roll": [
+     -7,
+     7
+    ],
+    "pitch": [
+     -7,
+     7
+    ],
+    "yaw": [
+     -7,
+     7
+    ],
+    "theta": [
+     -7,
+     7
+    ],
+    "axis": [
+     -1,
+     1
+    ],
+    "rpy": [
+     -7,
+     7
+    ],
+    "m": [
+     -1,
+     1
+    ],
+    "x0": [
+     -10,
+     10
+    ],
+    "y0": [
+     -10,
+     10
+    ],
+    "z0": [
+     -10,
+     10
+    ],
+    "v0": [
+     -10,
+     10
+    ],
+    "_q1": [
+     -1,
+     1
+    ],
+    "_q2": [
+     -1,
+     1
+    ],
+    "_q3": [
+     -1,
+     1
+    ],
+    "_q4": [
+     -1,
+     1
+    ],
+    "q1": [
+     -1,
+     1
+    ],
+    "q2": [
+     -1,
+     1
+    ],
+    "q3": [
+     -1,
+     1
+    ],
+    "q4": [
+     -1,
+     1
+    ],
+    "y": [
+     -10,
+     10
+    ],
+    "z": [
+     -10,
+     10
+    ],
+    "a.x": [
+     -1,
+     1
+    ],
+    "a.y": [
+     -1,
+     1
+    ],
+    "a.z": [
+     -1,
+     1
+    ],
+    "b.x": [
+     -1,
+     1
+    ],
+    "b.y": [
+     -1,
+     1
+    ],
+    "b.z": [
+     -1,
+     1
+    ],
+    "c.x": [
+     -1,
+     1
+    ],
+    "c.y": [
+     -1,
+     1
+    ],
+    "c.z": [
+     -1,
+     1
+    ]
+   },
+   "unit_args": {
+    "axis": 0.9,
+    "v": 0.3
    }
   }
  ]

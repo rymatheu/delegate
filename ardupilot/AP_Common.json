@@ -1,0 +1,428 @@
+{
+ "translate": "ardupilot/translate_ap_common.sh",
+ "out": "ardupilot/out/AP_Common",
+ "namespace": "AP_Common_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-DAP_CUSTOMROTATIONS_ENABLED=0",
+  "-DAP_TERRAIN_AVAILABLE=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_sources": [
+  "AP_Common/Location.cpp",
+  "AP_Math/location.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/AP_Math.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ap_math_env.cpp"
+ ],
+ "cxx_include": [
+  "<AP_Common/Location.h>"
+ ],
+ "free": {
+  "calls": 20000,
+  "leaf_domains": {
+   "relative_alt": [
+    0,
+    1
+   ],
+   "loiter_ccw": [
+    0,
+    1
+   ],
+   "terrain_alt": [
+    0,
+    1
+   ],
+   "origin_alt": [
+    0,
+    1
+   ],
+   "loiter_xtrack": [
+    0,
+    1
+   ]
+  },
+  "ranges": {
+   "lat": [
+    -900000000,
+    900000000
+   ],
+   "lng": [
+    -1800000000,
+    1800000000
+   ],
+   "alt": [
+    -100000,
+    1000000
+   ],
+   "latitude": [
+    -900000000,
+    900000000
+   ],
+   "longitude": [
+    -1800000000,
+    1800000000
+   ],
+   "alt_in_cm": [
+    -100000,
+    1000000
+   ],
+   "alt_cm": [
+    -100000,
+    1000000
+   ],
+   "alt_m": [
+    -1000,
+    10000
+   ],
+   "loc2.lat": [
+    -900000000,
+    900000000
+   ],
+   "loc2.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "point1.lat": [
+    -900000000,
+    900000000
+   ],
+   "point1.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "point2.lat": [
+    -900000000,
+    900000000
+   ],
+   "point2.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "other.lat": [
+    -900000000,
+    900000000
+   ],
+   "other.lng": [
+    -1800000000,
+    1800000000
+   ],
+   "ofs_north": [
+    -5000,
+    5000
+   ],
+   "ofs_east": [
+    -5000,
+    5000
+   ],
+   "ofs_ned": [
+    -5000,
+    5000
+   ],
+   "bearing_deg": [
+    -400,
+    400
+   ],
+   "pitch_deg": [
+    -100,
+    100
+   ],
+   "distance": [
+    0,
+    10000
+   ],
+   "alt_offset_cm": [
+    -100000,
+    100000
+   ],
+   "alt_offset_m": [
+    -1000,
+    1000
+   ],
+   "lon": [
+    -4000000000,
+    4000000000
+   ],
+   "lon1": [
+    -1800000000,
+    1800000000
+   ],
+   "lon2": [
+    -1800000000,
+    1800000000
+   ]
+  }
+ },
+ "classes": [
+  {
+   "class": "Location",
+   "cxx_include": "<AP_Common/Location.h>",
+   "state_from_line": true,
+   "calls": 20000,
+   "leaf_domains": {
+    "relative_alt": [
+     0,
+     1
+    ],
+    "loiter_ccw": [
+     0,
+     1
+    ],
+    "terrain_alt": [
+     0,
+     1
+    ],
+    "origin_alt": [
+     0,
+     1
+    ],
+    "loiter_xtrack": [
+     0,
+     1
+    ]
+   },
+   "ranges": {
+    "lat": [
+     -900000000,
+     900000000
+    ],
+    "lng": [
+     -1800000000,
+     1800000000
+    ],
+    "alt": [
+     -100000,
+     1000000
+    ],
+    "latitude": [
+     -900000000,
+     900000000
+    ],
+    "longitude": [
+     -1800000000,
+     1800000000
+    ],
+    "alt_in_cm": [
+     -100000,
+     1000000
+    ],
+    "alt_cm": [
+     -100000,
+     1000000
+    ],
+    "alt_m": [
+     -1000,
+     10000
+    ],
+    "loc2.lat": [
+     -900000000,
+     900000000
+    ],
+    "loc2.lng": [
+     -1800000000,
+     1800000000
+    ],
+    "point1.lat": [
+     -900000000,
+     900000000
+    ],
+    "point1.lng": [
+     -1800000000,
+     1800000000
+    ],
+    "point2.lat": [
+     -900000000,
+     900000000
+    ],
+    "point2.lng": [
+     -1800000000,
+     1800000000
+    ],
+    "other.lat": [
+     -900000000,
+     900000000
+    ],
+    "other.lng": [
+     -1800000000,
+     1800000000
+    ],
+    "ofs_north": [
+     -5000,
+     5000
+    ],
+    "ofs_east": [
+     -5000,
+     5000
+    ],
+    "ofs_ned": [
+     -5000,
+     5000
+    ],
+    "bearing_deg": [
+     -400,
+     400
+    ],
+    "pitch_deg": [
+     -100,
+     100
+    ],
+    "distance": [
+     0,
+     10000
+    ],
+    "alt_offset_cm": [
+     -100000,
+     100000
+    ],
+    "alt_offset_m": [
+     -1000,
+     1000
+    ],
+    "lon": [
+     -4000000000,
+     4000000000
+    ],
+    "lon1": [
+     -1800000000,
+     1800000000
+    ],
+    "lon2": [
+     -1800000000,
+     1800000000
+    ]
+   }
+  },
+  {
+   "class": "Bitmask<32>",
+   "cxx_include": "<AP_Common/Bitmask.h>",
+   "calls": 10000,
+   "ranges": {
+    "bit": [
+     0,
+     40
+    ]
+   },
+   "weights": {
+    "set": 6,
+    "clear": 3,
+    "setonoff": 3,
+    "get": 4,
+    "setall": 0.3,
+    "clearall": 0.3
+   }
+  },
+  {
+   "class": "Bitmask<102>",
+   "cxx_include": "<AP_Common/Bitmask.h>",
+   "calls": 10000,
+   "ranges": {
+    "bit": [
+     0,
+     110
+    ]
+   },
+   "weights": {
+    "set": 6,
+    "clear": 3,
+    "setonoff": 3,
+    "get": 4,
+    "setall": 0.3,
+    "clearall": 0.3
+   }
+  },
+  {
+   "class": "Bitmask<190>",
+   "cxx_include": "<AP_Common/Bitmask.h>",
+   "calls": 10000,
+   "ranges": {
+    "bit": [
+     0,
+     198
+    ]
+   },
+   "weights": {
+    "set": 6,
+    "clear": 3,
+    "setonoff": 3,
+    "get": 4,
+    "setall": 0.3,
+    "clearall": 0.3
+   }
+  },
+  {
+   "class": "Bitmask<317>",
+   "cxx_include": "<AP_Common/Bitmask.h>",
+   "calls": 10000,
+   "ranges": {
+    "bit": [
+     0,
+     325
+    ]
+   },
+   "weights": {
+    "set": 6,
+    "clear": 3,
+    "setonoff": 3,
+    "get": 4,
+    "setall": 0.3,
+    "clearall": 0.3
+   }
+  },
+  {
+   "class": "Bitmask<634>",
+   "cxx_include": "<AP_Common/Bitmask.h>",
+   "calls": 10000,
+   "ranges": {
+    "bit": [
+     0,
+     642
+    ]
+   },
+   "weights": {
+    "set": 6,
+    "clear": 3,
+    "setonoff": 3,
+    "get": 4,
+    "setall": 0.3,
+    "clearall": 0.3
+   }
+  }
+ ]
+}

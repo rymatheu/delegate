@@ -1,24 +1,84 @@
 {
  "namespace": "Navigate",
- "cpp2lean": ["--nest", "--param-class", "Param=float", "--boundary", "Planner,PGain", "--boundary-live", "Planner",
-              "--boundary-query", "Planner::gain", "--boundary-query", "PGain::kP", "--boundary-fn", "clk::now_ms",
-              "--output-log", "--lib-dir", "examples/navlib", "--drop", "printf", "--drop", "Navigator::step::logged"],
- "classes": [
-  {"class": "Navigator",
-   "globals": ["#include \"navigate_env.h\"", "static Planner planner_obj;"],
-   "boundary_args": ["planner_obj"],
-   "ctor": [],
-   "inputs": {"now_ms": "nav_now = %s;", "speed_limit": "nav_speed = %s;", "scaler": "nav_scaler = %s;",
-              "stopping_point_out.x": "nav_stop.x = %s;", "stopping_point_out.y": "nav_stop.y = %s;",
-              "estimate.x": "nav_est_base.x = %s;", "estimate.y": "nav_est_base.y = %s;", "estimate.z": "nav_est_base.z = %s;",
-              "gain_kP": "nav_kp = %s;"},
-   "quiet_console": true,
-   "monotonic": {"now_ms": [0, 10]},
-   "ranges": {"speed": [0.5, 10], "dt": [0.0025, 0.1], "v": [-5, 5], "t": [0, 10], "first": [0, 6], "last": [0, 6],
-              "speed_limit": [0.5, 10], "scaler": [0, 1], "stopping_point_out": [-10, 10], "estimate": [-10, 10], "gain_kP": [0.5, 2],
-              "a": [-10, 10], "b": [-10, 10]},
-   "domains": {"Navigator.fill.first": [0, 255], "Navigator.fill.last": [0, 254]},
-   "weights": {"Navigator.step": 6, "Navigator.start": 2},
-   "calls": 20000}
- ]
+ "cpp2lean": [
+  "--nest",
+  "--world",
+  "--param-class",
+  "Param=float",
+  "--boundary-fn",
+  "clk::now_ms",
+  "--lib-dir",
+  "examples/navlib",
+  "--drop",
+  "printf",
+  "--drop",
+  "Navigator::step::logged"
+ ],
+ "world": {
+  "globals": [
+   "#include \"navigate_env.h\""
+  ],
+  "cxx_include": [
+   "\"navigate.cpp\""
+  ],
+  "inputs": {
+   "navigator.now_ms": "nav_now = %s;"
+  },
+  "quiet_console": true,
+  "monotonic": {
+   "navigator.now_ms": [
+    0,
+    10
+   ]
+  },
+  "ranges": {
+   "speed": [
+    0.5,
+    10
+   ],
+   "dt": [
+    0.0025,
+    0.1
+   ],
+   "v": [
+    -5,
+    5
+   ],
+   "t": [
+    0,
+    10
+   ],
+   "first": [
+    0,
+    6
+   ],
+   "last": [
+    0,
+    6
+   ],
+   "a": [
+    -10,
+    10
+   ],
+   "b": [
+    -10,
+    10
+   ]
+  },
+  "domains": {
+   "navigator.fill.first": [
+    0,
+    255
+   ],
+   "navigator.fill.last": [
+    0,
+    254
+   ]
+  },
+  "weights": {
+   "navigator.step": 6,
+   "navigator.start": 2
+  },
+  "calls": 20000
+ }
 }

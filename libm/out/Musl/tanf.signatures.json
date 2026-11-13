@@ -1,0 +1,189 @@
+{
+ "namespace": "Musl.tanf",
+ "source": "libm/unity/unity_tanf.c",
+ "functions": [
+  {
+   "name": "__tandf",
+   "lean": "Musl.tanf.__tandf",
+   "params": [
+    [
+     "x",
+     "double"
+    ],
+    [
+     "odd",
+     "int32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_tanf.c:28-54"
+  },
+  {
+   "name": "tanf",
+   "lean": "Musl.tanf.tanf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_tanf.c:26-64"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "__tandf",
+   "cxx_call": "__tandf",
+   "lean": "Musl.tanf.__tandf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "odd",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "tanf",
+   "cxx_call": "tanf",
+   "lean": "Musl.tanf.tanf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary64 (1 : Int32)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "21:10"
+  },
+  {
+   "lean": "(1.5707963267948966 : Binary64)",
+   "bits": "3ff921fb54442d18",
+   "cpp": "1.5707963267948966",
+   "at": "21:12"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "22:10"
+  },
+  {
+   "lean": "Int32.toBinary64 (3 : Int32)",
+   "bits": "4008000000000000",
+   "cpp": "3",
+   "at": "23:10"
+  },
+  {
+   "lean": "Int32.toBinary64 (4 : Int32)",
+   "bits": "4010000000000000",
+   "cpp": "4",
+   "at": "24:10"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd5554d3418c99f",
+   "bits": "3fd5554d3418c99f",
+   "cpp": "0x15554d3418c99f.0p-54",
+   "at": "20:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc112fd38999f72",
+   "bits": "3fc112fd38999f72",
+   "cpp": "0x1112fd38999f72.0p-55",
+   "at": "21:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fab54c91d865afe",
+   "bits": "3fab54c91d865afe",
+   "cpp": "0x1b54c91d865afe.0p-57",
+   "at": "22:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f991df3908c33ce",
+   "bits": "3f991df3908c33ce",
+   "cpp": "0x191df3908c33ce.0p-58",
+   "at": "23:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f685dadfcecf44e",
+   "bits": "3f685dadfcecf44e",
+   "cpp": "0x185dadfcecf44e.0p-61",
+   "at": "24:3"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f8362b9bf971bcd",
+   "bits": "3f8362b9bf971bcd",
+   "cpp": "0x1362b9bf971bcd.0p-59",
+   "at": "25:3"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "53:16"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

@@ -1,0 +1,5 @@
+tests/reject_phase3j.cpp:48:22: rejected: pointer operation `&`
+tests/reject_phase3j.cpp:52:9: rejected: call of `update` through a pointer to `Backend`, of which the program has no object
+tests/reject_phase3j.cpp:56:9: rejected: range-based `for`
+tests/reject_phase3j.cpp:62:31: rejected: two pointer arguments into the same array `s.m`, one of them written (aliasing)
+tests/reject_phase3j.cpp:71:9: rejected: initializer list for `Holder::(unnamed struct at tests/reject_phase3j.cpp:68:5)` with 1 values for 0 members

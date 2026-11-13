@@ -10,6 +10,7 @@ the 18 trace numbers), flushed after every line; as `ardupilot/vehicle/copter_re
 -/
 
 open Vehicle
+open FloatLib.Floats (Binary32 Binary64)
 
 partial def loop (h : IO.FS.Stream) (out : IO.FS.Stream) (exact trace bits : Bool) (w : Option World) (w0 : World) : IO Unit := do
   let line ← h.getLine
@@ -28,7 +29,7 @@ partial def loop (h : IO.FS.Stream) (out : IO.FS.Stream) (exact trace bits : Boo
       | some x => x
       | none => takeover w0 smp
     let (w1, act) := tick wa smp
-    let mut vals : Array Float := act.map Float32.toFloat
+    let mut vals : Array Binary64 := act.map Binary32.toBinary64
     let mut hex : Array String := act.map h32
     if trace then
       let (tv, th) := traceValues w1
@@ -66,7 +67,7 @@ def bench (w0 : World) (samples : Array Sample) : IO Unit := do
       | none => takeover w0 smp
     let (w1, act) := tick wa smp
     for a in act do
-      checksum := checksum + a.toBits.toUInt64
+      checksum := checksum + (Binary32.toBits a).toUInt64
     w := some w1
   let t1 ← IO.monoNanosNow
   IO.println s!"{t1 - t0} {samples.size} {hex 16 checksum.toNat}"

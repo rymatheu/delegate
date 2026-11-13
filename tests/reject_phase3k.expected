@@ -1,0 +1,6 @@
+tests/reject_phase3k.cpp:49:16: rejected: access through a pointer or reference to member objects of different classes (`Backend`; only member function calls dispatch)
+tests/reject_phase3k.cpp:52:16: rejected: subscript of a pointer to member objects
+tests/reject_phase3k.cpp:61:14: rejected: argument for a reference to member objects that is not one of them
+tests/reject_phase3k.cpp:64:16: rejected: `memcmp` other than `memcmp(this, &x, sizeof(*this))` with x an object of this class
+tests/reject_phase3k.cpp:87:11: rejected: reference member `e` bound to something other than a member object of this object
+tests/reject_phase3k.cpp:94:9: rejected: pointer or reference to member objects of `ahrs` outside its own member functions

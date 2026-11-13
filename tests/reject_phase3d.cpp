@@ -1,4 +1,4 @@
-// cpp2lean-options: --boundary Planner --boundary-live Planner --output-log --drop Seg::noisy::calls --drop Seg::quiet::calls
+// cpp2lean-options: --boundary Planner --output-log --drop Seg::noisy::calls --drop Seg::quiet::calls
 // cpp2lean rejection test (phase 3, AC_WPNav constructs): the constructs added for AC_WPNav, SCurve
 // and SplineCurve, used outside their limits. Each line marked expect-reject must be reported
 // (reject_phase3d.expected), and no other line.
@@ -70,13 +70,10 @@ public:
 
 class Nav {
 public:
-    // a constructor that reads a live boundary object (constructors take no output log)
-    Nav(Planner &p) : _p(p), _v(p.speed()) {}  // expect-reject
-    // accepted: a live read after a call into the planner
+    // (the limits of the live boundary reads of earlier phases, --boundary-live, are now those of
+    // the World, tests/reject_world.cpp)
+    explicit Nav(Planner &p) : _p(p) {}
     float after_reset() { _p.reset(); return _p.speed(); }
-    // a local reference to a live read with arguments (each use would read it again, with
-    // arguments that may have changed)
-    float scaled(float k) { const float &r = _p.scaled(k); _p.reset(); return r; }  // expect-reject
 private:
     Planner &_p;
     float _v;

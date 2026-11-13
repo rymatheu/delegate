@@ -11,7 +11,7 @@ two vehicles list, read and set the same parameters in the same order.
 Reading converts the stored value to float, as AP_Param's get() into a float; setting converts the
 float as AP_Param::set_value (AP_Param.cpp:1501-1519): a float parameter stores it, an integer one
 converts it to its storage type (C++ float-to-integer conversion, truncation toward zero; Lean's
-Float32.toIntN agree on every value in range), an enum parameter stores that integer as the enum.
+CFloat's Binary32.toIntN agree on every value in range), an enum parameter stores that integer as the enum.
 
 Usage: python3 ardupilot/vehicle/gen_params.py ardupilot/out > lean/VehicleParams.lean
 """
@@ -20,10 +20,10 @@ import os
 import sys
 
 ROOTS = [  # (prefix, translation, class, World field)
-    ("ATC_", "AC_Attitude/AC_Attitude_lib", "AC_AttitudeControl_Multi", "atc"),
-    ("PSC", "AC_PosControl/AC_PosControl_lib", "AC_PosControl", "psc"),
-    ("MOT_", "AP_Motors/AP_Motors_lib", "AP_MotorsMatrix", "mot"),
-    ("WP_", "AC_WPNav/AC_WPNav_lib", "AC_WPNav", "wp"),
+    ("ATC_", "Copter/Copter_lib", "AC_AttitudeControl_Multi", "atc"),
+    ("PSC", "Copter/Copter_lib", "AC_PosControl", "psc"),
+    ("MOT_", "Copter/Copter_lib", "AP_MotorsMatrix", "mot"),
+    ("WP_", "Copter/Copter_lib", "AC_WPNav", "wp"),
 ]
 # the class whose var_info a class uses when it declares none of its own (AP_MotorsMatrix::var_info
 # names AP_MotorsMulticopter's, the base class's static member)
@@ -54,11 +54,11 @@ def getter(e, x):
     if e["enum"]:
         store, _ = INTS[e["storage"]]
         under = "UInt8"     # the enum's underlying type (AP_Motors::PWMType : uint8_t)
-        return "%s.toFloat32 (%s.to%s (%s.toInt %s))" % (store, under, store, e["enum"], x)
+        return "%s.toBinary32 (%s.to%s (%s.toInt %s))" % (store, under, store, e["enum"], x)
     store, field = INTS[t]
     if field:
-        return "%s.toFloat32 (%s.to%s %s)" % (store, field, store, x)
-    return "%s.toFloat32 %s" % (store, x)
+        return "%s.toBinary32 (%s.to%s %s)" % (store, field, store, x)
+    return "%s.toBinary32 %s" % (store, x)
 
 
 def setter(e, v):
@@ -67,11 +67,11 @@ def setter(e, v):
         return v
     if e["enum"]:
         store, _ = INTS[e["storage"]]
-        return "%s.ofInt (%s.toUInt8 (Float32.to%s %s))" % (e["enum"], store, store, v)
+        return "%s.ofInt (%s.toUInt8 (Binary32.to%s %s))" % (e["enum"], store, store, v)
     store, field = INTS[t]
     if field:
-        return "%s.to%s (Float32.to%s %s)" % (store, field, store, v)
-    return "Float32.to%s %s" % (store, v)
+        return "%s.to%s (Binary32.to%s %s)" % (store, field, store, v)
+    return "Binary32.to%s %s" % (store, v)
 
 
 def main():
@@ -90,8 +90,8 @@ def main():
         imports.append(ns)
         for name, path, e in entries(sig["var_info"], cls, prefix, []):
             allp.append((name, field, path, e, ns))
-    lines = ["import %s" % ns for ns in imports] + [""] + lines
-    lines += ["namespace VehicleParams", "",
+    lines = ["import %s" % ns for ns in dict.fromkeys(imports)] + [""] + lines
+    lines += ["open FloatLib.Floats (Binary32 Binary64)", "", "namespace VehicleParams", "",
               "/-- The parameter records of the four classes. -/",
               "structure All where"]
     for prefix, tr, cls, field in ROOTS:
@@ -100,14 +100,14 @@ def main():
     lines += ["", "/-- Every parameter name, in table order. -/", "def names : Array String := #["]
     lines.append(",\n".join("  \"%s\"" % n for n, _, _, _, _ in allp))
     lines += ["]", "", "/-- The value of a parameter as a float (AP_Param's get()). -/",
-              "def get (a : All) (name : String) : Option Float32 :="]
+              "def get (a : All) (name : String) : Option Binary32 :="]
     first = True
     for n, f, path, e, ns in allp:
         lines.append("  %sif name == \"%s\" then some (%s)" % ("" if first else "else ", n, getter(e, "a.%s.%s" % (f, path))))
         first = False
     lines.append("  else none")
     lines += ["", "/-- Set every parameter of this name (AP_Param::set_value); none if there is none. -/",
-              "def set (a : All) (name : String) (v : Float32) : Option All := Id.run do",
+              "def set (a : All) (name : String) (v : Binary32) : Option All := Id.run do",
               "  let mut a := a", "  let mut found := false"]
     for n, f, path, e, ns in allp:
         lines.append("  if name == \"%s\" then" % n)

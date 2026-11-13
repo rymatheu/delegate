@@ -1,0 +1,6 @@
+# functions reached and translated: 2418; emitted as stubs (rejected): 5
+AP_Param::convert_g2_objects	AP_Param.cpp:2179-2190	conversion of T(rec,0,False,AP_Param::G2ObjectConversion)
+AP_Param::convert_toplevel_objects	AP_Param.cpp:2192-2198	conversion of T(rec,0,False,AP_Param::TopLevelObjectConversion)
+AP_BoardConfig::allocation_error	AP_BoardConfig.cpp:591-599	no Lean type for T(fn,0,False,void (const char *, ...) __attribute__)
+AP_BoardConfig::throw_error	AP_BoardConfig.cpp:550-589	no body for function d138:0x14891e3c8 (vprintf, int (const char *, va_list))
+AP_Notify::update	AP_Notify.cpp:418-428	no body for function d194:0x134ebf838 (NotifyDevice::update, None)

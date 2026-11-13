@@ -8,6 +8,11 @@
 #include <AP_Math/matrix3.cpp>
 #include <AP_Math/quaternion.cpp>
 #include <AP_Math/location.cpp>
+// phase 2 (README.md, "Phase 2")
+#include <AP_Math/matrix_alg.cpp>
+#include <AP_Math/crc.cpp>
+#include <AP_Math/location_double.cpp>
+#include <AP_Math/div1000.h>
 
 // The one template the AP_Math sources do not instantiate themselves (AC_WPNav.cpp:676 does, at
 // float): an explicit instantiation, so that the AST holds its specialization. Nothing else is added.

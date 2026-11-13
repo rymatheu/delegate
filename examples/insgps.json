@@ -1,0 +1,58 @@
+{
+ "namespace": "InsGps",
+ "cpp2lean": [
+  "--nest",
+  "--world",
+  "--world-pointers",
+  "--front-ends",
+  "--ins-gps",
+  "--pointer-params",
+  "--runtime-loops",
+  "--general-loops",
+  "--ekf-types",
+  "--ekf-arrays",
+  "--boundary",
+  "Manager",
+  "--world-class",
+  "Calib"
+ ],
+ "world": {
+  "calls": 20000,
+  "exclude": [
+   "front.init"
+  ],
+  "setup": [
+   "front.init"
+  ],
+  "weights": {
+   "front.update": 6,
+   "front.init": 1
+  },
+  "domains": {
+   "i": [
+    0,
+    1
+   ]
+  },
+  "ranges": {
+   "v": [
+    -10,
+    10
+   ],
+   "b": [
+    0,
+    40000
+   ]
+  },
+  "globals": [
+   "static bool cpp2lean_found[2];",
+   "Port *Manager::find(uint8_t instance) const { return instance < 2 && cpp2lean_found[instance] ? &port : nullptr; }",
+   "static Manager cpp2lean_manager;",
+   "const Manager &manager() { return cpp2lean_manager; }"
+  ],
+  "inputs": {
+   "front.find_found_at[0]": "cpp2lean_found[0] = %s;",
+   "front.find_found_at[1]": "cpp2lean_found[1] = %s;"
+  }
+ }
+}

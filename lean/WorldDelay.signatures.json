@@ -1,0 +1,1912 @@
+{
+ "namespace": "WorldDelay",
+ "source": "examples/worlddelay.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Scheduler",
+   "lean": "WorldDelay.Scheduler",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "micros64",
+     "lean": "WorldDelay.Scheduler.micros64",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint64_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "feed",
+     "lean": "WorldDelay.Scheduler.feed",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dt_us",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "baro",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "has_sample",
+     "lean": "WorldDelay.Scheduler.has_sample",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "sample",
+     "lean": "WorldDelay.Scheduler.sample",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "step",
+     "lean": "WorldDelay.Scheduler.step",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "private",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "delay_microseconds",
+     "lean": "WorldDelay.Scheduler.delay_microseconds",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "usec",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "delay",
+     "lean": "WorldDelay.Scheduler.delay",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "ms",
+       "type": "uint16_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "register_timer_process",
+     "lean": "WorldDelay.Scheduler.register_timer_process",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "proc",
+       "type": "Functor<void>",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "pending",
+     "lean": "WorldDelay.Scheduler.pending",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint16_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "exhausted",
+     "lean": "WorldDelay.Scheduler.exhausted",
+     "top": false,
+     "kind": "method",
+     "owner": "Scheduler",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_recs[0]!.t_us",
+     "cxx": "_recs[0].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[0]!.baro",
+     "cxx": "_recs[0].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[0]!.pressure",
+     "cxx": "_recs[0].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[1]!.t_us",
+     "cxx": "_recs[1].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[1]!.baro",
+     "cxx": "_recs[1].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[1]!.pressure",
+     "cxx": "_recs[1].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[2]!.t_us",
+     "cxx": "_recs[2].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[2]!.baro",
+     "cxx": "_recs[2].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[2]!.pressure",
+     "cxx": "_recs[2].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[3]!.t_us",
+     "cxx": "_recs[3].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[3]!.baro",
+     "cxx": "_recs[3].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[3]!.pressure",
+     "cxx": "_recs[3].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[4]!.t_us",
+     "cxx": "_recs[4].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[4]!.baro",
+     "cxx": "_recs[4].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[4]!.pressure",
+     "cxx": "_recs[4].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[5]!.t_us",
+     "cxx": "_recs[5].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[5]!.baro",
+     "cxx": "_recs[5].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[5]!.pressure",
+     "cxx": "_recs[5].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[6]!.t_us",
+     "cxx": "_recs[6].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[6]!.baro",
+     "cxx": "_recs[6].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[6]!.pressure",
+     "cxx": "_recs[6].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[7]!.t_us",
+     "cxx": "_recs[7].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[7]!.baro",
+     "cxx": "_recs[7].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[7]!.pressure",
+     "cxx": "_recs[7].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[8]!.t_us",
+     "cxx": "_recs[8].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[8]!.baro",
+     "cxx": "_recs[8].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[8]!.pressure",
+     "cxx": "_recs[8].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[9]!.t_us",
+     "cxx": "_recs[9].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[9]!.baro",
+     "cxx": "_recs[9].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[9]!.pressure",
+     "cxx": "_recs[9].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[10]!.t_us",
+     "cxx": "_recs[10].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[10]!.baro",
+     "cxx": "_recs[10].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[10]!.pressure",
+     "cxx": "_recs[10].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[11]!.t_us",
+     "cxx": "_recs[11].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[11]!.baro",
+     "cxx": "_recs[11].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[11]!.pressure",
+     "cxx": "_recs[11].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[12]!.t_us",
+     "cxx": "_recs[12].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[12]!.baro",
+     "cxx": "_recs[12].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[12]!.pressure",
+     "cxx": "_recs[12].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[13]!.t_us",
+     "cxx": "_recs[13].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[13]!.baro",
+     "cxx": "_recs[13].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[13]!.pressure",
+     "cxx": "_recs[13].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[14]!.t_us",
+     "cxx": "_recs[14].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[14]!.baro",
+     "cxx": "_recs[14].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[14]!.pressure",
+     "cxx": "_recs[14].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[15]!.t_us",
+     "cxx": "_recs[15].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[15]!.baro",
+     "cxx": "_recs[15].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[15]!.pressure",
+     "cxx": "_recs[15].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[16]!.t_us",
+     "cxx": "_recs[16].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[16]!.baro",
+     "cxx": "_recs[16].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[16]!.pressure",
+     "cxx": "_recs[16].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[17]!.t_us",
+     "cxx": "_recs[17].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[17]!.baro",
+     "cxx": "_recs[17].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[17]!.pressure",
+     "cxx": "_recs[17].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[18]!.t_us",
+     "cxx": "_recs[18].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[18]!.baro",
+     "cxx": "_recs[18].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[18]!.pressure",
+     "cxx": "_recs[18].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[19]!.t_us",
+     "cxx": "_recs[19].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[19]!.baro",
+     "cxx": "_recs[19].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[19]!.pressure",
+     "cxx": "_recs[19].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[20]!.t_us",
+     "cxx": "_recs[20].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[20]!.baro",
+     "cxx": "_recs[20].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[20]!.pressure",
+     "cxx": "_recs[20].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[21]!.t_us",
+     "cxx": "_recs[21].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[21]!.baro",
+     "cxx": "_recs[21].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[21]!.pressure",
+     "cxx": "_recs[21].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[22]!.t_us",
+     "cxx": "_recs[22].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[22]!.baro",
+     "cxx": "_recs[22].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[22]!.pressure",
+     "cxx": "_recs[22].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[23]!.t_us",
+     "cxx": "_recs[23].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[23]!.baro",
+     "cxx": "_recs[23].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[23]!.pressure",
+     "cxx": "_recs[23].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[24]!.t_us",
+     "cxx": "_recs[24].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[24]!.baro",
+     "cxx": "_recs[24].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[24]!.pressure",
+     "cxx": "_recs[24].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[25]!.t_us",
+     "cxx": "_recs[25].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[25]!.baro",
+     "cxx": "_recs[25].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[25]!.pressure",
+     "cxx": "_recs[25].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[26]!.t_us",
+     "cxx": "_recs[26].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[26]!.baro",
+     "cxx": "_recs[26].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[26]!.pressure",
+     "cxx": "_recs[26].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[27]!.t_us",
+     "cxx": "_recs[27].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[27]!.baro",
+     "cxx": "_recs[27].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[27]!.pressure",
+     "cxx": "_recs[27].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[28]!.t_us",
+     "cxx": "_recs[28].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[28]!.baro",
+     "cxx": "_recs[28].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[28]!.pressure",
+     "cxx": "_recs[28].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[29]!.t_us",
+     "cxx": "_recs[29].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[29]!.baro",
+     "cxx": "_recs[29].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[29]!.pressure",
+     "cxx": "_recs[29].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[30]!.t_us",
+     "cxx": "_recs[30].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[30]!.baro",
+     "cxx": "_recs[30].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[30]!.pressure",
+     "cxx": "_recs[30].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[31]!.t_us",
+     "cxx": "_recs[31].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[31]!.baro",
+     "cxx": "_recs[31].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[31]!.pressure",
+     "cxx": "_recs[31].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[32]!.t_us",
+     "cxx": "_recs[32].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[32]!.baro",
+     "cxx": "_recs[32].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[32]!.pressure",
+     "cxx": "_recs[32].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[33]!.t_us",
+     "cxx": "_recs[33].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[33]!.baro",
+     "cxx": "_recs[33].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[33]!.pressure",
+     "cxx": "_recs[33].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[34]!.t_us",
+     "cxx": "_recs[34].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[34]!.baro",
+     "cxx": "_recs[34].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[34]!.pressure",
+     "cxx": "_recs[34].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[35]!.t_us",
+     "cxx": "_recs[35].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[35]!.baro",
+     "cxx": "_recs[35].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[35]!.pressure",
+     "cxx": "_recs[35].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[36]!.t_us",
+     "cxx": "_recs[36].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[36]!.baro",
+     "cxx": "_recs[36].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[36]!.pressure",
+     "cxx": "_recs[36].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[37]!.t_us",
+     "cxx": "_recs[37].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[37]!.baro",
+     "cxx": "_recs[37].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[37]!.pressure",
+     "cxx": "_recs[37].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[38]!.t_us",
+     "cxx": "_recs[38].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[38]!.baro",
+     "cxx": "_recs[38].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[38]!.pressure",
+     "cxx": "_recs[38].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[39]!.t_us",
+     "cxx": "_recs[39].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[39]!.baro",
+     "cxx": "_recs[39].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[39]!.pressure",
+     "cxx": "_recs[39].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[40]!.t_us",
+     "cxx": "_recs[40].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[40]!.baro",
+     "cxx": "_recs[40].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[40]!.pressure",
+     "cxx": "_recs[40].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[41]!.t_us",
+     "cxx": "_recs[41].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[41]!.baro",
+     "cxx": "_recs[41].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[41]!.pressure",
+     "cxx": "_recs[41].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[42]!.t_us",
+     "cxx": "_recs[42].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[42]!.baro",
+     "cxx": "_recs[42].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[42]!.pressure",
+     "cxx": "_recs[42].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[43]!.t_us",
+     "cxx": "_recs[43].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[43]!.baro",
+     "cxx": "_recs[43].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[43]!.pressure",
+     "cxx": "_recs[43].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[44]!.t_us",
+     "cxx": "_recs[44].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[44]!.baro",
+     "cxx": "_recs[44].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[44]!.pressure",
+     "cxx": "_recs[44].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[45]!.t_us",
+     "cxx": "_recs[45].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[45]!.baro",
+     "cxx": "_recs[45].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[45]!.pressure",
+     "cxx": "_recs[45].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[46]!.t_us",
+     "cxx": "_recs[46].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[46]!.baro",
+     "cxx": "_recs[46].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[46]!.pressure",
+     "cxx": "_recs[46].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[47]!.t_us",
+     "cxx": "_recs[47].t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[47]!.baro",
+     "cxx": "_recs[47].baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recs[47]!.pressure",
+     "cxx": "_recs[47].pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_head",
+     "cxx": "_head",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last_t",
+     "cxx": "_last_t",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_in.t_us",
+     "cxx": "_in.t_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_in.baro",
+     "cxx": "_in.baro",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_in.pressure",
+     "cxx": "_in.pressure",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_clock_us",
+     "cxx": "_clock_us",
+     "type": "uint64_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_exhausted",
+     "cxx": "_exhausted",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_timer_proc[0]!",
+     "cxx": "_timer_proc[0]",
+     "type": "Functor<void>",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_timer_proc[1]!",
+     "cxx": "_timer_proc[1]",
+     "type": "Functor<void>",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_timer_proc[2]!",
+     "cxx": "_timer_proc[2]",
+     "type": "Functor<void>",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_timer_proc[3]!",
+     "cxx": "_timer_proc[3]",
+     "type": "Functor<void>",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_num_timer",
+     "cxx": "_num_timer",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Baro",
+   "lean": "WorldDelay.Baro",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "copy",
+     "lean": "WorldDelay.Baro.copy",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "instance",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "WorldDelay.Baro.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "register_sensor",
+     "lean": "WorldDelay.Baro.register_sensor",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "WorldDelay.Baro.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "healthy",
+     "lean": "WorldDelay.Baro.healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "calibrate",
+     "lean": "WorldDelay.Baro.calibrate",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ground",
+     "lean": "WorldDelay.Baro.ground",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "failed",
+     "lean": "WorldDelay.Baro.failed",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "drivers[0]!",
+     "cxx": "drivers[0]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "drivers[1]!",
+     "cxx": "drivers[1]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_num_drivers",
+     "cxx": "_num_drivers",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_num_sensors",
+     "cxx": "_num_sensors",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pressure[0]!",
+     "cxx": "_pressure[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pressure[1]!",
+     "cxx": "_pressure[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last_ms[0]!",
+     "cxx": "_last_ms[0]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last_ms[1]!",
+     "cxx": "_last_ms[1]",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_ground",
+     "cxx": "_ground",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_failed",
+     "cxx": "_failed",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SimBaro",
+   "lean": "WorldDelay.SimBaro",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "update",
+     "lean": "WorldDelay.SimBaro.update",
+     "top": false,
+     "kind": "method",
+     "owner": "SimBaro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "_timer",
+     "lean": "WorldDelay.SimBaro._timer",
+     "top": false,
+     "kind": "method",
+     "owner": "SimBaro",
+     "access": "private",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Backend",
+     "lean": "WorldDelay.SimBaro.Backend.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "frontend",
+       "type": "Baro",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldDelay.Baro.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "SimBaro",
+     "lean": "WorldDelay.SimBaro.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SimBaro",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "baro",
+       "type": "Baro",
+       "ref": "world:barometer",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldDelay.Baro.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_instance",
+     "cxx": "_instance",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_recent",
+     "cxx": "_recent",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_has_sample",
+     "cxx": "_has_sample",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "220:17"
+  },
+  {
+   "lean": "Int32.toBinary32 (3 : Int32)",
+   "bits": "40400000",
+   "cpp": "3",
+   "at": "226:21"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "hal_scheduler",
+   "cxx": "hal_scheduler",
+   "class": "Scheduler",
+   "lean": "Scheduler",
+   "parts": [
+    [
+     "hal_scheduler",
+     "Scheduler.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "barometer",
+   "cxx": "barometer",
+   "class": "Baro",
+   "lean": "Baro",
+   "parts": [
+    [
+     "barometer",
+     "Baro.State",
+     "state"
+    ]
+   ]
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'SimBaro",
+   "class": "SimBaro",
+   "lean": "SimBaro",
+   "placement": false
+  }
+ ],
+ "funcs": [
+  {
+   "ctor": "SimBaro__timer",
+   "class": "SimBaro",
+   "method": "_timer"
+  }
+ ]
+}

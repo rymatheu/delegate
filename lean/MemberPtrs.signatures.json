@@ -1,0 +1,1286 @@
+{
+ "namespace": "MemberPtrs",
+ "source": "examples/memberptrs.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Engine",
+   "lean": "MemberPtrs.Engine",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "step",
+     "lean": "MemberPtrs.Engine.step",
+     "top": false,
+     "kind": "method",
+     "owner": "Engine",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "good",
+     "lean": "MemberPtrs.Engine.good",
+     "top": false,
+     "kind": "method",
+     "owner": "Engine",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "level",
+     "cxx": "level",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "t",
+     "cxx": "t",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Backend::Estimates",
+   "lean": "MemberPtrs.Backend.Estimates",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "get_roll",
+     "lean": "MemberPtrs.Backend.Estimates.get_roll",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend::Estimates",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "r",
+       "type": "float",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "healthy",
+     "cxx": "healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "initialised",
+     "cxx": "initialised",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "roll",
+     "cxx": "roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pos",
+     "cxx": "pos",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "resets",
+     "cxx": "resets",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "provides_origin",
+     "cxx": "provides_origin",
+     "type": "bool",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Fallback",
+   "lean": "MemberPtrs.Fallback",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "update",
+     "lean": "MemberPtrs.Fallback.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Fallback",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_results",
+     "lean": "MemberPtrs.Fallback.get_results",
+     "top": false,
+     "kind": "method",
+     "owner": "Fallback",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "r",
+       "type": "Backend::Estimates",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "MemberPtrs.Backend.Estimates.State",
+       "leaves": [
+        {
+         "lean": "healthy",
+         "cxx": "healthy",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "initialised",
+         "cxx": "initialised",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "roll",
+         "cxx": "roll",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "pos",
+         "cxx": "pos",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "resets",
+         "cxx": "resets",
+         "type": "uint16_t",
+         "enum": null
+        },
+        {
+         "lean": "provides_origin",
+         "cxx": "provides_origin",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_origin",
+     "lean": "MemberPtrs.Fallback.get_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_origin",
+     "lean": "MemberPtrs.Fallback.set_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kind",
+     "lean": "MemberPtrs.Fallback.kind",
+     "top": false,
+     "kind": "method",
+     "owner": "Fallback",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "MemberPtrs.Fallback.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "Fallback",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "acc",
+     "cxx": "acc",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "n",
+     "cxx": "n",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Main",
+   "lean": "MemberPtrs.Main",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "update",
+     "lean": "MemberPtrs.Main.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Main",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_results",
+     "lean": "MemberPtrs.Main.get_results",
+     "top": false,
+     "kind": "method",
+     "owner": "Main",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "r",
+       "type": "Backend::Estimates",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "MemberPtrs.Backend.Estimates.State",
+       "leaves": [
+        {
+         "lean": "healthy",
+         "cxx": "healthy",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "initialised",
+         "cxx": "initialised",
+         "type": "bool",
+         "enum": null
+        },
+        {
+         "lean": "roll",
+         "cxx": "roll",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "pos",
+         "cxx": "pos",
+         "type": "double",
+         "enum": null
+        },
+        {
+         "lean": "resets",
+         "cxx": "resets",
+         "type": "uint16_t",
+         "enum": null
+        },
+        {
+         "lean": "provides_origin",
+         "cxx": "provides_origin",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_origin",
+     "lean": "MemberPtrs.Main.get_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Main",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_origin",
+     "lean": "MemberPtrs.Main.set_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Main",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "kind",
+     "lean": "MemberPtrs.Main.kind",
+     "top": false,
+     "kind": "method",
+     "owner": "Main",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "started",
+     "cxx": "started",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "have_origin",
+     "cxx": "have_origin",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "origin",
+     "cxx": "origin",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Ahrs",
+   "lean": "MemberPtrs.Ahrs",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "backend_for",
+     "lean": "MemberPtrs.Ahrs.backend_for",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "type",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Backend *",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "estimates_for",
+     "lean": "MemberPtrs.Ahrs.estimates_for",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "private",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "type",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Backend::Estimates *",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_configured",
+     "lean": "MemberPtrs.Ahrs.update_configured",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "try_set_origin",
+     "lean": "MemberPtrs.Ahrs.try_set_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "source",
+       "type": "Backend *",
+       "ref": "tag",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "source_estimates",
+       "type": "Backend::Estimates *",
+       "ref": "tag",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update_active",
+     "lean": "MemberPtrs.Ahrs.update_active",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "MemberPtrs.Ahrs.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "type",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset",
+     "lean": "MemberPtrs.Ahrs.reset",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_origin",
+     "lean": "MemberPtrs.Ahrs.set_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "healthy",
+     "lean": "MemberPtrs.Ahrs.healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "get_origin",
+     "lean": "MemberPtrs.Ahrs.get_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "o",
+       "type": "double",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Ahrs",
+     "lean": "MemberPtrs.Ahrs.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Ahrs",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "roll",
+     "cxx": "roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "roll2",
+     "cxx": "roll2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "roll_ok",
+     "cxx": "roll_ok",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "kinds",
+     "cxx": "kinds",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_count",
+     "cxx": "fallback_count",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_type",
+     "cxx": "_type",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "done_origin",
+     "cxx": "done_origin",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback.acc",
+     "cxx": "fallback.acc",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback.n",
+     "cxx": "fallback.n",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.healthy",
+     "cxx": "fallback_estimates.healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.initialised",
+     "cxx": "fallback_estimates.initialised",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.roll",
+     "cxx": "fallback_estimates.roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.pos",
+     "cxx": "fallback_estimates.pos",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.resets",
+     "cxx": "fallback_estimates.resets",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fallback_estimates.provides_origin",
+     "cxx": "fallback_estimates.provides_origin",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main.started",
+     "cxx": "main.started",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main.have_origin",
+     "cxx": "main.have_origin",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main.origin",
+     "cxx": "main.origin",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.healthy",
+     "cxx": "main_estimates.healthy",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.initialised",
+     "cxx": "main_estimates.initialised",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.roll",
+     "cxx": "main_estimates.roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.pos",
+     "cxx": "main_estimates.pos",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.resets",
+     "cxx": "main_estimates.resets",
+     "type": "uint16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "main_estimates.provides_origin",
+     "cxx": "main_estimates.provides_origin",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "backends_and_estimates[0]!.backend",
+     "cxx": "backends_and_estimates[0].backend",
+     "type": "Backend &",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "backends_and_estimates[0]!.estimates",
+     "cxx": "backends_and_estimates[0].estimates",
+     "type": "Backend::Estimates &",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "backends_and_estimates[1]!.backend",
+     "cxx": "backends_and_estimates[1].backend",
+     "type": "Backend &",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "backends_and_estimates[1]!.estimates",
+     "cxx": "backends_and_estimates[1].estimates",
+     "type": "Backend::Estimates &",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "configured_backend",
+     "cxx": "configured_backend",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "configured_estimates",
+     "cxx": "configured_estimates",
+     "type": "Backend::Estimates *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "active_backend",
+     "cxx": "active_backend",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "active_estimates",
+     "cxx": "active_estimates",
+     "type": "Backend::Estimates *",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "50:21"
+  },
+  {
+   "lean": "(0.75 : Binary32)",
+   "bits": "3f400000",
+   "cpp": "0.75f",
+   "at": "17:25"
+  },
+  {
+   "lean": "(2.0 : Binary64)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "57:23"
+  },
+  {
+   "lean": "(5.0 : Binary32)",
+   "bits": "40a00000",
+   "cpp": "5.0f",
+   "at": "19:50"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "84:52"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "62:15"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "eng",
+   "cxx": "Main::eng",
+   "class": "Engine",
+   "lean": "Engine",
+   "parts": [
+    [
+     "eng",
+     "Engine.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "ahrs",
+   "cxx": "ahrs",
+   "class": "Ahrs",
+   "lean": "Ahrs",
+   "parts": [
+    [
+     "ahrs",
+     "Ahrs.State",
+     "state"
+    ]
+   ]
+  }
+ ],
+ "heap": [],
+ "funcs": [],
+ "mtags": [
+  {
+   "name": "ahrs'fallback",
+   "cxx": "ahrs.fallback"
+  },
+  {
+   "name": "ahrs'fallback_estimates",
+   "cxx": "ahrs.fallback_estimates"
+  },
+  {
+   "name": "ahrs'main",
+   "cxx": "ahrs.main"
+  },
+  {
+   "name": "ahrs'main_estimates",
+   "cxx": "ahrs.main_estimates"
+  }
+ ]
+}

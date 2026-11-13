@@ -1,0 +1,125 @@
+{
+ "translate": "ardupilot/translate_ekfgsf.sh",
+ "out": "ardupilot/out/EKFGSF",
+ "namespace": "EKFGSF_lib",
+ "ref_flags": "AP_NavEKF/EKFGSF_yaw.cpp",
+ "access_control": false,
+ "cxx_sources": [
+  "AP_NavEKF/EKFGSF_yaw.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ekf_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "EKFGSF_yaw",
+   "cxx_include": "<AP_NavEKF/EKFGSF_yaw.h>",
+   "calls": 4000,
+   "nullable_params": true,
+   "weights": {
+    "EKFGSF_yaw.update": 10,
+    "EKFGSF_yaw.fuseVelData": 3,
+    "EKFGSF_yaw.setGyroBias": 0.3,
+    "EKFGSF_yaw.getYawData": 1,
+    "EKFGSF_yaw.getVelInnovLength": 1
+   },
+   "range_prob": 1.0,
+   "ranges": {
+    "delAng": [
+     -0.01,
+     0.01
+    ],
+    "delVel": [
+     -0.03,
+     0.03
+    ],
+    "delVel.z": [
+     -0.13,
+     -0.105
+    ],
+    "delAngDT": [
+     0.011,
+     0.013
+    ],
+    "delVelDT": [
+     0.011,
+     0.013
+    ],
+    "TAS": [
+     0,
+     25
+    ],
+    "vel": [
+     -10,
+     10
+    ],
+    "velAcc": [
+     0.3,
+     2.0
+    ],
+    "gyroBias": [
+     -0.02,
+     0.02
+    ]
+   },
+   "run": "flight"
+  },
+  {
+   "class": "EKFGSF_yaw",
+   "cxx_include": "<AP_NavEKF/EKFGSF_yaw.h>",
+   "calls": 1500,
+   "nullable_params": true,
+   "weights": {
+    "EKFGSF_yaw.update": 10,
+    "EKFGSF_yaw.fuseVelData": 3,
+    "EKFGSF_yaw.setGyroBias": 0.3,
+    "EKFGSF_yaw.getYawData": 1,
+    "EKFGSF_yaw.getVelInnovLength": 1
+   },
+   "range_prob": 0.85,
+   "ranges": {
+    "delAng": [
+     -0.01,
+     0.01
+    ],
+    "delVel": [
+     -0.03,
+     0.03
+    ],
+    "delVel.z": [
+     -0.13,
+     -0.105
+    ],
+    "delAngDT": [
+     0.011,
+     0.013
+    ],
+    "delVelDT": [
+     0.011,
+     0.013
+    ],
+    "TAS": [
+     0,
+     25
+    ],
+    "vel": [
+     -10,
+     10
+    ],
+    "velAcc": [
+     0.3,
+     2.0
+    ],
+    "gyroBias": [
+     -0.02,
+     0.02
+    ]
+   },
+   "run": "wild"
+  }
+ ]
+}

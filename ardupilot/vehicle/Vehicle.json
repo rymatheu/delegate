@@ -1,0 +1,950 @@
+{
+ "_doc": "Phase 5a slice 2 (README.md \"Phase 5: the vehicle skeleton\"): the vehicle on the byte-memory back end, with AP_Param, GCS_MAVLink and AP_Mission as ardupilot/gcs/GCS.json translates them (its keys, entries and boundary), plus the vehicle from AP_Vehicle::setup and AP_Vehicle::loop. `vehicle` turns on the back end's vehicle features (definitions found on demand, records by value, <cmath>, function pointers, dispatch over the member objects of `copter`, the estimator bridge, stubs for rejected functions). Removed from GCS.json's lists because the vehicle now translates them: the vehicle answers (`answer`: set_mode, arm/disarm, takeoff), AP_Mission's execution state machine and ModeAuto/Copter::set_mode in `unreached`, AP_Mission's callbacks in `skip_members`.",
+ "asts": {
+  "libraries/AP_Param/AP_Param.cpp": [
+   "AP_Param",
+   "ap_var_type",
+   "Vector3",
+   "allow_set_internal_parameters"
+  ],
+  "libraries/StorageManager/StorageManager.cpp": [
+   "StorageAccess",
+   "StorageManager"
+  ],
+  "libraries/AP_HAL/Storage.cpp": [
+   "Storage::erase"
+  ],
+  "libraries/AP_Param/AP_ParamT.cpp": [
+   "AP_ParamTBase",
+   "AP_ParamV"
+  ],
+  "libraries/AP_Math/AP_Math.cpp": [
+   "constrain_value_line",
+   "is_equal"
+  ],
+  "libraries/AP_HAL/Storage.cpp#2": [
+   "MIN"
+  ],
+  "libraries/AP_Param/AP_ParamT.cpp#2": [
+   "default_as_float"
+  ],
+  "libraries/AC_AttitudeControl/AC_CommandModel.cpp": [
+   "AC_CommandModel"
+  ],
+  "libraries/SRV_Channel/SRV_Channels.cpp": [
+   "SRV_Channels"
+  ],
+  "libraries/SRV_Channel/SRV_Channels.cpp#2": [
+   "SRV_Channel::Function"
+  ],
+  "libraries/GCS_MAVLink/GCS_Common.cpp": [
+   "GCS",
+   "mavlink",
+   "_mav",
+   "crc_",
+   "Bitmask",
+   "comm_send",
+   "MAV_",
+   "ap_message",
+   "AP_ParamT",
+   "gcs",
+   "SerialProtocol",
+   "MIN",
+   "ObjectArray",
+   "camera_command_result",
+   "convert_COMMAND_LONG",
+   "PARAM_RESET",
+   "PREFLIGHT_STORAGE_PARAMETER_ACTION",
+   "flow_control"
+  ],
+  "libraries/GCS_MAVLink/GCS.cpp": [
+   "GCS",
+   "gcs"
+  ],
+  "libraries/GCS_MAVLink/GCS_Param.cpp": [
+   "GCS_MAVLINK",
+   "ObjectBuffer",
+   "strncpy_noterm",
+   "ByteBuffer"
+  ],
+  "libraries/GCS_MAVLink/MAVLink_routing.cpp": [
+   "MAVLink_routing"
+  ],
+  "libraries/GCS_MAVLink/MissionItemProtocol.cpp": [
+   "MissionItemProtocol"
+  ],
+  "libraries/GCS_MAVLink/MissionItemProtocol_Waypoints.cpp": [
+   "MissionItemProtocol_Waypoints"
+  ],
+  "libraries/GCS_MAVLink/GCS_MAVLink.cpp": [
+   "comm_",
+   "mavlink_",
+   "crc_",
+   "_mav",
+   "_mavlink",
+   "valid_channel",
+   "mav_array",
+   "GCS_MAVLINK::send_message_target",
+   "GCS_MAVLINK::mav_param_type",
+   "GCS_MAVLINK::set_channel_private"
+  ],
+  "ArduCopter/GCS_MAVLink_Copter.cpp": [
+   "GCS_MAVLINK_Copter",
+   "GCS_Copter",
+   "is_zero",
+   "is_positive"
+  ],
+  "ArduCopter/GCS_Copter.cpp": [
+   "GCS_Copter"
+  ],
+  "libraries/AP_HAL/utility/RingBuffer.cpp": [
+   "ByteBuffer"
+  ],
+  "libraries/AP_Mission/AP_Mission.cpp": [
+   "AP_Mission",
+   "mission",
+   "ENGINE_CONTROL_OPTIONS",
+   "check_lat",
+   "check_lng",
+   "is_zero",
+   "is_positive",
+   "MIN",
+   "is_negative",
+   "NAV_VTOL_LAND_OPTIONS"
+  ],
+  "libraries/GCS_MAVLink/GCS_Signing.cpp": [
+   "packet_overhead_chan",
+   "handle_setup_signing"
+  ],
+  "libraries/AP_Common/AP_Common.cpp": [
+   "strncpy_noterm"
+  ],
+  "libraries/AP_Math/location.cpp": [
+   "check_lat",
+   "check_lng"
+  ],
+  "libraries/AP_RTC/JitterCorrection.cpp": [
+   "JitterCorrection"
+  ],
+  "libraries/AP_Vehicle/AP_Vehicle.cpp": [
+   "scheduler_delay_callback",
+   "AP_Vehicle"
+  ],
+  "libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp": [
+   "AC_AttitudeControl"
+  ],
+  "libraries/AC_AttitudeControl/AC_PosControl.cpp": [
+   "AC_PosControl"
+  ],
+  "libraries/AC_WPNav/AC_WPNav.cpp": [
+   "AC_WPNav"
+  ],
+  "libraries/AC_WPNav/AC_Loiter.cpp": [
+   "AC_Loiter"
+  ],
+  "libraries/AC_WPNav/AC_Circle.cpp": [
+   "AC_Circle",
+   "radians"
+  ],
+  "libraries/AC_PID/AC_PID.cpp": [
+   "AC_PID"
+  ],
+  "libraries/AC_PID/AC_P.cpp": [
+   "AC_P"
+  ],
+  "libraries/AC_PID/AC_P_1D.cpp": [
+   "AC_P_1D"
+  ],
+  "libraries/AC_PID/AC_P_2D.cpp": [
+   "AC_P_2D"
+  ],
+  "libraries/AC_PID/AC_PID_2D.cpp": [
+   "AC_PID_2D"
+  ],
+  "libraries/AC_PID/AC_PID_Basic.cpp": [
+   "AC_PID_Basic"
+  ],
+  "libraries/Filter/SlewLimiter.cpp": [
+   "SlewLimiter"
+  ],
+  "libraries/Filter/LowPassFilter.cpp": [
+   "LowPassFilter",
+   "DigitalLPF"
+  ],
+  "libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp": [
+   "AP_BattMonitor_Analog",
+   "AP_BattMonitor_Backend",
+   "AP_Enum",
+   "AP_BattMonitor_Params"
+  ],
+  "libraries/AP_BattMonitor/AP_BattMonitor_Backend.cpp": [
+   "AP_BattMonitor_Backend"
+  ],
+  "ArduCopter/Copter.cpp": [
+   "Copter"
+  ],
+  "libraries/AP_Scheduler/AP_Scheduler.cpp": [
+   "AP_Scheduler"
+  ],
+  "ArduCopter/mode.cpp": [
+   "Mode"
+  ],
+  "libraries/AP_HAL/Util.cpp": [
+   "Util::snprintf",
+   "Util::vsnprintf",
+   "BufferPrinter"
+  ],
+  "libraries/AP_HAL/utility/print_vprintf.cpp": [
+   "print_vprintf"
+  ],
+  "libraries/AP_HAL/utility/ftoa_engine.cpp": [
+   "ftoa_engine",
+   "exponentTable",
+   "factorTable"
+  ],
+  "libraries/AP_HAL/utility/utoa_invert.cpp": [
+   "toa_invert"
+  ]
+ },
+ "layout_units": [
+  "libraries/AP_Param/AP_Param.cpp",
+  "libraries/AC_AttitudeControl/AC_CommandModel.cpp",
+  "libraries/SRV_Channel/SRV_Channels.cpp",
+  "libraries/GCS_MAVLink/GCS_Common.cpp",
+  "ArduCopter/GCS_MAVLink_Copter.cpp",
+  "libraries/AP_Mission/AP_Mission.cpp",
+  "libraries/AP_HAL/utility/RingBuffer.cpp",
+  "libraries/GCS_MAVLink/GCS_Param.cpp",
+  "libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp",
+  "libraries/AC_AttitudeControl/AC_PosControl.cpp",
+  "libraries/AC_WPNav/AC_WPNav.cpp",
+  "libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp",
+  "ArduCopter/Copter.cpp",
+  "libraries/AP_Vehicle/AP_Vehicle.cpp",
+  "libraries/AP_Scheduler/AP_Scheduler.cpp",
+  "libraries/AP_HAL/Util.cpp",
+  "libraries/AP_HAL/utility/ftoa_engine.cpp"
+ ],
+ "static_units": [
+  "libraries/AP_Param/AP_Param.cpp",
+  "libraries/StorageManager/StorageManager.cpp",
+  "libraries/SRV_Channel/SRV_Channels.cpp",
+  "libraries/GCS_MAVLink/GCS_Common.cpp",
+  "libraries/GCS_MAVLink/GCS.cpp",
+  "libraries/GCS_MAVLink/GCS_Param.cpp",
+  "libraries/GCS_MAVLink/MAVLink_routing.cpp",
+  "libraries/GCS_MAVLink/GCS_MAVLink.cpp",
+  "libraries/GCS_MAVLink/MissionItemProtocol.cpp",
+  "ArduCopter/GCS_MAVLink_Copter.cpp",
+  "libraries/AP_Mission/AP_Mission.cpp",
+  "libraries/GCS_MAVLink/MissionItemProtocol_Waypoints.cpp",
+  "libraries/AP_HAL/utility/RingBuffer.cpp",
+  "libraries/GCS_MAVLink/GCS_Signing.cpp",
+  "libraries/GCS_MAVLink/GCS_MAVLink_Parameters.cpp",
+  "libraries/AP_Vehicle/AP_Vehicle.cpp",
+  "libraries/AC_AttitudeControl/AC_PosControl.cpp",
+  "libraries/AC_AttitudeControl/AC_AttitudeControl.cpp",
+  "libraries/AC_WPNav/AC_WPNav.cpp",
+  "libraries/AC_WPNav/AC_Loiter.cpp",
+  "libraries/AC_WPNav/AC_Circle.cpp",
+  "libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp",
+  "ArduCopter/Copter.cpp",
+  "libraries/AP_Scheduler/AP_Scheduler.cpp",
+  "ArduCopter/mode.cpp",
+  "libraries/AP_HAL/utility/ftoa_engine.cpp"
+ ],
+ "root_table": [
+  "ArduCopter/Parameters.cpp",
+  "@_ZN6Copter8var_infoE"
+ ],
+ "boundary": {
+  "AP_HAL::Scheduler::is_system_initialized": "(← get).sysInit",
+  "AP_HAL::Util::get_soft_armed": "(← get).armed",
+  "panic": "()",
+  "AP_InternalError::error": "()",
+  "AP_HAL::Util::get_custom_defaults_file": "(0 : UInt64)",
+  "AP_HAL::Util::set_cmdline_parameters": "()",
+  "micros": "(← PMem.clock).toUInt32",
+  "millis": "((← PMem.clock) / 1000).toUInt32",
+  "AP_HAL::micros": "(← PMem.clock).toUInt32",
+  "AP_HAL::millis": "((← PMem.clock) / 1000).toUInt32",
+  "AP_HAL::UARTDriver::available": "PMem.uartAvailable {this}",
+  "AP_HAL::UARTDriver::read": "PMem.uartRead {this}",
+  "AP_HAL::UARTDriver::write": "PMem.uartWrite {this} {0} {1}",
+  "AP_HAL::UARTDriver::txspace": "PMem.uartTxspace {this}",
+  "AP_SerialManager::get_passthru": "false",
+  "Functor<bool, unsigned char, AP_HAL::UARTDriver *>::operator bool": "false",
+  "Functor<bool, unsigned char, AP_HAL::UARTDriver *>::operator()": "false",
+  "__mavlink_signing::accept_unsigned_callback": "false",
+  "mavlink_signature_check": "false",
+  "micros64": "(← PMem.clock)",
+  "AP_HAL::micros64": "(← PMem.clock)",
+  "HALSITL::Semaphore::take_blocking": "()",
+  "HALSITL::Semaphore::give": "true",
+  "HALSITL::Semaphore::take": "true",
+  "HALSITL::Semaphore::take_nonblocking": "true",
+  "AP_HAL::UARTDriver::is_write_locked": "false",
+  "AP_HAL::BetterStream::txspace": "PMem.uartTxspace {this}",
+  "AP_HAL::BetterStream::write": "PMem.uartWrite {this} {0} {1}",
+  "AP_HAL::UARTDriver::receive_time_constraint_us": "(← PMem.clock)",
+  "GCS_MAVLINK::initialise_message_intervals_from_config_files": "()",
+  "GCS_MAVLINK_InProgress::check_tasks": "()",
+  "AP_HAL::Scheduler::in_delay_callback": "(← get).inDelayCb",
+  "__builtin_ffs": "PMem.ffs {0}",
+  "__builtin_popcount": "PMem.popcount {0}",
+  "AP_SerialManager::UARTState::get_protocol": "(2 : Int32)",
+  "millis16": "((← PMem.clock) / 1000).toUInt16",
+  "AP_HAL::millis16": "((← PMem.clock) / 1000).toUInt16",
+  "floorf": "(pure (Binary32.floor {0}) : PMem.M Binary32)",
+  "GCS_MAVLINK::send_scaled_imu": "PMem.unreached \"GCS_MAVLINK::send_scaled_imu\"",
+  "AP_HAL::UARTDriver::bw_in_bytes_per_second": "(1000000 : UInt32)",
+  "AP_HAL::GPIO::usb_connected": "false",
+  "abs": "PMem.iabs {0}",
+  "fprintf": "(0 : Int32)",
+  "AP_RTC::set_utc_usec": "()",
+  "AP_HAL::UARTDriver::flow_control_enabled": "false",
+  "std::__atomic_base<unsigned int, false>::operator unsigned int": "PMem.ldU32 {this}",
+  "labs": "PMem.labs {0}",
+  "std::atomic<unsigned int>::operator=": "PMem.atomicStU32 {this} {0}",
+  "AP_SerialManager::find_serial": "PMem.findSerialProto {0} {1}",
+  "AP_SerialManager::find_protocol_instance": "PMem.findSerialProto {0} {1}",
+  "AP_SerialManager::UARTState::get_device_id": "PMem.serialDevId {this}",
+  "AP_SerialManager::disable_option": "()",
+  "AP_HAL::UARTDriver::option_is_set": "false",
+  "AP_HAL::UARTDriver::begin": "(discard <| PMem.hal \"AP_HAL::UARTDriver::begin\" {this} #[({0}).toUInt64])",
+  "AP_HAL::UARTDriver::get_flow_control": "(0 : UInt32)",
+  "AP_HAL::UARTDriver::set_flow_control": "()",
+  "AP_Notify::update": "()",
+  "AP_BoardConfig::config_error": "()",
+  "calloc": "PMem.calloc {0} {1}",
+  "config_error": "()",
+  "AP_HAL::BetterStream::write/1": "PMem.uartWrite1 {this} {0}",
+  "AP_HAL::UARTDriver::write/1": "PMem.uartWrite1 {this} {0}",
+  "AP::internalerror": "(0 : UInt64)",
+  "internalerror": "(0 : UInt64)",
+  "signaling_NaN": "(Binary32.ofBits 0x7fa00000)",
+  "AP_Notify::init": "()",
+  "get_HAL_mutable": "(0 : UInt64)",
+  "AP_HAL::get_HAL_mutable": "(0 : UInt64)",
+  "AP_CANManager::init": "()",
+  "millis64": "((← PMem.clock) / 1000)",
+  "AP_HAL::millis64": "((← PMem.clock) / 1000)",
+  "nanf": "(Binary32.ofBits 0x7fc04152)"
+ },
+ "entries": [
+  "AP_Param::setup_sketch_defaults",
+  "AP_Param::check_var_info",
+  "AP_Param::setup_object_defaults",
+  "AP_Param::load_all",
+  "AP_Param::load",
+  "AP_Param::erase_all",
+  "AP_Param::first",
+  "AP_Param::next",
+  "AP_Param::next_scalar",
+  "AP_Param::copy_name_token",
+  "AP_Param::find_by_name",
+  "AP_Param::find",
+  "AP_Param::find_by_index",
+  "AP_Param::count_parameters",
+  "AP_Param::cast_to_float",
+  "AP_Param::set_value",
+  "AP_Param::set_float",
+  "AP_Param::save_sync",
+  "AP_Param::find_key_by_pointer",
+  "AP_Param::load_object_from_eeprom",
+  "AP_Param::set_frame_type_flags",
+  "AP_Param::type_size",
+  "AP_Param::AP_Param",
+  "StorageAccess::StorageAccess",
+  "StorageManager::erase",
+  "AP_Param::invalidate_count",
+  "AP_ParamTBase<short, 2>::set_and_save",
+  "AP_ParamTBase<short, 2>::set_default",
+  "AP_ParamTBase<float, 4>::set_and_save",
+  "AP_ParamTBase<signed char, 1>::set_and_save",
+  "AP_ParamTBase<int, 3>::set_and_save",
+  "AP_Param::find_by_header",
+  "AP_Param::scan",
+  "AP_Param::is_sentinel",
+  "AC_CommandModel::AC_CommandModel",
+  "SRV_Channels::SRV_Channels",
+  "GCS::update_receive",
+  "GCS::update_send",
+  "GCS_MAVLINK::GCS_MAVLINK",
+  "GCS_MAVLINK::param_io_timer",
+  "GCS::init",
+  "GCS::setup_console",
+  "GCS::setup_uarts",
+  "AP_Vehicle::scheduler_delay_callback",
+  "GCS::send_message",
+  "ObjectBuffer<GCS_MAVLINK::pending_param_request>::ObjectBuffer",
+  "ObjectBuffer<GCS_MAVLINK::pending_param_reply>::ObjectBuffer",
+  "AC_AttitudeControl_Multi::AC_AttitudeControl_Multi",
+  "AC_PosControl::AC_PosControl",
+  "AC_WPNav::AC_WPNav",
+  "AC_Loiter::AC_Loiter",
+  "AC_Circle::AC_Circle",
+  "AP_BattMonitor_Analog::AP_BattMonitor_Analog",
+  "AP_Mission::AP_Mission",
+  "AP_Mission::init",
+  "AP_Vehicle::setup",
+  "AP_Vehicle::loop",
+  "AP_Param::notify",
+  "AP_Param::save",
+  "AP_Mission::write_home_to_storage",
+  "mavlink_msg_ekf_status_report_send_struct",
+  "mavlink_msg_gps_raw_int_send",
+  "mavlink_msg_gps2_raw_send"
+ ],
+ "constants": {
+  "is_equal:value": "false",
+  "Copter::load_parameters:k_format_version": "(120 : UInt16)",
+  "constrain_value:value": "false",
+  "AP_Arming::rc_checks_copter_sub:RC_CALIB_MIN_LIMIT_PWM": "(1300 : UInt16)",
+  "AP_Arming::rc_checks_copter_sub:RC_CALIB_MAX_LIMIT_PWM": "(1700 : UInt16)",
+  "Copter::motor_test_output:RC_MIN_LIMIT_PWM": "(800 : UInt16)",
+  "Copter::motor_test_output:RC_MAX_LIMIT_PWM": "(2200 : UInt16)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE": "(7 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE": "(56 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE": "(448 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE": "(1024 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_YAW_RATE_IGNORE": "(2048 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned:MAVLINK_SET_POS_TYPE_MASK_FORCE_SET": "(512 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE": "(7 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE": "(56 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE": "(448 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE": "(1024 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_YAW_RATE_IGNORE": "(2048 : UInt32)",
+  "GCS_MAVLINK_Copter::handle_message_set_position_target_global_int:MAVLINK_SET_POS_TYPE_MASK_FORCE_SET": "(512 : UInt32)"
+ },
+ "_constants_doc": "is_equal<float, float> (AP_Math.cpp:24-38): `std::is_same<double, common_type_nonconst>::value` with common_type_nonconst = float, a constant clang folds without printing its value; constrain_value<int/unsigned/...> (AP_Math.cpp:315): `std::is_floating_point<T>::value`, false for every instance (no floating instance: floats use constrain_value_line); RC_Channel::RC_CALIB_MIN/MAX_LIMIT_PWM (RC_Channel.h:481,483): 1300, 1700; Parameters::k_format_version (Parameters.h:32): 120; RC_Channel::RC_MIN/MAX_LIMIT_PWM (RC_Channel.h:476,478): 800, 2200; (Phase 5d) GCS_MAVLink_Copter.cpp:868-888's namespace-scope constexpr MAVLINK_SET_POS_TYPE_MASK_POS/VEL/ACC/YAW/YAW_RATE_IGNORE and FORCE_SET, the ORs of MAVLink's POSITION_TARGET_TYPEMASK values (common.h: X 1, Y 2, Z 4, VX 8, VY 16, VZ 32, AX 64, AY 128, AZ 256, FORCE_SET 512, YAW 1024, YAW_RATE 2048): 7, 56, 448, 1024, 2048, 512",
+ "drop": [
+  "AP_Param::load_defaults_file_from_filesystem",
+  "AP_Param::load_defaults_file_from_romfs",
+  "GCS::update_passthru"
+ ],
+ "_drop_doc": "reached only under `if (default_file)`, whose value is the HAL's get_custom_defaults_file(): null on the reference board (HAL_PARAM_DEFAULTS_PATH nullptr, AP_HAL/board/sitl.h:50; lockstep.cpp's Util does not override it) (Phase 5b: AP_Param::save, the save queue ObjectBuffer_TS<param_save>, flush and save_io_handler are translated)",
+ "hal_translated": {
+  "AP_HAL::Storage::erase": "AP_HAL::Storage::erase",
+  "AP_HAL::Util::snprintf": "AP_HAL::Util::snprintf",
+  "AP_HAL::Util::vsnprintf": "AP_HAL::Util::vsnprintf"
+ },
+ "dynamic": {
+  "GCS_MAVLINK": [
+   "GCS_MAVLINK_Copter",
+   "GCS_MAVLINK"
+  ],
+  "GCS": [
+   "GCS_Copter",
+   "GCS"
+  ],
+  "MissionItemProtocol": [
+   "MissionItemProtocol_Waypoints",
+   "MissionItemProtocol"
+  ],
+  "AP_Vehicle": [
+   "Copter",
+   "AP_Vehicle"
+  ],
+  "RC_Channels": [
+   "RC_Channels_Copter",
+   "RC_Channels"
+  ],
+  "RC_Channel": [
+   "RC_Channel_Copter",
+   "RC_Channel"
+  ],
+  "AP_Motors": [
+   "AP_MotorsMatrix",
+   "AP_MotorsMulticopter",
+   "AP_Motors"
+  ],
+  "AP_MotorsMulticopter": [
+   "AP_MotorsMatrix",
+   "AP_MotorsMulticopter"
+  ],
+  "AC_AttitudeControl": [
+   "AC_AttitudeControl_Multi",
+   "AC_AttitudeControl"
+  ],
+  "AP_Arming": [
+   "AP_Arming_Copter",
+   "AP_Arming"
+  ],
+  "AP_BattMonitor_Backend": [
+   "AP_BattMonitor_Analog",
+   "AP_BattMonitor_Backend"
+  ]
+ },
+ "imports": [
+  "GCSMemoryV",
+  "VehicleMemoryV"
+ ],
+ "unreached": [
+  "GCS_MAVLINK::handle_set_gps_global_origin",
+  "GCS_MAVLINK::handle_send_autopilot_version",
+  "GCS_MAVLINK::handle_param_value",
+  "GCS_MAVLINK::handle_radio_status",
+  "AP_GPS::handle_msg",
+  "GCS_MAVLINK::handle_statustext",
+  "AP_Notify::handle_led_control",
+  "GCS_MAVLINK::handle_manual_control",
+  "AP_Notify::handle_play_tune",
+  "GCS_MAVLINK::handle_data_packet",
+  "GCS_MAVLINK::handle_rc_channels_override",
+  "GCS_MAVLINK::handle_distance_sensor",
+  "GCS_MAVLINK_Copter::handle_landing_target",
+  "GCS_MAVLINK::handle_named_value",
+  "GCS_MAVLINK::handle_can_frame",
+  "AP_MAVLinkCAN::handle_can_filter_modify",
+  "GCS_MAVLINK_Copter::handle_command_ack",
+  "GCS_MAVLINK::handle_command_battery_reset",
+  "GCS_MAVLINK::handle_can_forward",
+  "GCS_MAVLINK::handle_command_debug_trap",
+  "GCS_MAVLINK::handle_command_do_set_global_origin",
+  "GCS_MAVLINK::handle_command_do_aux_function",
+  "GCS_MAVLINK_Copter::handle_flight_termination",
+  "GCS_MAVLINK::handle_command_do_jump_tag",
+  "GCS_MAVLINK::handle_command_do_set_home",
+  "GCS_MAVLINK::handle_command_int_external_position_estimate",
+  "GCS_MAVLINK::handle_command_int_external_wind_estimate",
+  "GCS_MAVLINK::handle_command_preflight_calibration",
+  "AP_Param::erase_all",
+  "GCS_MAVLINK_Copter::handle_preflight_reboot",
+  "GCS_MAVLINK::handle_do_set_safety_switch_state",
+  "GCS_MAVLINK::handle_command_set_ekf_source_set",
+  "GCS_MAVLINK::handle_command_storage_format",
+  "GCS_MAVLINK::handle_command_get_message_interval",
+  "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_MOTOR_TEST",
+  "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_PARACHUTE",
+  "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_PAUSE_CLICK",
+  "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_HOLD",
+  "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_CLICK",
+  "GCS_MAVLINK::handle_command_ack",
+  "GCS_MAVLINK::handle_landing_target",
+  "GCS_MAVLINK::handle_flight_termination",
+  "GCS_MAVLINK::handle_preflight_reboot",
+  "GCS_MAVLINK::_handle_command_preflight_calibration",
+  "mavlink_sign_packet",
+  "AP_BoardConfig::allow_set_internal_parameters",
+  "StorageAccess::attach_file"
+ ],
+ "unreached_names": [
+  "handle_led_control",
+  "handle_play_tune",
+  "handle_can_filter_modify"
+ ],
+ "zero_statics": {
+  "hal": 224
+ },
+ "lean_options": [
+  "maxHeartbeats 4000000",
+  "linter.unusedVariables false"
+ ],
+ "inherited_ctors": {
+  "GCS_MAVLINK_Copter": "GCS_MAVLINK",
+  "GCS::StatusTextQueue": "ObjectArray<GCS::statustext_t>"
+ },
+ "extra_tables": [
+  [
+   "libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp",
+   "@_ZN24AC_AttitudeControl_Multi8var_infoE"
+  ],
+  [
+   "libraries/AP_Motors/AP_MotorsMulticopter.cpp",
+   "@_ZN20AP_MotorsMulticopter8var_infoE"
+  ],
+  [
+   "libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp",
+   "@_ZN21AP_BattMonitor_Analog8var_infoE"
+  ]
+ ],
+ "vehicle": true,
+ "_dynamic_doc": "vehicle classes with one dynamic class in this vehicle: AP_Vehicle is Copter; RC_Channels/RC_Channel are the Copter ones; the motors are AP_MotorsMatrix (allocate_motors for the quad frame); the attitude controller AC_AttitudeControl_Multi; arming AP_Arming_Copter",
+ "by_address": {
+  "Mode": [
+   "copter",
+   "Copter"
+  ]
+ },
+ "_by_address_doc": "a virtual call through `Mode *`/`Mode &` dispatches on the object's address over the member objects of `copter` whose class derives from Mode (clang's layout of Copter), each arm the final overrider of that object's class",
+ "bridge_classes": "(AP_AHRS|AP_AHRS_Backend|AP_AHRS_DCM|AP_AHRS_NavEKF|AP_AHRS_View|AP_AHRS_SIM|AP_AHRS_External|NavEKF3|NavEKF3_core|NavEKF2|NavEKF2_core|AP_NavEKF_Source|EKFGSF_yaw|AP_DAL\\w*|AP_InertialSensor\\w*|AP_Baro\\w*|Compass|AP_Compass\\w*|CompassCalibrator|AP_GPS\\w*|GPS_Backend|AP_RTC|AP_Declination)(::\\w+)*",
+ "bridge_functions": [
+  "AP::ahrs",
+  "AP::ins",
+  "AP::gps",
+  "AP::baro",
+  "AP::compass",
+  "AP::rtc",
+  "AP::dal",
+  "AP::ahrs_navekf",
+  "AP::sitl",
+  "sitl",
+  "ahrs",
+  "ins",
+  "gps",
+  "baro",
+  "compass",
+  "rtc",
+  "dal"
+ ],
+ "_bridge_doc": "the estimator (stays in the value World ardupilot/out/Estimator/Estimator_lib.lean, reached through the bridge): every member function of these classes and these accessors is a boundary call that records its name (PMem.bridge) and gives the type's default; ardupilot/vehicle/bridge_calls.txt lists them (the API the bridge provides)",
+ "memory_module": "ParamMemoryV",
+ "bridge_module": "VehicleBridge",
+ "bridge_inputs": {
+  "AP_AHRS::update": [
+   [
+    "time_flying_ms",
+    "AP_Vehicle::get_time_flying_ms",
+    "copter"
+   ]
+  ],
+  "AP_GPS::init": [
+   [
+    "pre_convert_parameters",
+    "AP_GPS::convert_parameters",
+    "this"
+   ]
+  ],
+  "AP_AHRS::send_ekf_status_report": [
+   [
+    "link_chan",
+    "GCS_MAVLINK::get_chan",
+    "{0}"
+   ]
+  ]
+ },
+ "_bridge_module_doc": "Phase 5a slice 1 (README.md \"Phase 5: the estimator bridge\"): the memory with the estimator World inside (memory_module ParamMemoryV, generated by support/gen_param_memory_v.py from ParamMemory.lean; GCSMemoryV, VehicleMemoryV import it); every estimator call is a call of its adapter in bridge_module (ardupilot/out/Vehicle/VehicleBridge.lean, generated by ardupilot/vehicle/gen_bridge.py from Vehicle_lib.bridge.json and the estimator's signatures); bridge_inputs: the vehicle functions whose results are World boundary inputs of an adapter (AP_Vehicle::get_time_flying_ms for AP_DAL's time flying in AP_AHRS::update), passed as actions; Phase 5b: an input named pre_* is a translated member function of the estimator class run on the call's object (`this`) before the World call, for a call the World's translation drops (AP_GPS::init's convert_parameters: --drop AP_GPS::convert_parameters in ardupilot/translate_estimator.sh; on the memory it is AP_Param's conversion and flush, whose delay consumes input lines); Phase 5c: an object `{k}` is the call's k-th argument (AP_AHRS::send_ekf_status_report's `GCS_MAVLINK &link`: the translated GCS_MAVLINK::get_chan on it is the World's boundary input `link.get_chan()`)",
+ "init_order": [
+  "__GLOBAL__sub_I_AP_ParamT.cpp",
+  "__GLOBAL__sub_I_AP_ExternalControl_Copter.cpp",
+  "__GLOBAL__sub_I_AP_State.cpp",
+  "__GLOBAL__sub_I_Attitude.cpp",
+  "__GLOBAL__sub_I_Copter.cpp",
+  "__GLOBAL__sub_I_GCS_Copter.cpp",
+  "__GLOBAL__sub_I_GCS_MAVLink_Copter.cpp",
+  "__GLOBAL__sub_I_Log.cpp",
+  "__GLOBAL__sub_I_Parameters.cpp",
+  "__GLOBAL__sub_I_RC_Channel_Copter.cpp",
+  "__GLOBAL__sub_I_UserCode.cpp",
+  "__GLOBAL__sub_I_afs_copter.cpp",
+  "__GLOBAL__sub_I_autoyaw.cpp",
+  "__GLOBAL__sub_I_avoidance.cpp",
+  "__GLOBAL__sub_I_avoidance_adsb.cpp",
+  "__GLOBAL__sub_I_baro_ground_effect.cpp",
+  "__GLOBAL__sub_I_commands.cpp",
+  "__GLOBAL__sub_I_compassmot.cpp",
+  "__GLOBAL__sub_I_crash_check.cpp",
+  "__GLOBAL__sub_I_ekf_check.cpp",
+  "__GLOBAL__sub_I_esc_calibration.cpp",
+  "__GLOBAL__sub_I_events.cpp",
+  "__GLOBAL__sub_I_failsafe.cpp",
+  "__GLOBAL__sub_I_fence.cpp",
+  "__GLOBAL__sub_I_heli.cpp",
+  "__GLOBAL__sub_I_inertia.cpp",
+  "__GLOBAL__sub_I_land_detector.cpp",
+  "__GLOBAL__sub_I_landing_gear.cpp",
+  "__GLOBAL__sub_I_mode.cpp",
+  "__GLOBAL__sub_I_mode_acro.cpp",
+  "__GLOBAL__sub_I_mode_acro_heli.cpp",
+  "__GLOBAL__sub_I_mode_althold.cpp",
+  "__GLOBAL__sub_I_mode_auto.cpp",
+  "__GLOBAL__sub_I_mode_autorotate.cpp",
+  "__GLOBAL__sub_I_mode_autotune.cpp",
+  "__GLOBAL__sub_I_mode_avoid_adsb.cpp",
+  "__GLOBAL__sub_I_mode_brake.cpp",
+  "__GLOBAL__sub_I_mode_circle.cpp",
+  "__GLOBAL__sub_I_mode_drift.cpp",
+  "__GLOBAL__sub_I_mode_flip.cpp",
+  "__GLOBAL__sub_I_mode_flowhold.cpp",
+  "__GLOBAL__sub_I_mode_follow.cpp",
+  "__GLOBAL__sub_I_mode_guided.cpp",
+  "__GLOBAL__sub_I_mode_guided_custom.cpp",
+  "__GLOBAL__sub_I_mode_guided_nogps.cpp",
+  "__GLOBAL__sub_I_mode_land.cpp",
+  "__GLOBAL__sub_I_mode_loiter.cpp",
+  "__GLOBAL__sub_I_mode_poshold.cpp",
+  "__GLOBAL__sub_I_mode_rtl.cpp",
+  "__GLOBAL__sub_I_mode_smart_rtl.cpp",
+  "__GLOBAL__sub_I_mode_sport.cpp",
+  "__GLOBAL__sub_I_mode_stabilize.cpp",
+  "__GLOBAL__sub_I_mode_stabilize_heli.cpp",
+  "__GLOBAL__sub_I_mode_systemid.cpp",
+  "__GLOBAL__sub_I_mode_throw.cpp",
+  "__GLOBAL__sub_I_mode_turtle.cpp",
+  "__GLOBAL__sub_I_mode_zigzag.cpp",
+  "__GLOBAL__sub_I_motor_test.cpp",
+  "__GLOBAL__sub_I_motors.cpp",
+  "__GLOBAL__sub_I_navigation.cpp",
+  "__GLOBAL__sub_I_precision_landing.cpp",
+  "__GLOBAL__sub_I_radio.cpp",
+  "__GLOBAL__sub_I_rate_thread.cpp",
+  "__GLOBAL__sub_I_sensors.cpp",
+  "__GLOBAL__sub_I_standby.cpp",
+  "__GLOBAL__sub_I_surface_tracking.cpp",
+  "__GLOBAL__sub_I_system.cpp",
+  "__GLOBAL__sub_I_takeoff.cpp",
+  "__GLOBAL__sub_I_takeoff_check.cpp",
+  "__GLOBAL__sub_I_terrain.cpp",
+  "__GLOBAL__sub_I_toy_mode.cpp",
+  "__GLOBAL__sub_I_tuning.cpp",
+  "__GLOBAL__sub_I_lockstep.cpp",
+  "__GLOBAL__sub_I_sensors.cpp",
+  "__GLOBAL__sub_I_sensors_ins.cpp",
+  "__GLOBAL__sub_I_sensors_baro.cpp",
+  "__GLOBAL__sub_I_sensors_compass.cpp",
+  "__GLOBAL__sub_I_sensors_gps.cpp",
+  "__GLOBAL__sub_I_est_probe.cpp",
+  "__GLOBAL__sub_I_param_dump.cpp",
+  "__GLOBAL__sub_I_control.cpp",
+  "__GLOBAL__sub_I_location.cpp",
+  "__GLOBAL__sub_I_AP_Math.cpp",
+  "__GLOBAL__sub_I_GCS_MAVLink.cpp",
+  "__GLOBAL__sub_I_GCS.cpp",
+  "__GLOBAL__sub_I_RC_Channels.cpp",
+  "__GLOBAL__sub_I_GCS_Common.cpp",
+  "__GLOBAL__sub_I_AP_Mission.cpp",
+  "__GLOBAL__sub_I_AP_Vehicle.cpp",
+  "__GLOBAL__sub_I_Parameters.cpp",
+  "__GLOBAL__sub_I_LowPassFilter.cpp",
+  "__GLOBAL__sub_I_RC_Channel.cpp",
+  "__GLOBAL__sub_I_GCS_Signing.cpp",
+  "__GLOBAL__sub_I_quaternion.cpp",
+  "__GLOBAL__sub_I_AP_Scheduler.cpp",
+  "__GLOBAL__sub_I_SRV_Channel_aux.cpp",
+  "__GLOBAL__sub_I_SRV_Channels.cpp",
+  "__GLOBAL__sub_I_AC_PosControl.cpp",
+  "__GLOBAL__sub_I_AP_CANManager.cpp",
+  "__GLOBAL__sub_I_AP_Arming_Copter.cpp",
+  "__GLOBAL__sub_I_AP_BattMonitor.cpp",
+  "__GLOBAL__sub_I_AP_BoardConfig.cpp",
+  "__GLOBAL__sub_I_GPS_Backend.cpp",
+  "__GLOBAL__sub_I_StorageManager.cpp",
+  "__GLOBAL__sub_I_AP_AHRS_NavEKF3.cpp",
+  "__GLOBAL__sub_I_AP_Baro_Backend.cpp",
+  "__GLOBAL__sub_I_AP_MotorsMatrix.cpp",
+  "__GLOBAL__sub_I_AP_SerialManager.cpp",
+  "__GLOBAL__sub_I_Compass_PerMotor.cpp",
+  "__GLOBAL__sub_I_AP_InertialSensor.cpp",
+  "__GLOBAL__sub_I_AC_AttitudeControl.cpp",
+  "__GLOBAL__sub_I_AP_Compass_Backend.cpp",
+  "__GLOBAL__sub_I_AP_ExternalControl.cpp",
+  "__GLOBAL__sub_I_AP_SurfaceDistance.cpp",
+  "__GLOBAL__sub_I_AP_MotorsMulticopter.cpp",
+  "__GLOBAL__sub_I_AC_AttitudeControl_Multi.cpp",
+  "__GLOBAL__sub_I_AP_InertialSensor_Backend.cpp",
+  "__GLOBAL__sub_I_AP_Mission_ChangeDetector.cpp",
+  "__GLOBAL__sub_I_AP_GPS.cpp",
+  "__GLOBAL__sub_I_AP_RTC.cpp",
+  "__GLOBAL__sub_I_AP_AHRS.cpp",
+  "__GLOBAL__sub_I_AP_Baro.cpp",
+  "__GLOBAL__sub_I_AP_Notify.cpp",
+  "__GLOBAL__sub_I_AP_Compass.cpp",
+  "__GLOBAL__sub_I_PerfInfo.cpp",
+  "__GLOBAL__sub_I_AC_PID.cpp",
+  "__GLOBAL__sub_I_Util.cpp",
+  "__GLOBAL__sub_I_Storage.cpp",
+  "__GLOBAL__sub_I_AP_AHRS_Backend.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3.cpp",
+  "__GLOBAL__sub_I_vector2.cpp",
+  "__GLOBAL__sub_I_vector3.cpp",
+  "__GLOBAL__sub_I_AC_WPNav.cpp",
+  "__GLOBAL__sub_I_AP_Param.cpp",
+  "__GLOBAL__sub_I_Location.cpp",
+  "__GLOBAL__sub_I_AC_Circle.cpp",
+  "__GLOBAL__sub_I_AC_Loiter.cpp",
+  "__GLOBAL__sub_I_AP_Arming.cpp",
+  "__GLOBAL__sub_I_AP_Motors_Class.cpp",
+  "__GLOBAL__sub_I_EKFGSF_yaw.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_Outputs.cpp",
+  "__GLOBAL__sub_I_SCurve.cpp",
+  "__GLOBAL__sub_I_AP_Mission_Commands.cpp",
+  "__GLOBAL__sub_I_GCS_Param.cpp",
+  "__GLOBAL__sub_I_GCS_MAVLink_Parameters.cpp",
+  "__GLOBAL__sub_I_SRV_Channel.cpp",
+  "__GLOBAL__sub_I_SlewLimiter.cpp",
+  "__GLOBAL__sub_I_SplineCurve.cpp",
+  "__GLOBAL__sub_I_AC_PID_Basic.cpp",
+  "__GLOBAL__sub_I_AP_AHRS_View.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_core.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_Control.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_GyroBias.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_Measurements.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_PosVelFusion.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_VehicleStatus.cpp",
+  "__GLOBAL__sub_I_AP_Filesystem.cpp",
+  "__GLOBAL__sub_I_AP_MAVLinkCAN.cpp",
+  "__GLOBAL__sub_I_board_drivers.cpp",
+  "__GLOBAL__sub_I_AP_Declination.cpp",
+  "__GLOBAL__sub_I_AP_AHRS_DCM.cpp",
+  "__GLOBAL__sub_I_AccelCalibrator.cpp",
+  "__GLOBAL__sub_I_LowPassFilter2p.cpp",
+  "__GLOBAL__sub_I_MAVLink_routing.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF_Source.cpp",
+  "__GLOBAL__sub_I_DerivativeFilter.cpp",
+  "__GLOBAL__sub_I_MissionItemProtocol.cpp",
+  "__GLOBAL__sub_I_AP_Motors_Thrust_Linearization.cpp",
+  "__GLOBAL__sub_I_AP_BattMonitor_Analog.cpp",
+  "__GLOBAL__sub_I_AP_BattMonitor_Params.cpp",
+  "__GLOBAL__sub_I_AP_DAL.cpp",
+  "__GLOBAL__sub_I_AC_P.cpp",
+  "__GLOBAL__sub_I_AP_GPS_Params.cpp",
+  "__GLOBAL__sub_I_AC_P_1D.cpp",
+  "__GLOBAL__sub_I_AC_P_2D.cpp",
+  "__GLOBAL__sub_I_matrix3.cpp",
+  "__GLOBAL__sub_I_AC_PID_2D.cpp",
+  "__GLOBAL__sub_I_ToneAlarm.cpp",
+  "__GLOBAL__sub_I_AP_BattMonitor_Backend.cpp",
+  "__GLOBAL__sub_I_AP_Baro_atmosphere.cpp",
+  "__GLOBAL__sub_I_AP_AHRS_SIM.cpp",
+  "__GLOBAL__sub_I_MissionItemProtocol_Waypoints.cpp",
+  "__GLOBAL__sub_I_matrix_alg.cpp",
+  "__GLOBAL__sub_I_AP_DAL_GPS.cpp",
+  "__GLOBAL__sub_I_AP_DAL_Baro.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_MagFusion.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF3_AirDataFusion.cpp",
+  "__GLOBAL__sub_I_AP_DAL_Compass.cpp",
+  "__GLOBAL__sub_I_tables.cpp",
+  "__GLOBAL__sub_I_AP_DAL_Airspeed.cpp",
+  "__GLOBAL__sub_I_AP_NavEKF_core_common.cpp",
+  "__GLOBAL__sub_I_AP_DAL_InertialSensor.cpp",
+  "__GLOBAL__sub_I_AP_WheelEncoder.cpp",
+  "__GLOBAL__sub_I_RGBLed.cpp",
+  "__GLOBAL__sub_I_MMLPlayer.cpp",
+  "__GLOBAL__sub_I_AP_Filesystem_ROMFS.cpp",
+  "__GLOBAL__sub_I_WheelEncoder_Backend.cpp",
+  "__GLOBAL__sub_I_WheelEncoder_SITL_Quadrature.cpp"
+ ],
+ "static_construction": true,
+ "hal_hook": true,
+ "_static_construction_doc": "Phase 5a slice 2: `static_construction` translates the C++ static construction (staticConstruct: the dynamic initializers of the statics the translation uses, in the order of copter_ref's __init_offsets (`init_order`, ardupilot/vehicle/init_order.json) and of each unit's global constructor; member objects' default constructors translated; estimator classes constructed by the World; FUNCTOR_BIND_MEMBER bound). `hal_hook`: every HAL member outside `boundary` is `PMem.hal name this #[args]`, lockstep.cpp's semantics implemented by the replay driver (lean/VehicleReplay.lean).",
+ "static_refs": {
+  "_doc": "(static construction) a static member named through a derived class: function:name:type -> the static",
+  "Copter::allocate_motors:var_info:const struct AP_Param::GroupInfo[]": "AP_MotorsMulticopter::var_info"
+ },
+ "_zero_statics_doc": "(vehicle) `hal` is a reference to the HAL object: here a zeroed object of the HAL's size (clang: 224 bytes), so every driver pointer (`hal.scheduler`, `hal.util`, ...) is null; the drivers' virtual members are `PMem.hal` calls, their data members (`hal.util->persistent_data`) are in the null page below the image.",
+ "world_outputs": {
+  "_doc": "Phase 5b: the estimator World's output events (cpp2lean.py --output-log --param-save-log, ardupilot/translate_estimator.sh), replayed on the memory after each bridge call as the calls the World's translation made events of: [function, arguments]; {k} the event's k-th field, @f the translated accessor f's result. AP_Param::save on the parameter's address in this image (its C++ path from the World object, PMem.Bridge.addrOfPath, generated from estimator_params.json); GCS_SEND_MESSAGE in AP_AHRS (AP_AHRS.cpp:479, 1777-1778); AP::mission().write_home_to_storage() (AP_AHRS.cpp:1787); AP_Param::notify (set_and_notify in the World: the barometer's ground pressure every 10 s, the compass's external flag); (Phase 5c) GCS_SEND_TEXT in World code (cpp2lean.py --text-log): the vehicle's translated GCS::send_text with the format and the variadic arguments in memory as the C++ caller has them (`%text`: worldOutputs'textBlock), so the text is formatted by the translated print_vprintf",
+  "AP_Param_save": [
+   "AP_Param::save",
+   "PMem.Bridge.addrOfPath {0}",
+   "{1}"
+  ],
+  "send_message": [
+   "GCS::send_message",
+   "@gcs",
+   "Estimator_lib.ap_message.toInt {0}"
+  ],
+  "write_home_to_storage": [
+   "AP_Mission::write_home_to_storage",
+   "@AP::mission"
+  ],
+  "AP_Param_notify": [
+   "AP_Param::notify",
+   "PMem.Bridge.addrOfPath {0}"
+  ],
+  "send_text": [
+   "GCS::send_text",
+   "@gcs",
+   "{0}",
+   "%text {1} {2}"
+  ],
+  "_doc_send_text_snprintf": "Phase 5c (cpp2lean.py --text-buffers): `char buffer[n]` filled by `hal.util->snprintf(buffer, n, g, ...)` and sent as `GCS_SEND_TEXT(sev, \"%s\", buffer)` (AP_GPS_Backend::broadcast_gps_type, GPS_Backend.cpp:129-154): `%snprintf {f} {n} {g} {a}` formats into a buffer of n bytes of the drain's frame with the translated AP_HAL::Util::snprintf on hal.util and passes the format f and the variadic block of the buffer's address",
+  "send_text_snprintf": [
+   "GCS::send_text",
+   "@gcs",
+   "{0}",
+   "%ctext {1} {2}"
+  ],
+  "_doc_text_sink": "Phase 5d (cpp2lean.py --text-buffers): `Output.text_sink buf text`, pushed by the bridge's adapter of a World function with a `char *buf` parameter (AP_AHRS::pre_arm_check's failure_msg) after the call: the text the World wrote (`Estimator_lib.CText`: the format and tagged arguments of the last `hal.util->snprintf`/`dal.snprintf` into it, a format that is itself a text formatted first) formatted into the caller's buffer at address buf with the translated AP_HAL::Util::snprintf (C truncation at the call's size); nothing written if the World wrote nothing. `%ctext {f} {t}` (send_text_snprintf, since Phase 5d): the buffer a World text fills, formatted the same way into a buffer of the drain's frame",
+  "text_sink": [
+   "%textsink {0} {1}"
+  ],
+  "_doc_5c": "Phase 5c: the MAVLink sends of the estimator classes' own senders (cpp2lean.py --output-fn: AP_AHRS::send_ekf_status_report, AP_AHRS.cpp:1709; AP_GPS::send_mavlink_gps_raw, AP_GPS.cpp:1405; send_mavlink_gps2_raw, :1446), replayed as the calls of the translated MAVLink library on the link's channel; `&{k}`: the event's k-th field is the record the World's call points to, stored at clang's layout in a temporary of the drain's frame",
+  "mavlink_msg_ekf_status_report_send_struct": [
+   "mavlink_msg_ekf_status_report_send_struct",
+   "Estimator_lib.mavlink_channel_t.toInt {0}",
+   "&{1}"
+  ],
+  "mavlink_msg_gps_raw_int_send": [
+   "mavlink_msg_gps_raw_int_send",
+   "Estimator_lib.mavlink_channel_t.toInt {0}",
+   "{1}",
+   "{2}",
+   "{3}",
+   "{4}",
+   "{5}",
+   "{6}",
+   "{7}",
+   "{8}",
+   "{9}",
+   "{10}",
+   "{11}",
+   "{12}",
+   "{13}",
+   "{14}",
+   "{15}",
+   "{16}"
+  ],
+  "mavlink_msg_gps2_raw_send": [
+   "mavlink_msg_gps2_raw_send",
+   "Estimator_lib.mavlink_channel_t.toInt {0}",
+   "{1}",
+   "{2}",
+   "{3}",
+   "{4}",
+   "{5}",
+   "{6}",
+   "{7}",
+   "{8}",
+   "{9}",
+   "{10}",
+   "{11}",
+   "{12}",
+   "{13}",
+   "{14}",
+   "{15}",
+   "{16}",
+   "{17}",
+   "{18}"
+  ],
+  "est_mark": [
+   "%hal cpp2lean::est_mark",
+   "{0}",
+   "{1}"
+  ],
+  "_doc_est_mark": "Phase 5c: the World's lock-step points (reference/hal/est_scheduler.cpp est_mark, cpp2lean.py --output-fn): the driver (lean/VehicleReplay.lean) runs the vehicle's part of lockstep.cpp's step and delay there (kind 1: the vehicle's timer processes, the failsafe, the IO processes of the line; kind 2: the delay callback)",
+  "console_printf": [
+   "%console AP_HAL::BetterStream::printf",
+   "{0}",
+   "{1}"
+  ],
+  "_doc_console_printf": "Phase 5c: the World's console texts (DEV_PRINTF, hal.console->printf: \"Init Gyro\", \"*\", \"\\n\" of AP_InertialSensor::_init_gyro; cpp2lean.py --text-log), passed to the HAL's console printf (lean/VehicleReplay.lean: SERIAL0, as lockstep.cpp's console)"
+ },
+ "bridge_field_reads": [
+  "AP_AHRS_View::yaw",
+  "AP_AHRS::yaw_sensor"
+ ],
+ "_bridge_field_reads_doc": "Phase 5b: estimator data members that translated code reads directly (AC_AttitudeControl::reset_yaw_target_and_rate, AC_Circle, AC_Loiter, AC_PosControl read `_ahrs.yaw`): read through a generated adapter from the World object (ardupilot/vehicle/gen_bridge.py); before, the read was of the object's memory address (0x200, the view's stand-in address: 0); Phase 5c: AP_AHRS::yaw_sensor (GCS_MAVLINK::send_global_position_int's hdg, GCS_Common.cpp)",
+ "_content_senders_doc": "Phase 5c: the 64 content senders of GCS.json's PMem.bframe list are translated (removed from `boundary`): GCS_MAVLINK's and GCS_MAVLINK_Copter's senders on the memory, their estimator getters through the bridge (the World's translation, ardupilot/estimator.use); the estimator classes' own senders (AP_AHRS::send_ekf_status_report, AP_GPS::send_mavlink_gps_raw/gps2_raw) translated in the World, whose mavlink_msg_*_send calls are Output events (cpp2lean.py --output-fn) replayed here on the translated MAVLink library (`world_outputs`). Phase 5b had kept them recorded (README.md \"Phase 5b summary\", item 3)",
+ "varargs": true,
+ "goto_rewrite": true,
+ "hal_dispatch": {
+  "AP_HAL::BetterStream::write": "BufferPrinter"
+ },
+ "_formatter_doc": "Phase 5c (D10): ArduPilot's text formatter translated: AP_HAL::Util::snprintf and vsnprintf (Util.cpp, with its BufferPrinter; `hal_translated`: hal.util is the null object of this HAL and neither member reads Util state), print_vprintf (utility/print_vprintf.cpp, its gotos by cpp2lean's GotoRewriter: `goto_rewrite`), ftoa_engine (utility/ftoa_engine.cpp) and ultoa_invert/ulltoa_invert (utility/utoa_invert.cpp); print_vprintf's virtual `s->write(c)` on its AP_HAL::BetterStream is BufferPrinter's (`hal_dispatch`: the only BetterStream print_vprintf is given in translated code). `varargs`: C varargs as on the target (arm64 Apple: `va_list` is `char *`, each variadic argument in its own 8-byte slot): a variadic function takes the address of its caller's block of slots as a hidden last parameter; va_start/va_arg/va_copy/va_end over it. GCS::send_text, GCS_MAVLINK::send_text and GCS::service_statustext are translated (were boundary: no-ops and the recorded STATUSTEXT frames).",
+ "bridge_pointer_results": [
+  "AP_AHRS::get_secondary_estimates"
+ ],
+ "_bridge_pointer_results_doc": "Phase 5c: estimator functions returning `const T *` into the World (GCS_MAVLINK::send_ahrs2's AP_AHRS::get_secondary_estimates, AP_AHRS.h:202): the adapter (ardupilot/vehicle/gen_bridge.py) copies the pointed-to record, at clang's layout, into a temporary of the caller's frame and returns its address (null for the World's null pointer)",
+ "packed_records": "^__mavlink_\\w+_t$",
+ "_packed_records_doc": "Phase 5c: clang's record layout dump gives the MAVLink message structs (MAVPACKED: the packed attribute after the closing brace of a typedef'd struct) their unpacked layout (time_usec of GPS_GLOBAL_ORIGIN at 16, sizeof 24), while the compiled code has them packed (offsetof 12, sizeof 20): the records whose names match are laid out packed (cpp2lean_mem.py repack_layout); mavlink_message_t (`__mavlink_message`, a bit-field) keeps the dump's layout (its bytes are only read and written through its members)",
+ "_uart_begin_doc": "Phase 5c: AP_HAL::UARTDriver::begin is the HAL's (lean/VehicleReplay.lean): on SERIAL3, the GPS's port, the baud rate is that of the World's port stand-in (reference/hal/est_uart.h, EstUART::begin), the same unconnected port of lockstep.cpp that AP_GPS then reads (get_baud_rate: the first probe baud, \"GPS 1: probing for SITL at 230400 baud\"); before, a no-operation (GCS.json)",
+ "ctor_from_class": true,
+ "_ctor_from_class_doc": "Phase 5c: static construction calls a class's user-provided default constructor also when it is defined inline in the class and never called by name (AP_CANManager's CANIface_Params/CANDriver_Params elements: their setup_object_defaults gave CAN_D1_PROTOCOL/CAN_D2_PROTOCOL 0 instead of 1). AP_SerialManager::UARTState::baudrate is translated (GCS.json's boundary answered 115200: SERIAL3, the GPS's port, begins at SERIAL3_BAUD's 230400 in the reference)",
+ "string_pool": {
+  "binary": "build/reference/copter_ref",
+  "section": "__cstring"
+ },
+ "_string_pool_doc": "(Phase 5d) the C string literals at the reference binary's layout (cpp2lean_mem.py `macho_section`): the linker's merged __TEXT,__cstring section of build/reference/copter_ref is placed whole as constant data and each literal of the code takes its address there, so a read past a literal's end reads the reference's neighbor bytes, as compiled code does: GCS_MAVLINK_Copter::send_available_mode passes mode names of 4 to 17 bytes to mavlink_msg_available_modes_send, which copies 50 (the QGroundControl session's AVAILABLE_MODES). Phase 5d also translates the GUIDED handlers the scenario suite reaches (SET_POSITION_TARGET_LOCAL_NED/GLOBAL_INT and SET_ATTITUDE_TARGET were boundary no-ops; DO_REPOSITION, CONDITION_YAW, DO_CHANGE_SPEED were `unreached`) and the command handlers a ground station sends commonly (SET_MODE, GET_HOME_POSITION, REQUEST_AUTOPILOT_CAPABILITIES, PAUSE_CONTINUE, DO_SET_ROI(_LOCATION), DO_SET_MISSION_CURRENT, RUN_PREARM_CHECKS)"
+}

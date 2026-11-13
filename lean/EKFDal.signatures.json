@@ -1,0 +1,853 @@
+{
+ "namespace": "EKFDal",
+ "source": "examples/ekfdal.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Quat",
+   "lean": "EKFDal.Quat",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Quat",
+     "lean": "EKFDal.Quat.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Quat",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "q1",
+     "cxx": "q1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q2",
+     "cxx": "q2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q3",
+     "cxx": "q3",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q4",
+     "cxx": "q4",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Dal",
+   "lean": "EKFDal.Dal",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "start_frame",
+     "lean": "EKFDal.Dal.start_frame",
+     "top": false,
+     "kind": "method",
+     "owner": "Dal",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "location",
+     "lean": "EKFDal.Dal.location",
+     "top": false,
+     "kind": "method",
+     "owner": "Dal",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "log_event",
+     "lean": "EKFDal.Dal.log_event",
+     "top": false,
+     "kind": "method",
+     "owner": "Dal",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_rec.head",
+     "cxx": "_rec.head",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec.value",
+     "cxx": "_rec.value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec.quat.q1",
+     "cxx": "_rec.quat.q1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec.quat.q2",
+     "cxx": "_rec.quat.q2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec.quat.q3",
+     "cxx": "_rec.quat.q3",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec.quat.q4",
+     "cxx": "_rec.quat.q4",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_rec._end",
+     "cxx": "_rec._end",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last",
+     "cxx": "_last",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_frames",
+     "cxx": "_frames",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_loc[0]!",
+     "cxx": "_loc[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_loc[1]!",
+     "cxx": "_loc[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_loc[2]!",
+     "cxx": "_loc[2]",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Origin",
+   "lean": "EKFDal.Origin",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "get",
+     "lean": "EKFDal.Origin.get",
+     "top": false,
+     "kind": "method",
+     "owner": "Origin",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "alt",
+     "cxx": "alt",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Core",
+   "lean": "EKFDal.Core",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Core",
+     "lean": "EKFDal.Core.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Core",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_frontend",
+       "type": "Front *",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "_dal",
+       "type": "Dal",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFDal.Dal.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_lim",
+     "lean": "EKFDal.Core.set_lim",
+     "top": false,
+     "kind": "method",
+     "owner": "Core",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "which",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "EKFDal.Core.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Core",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "frontend",
+     "cxx": "frontend",
+     "type": "Front *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "lim",
+     "cxx": "lim",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[0]!",
+     "cxx": "states[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[1]!",
+     "cxx": "states[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[2]!",
+     "cxx": "states[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[3]!",
+     "cxx": "states[3]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[4]!",
+     "cxx": "states[4]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[5]!",
+     "cxx": "states[5]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[6]!",
+     "cxx": "states[6]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[7]!",
+     "cxx": "states[7]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "sum",
+     "cxx": "sum",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Front",
+   "lean": "EKFDal.Front",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "EKFDal.Front.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "EKFDal.Front.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "move_origin",
+     "lean": "EKFDal.Front.move_origin",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "d",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Front",
+     "lean": "EKFDal.Front.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "origin.alt",
+     "cxx": "origin.alt",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "selected",
+     "cxx": "selected",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "core",
+     "cxx": "core",
+     "type": "Core *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "num_cores",
+     "cxx": "num_cores",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary32 (1 : Int32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "20:19"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "20:37"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "44:48"
+  },
+  {
+   "lean": "(5.0 : Binary32)",
+   "bits": "40a00000",
+   "cpp": "5.0f",
+   "at": "122:34"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "78:38"
+  },
+  {
+   "lean": "(1.0e6 : Binary32)",
+   "bits": "49742400",
+   "cpp": "1.0e6f",
+   "at": "159:15"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "front",
+   "cxx": "front",
+   "class": "Front",
+   "lean": "Front",
+   "parts": [
+    [
+     "front",
+     "Front.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "Dal'force_write",
+   "cxx": "force_write",
+   "class": null,
+   "lean": null,
+   "parts": [
+    [
+     "Dal'force_write",
+     "Bool",
+     "static data member of `Dal`"
+    ]
+   ],
+   "static": "Dal",
+   "leaves": [
+    {
+     "root": "w",
+     "lean": "",
+     "cxx": "",
+     "type": "bool",
+     "enum": null
+    }
+   ]
+  },
+  {
+   "name": "Dal'events",
+   "cxx": "events",
+   "class": null,
+   "lean": null,
+   "parts": [
+    [
+     "Dal'events",
+     "UInt32",
+     "static data member of `Dal`"
+    ]
+   ],
+   "static": "Dal",
+   "leaves": [
+    {
+     "root": "w",
+     "lean": "",
+     "cxx": "",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ]
+  },
+  {
+   "name": "Front_update'lastTime",
+   "cxx": "lastTime",
+   "class": null,
+   "lean": null,
+   "parts": [
+    [
+     "Front_update'lastTime",
+     "UInt32",
+     "static data member of `Front::update`"
+    ]
+   ],
+   "static": "Front::update",
+   "leaves": [
+    {
+     "root": "w",
+     "lean": "",
+     "cxx": "",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "local": true
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'Dal",
+   "class": "Dal",
+   "lean": "Dal",
+   "placement": false
+  },
+  {
+   "field": "heap'Core",
+   "class": "Core",
+   "lean": "Core",
+   "placement": true
+  }
+ ],
+ "funcs": []
+}

@@ -1,0 +1,1399 @@
+{
+ "namespace": "WorldPtrs",
+ "source": "examples/worldptr.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Baro",
+   "lean": "WorldPtrs.Baro",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "register_sensor",
+     "lean": "WorldPtrs.Baro.register_sensor",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Baro",
+     "lean": "WorldPtrs.Baro.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "_add_backend",
+     "lean": "WorldPtrs.Baro._add_backend",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "private",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "backend",
+       "type": "Backend *",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "WorldPtrs.Baro.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "nsim",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "with_bad",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_pressure",
+     "lean": "WorldPtrs.Baro.set_pressure",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "instance",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "WorldPtrs.Baro.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "accumulate",
+     "lean": "WorldPtrs.Baro.accumulate",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "pressure",
+     "lean": "WorldPtrs.Baro.pressure",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "num_drivers",
+     "lean": "WorldPtrs.Baro.num_drivers",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint8_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "all_healthy",
+     "lean": "WorldPtrs.Baro.all_healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "first_scale",
+     "lean": "WorldPtrs.Baro.first_scale",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "same_first",
+     "lean": "WorldPtrs.Baro.same_first",
+     "top": false,
+     "kind": "method",
+     "owner": "Baro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "drivers[0]!",
+     "cxx": "drivers[0]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "drivers[1]!",
+     "cxx": "drivers[1]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "drivers[2]!",
+     "cxx": "drivers[2]",
+     "type": "Backend *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_num_drivers",
+     "cxx": "_num_drivers",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_num_sensors",
+     "cxx": "_num_sensors",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pressure[0]!",
+     "cxx": "_pressure[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pressure[1]!",
+     "cxx": "_pressure[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pressure[2]!",
+     "cxx": "_pressure[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_updates",
+     "cxx": "_updates",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SimBaro",
+   "lean": "WorldPtrs.SimBaro",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Backend",
+     "lean": "WorldPtrs.SimBaro.Backend.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "frontend",
+       "type": "Baro",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldPtrs.Baro.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "SimBaro",
+     "lean": "WorldPtrs.SimBaro.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SimBaro",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "baro",
+       "type": "Baro",
+       "ref": "world:barometer",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldPtrs.Baro.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "copy_to_frontend",
+     "lean": "WorldPtrs.SimBaro.copy_to_frontend",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "protected",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "WorldPtrs.SimBaro.update",
+     "top": false,
+     "kind": "method",
+     "owner": "SimBaro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scale",
+     "lean": "WorldPtrs.SimBaro.scale",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "accumulate",
+     "lean": "WorldPtrs.SimBaro.accumulate",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "healthy",
+     "lean": "WorldPtrs.SimBaro.healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_instance",
+     "cxx": "_instance",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_sum",
+     "cxx": "_sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "ScaledBaro",
+   "lean": "WorldPtrs.ScaledBaro",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Backend",
+     "lean": "WorldPtrs.ScaledBaro.Backend.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "frontend",
+       "type": "Baro",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldPtrs.Baro.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "ScaledBaro",
+     "lean": "WorldPtrs.ScaledBaro.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "ScaledBaro",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "baro",
+       "type": "Baro",
+       "ref": "world:barometer",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "WorldPtrs.Baro.State",
+       "leaves": null
+      },
+      {
+       "name": "k",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init_sensor",
+     "lean": "WorldPtrs.ScaledBaro.init_sensor",
+     "top": false,
+     "kind": "method",
+     "owner": "ScaledBaro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "copy_to_frontend",
+     "lean": "WorldPtrs.ScaledBaro.copy_to_frontend",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "protected",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "WorldPtrs.ScaledBaro.update",
+     "top": false,
+     "kind": "method",
+     "owner": "ScaledBaro",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scale",
+     "lean": "WorldPtrs.ScaledBaro.scale",
+     "top": false,
+     "kind": "method",
+     "owner": "ScaledBaro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "accumulate",
+     "lean": "WorldPtrs.ScaledBaro.accumulate",
+     "top": false,
+     "kind": "method",
+     "owner": "Backend",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "pressure",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "healthy",
+     "lean": "WorldPtrs.ScaledBaro.healthy",
+     "top": false,
+     "kind": "method",
+     "owner": "ScaledBaro",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_instance",
+     "cxx": "_instance",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_sum",
+     "cxx": "_sum",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_k",
+     "cxx": "_k",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Store",
+   "lean": "WorldPtrs.Store",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "note",
+     "lean": "WorldPtrs.Store.note",
+     "top": false,
+     "kind": "method",
+     "owner": "Store",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "last",
+     "lean": "WorldPtrs.Store.last",
+     "top": false,
+     "kind": "method",
+     "owner": "Store",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_last",
+     "cxx": "_last",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_n",
+     "cxx": "_n",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Core",
+   "lean": "WorldPtrs.Core",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Core",
+     "lean": "WorldPtrs.Core.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Core",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "frontend",
+       "type": "Filter *",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "idx",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "step",
+     "lean": "WorldPtrs.Core.step",
+     "top": false,
+     "kind": "method",
+     "owner": "Core",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "state",
+     "lean": "WorldPtrs.Core.state",
+     "top": false,
+     "kind": "method",
+     "owner": "Core",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "frontend",
+     "cxx": "frontend",
+     "type": "Filter *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_idx",
+     "cxx": "_idx",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_x",
+     "cxx": "_x",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Filter",
+   "lean": "WorldPtrs.Filter",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "WorldPtrs.Filter.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "WorldPtrs.Filter.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "core_state",
+     "lean": "WorldPtrs.Filter.core_state",
+     "top": false,
+     "kind": "method",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "gain",
+     "cxx": "gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "core",
+     "cxx": "core",
+     "type": "Core *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "num_cores",
+     "cxx": "num_cores",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.25 : Binary32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "249:18"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "155:19"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "179:44"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "181:49"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "164:20"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "barometer",
+   "cxx": "barometer",
+   "class": "Baro",
+   "lean": "Baro",
+   "parts": [
+    [
+     "barometer",
+     "Baro.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "filter",
+   "cxx": "filter",
+   "class": "Filter",
+   "lean": "Filter",
+   "parts": [
+    [
+     "filter",
+     "Filter.State",
+     "state"
+    ]
+   ]
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'ScaledBaro",
+   "class": "ScaledBaro",
+   "lean": "ScaledBaro",
+   "placement": false
+  },
+  {
+   "field": "heap'SimBaro",
+   "class": "SimBaro",
+   "lean": "SimBaro",
+   "placement": false
+  },
+  {
+   "field": "heap'Store",
+   "class": "Store",
+   "lean": "Store",
+   "placement": false
+  },
+  {
+   "field": "heap'Core",
+   "class": "Core",
+   "lean": "Core",
+   "placement": true
+  }
+ ],
+ "funcs": []
+}

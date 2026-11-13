@@ -2,7 +2,7 @@
 // AC_PID.cpp:193-388 at commit 802db19de1): gains as parameters, low-pass filters on the target,
 // the error and the derivative, an integrator with anti-windup and a limit, a PD sum limit. The
 // gain scaler is read from an object outside the translation (the boundary).
-// Translated with: --param-class AP_Float=float --boundary AHRS --extern ext_sqrt:Float32.sqrt
+// Translated with: --param-class AP_Float=float --boundary AHRS --extern ext_sqrt:Binary32.sqrt
 #include <cfloat>
 #include <cmath>
 #include <cstdint>

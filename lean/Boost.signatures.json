@@ -215,41 +215,42 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "4:43"
   },
   {
-   "lean": "(10.0 : Float32)",
+   "lean": "(10.0 : Binary32)",
    "bits": "41200000",
    "cpp": "10.0f",
    "at": "13:45"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "13:63"
   },
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
    "cpp": "1.0f",
    "at": "13:69"
   },
   {
-   "lean": "(0.1 : Float32)",
+   "lean": "(0.1 : Binary32)",
    "bits": "3dcccccd",
    "cpp": "0.1f",
    "at": "15:66"
   },
   {
-   "lean": "(0.5 : Float)",
+   "lean": "(0.5 : Binary64)",
    "bits": "3fe0000000000000",
    "cpp": "0.5",
    "at": "21:23"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

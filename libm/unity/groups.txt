@@ -1,0 +1,26 @@
+__rem_pio2f: __rem_pio2f __rem_pio2_large
+__rem_pio2: __rem_pio2 __rem_pio2_large
+sinf: sinf __sindf __cosdf | __rem_pio2f
+cosf: cosf __sindf __cosdf | __rem_pio2f
+tanf: tanf __tandf | __rem_pio2f
+asinf: asinf
+acosf: acosf
+atanf: atanf
+atan2f: atan2f
+expf: expf exp2f_data __math_oflowf __math_uflowf __math_xflowf
+logf: logf logf_data __math_divzerof __math_invalidf
+log2f: log2f log2f_data __math_divzerof __math_invalidf
+powf: powf powf_data exp2f_data __math_oflowf __math_uflowf __math_xflowf __math_invalidf
+fmodf: fmodf
+sin: sin __sin __cos | __rem_pio2
+cos: cos __sin __cos | __rem_pio2
+tan: tan __tan | __rem_pio2
+asin: asin
+acos: acos
+atan: atan
+atan2: atan2
+exp: exp exp_data __math_oflow __math_uflow __math_xflow
+log: log log_data __math_divzero __math_invalid
+log2: log2 log2_data __math_divzero __math_invalid
+pow: pow pow_data exp_data __math_oflow __math_uflow __math_xflow __math_invalid
+fmod: fmod

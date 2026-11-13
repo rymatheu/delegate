@@ -1,0 +1,47 @@
+{
+ "namespace": "EKFData",
+ "cpp2lean": [
+  "--nest",
+  "--world",
+  "--ekf-types",
+  "--ekf-arrays",
+  "--ring-buffers",
+  "--runtime-loops"
+ ],
+ "world": {
+  "calls": 20000,
+  "weights": {
+   "data.add_sample": 4,
+   "data.take": 3,
+   "data.start": 0.2,
+   "data.flush": 0.2
+  },
+  "ranges": {
+   "t": [
+    0,
+    400
+   ],
+   "v": [
+    -4,
+    4
+   ],
+   "k": [
+    -2,
+    2
+   ],
+   "dx": [
+    -3,
+    3
+   ]
+  },
+  "domains": {
+   "data.start.n": [
+    1,
+    40
+   ]
+  }
+ },
+ "cxx_extra": [
+  "-fno-access-control"
+ ]
+}

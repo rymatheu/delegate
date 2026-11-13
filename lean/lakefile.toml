@@ -1,15 +1,33 @@
 name = "cpp2lean_demo"
-# The C that Lean emits is compiled with the code-generation flags of the C++ side
-# (cpp2lean/README.md, "Compilation assumptions"): no FMA contraction (Lean's default, repeated),
-# no fusion of sinf/cosf pairs into __sincosf_stret, no libm call simplification (-fno-builtin).
-moreLeancArgs = ["-ffp-contract=off", "-fno-builtin-sinf", "-fno-builtin-cosf", "-fno-builtin-sin", "-fno-builtin-cos", "-fno-builtin"]
+# C's float and double are FloatLib's Binary32 and Binary64 (cpp2lean/README.md, "Floating point"):
+# the Lean code computes with FloatLib's software operations only, so the C that Lean emits has no
+# floating-point arithmetic and no C library call of its own (cpp2lean/README.md, "Compilation
+# assumptions"); Lean passes -ffp-contract=off to the C compiler itself.
 defaultTargets = ["Translated", "demo"]
-# An unknown name in emitted code must be an error, not an auto-bound implicit argument.
-leanOptions = { autoImplicit = false }
+# An unknown name in emitted code must be an error, not an auto-bound implicit argument. Mathlib's
+# style linters (active through FloatLib's import of Mathlib) do not apply to translated code, which
+# keeps the C names (`Musl.sinf.sinf`, `__rem_pio2f`).
+leanOptions = { autoImplicit = false, weak.linter.dupNamespace = false, weak.linter.style.nameCheck = false }
+
+# FloatLib first, Mathlib (FloatLib's dependency) last and pinned, so that its version wins.
+[[require]]
+name = "floatlib"
+git = "https://github.com/lean-dojo/FloatLib.git"
+rev = "acba2057e452f32f4ed4f06bb0adbeda5342ba92"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.35.0"
 
 [[lean_lib]]
 name = "Translated"
-roots = ["Numeric", "Mixed", "CppLibm", "Boost", "Pid", "Shapes", "AC_PID_lib", "Motors", "AP_Math_lib", "AP_Motors_lib", "Frame", "AC_Attitude_lib", "AC_PosControl_lib", "Control", "AC_WPNav_lib", "Navigate", "AHRS_View_lib"]
+roots = ["CFloat", "Numeric", "Mixed", "Boost", "Pid", "Shapes", "AC_PID_lib", "Motors", "AP_Math_lib", "Frame", "Control", "Navigate", "AHRS_View_lib", "Libm", "Musl", "Worlds", "Copter_lib", "Bytes", "CStringDemo", "Pointers", "LowPassFilter2p_lib", "AC_CommandModel_lib", "AP_Declination_lib", "AP_Common_lib", "Text_lib", "StorageManager_lib", "AP_InternalError_lib", "CString", "EKF_Buffer_lib", "EKFGSF_lib", "EKFData", "WorldPtrs", "WorldDelay", "EKFDal", "Sensors_lib", "FrontEnds", "NavEKF_Source_lib", "InsGps", "FastCalls", "Estimation_lib", "MemberPtrs", "Mavlink_lib", "BitFields", "Mission_lib"]
+
+# the translation of musl's C library functions (libm/translate_libm.sh): Musl.lean imports Musl/*.lean
+[[lean_lib]]
+name = "MuslLib"
+roots = ["Musl"]
 
 [[lean_exe]]
 name = "demo"
@@ -26,3 +44,127 @@ root = "VehicleMain"
 [[lean_lib]]
 name = "VehicleLib"
 roots = ["VehicleParams", "Vehicle"]
+
+# micro-benchmark and equality check of CFloat's conversions (README.md, "Phase 3: conversions on the bit patterns")
+[[lean_exe]]
+name = "cfloat_bench"
+root = "CFloatBench"
+
+# F15: the cost of an element write into an array member, as emitted before and after --ekf-arrays (README.md, "Phase 3: EKF data structures")
+[[lean_exe]]
+name = "f15_bench"
+root = "F15Bench"
+
+# elaboration and run time of the straight-line part of EKF3's CovariancePrediction as emitted (README.md, "Phase 3: EKF data structures")
+[[lean_exe]]
+name = "covpred_bench"
+root = "CovPredBench"
+
+# the NavEKF3 translation (ardupilot/translate_ekf3.sh) and the Lean side of its difftest
+# (ardupilot/ekf3_difftest.py; README.md, "Phase 3: AP_DAL and NavEKF3")
+[[lean_lib]]
+name = "EKF3Lib"
+roots = ["EKF3_lib"]
+
+[[lean_exe]]
+name = "ekf3_lean"
+root = "EKF3Main"
+
+# the replay of the sensor front ends' World on a recorded flight (ardupilot/sensors_replay.py; README.md "Phase 3: sensor front ends and AP_Param")
+[[lean_lib]]
+name = "SensorsReplayLib"
+roots = ["SensorsReplayParams"]
+
+[[lean_exe]]
+name = "sensors_replay"
+root = "SensorsReplay"
+
+# the estimator as one World (ardupilot/translate_estimation.sh; README.md "Phase 3: the estimator World and the EKF3
+# replay"), the Lean side of its World difftest (ardupilot/Estimation)
+[[lean_lib]]
+name = "EstimationLib"
+roots = ["Estimation_lib"]
+
+# the estimator World with AP_AHRS (ardupilot/translate_estimator.sh) and its replay on a recorded flight
+# (ardupilot/estimation_replay.py; README.md "Phase 3: AP_AHRS in the estimator World, the full estimation replay")
+[[lean_lib]]
+name = "EstimatorLib"
+roots = ["Estimator_lib"]
+
+[[lean_lib]]
+name = "EstimationReplayLib"
+roots = ["EstimationReplayParams"]
+
+[[lean_exe]]
+name = "estimation_replay"
+root = "EstimationReplay"
+
+# the AP_AHRS translation (ardupilot/translate_ahrs.sh) and the Lean side of its difftest
+# (ardupilot/ahrs_difftest.py; README.md, "Phase 3: AP_AHRS translated")
+[[lean_lib]]
+name = "AHRSLib"
+roots = ["AHRS_lib"]
+
+[[lean_exe]]
+name = "ahrs_lean"
+root = "AHRSMain"
+
+# the mission round trip of a recorded flight against the reference (ardupilot/mission_roundtrip.py; README.md "Phase 4:
+# AP_Mission"): the translated MAVLink library and AP_Mission on the flight's uplink
+[[lean_exe]]
+name = "mission_roundtrip"
+root = "MissionRoundTrip"
+
+# Phase 4: AP_Param over one byte memory (cpp2lean --param-memory, README.md "Phase 4: AP_Param")
+[[lean_lib]]
+name = "ParamLib"
+roots = ["ParamMemory", "AP_Param_lib", "ParamHarnessData", "ParamBoot"]
+
+[[lean_exe]]
+name = "param_dump"
+root = "ParamDumpMain"
+
+# Phase 4: GCS_MAVLink over the byte memory of AP_Param (cpp2lean --param-memory ardupilot/gcs/GCS.json, README.md
+# "Phase 4: GCS_MAVLink"), and the byte replay of the recorded sessions (ardupilot/gcs/gcs_replay.py)
+[[lean_lib]]
+name = "GCSLib"
+roots = ["GCSMemory", "GCS_lib"]
+
+[[lean_exe]]
+name = "gcs_smoke"
+root = "GCSSmoke"
+
+[[lean_lib]]
+name = "GCSHarnessLib"
+roots = ["GCSHarnessData"]
+
+[[lean_exe]]
+name = "gcs_replay"
+root = "GCSReplay"
+
+# Phase 5a slice 2: the vehicle skeleton over the byte memory (cpp2lean --param-memory ardupilot/vehicle/Vehicle.json,
+# ardupilot/vehicle/translate_vehicle.sh; README.md "Phase 5: the vehicle skeleton")
+[[lean_lib]]
+name = "VehicleMemLib"
+roots = ["VehicleMemoryV", "Vehicle_lib"]
+
+# Phase 5a slice 1: the memory with the estimator World inside (support/gen_param_memory_v.py: ParamMemoryV,
+# VehicleBridgeMap) and the estimator bridge's adapters (ardupilot/vehicle/gen_bridge.py: VehicleBridge); the combined
+# replay of the estimator and the GCS over one state (ardupilot/onestate_replay.py; README.md "Phase 5: the estimator bridge")
+[[lean_lib]]
+name = "VehicleBridgeLib"
+roots = ["VehicleBridgeMap", "ParamMemoryV", "GCSMemoryV", "VehicleMemoryV", "VehicleBridge"]
+
+[[lean_lib]]
+name = "OneStateLib"
+roots = ["EstimatorProbe", "VehicleHarnessData"]
+
+[[lean_exe]]
+name = "onestate_replay"
+root = "OneStateReplay"
+
+# Phase 5a slice 2: the whole-vehicle replay (lean/VehicleReplay.lean: the translated static construction, setup and the
+# loop on lockstep.cpp's HAL; ardupilot/vehicle/vehicle_replay.py; README.md "Phase 5: the whole-vehicle replay")
+[[lean_exe]]
+name = "vehicle_replay"
+root = "VehicleReplay"

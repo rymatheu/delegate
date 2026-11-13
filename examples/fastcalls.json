@@ -1,0 +1,7 @@
+{
+ "namespace": "FastCalls",
+ "cpp2lean": ["--nest", "--world", "--world-pointers", "--ekf-arrays", "--runtime-loops", "--pointer-params", "--array-offsets", "--swap-out", "--member-objects",
+              "--reachable", "--use", "Front::init", "--use", "Front::update"],
+ "world": {"calls": 20000, "weights": {"front.init": 0.05, "front.update": 4},
+           "ranges": {"n": [0, 3], "x": [-2, 2], "first": [0, 7], "last": [0, 7]}}
+}

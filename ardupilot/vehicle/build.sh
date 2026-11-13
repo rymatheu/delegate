@@ -3,7 +3,8 @@
 #   build/vehicle/copter_ref   ardupilot/vehicle/copter_ref.cpp over ArduPilot's classes, compiled
 #                              unmodified with the stub headers (ardupilot/stubs) and the flags of the
 #                              translations plus the code-generation flags of the compilation
-#                              assumptions (README.md)
+#                              assumptions (README.md), linked with musl's math functions
+#                              (libm/build_musl.sh), not the platform's libm
 #   lean/.lake/build/bin/copter_lean
 #                              lean/Vehicle.lean + lean/VehicleMain.lean over the Lean translations
 #                              (ardupilot/out/*), with the parameter tables generated from their
@@ -76,14 +77,17 @@ if [[ " $WHAT " == *" cpp "* ]]; then
     "$CXX" "${FLAGS[@]}" "${DEFINES[@]}" "${INCLUDES[@]}" -c "$s" -o "$o"
     objs+=("$o")
   done
-  "$CXX" -o "$ROOT/build/vehicle/copter_ref" "${objs[@]}" -Wl,-dead_strip
-  echo "built build/vehicle/copter_ref; libm imports:" \
-    $(nm -u "$ROOT/build/vehicle/copter_ref" | grep -E '^_(a?(sin|cos|tan)f?|atan2?f?|sqrtf?|powf?|expf?|logf?|fmodf?|cexpf?|__sincos.*)$' | tr '\n' ' ')
+  # musl's math functions (the same C sources the Lean side translates), bound to the C names
+  MUSL=($(cat "$("$ROOT/libm/build_musl.sh")"))
+  "$CXX" -o "$ROOT/build/vehicle/copter_ref" "${objs[@]}" "${MUSL[@]}" -Wl,-dead_strip
+  # the C library functions the reference still imports from the platform (none expected)
+  IMP=$(nm -u "$ROOT/build/vehicle/copter_ref" | grep -E '^_(a?(sin|cos|tan)h?f?|atan2?f?|sqrtf?|powf?|expf?|exp2f?|logf?|log2f?|log10f?|fmodf?|f(min|max|abs)f?|floorf?|ceilf?|truncf?|roundf?|copysignf?|scalbnf?|ldexpf?|hypotf?|fmaf?|cexpf?|__sincos.*)$' | tr '\n' ' ' || true)
+  echo "built build/vehicle/copter_ref; math functions imported from the platform's libm: ${IMP:-none}"
 fi
 
 if [[ " $WHAT " == *" lean "* ]]; then
   D="$ROOT/lean"
-  for d in AP_Motors AC_Attitude AC_PosControl AC_WPNav AHRS_View; do
+  for d in Copter AHRS_View; do
     if [ ! -f "$ROOT/ardupilot/out/$d/${d}_lib.lean" ]; then
       echo "build.sh: no translation in ardupilot/out/$d (run ardupilot/translate_*.sh)" >&2
       exit 1
@@ -99,7 +103,7 @@ import re, sys
 p = sys.argv[1]; t = open(p).read()
 m = re.search(r'^roots = \[(.*)\]$', t, re.M)
 roots = re.findall(r'"([^"]+)"', m.group(1))
-new = roots + [r for r in ("AC_WPNav_lib", "AHRS_View_lib") if r not in roots]
+new = roots + [r for r in ("Copter_lib", "AHRS_View_lib") if r not in roots]
 if new != roots:
     open(p, "w").write(t[:m.start()] + "roots = [%s]" % ", ".join('"%s"' % r for r in new) + t[m.end():])
 PY2

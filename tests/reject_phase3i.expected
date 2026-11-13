@@ -1,0 +1,3 @@
+tests/reject_phase3i.cpp:45:52: rejected: argument for a reference member of a heap object that is not an element of an array member of a World object
+tests/reject_phase3i.cpp:48:17: rejected: pointer from the boundary with several non-constant arguments
+tests/reject_phase3i.cpp:51:15: rejected: array `c` without an initializer list

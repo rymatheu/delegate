@@ -418,29 +418,36 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "59:23"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
    "cpp": "1.0f",
    "at": "46:19"
   },
   {
-   "lean": "(2.0 : Float32)",
+   "lean": "(2.0 : Binary32)",
    "bits": "40000000",
    "cpp": "2.0f",
    "at": "50:27"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "51:30"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "79:57"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

@@ -18,6 +18,7 @@
 
 #include <AP_Math/AP_Math.h>
 #include <SITL/SITL.h>   // the real AP_AHRS.h reaches SITL.h through AP_AHRS_SIM.h
+#include <AP_Common/Location.h>   // the real AP_AHRS.h reaches it through AP_AHRS_Backend.h:27 (AC_Circle.cpp:136 needs it)
 
 class AP_AHRS {
 public:
@@ -29,6 +30,7 @@ public:
         Quaternion quat;        // body to NED
         Vector3f gyro;          // rad/s, body
         float air_density_ratio = 1.0f;
+        float control_ground_speed_limit_ms = 400.0f;   // EKF3's limit without optical flow (AP_NavEKF3_Outputs.cpp getEkfControlLimits)
     } sample;
 
     float get_air_density_ratio(void) const { return sample.air_density_ratio; }
@@ -37,6 +39,7 @@ public:
     bool get_relative_position_NED_origin(Vector3p &vec) const { vec = sample.pos_ned; return true; }
     bool get_relative_position_D_origin_float(float &posD) const { posD = (float)sample.pos_ned.z; return true; }
     bool get_vert_pos_rate_D(float &velocity) const { velocity = sample.vel_ned.z; return true; }
+    float get_control_ground_speed_limit_ms() const { return sample.control_ground_speed_limit_ms; }   // AP_AHRS.h:322 (AC_Loiter.cpp:324)
     float get_control_gain_scaler_XY() const { return 1.0f; }
     float get_control_gain_scaler_Z() const { return 1.0f; }
     uint16_t get_yaw_reset_count(void) const { return 0; }

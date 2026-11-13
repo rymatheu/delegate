@@ -1,0 +1,1192 @@
+{
+ "namespace": "Musl.log2",
+ "source": "libm/unity/unity_log2.c",
+ "functions": [
+  {
+   "name": "eval_as_double",
+   "lean": "Musl.log2.eval_as_double",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_log2.c:110-114"
+  },
+  {
+   "name": "fp_barrier",
+   "lean": "Musl.log2.fp_barrier",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_log2.c:131-135"
+  },
+  {
+   "name": "__math_divzero",
+   "lean": "Musl.log2.__math_divzero",
+   "params": [
+    [
+     "sign",
+     "uint32_t"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_log2.c:3-6"
+  },
+  {
+   "name": "__math_invalid",
+   "lean": "Musl.log2.__math_invalid",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_log2.c:3-6"
+  },
+  {
+   "name": "top16",
+   "lean": "Musl.log2.top16",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "libm/unity/unity_log2.c:23-26"
+  },
+  {
+   "name": "log2",
+   "lean": "Musl.log2.log2",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_log2.c:28-122"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "eval_as_double",
+   "cxx_call": "eval_as_double",
+   "lean": "Musl.log2.eval_as_double",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "fp_barrier",
+   "cxx_call": "fp_barrier",
+   "lean": "Musl.log2.fp_barrier",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_divzero",
+   "cxx_call": "__math_divzero",
+   "lean": "Musl.log2.__math_divzero",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sign",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__math_invalid",
+   "cxx_call": "__math_invalid",
+   "lean": "Musl.log2.__math_invalid",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "top16",
+   "cxx_call": "top16",
+   "lean": "Musl.log2.top16",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "log2",
+   "cxx_call": "log2",
+   "lean": "Musl.log2.log2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Binary64.ofBits 0x3ff7154765200000",
+   "bits": "3ff7154765200000",
+   "cpp": "0x1.7154765200000p+0",
+   "at": "14:13"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3de705fc2eefa200",
+   "bits": "3de705fc2eefa200",
+   "cpp": "0x1.705fc2eefa200p-33",
+   "at": "15:13"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe71547652b8339",
+   "bits": "3fe71547652b8339",
+   "cpp": "0x1.71547652b8339p-1",
+   "at": "34:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdec709dc3a04be",
+   "bits": "3fdec709dc3a04be",
+   "cpp": "0x1.ec709dc3a04bep-2",
+   "at": "35:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd7154764702ffb",
+   "bits": "3fd7154764702ffb",
+   "cpp": "0x1.7154764702ffbp-2",
+   "at": "36:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd2776c50034c48",
+   "bits": "3fd2776c50034c48",
+   "cpp": "0x1.2776c50034c48p-2",
+   "at": "37:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcec7b328ea92bc",
+   "bits": "3fcec7b328ea92bc",
+   "cpp": "0x1.ec7b328ea92bcp-3",
+   "at": "38:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fca6225e117f92e",
+   "bits": "3fca6225e117f92e",
+   "cpp": "0x1.a6225e117f92ep-3",
+   "at": "39:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe71547652b82fe",
+   "bits": "3fe71547652b82fe",
+   "cpp": "0x1.71547652b82fep-1",
+   "at": "19:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdec709dc3a03f7",
+   "bits": "3fdec709dc3a03f7",
+   "cpp": "0x1.ec709dc3a03f7p-2",
+   "at": "20:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd71547652b7c3f",
+   "bits": "3fd71547652b7c3f",
+   "cpp": "0x1.71547652b7c3fp-2",
+   "at": "21:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd2776c50f05be4",
+   "bits": "3fd2776c50f05be4",
+   "cpp": "0x1.2776c50f05be4p-2",
+   "at": "22:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcec709dd768fe5",
+   "bits": "3fcec709dd768fe5",
+   "cpp": "0x1.ec709dd768fe5p-3",
+   "at": "23:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fca61761ec4e736",
+   "bits": "3fca61761ec4e736",
+   "cpp": "0x1.a61761ec4e736p-3",
+   "at": "24:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc7153fbc64a79b",
+   "bits": "3fc7153fbc64a79b",
+   "cpp": "0x1.7153fbc64a79bp-3",
+   "at": "25:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc484d154f01b4a",
+   "bits": "3fc484d154f01b4a",
+   "cpp": "0x1.484d154f01b4ap-3",
+   "at": "26:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc289e4a72c383c",
+   "bits": "3fc289e4a72c383c",
+   "cpp": "0x1.289e4a72c383cp-3",
+   "at": "27:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc0b32f285aee66",
+   "bits": "3fc0b32f285aee66",
+   "cpp": "0x1.0b32f285aee66p-3",
+   "at": "28:1"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff724286bb1acf8",
+   "bits": "3ff724286bb1acf8",
+   "cpp": "0x1.724286bb1acf8p+0",
+   "at": "68:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe1095feecdb000",
+   "bits": "3fe1095feecdb000",
+   "cpp": "0x1.1095feecdb000p-1",
+   "at": "68:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff6e1f766d2cca1",
+   "bits": "3ff6e1f766d2cca1",
+   "cpp": "0x1.6e1f766d2cca1p+0",
+   "at": "69:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe08494bd76d000",
+   "bits": "3fe08494bd76d000",
+   "cpp": "0x1.08494bd76d000p-1",
+   "at": "69:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff6a13d0e30d48a",
+   "bits": "3ff6a13d0e30d48a",
+   "cpp": "0x1.6a13d0e30d48ap+0",
+   "at": "70:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe00143aee8f800",
+   "bits": "3fe00143aee8f800",
+   "cpp": "0x1.00143aee8f800p-1",
+   "at": "70:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff661ec32d06c85",
+   "bits": "3ff661ec32d06c85",
+   "cpp": "0x1.661ec32d06c85p+0",
+   "at": "71:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdefec5360b4000",
+   "bits": "3fdefec5360b4000",
+   "cpp": "0x1.efec5360b4000p-2",
+   "at": "71:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff623fa951198f8",
+   "bits": "3ff623fa951198f8",
+   "cpp": "0x1.623fa951198f8p+0",
+   "at": "72:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fddfdd91ab7e000",
+   "bits": "3fddfdd91ab7e000",
+   "cpp": "0x1.dfdd91ab7e000p-2",
+   "at": "72:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff5e75ba4cf026c",
+   "bits": "3ff5e75ba4cf026c",
+   "cpp": "0x1.5e75ba4cf026cp+0",
+   "at": "73:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdcffae0cc79000",
+   "bits": "3fdcffae0cc79000",
+   "cpp": "0x1.cffae0cc79000p-2",
+   "at": "73:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff5ac055a214fb8",
+   "bits": "3ff5ac055a214fb8",
+   "cpp": "0x1.5ac055a214fb8p+0",
+   "at": "74:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdc043811fda000",
+   "bits": "3fdc043811fda000",
+   "cpp": "0x1.c043811fda000p-2",
+   "at": "74:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff571ed0f166e1e",
+   "bits": "3ff571ed0f166e1e",
+   "cpp": "0x1.571ed0f166e1ep+0",
+   "at": "75:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdb0b67323ae000",
+   "bits": "3fdb0b67323ae000",
+   "cpp": "0x1.b0b67323ae000p-2",
+   "at": "75:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff53909590bf835",
+   "bits": "3ff53909590bf835",
+   "cpp": "0x1.53909590bf835p+0",
+   "at": "76:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fda152f5a2db000",
+   "bits": "3fda152f5a2db000",
+   "cpp": "0x1.a152f5a2db000p-2",
+   "at": "76:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff5014fed61addd",
+   "bits": "3ff5014fed61addd",
+   "cpp": "0x1.5014fed61adddp+0",
+   "at": "77:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd9217f5af86000",
+   "bits": "3fd9217f5af86000",
+   "cpp": "0x1.9217f5af86000p-2",
+   "at": "77:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff4cab88e487bd0",
+   "bits": "3ff4cab88e487bd0",
+   "cpp": "0x1.4cab88e487bd0p+0",
+   "at": "78:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd8304db0719000",
+   "bits": "3fd8304db0719000",
+   "cpp": "0x1.8304db0719000p-2",
+   "at": "78:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff49539b4334fee",
+   "bits": "3ff49539b4334fee",
+   "cpp": "0x1.49539b4334feep+0",
+   "at": "79:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd74189f9a9e000",
+   "bits": "3fd74189f9a9e000",
+   "cpp": "0x1.74189f9a9e000p-2",
+   "at": "79:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff460cbdfafd569",
+   "bits": "3ff460cbdfafd569",
+   "cpp": "0x1.460cbdfafd569p+0",
+   "at": "80:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd6552bb5199000",
+   "bits": "3fd6552bb5199000",
+   "cpp": "0x1.6552bb5199000p-2",
+   "at": "80:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff42d664ee4b953",
+   "bits": "3ff42d664ee4b953",
+   "cpp": "0x1.42d664ee4b953p+0",
+   "at": "81:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd56b23a29b1000",
+   "bits": "3fd56b23a29b1000",
+   "cpp": "0x1.56b23a29b1000p-2",
+   "at": "81:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff3fb01111dd8a6",
+   "bits": "3ff3fb01111dd8a6",
+   "cpp": "0x1.3fb01111dd8a6p+0",
+   "at": "82:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd483650f5fa000",
+   "bits": "3fd483650f5fa000",
+   "cpp": "0x1.483650f5fa000p-2",
+   "at": "82:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff3c995b70c5836",
+   "bits": "3ff3c995b70c5836",
+   "cpp": "0x1.3c995b70c5836p+0",
+   "at": "83:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd39de937f6a000",
+   "bits": "3fd39de937f6a000",
+   "cpp": "0x1.39de937f6a000p-2",
+   "at": "83:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff3991c4ab6fd4a",
+   "bits": "3ff3991c4ab6fd4a",
+   "cpp": "0x1.3991c4ab6fd4ap+0",
+   "at": "84:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd2baa1538d6000",
+   "bits": "3fd2baa1538d6000",
+   "cpp": "0x1.2baa1538d6000p-2",
+   "at": "84:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff3698e0ce099b5",
+   "bits": "3ff3698e0ce099b5",
+   "cpp": "0x1.3698e0ce099b5p+0",
+   "at": "85:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd1d98340ca4000",
+   "bits": "3fd1d98340ca4000",
+   "cpp": "0x1.1d98340ca4000p-2",
+   "at": "85:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff33ae48213e7b2",
+   "bits": "3ff33ae48213e7b2",
+   "cpp": "0x1.33ae48213e7b2p+0",
+   "at": "86:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd0fa853a40e000",
+   "bits": "3fd0fa853a40e000",
+   "cpp": "0x1.0fa853a40e000p-2",
+   "at": "86:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff30d191985bdb1",
+   "bits": "3ff30d191985bdb1",
+   "cpp": "0x1.30d191985bdb1p+0",
+   "at": "87:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd01d9c32e73000",
+   "bits": "3fd01d9c32e73000",
+   "cpp": "0x1.01d9c32e73000p-2",
+   "at": "87:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff2e025cab271d7",
+   "bits": "3ff2e025cab271d7",
+   "cpp": "0x1.2e025cab271d7p+0",
+   "at": "88:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fce857da2fa6000",
+   "bits": "3fce857da2fa6000",
+   "cpp": "0x1.e857da2fa6000p-3",
+   "at": "88:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff2b404cf13cd82",
+   "bits": "3ff2b404cf13cd82",
+   "cpp": "0x1.2b404cf13cd82p+0",
+   "at": "89:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fccd3c8633d8000",
+   "bits": "3fccd3c8633d8000",
+   "cpp": "0x1.cd3c8633d8000p-3",
+   "at": "89:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff288b02c7ccb50",
+   "bits": "3ff288b02c7ccb50",
+   "cpp": "0x1.288b02c7ccb50p+0",
+   "at": "90:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcb26034c14a000",
+   "bits": "3fcb26034c14a000",
+   "cpp": "0x1.b26034c14a000p-3",
+   "at": "90:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff25e2263944de5",
+   "bits": "3ff25e2263944de5",
+   "cpp": "0x1.25e2263944de5p+0",
+   "at": "91:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc97c1c2f4fe000",
+   "bits": "3fc97c1c2f4fe000",
+   "cpp": "0x1.97c1c2f4fe000p-3",
+   "at": "91:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff234563d8615b1",
+   "bits": "3ff234563d8615b1",
+   "cpp": "0x1.234563d8615b1p+0",
+   "at": "92:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc7d6023f800000",
+   "bits": "3fc7d6023f800000",
+   "cpp": "0x1.7d6023f800000p-3",
+   "at": "92:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff20b46e33eaf38",
+   "bits": "3ff20b46e33eaf38",
+   "cpp": "0x1.20b46e33eaf38p+0",
+   "at": "93:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc633a71a05e000",
+   "bits": "3fc633a71a05e000",
+   "cpp": "0x1.633a71a05e000p-3",
+   "at": "93:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff1e2eefdcda3dd",
+   "bits": "3ff1e2eefdcda3dd",
+   "cpp": "0x1.1e2eefdcda3ddp+0",
+   "at": "94:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc494f5e9570000",
+   "bits": "3fc494f5e9570000",
+   "cpp": "0x1.494f5e9570000p-3",
+   "at": "94:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff1bb4a580b3930",
+   "bits": "3ff1bb4a580b3930",
+   "cpp": "0x1.1bb4a580b3930p+0",
+   "at": "95:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc2f9e424e0a000",
+   "bits": "3fc2f9e424e0a000",
+   "cpp": "0x1.2f9e424e0a000p-3",
+   "at": "95:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff19453847f2200",
+   "bits": "3ff19453847f2200",
+   "cpp": "0x1.19453847f2200p+0",
+   "at": "96:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc162595afdc000",
+   "bits": "3fc162595afdc000",
+   "cpp": "0x1.162595afdc000p-3",
+   "at": "96:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff16e06c0d5d73c",
+   "bits": "3ff16e06c0d5d73c",
+   "cpp": "0x1.16e06c0d5d73cp+0",
+   "at": "97:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fbf9c9a75bd8000",
+   "bits": "3fbf9c9a75bd8000",
+   "cpp": "0x1.f9c9a75bd8000p-4",
+   "at": "97:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff1485f47b7e4c2",
+   "bits": "3ff1485f47b7e4c2",
+   "cpp": "0x1.1485f47b7e4c2p+0",
+   "at": "98:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fbc7b575bf9c000",
+   "bits": "3fbc7b575bf9c000",
+   "cpp": "0x1.c7b575bf9c000p-4",
+   "at": "98:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff12358ad0085d1",
+   "bits": "3ff12358ad0085d1",
+   "cpp": "0x1.12358ad0085d1p+0",
+   "at": "99:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb960c60ff48000",
+   "bits": "3fb960c60ff48000",
+   "cpp": "0x1.960c60ff48000p-4",
+   "at": "99:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0fef00f532227",
+   "bits": "3ff0fef00f532227",
+   "cpp": "0x1.0fef00f532227p+0",
+   "at": "100:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb64ce247b60000",
+   "bits": "3fb64ce247b60000",
+   "cpp": "0x1.64ce247b60000p-4",
+   "at": "100:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0db2077d03a8f",
+   "bits": "3ff0db2077d03a8f",
+   "cpp": "0x1.0db2077d03a8fp+0",
+   "at": "101:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb33f78b2014000",
+   "bits": "3fb33f78b2014000",
+   "cpp": "0x1.33f78b2014000p-4",
+   "at": "101:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0b7e6d65980d9",
+   "bits": "3ff0b7e6d65980d9",
+   "cpp": "0x1.0b7e6d65980d9p+0",
+   "at": "102:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb0387d1a42c000",
+   "bits": "3fb0387d1a42c000",
+   "cpp": "0x1.0387d1a42c000p-4",
+   "at": "102:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0953efe7b408d",
+   "bits": "3ff0953efe7b408d",
+   "cpp": "0x1.0953efe7b408dp+0",
+   "at": "103:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3faa6f9208b50000",
+   "bits": "3faa6f9208b50000",
+   "cpp": "0x1.a6f9208b50000p-5",
+   "at": "103:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff07325cac53b83",
+   "bits": "3ff07325cac53b83",
+   "cpp": "0x1.07325cac53b83p+0",
+   "at": "104:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fa47a954f770000",
+   "bits": "3fa47a954f770000",
+   "cpp": "0x1.47a954f770000p-5",
+   "at": "104:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff05197e40d1b5c",
+   "bits": "3ff05197e40d1b5c",
+   "cpp": "0x1.05197e40d1b5cp+0",
+   "at": "105:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f9d23a8c50c0000",
+   "bits": "3f9d23a8c50c0000",
+   "cpp": "0x1.d23a8c50c0000p-6",
+   "at": "105:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff03091c1208ea2",
+   "bits": "3ff03091c1208ea2",
+   "cpp": "0x1.03091c1208ea2p+0",
+   "at": "106:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f916a2629780000",
+   "bits": "3f916a2629780000",
+   "cpp": "0x1.16a2629780000p-6",
+   "at": "106:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ff0101025b37e21",
+   "bits": "3ff0101025b37e21",
+   "cpp": "0x1.0101025b37e21p+0",
+   "at": "107:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f7720f8d8e80000",
+   "bits": "3f7720f8d8e80000",
+   "cpp": "0x1.720f8d8e80000p-8",
+   "at": "107:25"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fefc07ef9caa76b",
+   "bits": "3fefc07ef9caa76b",
+   "cpp": "0x1.fc07ef9caa76bp-1",
+   "at": "108:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f86fe53b1500000",
+   "bits": "3f86fe53b1500000",
+   "cpp": "0x1.6fe53b1500000p-7",
+   "at": "108:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fef4465d3f6f184",
+   "bits": "3fef4465d3f6f184",
+   "cpp": "0x1.f4465d3f6f184p-1",
+   "at": "109:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fa11ccce10f8000",
+   "bits": "3fa11ccce10f8000",
+   "cpp": "0x1.11ccce10f8000p-5",
+   "at": "109:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feecc079f84107f",
+   "bits": "3feecc079f84107f",
+   "cpp": "0x1.ecc079f84107fp-1",
+   "at": "110:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fac4dfc8c8b8000",
+   "bits": "3fac4dfc8c8b8000",
+   "cpp": "0x1.c4dfc8c8b8000p-5",
+   "at": "110:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fee573a99975ae8",
+   "bits": "3fee573a99975ae8",
+   "cpp": "0x1.e573a99975ae8p-1",
+   "at": "111:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb3aa321e574000",
+   "bits": "3fb3aa321e574000",
+   "cpp": "0x1.3aa321e574000p-4",
+   "at": "111:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fede5d6f0bd3de6",
+   "bits": "3fede5d6f0bd3de6",
+   "cpp": "0x1.de5d6f0bd3de6p-1",
+   "at": "112:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fb918a0d08b8000",
+   "bits": "3fb918a0d08b8000",
+   "cpp": "0x1.918a0d08b8000p-4",
+   "at": "112:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fed77b681ff38b3",
+   "bits": "3fed77b681ff38b3",
+   "cpp": "0x1.d77b681ff38b3p-1",
+   "at": "113:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fbe72e9da044000",
+   "bits": "3fbe72e9da044000",
+   "cpp": "0x1.e72e9da044000p-4",
+   "at": "113:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fed0cb5724de943",
+   "bits": "3fed0cb5724de943",
+   "cpp": "0x1.d0cb5724de943p-1",
+   "at": "114:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc1dcd2507f6000",
+   "bits": "3fc1dcd2507f6000",
+   "cpp": "0x1.1dcd2507f6000p-3",
+   "at": "114:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feca4b2dc0e7563",
+   "bits": "3feca4b2dc0e7563",
+   "cpp": "0x1.ca4b2dc0e7563p-1",
+   "at": "115:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc476ab03dea000",
+   "bits": "3fc476ab03dea000",
+   "cpp": "0x1.476ab03dea000p-3",
+   "at": "115:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fec3f8ee8d6cb51",
+   "bits": "3fec3f8ee8d6cb51",
+   "cpp": "0x1.c3f8ee8d6cb51p-1",
+   "at": "116:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc7074377e22000",
+   "bits": "3fc7074377e22000",
+   "cpp": "0x1.7074377e22000p-3",
+   "at": "116:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3febdd2b4f020c4c",
+   "bits": "3febdd2b4f020c4c",
+   "cpp": "0x1.bdd2b4f020c4cp-1",
+   "at": "117:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc98ede8ba94000",
+   "bits": "3fc98ede8ba94000",
+   "cpp": "0x1.98ede8ba94000p-3",
+   "at": "117:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feb7d6c006015ca",
+   "bits": "3feb7d6c006015ca",
+   "cpp": "0x1.b7d6c006015cap-1",
+   "at": "118:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fcc0db86ad2e000",
+   "bits": "3fcc0db86ad2e000",
+   "cpp": "0x1.c0db86ad2e000p-3",
+   "at": "118:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feb20366e2e338f",
+   "bits": "3feb20366e2e338f",
+   "cpp": "0x1.b20366e2e338fp-1",
+   "at": "119:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fce840aafcee000",
+   "bits": "3fce840aafcee000",
+   "cpp": "0x1.e840aafcee000p-3",
+   "at": "119:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3feac57026295039",
+   "bits": "3feac57026295039",
+   "cpp": "0x1.ac57026295039p-1",
+   "at": "120:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd0790ab4678000",
+   "bits": "3fd0790ab4678000",
+   "cpp": "0x1.0790ab4678000p-2",
+   "at": "120:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fea6d01bc2731dd",
+   "bits": "3fea6d01bc2731dd",
+   "cpp": "0x1.a6d01bc2731ddp-1",
+   "at": "121:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd1ac056801c000",
+   "bits": "3fd1ac056801c000",
+   "cpp": "0x1.1ac056801c000p-2",
+   "at": "121:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fea16d3bc3ff18b",
+   "bits": "3fea16d3bc3ff18b",
+   "cpp": "0x1.a16d3bc3ff18bp-1",
+   "at": "122:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd2db11d4fee000",
+   "bits": "3fd2db11d4fee000",
+   "cpp": "0x1.2db11d4fee000p-2",
+   "at": "122:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe9c2d14967fead",
+   "bits": "3fe9c2d14967fead",
+   "cpp": "0x1.9c2d14967feadp-1",
+   "at": "123:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd406464ec58000",
+   "bits": "3fd406464ec58000",
+   "cpp": "0x1.406464ec58000p-2",
+   "at": "123:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe970e4f47c9902",
+   "bits": "3fe970e4f47c9902",
+   "cpp": "0x1.970e4f47c9902p-1",
+   "at": "124:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd52dbe093af000",
+   "bits": "3fd52dbe093af000",
+   "cpp": "0x1.52dbe093af000p-2",
+   "at": "124:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe920fb3982bcf2",
+   "bits": "3fe920fb3982bcf2",
+   "cpp": "0x1.920fb3982bcf2p-1",
+   "at": "125:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd651902050d000",
+   "bits": "3fd651902050d000",
+   "cpp": "0x1.651902050d000p-2",
+   "at": "125:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe8d30187f759f1",
+   "bits": "3fe8d30187f759f1",
+   "cpp": "0x1.8d30187f759f1p-1",
+   "at": "126:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd771d2cdeaf000",
+   "bits": "3fd771d2cdeaf000",
+   "cpp": "0x1.771d2cdeaf000p-2",
+   "at": "126:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe886e5ebb9f66d",
+   "bits": "3fe886e5ebb9f66d",
+   "cpp": "0x1.886e5ebb9f66dp-1",
+   "at": "127:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd88e9c857d9000",
+   "bits": "3fd88e9c857d9000",
+   "cpp": "0x1.88e9c857d9000p-2",
+   "at": "127:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe83c97b658b994",
+   "bits": "3fe83c97b658b994",
+   "cpp": "0x1.83c97b658b994p-1",
+   "at": "128:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fd9a80155e16000",
+   "bits": "3fd9a80155e16000",
+   "cpp": "0x1.9a80155e16000p-2",
+   "at": "128:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe7f405ffc61022",
+   "bits": "3fe7f405ffc61022",
+   "cpp": "0x1.7f405ffc61022p-1",
+   "at": "129:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdabe186ed3d000",
+   "bits": "3fdabe186ed3d000",
+   "cpp": "0x1.abe186ed3d000p-2",
+   "at": "129:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe7ad22181415ca",
+   "bits": "3fe7ad22181415ca",
+   "cpp": "0x1.7ad22181415cap-1",
+   "at": "130:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdbd0f2aea0e000",
+   "bits": "3fdbd0f2aea0e000",
+   "cpp": "0x1.bd0f2aea0e000p-2",
+   "at": "130:24"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fe767dcf99eff8c",
+   "bits": "3fe767dcf99eff8c",
+   "cpp": "0x1.767dcf99eff8cp-1",
+   "at": "131:2"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdce0a43dbf4000",
+   "bits": "3fdce0a43dbf4000",
+   "cpp": "0x1.ce0a43dbf4000p-2",
+   "at": "131:24"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "39:6"
+  },
+  {
+   "lean": "(0.042397022247314453 : Binary64)",
+   "bits": "3fa5b51000000000",
+   "cpp": "0.042397022247314453",
+   "at": "39:6"
+  },
+  {
+   "lean": "(0.044274330139160156 : Binary64)",
+   "bits": "3fa6ab2000000000",
+   "cpp": "0.044274330139160156",
+   "at": "39:6"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "43:11"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "5:41"
+  },
+  {
+   "lean": "Binary32.ofBits 0x7f800000",
+   "bits": "7f800000",
+   "cpp": "__builtin_inff",
+   "at": "70:13"
+  },
+  {
+   "lean": "(4503599627370496.0 : Binary64)",
+   "bits": "4330000000000000",
+   "cpp": "4503599627370496",
+   "at": "75:8"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

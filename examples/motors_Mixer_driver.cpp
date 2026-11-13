@@ -22,7 +22,7 @@ static void td(double d) { uint64_t u; memcpy(&u, &d, 8); printf(" d:%016llx", (
 static void tb(bool b) { printf(" b:%d", b ? 1 : 0); }
 static void ti(long long v) { printf(" i:%lld", v); }
 static void tu(unsigned long long v) { printf(" i:%llu", v); }
-static void tstr(const char *x) { printf(" s:"); for (; *x; x++) printf("%02x", (unsigned char)*x); }
+static void tstr(const char *x) { if (!x) x = ""; printf(" s:"); for (; *x; x++) printf("%02x", (unsigned char)*x); }
 
 static Motors motors_obj;   // the boundary object: the driver writes its inputs before each call and prints what it received
 static Mixer obj(motors_obj);   // static storage: zero-filled before construction, as ArduPilot's objects

@@ -1,0 +1,2 @@
+# musl 1.2.5 math sources the reference vehicle needs beyond libm/musl_files.txt (one per line;
+# a name the vehicle calls is bound to cpp2lean_musl_<name> at link time; reference/build.py)

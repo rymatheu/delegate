@@ -1,0 +1,797 @@
+{
+ "namespace": "CStringDemo",
+ "source": "examples/cstring.cpp",
+ "functions": [
+  {
+   "name": "t_strlen",
+   "lean": "CStringDemo.t_strlen",
+   "params": [
+    [
+     "seed",
+     "uint32_t"
+    ],
+    [
+     "len",
+     "uint8_t"
+    ],
+    [
+     "max",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/cstring.cpp:25-30"
+  },
+  {
+   "name": "t_strcmp",
+   "lean": "CStringDemo.t_strcmp",
+   "params": [
+    [
+     "sa",
+     "uint32_t"
+    ],
+    [
+     "sb",
+     "uint32_t"
+    ],
+    [
+     "la",
+     "uint8_t"
+    ],
+    [
+     "lb",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/cstring.cpp:32-39"
+  },
+  {
+   "name": "t_strncmp",
+   "lean": "CStringDemo.t_strncmp",
+   "params": [
+    [
+     "sa",
+     "uint32_t"
+    ],
+    [
+     "sb",
+     "uint32_t"
+    ],
+    [
+     "la",
+     "uint8_t"
+    ],
+    [
+     "n",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/cstring.cpp:41-48"
+  },
+  {
+   "name": "t_memcmp",
+   "lean": "CStringDemo.t_memcmp",
+   "params": [
+    [
+     "sa",
+     "uint32_t"
+    ],
+    [
+     "sb",
+     "uint32_t"
+    ],
+    [
+     "n",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/cstring.cpp:50-57"
+  },
+  {
+   "name": "t_strncpy",
+   "lean": "CStringDemo.t_strncpy",
+   "params": [
+    [
+     "seed",
+     "uint32_t"
+    ],
+    [
+     "len",
+     "uint8_t"
+    ],
+    [
+     "n",
+     "uint8_t"
+    ],
+    [
+     "at",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint64_t",
+   "source": "examples/cstring.cpp:69-78"
+  },
+  {
+   "name": "t_char",
+   "lean": "CStringDemo.t_char",
+   "params": [
+    [
+     "v",
+     "uint8_t"
+    ],
+    [
+     "w",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/cstring.cpp:81-90"
+  },
+  {
+   "name": "t_literals",
+   "lean": "CStringDemo.t_literals",
+   "params": [
+    [
+     "which",
+     "uint8_t"
+    ],
+    [
+     "skip",
+     "uint8_t"
+    ]
+   ],
+   "ret": "uint32_t",
+   "source": "examples/cstring.cpp:93-109"
+  },
+  {
+   "name": "t_varargs",
+   "lean": "CStringDemo.t_varargs",
+   "params": [
+    [
+     "a",
+     "int32_t"
+    ],
+    [
+     "b",
+     "uint32_t"
+    ],
+    [
+     "c",
+     "float"
+    ],
+    [
+     "d",
+     "int16_t"
+    ],
+    [
+     "which",
+     "uint8_t"
+    ]
+   ],
+   "ret": "int64_t",
+   "source": "examples/cstring.cpp:137-143"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "fill",
+   "cxx_call": "fill",
+   "lean": "CStringDemo.fill",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "s",
+     "type": "char[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "len",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_strlen",
+   "cxx_call": "t_strlen",
+   "lean": "CStringDemo.t_strlen",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "len",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "max",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_strcmp",
+   "cxx_call": "t_strcmp",
+   "lean": "CStringDemo.t_strcmp",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sa",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sb",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "la",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "lb",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_strncmp",
+   "cxx_call": "t_strncmp",
+   "lean": "CStringDemo.t_strncmp",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sa",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sb",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "la",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_memcmp",
+   "cxx_call": "t_memcmp",
+   "lean": "CStringDemo.t_memcmp",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "sa",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sb",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "fold",
+   "cxx_call": "fold",
+   "lean": "CStringDemo.fold",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "p",
+     "type": "char[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_strncpy",
+   "cxx_call": "t_strncpy",
+   "lean": "CStringDemo.t_strncpy",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "seed",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "len",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "at",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_char",
+   "cxx_call": "t_char",
+   "lean": "CStringDemo.t_char",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "w",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_literals",
+   "cxx_call": "t_literals",
+   "lean": "CStringDemo.t_literals",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "which",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "skip",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "mix",
+   "cxx_call": "mix",
+   "lean": "CStringDemo.mix",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "kinds",
+     "type": "char[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "char"
+    },
+    {
+     "name": "...",
+     "type": "args",
+     "ref": "va",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "t_varargs",
+   "cxx_call": "t_varargs",
+   "lean": "CStringDemo.t_varargs",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "a",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "b",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "c",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "d",
+     "type": "int16_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "which",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int64_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(16.0 : Binary64)",
+   "bits": "4030000000000000",
+   "cpp": "16.0",
+   "at": "130:40"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "142:36"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

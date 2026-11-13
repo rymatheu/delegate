@@ -1,0 +1,1849 @@
+{
+ "namespace": "EKFData",
+ "source": "examples/ekfdata.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Ring<sample>",
+   "lean": "EKFData.Ring_sample",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "EKFData.Ring_sample.erased_ring.init",
+     "top": false,
+     "kind": "method",
+     "owner": "erased_ring",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_size",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKFData.Ring_sample.push_const_void_ptr",
+     "top": false,
+     "kind": "method",
+     "owner": "erased_ring",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "sample",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFData.sample",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "value",
+         "cxx": "value",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "good",
+         "cxx": "good",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "pop_until",
+     "lean": "EKFData.Ring_sample.pop_until_void_ptr_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "erased_ring",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "element",
+       "type": "sample",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFData.sample",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "value",
+         "cxx": "value",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "good",
+         "cxx": "good",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "EKFData.Ring_sample.erased_ring.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "erased_ring",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "erased_ring",
+     "lean": "EKFData.Ring_sample.erased_ring.construct",
+     "top": false,
+     "kind": "ctor",
+     "owner": "erased_ring",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_elsize",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Ring",
+     "lean": "EKFData.Ring_sample.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Ring<sample>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "EKFData.Ring_sample.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Ring<sample>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "push",
+     "lean": "EKFData.Ring_sample.push_sample",
+     "top": false,
+     "kind": "method",
+     "owner": "Ring<sample>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "e",
+       "type": "sample",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFData.sample",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "value",
+         "cxx": "value",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "good",
+         "cxx": "good",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "pop_until",
+     "lean": "EKFData.Ring_sample.pop_until_sample_uint32_t",
+     "top": false,
+     "kind": "method",
+     "owner": "Ring<sample>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "e",
+       "type": "sample",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "EKFData.sample",
+       "leaves": [
+        {
+         "lean": "time_ms",
+         "cxx": "time_ms",
+         "type": "uint32_t",
+         "enum": null
+        },
+        {
+         "lean": "value",
+         "cxx": "value",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "good",
+         "cxx": "good",
+         "type": "bool",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "clear",
+     "lean": "EKFData.Ring_sample.clear",
+     "top": false,
+     "kind": "method",
+     "owner": "Ring<sample>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "elsize",
+     "cxx": "elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "buffer'alloc",
+     "cxx": "buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "size",
+     "cxx": "size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "oldest",
+     "cxx": "oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "V3",
+   "lean": "EKFData.V3",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "M3",
+   "lean": "EKFData.M3",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "a.x",
+     "cxx": "a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.y",
+     "cxx": "a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.z",
+     "cxx": "a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.x",
+     "cxx": "b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.y",
+     "cxx": "b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.z",
+     "cxx": "b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.x",
+     "cxx": "c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.y",
+     "cxx": "c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.z",
+     "cxx": "c.z",
+     "type": "double",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Data",
+   "lean": "EKFData.Data",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Data",
+     "lean": "EKFData.Data.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Data",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "add_sample",
+     "lean": "EKFData.Data.add_sample",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "g",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "take",
+     "lean": "EKFData.Data.take",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "t",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "start",
+     "lean": "EKFData.Data.start",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "flush",
+     "lean": "EKFData.Data.flush",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_m",
+     "lean": "EKFData.Data.set_m",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "j",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "row_sum",
+     "lean": "EKFData.Data.row_sum",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "zero_m",
+     "lean": "EKFData.Data.zero_m",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "copy_rows",
+     "lean": "EKFData.Data.copy_rows",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "k",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "cell_step",
+     "lean": "EKFData.Data.cell_step",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "c",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "cell_trace",
+     "lean": "EKFData.Data.cell_trace",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "c",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scale_rows",
+     "lean": "EKFData.Data.scale_rows",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "k",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_state",
+     "lean": "EKFData.Data.set_state",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "state_b_y",
+     "lean": "EKFData.Data.state_b_y",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "move",
+     "lean": "EKFData.Data.move",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "dx",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_health",
+     "lean": "EKFData.Data.set_health",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "att",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "vel",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pos",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "health_word",
+     "lean": "EKFData.Data.health_word",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "position_ok",
+     "lean": "EKFData.Data.position_ok",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "reset_health",
+     "lean": "EKFData.Data.reset_health",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scratch",
+     "lean": "EKFData.Data.scratch",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "v",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scratch_sum",
+     "lean": "EKFData.Data.scratch_sum",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "w"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "double",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "last",
+     "lean": "EKFData.Data.last",
+     "top": false,
+     "kind": "method",
+     "owner": "Data",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "gain",
+     "cxx": "gain",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ring.elsize",
+     "cxx": "ring.elsize",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ring.buffer'alloc",
+     "cxx": "ring.buffer != nullptr",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ring.size",
+     "cxx": "ring.size",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ring.oldest",
+     "cxx": "ring.oldest",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ring.count",
+     "cxx": "ring.count",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "last_value",
+     "cxx": "last_value",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[0]!",
+     "cxx": "M[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[1]!",
+     "cxx": "M[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[2]!",
+     "cxx": "M[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[3]!",
+     "cxx": "M[0][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[4]!",
+     "cxx": "M[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[5]!",
+     "cxx": "M[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[6]!",
+     "cxx": "M[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[7]!",
+     "cxx": "M[1][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[8]!",
+     "cxx": "M[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[9]!",
+     "cxx": "M[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[10]!",
+     "cxx": "M[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "M[11]!",
+     "cxx": "M[2][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.P[0]!",
+     "cxx": "cells[0].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.P[1]!",
+     "cxx": "cells[0].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.P[2]!",
+     "cxx": "cells[0].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.P[3]!",
+     "cxx": "cells[0].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.X[0]!",
+     "cxx": "cells[0].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[0]!.X[1]!",
+     "cxx": "cells[0].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.P[0]!",
+     "cxx": "cells[1].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.P[1]!",
+     "cxx": "cells[1].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.P[2]!",
+     "cxx": "cells[1].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.P[3]!",
+     "cxx": "cells[1].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.X[0]!",
+     "cxx": "cells[1].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[1]!.X[1]!",
+     "cxx": "cells[1].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.P[0]!",
+     "cxx": "cells[2].P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.P[1]!",
+     "cxx": "cells[2].P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.P[2]!",
+     "cxx": "cells[2].P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.P[3]!",
+     "cxx": "cells[2].P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.X[0]!",
+     "cxx": "cells[2].X[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "cells[2]!.X[1]!",
+     "cxx": "cells[2].X[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.a.x",
+     "cxx": "R.a.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.a.y",
+     "cxx": "R.a.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.a.z",
+     "cxx": "R.a.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.b.x",
+     "cxx": "R.b.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.b.y",
+     "cxx": "R.b.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.b.z",
+     "cxx": "R.b.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.c.x",
+     "cxx": "R.c.x",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.c.y",
+     "cxx": "R.c.y",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "R.c.z",
+     "cxx": "R.c.z",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[0]!",
+     "cxx": "states[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[1]!",
+     "cxx": "states[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[2]!",
+     "cxx": "states[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[3]!",
+     "cxx": "states[3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[4]!",
+     "cxx": "states[4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "states[5]!",
+     "cxx": "states[5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "status",
+     "cxx": "status.value",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "checks",
+     "cxx": "checks.value",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.25 : Binary64)",
+   "bits": "3fd0000000000000",
+   "cpp": "0.25",
+   "at": "125:23"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "137:20"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "148:21"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "data",
+   "cxx": "data",
+   "class": "Data",
+   "lean": "Data",
+   "parts": [
+    [
+     "data",
+     "Data.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "Common'KHP",
+   "cxx": "KHP",
+   "class": null,
+   "lean": null,
+   "parts": [
+    [
+     "Common'KHP",
+     "Array Binary64",
+     "static data member of `Common`"
+    ]
+   ],
+   "static": "Common",
+   "leaves": [
+    {
+     "root": "w",
+     "lean": "[0]!",
+     "cxx": "[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[1]!",
+     "cxx": "[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[2]!",
+     "cxx": "[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[3]!",
+     "cxx": "[0][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[4]!",
+     "cxx": "[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[5]!",
+     "cxx": "[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[6]!",
+     "cxx": "[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[7]!",
+     "cxx": "[1][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[8]!",
+     "cxx": "[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[9]!",
+     "cxx": "[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[10]!",
+     "cxx": "[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[11]!",
+     "cxx": "[2][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[12]!",
+     "cxx": "[3][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[13]!",
+     "cxx": "[3][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[14]!",
+     "cxx": "[3][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "w",
+     "lean": "[15]!",
+     "cxx": "[3][3]",
+     "type": "double",
+     "enum": null
+    }
+   ]
+  }
+ ]
+}

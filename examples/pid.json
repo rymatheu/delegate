@@ -1,6 +1,6 @@
 {
  "namespace": "Pid",
- "cpp2lean": ["--param-class", "AP_Float=float", "--boundary", "AHRS", "--extern", "ext_sqrt:Float32.sqrt"],
+ "cpp2lean": ["--param-class", "AP_Float=float", "--boundary", "AHRS", "--extern", "ext_sqrt:Binary32.sqrt"],
  "classes": [
   {"class": "PID",
    "globals": ["static AHRS ahrs_obj;   // the boundary object; the driver writes its values before each call",

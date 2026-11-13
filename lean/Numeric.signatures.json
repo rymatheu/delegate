@@ -430,77 +430,108 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
    "cpp": "1.0f",
    "at": "47:40"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "47:47"
   },
   {
-   "lean": "(0.25 : Float32)",
+   "lean": "(0.25 : Binary32)",
    "bits": "3e800000",
    "cpp": "0.25f",
    "at": "47:53"
   },
   {
-   "lean": "(0.125 : Float32)",
+   "lean": "(0.125 : Binary32)",
    "bits": "3e000000",
    "cpp": "0.125f",
    "at": "47:61"
   },
   {
-   "lean": "(0.0625 : Float32)",
+   "lean": "(0.0625 : Binary32)",
    "bits": "3d800000",
    "cpp": "0.0625f",
    "at": "47:69"
   },
   {
-   "lean": "(1.1920929e-7 : Float32)",
+   "lean": "Int32.toBinary32 (2 : Int32)",
+   "bits": "40000000",
+   "cpp": "2",
+   "at": "10:31"
+  },
+  {
+   "lean": "(1.1920929e-7 : Binary32)",
    "bits": "34000000",
    "cpp": "1.1920929E-7",
    "at": "22:43"
   },
   {
-   "lean": "(1.0 : Float)",
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "28:16"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
    "bits": "3ff0000000000000",
    "cpp": "1.0",
    "at": "38:54"
   },
   {
-   "lean": "(4.0 : Float)",
+   "lean": "Binary64.toBinary32 (-(Binary64.ofBits 0x3ff0000000000000 /- 1.0 -/))",
+   "bits": "bf800000",
+   "cpp": "-1.0",
+   "at": "38:53"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3ff0000000000000 /- 1.0 -/)",
+   "bits": "3f800000",
+   "cpp": "1.0",
+   "at": "38:59"
+  },
+  {
+   "lean": "(4.0 : Binary64)",
    "bits": "4010000000000000",
    "cpp": "4.0",
    "at": "42:123"
   },
   {
-   "lean": "(2.0 : Float)",
+   "lean": "(2.0 : Binary64)",
    "bits": "4000000000000000",
    "cpp": "2.0",
    "at": "42:172"
   },
   {
-   "lean": "(0.0 : Float)",
+   "lean": "(0.0 : Binary64)",
    "bits": "0000000000000000",
    "cpp": "0.0",
    "at": "43:44"
   },
   {
-   "lean": "(0.0 : Float32)",
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x0000000000000000 /- 0.0 -/)",
+   "bits": "00000000",
+   "cpp": "0.0",
+   "at": "43:44"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
    "bits": "00000000",
    "cpp": "0.0f",
    "at": "51:17"
   },
   {
-   "lean": "(0.5 : Float)",
+   "lean": "(0.5 : Binary64)",
    "bits": "3fe0000000000000",
    "cpp": "0.5",
    "at": "60:57"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

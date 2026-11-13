@@ -1,0 +1,80 @@
+{
+ "namespace": "Musl.fmodf",
+ "source": "libm/unity/unity_fmodf.c",
+ "functions": [
+  {
+   "name": "fmodf",
+   "lean": "Musl.fmodf.fmodf",
+   "params": [
+    [
+     "x",
+     "float"
+    ],
+    [
+     "y",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_fmodf.c:4-65"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "fmodf",
+   "cxx_call": "fmodf",
+   "lean": "Musl.fmodf.fmodf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "y",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "17:11"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

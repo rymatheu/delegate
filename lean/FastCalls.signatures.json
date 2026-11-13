@@ -1,0 +1,987 @@
+{
+ "namespace": "FastCalls",
+ "source": "examples/fastcalls.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Monitor",
+   "lean": "FastCalls.Monitor",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "note",
+     "lean": "FastCalls.Monitor.note",
+     "top": false,
+     "kind": "method",
+     "owner": "Monitor",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "peak",
+     "cxx": "peak",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[0]!",
+     "cxx": "hist[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[1]!",
+     "cxx": "hist[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[2]!",
+     "cxx": "hist[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[3]!",
+     "cxx": "hist[3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[4]!",
+     "cxx": "hist[4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[5]!",
+     "cxx": "hist[5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[6]!",
+     "cxx": "hist[6]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "hist[7]!",
+     "cxx": "hist[7]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "n",
+     "cxx": "n",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Core",
+   "lean": "FastCalls.Core",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Core",
+     "lean": "FastCalls.Core.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Core",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "index",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "FastCalls.Core.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Core",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "first",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "last",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "sum",
+     "cxx": "sum",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[0]!",
+     "cxx": "P[0][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[1]!",
+     "cxx": "P[0][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[2]!",
+     "cxx": "P[0][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[3]!",
+     "cxx": "P[0][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[4]!",
+     "cxx": "P[0][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[5]!",
+     "cxx": "P[0][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[6]!",
+     "cxx": "P[1][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[7]!",
+     "cxx": "P[1][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[8]!",
+     "cxx": "P[1][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[9]!",
+     "cxx": "P[1][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[10]!",
+     "cxx": "P[1][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[11]!",
+     "cxx": "P[1][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[12]!",
+     "cxx": "P[2][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[13]!",
+     "cxx": "P[2][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[14]!",
+     "cxx": "P[2][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[15]!",
+     "cxx": "P[2][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[16]!",
+     "cxx": "P[2][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[17]!",
+     "cxx": "P[2][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[18]!",
+     "cxx": "P[3][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[19]!",
+     "cxx": "P[3][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[20]!",
+     "cxx": "P[3][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[21]!",
+     "cxx": "P[3][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[22]!",
+     "cxx": "P[3][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[23]!",
+     "cxx": "P[3][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[24]!",
+     "cxx": "P[4][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[25]!",
+     "cxx": "P[4][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[26]!",
+     "cxx": "P[4][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[27]!",
+     "cxx": "P[4][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[28]!",
+     "cxx": "P[4][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[29]!",
+     "cxx": "P[4][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[30]!",
+     "cxx": "P[5][0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[31]!",
+     "cxx": "P[5][1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[32]!",
+     "cxx": "P[5][2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[33]!",
+     "cxx": "P[5][3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[34]!",
+     "cxx": "P[5][4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "P[35]!",
+     "cxx": "P[5][5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[0]!",
+     "cxx": "row[0]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[1]!",
+     "cxx": "row[1]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[2]!",
+     "cxx": "row[2]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[3]!",
+     "cxx": "row[3]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[4]!",
+     "cxx": "row[4]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "row[5]!",
+     "cxx": "row[5]",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "idx",
+     "cxx": "idx",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "count",
+     "cxx": "count",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Front",
+   "lean": "FastCalls.Front",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "init",
+     "lean": "FastCalls.Front.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "FastCalls.Front.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x",
+       "type": "double",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "first",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "last",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Front",
+     "lean": "FastCalls.Front.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Front",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "m",
+       "type": "Monitor",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "FastCalls.Monitor.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "best",
+     "cxx": "best",
+     "type": "double",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "core",
+     "cxx": "core",
+     "type": "Core *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "num_cores",
+     "cxx": "num_cores",
+     "type": "uint8_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "zero_range",
+   "cxx_call": "Common::zero_range",
+   "lean": "FastCalls.Common.zero_range",
+   "kind": "free",
+   "top": false,
+   "owner": "Common",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "double[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "double"
+    },
+    {
+     "name": "n1",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "n2",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "scale",
+   "cxx_call": "Common::scale",
+   "lean": "FastCalls.Common.scale",
+   "kind": "free",
+   "top": false,
+   "owner": "Common",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "double[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "double"
+    },
+    {
+     "name": "k",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "g",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "copy_into",
+   "cxx_call": "Common::copy_into",
+   "lean": "FastCalls.Common.copy_into",
+   "kind": "free",
+   "top": false,
+   "owner": "Common",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "dst",
+     "type": "double[0]",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "double"
+    },
+    {
+     "name": "src",
+     "type": "double[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "double"
+    },
+    {
+     "name": "k",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "total",
+   "cxx_call": "Common::total",
+   "lean": "FastCalls.Common.total",
+   "kind": "free",
+   "top": false,
+   "owner": "Common",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "double[0]",
+     "ref": "cptr",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null,
+     "array_elem": "double"
+    },
+    {
+     "name": "k",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "24:22"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "64:23"
+  },
+  {
+   "lean": "(0.25 : Binary64)",
+   "bits": "3fd0000000000000",
+   "cpp": "0.25",
+   "at": "70:42"
+  },
+  {
+   "lean": "(0.5 : Binary64)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "78:40"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "monitor",
+   "cxx": "monitor",
+   "class": "Monitor",
+   "lean": "Monitor",
+   "parts": [
+    [
+     "monitor",
+     "Monitor.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "tally",
+   "cxx": "Front::tally",
+   "class": "Monitor",
+   "lean": "Monitor",
+   "parts": [
+    [
+     "tally",
+     "Monitor.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "front",
+   "cxx": "front",
+   "class": "Front",
+   "lean": "Front",
+   "parts": [
+    [
+     "front",
+     "Front.State",
+     "state"
+    ]
+   ]
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'Core",
+   "class": "Core",
+   "lean": "Core",
+   "placement": true
+  }
+ ],
+ "funcs": []
+}

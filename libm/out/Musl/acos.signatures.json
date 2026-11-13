@@ -1,0 +1,210 @@
+{
+ "namespace": "Musl.acos",
+ "source": "libm/unity/unity_acos.c",
+ "functions": [
+  {
+   "name": "R",
+   "lean": "Musl.acos.R",
+   "params": [
+    [
+     "z",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_acos.c:52-58"
+  },
+  {
+   "name": "acos",
+   "lean": "Musl.acos.acos",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_acos.c:60-101"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "R",
+   "cxx_call": "R",
+   "lean": "Musl.acos.R",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "z",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "acos",
+   "cxx_call": "acos",
+   "lean": "Musl.acos.acos",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.57079632679489655800e+00 : Binary64)",
+   "bits": "3ff921fb54442d18",
+   "cpp": "1.57079632679489655800e+00",
+   "at": "39:11"
+  },
+  {
+   "lean": "(6.12323399573676603587e-17 : Binary64)",
+   "bits": "3c91a62633145c07",
+   "cpp": "6.12323399573676603587e-17",
+   "at": "40:11"
+  },
+  {
+   "lean": "(1.66666666666666657415e-01 : Binary64)",
+   "bits": "3fc5555555555555",
+   "cpp": "1.66666666666666657415e-01",
+   "at": "41:8"
+  },
+  {
+   "lean": "(3.25565818622400915405e-01 : Binary64)",
+   "bits": "3fd4d61203eb6f7d",
+   "cpp": "3.25565818622400915405e-01",
+   "at": "42:8"
+  },
+  {
+   "lean": "(2.01212532134862925881e-01 : Binary64)",
+   "bits": "3fc9c1550e884455",
+   "cpp": "2.01212532134862925881e-01",
+   "at": "43:8"
+  },
+  {
+   "lean": "(4.00555345006794114027e-02 : Binary64)",
+   "bits": "3fa48228b5688f3b",
+   "cpp": "4.00555345006794114027e-02",
+   "at": "44:8"
+  },
+  {
+   "lean": "(7.91534994289814532176e-04 : Binary64)",
+   "bits": "3f49efe07501b288",
+   "cpp": "7.91534994289814532176e-04",
+   "at": "45:8"
+  },
+  {
+   "lean": "(3.47933107596021167570e-05 : Binary64)",
+   "bits": "3f023de10dfdf709",
+   "cpp": "3.47933107596021167570e-05",
+   "at": "46:8"
+  },
+  {
+   "lean": "(2.40339491173441421878e+00 : Binary64)",
+   "bits": "40033a271c8a2d4b",
+   "cpp": "2.40339491173441421878e+00",
+   "at": "47:8"
+  },
+  {
+   "lean": "(2.02094576023350569471e+00 : Binary64)",
+   "bits": "40002ae59c598ac8",
+   "cpp": "2.02094576023350569471e+00",
+   "at": "48:8"
+  },
+  {
+   "lean": "(6.88283971605453293030e-01 : Binary64)",
+   "bits": "3fe6066c1b8d0159",
+   "cpp": "6.88283971605453293030e-01",
+   "at": "49:8"
+  },
+  {
+   "lean": "(7.70381505559019352791e-02 : Binary64)",
+   "bits": "3fb3b8c5b12e9282",
+   "cpp": "7.70381505559019352791e-02",
+   "at": "50:8"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "56:6"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "75:12"
+  },
+  {
+   "lean": "Binary32.ofBits 0x03800000",
+   "bits": "03800000",
+   "cpp": "0x1p-120f",
+   "at": "75:24"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x03800000)",
+   "bits": "3870000000000000",
+   "cpp": "0x1p-120f",
+   "at": "75:24"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "76:11"
+  },
+  {
+   "lean": "(0.5 : Binary64)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "88:15"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

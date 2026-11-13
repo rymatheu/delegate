@@ -1,0 +1,115 @@
+{
+ "asts": {
+  "libraries/AP_Param/AP_Param.cpp": [
+   "AP_Param",
+   "ap_var_type",
+   "Vector3"
+  ],
+  "libraries/StorageManager/StorageManager.cpp": [
+   "StorageAccess",
+   "StorageManager"
+  ],
+  "libraries/AP_HAL/Storage.cpp": [
+   "Storage::erase"
+  ],
+  "libraries/AP_Param/AP_ParamT.cpp": [
+   "AP_ParamTBase",
+   "AP_ParamV"
+  ],
+  "libraries/AP_Math/AP_Math.cpp": [
+   "constrain_value_line",
+   "is_equal"
+  ],
+  "libraries/AP_HAL/Storage.cpp#2": [
+   "MIN"
+  ],
+  "libraries/AP_Param/AP_ParamT.cpp#2": [
+   "default_as_float"
+  ],
+  "libraries/AC_AttitudeControl/AC_CommandModel.cpp": [
+   "AC_CommandModel"
+  ],
+  "libraries/SRV_Channel/SRV_Channels.cpp": [
+   "SRV_Channels"
+  ],
+  "libraries/SRV_Channel/SRV_Channels.cpp#2": [
+   "SRV_Channel::Function"
+  ]
+ },
+ "layout_units": [
+  "libraries/AP_Param/AP_Param.cpp",
+  "libraries/AC_AttitudeControl/AC_CommandModel.cpp",
+  "libraries/SRV_Channel/SRV_Channels.cpp"
+ ],
+ "static_units": [
+  "libraries/AP_Param/AP_Param.cpp",
+  "libraries/StorageManager/StorageManager.cpp",
+  "libraries/SRV_Channel/SRV_Channels.cpp"
+ ],
+ "root_table": [
+  "ArduCopter/Parameters.cpp",
+  "@_ZN6Copter8var_infoE"
+ ],
+ "boundary": {
+  "AP_HAL::Scheduler::register_io_process": "()",
+  "AP_HAL::Scheduler::is_system_initialized": "(\u2190 get).sysInit",
+  "AP_HAL::Util::get_soft_armed": "(\u2190 get).armed",
+  "panic": "()",
+  "AP_HAL::BetterStream::printf": "()",
+  "AP_InternalError::error": "()",
+  "GCS::send_parameter_value": "()",
+  "AP_HAL::Util::get_custom_defaults_file": "(0 : UInt64)",
+  "AP_HAL::Util::set_cmdline_parameters": "()"
+ },
+ "entries": [
+  "AP_Param::setup_sketch_defaults",
+  "AP_Param::check_var_info",
+  "AP_Param::setup_object_defaults",
+  "AP_Param::load_all",
+  "AP_Param::load",
+  "AP_Param::erase_all",
+  "AP_Param::first",
+  "AP_Param::next",
+  "AP_Param::next_scalar",
+  "AP_Param::copy_name_token",
+  "AP_Param::find_by_name",
+  "AP_Param::find",
+  "AP_Param::find_by_index",
+  "AP_Param::count_parameters",
+  "AP_Param::cast_to_float",
+  "AP_Param::set_value",
+  "AP_Param::set_float",
+  "AP_Param::save_sync",
+  "AP_Param::find_key_by_pointer",
+  "AP_Param::load_object_from_eeprom",
+  "AP_Param::set_frame_type_flags",
+  "AP_Param::type_size",
+  "AP_Param::AP_Param",
+  "StorageAccess::StorageAccess",
+  "StorageManager::erase",
+  "AP_Param::invalidate_count",
+  "AP_ParamTBase<short, 2>::set_and_save",
+  "AP_ParamTBase<short, 2>::set_default",
+  "AP_ParamTBase<float, 4>::set_and_save",
+  "AP_ParamTBase<signed char, 1>::set_and_save",
+  "AP_ParamTBase<int, 3>::set_and_save",
+  "AP_Param::find_by_header",
+  "AP_Param::scan",
+  "AP_Param::is_sentinel",
+  "AC_CommandModel::AC_CommandModel",
+  "SRV_Channels::SRV_Channels"
+ ],
+ "constants": {
+  "is_equal:value": "false"
+ },
+ "_constants_doc": "is_equal<float, float> (AP_Math.cpp:24-38): `std::is_same<double, common_type_nonconst>::value` with common_type_nonconst = float, a constant clang folds without printing its value",
+ "drop": [
+  "AP_Param::load_defaults_file_from_filesystem",
+  "AP_Param::load_defaults_file_from_romfs",
+  "AP_Param::save"
+ ],
+ "_drop_doc": "reached only under `if (default_file)`, whose value is the HAL's get_custom_defaults_file(): null on the reference board (HAL_PARAM_DEFAULTS_PATH nullptr, AP_HAL/board/sitl.h:50; lockstep.cpp's Util does not override it); AP_Param::save: the save queue (ObjectBuffer_TS<param_save>, a heap ring buffer built by a static constructor and drained by save_io_handler on the IO thread) is not translated; save_sync, which the IO thread runs for each queued parameter, is",
+ "hal_translated": {
+  "AP_HAL::Storage::erase": "AP_HAL::Storage::erase"
+ }
+}

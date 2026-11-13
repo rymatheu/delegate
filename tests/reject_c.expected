@@ -1,0 +1,5 @@
+tests/reject_c.c:9:12: rejected: union members of different widths
+tests/reject_c.c:17:2: rejected: `continue` in a `for` loop without a constant trip count
+tests/reject_c.c:28:3: rejected: `goto` to a label whose statements do not all end in `return` (or declare variables or labels)
+tests/reject_c.c:44:4: rejected: backward `goto` from inside a loop or `switch`
+tests/reject_c.c:49:24: rejected: pointer or reference type `float *`

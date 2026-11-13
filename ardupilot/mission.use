@@ -1,0 +1,30 @@
+# The entry points of the AP_Mission translation (ardupilot/translate_mission.sh): what MissionItemProtocol_Waypoints,
+# GCS_MAVLINK (MISSION_ITEM to MISSION_ITEM_INT, COMMAND_LONG) and the vehicle's boot call that does not need ModeAuto,
+# and the difftest harness's member functions (ardupilot/unity_mission.cpp)
+AP_Mission::init
+AP_Mission::add_cmd
+AP_Mission::replace_cmd
+AP_Mission::read_cmd_from_storage
+AP_Mission::clear
+AP_Mission::truncate
+AP_Mission::write_home_to_storage
+AP_Mission::num_commands
+AP_Mission::num_commands_max
+AP_Mission::mavlink_int_to_mission_cmd
+AP_Mission::mission_cmd_to_mavlink_int
+AP_Mission::convert_MISSION_ITEM_to_MISSION_ITEM_INT
+AP_Mission::convert_MISSION_ITEM_INT_to_MISSION_ITEM
+AP_Mission::get_next_nav_cmd
+AP_Mission::is_nav_cmd
+MissionTest::t_boot
+MissionTest::t_add
+MissionTest::t_replace
+MissionTest::t_raw
+MissionTest::t_read
+MissionTest::t_clear
+MissionTest::t_truncate
+MissionTest::t_home
+MissionTest::t_next
+MissionTest::t_conv
+MissionTest::t_item
+MissionTest::t_get

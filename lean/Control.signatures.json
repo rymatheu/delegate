@@ -4,6 +4,186 @@
  "functions": [],
  "classes": [
   {
+   "cxx": "V2",
+   "lean": "V2",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "V2",
+     "lean": "V2.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "V2",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "V2",
+     "lean": "V2.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "V2",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "zero",
+     "lean": "V2.zero",
+     "top": false,
+     "kind": "method",
+     "owner": "V2",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*=",
+     "lean": "V2.op_mul_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "V2",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "k",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "V2",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "length",
+     "lean": "V2.length",
+     "top": false,
+     "kind": "method",
+     "owner": "V2",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
    "cxx": "V3",
    "lean": "V3",
    "has_params": false,
@@ -190,186 +370,6 @@
      "root": "s",
      "lean": "z",
      "cxx": "z",
-     "type": "float",
-     "enum": null
-    }
-   ],
-   "output_log": false
-  },
-  {
-   "cxx": "V2",
-   "lean": "V2",
-   "has_params": false,
-   "inputs": [],
-   "sub_inputs": [],
-   "outputs": [],
-   "sub_outputs": [],
-   "methods": [
-    {
-     "cxx": "V2",
-     "lean": "V2.init_void",
-     "top": true,
-     "kind": "ctor",
-     "owner": "V2",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "V2",
-     "lean": "V2.init_float2",
-     "top": true,
-     "kind": "ctor",
-     "owner": "V2",
-     "access": "public",
-     "reads": [],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "x0",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      },
-      {
-       "name": "y0",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "zero",
-     "lean": "V2.zero",
-     "top": false,
-     "kind": "method",
-     "owner": "V2",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "void",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": null
-    },
-    {
-     "cxx": "operator*=",
-     "lean": "V2.op_mul_assign",
-     "top": false,
-     "kind": "method",
-     "owner": "V2",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [
-      "s"
-     ],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [
-      {
-       "name": "k",
-       "type": "float",
-       "ref": null,
-       "boundary": false,
-       "enum": null,
-       "under": null,
-       "scalar": true,
-       "lean_type": null,
-       "leaves": null
-      }
-     ],
-     "ret": "V2",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": false,
-     "ret_leaves": [
-      {
-       "lean": "x",
-       "cxx": "x",
-       "type": "float",
-       "enum": null
-      },
-      {
-       "lean": "y",
-       "cxx": "y",
-       "type": "float",
-       "enum": null
-      }
-     ]
-    },
-    {
-     "cxx": "length",
-     "lean": "V2.length",
-     "top": false,
-     "kind": "method",
-     "owner": "V2",
-     "access": "public",
-     "reads": [
-      "s"
-     ],
-     "writes": [],
-     "uses_inp": false,
-     "uses_own": false,
-     "params": [],
-     "ret": "float",
-     "ret_enum": null,
-     "ret_under": null,
-     "ret_scalar": true,
-     "ret_leaves": null
-    }
-   ],
-   "leaves": [
-    {
-     "root": "s",
-     "lean": "x",
-     "cxx": "x",
-     "type": "float",
-     "enum": null
-    },
-    {
-     "root": "s",
-     "lean": "y",
-     "cxx": "y",
      "type": "float",
      "enum": null
     }
@@ -1092,29 +1092,36 @@
  "output_ns": null,
  "literals": [
   {
-   "lean": "(1.0 : Float32)",
+   "lean": "(1.0 : Binary32)",
    "bits": "3f800000",
    "cpp": "1.0f",
    "at": "90:30"
   },
   {
-   "lean": "(2.0 : Float32)",
+   "lean": "(2.0 : Binary32)",
    "bits": "40000000",
    "cpp": "2.0f",
    "at": "90:36"
   },
   {
-   "lean": "(3.0 : Float32)",
+   "lean": "(3.0 : Binary32)",
    "bits": "40400000",
    "cpp": "3.0f",
    "at": "90:43"
   },
   {
-   "lean": "(0.5 : Float32)",
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "12:24"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
    "bits": "3f000000",
    "cpp": "0.5f",
    "at": "119:29"
   }
  ],
- "var_info": {}
+ "var_info": {},
+ "world": []
 }

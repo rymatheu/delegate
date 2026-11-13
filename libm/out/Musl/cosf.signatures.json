@@ -1,0 +1,235 @@
+{
+ "namespace": "Musl.cosf",
+ "source": "libm/unity/unity_cosf.c",
+ "functions": [
+  {
+   "name": "__cosdf",
+   "lean": "Musl.cosf.__cosdf",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_cosf.c:26-35"
+  },
+  {
+   "name": "__sindf",
+   "lean": "Musl.cosf.__sindf",
+   "params": [
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_cosf.c:26-36"
+  },
+  {
+   "name": "cosf",
+   "lean": "Musl.cosf.cosf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_cosf.c:26-78"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "__cosdf",
+   "cxx_call": "__cosdf",
+   "lean": "Musl.cosf.__cosdf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "__sindf",
+   "cxx_call": "__sindf",
+   "lean": "Musl.cosf.__sindf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "cosf",
+   "cxx_call": "cosf",
+   "lean": "Musl.cosf.cosf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "Int32.toBinary64 (1 : Int32)",
+   "bits": "3ff0000000000000",
+   "cpp": "1",
+   "at": "21:10"
+  },
+  {
+   "lean": "(1.5707963267948966 : Binary64)",
+   "bits": "3ff921fb54442d18",
+   "cpp": "1.5707963267948966",
+   "at": "21:12"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "22:10"
+  },
+  {
+   "lean": "Int32.toBinary64 (3 : Int32)",
+   "bits": "4008000000000000",
+   "cpp": "3",
+   "at": "23:10"
+  },
+  {
+   "lean": "Int32.toBinary64 (4 : Int32)",
+   "bits": "4010000000000000",
+   "cpp": "4",
+   "at": "24:10"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fc5555554cbac77",
+   "bits": "3fc5555554cbac77",
+   "cpp": "0x15555554cbac77.0p-55",
+   "at": "21:7"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f811110896efbb2",
+   "bits": "3f811110896efbb2",
+   "cpp": "0x111110896efbb2.0p-59",
+   "at": "22:7"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f2a00f9e2cae774",
+   "bits": "3f2a00f9e2cae774",
+   "cpp": "0x1a00f9e2cae774.0p-65",
+   "at": "23:7"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ec6cd878c3b46a7",
+   "bits": "3ec6cd878c3b46a7",
+   "cpp": "0x16cd878c3b46a7.0p-71",
+   "at": "24:7"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fdffffffd0c5e81",
+   "bits": "3fdffffffd0c5e81",
+   "cpp": "0x1ffffffd0c5e81.0p-54",
+   "at": "21:8"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3fa55553e1053a42",
+   "bits": "3fa55553e1053a42",
+   "cpp": "0x155553e1053a42.0p-57",
+   "at": "22:8"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3f56c087e80f1e27",
+   "bits": "3f56c087e80f1e27",
+   "cpp": "0x16c087e80f1e27.0p-62",
+   "at": "23:8"
+  },
+  {
+   "lean": "Binary64.ofBits 0x3ef99342e0ee5069",
+   "bits": "3ef99342e0ee5069",
+   "cpp": "0x199342e0ee5069.0p-68",
+   "at": "24:8"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "40:11"
+  },
+  {
+   "lean": "(1.0 : Binary64)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "34:11"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

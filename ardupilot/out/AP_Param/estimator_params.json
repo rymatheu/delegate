@@ -1,0 +1,2218 @@
+[
+ {
+  "path": "barometer.sensors[0].ground_pressure",
+  "object": "copter",
+  "offset": 1264,
+  "addr": 32856,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer.sensors[0].bus_id",
+  "object": "copter",
+  "offset": 1280,
+  "addr": 32872,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "barometer.sensors[1].ground_pressure",
+  "object": "copter",
+  "offset": 1304,
+  "addr": 32896,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer.sensors[1].bus_id",
+  "object": "copter",
+  "offset": 1320,
+  "addr": 32912,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "barometer.sensors[2].ground_pressure",
+  "object": "copter",
+  "offset": 1344,
+  "addr": 32936,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer.sensors[2].bus_id",
+  "object": "copter",
+  "offset": 1360,
+  "addr": 32952,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "barometer._alt_offset",
+  "object": "copter",
+  "offset": 1364,
+  "addr": 32956,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer._field_elevation",
+  "object": "copter",
+  "offset": 1376,
+  "addr": 32968,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer._primary_baro",
+  "object": "copter",
+  "offset": 1388,
+  "addr": 32980,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "barometer._ext_bus",
+  "object": "copter",
+  "offset": 1389,
+  "addr": 32981,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "barometer._specific_gravity",
+  "object": "copter",
+  "offset": 1472,
+  "addr": 33064,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer._user_ground_temperature",
+  "object": "copter",
+  "offset": 1476,
+  "addr": 33068,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer._filter_range",
+  "object": "copter",
+  "offset": 1488,
+  "addr": 33080,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "barometer._alt_error_max",
+  "object": "copter",
+  "offset": 1496,
+  "addr": 33088,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "barometer._options",
+  "object": "copter",
+  "offset": 1500,
+  "addr": 33092,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._enabled",
+  "object": "copter",
+  "offset": 1537,
+  "addr": 33129,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._learn",
+  "object": "copter",
+  "offset": 1540,
+  "addr": 33132,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._declination",
+  "object": "copter",
+  "offset": 1544,
+  "addr": 33136,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._auto_declination",
+  "object": "copter",
+  "offset": 1548,
+  "addr": 33140,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._motor_comp_type",
+  "object": "copter",
+  "offset": 1556,
+  "addr": 33148,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._rotate_auto",
+  "object": "copter",
+  "offset": 1557,
+  "addr": 33149,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[0].external",
+  "object": "copter",
+  "offset": 1564,
+  "addr": 33156,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[0].orientation",
+  "object": "copter",
+  "offset": 1568,
+  "addr": 33160,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offset.x",
+  "object": "copter",
+  "offset": 1572,
+  "addr": 33164,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offset.y",
+  "object": "copter",
+  "offset": 1576,
+  "addr": 33168,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offset.z",
+  "object": "copter",
+  "offset": 1580,
+  "addr": 33172,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].diagonals.x",
+  "object": "copter",
+  "offset": 1584,
+  "addr": 33176,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].diagonals.y",
+  "object": "copter",
+  "offset": 1588,
+  "addr": 33180,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].diagonals.z",
+  "object": "copter",
+  "offset": 1592,
+  "addr": 33184,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offdiagonals.x",
+  "object": "copter",
+  "offset": 1596,
+  "addr": 33188,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offdiagonals.y",
+  "object": "copter",
+  "offset": 1600,
+  "addr": 33192,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].offdiagonals.z",
+  "object": "copter",
+  "offset": 1604,
+  "addr": 33196,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].motor_compensation.x",
+  "object": "copter",
+  "offset": 1624,
+  "addr": 33216,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].motor_compensation.y",
+  "object": "copter",
+  "offset": 1628,
+  "addr": 33220,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].motor_compensation.z",
+  "object": "copter",
+  "offset": 1632,
+  "addr": 33224,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].scale_factor",
+  "object": "copter",
+  "offset": 1608,
+  "addr": 33200,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[0].dev_id",
+  "object": "copter",
+  "offset": 1612,
+  "addr": 33204,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._state._priv_instance[1].external",
+  "object": "copter",
+  "offset": 1688,
+  "addr": 33280,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[1].orientation",
+  "object": "copter",
+  "offset": 1692,
+  "addr": 33284,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offset.x",
+  "object": "copter",
+  "offset": 1696,
+  "addr": 33288,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offset.y",
+  "object": "copter",
+  "offset": 1700,
+  "addr": 33292,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offset.z",
+  "object": "copter",
+  "offset": 1704,
+  "addr": 33296,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].diagonals.x",
+  "object": "copter",
+  "offset": 1708,
+  "addr": 33300,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].diagonals.y",
+  "object": "copter",
+  "offset": 1712,
+  "addr": 33304,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].diagonals.z",
+  "object": "copter",
+  "offset": 1716,
+  "addr": 33308,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offdiagonals.x",
+  "object": "copter",
+  "offset": 1720,
+  "addr": 33312,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offdiagonals.y",
+  "object": "copter",
+  "offset": 1724,
+  "addr": 33316,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].offdiagonals.z",
+  "object": "copter",
+  "offset": 1728,
+  "addr": 33320,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].motor_compensation.x",
+  "object": "copter",
+  "offset": 1748,
+  "addr": 33340,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].motor_compensation.y",
+  "object": "copter",
+  "offset": 1752,
+  "addr": 33344,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].motor_compensation.z",
+  "object": "copter",
+  "offset": 1756,
+  "addr": 33348,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].scale_factor",
+  "object": "copter",
+  "offset": 1732,
+  "addr": 33324,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[1].dev_id",
+  "object": "copter",
+  "offset": 1736,
+  "addr": 33328,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._state._priv_instance[2].external",
+  "object": "copter",
+  "offset": 1812,
+  "addr": 33404,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[2].orientation",
+  "object": "copter",
+  "offset": 1816,
+  "addr": 33408,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offset.x",
+  "object": "copter",
+  "offset": 1820,
+  "addr": 33412,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offset.y",
+  "object": "copter",
+  "offset": 1824,
+  "addr": 33416,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offset.z",
+  "object": "copter",
+  "offset": 1828,
+  "addr": 33420,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].diagonals.x",
+  "object": "copter",
+  "offset": 1832,
+  "addr": 33424,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].diagonals.y",
+  "object": "copter",
+  "offset": 1836,
+  "addr": 33428,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].diagonals.z",
+  "object": "copter",
+  "offset": 1840,
+  "addr": 33432,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offdiagonals.x",
+  "object": "copter",
+  "offset": 1844,
+  "addr": 33436,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offdiagonals.y",
+  "object": "copter",
+  "offset": 1848,
+  "addr": 33440,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].offdiagonals.z",
+  "object": "copter",
+  "offset": 1852,
+  "addr": 33444,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].motor_compensation.x",
+  "object": "copter",
+  "offset": 1872,
+  "addr": 33464,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].motor_compensation.y",
+  "object": "copter",
+  "offset": 1876,
+  "addr": 33468,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].motor_compensation.z",
+  "object": "copter",
+  "offset": 1880,
+  "addr": 33472,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].scale_factor",
+  "object": "copter",
+  "offset": 1856,
+  "addr": 33448,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "compass._state._priv_instance[2].dev_id",
+  "object": "copter",
+  "offset": 1860,
+  "addr": 33452,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._use_for_yaw._priv_instance[0]",
+  "object": "copter",
+  "offset": 2060,
+  "addr": 33652,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._priority_did_stored_list._priv_instance[0]",
+  "object": "copter",
+  "offset": 2064,
+  "addr": 33656,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._use_for_yaw._priv_instance[1]",
+  "object": "copter",
+  "offset": 2061,
+  "addr": 33653,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._priority_did_stored_list._priv_instance[1]",
+  "object": "copter",
+  "offset": 2068,
+  "addr": 33660,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._use_for_yaw._priv_instance[2]",
+  "object": "copter",
+  "offset": 2062,
+  "addr": 33654,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._priority_did_stored_list._priv_instance[2]",
+  "object": "copter",
+  "offset": 2072,
+  "addr": 33664,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass.extra_dev_id[0]",
+  "object": "copter",
+  "offset": 2280,
+  "addr": 33872,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass.extra_dev_id[1]",
+  "object": "copter",
+  "offset": 2284,
+  "addr": 33876,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass.extra_dev_id[2]",
+  "object": "copter",
+  "offset": 2288,
+  "addr": 33880,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass.extra_dev_id[3]",
+  "object": "copter",
+  "offset": 2292,
+  "addr": 33884,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass.extra_dev_id[4]",
+  "object": "copter",
+  "offset": 2296,
+  "addr": 33888,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._offset_max",
+  "object": "copter",
+  "offset": 2088,
+  "addr": 33680,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._driver_type_mask",
+  "object": "copter",
+  "offset": 2276,
+  "addr": 33868,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._filter_range",
+  "object": "copter",
+  "offset": 2320,
+  "addr": 33912,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._options",
+  "object": "copter",
+  "offset": 2090,
+  "addr": 33682,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "compass._per_motor.enable",
+  "object": "copter",
+  "offset": 2104,
+  "addr": 33696,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "compass._per_motor.expo",
+  "object": "copter",
+  "offset": 2108,
+  "addr": 33700,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[0].x",
+  "object": "copter",
+  "offset": 3312,
+  "addr": 34904,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[0].y",
+  "object": "copter",
+  "offset": 3316,
+  "addr": 34908,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[0].z",
+  "object": "copter",
+  "offset": 3320,
+  "addr": 34912,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[0].x",
+  "object": "copter",
+  "offset": 3240,
+  "addr": 34832,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[0].y",
+  "object": "copter",
+  "offset": 3244,
+  "addr": 34836,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[0].z",
+  "object": "copter",
+  "offset": 3248,
+  "addr": 34840,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[0].x",
+  "object": "copter",
+  "offset": 3276,
+  "addr": 34868,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[0].y",
+  "object": "copter",
+  "offset": 3280,
+  "addr": 34872,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[0].z",
+  "object": "copter",
+  "offset": 3284,
+  "addr": 34876,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._use_old_param[0]",
+  "object": "copter",
+  "offset": 3521,
+  "addr": 35113,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._accel_pos_old_param[0].x",
+  "object": "copter",
+  "offset": 3348,
+  "addr": 34940,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[0].y",
+  "object": "copter",
+  "offset": 3352,
+  "addr": 34944,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[0].z",
+  "object": "copter",
+  "offset": 3356,
+  "addr": 34948,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_id_old_param[0]",
+  "object": "copter",
+  "offset": 3228,
+  "addr": 34820,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._accel_id_old_param[0]",
+  "object": "copter",
+  "offset": 3216,
+  "addr": 34808,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[1].x",
+  "object": "copter",
+  "offset": 3324,
+  "addr": 34916,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[1].y",
+  "object": "copter",
+  "offset": 3328,
+  "addr": 34920,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[1].z",
+  "object": "copter",
+  "offset": 3332,
+  "addr": 34924,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[1].x",
+  "object": "copter",
+  "offset": 3252,
+  "addr": 34844,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[1].y",
+  "object": "copter",
+  "offset": 3256,
+  "addr": 34848,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[1].z",
+  "object": "copter",
+  "offset": 3260,
+  "addr": 34852,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[1].x",
+  "object": "copter",
+  "offset": 3288,
+  "addr": 34880,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[1].y",
+  "object": "copter",
+  "offset": 3292,
+  "addr": 34884,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[1].z",
+  "object": "copter",
+  "offset": 3296,
+  "addr": 34888,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._use_old_param[1]",
+  "object": "copter",
+  "offset": 3522,
+  "addr": 35114,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._accel_pos_old_param[1].x",
+  "object": "copter",
+  "offset": 3360,
+  "addr": 34952,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[1].y",
+  "object": "copter",
+  "offset": 3364,
+  "addr": 34956,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[1].z",
+  "object": "copter",
+  "offset": 3368,
+  "addr": 34960,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_id_old_param[1]",
+  "object": "copter",
+  "offset": 3232,
+  "addr": 34824,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._accel_id_old_param[1]",
+  "object": "copter",
+  "offset": 3220,
+  "addr": 34812,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[2].x",
+  "object": "copter",
+  "offset": 3336,
+  "addr": 34928,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[2].y",
+  "object": "copter",
+  "offset": 3340,
+  "addr": 34932,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_offset_old_param[2].z",
+  "object": "copter",
+  "offset": 3344,
+  "addr": 34936,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[2].x",
+  "object": "copter",
+  "offset": 3264,
+  "addr": 34856,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[2].y",
+  "object": "copter",
+  "offset": 3268,
+  "addr": 34860,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_scale_old_param[2].z",
+  "object": "copter",
+  "offset": 3272,
+  "addr": 34864,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[2].x",
+  "object": "copter",
+  "offset": 3300,
+  "addr": 34892,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[2].y",
+  "object": "copter",
+  "offset": 3304,
+  "addr": 34896,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_offset_old_param[2].z",
+  "object": "copter",
+  "offset": 3308,
+  "addr": 34900,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._use_old_param[2]",
+  "object": "copter",
+  "offset": 3523,
+  "addr": 35115,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._accel_pos_old_param[2].x",
+  "object": "copter",
+  "offset": 3372,
+  "addr": 34964,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[2].y",
+  "object": "copter",
+  "offset": 3376,
+  "addr": 34968,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._accel_pos_old_param[2].z",
+  "object": "copter",
+  "offset": 3380,
+  "addr": 34972,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_id_old_param[2]",
+  "object": "copter",
+  "offset": 3236,
+  "addr": 34828,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._accel_id_old_param[2]",
+  "object": "copter",
+  "offset": 3224,
+  "addr": 34816,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._gyro_filter_cutoff",
+  "object": "copter",
+  "offset": 3518,
+  "addr": 35110,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._accel_filter_cutoff",
+  "object": "copter",
+  "offset": 3516,
+  "addr": 35108,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._still_threshold",
+  "object": "copter",
+  "offset": 3748,
+  "addr": 35340,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ins._gyro_cal_timing",
+  "object": "copter",
+  "offset": 3520,
+  "addr": 35112,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._trim_option",
+  "object": "copter",
+  "offset": 3753,
+  "addr": 35345,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._acc_body_aligned",
+  "object": "copter",
+  "offset": 3752,
+  "addr": 35344,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ins._fast_sampling_mask",
+  "object": "copter",
+  "offset": 3524,
+  "addr": 35116,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._enable_mask",
+  "object": "copter",
+  "offset": 3526,
+  "addr": 35118,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins._fast_sampling_rate",
+  "object": "copter",
+  "offset": 3525,
+  "addr": 35117,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ins.raw_logging_options",
+  "object": "copter",
+  "offset": 3824,
+  "addr": 35416,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "gps._navfilter",
+  "object": "copter",
+  "offset": 456,
+  "addr": 32048,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._auto_switch",
+  "object": "copter",
+  "offset": 457,
+  "addr": 32049,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._sbas_mode",
+  "object": "copter",
+  "offset": 468,
+  "addr": 32060,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._min_elevation",
+  "object": "copter",
+  "offset": 469,
+  "addr": 32061,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._inject_to",
+  "object": "copter",
+  "offset": 460,
+  "addr": 32052,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._sbp_logmask",
+  "object": "copter",
+  "offset": 458,
+  "addr": 32050,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._raw_data",
+  "object": "copter",
+  "offset": 470,
+  "addr": 32062,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._save_config",
+  "object": "copter",
+  "offset": 471,
+  "addr": 32063,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._auto_config",
+  "object": "copter",
+  "offset": 472,
+  "addr": 32064,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps._blend_mask",
+  "object": "copter",
+  "offset": 473,
+  "addr": 32065,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "gps._driver_options",
+  "object": "copter",
+  "offset": 474,
+  "addr": 32066,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "gps._primary",
+  "object": "copter",
+  "offset": 476,
+  "addr": 32068,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[0].type",
+  "object": "copter",
+  "offset": 384,
+  "addr": 31976,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[0].gnss_mode",
+  "object": "copter",
+  "offset": 386,
+  "addr": 31978,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[0].rate_ms",
+  "object": "copter",
+  "offset": 388,
+  "addr": 31980,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[0].antenna_offset.x",
+  "object": "copter",
+  "offset": 392,
+  "addr": 31984,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[0].antenna_offset.y",
+  "object": "copter",
+  "offset": 396,
+  "addr": 31988,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[0].antenna_offset.z",
+  "object": "copter",
+  "offset": 400,
+  "addr": 31992,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[0].delay_ms",
+  "object": "copter",
+  "offset": 404,
+  "addr": 31996,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[0].com_port",
+  "object": "copter",
+  "offset": 406,
+  "addr": 31998,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[1].type",
+  "object": "copter",
+  "offset": 408,
+  "addr": 32000,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[1].gnss_mode",
+  "object": "copter",
+  "offset": 410,
+  "addr": 32002,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[1].rate_ms",
+  "object": "copter",
+  "offset": 412,
+  "addr": 32004,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[1].antenna_offset.x",
+  "object": "copter",
+  "offset": 416,
+  "addr": 32008,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[1].antenna_offset.y",
+  "object": "copter",
+  "offset": 420,
+  "addr": 32012,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[1].antenna_offset.z",
+  "object": "copter",
+  "offset": 424,
+  "addr": 32016,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[1].delay_ms",
+  "object": "copter",
+  "offset": 428,
+  "addr": 32020,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[1].com_port",
+  "object": "copter",
+  "offset": 430,
+  "addr": 32022,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[2].type",
+  "object": "copter",
+  "offset": 432,
+  "addr": 32024,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[2].gnss_mode",
+  "object": "copter",
+  "offset": 434,
+  "addr": 32026,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[2].rate_ms",
+  "object": "copter",
+  "offset": 436,
+  "addr": 32028,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[2].antenna_offset.x",
+  "object": "copter",
+  "offset": 440,
+  "addr": 32032,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[2].antenna_offset.y",
+  "object": "copter",
+  "offset": 444,
+  "addr": 32036,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[2].antenna_offset.z",
+  "object": "copter",
+  "offset": 448,
+  "addr": 32040,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "gps.params[2].delay_ms",
+  "object": "copter",
+  "offset": 452,
+  "addr": 32044,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "gps.params[2].com_port",
+  "object": "copter",
+  "offset": 454,
+  "addr": 32046,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._enable",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 29,
+  "addr": 30941,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gpsHorizVelNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 32,
+  "addr": 30944,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gpsVertVelNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 36,
+  "addr": 30948,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gpsVelInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 90,
+  "addr": 31002,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gpsHorizPosNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 40,
+  "addr": 30952,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gpsPosInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 92,
+  "addr": 31004,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gpsGlitchRadiusMax",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 101,
+  "addr": 31013,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._baroAltNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 44,
+  "addr": 30956,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._hgtInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 94,
+  "addr": 31006,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._hgtDelay_ms",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 88,
+  "addr": 31000,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._magNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 48,
+  "addr": 30960,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._magCal",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 100,
+  "addr": 31012,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._magInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 96,
+  "addr": 31008,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._easNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 52,
+  "addr": 30964,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._tasInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 98,
+  "addr": 31010,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._rngNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 124,
+  "addr": 31036,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._rngInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 112,
+  "addr": 31024,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._maxFlowRate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 116,
+  "addr": 31028,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._flowNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 104,
+  "addr": 31016,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._flowInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 108,
+  "addr": 31020,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._flowDelay_ms",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 110,
+  "addr": 31022,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gyrNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 72,
+  "addr": 30984,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._accNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 76,
+  "addr": 30988,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gyroBiasProcessNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 80,
+  "addr": 30992,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._accelBiasProcessNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 84,
+  "addr": 30996,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._windVelProcessNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 56,
+  "addr": 30968,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._wndVarHgtRateScale",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 60,
+  "addr": 30972,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gpsCheck",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 128,
+  "addr": 31040,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._imuMask",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 129,
+  "addr": 31041,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._gpsCheckScaler",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 130,
+  "addr": 31042,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._noaidHorizNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 132,
+  "addr": 31044,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._betaMask",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 220,
+  "addr": 31132,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._yawNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 136,
+  "addr": 31048,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._yawInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 140,
+  "addr": 31052,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._tauVelPosOutput",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 142,
+  "addr": 31054,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._magEarthProcessNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 64,
+  "addr": 30976,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._magBodyProcessNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 68,
+  "addr": 30980,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._useRngSwHgt",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 143,
+  "addr": 31055,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._terrGradMax",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 144,
+  "addr": 31056,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._rngBcnNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 148,
+  "addr": 31060,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._rngBcnInnovGate",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 152,
+  "addr": 31064,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._rngBcnDelay_ms",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 154,
+  "addr": 31066,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._useRngSwSpd",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 156,
+  "addr": 31068,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._accBiasLim",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 160,
+  "addr": 31072,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._magMask",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 164,
+  "addr": 31076,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._originHgtMode",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 165,
+  "addr": 31077,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._visOdmVelErrMin",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 172,
+  "addr": 31084,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._visOdmVelErrMax",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 168,
+  "addr": 31080,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._wencOdmVelErr",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 176,
+  "addr": 31088,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._flowUse",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 180,
+  "addr": 31092,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._hrt_filt_freq",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 184,
+  "addr": 31096,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._mag_ef_limit",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 188,
+  "addr": 31100,
+  "size": 2,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gsfRunMask",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 190,
+  "addr": 31102,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._gsfUseMask",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 191,
+  "addr": 31103,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._flowNavGainHgt",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 120,
+  "addr": 31032,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._gsfResetMaxCount",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 192,
+  "addr": 31104,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._err_thresh",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 196,
+  "addr": 31108,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._affinity",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 200,
+  "addr": 31112,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._ballisticCoef_x",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 208,
+  "addr": 31120,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._ballisticCoef_y",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 212,
+  "addr": 31124,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._dragObsNoise",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 204,
+  "addr": 31116,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._momentumDragCoef",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 216,
+  "addr": 31128,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._ognmTestScaleFactor",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 224,
+  "addr": 31136,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._baroGndEffectDeadZone",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 228,
+  "addr": 31140,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._primary_core",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 232,
+  "addr": 31144,
+  "size": 1,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3._log_level",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 233,
+  "addr": 31145,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3._gpsVAccThreshold",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 236,
+  "addr": 31148,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "EKF3._options",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 240,
+  "addr": 31152,
+  "size": 4,
+  "kind": "unsigned"
+ },
+ {
+  "path": "EKF3.sources._source_set[0].posxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 458,
+  "addr": 31370,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[0].velxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 459,
+  "addr": 31371,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[0].posz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 460,
+  "addr": 31372,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[0].velz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 461,
+  "addr": 31373,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[0].yaw",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 462,
+  "addr": 31374,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[1].posxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 463,
+  "addr": 31375,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[1].velxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 464,
+  "addr": 31376,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[1].posz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 465,
+  "addr": 31377,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[1].velz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 466,
+  "addr": 31378,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[1].yaw",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 467,
+  "addr": 31379,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[2].posxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 468,
+  "addr": 31380,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[2].velxy",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 469,
+  "addr": 31381,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[2].posz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 470,
+  "addr": 31382,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[2].velz",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 471,
+  "addr": 31383,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._source_set[2].yaw",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 472,
+  "addr": 31384,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "EKF3.sources._options",
+  "object": "AP_AHRS_NavEKF3::EKF3",
+  "offset": 474,
+  "addr": 31386,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ahrs.gps_gain",
+  "object": "copter",
+  "offset": 4236,
+  "addr": 35828,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._gps_use",
+  "object": "copter",
+  "offset": 4244,
+  "addr": 35836,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ahrs._kp_yaw",
+  "object": "copter",
+  "offset": 4228,
+  "addr": 35820,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._kp",
+  "object": "copter",
+  "offset": 4232,
+  "addr": 35824,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._wind_max",
+  "object": "copter",
+  "offset": 4224,
+  "addr": 35816,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ahrs._trim.x",
+  "object": "copter",
+  "offset": 4328,
+  "addr": 35920,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._trim.y",
+  "object": "copter",
+  "offset": 4332,
+  "addr": 35924,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._trim.z",
+  "object": "copter",
+  "offset": 4336,
+  "addr": 35928,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._board_orientation",
+  "object": "copter",
+  "offset": 4225,
+  "addr": 35817,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ahrs.beta",
+  "object": "copter",
+  "offset": 4240,
+  "addr": 35832,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._gps_minsats",
+  "object": "copter",
+  "offset": 4245,
+  "addr": 35837,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ahrs._ekf_type",
+  "object": "copter",
+  "offset": 4226,
+  "addr": 35818,
+  "size": 1,
+  "kind": "signed"
+ },
+ {
+  "path": "ahrs._options",
+  "object": "copter",
+  "offset": 6288,
+  "addr": 37880,
+  "size": 2,
+  "kind": "unsigned"
+ },
+ {
+  "path": "ahrs._origin_lat",
+  "object": "copter",
+  "offset": 4248,
+  "addr": 35840,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._origin_lon",
+  "object": "copter",
+  "offset": 4252,
+  "addr": 35844,
+  "size": 4,
+  "kind": "float"
+ },
+ {
+  "path": "ahrs._origin_alt",
+  "object": "copter",
+  "offset": 4256,
+  "addr": 35848,
+  "size": 4,
+  "kind": "float"
+ }
+]

@@ -1,0 +1,1232 @@
+{
+ "namespace": "InsGps",
+ "source": "examples/insgps.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "PortImpl",
+   "lean": "InsGps.PortImpl",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "baud",
+     "lean": "InsGps.PortImpl.baud",
+     "top": false,
+     "kind": "method",
+     "owner": "PortImpl",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "uint32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "begin",
+     "lean": "InsGps.PortImpl.begin",
+     "top": false,
+     "kind": "method",
+     "owner": "PortImpl",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "b",
+       "type": "uint32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_baud",
+     "cxx": "_baud",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_begun",
+     "cxx": "_begun",
+     "type": "uint16_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vec",
+   "lean": "InsGps.Vec",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vec",
+     "lean": "InsGps.Vec.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vec",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Vec",
+     "lean": "InsGps.Vec.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vec",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "a",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "b",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Filter",
+   "lean": "InsGps.Filter",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Filter",
+     "lean": "InsGps.Filter.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "apply",
+     "lean": "InsGps.Filter.apply",
+     "top": false,
+     "kind": "method",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_gain",
+     "lean": "InsGps.Filter.set_gain",
+     "top": false,
+     "kind": "method",
+     "owner": "Filter",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "g",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_p.gain",
+     "cxx": "_p.gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_p.last",
+     "cxx": "_p.last",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_state.x",
+     "cxx": "_state.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_state.y",
+     "cxx": "_state.y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Group",
+   "lean": "InsGps.Group",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Group",
+     "lean": "InsGps.Group.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Group",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "rate",
+     "cxx": "rate",
+     "type": "int16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "gain",
+     "cxx": "gain",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Calib",
+   "lean": "InsGps.Calib",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "status",
+     "lean": "InsGps.Calib.status",
+     "top": false,
+     "kind": "method",
+     "owner": "Calib",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "int32_t",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_status",
+     "cxx": "_status",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "SimDriver",
+   "lean": "InsGps.SimDriver",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Driver",
+     "lean": "InsGps.SimDriver.Driver.init",
+     "top": false,
+     "kind": "ctor",
+     "owner": "Driver",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "f",
+       "type": "Front",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "InsGps.Front.State",
+       "leaves": null
+      },
+      {
+       "name": "group",
+       "type": "nat",
+       "ref": "elem",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "fix",
+       "type": "nat",
+       "ref": "elem",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "port",
+       "type": "Port *",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Driver",
+     "lean": "InsGps.SimDriver.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "SimDriver",
+     "access": "private",
+     "reads": [
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "unnamed'0",
+       "type": "Front",
+       "ref": "world:front",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "InsGps.Front.State",
+       "leaves": null
+      },
+      {
+       "name": "unnamed'1",
+       "type": "nat",
+       "ref": "elem",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "unnamed'2",
+       "type": "nat",
+       "ref": "elem",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "unnamed'3",
+       "type": "Port *",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "read",
+     "lean": "InsGps.SimDriver.read",
+     "top": false,
+     "kind": "method",
+     "owner": "SimDriver",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "_port",
+     "cxx": "_port",
+     "type": "Port *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_reads",
+     "cxx": "_reads",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_last",
+     "cxx": "_last",
+     "type": "uint32_t",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Front",
+   "lean": "InsGps.Front",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "find_found_at",
+     "type": "bool[0]",
+     "cxx": "manager().find(...) for each i",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Front",
+     "lean": "InsGps.Front.construct",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Front",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "init",
+     "lean": "InsGps.Front.init",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "create",
+     "lean": "InsGps.Front.create",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Driver *",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "average",
+     "lean": "InsGps.Front.average",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "InsGps.Front.update",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s",
+      "w"
+     ],
+     "writes": [
+      "s",
+      "w"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "speed",
+     "lean": "InsGps.Front.speed",
+     "top": false,
+     "kind": "method",
+     "owner": "Front",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "fixes[0]!.status",
+     "cxx": "fixes[0].status",
+     "type": "uint8_t",
+     "enum": "InsGps.FixType"
+    },
+    {
+     "root": "s",
+     "lean": "fixes[0]!.speed",
+     "cxx": "fixes[0].speed",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[0]!.course",
+     "cxx": "fixes[0].course",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[0]!.\u00abhave\u00bb",
+     "cxx": "fixes[0].have",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[0]!.reads",
+     "cxx": "fixes[0].reads",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[1]!.status",
+     "cxx": "fixes[1].status",
+     "type": "uint8_t",
+     "enum": "InsGps.FixType"
+    },
+    {
+     "root": "s",
+     "lean": "fixes[1]!.speed",
+     "cxx": "fixes[1].speed",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[1]!.course",
+     "cxx": "fixes[1].course",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[1]!.\u00abhave\u00bb",
+     "cxx": "fixes[1].have",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "fixes[1]!.reads",
+     "cxx": "fixes[1].reads",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "groups[0]!.rate",
+     "cxx": "groups[0].rate",
+     "type": "int16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "groups[0]!.gain",
+     "cxx": "groups[0].gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "groups[1]!.rate",
+     "cxx": "groups[1].rate",
+     "type": "int16_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "groups[1]!.gain",
+     "cxx": "groups[1].gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[0]!._p.gain",
+     "cxx": "filters[0]._p.gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[0]!._p.last",
+     "cxx": "filters[0]._p.last",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[0]!._state.x",
+     "cxx": "filters[0]._state.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[0]!._state.y",
+     "cxx": "filters[0]._state.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[1]!._p.gain",
+     "cxx": "filters[1]._p.gain",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[1]!._p.last",
+     "cxx": "filters[1]._p.last",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[1]!._state.x",
+     "cxx": "filters[1]._state.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "filters[1]!._state.y",
+     "cxx": "filters[1]._state.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "drivers[0]!",
+     "cxx": "drivers[0]",
+     "type": "Driver *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "drivers[1]!",
+     "cxx": "drivers[1]",
+     "type": "Driver *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ports[0]!",
+     "cxx": "ports[0]",
+     "type": "Port *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "ports[1]!",
+     "cxx": "ports[1]",
+     "type": "Port *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_calib",
+     "cxx": "_calib",
+     "type": "Calib *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_count",
+     "cxx": "_count",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_hits",
+     "cxx": "_hits",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_avg.x",
+     "cxx": "_avg.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_avg.y",
+     "cxx": "_avg.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_input",
+     "cxx": "_input",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "FixType",
+   "lean": "InsGps.FixType",
+   "under": "uint8_t",
+   "values": [
+    [
+     "NONE",
+     0,
+     "NONE"
+    ],
+    [
+     "FIX_2D",
+     2,
+     "FIX_2D"
+    ],
+    [
+     "FIX_3D",
+     3,
+     "FIX_3D"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "pick",
+   "cxx_call": "pick",
+   "lean": "InsGps.pick",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "table",
+     "type": "void",
+     "ref": "dead",
+     "boundary": true,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "i",
+     "type": "uint8_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "uint8_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "halve",
+   "cxx_call": "Driver::halve",
+   "lean": "InsGps.Driver.halve",
+   "kind": "free",
+   "top": false,
+   "owner": "Driver",
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "s",
+     "type": "Fix",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "InsGps.Fix",
+     "leaves": [
+      {
+       "lean": "status",
+       "cxx": "status",
+       "type": "uint8_t",
+       "enum": "InsGps.FixType"
+      },
+      {
+       "lean": "speed",
+       "cxx": "speed",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "course",
+       "cxx": "course",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "\u00abhave\u00bb",
+       "cxx": "have",
+       "type": "bool",
+       "enum": null
+      },
+      {
+       "lean": "reads",
+       "cxx": "reads",
+       "type": "uint32_t",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(0.25 : Binary32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "56:32"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "42:15"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "83:53"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "49:53"
+  },
+  {
+   "lean": "(2.0 : Binary32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "165:32"
+  },
+  {
+   "lean": "(0.0 : Binary32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "169:25"
+  }
+ ],
+ "var_info": {},
+ "world": [
+  {
+   "name": "port",
+   "cxx": "port",
+   "class": "PortImpl",
+   "lean": "PortImpl",
+   "parts": [
+    [
+     "port",
+     "PortImpl.State",
+     "state"
+    ]
+   ]
+  },
+  {
+   "name": "front",
+   "cxx": "front",
+   "class": "Front",
+   "lean": "Front",
+   "parts": [
+    [
+     "front",
+     "Front.State",
+     "state"
+    ],
+    [
+     "front'inp",
+     "Front.Inputs",
+     "boundary inputs"
+    ]
+   ]
+  }
+ ],
+ "heap": [
+  {
+   "field": "heap'SimDriver",
+   "class": "SimDriver",
+   "lean": "SimDriver",
+   "placement": false
+  }
+ ],
+ "funcs": []
+}

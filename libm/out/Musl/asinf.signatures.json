@@ -1,0 +1,198 @@
+{
+ "namespace": "Musl.asinf",
+ "source": "libm/unity/unity_asinf.c",
+ "functions": [
+  {
+   "name": "R",
+   "lean": "Musl.asinf.R",
+   "params": [
+    [
+     "z",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_asinf.c:27-33"
+  },
+  {
+   "name": "asinf",
+   "lean": "Musl.asinf.asinf",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "libm/unity/unity_asinf.c:35-61"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "R",
+   "cxx_call": "R",
+   "lean": "Musl.asinf.R",
+   "file_static": true,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "z",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "asinf",
+   "cxx_call": "asinf",
+   "lean": "Musl.asinf.asinf",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.570796326794896558e+00 : Binary64)",
+   "bits": "3ff921fb54442d18",
+   "cpp": "1.570796326794896558e+00",
+   "at": "18:8"
+  },
+  {
+   "lean": "(1.6666586697e-01 : Binary64)",
+   "bits": "3fc5554e9fff7105",
+   "cpp": "1.6666586697e-01",
+   "at": "22:8"
+  },
+  {
+   "lean": "Binary64.toBinary32 (Binary64.ofBits 0x3fc5554e9fff7105 /- 1.6666586697e-01 -/)",
+   "bits": "3e2aaa75",
+   "cpp": "1.6666586697e-01",
+   "at": "22:8"
+  },
+  {
+   "lean": "(4.2743422091e-02 : Binary64)",
+   "bits": "3fa5e2773ffffbee",
+   "cpp": "4.2743422091e-02",
+   "at": "23:8"
+  },
+  {
+   "lean": "Binary64.toBinary32 (-(Binary64.ofBits 0x3fa5e2773ffffbee /- 4.2743422091e-02 -/))",
+   "bits": "bd2f13ba",
+   "cpp": "-4.2743422091e-02",
+   "at": "23:7"
+  },
+  {
+   "lean": "(8.6563630030e-03 : Binary64)",
+   "bits": "3f81ba6d60006346",
+   "cpp": "8.6563630030e-03",
+   "at": "24:8"
+  },
+  {
+   "lean": "Binary64.toBinary32 (-(Binary64.ofBits 0x3f81ba6d60006346 /- 8.6563630030e-03 -/))",
+   "bits": "bc0dd36b",
+   "cpp": "-8.6563630030e-03",
+   "at": "24:7"
+  },
+  {
+   "lean": "(7.0662963390e-01 : Binary64)",
+   "bits": "3fe69cb5bfff84bc",
+   "cpp": "7.0662963390e-01",
+   "at": "25:8"
+  },
+  {
+   "lean": "Binary64.toBinary32 (-(Binary64.ofBits 0x3fe69cb5bfff84bc /- 7.0662963390e-01 -/))",
+   "bits": "bf34e5ae",
+   "cpp": "-7.0662963390e-01",
+   "at": "25:7"
+  },
+  {
+   "lean": "(1.0 : Binary32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "31:6"
+  },
+  {
+   "lean": "Binary32.ofBits 0x03800000",
+   "bits": "03800000",
+   "cpp": "0x1p-120f",
+   "at": "45:20"
+  },
+  {
+   "lean": "Binary32.toBinary64 (Binary32.ofBits 0x03800000)",
+   "bits": "3870000000000000",
+   "cpp": "0x1p-120f",
+   "at": "45:20"
+  },
+  {
+   "lean": "Int32.toBinary32 (0 : Int32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "46:10"
+  },
+  {
+   "lean": "Int32.toBinary32 (1 : Int32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "55:7"
+  },
+  {
+   "lean": "(0.5 : Binary32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "55:21"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "57:13"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

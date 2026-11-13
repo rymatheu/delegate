@@ -1,0 +1,201 @@
+{
+ "harness": "ardupilot/ekf3_difftest.py",
+ "translate": "ardupilot/translate_ekf3.sh",
+ "out": "ardupilot/out/EKF3",
+ "namespace": "EKF3_lib",
+ "ref_flags": "AP_NavEKF3/AP_NavEKF3_core.cpp",
+ "cxx_sources": [
+  "AP_NavEKF/EKF_Buffer.cpp",
+  "AP_NavEKF/EKFGSF_yaw.cpp",
+  "AP_NavEKF/AP_NavEKF_Source.cpp",
+  "AP_NavEKF/AP_NavEKF_core_common.cpp",
+  "AP_NavEKF3/AP_NavEKF3.cpp",
+  "AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Control.cpp",
+  "AP_NavEKF3/AP_NavEKF3_GyroBias.cpp",
+  "AP_NavEKF3/AP_NavEKF3_MagFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Measurements.cpp",
+  "AP_NavEKF3/AP_NavEKF3_Outputs.cpp",
+  "AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp",
+  "AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp",
+  "AP_NavEKF3/AP_NavEKF3_core.cpp",
+  "AP_DAL/AP_DAL.cpp",
+  "AP_DAL/AP_DAL_Airspeed.cpp",
+  "AP_DAL/AP_DAL_Baro.cpp",
+  "AP_DAL/AP_DAL_Compass.cpp",
+  "AP_DAL/AP_DAL_GPS.cpp",
+  "AP_DAL/AP_DAL_InertialSensor.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Math/quaternion.cpp",
+  "AP_Math/location.cpp",
+  "AP_Math/control.cpp",
+  "AP_Common/Location.cpp",
+  "AP_Declination/AP_Declination.cpp",
+  "AP_Declination/tables.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ekf3_env.cpp"
+ ],
+ "source_calls": {
+  "getPosXYSource_at": "getPosXYSource($i)",
+  "usingGPS_at": "usingGPS($i)",
+  "ext_nav_enabled": "ext_nav_enabled()",
+  "wheel_encoder_enabled": "wheel_encoder_enabled()",
+  "gps_yaw_enabled": "gps_yaw_enabled()",
+  "getVelXYSource_at": "getVelXYSource($i)",
+  "getYawSource_at": "getYawSource($i)",
+  "getPosZSource_at": "getPosZSource($i)",
+  "useVelZSource_GPS_at1": "useVelZSource(AP_NavEKF_Source::SourceZ::GPS, $i)",
+  "useVelZSource_EXTNAV_at1": "useVelZSource(AP_NavEKF_Source::SourceZ::EXTNAV, $i)",
+  "useVelXYSource_EXTNAV_at1": "useVelXYSource(AP_NavEKF_Source::SourceXY::EXTNAV, $i)",
+  "useVelXYSource_WHEEL_ENCODER_at1": "useVelXYSource(AP_NavEKF_Source::SourceXY::WHEEL_ENCODER, $i)",
+  "useVelXYSource_GPS_at1": "useVelXYSource(AP_NavEKF_Source::SourceXY::GPS, $i)",
+  "useVelXYSource_OPTFLOW_at1": "useVelXYSource(AP_NavEKF_Source::SourceXY::OPTFLOW, $i)"
+ },
+ "getters": [
+  {
+   "name": "healthy"
+  },
+  {
+   "name": "getPrimaryCoreIndex"
+  },
+  {
+   "name": "getPrimaryCoreIMUIndex"
+  },
+  {
+   "name": "getQuaternion"
+  },
+  {
+   "name": "getRotationBodyToNED"
+  },
+  {
+   "name": "getEulerAngles"
+  },
+  {
+   "name": "getVelNED"
+  },
+  {
+   "name": "getPosNE"
+  },
+  {
+   "name": "getPosD"
+  },
+  {
+   "name": "getPosDownDerivative"
+  },
+  {
+   "name": "getGyroBias",
+   "args": {
+    "instance": -1
+   }
+  },
+  {
+   "name": "getAccelBias",
+   "args": {
+    "instance": -1
+   }
+  },
+  {
+   "name": "getVariances"
+  },
+  {
+   "name": "getFilterStatus"
+  },
+  {
+   "name": "getFilterFaults"
+  },
+  {
+   "name": "getOriginLLH"
+  },
+  {
+   "name": "getLLH"
+  },
+  {
+   "name": "getHAGL"
+  },
+  {
+   "name": "getWind"
+  },
+  {
+   "name": "getMagNED"
+  },
+  {
+   "name": "getMagXYZ"
+  },
+  {
+   "name": "getMagOffsets",
+   "args": {
+    "mag_idx": 0
+   }
+  },
+  {
+   "name": "getInnovations"
+  },
+  {
+   "name": "getHeightControlLimit"
+  },
+  {
+   "name": "getEkfControlLimits"
+  },
+  {
+   "name": "getActiveAirspeed"
+  },
+  {
+   "name": "getTerrainAltVariance"
+  },
+  {
+   "name": "getYawResetCount"
+  },
+  {
+   "name": "getPosNorthEastResetCount"
+  },
+  {
+   "name": "getPosDownResetCount"
+  },
+  {
+   "name": "configuredToUseGPSForPosXY"
+  },
+  {
+   "name": "isVibrationAffected"
+  },
+  {
+   "name": "using_gps"
+  },
+  {
+   "name": "using_noncompass_for_yaw"
+  },
+  {
+   "name": "using_extnav_for_yaw"
+  },
+  {
+   "name": "use_compass"
+  }
+ ],
+ "runs": [
+  {
+   "name": "one_core",
+   "imus": 1,
+   "steps": 24000,
+   "still": 40.0,
+   "seed": 1
+  },
+  {
+   "name": "two_cores",
+   "imus": 2,
+   "steps": 24000,
+   "still": 40.0,
+   "seed": 2,
+   "fault": 0.05,
+   "accel_fault": 3.0
+  }
+ ],
+ "cxx_param_types": {
+  "getFilterStatus.status": [
+   "nav_filter_status",
+   ".value"
+  ]
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "namespace": "WorldDelay",
+ "cpp2lean": ["--nest", "--world", "--world-pointers", "--pointer-params", "--runtime-loops", "--general-loops"],
+ "world": {"calls": 20000, "weights": {"hal_scheduler.feed": 20, "barometer.init": 0.05, "barometer.calibrate": 0.3, "barometer.update": 1,
+                                       "hal_scheduler.delay": 1, "hal_scheduler.delay_microseconds": 1},
+           "ranges": {"dt_us": [300, 2500], "pressure": [90000, 110000], "ms": [0, 30], "usec": [0, 5000], "instance": [0, 2]}}
+}

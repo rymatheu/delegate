@@ -1,0 +1,13 @@
+tests/reject_phase2b.cpp:26:9: rejected: backward `goto`
+tests/reject_phase2b.cpp:41:5: rejected: `goto` into a loop body
+tests/reject_phase2b.cpp:57:5: rejected: label in a `switch` case whose statements from the label do not end in `break`
+tests/reject_phase2b.cpp:70:5: rejected: write through a pointer to a string literal or a pointer value
+tests/reject_phase2b.cpp:79:26: rejected: type `long double`
+tests/reject_phase2b.cpp:98:21: rejected: variadic argument of type `Pair`
+tests/reject_phase2b.cpp:106:15: rejected: local pointer `p` initialized with something other than a pointer into an array
+tests/reject_phase2b.cpp:113:24: rejected: local pointer `b` to the bytes of an object that is assigned or written through it (only read-only views of variables that do not change are translated)
+tests/reject_phase2b.cpp:123:18: rejected: union members of different widths
+tests/reject_phase2b.cpp:132:12: rejected: `hal.storage->erase` (only read_block and write_block are part of the storage model)
+tests/reject_phase2b.cpp:146:25: rejected: object representation of `Virt`, which has virtual functions (a vtable pointer)
+tests/reject_phase2b.cpp:158:5: rejected: array `buf` written while `p` (a `const char *` that holds a copy of it) may still point into it
+tests/reject_phase2b.cpp:173:12: rejected: `memcmp` of the object representation of `Padded`, which has padding (unspecified bytes)

@@ -1,0 +1,122 @@
+{
+ "namespace": "Musl.atan2",
+ "source": "libm/unity/unity_atan2.c",
+ "functions": [
+  {
+   "name": "atan2",
+   "lean": "Musl.atan2.atan2",
+   "params": [
+    [
+     "y",
+     "double"
+    ],
+    [
+     "x",
+     "double"
+    ]
+   ],
+   "ret": "double",
+   "source": "libm/unity/unity_atan2.c:46-107"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "atan2",
+   "cxx_call": "atan2",
+   "lean": "Musl.atan2.atan2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "y",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "double",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(3.1415926535897931160e+00 : Binary64)",
+   "bits": "400921fb54442d18",
+   "cpp": "3.1415926535897931160E+00",
+   "at": "43:10"
+  },
+  {
+   "lean": "(1.2246467991473531772e-16 : Binary64)",
+   "bits": "3ca1a62633145c07",
+   "cpp": "1.2246467991473531772E-16",
+   "at": "44:10"
+  },
+  {
+   "lean": "Int32.toBinary64 (2 : Int32)",
+   "bits": "4000000000000000",
+   "cpp": "2",
+   "at": "72:20"
+  },
+  {
+   "lean": "Int32.toBinary64 (4 : Int32)",
+   "bits": "4010000000000000",
+   "cpp": "4",
+   "at": "77:23"
+  },
+  {
+   "lean": "Int32.toBinary64 (3 : Int32)",
+   "bits": "4008000000000000",
+   "cpp": "3",
+   "at": "79:20"
+  },
+  {
+   "lean": "Int32.toBinary64 (-(3 : Int32))",
+   "bits": "c008000000000000",
+   "cpp": "-3",
+   "at": "80:19"
+  },
+  {
+   "lean": "(0.0 : Binary64)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "84:20"
+  },
+  {
+   "lean": "Int32.toBinary64 (0 : Int32)",
+   "bits": "0000000000000000",
+   "cpp": "0",
+   "at": "97:7"
+  }
+ ],
+ "var_info": {},
+ "world": []
+}

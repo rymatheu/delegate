@@ -1,0 +1,76 @@
+{
+ "translate": "ardupilot/translate_navekf_source.sh",
+ "out": "ardupilot/out/NavEKF_Source",
+ "namespace": "NavEKF_Source_lib",
+ "ref_flags": "AP_NavEKF/AP_NavEKF_Source.cpp",
+ "access_control": false,
+ "cxx_sources": [
+  "AP_NavEKF/AP_NavEKF_Source.cpp",
+  "AP_Param/AP_ParamT.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/navekf_source_env.cpp"
+ ],
+ "world": {
+  "cxx_include": [
+   "<AP_NavEKF/AP_NavEKF_Source.h>",
+   "\"cpp2lean_events.h\""
+  ],
+  "cxx_world": {
+   "unity": "ardupilot/unity_navekf_source.cpp"
+  },
+  "globals": [
+   "void cpp2lean_set_num_enabled(uint8_t n);",
+   "extern bool cpp2lean_configured;"
+  ],
+  "inputs": {
+   "sources.get_num_enabled": "cpp2lean_set_num_enabled(%s);",
+   "sources.source_set_0_posxy_configured": "cpp2lean_configured = %s;"
+  },
+  "calls": 3000,
+  "domains": {
+   "core_index": [0, 5],
+   "@sources.get_num_enabled": [0, 3]
+  },
+  "input_corners": "readers"
+ },
+ "world_runs": [
+  {
+   "run": "defaults",
+   "range_prob": 1.0,
+   "run_note": "ArduPilot's default source sets (GPS/GPS/baro/GPS/compass; the second and third unused but baro height), as in the reference"
+  },
+  {
+   "run": "sets",
+   "range_prob": 1.0,
+   "state_params": {
+    "sources._source_set[1].posxy._value": "6",
+    "sources._source_set[1].velxy._value": "5",
+    "sources._source_set[1].posz._value": "2",
+    "sources._source_set[1].velz._value": "6",
+    "sources._source_set[1].yaw._value": "8",
+    "sources._source_set[2].posxy._value": "4",
+    "sources._source_set[2].velxy._value": "7",
+    "sources._source_set[2].posz._value": "3",
+    "sources._source_set[2].velz._value": "3",
+    "sources._source_set[2].yaw._value": "3",
+    "sources._options._value": "8"
+   },
+   "run_note": "the second and third source sets set to external navigation, optical flow, rangefinder, GSF yaw, beacon, wheel encoder, GPS and GPS-with-compass-fallback yaw; one source set per core (SRC_PER_CORE)"
+  },
+  {
+   "run": "options",
+   "range_prob": 1.0,
+   "state_params": {
+    "sources._source_set[0].yaw._value": "2",
+    "sources._source_set[0].velz._value": "0",
+    "sources._source_set[1].posxy._value": "3",
+    "sources._source_set[1].velxy._value": "3",
+    "sources._source_set[1].velz._value": "3",
+    "sources._source_set[1].yaw._value": "6",
+    "sources._options._value": "1"
+   },
+   "run_note": "GPS yaw, no vertical velocity in the first set, external navigation yaw in the second; FUSE_ALL_VELOCITIES"
+  }
+ ]
+}
