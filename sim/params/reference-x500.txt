@@ -1,0 +1,75 @@
+# Parameter overrides of the vehicle on leanfc's X500 (Holybro X500 V2 model, LEANFC_ROOT/sim/assets/x500.urdf) in
+# gym-pybullet-drones, written into a storage image by `fly_reference.py --script image` (sim/README.md, "Gorge flight").
+# Names as at ArduPilot 802db19de1; every parameter not listed keeps ArduPilot's code default.
+
+# Vehicle configuration, as the CF2X image (sim/params/reference-cf2x.txt): what SITL's copter.parm and its command line
+# provide to the reference's stand-ins
+FRAME_CLASS 1          # quad
+FRAME_TYPE 1           # X
+GPS1_TYPE 100          # the GPS stand-in (AP_GPS_SITL's type)
+BATT_MONITOR 4         # analog voltage and current (D8)
+INS_ACCOFFS_X 0.001    # accelerometer "calibrated" (non-zero offsets, as copter.parm)
+INS_ACCOFFS_Y 0.001
+INS_ACCOFFS_Z 0.001
+
+# Motors: the plant. The harness maps PWM 1000..2000 linearly to the actuator a in [0, 1] and a to the propeller speed
+# MAX_RPM sqrt(a) (run_copter.actuators_to_rpm, as leanfc's run_leanfc.py), so the thrust of a motor is a x 8.54858 N:
+# linear in the actuator from zero, i.e. thrust curve exponent 0 and spin range [0, 1]. The motor lag (12.5 ms up, 25 ms
+# down) is the simulator's.
+MOT_PWM_MIN 1000       # (default 1000; stated)
+MOT_PWM_MAX 2000       # (default 2000; stated)
+MOT_THST_EXPO 0        # default 0.65: the plant's thrust is linear in the actuator
+MOT_SPIN_ARM 0         # default 0.10: actuator 0 is zero thrust in the plant (no ESC dead band to idle above)
+MOT_SPIN_MIN 0         # default 0.15: idem; spin_min > 0 would add spin_min x 8.55 N per motor that ArduPilot does not expect
+MOT_SPIN_MAX 1         # default 0.95: actuator 1 is the model's maximum thrust (1000 rad/s)
+MOT_HOVER_LEARN 0      # default 2 (learn and save): the hover throttle below is exact for this plant
+# Hover: thrust fraction 1/thrust2weight = 1/1.689113625 = 0.59203. At the gorge (4302 m, field elevation set from the EKF
+# origin) ArduPilot's air-density compensation (AP_Motors_Thrust_Linearization::get_compensation_gain) divides every
+# motor demand by the 1976-atmosphere density ratio 0.64783, while the simulated thrust does not depend on altitude; the
+# throttle demand that hovers this plant there is 0.59203 x 0.64783 = 0.38353 (what MOT_HOVER_LEARN would converge to).
+MOT_THST_HOVER 0.3835
+
+# Attitude and vertical acceleration gains of ArduPilot's Tools/Frame_params/Holybro-X500v2-bdshot.param (an autotuned
+# X500 V2), unchanged. Left out of that file: INS_HNTCH_* (harmonic notch tracking ESC telemetry: the simulator has neither
+# ESC telemetry nor vibration), SERVO_BLH_*, SERVO_DSHOT_ESC (DShot output: the harness reads PWM), TKOFF_RPM_MIN (ESC
+# RPM), MOT_BAT_VOLT_MAX/MIN 16.8/13.2 (battery-voltage thrust scaling: the simulated thrust does not depend on the
+# voltage, so it stays off, the code default 0), MOT_SPIN_ARM/MIN 0.07/0.09 and MOT_THST_HOVER 0.29 (the real vehicle's
+# ESCs and thrust curve; set above for the plant).
+ATC_ACC_P_MAX 1651.67
+ATC_ACC_R_MAX 1767.26
+ATC_ACC_Y_MAX 90           # file 359.55, see below
+ATC_ANG_PIT_P 21.2236
+ATC_ANG_RLL_P 26.35878
+ATC_ANG_YAW_P 3            # file 8.53887, see below
+ATC_RAT_PIT_D 0.005201788
+ATC_RAT_PIT_FLTD 21
+ATC_RAT_PIT_FLTT 21
+ATC_RAT_PIT_I 0.1466683
+ATC_RAT_PIT_P 0.1466683
+ATC_RAT_RLL_D 0.004905871
+ATC_RAT_RLL_FLTD 21
+ATC_RAT_RLL_FLTT 21
+ATC_RAT_RLL_I 0.1255951
+ATC_RAT_RLL_P 0.1255951
+ATC_RAT_YAW_D 0.0144       # file 0.02224096 x 0.648, see below
+ATC_RAT_YAW_FLTD 10
+ATC_RAT_YAW_FLTE 2.5       # file 1.3176; ArduPilot's default
+ATC_RAT_YAW_FLTT 21
+ATC_RAT_YAW_I 0.078        # file 0.1204564 x 0.648
+ATC_RAT_YAW_P 0.78         # file 1.204564 x 0.648
+PSC_D_ACC_I 0.06
+PSC_D_ACC_P 0.03
+
+# Yaw, changed from the file for this model (gorge flights sim/out/gorge-port-x500/try1..try5): with the file's yaw values
+# the yaw loop limit-cycled at about 1.5 Hz with motors at 0 and 1 (try1: contact with the terrain at N 31.7 m). The
+# model's yaw authority is small: momentConstant 0.016 m, so a unit yaw output gives 4 x 0.5 x 8.55 N x 0.016 m / 0.04 kg m^2
+# = 6.8 rad/s^2, times 1.544 at 4302 m (the density compensation), and at the hover actuator 0.592 a motor has only 0.41 of
+# headroom, about 5.5 rad/s^2 of yaw acceleration in all; the file asks for 359.55 deg/s^2 = 6.3 rad/s^2. So: the yaw
+# acceleration limit at 90 deg/s^2 (try2: the mission completes, yaw still cycling); the yaw rate P, I, D times the density
+# ratio 0.648, which cancels the compensation's gain (try3); the yaw error filter at ArduPilot's default 2.5 Hz and the
+# yaw angle P at 3 (default 4.5, file 8.5), so that the angle loop stays well inside the rate loop (try4, try5). Roll and
+# pitch keep the file's gains: their loops are quiet (actuator std from roll and pitch below 0.001 in cruise).
+
+# Navigation in the gorge: 2 m/s along the splines (default 10 m/s), the speed leanfc's own controller flies this plan at
+# (nav.vMax 2.0); the 6.3 to 8.6 m wide wash leaves about 2 m to the walls from the centerline.
+WP_SPD 2

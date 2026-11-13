@@ -1,0 +1,9 @@
+# The fast gorge flight of the X500 (sim/README.md "Gorge flight"): navigation limits sent with PARAM_SET after the
+# parameter download (sim/gorge_lockstep.py --params), on top of the X500 image (build/gorge-port/storage-x500.bin,
+# sim/params/reference-x500.txt, whose WP_SPD 2 and default WP_ACC 2.5 and WP_JERK 1 these replace).
+# The speed ladder (sim/out/gorge-port-x500-fast/ladder-*, sim/gorge_stability.py): WP_SPD 4, 5, 6, 7 pass;
+# WP_SPD 8 fails with WP_ACC 4.5 and with 5 (motor 1 at full thrust for about 50 ms in the bank reversal at N 26 m), and
+# WP_SPD 10 with WP_ACC 5 the same. This is the rung below the first failing one.
+WP_SPD 7         # m/s along the splines (default 10; image 2)
+WP_ACC 4.5       # m/s^2 horizontal acceleration (default 2.5; @Range 0.5 5)
+WP_JERK 6        # m/s^3 (default 1)

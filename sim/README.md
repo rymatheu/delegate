@@ -298,3 +298,118 @@ vehicle has to keep up with the 400 Hz real-time pace: a step slower than 2.5 ms
 dropped; the harness catches up), so a loaded machine shows up as a lag of the vehicle's clock against the wall clock, not
 as a different session. Without QGroundControl, `--gcs scripted` runs `sim/udp_gcs_check.py` (pymavlink on the same port:
 heartbeat, PARAM_REQUEST_LIST, the first PARAM_VALUEs) for `--seconds` and prints what it received.
+
+## Gorge flight
+
+The translated whole vehicle (`sim/lean_vehicle.py` over `lean/.lake/build/bin/vehicle_replay`) flown in leanfc's gorge
+world (seed 7) on leanfc's gorge mission, on leanfc's X500 (Holybro X500 V2 model), and the flight rendered with the
+gorge's cameras. The world, the plan, the X500 model, the wind and the renderers are leanfc's, imported from its checkout
+(`LEANFC_ROOT`, default `/Users/ryan/Research/leanfc`); nothing is copied into this repository and nothing is written into
+leanfc (no bytecode; its `Gorge` takes its build lock file and rebuilds its asset cache only if that is missing).
+
+```
+V=build/reference/venv/bin/python
+# once: the X500's storage image (copter_ref, blank storage, the overrides of sim/params/reference-x500.txt)
+$V sim/fly_reference.py --script image --params sim/params/reference-x500.txt --storage-out build/gorge-port/storage-x500.bin --out build/gorge-port/image-x500 --duration 60
+# once: H.264 for the render (the versions of leanfc's sim/world/requirements-video.txt)
+/opt/homebrew/bin/uv venv --python 3.12 build/gorge-video && /opt/homebrew/bin/uv pip install --python build/gorge-video/bin/python av==19.0.2 numpy==2.5.4
+# the record flight, its whole-vehicle replay, the render
+$V sim/gorge_lockstep.py --replay-check --ref-check --out sim/out/gorge-port-x500/flight
+LEAN_NUM_THREADS=1 python3 ardupilot/vehicle/vehicle_replay.py sim/out/gorge-port-x500/flight --est sim/out/gorge-port-x500/flight/est.txt --out-dir build/gorge-port/vehicle_replay-x500
+$V sim/render_gorge.py --run sim/out/gorge-port-x500/flight --out sim/out/gorge-port-x500
+# options: --seed N (sensor noise of fly_reference.py), --wind MEAN GUST (leanfc's wind.Wind, X500 only),
+#          --vehicle cf2x --params sim/params/gorge-port.txt (the CF2X, below)
+```
+
+`build/reference/venv` has pymavlink and the world's dependencies (numpy, scipy, Pillow, pybullet, gym-pybullet-drones,
+matplotlib).
+
+### The harness (`sim/gorge_lockstep.py`, harness code; its docstring has the details)
+
+`fly_reference.py`'s lock step, sensor layer and ground station, in leanfc's `fly_gorge.GorgeAviary` (the gorge's collision
+bodies in place of the ground plane):
+
+- `--vehicle x500` (default): `run_leanfc.AIRFRAMES["x500"]["urdf"]` (leanfc `sim/assets/x500.urdf`: 2.0643 kg, inertia
+  0.02167 / 0.02167 / 0.04 kg m^2, 8.54858 N per motor at 1000 rad/s, thrust-to-weight 1.6891, collision cylinder r 0.25 m)
+  and `fly_gorge.LAG` (first-order motor lag 12.5 ms up, 25 ms down, starting at zero thrust), physics 1200 Hz, control
+  400 Hz (three physics steps per vehicle line); placed as leanfc's `gorge_session.py` places it (base 5 mm above
+  `gorge_plan.start_rest_z`) and settled on its contact. `--vehicle cf2x`: the package's CF2X, no lag.
+- Output map: PWM 1000..2000 of ArduPilot's motor slots 0..3 (quad X: front right CCW, rear left CCW, front left CW, rear
+  right CW, `PROTOCOL.md`) is the actuator a = (PWM - 1000) / 1000 of PX4's rotor_0..3, which are the same motors with the
+  same spins (`x500.urdf`'s comment: rotor_0 front right ccw, rotor_1 rear left ccw, rotor_2 front left cw, rotor_3 rear
+  right cw) and the URDF's propeller links 0, 2, 3, 1 (`run_copter.SLOT_TO_SIM = [0, 2, 3, 1]`); propeller speed
+  MAX_RPM sqrt(a) (`run_copter.actuators_to_rpm`, as `run_leanfc.py`), so a motor's thrust is a x 8.54858 N, linear in a.
+- Home of the sensor layer at the gorge's geographic origin (leanfc `params/ground.params`: 38.8405556, -105.0441667,
+  4302 m; world ENU 0, 0, 0), with ArduPilot's earth field there; battery reading 16.0 V (4S) for the X500.
+- The mission of `gorge_plan.plan_items` (NAV_TAKEOFF, 10 NAV_SPLINE_WAYPOINTs 3.5 m above the floor on the centerline,
+  NAV_LAND) as MISSION_ITEM_INT with the plan's relative altitudes (for the CF2X re-referred to its rest height); the
+  spline items' param4 `null` is sent as 0 (ArduPilot answers a NaN there with MAV_MISSION_INVALID_PARAM4). GUIDED, arm,
+  NAV_TAKEOFF, AUTO, until the vehicle disarms.
+- The record: every 4th step the true pose, the actuators, the clearance (PyBullet `getClosestPoints` from the vehicle's
+  collision cylinder to every gorge body, up to 4 m, as leanfc's `gorge_session.py`) and the contacts (`track.csv`), and
+  the numbers of `flight.json`. "In the air" is from the takeoff item's MISSION_ITEM_REACHED to the land item's
+  MISSION_CURRENT (leanfc's `test_gorge_flight.py` uses the landed state IN_AIR, which is not streamed here); the route is
+  the takeoff column and the chords between the spline waypoints, as there. `--ref-check` replays `inputs.txt` through
+  `copter_ref` (output lines compared; `est.txt` for `vehicle_replay.py`).
+
+### The X500's configuration (`sim/params/reference-x500.txt`, in the storage image)
+
+Every parameter that differs from ArduPilot's code defaults, with its reason, is in that file: the vehicle configuration
+of the CF2X image (frame, GPS and battery stand-ins, accelerometer offsets); the plant (`MOT_THST_EXPO 0`,
+`MOT_SPIN_ARM 0`, `MOT_SPIN_MIN 0`, `MOT_SPIN_MAX 1`: thrust linear in the actuator from zero; `MOT_HOVER_LEARN 0`,
+`MOT_THST_HOVER 0.3835`); the attitude gains of ArduPilot's `Tools/Frame_params/Holybro-X500v2-bdshot.param` (roll and
+pitch unchanged; yaw changed, below; its notch, DShot, ESC-RPM and battery-scaling entries left out); `WP_SPD 2`.
+
+The gorge is at 4302 m. ArduPilot sets the field elevation from the EKF origin and divides every motor demand by the
+1976-atmosphere density ratio 0.6478 (`AP_Motors_Thrust_Linearization::get_compensation_gain`); the simulator's thrust
+does not depend on altitude (leanfc's physics, unchanged). The configuration accounts for it in two places:
+`MOT_THST_HOVER` is the throttle demand that hovers this plant there (1/1.6891 x 0.6478 = 0.3835, what hover learning
+would converge to), and the yaw rate gains are the file's times 0.648. Yaw (flights `try1` to `try5`): with the file's yaw
+values the yaw loop limit-cycled at 1.5 Hz, motors at 0 and 1, and the vehicle touched the terrain at N 31.7 m; the
+model's yaw authority is small (momentConstant 0.016 m: 6.8 rad/s^2 per unit of yaw output, about 5.5 rad/s^2 in all at the
+hover actuator 0.592), less than the file's `ATC_ACC_Y_MAX` (6.3 rad/s^2). Set: `ATC_ACC_Y_MAX 90`, `ATC_RAT_YAW_P/I/D`
+0.78 / 0.078 / 0.0144, `ATC_RAT_YAW_FLTE 2.5` (default), `ATC_ANG_YAW_P 3`.
+
+### Results (2026-11-13; deterministic for given options)
+
+| flight (`sim/out/gorge-port-x500/`) | completed | MISSION_ITEM_REACHED | arm to disarm | clearance in the air | route distance max / rms | top speed | tilt max | contacts |
+|---|---|---|---|---|---|---|---|---|
+| `flight` (record) | yes | 1..11 | 57.0 s (vehicle texts 56.26 s) | 1.75 m (N 25.0 m) | 0.523 / 0.157 m | 2.05 m/s | 9.0 deg | 0 |
+| `flight-noise-s1` (`--seed 1`) | yes | 1..11 | 57.0 s | 1.76 m | 0.556 / 0.196 m | 2.08 m/s | 8.9 deg | 0 |
+| `flight-wind-4-1` (`--wind 4 1`) | yes | 1..11 | 56.0 s | 1.77 m | 0.504 / 0.151 m | 2.08 m/s | 11.7 deg | 0 |
+
+Arm to disarm is between the ground station's armed and disarmed heartbeats (1 Hz); the vehicle's `Arming motors` and
+`Disarming motors` texts are at 41.890 and 98.145 s. Record flight: liftoff 45.38 s, touchdown 95.51 s at 0.50 m/s,
+0.04 m from the land item. Actuators in the air 0.370..0.809 (std per motor 0.039..0.043, no tick at 0 or 1); in cruise
+(50 to 58 s) 0.571..0.601, std per motor 0.0026..0.0035; the larger excursions are the heading changes at the spline
+transitions (`WP_YAW_BEHAVIOR` default: face the next waypoint), where the heading rings by up to about 2.6 deg.
+Checks: the Lean replay of `inputs.txt` identical byte for byte (40,413 lines); `copter_ref` on the same lines identical;
+`vehicle_replay.py`: PWM, downlink and tasks identical on 40,413 of 40,413 lines, storage 0 bytes differ,
+`# unreached=[rejected AP_Param::convert_g2_objects, rejected AP_Param::convert_toplevel_objects, rejected AP_Notify::update]`
+(defaults answered: `AP_InertialSensor::periodic`, `Compass::configured`), the same as on the recorded flight.
+For reference, leanfc's own controller flew the plan arm to disarm in 51.5 s with 1.75 m least clearance.
+
+Render (`sim/render_gorge.py`, adapter code; leanfc's world, scene renderer, X500 meshes and propeller blur, cameras on
+`sensors.FORWARD`, exposure, thermal detector and AGC, fonts and H.264 encoder, imported): `gorge-port.mp4` (20 fps,
+real speed, from 1 s before arming to 1 s after the disarm; chase view, under it the forward RGB and thermal cameras),
+`gorge-port-{overview,chase,rgb,thermal}.png`, every 20th frame in `gorge-port-frames/`.
+
+### The fast flight (`sim/out/gorge-port-x500-fast/`)
+
+`$V sim/gorge_lockstep.py --params sim/params/gorge-fast-x500.txt --replay-check --out sim/out/gorge-port-x500-fast/flight`
+(PARAM_SET of WP_SPD 7, WP_ACC 4.5, WP_JERK 6 on the X500 image), rendered with `sim/render_gorge.py --run
+sim/out/gorge-port-x500-fast/flight --out sim/out/gorge-port-x500-fast`: completed, arm to disarm 34.0 s, the gorge from the
+first to the last spline waypoint in 12.36 s (5.37 m/s mean, 7.04 m/s top), clearance 1.77 m, tilt 23.4 deg, actuators up to
+0.970, no saturated tick; it also passes with `--seed 1` and `--wind 4 1`. The speed ladder (`ladder-*`, table by
+`$V sim/gorge_stability.py RUN... --markdown`): WP_SPD 4 to 7 pass; WP_SPD 8 (WP_ACC 4.5 or 5) and 10 fail by thrust margin,
+motor 1 at full thrust for about 50 ms in the bank reversal at N 26 m, and their top speed stays at 7.6 m/s (the legs of at
+most 10 m with bends, under ArduPilot's largest WP_ACC of 5 m/s^2).
+
+### The CF2X (`--vehicle cf2x`, earlier flight)
+
+`sim/out/gorge-port/flight`: `$V sim/gorge_lockstep.py --vehicle cf2x --params sim/params/gorge-port.txt --replay-check
+--ref-check --out sim/out/gorge-port/flight` (boot image `build/reference/storage-cf2x.bin`; `gorge-port.txt` sends the
+CF2X rate gains with PARAM_SET: with the image's gains its rate loops limit-cycle, roll and pitch at 23 Hz, yaw at 5 Hz, as
+in `sim/out/lockstep-flight`). Completed: 1..11 reached, 57.0 s, clearance 2.02 m, route 0.475 / 0.143 m, 2.08 m/s,
+no contacts; with `--seed 1` (`flight-noise-s1`) completed, clearance 1.99 m. Rendered as `sim/out/gorge-port/gorge-port.mp4`
+and stills (`$V sim/render_gorge.py --run sim/out/gorge-port/flight --out sim/out/gorge-port`).

@@ -1,0 +1,22 @@
+# Parameter changes of the gorge flight (sim/gorge_lockstep.py --params), sent with PARAM_SET through the translated
+# parameter protocol after the parameter download; the storage image (build/reference/storage-cf2x.bin,
+# sim/params/reference-cf2x.txt) is not changed. Everything else keeps the image's values (WP_SPD 2, WP_ACC 1.5,
+# WP_JERK 5, the attitude and position gains of copter-cf2x-tuned.txt).
+#
+# Why: with the image's rate gains (ArduPilot's defaults for roll and pitch, SITL's 0.3 / 0.02 for yaw) the rate loops of
+# the 27 g CF2X limit-cycle through the whole vehicle's gyro path (sensor samples at 1200 Hz, INS_GYRO_FILTER 20 Hz, the
+# rate PIDs' filters): roll and pitch at about 23 Hz, yaw at about 5 Hz, every motor output hitting 0 or 1 on every
+# sample in the air. The same chatter is in the recorded flight at CMAC (sim/out/lockstep-flight, std of the actuators
+# 0.35). The CF2X has about 600 rad/s^2 of roll or pitch acceleration and 350 rad/s^2 of yaw acceleration per unit of
+# rate-controller output (Ixx 1.4e-5 kg m^2, arm 0.0397 m, thrust-to-weight 2.25, km/kf 0.025 m), and about 1.55 times that
+# at the gorge's 4302 m, where ArduPilot's air-density compensation (AP_Motors_Thrust_Linearization) divides by the
+# density ratio 0.65 while the simulator's thrust does not depend on altitude. The gains below scale the defaults to that
+# authority (crossover of roll and pitch near 28 rad/s, below the 20 Hz gyro filter; D x authority below 0.3).
+ATC_RAT_RLL_P 0.03       # 0.135
+ATC_RAT_RLL_I 0.03       # 0.135
+ATC_RAT_RLL_D 0.0003     # 0.0036
+ATC_RAT_PIT_P 0.03       # 0.135
+ATC_RAT_PIT_I 0.03       # 0.135
+ATC_RAT_PIT_D 0.0003     # 0.0036
+ATC_RAT_YAW_P 0.03       # 0.3
+ATC_RAT_YAW_I 0.003      # 0.02

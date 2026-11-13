@@ -24,6 +24,11 @@ sim/out/lean-course-1ms/*.png
 sim/out/ref-course-1ms/*.png
 sim/out/lean-course-1ms/trace.txt
 sim/out/ref-course-1ms/trace.txt
+!sim/out/gorge-port-x500/
+!sim/out/gorge-port-x500-fast/
+sim/out/gorge-port-x500*/*
+!sim/out/gorge-port-x500*/gorge-port.mp4
+!sim/out/gorge-port-x500*/gorge-port-*.png
 sim/figs/out/
 
 # LaTeX work files
