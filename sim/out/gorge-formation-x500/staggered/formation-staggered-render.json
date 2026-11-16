@@ -1,0 +1,41 @@
+{
+ "run": "/Users/ryan/Research/cpp2lean/sim/out/gorge-formation-x500/staggered/flight",
+ "frames": 1240,
+ "every_s": 0.05,
+ "fps": 20.0,
+ "workers": 2,
+ "render_wall_s": 765.2,
+ "mp4_mb": 31.25,
+ "stills": {
+  "N12": {
+   "t": 57.300000000000004,
+   "north": 12.034029506071594
+  },
+  "N25": {
+   "t": 63.95,
+   "north": 25.04677013018876
+  },
+  "N45": {
+   "t": 74.45,
+   "north": 45.0809107993602
+  },
+  "N65": {
+   "t": 84.55000000000001,
+   "north": 65.05578624496873
+  },
+  "landing": {
+   "t": 99.25,
+   "north": 76.47411597954998
+  },
+  "overview": {}
+ },
+ "leanfc": "/Users/ryan/Research/leanfc",
+ "other_vehicle_in_rgb_fov_fraction": {
+  "v1 sees v2": 0.0,
+  "v2 sees v1": 0.0
+ },
+ "span": [
+  41.0325,
+  103.0325
+ ]
+}

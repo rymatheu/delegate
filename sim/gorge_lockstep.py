@@ -5,6 +5,7 @@ world in gym-pybullet-drones, on the gorge mission, with the scripted ground sta
     build/reference/venv/bin/python sim/gorge_lockstep.py --out sim/out/gorge-port-x500/flight
         [--vehicle x500|cf2x] [--bin sim/lean_vehicle.py | build/reference/copter_ref] [--storage IMAGE]
         [--params FILE]... [--set NAME VALUE]... [--seed N] [--wind MEAN GUST] [--duration S] [--replay-check] [--ref-check]
+        [--spline-north Y1,Y2,... | --straight-north Y1,Y2,...]
 
 Harness code only (no vehicle logic). What it shares with sim/fly_reference.py: the vehicle protocol
 (sim/lockstep_proto.py), the sensor layer (fly_reference.Sensors: IMU after every 1200 Hz physics substep, barometer and
@@ -38,6 +39,15 @@ sim/run_copter.py, and the ground station (sim/lockstep_gcs.py). What differs:
   refer to the X500's rest height (base 0.2 m above the floor): the X500 flies them unchanged; for the CF2X they are
   referred to its rest height (the settled start) instead, so that every waypoint is where the plan puts it in the world,
   3.5 m above the floor on the centerline;
+- --spline-north (off by default; sim/README.md "The smooth flight"): the spline waypoints re-spaced on the same
+  centerline, at the given north coordinates y (m, world ENU): each at (Gorge.xc_fn(y), y, Gorge.floor_c(y) +
+  gorge.FLIGHT_H), the points leanfc's Gorge.flight_path chooses its waypoints from (it picks them greedily, legs up to
+  10 m with the centerline within 0.35 m of the chord); the takeoff point (Gorge.path[0]) and the last waypoint (the
+  plan's, y = Gorge.path[-1] north, where NAV_LAND is) unchanged, the items built by gorge_plan.plan_items from that
+  path; the route of the metrics is then this path (flight.json "path");
+- --straight-north (off by default; sim/README.md "The S-curve flight"): the same, with the waypoints sent as
+  MAV_CMD_NAV_WAYPOINT (16, straight legs flown by ArduPilot's S-curves with corner blending) in place of
+  NAV_SPLINE_WAYPOINT; param1 (hold time) 0, so every waypoint is a fast waypoint, param2..4 0 as for the spline items;
 - the ground-station script (script_gorge): heartbeat, streams, parameter download, the PARAM_SETs of --params and --set,
   EKF3 using GPS, mission upload and download back, GUIDED, arm, NAV_TAKEOFF to the takeoff item's altitude, AUTO; it
   records MISSION_CURRENT and MISSION_ITEM_REACHED and waits for the disarm;
@@ -103,6 +113,29 @@ def import_leanfc():
     return G, GP, geo, GorgeAviary, LAG, R, Wind
 
 
+class PathView:
+    """A leanfc Gorge with another waypoint path (--spline-north) for gorge_plan.plan_items: every attribute is the
+    Gorge's except .path (the Gorge object itself is not modified)."""
+
+    def __init__(self, g, path):
+        self._g = g
+        self.path = path
+
+    def __getattr__(self, name):
+        return getattr(self._g, name)
+
+
+def respaced_path(G, g, north):
+    """The takeoff point of g.path, then spline waypoints on leanfc's centerline at the north coordinates `north`
+    (Gorge.flight_path's points: x_c(y), y, floor_c(y) + gorge.FLIGHT_H); the last one must be the plan's last waypoint."""
+    ys = np.array(north, float)
+    if len(ys) < 2 or np.any(np.diff(ys) <= 0) or ys[0] <= g.path[0, 1] or abs(ys[-1] - g.path[-1, 1]) > 1e-9:
+        sys.exit(f"gorge_lockstep: --spline-north must increase from above {g.path[0, 1]} and end at the plan's last "
+                 f"waypoint north {g.path[-1, 1]}")
+    pts = np.stack([g.xc_fn(ys), ys, g.floor_c(ys) + G.FLIGHT_H], -1)
+    return np.vstack([g.path[:1], pts])
+
+
 def gorge_origin(geo):
     return geo.Origin.from_params([LEANFC_ROOT / "params" / "x500.params", LEANFC_ROOT / "params" / "ground.params"])
 
@@ -164,7 +197,7 @@ def make_env(GorgeAviary, GP, g, pyb_hz, vehicle="x500", urdf=None, lag=None, wi
     return env
 
 
-def gorge_mission(m, GP, g, origin, home_z, rereference):
+def gorge_mission(m, GP, g, origin, home_z, rereference, leg_cmd=None):
     """The plan's items (gorge_plan.plan_items) as (command, frame, params, lat, lon, alt) for lockstep_gcs.upload_mission,
     seq 0 home. rereference False (the X500): the plan's relative altitudes unchanged (they refer to the X500's rest
     height, gorge_plan.start_rest_z) and home at the plan's planned home; True (the CF2X): relative altitudes about the
@@ -180,7 +213,8 @@ def gorge_mission(m, GP, g, origin, home_z, rereference):
         q = it["params"]
         rel = 0.0 if it["command"] == 21 else (round(float(wz[k]) - home_z, 3) if rereference else float(q[6]))
         p4 = 0.0 if q[3] is None else float(q[3])       # the plan's null: ArduPilot refuses NaN here (see docstring)
-        out.append((it["command"], FR, (float(q[0]), float(q[1]), float(q[2]), p4), float(q[4]), float(q[5]), rel))
+        cmd = leg_cmd if (leg_cmd is not None and it["command"] == 82) else it["command"]
+        out.append((cmd, FR, (float(q[0]), float(q[1]), float(q[2]), p4), float(q[4]), float(q[5]), rel))
     return out, items
 
 
@@ -348,6 +382,11 @@ def main():
     ap.add_argument("--duration", type=float, default=240.0, help="limit, simulated seconds")
     ap.add_argument("--pyb-hz", type=int, default=1200)
     ap.add_argument("--replay-check", action="store_true")
+    ap.add_argument("--spline-north", default=None, metavar="Y1,Y2,...",
+                    help="re-spaced spline waypoints at these north coordinates (m) on leanfc's gorge centerline, the last "
+                         "the plan's last waypoint (default: off, the plan's waypoints Gorge.path)")
+    ap.add_argument("--straight-north", default=None, metavar="Y1,Y2,...",
+                    help="as --spline-north, with the waypoints sent as NAV_WAYPOINT (straight S-curve legs) (default: off)")
     ap.add_argument("--ref-check", action="store_true",
                     help="replay inputs.txt through build/reference/copter_ref (with --est est.txt) and compare its output "
                          "lines with outputs.txt")
@@ -371,6 +410,16 @@ def main():
     origin = gorge_origin(geo)
     home = (origin.lat_e7 / 1e7, origin.lon_e7 / 1e7, origin.alt_m)
     log(f"gorge seed {gz.seed} from {LEANFC_ROOT}; origin {home} (world ENU 0, 0, 0); start {gz.path[0].tolist()} (ENU)")
+    gplan, spline_north, leg_cmd = gz, None, None
+    if args.spline_north and args.straight_north:
+        sys.exit("gorge_lockstep: --spline-north and --straight-north exclude each other")
+    if args.spline_north or args.straight_north:
+        spline_north = [float(v) for v in (args.spline_north or args.straight_north).split(",")]
+        gplan = PathView(gz, respaced_path(G, gz, spline_north))
+        leg_cmd = int(m.MAV_CMD_NAV_WAYPOINT) if args.straight_north else None
+        kind = "straight NAV_WAYPOINT" if args.straight_north else "spline"
+        log(f"--{'straight' if args.straight_north else 'spline'}-north: {len(spline_north)} {kind} waypoints on the centerline at "
+            f"north {spline_north} (ENU {np.round(gplan.path[1:], 3).tolist()}) in place of the plan's {len(gz.path) - 1} spline waypoints")
 
     substeps = args.pyb_hz // 400
     wind = Wind(gz, args.wind[0], args.wind[1], (args.seed or 0) + 1000) if args.wind else None
@@ -389,8 +438,8 @@ def main():
     log(f"start: vehicle settled at ENU {np.round(obs[0][0:3], 4).tolist()}, {len(world)} world bodies; "
         f"floor at start {float(gz.ground_z(gz.path[None, 0, :2])[0]):.4f}")
 
-    items, plan_items = gorge_mission(m, GP, gz, origin, home_z, args.vehicle == "cf2x")
-    _, plan_home_z = GP.plan_items(gz, origin)
+    items, plan_items = gorge_mission(m, GP, gplan, origin, home_z, args.vehicle == "cf2x", leg_cmd)
+    _, plan_home_z = GP.plan_items(gplan, origin)
     (out / "mission.json").write_text(json.dumps(dict(
         vehicle=args.vehicle, home_z_settled=home_z, plan_home_z_x500=plan_home_z, origin=home,
         items=[dict(seq=s, command=int(c), frame=int(f), params=[None if isinstance(q, float) and math.isnan(q) else q for q in p],
@@ -477,13 +526,14 @@ def main():
     summary.append("events: " + "; ".join(f"{t:.2f} {w}" for t, w in gcs.events))
     summary.append("messages received: " + ", ".join(f"{k}:{v}" for k, v in sorted(gcs.counts.items())))
     track = np.genfromtxt(out / "track.csv", delimiter=",", names=True)
-    met = gorge_metrics(track, rec, gz.path, home_z, len(items) - 3)
+    met = gorge_metrics(track, rec, gplan.path, home_z, len(items) - 3)
     n_spl = len(items) - 3
     spl = list(range(2, 2 + n_spl))
     met["completed"] = bool(rec["t_disarm"] is not None and all(s in met["reached"] for s in [1] + spl)
                             and met.get("contacts_between_liftoff_and_touchdown") == 0 and met.get("touchdown_t") is not None)
     flight = dict(end=end, vehicle=args.vehicle, wind=args.wind, bin=args.bin, storage=args.storage, seed=args.seed, gorge_seed=gz.seed, origin=home,
                   home_z=home_z, params_set=dict(sets), events=gcs.events, record=dict(rec), metrics=met,
+                  n_spline=n_spl, spline_north=spline_north, path=gplan.path.tolist(), leg_command=leg_cmd or 82,
                   wall_s=wall, simulated_s=steps * STEP_US * 1e-6)
     (out / "flight.json").write_text(json.dumps(flight, indent=1, default=float) + "\n")
     summary.append(f"mission: completed {met['completed']}; MISSION_ITEM_REACHED {met['reached']}; "

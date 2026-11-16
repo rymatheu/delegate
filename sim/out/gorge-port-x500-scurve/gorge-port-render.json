@@ -1,0 +1,37 @@
+{
+ "run": "sim/out/gorge-port-x500-scurve/flight",
+ "frames": 621,
+ "every_s": 0.05,
+ "fps": 20.0,
+ "t0": 41.0325,
+ "t1": 72.0325,
+ "size": [
+  720,
+  692
+ ],
+ "render_wall_s": 212.2,
+ "mp4_mb": 19.72,
+ "stills": {
+  "chase": {
+   "t": 54.7325
+  },
+  "rgb": {
+   "t": 55.1825
+  },
+  "thermal": {
+   "t": 51.5325,
+   "hot_c": 549.9999389648438
+  }
+ },
+ "blank_panel_frames": [],
+ "vehicle": "x500",
+ "mount": {
+  "pos": [
+   0.2,
+   0.0,
+   -0.03
+  ],
+  "pitch_deg": 30.0
+ },
+ "leanfc": "/Users/ryan/Research/leanfc"
+}

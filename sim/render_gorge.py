@@ -261,7 +261,7 @@ def overview(g, tr, path):
     fly = (tr.t >= met["liftoff_t"]) & (tr.t <= (met.get("touchdown_t") or tr.t[-1]))
     q, _ = px(tr.pos[fly][::5])
     dr.line([tuple(a) for a in q], fill=(230, 50, 40, 235), width=4)
-    path_ = g.path
+    path_ = np.array(tr.flight["path"]) if tr.flight.get("path") else g.path     # the flight's waypoints (--spline-north)
     q, _ = px(path_)
     for j, a in enumerate(q):
         dr.ellipse([a[0] - 7, a[1] - 7, a[0] + 7, a[1] + 7], fill=(40, 110, 230, 235), outline=(255, 255, 255, 230))
@@ -282,7 +282,8 @@ def overview(g, tr, path):
     dr.text((Wo - 128, 82), "north", font=RW.font(24, True), fill=(255, 255, 255))
     dr.rectangle([0, 0, Wo, 30], fill=(0, 0, 0, 120))
     dr.text((12, 3), f"Gorge seed {g.seed} from above: ArduCopter in Lean (cpp2lean) flying the {tr.v['name']} on the gorge mission. "
-            f"Red: flown track, liftoff to touchdown; blue: the plan's takeoff (T) and spline waypoints 1-10; white ring: land",
+            f"Red: flown track, liftoff to touchdown; blue: the mission's takeoff (T) and "
+            f"{'spline ' if tr.flight.get('leg_command', 82) == 82 else 'straight-leg '}waypoints 1-{len(path_) - 1}; white ring: land",
             font=RW.font(20), fill=(255, 255, 255))
     img.save(path)
     p.disconnect(v.c)
