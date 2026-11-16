@@ -1,6 +1,7 @@
 # build products
 lean/.lake/
-contracts/.lake/
+archive/contracts/.lake/
+plant/.lake/
 build/
 __pycache__/
 sim/__pycache__/
