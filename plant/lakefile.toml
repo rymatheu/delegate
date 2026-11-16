@@ -1,0 +1,24 @@
+name = "plant"
+defaultTargets = ["Plant"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+# For GlobalExistenceLinear (LipschitzWith.exists_autonomousFlow), RadialTruncation and NonAutonomous:
+# the last commit on the 4.35 line.
+[[require]]
+name = "DynamicalSystems"
+git = "https://github.com/mcdoll/DynamicalSystems"
+rev = "c2a753b74de172aacce2f4aae88b662f6c2cda05"
+
+# Mathlib last and pinned to the revision of cpp2lean/lean (tag v4.35.0), so that its version wins over
+# the one DynamicalSystems asks for.
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "Plant"
+roots = ["Plant"]
