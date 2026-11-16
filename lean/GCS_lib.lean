@@ -1767,15 +1767,217 @@ def initMem (st : ByteArray) : PMem.Mem := Id.run do
   let ((), s) := (do for (a, h) in image do PMem.place a h : PMem.M Unit).run s0
   return s
 
-mutual
+/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'signed_char_1.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI8 v
+  PMem.stI8 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<short, 2>::set : void (const short &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI16 v
+  PMem.stI16 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI32 v
+  PMem.stI32 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'float_4.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 v
+  PMem.stF32 this t'1
+  return ()
+
+/-- C++ `AP_Param::set_value : void (enum ap_var_type, void *, float)`, `AP_Param.cpp:1501-1519`. -/
+def AP_Param.set_value.body (fp : UInt64) (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
+  let mut type' := type'
+  let mut ptr' := ptr'
+  PMem.stF32 (fp + 0) value
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (1 : Int32) then
+    let t'2 ← PMem.ldF32 (fp + 0)
+    PMem.stI8 (fp + 4) (Binary32.toInt8 (t'2))
+    AP_ParamTBase'signed_char_1.set ptr' (fp + 4)
+  else if sw'1 == (2 : Int32) then
+    let t'3 ← PMem.ldF32 (fp + 0)
+    PMem.stI16 (fp + 6) (Binary32.toInt16 (t'3))
+    AP_ParamTBase'short_2.set ptr' (fp + 6)
+  else if sw'1 == (3 : Int32) then
+    let t'4 ← PMem.ldF32 (fp + 0)
+    PMem.stI32 (fp + 8) (Binary32.toInt32 (t'4))
+    AP_ParamTBase'int_3.set ptr' (fp + 8)
+  else if sw'1 == (4 : Int32) then
+    AP_ParamTBase'float_4.set ptr' (fp + 0)
+  else
+    pure ()
+  return ()
+
+def AP_Param.set_value (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
+  let fp ← PMem.enter 12
+  let r ← AP_Param.set_value.body fp type' ptr' value
+  PMem.leave fp
+  return r
+
+/-- C++ `MIN : auto (const unsigned long &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
+def MIN (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU64 one
+  let t'2 ← PMem.ldU32 two
+  let mut c'3 : UInt64 := default
+  if (decide (t'1 < (UInt32.toUInt64 (t'2)))) then
+    let t'4 ← PMem.ldU64 one
+    c'3 := t'4
+  else
+    let t'5 ← PMem.ldU32 two
+    c'3 := UInt32.toUInt64 (t'5)
+  return c'3
+
+/-- C++ `StorageAccess::read_block : bool (void *, uint16_t, size_t) const`, `StorageManager.cpp:139-186`. -/
+def StorageAccess.read_block.body (fp : UInt64) (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
+  let mut data := data
+  let mut addr := addr
+  PMem.stU64 (fp + 0) n
+  let mut b : UInt64 := data
+  let t'1 ← PMem.ldU64 (this + 8)
+  if (t'1 != (0 : UInt64)) then
+    let t'2 ← PMem.ldU64 (this + 8)
+    let t'3 ← PMem.ldU32 (t'2 + 24)
+    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
+      return false
+    let t'4 ← PMem.ldU64 (this + 8)
+    let t'5 ← PMem.ldU32 (t'4 + 24)
+    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
+    let t'6 ← MIN (fp + 0) (fp + 8)
+    let mut n2 : UInt64 := t'6
+    let t'7 ← PMem.ldU64 (this + 8)
+    let t'8 ← PMem.ldU64 (t'7 + 16)
+    let t'9 ← PMem.memcpy b (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) n2
+    discard <| pure (t'9)
+    let t'10 ← PMem.ldU64 (fp + 0)
+    return (t'10 == n2)
+  for i'11 in [0:15] do
+    let i : UInt8 := UInt8.ofNat i'11
+    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+    let t'12 ← PMem.ldU16 (area + 6)
+    let mut length : UInt16 := t'12
+    let t'13 ← PMem.ldU16 (area + 4)
+    let mut offset : UInt16 := t'13
+    let t'14 ← PMem.ldU32 area
+    let t'15 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'14)) != (UInt32.toInt32 (t'15))) then
+      continue
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'16 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
+      addr := t'16
+      continue
+    let t'17 ← PMem.ldU64 (fp + 0)
+    let mut count : UInt16 := UInt64.toUInt16 (t'17)
+    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'18 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
+      count := t'18
+    PMem.halRead b (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) (UInt16.toUInt64 (count))
+    let t'19 ← PMem.ldU64 (fp + 0)
+    let t'20 := (t'19 - (UInt16.toUInt64 (count)))
+    PMem.stU64 (fp + 0) t'20
+    let t'21 ← PMem.ldU64 (fp + 0)
+    if (t'21 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
+      break
+    let t'22 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
+    b := t'22
+    let t'23 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    addr := t'23
+  let t'24 ← PMem.ldU64 (fp + 0)
+  return (t'24 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
+
+def StorageAccess.read_block (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 12
+  let r ← StorageAccess.read_block.body fp this data addr n
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::setup : bool ()`, `AP_Param.cpp:362-399`. -/
+def AP_Param.setup.body (fp : UInt64)  : PMem.M Bool := do
+  discard <| PMem.memset ((fp + 0) + 0) 0 2
+  discard <| PMem.memset ((fp + 0) + 2) 0 1
+  discard <| PMem.memset ((fp + 0) + 3) 0 1
+  let t'1 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (4 : UInt64)
+  discard <| pure (t'1)
+  let t'2 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64)
+  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) != (UInt32.toInt32 (UInt8.toUInt32 ((80 : UInt8)))))
+  if !sc'4 then
+    let t'3 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64)
+    sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((65 : UInt8)))))
+  let mut sc'6 := sc'4
+  if !sc'6 then
+    let t'5 ← PMem.ldU8 ((fp + 0) + 2)
+    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))
+  if sc'6 then
+    PMem.unreached "AP_Param::erase_all"
+  return true
+
+def AP_Param.setup  : PMem.M Bool := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.setup.body fp 
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::var_info : const struct Info &(uint16_t)`, `AP_Param.h:846-848`. -/
+def AP_Param.var_info (i : UInt16) : PMem.M UInt64 := do
+  let mut i := i
+  let t'1 ← PMem.ldU64 (0xbad0 : UInt64) /- &AP_Param::_var_info -/
+  return (t'1 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64)
+
+/-- C++ `AP_Param::get_base : bool (const struct Info &, ptrdiff_t &)`, `AP_Param.cpp:440-448`. -/
+def AP_Param.get_base (info' : UInt64) (base : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU16 (info' + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (info' + 8)
+    let t'3 ← PMem.ldI64 t'2
+    PMem.stI64 base t'3
+    let t'4 ← PMem.ldI64 base
+    return (t'4 != (Int32.toInt64 ((0 : Int32))))
+  let t'5 ← PMem.ldU64 (info' + 8)
+  let t'6 := UInt64.toInt64 (t'5)
+  PMem.stI64 base t'6
+  return true
+
+/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct Info &)`, `AP_Param.cpp:2698-2709`. -/
+def AP_Param.get_default_value (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
+  let mut vp := vp
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (0xbe50 : UInt64) /- &AP_Param::num_param_overrides -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
+    let t'6 ← PMem.ldU64 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
+    if (vp == t'6) then
+      let t'7 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
+      let t'8 ← PMem.ldF32 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
+      return t'8
+  let t'9 ← PMem.ldU16 (info' + 24)
+  if (((UInt32.toInt32 (UInt16.toUInt32 (t'9))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
+    let t'10 ← PMem.ldI64 (info' + 16)
+    let t'11 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'10)))
+    return t'11
+  let t'12 ← PMem.ldF32 (info' + 16)
+  return t'12
 
 /-- C++ `AP_Param::setup_sketch_defaults : void ()`, `AP_Param.cpp:1569-1583`. -/
-partial def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := do
+def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := do
   let t'1 ← AP_Param.setup
   discard <| pure (t'1)
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'2 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'2 then
       let t'3 := i
       let t'4 := (t'3 + 1)
@@ -1797,18 +1999,152 @@ partial def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := 
         AP_Param.set_value (UInt8.toUInt32 (type')) (Int64.toUInt64 (t'9)) t'11
   return ()
 
-partial def AP_Param.setup_sketch_defaults  : PMem.M Unit := do
+def AP_Param.setup_sketch_defaults  : PMem.M Unit := do
   let fp ← PMem.enter 8
   let r ← AP_Param.setup_sketch_defaults.body fp 
   PMem.leave fp
   return r
 
+/-- `AP_Param.type_size` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.type_size.pure' (type' : UInt32) : Id UInt8 := do
+  let mut type' := type'
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (0 : Int32) || sw'1 == (6 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  else if sw'1 == (1 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+  else if sw'1 == (2 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
+  else if sw'1 == (3 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  else if sw'1 == (4 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  else if sw'1 == (5 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 (((3 : Int32) * (4 : Int32))))
+  else
+    pure ()
+  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+
+/-- C++ `AP_Param::type_size : uint8_t (enum ap_var_type)`, `AP_Param.cpp:702-721`. -/
+def AP_Param.type_size (type' : UInt32) : PMem.M UInt8 :=
+  pure (_root_.GCS_lib.AP_Param.type_size.pure' type')
+
+/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct Info &)`, `AP_Param.cpp:312-318`. -/
+def AP_Param.get_group_info (info' : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU16 (info' + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (info' + 16)
+    let t'3 ← PMem.ldU64 t'2
+    return t'3
+  let t'4 ← PMem.ldU64 (info' + 16)
+  return t'4
+
+/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct GroupInfo &)`, `AP_Param.cpp:301-307`. -/
+def AP_Param.get_group_info'2 (ginfo : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU16 (ginfo + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (ginfo + 16)
+    let t'3 ← PMem.ldU64 t'2
+    return t'3
+  let t'4 ← PMem.ldU64 (ginfo + 16)
+  return t'4
+
+mutual
+
+/-- C++ `AP_Param::check_group_info : void (const struct AP_Param::GroupInfo *, uint16_t *, uint8_t, uint8_t)`, `AP_Param.cpp:235-283`. -/
+def AP_Param.check_group_info'rec (rec'depth : Nat) (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let mut group_info := group_info
+  let mut total_size := total_size
+  let mut group_shift := group_shift
+  let mut prefix_length := prefix_length
+  let mut type' : UInt8 := default  -- uninitialized in C
+  let mut used_mask : UInt64 := Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'4
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+    let mut idx : UInt8 := t'5
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (idx))) ≥ ((1 : Int32) <<< (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))))) then
+      pure ()
+    if (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) != (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (idx))) == (0 : Int32))) then
+      let t'6 := Int8.toUInt8 (Int32.toInt8 ((63 : Int32)))
+      idx := t'6
+    if (used_mask &&& ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx)))))))) != (0 : UInt64) then
+      pure ()
+    let t'7 := (used_mask ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx))))))))
+    used_mask := t'7
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        pure ()
+      let t'8 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'8
+      if (ginfo == (0 : UInt64)) then
+        continue
+      let t'9 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let t'10 ← PMem.strlen t'9
+      AP_Param.check_group_info'rec rec'd ginfo total_size (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) (UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'10)))
+      continue
+    let t'11 ← AP_Param.type_size (UInt8.toUInt32 (type'))
+    let mut size : UInt8 := t'11
+    if ((UInt32.toInt32 (UInt8.toUInt32 (size))) == (0 : Int32)) then
+      pure ()
+    let t'12 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+    let t'13 ← PMem.strlen t'12
+    let mut param_name_length : UInt8 := UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'13))
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32)))) then
+      let t'14 := (param_name_length + (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
+      param_name_length := t'14
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (param_name_length))) > (16 : Int32))) then
+      pure ()
+    let t'15 ← PMem.ldU16 total_size
+    let t'16 := (t'15 + (UInt64.toUInt16 (((UInt8.toUInt64 (size)) + (4 : UInt64)))))
+    PMem.stU16 total_size t'16
+  return ()
+
+end
+
+/-- `AP_Param.check_group_info'rec` with the depth of its recursive component (64). -/
+def AP_Param.check_group_info (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit :=
+  AP_Param.check_group_info'rec 64 group_info total_size group_shift prefix_length
+
+/-- C++ `AP_Param::duplicate_key : bool (uint16_t, uint16_t)`, `AP_Param.cpp:286-296`. -/
+def AP_Param.duplicate_key (vindex : UInt16) (key : UInt16) : PMem.M Bool := do
+  let mut vindex := vindex
+  let mut key := key
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (vindex))) + (1 : Int32))))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← AP_Param.var_info i
+    let t'6 ← PMem.ldU16 (t'5 + 26)
+    let mut key2 : UInt16 := t'6
+    if ((UInt32.toInt32 (UInt16.toUInt32 (key2))) == (UInt32.toInt32 (UInt16.toUInt32 (key)))) then
+      return true
+  return false
+
 /-- C++ `AP_Param::check_var_info : void ()`, `AP_Param.cpp:321-358`. -/
-partial def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
+def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
   PMem.stU16 (fp + 0) (UInt64.toUInt16 ((4 : UInt64)))
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -1852,21 +2188,65 @@ partial def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
       pure ()
   return ()
 
-partial def AP_Param.check_var_info  : PMem.M Unit := do
+def AP_Param.check_var_info  : PMem.M Unit := do
   let fp ← PMem.enter 2
   let r ← AP_Param.check_var_info.body fp 
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct GroupInfo &)`, `AP_Param.cpp:2685-2696`. -/
+def AP_Param.get_default_value'2 (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
+  let mut vp := vp
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (0xbe50 : UInt64) /- &AP_Param::num_param_overrides -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
+    let t'6 ← PMem.ldU64 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
+    if (vp == t'6) then
+      let t'7 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
+      let t'8 ← PMem.ldF32 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
+      return t'8
+  let t'9 ← PMem.ldU16 (info' + 24)
+  if (((UInt32.toInt32 (UInt16.toUInt32 (t'9))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
+    let t'10 ← PMem.ldI64 (info' + 16)
+    let t'11 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'10)))
+    return t'11
+  let t'12 ← PMem.ldF32 (info' + 16)
+  return t'12
+
+/-- C++ `AP_ParamV<Vector3<float>, 5>::set : void (const Vector3<float> &)`, `AP_Param.h:1065-1067`. -/
+def AP_ParamV'Vector3_float_5.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  discard <| PMem.memcpy this v 12
+  discard <| pure (this)
+  return ()
+
+/-- C++ `Vector3<float>::Vector3 : void (const float, const float, const float)`, `AP_Common.h:85-88`. -/
+def Vector3'float.Vector3 (this : UInt64) (x0 : Binary32) (y0 : Binary32) (z0 : Binary32) : PMem.M Unit := do
+  let mut x0 := x0
+  let mut y0 := y0
+  let mut z0 := z0
+  PMem.stF32 (this + 0) x0
+  PMem.stF32 (this + 4) y0
+  PMem.stF32 (this + 8) z0
+  return ()
+
 /-- C++ `AP_Param::setup_object_defaults : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1524-1542`. -/
-partial def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
   let mut object_pointer := object_pointer
   let mut group_info := group_info
   let mut base : Int64 := UInt64.toInt64 (object_pointer)
   let mut type' : UInt8 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -1891,1062 +2271,166 @@ partial def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : 
         AP_ParamV'Vector3_float_5.set ptr''2 (fp + 0)
   return ()
 
-partial def AP_Param.setup_object_defaults (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+def AP_Param.setup_object_defaults (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 12
   let r ← AP_Param.setup_object_defaults.body fp object_pointer group_info
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::load_all : bool ()`, `AP_Param.cpp:1588-1622`. -/
-partial def AP_Param.load_all.body (fp : UInt64)  : PMem.M Bool := do
-  AP_Param.Param_header.Param_header (fp + 0)
-  let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-  AP_Param.reload_defaults_file false
-  let t'1 ← PMem.ldB (0xba80 : UInt64) /- &AP_Param::registered_save_handler -/
-  if !t'1 then
-    PMem.stB (0xba80 : UInt64) /- &AP_Param::registered_save_handler -/ true
-  repeat
-    let t'2 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))) then break
-    let t'3 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
-    discard <| pure (t'3)
-    let t'4 ← AP_Param.is_sentinel (fp + 0)
-    if t'4 then
-      PMem.stU16 (0xba98 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
-      return true
-    let mut info' : UInt64 := default  -- uninitialized in C
-    AP_Param.Param_header.Param_header'2 (fp + 16) (fp + 0)
-    let t'5 ← AP_Param.find_by_header (fp + 16) (fp + 8)
-    info' := t'5
-    if (info' != (0 : UInt64)) then
-      let t'6 ← PMem.ldU64 (fp + 8)
-      let t'7 ← PMem.ldBits (fp + 0) 8 5
-      let t'8 ← AP_Param.type_size (UInt64.toUInt32 (t'7))
-      let t'9 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ t'6 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'8))
-      discard <| pure (t'9)
-    let t'10 ← PMem.ldBits (fp + 0) 8 5
-    let t'11 ← AP_Param.type_size (UInt64.toUInt32 (t'10))
-    let t'12 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'11)) + (4 : UInt64)))))
-    ofs := t'12
-  return false
+/-- C++ `AP_Param::Param_header::Param_header : void (const Param_header &) noexcept`, `AP_Param.h:?-?`. -/
+def AP_Param.Param_header.Param_header'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits arg 0 8
+  PMem.stBits this 0 8 (UInt32.toUInt64 ((UInt64.toUInt32 (t'1))))
+  let t'2 ← PMem.ldBits arg 8 5
+  PMem.stBits this 8 5 (UInt32.toUInt64 ((UInt64.toUInt32 (t'2))))
+  let t'3 ← PMem.ldBits arg 13 1
+  PMem.stBits this 13 1 (UInt32.toUInt64 ((UInt64.toUInt32 (t'3))))
+  let t'4 ← PMem.ldBits arg 14 18
+  PMem.stBits this 14 18 (UInt32.toUInt64 ((UInt64.toUInt32 (t'4))))
+  return ()
 
-partial def AP_Param.load_all  : PMem.M Bool := do
-  let fp ← PMem.enter 20
-  let r ← AP_Param.load_all.body fp 
-  PMem.leave fp
-  return r
+/-- C++ `AP_Param::get_key : uint16_t (const Param_header &)`, `AP_Param.cpp:743-746`. -/
+def AP_Param.get_key (phdr : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldBits phdr 13 1
+  let t'2 ← PMem.ldBits phdr 0 8
+  return Int16.toUInt16 (Int32.toInt16 ((((UInt32.toInt32 (UInt16.toUInt32 ((UInt32.toUInt16 ((UInt64.toUInt32 (t'1))))))) <<< (8 : Int32)) ||| (UInt32.toInt32 ((UInt64.toUInt32 (t'2)))))))
 
-/-- C++ `AP_Param::load : bool ()`, `AP_Param.cpp:1339-1399`. -/
-partial def AP_Param.load.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
-  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  if (info' == (0 : UInt64)) then
-    return false
-  AP_Param.Param_header.Param_header (fp + 48)
-  let t'2 ← PMem.ldU64 (fp + 8)
-  if (t'2 != (0 : UInt64)) then
-    let t'3 ← PMem.ldU64 (fp + 8)
-    let t'4 ← PMem.ldU8 (t'3 + 27)
-    let t'5 := UInt8.toUInt32 (t'4)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
-  else
-    let t'6 ← PMem.ldU8 (info' + 28)
-    let t'7 := UInt8.toUInt32 (t'6)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'7))
-  let t'8 ← PMem.ldU16 (info' + 26)
-  AP_Param.set_key (fp + 48) t'8
-  let t'9 ← PMem.ldU32 (fp + 0)
-  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'9))
-  let t'10 ← AP_Param.scan (fp + 48) (fp + 56)
-  if !t'10 then
-    let t'11 ← AP_Param.get_base info' (fp + 64)
-    if !t'11 then
+/-- C++ `AP_Param::adjust_group_offset : bool (uint16_t, const struct GroupInfo &, ptrdiff_t &)`, `AP_Param.cpp:413-435`. -/
+def AP_Param.adjust_group_offset.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
+  let mut vindex := vindex
+  let t'1 ← PMem.ldU16 (group_info + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldI64 new_offset
+    let t'3 ← PMem.ldI64 (group_info + 8)
+    let t'4 := (t'2 + t'3)
+    PMem.stI64 new_offset t'4
+    return true
+  let t'5 ← PMem.ldU16 (group_info + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
+    let t'6 ← AP_Param.var_info vindex
+    let t'7 ← AP_Param.get_base t'6 (fp + 0)
+    if !t'7 then
       return false
-    let t'12 ← PMem.ldU64 (fp + 8)
-    if (t'12 != (0 : UInt64)) then
-      let mut group_offset : Int64 := Int32.toInt64 ((0 : Int32))
-      let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-      let mut first'13 := true
-      repeat
-        if !first'13 then
-          let t'14 := i
-          let t'15 := (t'14 + 1)
-          i := t'15
-          pure ()
-        first'13 := false
-        let t'16 ← PMem.ldU8 (fp + 16)
-        if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'16)))))) then break
-        let t'17 ← PMem.ldU64 (((fp + 16) + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-        let t'18 ← PMem.ldI64 (t'17 + 8)
-        let t'19 := (group_offset + t'18)
-        group_offset := t'19
-      let t'20 ← PMem.ldBits (fp + 48) 8 5
-      let t'21 ← PMem.ldI64 (fp + 64)
-      let t'22 ← PMem.ldU64 (fp + 8)
-      let t'23 ← PMem.ldI64 (t'22 + 8)
-      let t'24 ← PMem.ldU64 (fp + 8)
-      let t'25 ← AP_Param.get_default_value'2 this t'24
-      AP_Param.set_value (UInt64.toUInt32 (t'20)) (Int64.toUInt64 (((t'21 + t'23) + group_offset))) t'25
-    else
-      let t'26 ← PMem.ldBits (fp + 48) 8 5
-      let t'27 ← PMem.ldI64 (fp + 64)
-      let t'28 ← AP_Param.get_default_value this info'
-      AP_Param.set_value (UInt64.toUInt32 (t'26)) (Int64.toUInt64 (t'27)) t'28
-    return false
-  let t'29 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'31 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'29)))) != (UInt32.toInt32 ((5 : UInt32))))
-  if sc'31 then
-    let t'30 ← PMem.ldU8 (fp + 40)
-    sc'31 := ((UInt32.toInt32 (UInt8.toUInt32 (t'30))) != (0 : Int32))
-  if sc'31 then
-    return false
-  let mut ap : UInt64 := this
-  let t'32 ← PMem.ldU8 (fp + 40)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'32))) != (0 : Int32)) then
-    let t'33 ← PMem.ldU8 (fp + 40)
-    let t'34 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'33)) * (4 : UInt64)))) * 1).toUInt64)
-    ap := t'34
-  let t'35 ← PMem.ldU16 (fp + 56)
-  let t'36 ← PMem.ldBits (fp + 48) 8 5
-  let t'37 ← AP_Param.type_size (UInt64.toUInt32 (t'36))
-  let t'38 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'35)) + (4 : UInt64)))) (UInt8.toUInt64 (t'37))
-  discard <| pure (t'38)
+    let t'8 ← PMem.ldI64 (fp + 0)
+    let t'9 ← PMem.ldI64 new_offset
+    let t'10 ← PMem.ldI64 (group_info + 8)
+    let mut p : UInt64 := Int64.toUInt64 (((t'8 + t'9) + t'10))
+    let t'11 ← PMem.ldU64 p
+    if (t'11 == (0 : UInt64)) then
+      return false
+    let t'12 ← PMem.ldU64 p
+    let t'13 ← PMem.ldI64 (fp + 0)
+    let t'14 := ((UInt64.toInt64 (t'12)) - t'13)
+    PMem.stI64 new_offset t'14
   return true
 
-partial def AP_Param.load (this : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 72
-  let r ← AP_Param.load.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::erase_all : void ()`, `AP_Param.cpp:179-192`. -/
-partial def AP_Param.erase_all.body (fp : UInt64)  : PMem.M Unit := do
-  AP_Param.EEPROM_header.EEPROM_header (fp + 0)
-  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) (80 : UInt8)
-  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (65 : UInt8)
-  PMem.stU8 ((fp + 0) + 2) (6 : UInt8)
-  let t'1 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  PMem.stU8 ((fp + 0) + 3) t'1
-  AP_Param.eeprom_write_check (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (UInt64.toUInt8 ((4 : UInt64)))
-  AP_Param.write_sentinel (UInt64.toUInt16 ((4 : UInt64)))
-  return ()
-
-partial def AP_Param.erase_all  : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.erase_all.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::first : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1765-1788`. -/
-partial def AP_Param.first.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut default_val := default_val
-  let t'1 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 0 9 (UInt32.toUInt64 (t'1))
-  let t'2 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 13 18 (UInt32.toUInt64 (t'2))
-  let t'3 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 9 4 (UInt32.toUInt64 (t'3))
-  let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
-    return (0 : UInt64)
-  let t'5 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  let t'6 ← AP_Param.get_base t'5 (fp + 0)
-  if !t'6 then
-    return (0 : UInt64)
-  if (ptype != (0 : UInt64)) then
-    let t'7 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-    let t'8 ← PMem.ldU8 (t'7 + 28)
-    let t'9 := UInt8.toUInt32 (t'8)
-    PMem.stU32 ptype t'9
-  if (default_val != (0 : UInt64)) then
-    let t'10 ← PMem.ldI64 (fp + 0)
-    let t'11 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-    let t'12 ← AP_Param.get_default_value (Int64.toUInt64 (t'10)) t'11
-    PMem.stF32 default_val t'12
-  let t'13 ← PMem.ldI64 (fp + 0)
-  AP_Param.check_default (Int64.toUInt64 (t'13)) default_val
-  let t'14 ← PMem.ldI64 (fp + 0)
-  return Int64.toUInt64 (t'14)
-
-partial def AP_Param.first (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.adjust_group_offset (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 8
-  let r ← AP_Param.first.body fp token ptype default_val
+  let r ← AP_Param.adjust_group_offset.body fp vindex group_info new_offset
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *)`, `AP_Param.h:561-?`. -/
-partial def AP_Param.next (token : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let t'1 ← AP_Param.next'2 token ptype false (0 : UInt64)
-  return t'1
-
-/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1891-1953`. -/
-partial def AP_Param.next'2.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut skip_disabled := skip_disabled
-  let mut default_val := default_val
-  let t'1 ← PMem.ldBits token 0 9
-  let mut i : UInt16 := UInt32.toUInt16 ((UInt64.toUInt32 (t'1)))
-  PMem.stB (fp + 0) false
-  let t'2 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2))))) then
-    return (0 : UInt64)
-  let t'3 ← AP_Param.var_info i
-  let t'4 ← PMem.ldU8 (t'3 + 28)
-  let mut type' : UInt32 := UInt8.toUInt32 (t'4)
-  let mut sc'6 := ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((5 : UInt32))))
-  if sc'6 then
-    let t'5 ← PMem.ldBits token 9 4
-    sc'6 := (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'5)))) < (3 : Int32)))
-  if sc'6 then
-    let t'7 ← PMem.ldBits token 9 4
-    let t'8 := UInt64.toUInt32 (t'7)
-    let t'9 := (t'8 + 1)
-    PMem.stBits token 9 4 (UInt32.toUInt64 (t'9))
-    if (ptype != (0 : UInt64)) then
-      PMem.stU32 ptype (4 : UInt32)
-    let t'10 ← PMem.ldBits token 9 4
-    let t'11 ← AP_Param.var_info i
-    let t'12 ← PMem.ldU64 (t'11 + 8)
-    let mut ret : UInt64 := (((UInt32.toUInt64 (((UInt64.toUInt32 (t'10)) - (1 : UInt32)))) * (4 : UInt64)) + (Int64.toUInt64 ((UInt64.toInt64 (t'12)))))
-    if (default_val != (0 : UInt64)) then
-      let t'13 ← AP_Param.var_info i
-      let t'14 ← AP_Param.get_default_value ret t'13
-      PMem.stF32 default_val t'14
-    return ret
-  if ((UInt32.toInt32 (type')) != (UInt32.toInt32 ((6 : UInt32)))) then
-    let t'15 := i
-    let t'16 := (t'15 + 1)
-    i := t'16
-    PMem.stB (fp + 0) true
-  let mut first'17 := true
-  repeat
-    if !first'17 then
-      let t'18 := i
-      let t'19 := (t'18 + 1)
-      i := t'19
-      pure ()
-    first'17 := false
-    let t'20 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'20)))))) then break
-    let t'21 ← AP_Param.var_info i
-    let info' : UInt64 := t'21
-    let t'22 ← PMem.ldU16 (info' + 24)
-    let t'23 ← AP_Param.check_frame_type t'22
-    if !t'23 then
-      continue
-    let t'24 ← PMem.ldU8 (info' + 28)
-    let t'25 := UInt8.toUInt32 (t'24)
-    type' := t'25
-    if ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'26 ← AP_Param.get_group_info info'
-      let mut group_info : UInt64 := t'26
-      if (group_info == (0 : UInt64)) then
-        continue
-      let t'27 ← AP_Param.next_group i group_info (fp + 0) (Int32.toUInt32 ((0 : Int32))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (Int32.toInt64 ((0 : Int32))) token ptype skip_disabled default_val
-      let mut ap : UInt64 := t'27
-      if (ap != (0 : UInt64)) then
-        return ap
-    else
-      let t'28 := UInt16.toUInt32 (i)
-      PMem.stBits token 0 9 (UInt32.toUInt64 (t'28))
-      let t'29 := Int32.toUInt32 ((0 : Int32))
-      PMem.stBits token 13 18 (UInt32.toUInt64 (t'29))
-      let t'30 := Int32.toUInt32 ((0 : Int32))
-      PMem.stBits token 9 4 (UInt32.toUInt64 (t'30))
-      if (ptype != (0 : UInt64)) then
-        PMem.stU32 ptype type'
-      if (default_val != (0 : UInt64)) then
-        let t'31 ← PMem.ldU64 (info' + 8)
-        let t'32 ← AP_Param.get_default_value t'31 info'
-        PMem.stF32 default_val t'32
-      let t'33 ← PMem.ldU64 (info' + 8)
-      return t'33
-  return (0 : UInt64)
-
-partial def AP_Param.next'2 (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 1
-  let r ← AP_Param.next'2.body fp token ptype skip_disabled default_val
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::next_scalar : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1957-1972`. -/
-partial def AP_Param.next_scalar.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut default_val := default_val
-  let mut ap : UInt64 := default  -- uninitialized in C
-  repeat
-    let t'1 ← AP_Param.next'2 token (fp + 0) true default_val
-    ap := t'1
-    let mut sc'3 := (ap != (0 : UInt64))
-    if sc'3 then
-      let t'2 ← PMem.ldU32 (fp + 0)
-      sc'3 := (decide ((UInt32.toInt32 (t'2)) > (UInt32.toInt32 ((4 : UInt32)))))
-    if !(sc'3) then break
-  if (ap != (0 : UInt64)) then
-    if (ptype != (0 : UInt64)) then
-      let t'4 ← PMem.ldU32 (fp + 0)
-      PMem.stU32 ptype t'4
-  AP_Param.check_default ap default_val
-  return ap
-
-partial def AP_Param.next_scalar (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.next_scalar.body fp token ptype default_val
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::copy_name_token : void (const ParamToken &, char *, size_t, bool) const`, `AP_Param.cpp:832-845`. -/
-partial def AP_Param.copy_name_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
-  let mut buffer := buffer
-  let mut buffer_size := buffer_size
-  let mut force_scalar := force_scalar
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info_token this token (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  if (info' == (0 : UInt64)) then
-    let t'2 := Int32.toInt8 ((0 : Int32))
-    PMem.stI8 buffer t'2
-    return ()
-  let t'3 ← PMem.ldU64 (fp + 8)
-  let t'4 ← PMem.ldU8 (fp + 40)
-  AP_Param.copy_name_info this info' t'3 (fp + 16) t'4 buffer buffer_size force_scalar
-  return ()
-
-partial def AP_Param.copy_name_token (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
-  let fp ← PMem.enter 41
-  let r ← AP_Param.copy_name_token.body fp this token buffer buffer_size force_scalar
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_by_name : AP_Param *(const char *, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:1003-1025`. -/
-partial def AP_Param.find_by_name.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let mut name := name
-  let mut ptype := ptype
-  let mut token := token
-  let mut ap : UInt64 := default  -- uninitialized in C
-  let t'1 ← AP_Param.first token ptype (0 : UInt64)
-  ap := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
-      ap := t'3
-      pure ()
-    first'2 := false
-    let mut sc'5 := (ap != 0)
-    if sc'5 then
-      let t'4 ← PMem.ldU32 ptype
-      sc'5 := ((UInt32.toInt32 (t'4)) != (UInt32.toInt32 ((6 : UInt32))))
-    let mut sc'7 := sc'5
-    if sc'7 then
-      let t'6 ← PMem.ldU32 ptype
-      sc'7 := ((UInt32.toInt32 (t'6)) != (UInt32.toInt32 ((0 : UInt32))))
-    if !(sc'7) then break
-    let t'8 ← PMem.ldBits token 0 9
-    let t'9 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'8))))
-    let t'10 ← PMem.ldU64 t'9
-    let t'11 ← PMem.strlen t'10
-    let mut nlen : UInt64 := t'11
-    let t'12 ← PMem.ldBits token 0 9
-    let t'13 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'12))))
-    let t'14 ← PMem.ldU64 t'13
-    let t'15 ← PMem.strncasecmp name t'14 nlen
-    let mut ret : Int32 := t'15
-    if (ret == (0 : Int32)) then
-      AP_Param.copy_name_token ap token (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) false
-      let t'16 ← PMem.strncasecmp name (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
-      if (t'16 == (0 : Int32)) then
-        break
-  return ap
-
-partial def AP_Param.find_by_name (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 16
-  let r ← AP_Param.find_by_name.body fp name ptype token
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find : AP_Param *(const char *, enum ap_var_type *, uint16_t *)`, `AP_Param.cpp:938-985`. -/
-partial def AP_Param.find.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
-  let mut name := name
-  let mut ptype := ptype
-  let mut flags := flags
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← AP_Param.var_info i
-    let info' : UInt64 := t'5
-    let t'6 ← PMem.ldU8 (info' + 28)
-    let mut type' : UInt8 := t'6
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'7 ← PMem.ldU64 info'
-      let t'8 ← PMem.strnlen t'7 (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
-      let mut len : UInt8 := UInt64.toUInt8 (t'8)
-      let t'9 ← PMem.ldU64 info'
-      let t'10 ← PMem.strncmp name t'9 (UInt8.toUInt64 (len))
-      if (t'10 != (0 : Int32)) then
-        continue
-      let t'11 ← AP_Param.get_group_info info'
-      let mut group_info : UInt64 := t'11
-      if (group_info == (0 : UInt64)) then
-        continue
-      let t'12 ← AP_Param.find_group (name + ((Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (len))))) * 1).toUInt64) i (Int32.toInt64 ((0 : Int32))) group_info ptype
-      let mut ap : UInt64 := t'12
-      if (ap != (0 : UInt64)) then
-        if (flags != (0 : UInt64)) then
-          PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-          discard <| PMem.memset ((fp + 16) + 0) 0 1
-          discard <| PMem.memset ((fp + 16) + 8) 0 16
-          let t'13 ← AP_Param.find_var_info ap (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-          discard <| pure (t'13)
-          let t'14 ← PMem.ldU64 (fp + 8)
-          if (t'14 != (0 : UInt64)) then
-            let t'15 ← PMem.ldU64 (fp + 8)
-            let t'16 ← PMem.ldU16 (t'15 + 24)
-            PMem.stU16 flags t'16
-          else
-            let t'17 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-            PMem.stU16 flags t'17
-        return ap
-    else
-      let t'18 ← PMem.ldU64 info'
-      let t'19 ← PMem.strcasecmp name t'18
-      if (t'19 == (0 : Int32)) then
-        let t'20 := UInt8.toUInt32 (type')
-        PMem.stU32 ptype t'20
-        let t'21 ← AP_Param.get_base info' (fp + 48)
-        if !t'21 then
-          return (0 : UInt64)
-        if (flags != (0 : UInt64)) then
-          let t'22 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-          PMem.stU16 flags t'22
-        let t'23 ← PMem.ldI64 (fp + 48)
-        return Int64.toUInt64 (t'23)
-  return (0 : UInt64)
-
-partial def AP_Param.find (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 56
-  let r ← AP_Param.find.body fp name ptype flags
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_by_index : AP_Param *(uint16_t, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:989-1000`. -/
-partial def AP_Param.find_by_index (idx : UInt16) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let mut idx := idx
-  let mut ptype := ptype
-  let mut token := token
-  let mut ap : UInt64 := default  -- uninitialized in C
-  let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'1 ← AP_Param.first token ptype (0 : UInt64)
-  ap := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
-      ap := t'3
-      pure ()
-    first'2 := false
-    if !(((ap != 0) && (decide ((UInt32.toInt32 (UInt16.toUInt32 (count))) < (UInt32.toInt32 (UInt16.toUInt32 (idx))))))) then break
-    let t'4 := count
-    let t'5 := (t'4 + 1)
-    count := t'5
-  return ap
-
-/-- C++ `AP_Param::count_parameters : uint16_t ()`, `AP_Param.cpp:2752-2782`. -/
-partial def AP_Param.count_parameters.body (fp : UInt64)  : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
-  let mut sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) != (0 : Int32))
-  if sc'4 then
-    let t'2 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
-    let t'3 ← PMem.ldU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/
-    sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 (t'3))))
-  if sc'4 then
-    let t'5 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
-    return t'5
-  let mut limit : UInt8 := Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  repeat
-    let t'6 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
-    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
-    if !sc'9 then
-      let t'7 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
-      let t'8 ← PMem.ldU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/
-      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) != (UInt32.toInt32 (UInt16.toUInt32 (t'8))))
-    let mut sc'12 := sc'9
-    if sc'12 then
-      let t'10 := limit
-      let t'11 := (t'10 - 1)
-      limit := t'11
-      sc'12 := t'10 != (0 : UInt8)
-    if !(sc'12) then break
-    let mut vp : UInt64 := default  -- uninitialized in C
-    PMem.stBits (fp + 0) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
-    let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    let t'13 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
-    let mut marker : UInt16 := t'13
-    let t'14 ← AP_Param.first (fp + 0) (0 : UInt64) (0 : UInt64)
-    vp := t'14
-    let mut first'15 := true
-    repeat
-      if !first'15 then
-        let t'16 ← AP_Param.next_scalar (fp + 0) (0 : UInt64) (0 : UInt64)
-        vp := t'16
-        pure ()
-      first'15 := false
-      if !((vp != (0 : UInt64))) then break
-      let t'17 := count
-      let t'18 := (t'17 + 1)
-      count := t'18
-    PMem.stU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/ count
-    PMem.stU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/ marker
-  let t'19 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
-  return t'19
-
-partial def AP_Param.count_parameters  : PMem.M UInt16 := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.count_parameters.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::cast_to_float : float (enum ap_var_type) const`, `AP_Param.cpp:1976-1990`. -/
-partial def AP_Param.cast_to_float (this : UInt64) (type' : UInt32) : PMem.M Binary32 := do
-  let mut type' := type'
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (1 : Int32) then
-    let t'2 ← AP_ParamTBase'signed_char_1.cast_to_float this
-    return t'2
-  else if sw'1 == (2 : Int32) then
-    let t'3 ← AP_ParamTBase'short_2.cast_to_float this
-    return t'3
-  else if sw'1 == (3 : Int32) then
-    let t'4 ← AP_ParamTBase'int_3.cast_to_float this
-    return t'4
-  else if sw'1 == (4 : Int32) then
-    let t'5 ← AP_ParamTBase'float_4.cast_to_float this
-    return t'5
-  else
-    return (Binary32.ofBits 0x7fc00000)
-
-/-- C++ `AP_Param::set_value : void (enum ap_var_type, void *, float)`, `AP_Param.cpp:1501-1519`. -/
-partial def AP_Param.set_value.body (fp : UInt64) (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
-  let mut type' := type'
-  let mut ptr' := ptr'
-  PMem.stF32 (fp + 0) value
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (1 : Int32) then
-    let t'2 ← PMem.ldF32 (fp + 0)
-    PMem.stI8 (fp + 4) (Binary32.toInt8 (t'2))
-    AP_ParamTBase'signed_char_1.set ptr' (fp + 4)
-  else if sw'1 == (2 : Int32) then
-    let t'3 ← PMem.ldF32 (fp + 0)
-    PMem.stI16 (fp + 6) (Binary32.toInt16 (t'3))
-    AP_ParamTBase'short_2.set ptr' (fp + 6)
-  else if sw'1 == (3 : Int32) then
-    let t'4 ← PMem.ldF32 (fp + 0)
-    PMem.stI32 (fp + 8) (Binary32.toInt32 (t'4))
-    AP_ParamTBase'int_3.set ptr' (fp + 8)
-  else if sw'1 == (4 : Int32) then
-    AP_ParamTBase'float_4.set ptr' (fp + 0)
-  else
-    pure ()
-  return ()
-
-partial def AP_Param.set_value (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
-  let fp ← PMem.enter 12
-  let r ← AP_Param.set_value.body fp type' ptr' value
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::set_float : void (float, enum ap_var_type)`, `AP_Param.cpp:2299-2329`. -/
-partial def AP_Param.set_float.body (fp : UInt64) (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
-  PMem.stF32 (fp + 0) value
-  let mut var_type := var_type
-  let t'1 ← PMem.ldF32 (fp + 0)
-  let mut sc'3 := (Binary32.isNaN t'1)
-  if !sc'3 then
-    let t'2 ← PMem.ldF32 (fp + 0)
-    sc'3 := (Binary32.isInf t'2)
+/-- C++ `AP_Param::group_id : uint32_t (const struct GroupInfo *, uint32_t, uint8_t, uint8_t)`, `AP_Param.cpp:201-213`. -/
+def AP_Param.group_id (grpinfo : UInt64) (base : UInt32) (i : UInt8) (shift : UInt8) : PMem.M UInt32 := do
+  let mut grpinfo := grpinfo
+  let mut base := base
+  let mut i := i
+  let mut shift := shift
+  let t'1 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+  let mut sc'3 := (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (shift))) != (0 : Int32)))
   if sc'3 then
-    return ()
-  let mut rounding_addition : Binary32 := (Binary32.ofBits 0x3c23d70a /- 999999977/100000000000 -/)
-  if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((4 : UInt32)))) then
-    AP_ParamTBase'float_4.set this (fp + 0)
-  else
-    if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((3 : UInt32)))) then
-      let t'4 ← PMem.ldF32 (fp + 0)
-      if (decide (t'4 < (Int32.toBinary32 ((0 : Int32))))) then
-        let t'5 := -rounding_addition
-        rounding_addition := t'5
-      let t'6 ← PMem.ldF32 (fp + 0)
-      let mut v : Binary32 := (t'6 + rounding_addition)
-      let t'7 ← constrain_value_line v (Int32.toBinary32 (((-(2147483647 : Int32)) - (1 : Int32)))) (Int32.toBinary32 ((2147483647 : Int32))) (Int32.toUInt32 ((2316 : Int32)))
-      v := t'7
-      PMem.stI32 (fp + 4) (Binary32.toInt32 (v))
-      AP_ParamTBase'int_3.set this (fp + 4)
-    else
-      if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((2 : UInt32)))) then
-        let t'8 ← PMem.ldF32 (fp + 0)
-        if (decide (t'8 < (Int32.toBinary32 ((0 : Int32))))) then
-          let t'9 := -rounding_addition
-          rounding_addition := t'9
-        let t'10 ← PMem.ldF32 (fp + 0)
-        let mut v'2 : Binary32 := (t'10 + rounding_addition)
-        let t'11 ← constrain_value_line v'2 (Int32.toBinary32 ((-(32768 : Int32)))) (Int32.toBinary32 ((32767 : Int32))) (Int32.toUInt32 ((2321 : Int32)))
-        v'2 := t'11
-        PMem.stI16 (fp + 8) (Binary32.toInt16 (v'2))
-        AP_ParamTBase'short_2.set this (fp + 8)
-      else
-        if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((1 : UInt32)))) then
-          let t'12 ← PMem.ldF32 (fp + 0)
-          if (decide (t'12 < (Int32.toBinary32 ((0 : Int32))))) then
-            let t'13 := -rounding_addition
-            rounding_addition := t'13
-          let t'14 ← PMem.ldF32 (fp + 0)
-          let mut v'3 : Binary32 := (t'14 + rounding_addition)
-          let t'15 ← constrain_value_line v'3 (Int32.toBinary32 ((-(128 : Int32)))) (Int32.toBinary32 ((127 : Int32))) (Int32.toUInt32 ((2326 : Int32)))
-          v'3 := t'15
-          PMem.stI8 (fp + 10) (Binary32.toInt8 (v'3))
-          AP_ParamTBase'signed_char_1.set this (fp + 10)
-  return ()
+    let t'2 ← PMem.ldU16 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 24)
+    sc'3 := !(((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32))
+  if sc'3 then
+    return (base + ((63 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
+  let t'4 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+  return (base + (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) <<< (UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
 
-partial def AP_Param.set_float (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 11
-  let r ← AP_Param.set_float.body fp this value var_type
-  PMem.leave fp
-  return r
+mutual
 
-/-- C++ `AP_Param::save_sync : void (bool, bool)`, `AP_Param.cpp:1158-1264`. -/
-partial def AP_Param.save_sync.body (fp : UInt64) (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
-  let mut force_save := force_save
-  let mut send_to_gcs := send_to_gcs
-  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  let mut ap : UInt64 := default  -- uninitialized in C
-  if (info' == (0 : UInt64)) then
-    return ()
-  AP_Param.Param_header.Param_header (fp + 48)
-  let t'2 ← PMem.ldU64 (fp + 8)
-  if (t'2 != (0 : UInt64)) then
-    let t'3 ← PMem.ldU64 (fp + 8)
-    let t'4 ← PMem.ldU8 (t'3 + 27)
-    let t'5 := UInt8.toUInt32 (t'4)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
-    let t'6 ← PMem.ldU64 (fp + 8)
-    let t'7 ← PMem.ldU16 (t'6 + 24)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
-      send_to_gcs := false
-  else
-    let t'8 ← PMem.ldU8 (info' + 28)
-    let t'9 := UInt8.toUInt32 (t'8)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'9))
-    let t'10 ← PMem.ldU16 (info' + 24)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'10))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
-      send_to_gcs := false
-  let t'11 ← PMem.ldU16 (info' + 26)
-  AP_Param.set_key (fp + 48) t'11
-  let t'12 ← PMem.ldU32 (fp + 0)
-  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'12))
-  ap := this
-  let t'13 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'15 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'13)))) != (UInt32.toInt32 ((5 : UInt32))))
-  if sc'15 then
-    let t'14 ← PMem.ldU8 (fp + 40)
-    sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'14))) != (0 : Int32))
-  if sc'15 then
-    return ()
-  let t'16 ← PMem.ldU8 (fp + 40)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'16))) != (0 : Int32)) then
-    let t'17 ← PMem.ldU8 (fp + 40)
-    let t'18 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'17)) * (4 : UInt64)))) * 1).toUInt64)
-    ap := t'18
-  let t'19 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'21 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (UInt32.toInt32 ((1 : UInt32))))
-  if sc'21 then
-    let t'20 ← PMem.ldU64 (fp + 8)
-    sc'21 := (t'20 != (0 : UInt64))
-  let mut sc'24 := sc'21
-  if sc'24 then
-    let t'22 ← PMem.ldU64 (fp + 8)
-    let t'23 ← PMem.ldU16 (t'22 + 24)
-    sc'24 := ((UInt32.toInt32 (UInt16.toUInt32 (t'23))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
-  if sc'24 then
-    AP_Param.invalidate_count
-  let t'25 ← PMem.ldU64 (fp + 8)
-  let t'26 ← PMem.ldU8 (fp + 40)
-  AP_Param.copy_name_info this info' t'25 (fp + 16) t'26 (fp + 56) (17 : UInt64) true
-  let t'27 ← AP_Param.scan (fp + 48) (fp + 80)
-  if t'27 then
-    let t'28 ← PMem.ldU16 (fp + 80)
-    let t'29 ← PMem.ldBits (fp + 48) 8 5
-    let t'30 ← AP_Param.type_size (UInt64.toUInt32 (t'29))
-    AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'28)) + (4 : UInt64)))) t'30
-    if send_to_gcs then
-      let t'31 ← PMem.ldBits (fp + 48) 8 5
-      let t'32 ← PMem.ldU8 (fp + 40)
-      AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'31)) t'32
-    return ()
-  let t'33 ← PMem.ldU16 (fp + 80)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'33))) == (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 ((~~~(0 : Int32))))))))) then
-    PMem.stB (0xbab8 : UInt64) /- &AP_Param::eeprom_full -/ true
-    let mut first'34 := true
-    repeat
-      if !first'34 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'34 := false
-    return ()
-  let t'35 ← PMem.ldBits (fp + 48) 8 5
-  if (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'35)))) ≤ (UInt32.toInt32 ((4 : UInt32))))) then
-    let t'36 ← PMem.ldBits (fp + 48) 8 5
-    let t'37 ← AP_Param.cast_to_float this (UInt64.toUInt32 (t'36))
-    let mut v1 : Binary32 := t'37
-    let mut v2 : Binary32 := default  -- uninitialized in C
-    let t'38 ← PMem.ldU64 (fp + 8)
-    if (t'38 != (0 : UInt64)) then
-      let t'39 ← PMem.ldU64 (fp + 8)
-      let t'40 ← AP_Param.get_default_value'2 this t'39
-      v2 := t'40
-    else
-      let t'41 ← AP_Param.get_default_value this info'
-      v2 := t'41
-    let t'42 ← is_equal v1 v2
-    if (t'42 && (!force_save)) then
-      if send_to_gcs then
-        pure ()
-      return ()
-    let mut sc'44 := !force_save
-    if sc'44 then
-      let t'43 ← PMem.ldBits (fp + 48) 8 5
-      sc'44 := (((UInt32.toInt32 ((UInt64.toUInt32 (t'43)))) != (UInt32.toInt32 ((3 : UInt32)))) && (decide ((Binary32.abs (v1 - v2)) < ((Binary32.ofBits 0x38d1b717 /- 499999987/5000000000000 -/) * (Binary32.abs v1)))))
-    if sc'44 then
-      if send_to_gcs then
-        pure ()
-      return ()
-  let t'45 ← PMem.ldU16 (fp + 80)
-  let t'46 ← PMem.ldBits (fp + 48) 8 5
-  let t'47 ← AP_Param.type_size (UInt64.toUInt32 (t'46))
-  let t'48 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
-  if (decide (((Int64.toUInt64 (Int32.toInt64 (((UInt32.toInt32 (UInt16.toUInt32 (t'45))) + (UInt32.toInt32 (UInt8.toUInt32 (t'47))))))) + ((Int64.toUInt64 (Int32.toInt64 ((2 : Int32)))) * (4 : UInt64))) ≥ (UInt16.toUInt64 (t'48)))) then
-    PMem.stB (0xbab8 : UInt64) /- &AP_Param::eeprom_full -/ true
-    let mut first'49 := true
-    repeat
-      if !first'49 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'49 := false
-    return ()
-  let t'50 ← PMem.ldU16 (fp + 80)
-  let t'51 ← PMem.ldBits (fp + 48) 8 5
-  let t'52 ← AP_Param.type_size (UInt64.toUInt32 (t'51))
-  AP_Param.write_sentinel (UInt64.toUInt16 ((((UInt16.toUInt64 (t'50)) + (4 : UInt64)) + (UInt8.toUInt64 (t'52)))))
-  let t'53 ← PMem.ldU16 (fp + 80)
-  let t'54 ← PMem.ldBits (fp + 48) 8 5
-  let t'55 ← AP_Param.type_size (UInt64.toUInt32 (t'54))
-  AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'53)) + (4 : UInt64)))) t'55
-  let t'56 ← PMem.ldU16 (fp + 80)
-  AP_Param.eeprom_write_check (fp + 48) t'56 (UInt64.toUInt8 ((4 : UInt64)))
-  if send_to_gcs then
-    let t'57 ← PMem.ldBits (fp + 48) 8 5
-    let t'58 ← PMem.ldU8 (fp + 40)
-    AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'57)) t'58
-  return ()
-
-partial def AP_Param.save_sync (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
-  let fp ← PMem.enter 82
-  let r ← AP_Param.save_sync.body fp this force_save send_to_gcs
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_key_by_pointer : bool (const void *, uint16_t &)`, `AP_Param.cpp:1070-1092`. -/
-partial def AP_Param.find_key_by_pointer (ptr' : UInt64) (key : UInt64) : PMem.M Bool := do
+/-- C++ `AP_Param::find_by_header_group : const struct AP_Param::Info *(struct Param_header, void **, uint16_t, const struct GroupInfo *, uint32_t, uint8_t, ptrdiff_t)`, `AP_Param.cpp:461-508`. -/
+def AP_Param.find_by_header_group.body'rec (rec'depth : Nat) (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut ptr' := ptr'
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut vindex := vindex
+  let mut group_info := group_info
+  let mut group_base := group_base
+  let mut group_shift := group_shift
+  let mut group_offset := group_offset
+  let mut type' : UInt8 := default  -- uninitialized in C
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
       i := t'3
       pure ()
     first'1 := false
-    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← AP_Param.var_info i
-    let info' : UInt64 := t'5
-    let t'6 ← PMem.ldU8 (info' + 28)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) != (UInt32.toInt32 ((6 : UInt32)))) then
-      continue
-    let t'7 ← PMem.ldU16 (info' + 24)
-    let mut sc'10 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
-    if sc'10 then
-      let t'8 ← PMem.ldU64 (info' + 8)
-      let t'9 ← PMem.ldU64 t'8
-      sc'10 := (ptr' == t'9)
-    if sc'10 then
-      let t'11 ← PMem.ldU16 (info' + 26)
-      PMem.stU16 key t'11
-      return true
-    let mut offset : Int64 := Int32.toInt64 ((0 : Int32))
-    let t'12 ← AP_Param.get_group_info info'
-    let mut ginfo : UInt64 := t'12
-    if (ginfo == (0 : UInt64)) then
-      continue
-    let t'13 ← AP_Param.find_key_by_pointer_group ptr' i ginfo offset key
-    if t'13 then
-      return true
-  return false
-
-/-- C++ `AP_Param::load_object_from_eeprom : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1705-1761`. -/
-partial def AP_Param.load_object_from_eeprom.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
-  let mut object_pointer := object_pointer
-  let mut group_info := group_info
-  AP_Param.Param_header.Param_header (fp + 0)
-  let t'1 ← AP_Param.find_key_by_pointer object_pointer (fp + 8)
-  if !t'1 then
-    let mut first'2 := true
-    repeat
-      if !first'2 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'2 := false
-    return ()
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'3 := true
-  repeat
-    if !first'3 then
-      let t'4 := i
-      let t'5 := (t'4 + 1)
-      i := t'5
-      pure ()
-    first'3 := false
-    let t'6 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'6))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'7 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'7))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      PMem.stI64 (fp + 16) (Int32.toInt64 ((0 : Int32)))
-      let t'8 ← PMem.ldU16 (fp + 8)
-      let t'9 ← AP_Param.adjust_group_offset t'8 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 16)
-      if !t'9 then
+    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'4
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        return (0 : UInt64)
+      let t'5 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'5
+      if (ginfo == (0 : UInt64)) then
         continue
-      let t'10 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'10
-      if (ginfo != (0 : UInt64)) then
-        let t'11 ← PMem.ldI64 (fp + 16)
-        AP_Param.load_object_from_eeprom (Int64.toUInt64 (((UInt64.toInt64 (object_pointer)) + t'11))) ginfo
-    let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-    repeat
-      let t'12 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
-      if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'12)))))) then break
-      let t'13 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
-      discard <| pure (t'13)
-      let t'14 ← AP_Param.is_sentinel (fp + 0)
-      if t'14 then
-        PMem.stU16 (0xba98 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
-        break
-      let t'15 ← AP_Param.get_key (fp + 0)
-      let t'16 ← PMem.ldU16 (fp + 8)
-      if ((UInt32.toInt32 (UInt16.toUInt32 (t'15))) == (UInt32.toInt32 (UInt16.toUInt32 (t'16)))) then
-        let mut info' : UInt64 := default  -- uninitialized in C
-        AP_Param.Param_header.Param_header'2 (fp + 32) (fp + 0)
-        let t'17 ← AP_Param.find_by_header (fp + 32) (fp + 24)
-        info' := t'17
-        if (info' != (0 : UInt64)) then
-          let t'18 ← PMem.ldU64 (fp + 24)
-          let t'19 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-          if ((UInt64.toInt64 (t'18)) == ((UInt64.toInt64 (object_pointer)) + t'19)) then
-            let t'20 ← PMem.ldU64 (fp + 24)
-            let t'21 ← PMem.ldBits (fp + 0) 8 5
-            let t'22 ← AP_Param.type_size (UInt64.toUInt32 (t'21))
-            let t'23 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ t'20 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'22))
-            discard <| pure (t'23)
-            break
-      let t'24 ← PMem.ldBits (fp + 0) 8 5
-      let t'25 ← AP_Param.type_size (UInt64.toUInt32 (t'24))
-      let t'26 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'25)) + (4 : UInt64)))))
-      ofs := t'26
-  let t'27 ← PMem.ldB (0xbac0 : UInt64) /- &AP_Param::done_all_default_params -/
-  if !t'27 then
-    AP_Param.reload_defaults_file false
-  AP_Param.invalidate_count
-  return ()
+      PMem.stI64 (fp + 0) group_offset
+      let t'6 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 0)
+      if !t'6 then
+        continue
+      AP_Param.Param_header.Param_header'2 (fp + 8) phdr
+      let t'7 ← AP_Param.group_id group_info group_base i group_shift
+      let t'8 ← PMem.ldI64 (fp + 0)
+      let t'9 ← AP_Param.find_by_header_group'rec rec'd (fp + 8) ptr' vindex ginfo t'7 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'8
+      let mut ret : UInt64 := t'9
+      if (ret != (0 : UInt64)) then
+        return ret
+      continue
+    let t'10 ← AP_Param.group_id group_info group_base i group_shift
+    let t'11 ← PMem.ldBits phdr 14 18
+    let mut sc'13 := (t'10 == (UInt64.toUInt32 (t'11)))
+    if sc'13 then
+      let t'12 ← PMem.ldBits phdr 8 5
+      sc'13 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((UInt64.toUInt32 (t'12)))))
+    if sc'13 then
+      let t'14 ← AP_Param.var_info vindex
+      let t'15 ← AP_Param.get_base t'14 (fp + 16)
+      if !t'15 then
+        continue
+      let t'16 ← PMem.ldI64 (fp + 16)
+      let t'17 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+      let t'18 := Int64.toUInt64 (((t'16 + t'17) + group_offset))
+      PMem.stU64 ptr' t'18
+      let t'19 ← AP_Param.var_info vindex
+      return t'19
+  return (0 : UInt64)
 
-partial def AP_Param.load_object_from_eeprom (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 36
-  let r ← AP_Param.load_object_from_eeprom.body fp object_pointer group_info
+def AP_Param.find_by_header_group'rec (rec'depth : Nat) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 24
+  let r ← AP_Param.find_by_header_group.body'rec rec'd fp phdr ptr' vindex group_info group_base group_shift group_offset
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::set_frame_type_flags : void (uint16_t)`, `AP_Param.h:599-602`. -/
-partial def AP_Param.set_frame_type_flags (flags_to_set : UInt16) : PMem.M Unit := do
-  let mut flags_to_set := flags_to_set
-  AP_Param.invalidate_count
-  let t'1 := (0xbac8 : UInt64) /- &AP_Param::_frame_type_flags -/
-  let t'2 ← PMem.ldU16 t'1
-  let t'3 := (t'2 ||| (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (flags_to_set)))))))
-  PMem.stU16 t'1 t'3
-  return ()
+end
 
-/-- C++ `AP_Param::type_size : uint8_t (enum ap_var_type)`, `AP_Param.cpp:702-721`. -/
-partial def AP_Param.type_size (type' : UInt32) : PMem.M UInt8 := do
-  let mut type' := type'
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (0 : Int32) || sw'1 == (6 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  else if sw'1 == (1 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  else if sw'1 == (2 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
-  else if sw'1 == (3 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  else if sw'1 == (4 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  else if sw'1 == (5 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 (((3 : Int32) * (4 : Int32))))
-  else
-    pure ()
-  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+/-- `AP_Param.find_by_header_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_by_header_group.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 :=
+  AP_Param.find_by_header_group.body'rec 64 fp phdr ptr' vindex group_info group_base group_shift group_offset
 
-/-- C++ `AP_Param::AP_Param : void (const struct Info *)`, `AP_Param.h:263-276`. -/
-partial def AP_Param.AP_Param (this : UInt64) (info' : UInt64) : PMem.M Unit := do
-  let mut info' := info'
-  PMem.stU64 (0xbad0 : UInt64) /- &AP_Param::_var_info -/ info'
-  let mut i : UInt16 := default  -- uninitialized in C
-  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  i := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := i
-      let t'4 := (t'3 + 1)
-      i := t'4
-      pure ()
-    first'2 := false
-    let t'5 ← PMem.ldU8 ((info' + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64) + 28)
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-  PMem.stU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/ i
-  let t'6 ← PMem.ldU64 (0xbad8 : UInt64) /- &AP_Param::_singleton -/
-  if (t'6 != (0 : UInt64)) then
-    pure ()
-  PMem.stU64 (0xbad8 : UInt64) /- &AP_Param::_singleton -/ this
-  return ()
-
-/-- C++ `AP_Param::AP_Param : void ()`, `AP_Param.h:279-?`. -/
-partial def AP_Param.AP_Param'2 (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `StorageAccess::StorageAccess : void (StorageManager::StorageType)`, `StorageManager.cpp:119-133`. -/
-partial def StorageAccess.StorageAccess (this : UInt64) (_type : UInt32) : PMem.M Unit := do
-  let mut _type := _type
-  PMem.stU32 (this + 0) _type
-  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  PMem.stU16 (this + 4) t'1
-  PMem.stU64 (this + 8) (0 : UInt64)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := i
-      let t'4 := (t'3 + 1)
-      i := t'4
-      pure ()
-    first'2 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-    let t'5 ← PMem.ldU32 area
-    let t'6 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'5)) == (UInt32.toInt32 (t'6))) then
-      let t'7 := (this + 4)
-      let t'8 ← PMem.ldU16 t'7
-      let t'9 ← PMem.ldU16 (area + 6)
-      let t'10 := (t'8 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (t'9)))))))
-      PMem.stU16 t'7 t'10
-  return ()
-
-/-- C++ `StorageManager::erase : void ()`, `StorageManager.cpp:109-114`. -/
-partial def StorageManager.erase  : PMem.M Unit := do
-  let t'1 ← AP_HAL.Storage.erase (0 : UInt64)
-  if !t'1 then
-    pure ()
-  return ()
-
-/-- C++ `AP_Param::invalidate_count : void ()`, `AP_Param.cpp:2787-2793`. -/
-partial def AP_Param.invalidate_count  : PMem.M Unit := do
-  let t'1 := (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
-  let t'2 ← PMem.ldU16 t'1
-  let t'3 := (t'2 + 1)
-  PMem.stU16 t'1 t'3
-  return ()
-
-/-- C++ `AP_ParamTBase<short, 2>::set_and_save : void (const short &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI16 this
-  let t'2 ← PMem.ldI16 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int16.toInt32 (t'1)) - (Int16.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'short_2.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<short, 2>::set_default : void (const short &)`, `AP_ParamT.cpp:45-52`. -/
-partial def AP_ParamTBase'short_2.set_default (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← default_as_float v
-  AP_Param.add_default this t'1
-  let t'2 ← AP_Param.configured this
-  if !t'2 then
-    AP_ParamTBase'short_2.set this v
-  return ()
-
-/-- C++ `AP_ParamTBase<float, 4>::set_and_save : void (const float &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'float_4.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 this
-  let t'2 ← PMem.ldF32 v
-  let mut force : Bool := (decide ((Binary32.abs (t'1 - t'2)) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'float_4.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<signed char, 1>::set_and_save : void (const signed char &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'signed_char_1.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI8 this
-  let t'2 ← PMem.ldI8 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int8.toInt32 (t'1)) - (Int8.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'signed_char_1.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<int, 3>::set_and_save : void (const int &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'int_3.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI32 this
-  let t'2 ← PMem.ldI32 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 ((t'1 - t'2)))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'int_3.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
+/-- `AP_Param.find_by_header_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_by_header_group (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 :=
+  AP_Param.find_by_header_group'rec 64 phdr ptr' vindex group_info group_base group_shift group_offset
 
 /-- C++ `AP_Param::find_by_header : const struct AP_Param::Info *(struct Param_header, void **)`, `AP_Param.cpp:512-541`. -/
-partial def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
   let mut ptr' := ptr'
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -2983,19 +2467,98 @@ partial def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : U
       return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_by_header (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_by_header (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 16
   let r ← AP_Param.find_by_header.body fp phdr ptr'
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::is_sentinel : bool (const Param_header &)`, `AP_Param.cpp:760-777`. -/
+def AP_Param.is_sentinel (phdr : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldBits phdr 8 5
+  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8)))))
+  if !sc'3 then
+    let t'2 ← AP_Param.get_key phdr
+    sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 ((511 : UInt16)))))
+  if sc'3 then
+    return true
+  let t'4 ← PMem.ldU32 phdr
+  let mut v : UInt32 := t'4
+  if ((v == (Int32.toUInt32 ((0 : Int32)))) || (v == (4294967295 : UInt32))) then
+    return true
+  return false
+
+/-- `AP_Param.Param_header.Param_header` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.Param_header.Param_header.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param::Param_header::Param_header : void () noexcept`, `AP_Param.h:669-?`. -/
+def AP_Param.Param_header.Param_header (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Param.Param_header.Param_header.pure' this)
+
+/-- `AP_Param.reload_defaults_file` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.reload_defaults_file.pure' (last_pass : Bool) : Id Unit := do
+  let mut last_pass := last_pass
+  let mut default_file : UInt64 := (0 : UInt64)
+  if (default_file != 0) then
+    -- AP_Param::load_defaults_file_from_filesystem: dropped (configuration)
+  return ()
+
+/-- C++ `AP_Param::reload_defaults_file : void (bool)`, `AP_Param.cpp:1629-1657`. -/
+def AP_Param.reload_defaults_file (last_pass : Bool) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Param.reload_defaults_file.pure' last_pass)
+
+/-- C++ `StorageAccess::size : uint16_t () const`, `StorageManager.h:97-?`. -/
+def StorageAccess.size (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (this + 4)
+  return t'1
+
+/-- C++ `AP_Param::load_all : bool ()`, `AP_Param.cpp:1588-1622`. -/
+def AP_Param.load_all.body (fp : UInt64)  : PMem.M Bool := do
+  AP_Param.Param_header.Param_header (fp + 0)
+  let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
+  AP_Param.reload_defaults_file false
+  let t'1 ← PMem.ldB (0xba80 : UInt64) /- &AP_Param::registered_save_handler -/
+  if !t'1 then
+    PMem.stB (0xba80 : UInt64) /- &AP_Param::registered_save_handler -/ true
+  for _ in PMem.loopFuel do
+    let t'2 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))) then break
+    let t'3 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
+    discard <| pure (t'3)
+    let t'4 ← AP_Param.is_sentinel (fp + 0)
+    if t'4 then
+      PMem.stU16 (0xba98 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
+      return true
+    let mut info' : UInt64 := default  -- uninitialized in C
+    AP_Param.Param_header.Param_header'2 (fp + 16) (fp + 0)
+    let t'5 ← AP_Param.find_by_header (fp + 16) (fp + 8)
+    info' := t'5
+    if (info' != (0 : UInt64)) then
+      let t'6 ← PMem.ldU64 (fp + 8)
+      let t'7 ← PMem.ldBits (fp + 0) 8 5
+      let t'8 ← AP_Param.type_size (UInt64.toUInt32 (t'7))
+      let t'9 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ t'6 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'8))
+      discard <| pure (t'9)
+    let t'10 ← PMem.ldBits (fp + 0) 8 5
+    let t'11 ← AP_Param.type_size (UInt64.toUInt32 (t'10))
+    let t'12 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'11)) + (4 : UInt64)))))
+    ofs := t'12
+  return false
+
+def AP_Param.load_all  : PMem.M Bool := do
+  let fp ← PMem.enter 20
+  let r ← AP_Param.load_all.body fp 
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::scan : bool (const AP_Param::Param_header *, uint16_t *)`, `AP_Param.cpp:784-808`. -/
-partial def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
+def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
   let mut target := target
   let mut pofs := pofs
   AP_Param.Param_header.Param_header (fp + 0)
   let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-  repeat
+  for _ in PMem.loopFuel do
     let t'1 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
     if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'1)))))) then break
     let t'2 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
@@ -3028,867 +2591,129 @@ partial def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) :
   PMem.stU16 pofs t'15
   return false
 
-partial def AP_Param.scan (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
+def AP_Param.scan (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 4
   let r ← AP_Param.scan.body fp target pofs
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::is_sentinel : bool (const Param_header &)`, `AP_Param.cpp:760-777`. -/
-partial def AP_Param.is_sentinel (phdr : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldBits phdr 8 5
-  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8)))))
-  if !sc'3 then
-    let t'2 ← AP_Param.get_key phdr
-    sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 ((511 : UInt16)))))
-  if sc'3 then
-    return true
-  let t'4 ← PMem.ldU32 phdr
-  let mut v : UInt32 := t'4
-  if ((v == (Int32.toUInt32 ((0 : Int32)))) || (v == (4294967295 : UInt32))) then
-    return true
-  return false
+mutual
 
-/-- C++ `AC_CommandModel::AC_CommandModel : void (float, float, float)`, `AC_CommandModel.cpp:42-48`. -/
-partial def AC_CommandModel.AC_CommandModel (this : UInt64) (initial_rate : Binary32) (initial_expo : Binary32) (initial_tc : Binary32) : PMem.M Unit := do
-  let mut initial_rate := initial_rate
-  let mut initial_expo := initial_expo
-  let mut initial_tc := initial_tc
-  PMem.stF32 (this + 12) initial_tc
-  PMem.stF32 (this + 16) initial_rate
-  PMem.stF32 (this + 20) initial_expo
-  AP_Param.setup_object_defaults this (0x7668 : UInt64) /- &AC_CommandModel::var_info -/
-  return ()
-
-/-- C++ `SRV_Channels::SRV_Channels : void ()`, `SRV_Channels.cpp:344-362`. -/
-partial def SRV_Channels.SRV_Channels.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  PMem.stU64 (0xbb58 : UInt64) /- &SRV_Channels::_singleton -/ this
-  let t'1 := (this + 4)
-  PMem.stU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/ t'1
-  AP_Param.setup_object_defaults this (0x6c90 : UInt64) /- &SRV_Channels::var_info -/
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := i
-      let t'4 := (t'3 + 1)
-      i := t'4
-      pure ()
-    first'2 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (32 : Int32)))) then break
-    let t'5 ← PMem.ldU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/
-    PMem.stU8 ((t'5 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 13) i
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) ≥ (16 : Int32))) then
-      PMem.stI16 (fp + 0) (Int32.toInt16 ((-1 : Int32)))
-      let t'6 ← PMem.ldU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/
-      AP_ParamTBase'short_2.set_default ((t'6 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 8) (fp + 0)
-  return ()
-
-partial def SRV_Channels.SRV_Channels (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← SRV_Channels.SRV_Channels.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::update_receive : void ()`, `GCS_Common.cpp:2795-2802`. -/
-partial def GCS.update_receive (this : UInt64) : PMem.M Unit := do
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← GCS.num_gcs this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'4)))))) then break
-    let t'5 ← GCS_Copter.chan this i
-    GCS_MAVLINK.update_receive t'5 (Int32.toUInt32 ((1000 : Int32)))
-  -- GCS::update_passthru: dropped (configuration)
-  return ()
-
-/-- C++ `GCS::update_send : void ()`, `GCS_Common.cpp:2743-2793`. -/
-partial def GCS.update_send (this : UInt64) : PMem.M Unit := do
-  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 160)
-  let t'2 ← PMem.ldU32 t'1
-  PMem.stU32 (0xbb68 : UInt64) /- &mavlink_system -/ t'2
-  PMem.stB (this + 473) true
-  let t'3 ← PMem.ldB (this + 472)
-  if !t'3 then
-    PMem.stB (this + 472) true
-    let t'4 ← PMem.alloc 56
-    let t'5 ← AP.mission
-    MissionItemProtocol_Waypoints.MissionItemProtocol_Waypoints t'4 t'5
-    PMem.stU64 ((0xbb70 : UInt64) /- &GCS::missionitemprotocols -/ + ((UInt64.toInt64 (UInt32.toUInt64 ((0 : UInt32)))) * 8).toUInt64) t'4
-  let __range1 : UInt64 := (0xbb70 : UInt64) /- &GCS::missionitemprotocols -/
-  let mut __begin1 : UInt64 := __range1
-  let mut __end1 : UInt64 := (__range1 + ((3 : Int64) * 8).toUInt64)
-  let mut first'6 := true
-  repeat
-    if !first'6 then
-      let t'7 := (__begin1 + 8)
-      __begin1 := t'7
-      pure ()
-    first'6 := false
-    if !((__begin1 != __end1)) then break
-    let t'8 ← PMem.ldU64 __begin1
-    let mut prot : UInt64 := t'8
-    if (prot == (0 : UInt64)) then
-      continue
-    MissionItemProtocol.update prot
-  let t'9 ← PMem.ldU8 (this + 536)
-  let mut i : UInt8 := t'9
-  let mut first'10 := true
-  repeat
-    if !first'10 then
-      let t'11 := i
-      let t'12 := (t'11 + 1)
-      i := t'12
-      pure ()
-    first'10 := false
-    let t'13 ← GCS.num_gcs this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'13)))))) then break
-    let t'14 ← GCS_Copter.chan this i
-    GCS_MAVLINK.update_send t'14
-  let mut i'2 : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'15 := true
-  repeat
-    if !first'15 then
-      let t'16 := i'2
-      let t'17 := (t'16 + 1)
-      i'2 := t'17
-      pure ()
-    first'15 := false
-    let t'18 ← PMem.ldU8 (this + 536)
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i'2))) < (UInt32.toInt32 (UInt8.toUInt32 (t'18)))))) then break
-    let t'19 ← GCS_Copter.chan this i'2
-    GCS_MAVLINK.update_send t'19
-  PMem.statustexts this
-  let t'20 := (this + 536)
-  let t'21 ← PMem.ldU8 t'20
-  let t'22 := (t'21 + 1)
-  PMem.stU8 t'20 t'22
-  let t'23 ← PMem.ldU8 (this + 536)
-  let t'24 ← GCS.num_gcs this
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'23))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'24))))) then
-    let t'25 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    PMem.stU8 (this + 536) t'25
-  return ()
-
-/-- C++ `GCS_MAVLINK::GCS_MAVLINK : void (AP_HAL::UARTDriver &)`, `GCS_Common.cpp:136-141`. -/
-partial def GCS_MAVLINK.GCS_MAVLINK (this : UInt64) (uart : UInt64) : PMem.M Unit := do
-  PMem.stU16 (this + 12) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
-  PMem.stU16 ((this + 72) + 20) (Int16.toUInt16 (Int32.toInt16 ((10000 : Int32))))
-  PMem.stBits (this + 104) 104 24 (UInt32.toUInt64 ((Int32.toUInt32 ((24 : Int32)))))
-  PMem.stU8 (((this + 506) + 0) + 0) (0 : UInt8)
-  discard <| PMem.memset (((this + 506) + 0) + 2) 0 2
-  discard <| PMem.memset (((this + 506) + 0) + 4) 0 2
-  PMem.stU8 (((this + 506) + 6) + 0) (31 : UInt8)
-  discard <| PMem.memset (((this + 506) + 6) + 2) 0 2
-  discard <| PMem.memset (((this + 506) + 6) + 4) 0 2
-  PMem.stI8 (this + 524) (Int32.toInt8 ((-(1 : Int32))))
-  PMem.stU8 (this + 728) (255 : UInt8)
-  JitterCorrection.JitterCorrection (this + 808) (Int16.toUInt16 (Int32.toInt16 ((500 : Int32)))) (Int16.toUInt16 (Int32.toInt16 ((100 : Int32))))
-  AP_Param.setup_object_defaults this (0xbb88 : UInt64) /- &GCS_MAVLINK::var_info -/
-  PMem.stU64 (this + 480) uart
-  return ()
-
-/-- C++ `GCS_MAVLINK::param_io_timer : void ()`, `GCS_Param.cpp:375-425`. -/
-partial def GCS_MAVLINK.param_io_timer.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  GCS_MAVLINK.pending_param_request.pending_param_request (fp + 0)
-  let t'1 ← AP_Param.count_parameters
-  discard <| pure (t'1)
-  let t'2 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.space (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/
-  if (t'2 == (Int32.toUInt32 ((0 : Int32)))) then
-    return ()
-  let t'3 ← ObjectBuffer'GCS_MAVLINK_pending_param_request.pop (0xbe00 : UInt64) /- &GCS_MAVLINK::param_requests -/ (fp + 0)
-  if !t'3 then
-    return ()
-  GCS_MAVLINK.pending_param_reply.pending_param_reply (fp + 32)
-  let mut vp : UInt64 := default  -- uninitialized in C
-  let t'4 ← PMem.ldI16 ((fp + 0) + 4)
-  if ((Int16.toInt32 (t'4)) != (-(1 : Int32))) then
-    PMem.stBits (fp + 80) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 80) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 80) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 80) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
-    let t'5 ← PMem.ldI16 ((fp + 0) + 4)
-    let t'6 ← AP_Param.find_by_index (Int16.toUInt16 (t'5)) ((fp + 32) + 8) (fp + 80)
-    vp := t'6
-    if (vp != (0 : UInt64)) then
-      AP_Param.copy_name_token vp (fp + 80) ((fp + 32) + 16) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) true
-    else
-      let t'7 ← PMem.memset ((fp + 32) + 16) (Int8.toInt32 ((0 : Int8))) (17 : UInt64)
-      discard <| pure (t'7)
-  else
-    let t'8 ← PMem.strncpy ((fp + 32) + 16) ((fp + 0) + 6) (Int64.toUInt64 (Int32.toInt64 (((16 : Int32) + (1 : Int32)))))
-    discard <| pure (t'8)
-    let t'9 ← AP_Param.find ((fp + 0) + 6) ((fp + 32) + 8) (0 : UInt64)
-    vp := t'9
-  let t'10 ← PMem.ldU32 (fp + 0)
-  PMem.stU32 (fp + 32) t'10
-  let t'11 ← PMem.ldU32 ((fp + 0) + 24)
-  PMem.stU32 ((fp + 32) + 36) t'11
-  let t'12 ← PMem.ldU8 ((fp + 0) + 28)
-  PMem.stU8 ((fp + 32) + 40) t'12
-  let t'13 := Int32.toInt8 ((0 : Int32))
-  PMem.stI8 (((fp + 32) + 16) + ((Int32.toInt64 ((16 : Int32))) * 1).toUInt64) t'13
-  if (vp != (0 : UInt64)) then
-    let t'14 ← PMem.ldU32 ((fp + 32) + 8)
-    let t'15 ← AP_Param.cast_to_float vp t'14
-    PMem.stF32 ((fp + 32) + 4) t'15
-    PMem.stU32 ((fp + 32) + 44) (0 : UInt32)
-  else
-    let t'16 ← PMem.ldF32 (0xbe10 : UInt64) /- &NaNf -/
-    PMem.stF32 ((fp + 32) + 4) t'16
-    PMem.stU32 ((fp + 32) + 44) (1 : UInt32)
-  let t'17 ← PMem.ldI16 ((fp + 0) + 4)
-  PMem.stI16 ((fp + 32) + 12) t'17
-  let t'18 ← AP_Param.count_parameters
-  PMem.stU16 ((fp + 32) + 14) t'18
-  let t'19 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.push (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/ (fp + 32)
-  discard <| pure (t'19)
-  return ()
-
-partial def GCS_MAVLINK.param_io_timer (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 84
-  let r ← GCS_MAVLINK.param_io_timer.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::init : void ()`, `GCS.cpp:273-279`. -/
-partial def GCS.init (this : UInt64) : PMem.M Unit := do
-  GCS.convert_parameters this
-  let t'1 ← GCS.sysid_this_mav this
-  PMem.stU32 (0xbb68 : UInt64) /- &mavlink_system -/ t'1
-  return ()
-
-/-- C++ `GCS::setup_console : void ()`, `GCS_Common.cpp:2812-2825`. -/
-partial def GCS.setup_console (this : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.findSerial (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
-  let mut uart : UInt64 := t'1
-  if (uart == (0 : UInt64)) then
-    return ()
-  if (((128 : UInt64) / (8 : UInt64)) == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
-    return ()
-  let t'2 ← GCS.create_gcs_mavlink_backend this uart
-  if !t'2 then
-    pure ()
-  return ()
-
-/-- C++ `GCS::setup_uarts : void ()`, `GCS_Common.cpp:2852-2885`. -/
-partial def GCS.setup_uarts (this : UInt64) : PMem.M Unit := do
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (255 : Int32)))) then break
-    let t'4 ← PMem.findSerial i
-    let mut uart : UInt64 := t'4
-    if (uart == (0 : UInt64)) then
-      return ()
-    let t'5 ← GCS.create_gcs_mavlink_backend this uart
-    if !t'5 then
-      pure ()
-  return ()
-
-/-- C++ `AP_Vehicle::scheduler_delay_callback : void ()`, `AP_Vehicle.cpp:738-780`. -/
-partial def AP_Vehicle.scheduler_delay_callback  : PMem.M Unit := do
-  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let t'1 ← PMem.ldU32 (0xbe18 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_1hz -/
-  if (decide ((tnow - t'1) > (Int32.toUInt32 ((1000 : Int32))))) then
-    PMem.stU32 (0xbe18 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_1hz -/ tnow
-    let t'2 ← gcs
-    GCS.send_message t'2 (0 : UInt8)
-    let t'3 ← gcs
-    GCS.send_message t'3 (7 : UInt8)
-  let t'4 ← PMem.ldU32 (0xbe20 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_50hz -/
-  if (decide ((tnow - t'4) > (Int32.toUInt32 ((20 : Int32))))) then
-    PMem.stU32 (0xbe20 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_50hz -/ tnow
-    let t'5 ← gcs
-    GCS.update_receive t'5
-    let t'6 ← gcs
-    GCS.update_send t'6
-  let t'7 ← PMem.ldU32 (0xbe28 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_5s -/
-  if (decide ((tnow - t'7) > (Int32.toUInt32 ((5000 : Int32))))) then
-    PMem.stU32 (0xbe28 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_5s -/ tnow
-    if false then
-      pure ()
-    else
-      pure ()
-  return ()
-
-/-- C++ `GCS::send_message : void (enum ap_message)`, `GCS_Common.cpp:2730-2741`. -/
-partial def GCS.send_message (this : UInt64) (id : UInt8) : PMem.M Unit := do
-  let mut id := id
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← GCS.num_gcs this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'4)))))) then break
-    let t'5 ← GCS_Copter.chan this i
-    let link : UInt64 := t'5
-    let t'6 ← GCS_MAVLINK.is_unicast link
-    if (t'6 && ((UInt32.toInt32 (UInt8.toUInt32 (id))) != (UInt32.toInt32 (UInt8.toUInt32 ((0 : UInt8)))))) then
-      continue
-    GCS_MAVLINK.send_message link id
-  return ()
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::ObjectBuffer : void (uint32_t)`, `AP_Common.h:114-121`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_request.ObjectBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
-  let mut _size := _size
-  PMem.stU64 (this + 0) (0 : UInt64)
-  PMem.stB (this + 8) true
-  let t'1 ← PMem.alloc 24
-  ByteBuffer.ByteBuffer t'1 (UInt64.toUInt32 (((UInt32.toUInt64 ((_size + (Int32.toUInt32 ((1 : Int32)))))) * (32 : UInt64))))
-  PMem.stU64 this t'1
-  PMem.stB (this + 8) false
-  return ()
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::ObjectBuffer : void (uint32_t)`, `AP_Common.h:114-121`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_reply.ObjectBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
-  let mut _size := _size
-  PMem.stU64 (this + 0) (0 : UInt64)
-  PMem.stB (this + 8) true
-  let t'1 ← PMem.alloc 24
-  ByteBuffer.ByteBuffer t'1 (UInt64.toUInt32 (((UInt32.toUInt64 ((_size + (Int32.toUInt32 ((1 : Int32)))))) * (48 : UInt64))))
-  PMem.stU64 this t'1
-  PMem.stB (this + 8) false
-  return ()
-
-/-- C++ `AC_AttitudeControl_Multi::AC_AttitudeControl_Multi : void (AP_AHRS_View &, AP_MotorsMulticopter &)`, `AC_AttitudeControl_Multi.cpp:337-346`. -/
-partial def AC_AttitudeControl_Multi.AC_AttitudeControl_Multi.body (fp : UInt64) (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
-  AC_AttitudeControl.AC_AttitudeControl this ahrs motors
-  PMem.stU64 (this + 368) motors
-  PMem.stF32 ((fp + 0) + 0) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
-  PMem.stF32 ((fp + 0) + 4) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
-  PMem.stF32 ((fp + 0) + 8) (Binary32.ofBits 0x3b6bedfa /- 179999997/50000000000 -/)
-  PMem.stF32 ((fp + 0) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 0) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
-  PMem.stF32 ((fp + 0) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 0) + 24) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 0) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 0) + 32) (Int32.toBinary32 ((0 : Int32)))
-  PMem.stF32 ((fp + 0) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| PMem.memset ((fp + 0) + 40) 0 4
-  AC_PID.AC_PID (this + 376) (fp + 0)
-  PMem.stF32 ((fp + 48) + 0) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
-  PMem.stF32 ((fp + 48) + 4) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
-  PMem.stF32 ((fp + 48) + 8) (Binary32.ofBits 0x3b6bedfa /- 179999997/50000000000 -/)
-  PMem.stF32 ((fp + 48) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 48) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
-  PMem.stF32 ((fp + 48) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 48) + 24) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 48) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 48) + 32) (Int32.toBinary32 ((0 : Int32)))
-  PMem.stF32 ((fp + 48) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| PMem.memset ((fp + 48) + 40) 0 4
-  AC_PID.AC_PID (this + 616) (fp + 48)
-  PMem.stF32 ((fp + 96) + 0) (Binary32.ofBits 0x3e3851ec /- 180000007/1000000000 -/)
-  PMem.stF32 ((fp + 96) + 4) (Binary32.ofBits 0x3c9374bc /- 22499999/1250000000 -/)
-  PMem.stF32 ((fp + 96) + 8) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 96) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 ((fp + 96) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
-  PMem.stF32 ((fp + 96) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 96) + 24) (Binary32.ofBits 0x40200000 /- 5/2 -/)
-  PMem.stF32 ((fp + 96) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
-  PMem.stF32 ((fp + 96) + 32) (Int32.toBinary32 ((0 : Int32)))
-  PMem.stF32 ((fp + 96) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| PMem.memset ((fp + 96) + 40) 0 4
-  AC_PID.AC_PID (this + 856) (fp + 96)
-  AP_Param.setup_object_defaults this (0x19d0 : UInt64) /- &AC_AttitudeControl_Multi::var_info -/
-  return ()
-
-partial def AC_AttitudeControl_Multi.AC_AttitudeControl_Multi (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 140
-  let r ← AC_AttitudeControl_Multi.AC_AttitudeControl_Multi.body fp this ahrs motors
-  PMem.leave fp
-  return r
-
-/-- C++ `AC_PosControl::AC_PosControl : void (AP_AHRS_View &, const AP_Motors &, AC_AttitudeControl &)`, `AC_PosControl.cpp:353-373`. -/
-partial def AC_PosControl.AC_PosControl (this : UInt64) (ahrs : UInt64) (motors : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 0) ahrs
-  PMem.stU64 (this + 8) motors
-  PMem.stU64 (this + 16) attitude_control
-  AC_P_2D.AC_P_2D (this + 36) (Binary32.ofBits 0x3f800000 /- 1 -/)
-  AC_P_1D.AC_P_1D (this + 60) (Binary32.ofBits 0x3f800000 /- 1 -/)
-  AC_PID_2D.AC_PID_2D (this + 84) (Binary32.ofBits 0x40000000 /- 2 -/) (Binary32.ofBits 0x3f800000 /- 1 -/) (Binary32.ofBits 0x3e800000 /- 1/4 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41200000 /- 10 -/) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x40a00000 /- 5 -/)
-  AC_PID_Basic.AC_PID_Basic (this + 264) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41200000 /- 10 -/) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x40a00000 /- 5 -/)
-  AC_PID.AC_PID'2 (this + 384) (Binary32.ofBits 0x3d4ccccd /- 500000007/10000000000 -/) (Binary32.ofBits 0x3dcccccd /- 100000001/1000000000 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x3f4ccccd /- 800000011/1000000000 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41a00000 /- 20 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Int32.toBinary32 ((0 : Int32))) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/))) (Int32.toBinary32 ((0 : Int32)))
-  PMem.stF32 (this + 636) (Binary32.ofBits 0x40a00000 /- 5 -/)
-  PMem.stF32 (this + 640) (Binary32.ofBits 0x40200000 /- 5/2 -/)
-  PMem.stF32 (this + 644) (Binary32.ofBits 0x3fc00000 /- 3/2 -/)
-  PMem.stF32 (this + 648) (Binary32.ofBits 0x3f800000 /- 1 -/)
-  PMem.stF32 (this + 652) (Binary32.ofBits 0x40200000 /- 5/2 -/)
-  PMem.stF32 (this + 656) (Binary32.ofBits 0x40a00000 /- 5 -/)
-  PMem.stF32 (this + 660) (Binary32.ofBits 0x40a00000 /- 5 -/)
-  PMem.stF32 (this + 664) (Binary32.ofBits 0x40000000 /- 2 -/)
-  PMem.stF32 (this + 684) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  PMem.stU8 (this + 972) (0 : UInt8)
-  AP_Param.setup_object_defaults this (0x33c8 : UInt64) /- &AC_PosControl::var_info -/
-  PMem.stU64 (0xbe30 : UInt64) /- &AC_PosControl::_singleton -/ this
-  return ()
-
-/-- C++ `AC_WPNav::AC_WPNav : void (const AP_AHRS_View &, AC_PosControl &, const AC_AttitudeControl &)`, `AC_WPNav.cpp:167-182`. -/
-partial def AC_WPNav.AC_WPNav (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
-  PMem.stBits (this + 8) 0 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
-  PMem.stBits (this + 8) 1 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
-  PMem.stBits (this + 8) 2 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
-  PMem.stU64 (this + 16) ahrs
-  PMem.stU64 (this + 24) pos_control
-  PMem.stU64 (this + 32) attitude_control
-  AP_Param.setup_object_defaults this (0x2fe8 : UInt64) /- &AC_WPNav::var_info -/
-  let t'1 := if false then (1 : UInt8) else (0 : UInt8)
-  PMem.stBits (this + 8) 0 1 (UInt8.toUInt64 (t'1))
-  let t'2 := if false then (1 : UInt8) else (0 : UInt8)
-  PMem.stBits (this + 8) 1 1 (UInt8.toUInt64 (t'2))
-  let t'3 ← AP_ParamT'float_4.operator_const_float__ (this + 40)
-  let t'4 ← PMem.ldF32 t'3
-  PMem.stF32 (this + 80) t'4
-  let t'5 ← AP_ParamT'float_4.operator_const_float__ (this + 44)
-  let t'6 ← PMem.ldF32 t'5
-  PMem.stF32 (this + 84) t'6
-  let t'7 ← AC_WPNav.get_default_speed_down_ms this
-  PMem.stF32 (this + 88) t'7
-  return ()
-
-/-- C++ `AC_Loiter::AC_Loiter : void (const AP_AHRS_View &, AC_PosControl &, const AC_AttitudeControl &)`, `AC_Loiter.cpp:102-108`. -/
-partial def AC_Loiter.AC_Loiter (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 0) ahrs
-  PMem.stU64 (this + 8) pos_control
-  PMem.stU64 (this + 16) attitude_control
-  AP_Param.setup_object_defaults this (0x31b8 : UInt64) /- &AC_Loiter::var_info -/
-  return ()
-
-/-- C++ `AC_Circle::AC_Circle : void (const AP_AHRS_View &, AC_PosControl &)`, `AC_Circle.cpp:50-57`. -/
-partial def AC_Circle.AC_Circle (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 0) ahrs
-  PMem.stU64 (this + 8) pos_control
-  AP_Param.setup_object_defaults this (0x3320 : UInt64) /- &AC_Circle::var_info -/
-  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 20)
-  let t'2 ← PMem.ldF32 t'1
-  let t'3 ← radians t'2
-  PMem.stF32 (this + 60) t'3
-  return ()
-
-/-- C++ `AP_BattMonitor_Analog::AP_BattMonitor_Analog : void (AP_BattMonitor &, AP_BattMonitor::BattMonitor_State &, AP_BattMonitor_Params &)`, `AP_BattMonitor_Analog.cpp:109-149`. -/
-partial def AP_BattMonitor_Analog.AP_BattMonitor_Analog (this : UInt64) (mon : UInt64) (mon_state : UInt64) (params : UInt64) : PMem.M Unit := do
-  AP_BattMonitor_Backend.AP_BattMonitor_Backend this mon mon_state params
-  AP_Param.setup_object_defaults this (0x2020 : UInt64) /- &AP_BattMonitor_Analog::var_info -/
-  let t'1 ← PMem.ldU8 (mon_state + 92)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (1 : Int32)) then
-    pure ()
-  let t'2 := (0x2020 : UInt64) /- &AP_BattMonitor_Analog::var_info -/
-  let t'3 ← PMem.ldU64 (this + 16)
-  PMem.stU64 (t'3 + 104) t'2
-  let t'4 ← PMem.ldU64 (this + 24)
-  let t'5 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'4 + 38)
-  if (t'5 != (31 : Int32)) then
-    let t'6 := (0x20 : UInt64)
-    PMem.stU64 (this + 56) t'6
-    let t'7 ← PMem.ldU64 (this + 56)
-    if (t'7 == (0 : UInt64)) then
-      pure ()
-  let t'8 ← PMem.ldU64 (this + 24)
-  let t'9 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'8 + 38)
-  let mut sc'12 := (t'9 == (4 : Int32))
-  if !sc'12 then
-    let t'10 ← PMem.ldU64 (this + 24)
-    let t'11 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'10 + 38)
-    sc'12 := (t'11 == (31 : Int32))
-  if sc'12 then
-    let t'13 := (0x20 : UInt64)
-    PMem.stU64 (this + 64) t'13
-    let t'14 ← PMem.ldU64 (this + 64)
-    if (t'14 == (0 : UInt64)) then
-      pure ()
-  return ()
-
-/-- C++ `AP_Mission::AP_Mission : void (mission_cmd_fn_t, mission_cmd_fn_t, mission_complete_fn_t)`, `functor.h:476-497`. -/
-partial def AP_Mission.AP_Mission (this : UInt64) (cmd_start_fn : UInt64) (cmd_verify_fn : UInt64) (mission_complete_fn : UInt64) : PMem.M Unit := do
-  PMem.stU16 (this + 172) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  PMem.stU16 (this + 174) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
-  PMem.stU16 (this + 176) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
-  let t'1 ← PMem.ldU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/
-  if (t'1 != (0 : UInt64)) then
-    pure ()
-  PMem.stU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/ this
-  AP_Param.setup_object_defaults this (0x5180 : UInt64) /- &AP_Mission::var_info -/
-  let t'2 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  PMem.stU16 (this + 88) t'2
-  let t'3 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  PMem.stU16 (this + 116) t'3
-  return ()
-
-/-- C++ `AP_Mission::init : void ()`, `AP_Mission.cpp:64-105`. -/
-partial def AP_Mission.init.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  let mut bc : UInt64 := (0 : UInt64)
-  if (bc != (0 : UInt64)) then
-    let mut size_kb : UInt16 := (0 : UInt16)
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (size_kb))) > (0 : Int32))) then
-      PMem.unreached "StorageAccess::attach_file"
-      let t'1 := !(default : Bool)
-      PMem.stB (this + 606) t'1
-      let t'2 ← PMem.ldB (this + 606)
-      if t'2 then
-        PMem.stI16 (fp + 0) (Int32.toInt16 ((0 : Int32)))
-        AP_ParamTBase'short_2.set (this + 80) (fp + 0)
-  let t'3 ← StorageAccess.size (0xbe40 : UInt64) /- &AP_Mission::_storage -/
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ ((15 : Int32) + (4 : Int32)))) then
-    let t'4 ← StorageAccess.size (0xbe40 : UInt64) /- &AP_Mission::_storage -/
-    let t'5 := UInt32.toUInt16 ((((UInt16.toUInt32 (t'4)) - (4 : UInt32)) / (Int32.toUInt32 ((15 : Int32)))))
-    PMem.stU16 (this + 604) t'5
-  let t'6 ← AP_ParamTBase'short_2.get (this + 80)
-  let t'7 ← PMem.ldI16 t'6
-  let t'8 ← PMem.ldU16 (this + 604)
-  if (decide ((Int16.toInt32 (t'7)) > (UInt32.toInt32 (UInt16.toUInt32 (t'8))))) then
-    PMem.stI16 (fp + 2) (Int32.toInt16 ((0 : Int32)))
-    AP_ParamTBase'short_2.set (this + 80) (fp + 2)
-  AP_Mission.check_eeprom_version this
-  AP_Mission.init_jump_tracking this
-  let t'9 ← AP_Mission.option_is_set this (1 : Int32)
-  if t'9 then
-    let t'10 ← AP_Mission.clear this
-    discard <| pure (t'10)
-  let t'11 := ((← get).clockUs / 1000).toUInt32
-  PMem.stU32 (this + 596) t'11
-  return ()
-
-partial def AP_Mission.init (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← AP_Mission.init.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::setup : bool ()`, `AP_Param.cpp:362-399`. -/
-partial def AP_Param.setup.body (fp : UInt64)  : PMem.M Bool := do
-  discard <| PMem.memset ((fp + 0) + 0) 0 2
-  discard <| PMem.memset ((fp + 0) + 2) 0 1
-  discard <| PMem.memset ((fp + 0) + 3) 0 1
-  let t'1 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (4 : UInt64)
-  discard <| pure (t'1)
-  let t'2 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64)
-  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) != (UInt32.toInt32 (UInt8.toUInt32 ((80 : UInt8)))))
-  if !sc'4 then
-    let t'3 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64)
-    sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((65 : UInt8)))))
-  let mut sc'6 := sc'4
-  if !sc'6 then
-    let t'5 ← PMem.ldU8 ((fp + 0) + 2)
-    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))
-  if sc'6 then
-    PMem.unreached "AP_Param::erase_all"
-  return true
-
-partial def AP_Param.setup  : PMem.M Bool := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.setup.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::var_info : const struct Info &(uint16_t)`, `AP_Param.h:846-848`. -/
-partial def AP_Param.var_info (i : UInt16) : PMem.M UInt64 := do
-  let mut i := i
-  let t'1 ← PMem.ldU64 (0xbad0 : UInt64) /- &AP_Param::_var_info -/
-  return (t'1 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64)
-
-/-- C++ `AP_Param::get_base : bool (const struct Info &, ptrdiff_t &)`, `AP_Param.cpp:440-448`. -/
-partial def AP_Param.get_base (info' : UInt64) (base : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU16 (info' + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (info' + 8)
-    let t'3 ← PMem.ldI64 t'2
-    PMem.stI64 base t'3
-    let t'4 ← PMem.ldI64 base
-    return (t'4 != (Int32.toInt64 ((0 : Int32))))
-  let t'5 ← PMem.ldU64 (info' + 8)
-  let t'6 := UInt64.toInt64 (t'5)
-  PMem.stI64 base t'6
-  return true
-
-/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct Info &)`, `AP_Param.cpp:2698-2709`. -/
-partial def AP_Param.get_default_value (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
-  let mut vp := vp
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU16 (0xbe50 : UInt64) /- &AP_Param::num_param_overrides -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
-    let t'6 ← PMem.ldU64 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
-    if (vp == t'6) then
-      let t'7 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
-      let t'8 ← PMem.ldF32 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
-      return t'8
-  let t'9 ← PMem.ldU16 (info' + 24)
-  if (((UInt32.toInt32 (UInt16.toUInt32 (t'9))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
-    let t'10 ← PMem.ldI64 (info' + 16)
-    let t'11 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'10)))
-    return t'11
-  let t'12 ← PMem.ldF32 (info' + 16)
-  return t'12
-
-/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct Info &)`, `AP_Param.cpp:312-318`. -/
-partial def AP_Param.get_group_info (info' : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU16 (info' + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (info' + 16)
-    let t'3 ← PMem.ldU64 t'2
-    return t'3
-  let t'4 ← PMem.ldU64 (info' + 16)
-  return t'4
-
-/-- C++ `AP_Param::check_group_info : void (const struct AP_Param::GroupInfo *, uint16_t *, uint8_t, uint8_t)`, `AP_Param.cpp:235-283`. -/
-partial def AP_Param.check_group_info (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit := do
+/-- C++ `AP_Param::find_var_info_group : const struct AP_Param::Info *(const struct GroupInfo *, uint16_t, uint32_t, uint8_t, ptrdiff_t, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:544-612`. -/
+def AP_Param.find_var_info_group.body'rec (rec'depth : Nat) (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut group_info := group_info
-  let mut total_size := total_size
+  let mut vindex := vindex
+  let mut group_base := group_base
   let mut group_shift := group_shift
-  let mut prefix_length := prefix_length
+  let mut group_offset := group_offset
+  let mut group_element := group_element
+  let mut idx := idx
+  let t'1 ← AP_Param.var_info vindex
+  let t'2 ← AP_Param.get_base t'1 (fp + 0)
+  if !t'2 then
+    return (0 : UInt64)
   let mut type' : UInt8 := default  -- uninitialized in C
-  let mut used_mask : UInt64 := Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
+  let mut first'3 := true
+  for _ in PMem.loopFuel do
+    if !first'3 then
+      let t'4 := i
+      let t'5 := (t'4 + 1)
+      i := t'5
       pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'4
+    first'3 := false
+    let t'6 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'6
     if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-    let mut idx : UInt8 := t'5
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (idx))) ≥ ((1 : Int32) <<< (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))))) then
-      pure ()
-    if (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) != (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (idx))) == (0 : Int32))) then
-      let t'6 := Int8.toUInt8 (Int32.toInt8 ((63 : Int32)))
-      idx := t'6
-    if (used_mask &&& ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx)))))))) != (0 : UInt64) then
-      pure ()
-    let t'7 := (used_mask ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx))))))))
-    used_mask := t'7
+    let t'7 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+    let mut ofs : Int64 := (t'7 + group_offset)
     if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        pure ()
       let t'8 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
       let mut ginfo : UInt64 := t'8
       if (ginfo == (0 : UInt64)) then
         continue
-      let t'9 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let t'10 ← PMem.strlen t'9
-      AP_Param.check_group_info ginfo total_size (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) (UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'10)))
-      continue
-    let t'11 ← AP_Param.type_size (UInt8.toUInt32 (type'))
-    let mut size : UInt8 := t'11
-    if ((UInt32.toInt32 (UInt8.toUInt32 (size))) == (0 : Int32)) then
-      pure ()
-    let t'12 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-    let t'13 ← PMem.strlen t'12
-    let mut param_name_length : UInt8 := UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'13))
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32)))) then
-      let t'14 := (param_name_length + (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
-      param_name_length := t'14
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (param_name_length))) > (16 : Int32))) then
-      pure ()
-    let t'15 ← PMem.ldU16 total_size
-    let t'16 := (t'15 + (UInt64.toUInt16 (((UInt8.toUInt64 (size)) + (4 : UInt64)))))
-    PMem.stU16 total_size t'16
-  return ()
-
-/-- C++ `AP_Param::duplicate_key : bool (uint16_t, uint16_t)`, `AP_Param.cpp:286-296`. -/
-partial def AP_Param.duplicate_key (vindex : UInt16) (key : UInt16) : PMem.M Bool := do
-  let mut vindex := vindex
-  let mut key := key
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (vindex))) + (1 : Int32))))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← AP_Param.var_info i
-    let t'6 ← PMem.ldU16 (t'5 + 26)
-    let mut key2 : UInt16 := t'6
-    if ((UInt32.toInt32 (UInt16.toUInt32 (key2))) == (UInt32.toInt32 (UInt16.toUInt32 (key)))) then
-      return true
-  return false
-
-/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct GroupInfo &)`, `AP_Param.cpp:2685-2696`. -/
-partial def AP_Param.get_default_value'2 (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
-  let mut vp := vp
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU16 (0xbe50 : UInt64) /- &AP_Param::num_param_overrides -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
-    let t'6 ← PMem.ldU64 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
-    if (vp == t'6) then
-      let t'7 ← PMem.ldU64 (0xbe58 : UInt64) /- &AP_Param::param_overrides -/
-      let t'8 ← PMem.ldF32 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
-      return t'8
-  let t'9 ← PMem.ldU16 (info' + 24)
-  if (((UInt32.toInt32 (UInt16.toUInt32 (t'9))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
-    let t'10 ← PMem.ldI64 (info' + 16)
-    let t'11 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'10)))
-    return t'11
-  let t'12 ← PMem.ldF32 (info' + 16)
-  return t'12
-
-/-- C++ `AP_ParamV<Vector3<float>, 5>::set : void (const Vector3<float> &)`, `AP_Param.h:1065-1067`. -/
-partial def AP_ParamV'Vector3_float_5.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  discard <| PMem.memcpy this v 12
-  discard <| pure (this)
-  return ()
-
-/-- C++ `Vector3<float>::Vector3 : void (const float, const float, const float)`, `AP_Common.h:85-88`. -/
-partial def Vector3'float.Vector3 (this : UInt64) (x0 : Binary32) (y0 : Binary32) (z0 : Binary32) : PMem.M Unit := do
-  let mut x0 := x0
-  let mut y0 := y0
-  let mut z0 := z0
-  PMem.stF32 (this + 0) x0
-  PMem.stF32 (this + 4) y0
-  PMem.stF32 (this + 8) z0
-  return ()
-
-/-- C++ `AP_Param::Param_header::Param_header : void () noexcept`, `AP_Param.h:669-?`. -/
-partial def AP_Param.Param_header.Param_header (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `AP_Param::reload_defaults_file : void (bool)`, `AP_Param.cpp:1629-1657`. -/
-partial def AP_Param.reload_defaults_file (last_pass : Bool) : PMem.M Unit := do
-  let mut last_pass := last_pass
-  let mut default_file : UInt64 := (0 : UInt64)
-  if (default_file != 0) then
-    -- AP_Param::load_defaults_file_from_filesystem: dropped (configuration)
-  return ()
-
-/-- C++ `StorageAccess::size : uint16_t () const`, `StorageManager.h:97-?`. -/
-partial def StorageAccess.size (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (this + 4)
-  return t'1
-
-/-- C++ `StorageAccess::read_block : bool (void *, uint16_t, size_t) const`, `StorageManager.cpp:139-186`. -/
-partial def StorageAccess.read_block.body (fp : UInt64) (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
-  let mut data := data
-  let mut addr := addr
-  PMem.stU64 (fp + 0) n
-  let mut b : UInt64 := data
-  let t'1 ← PMem.ldU64 (this + 8)
-  if (t'1 != (0 : UInt64)) then
-    let t'2 ← PMem.ldU64 (this + 8)
-    let t'3 ← PMem.ldU32 (t'2 + 24)
-    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
-      return false
-    let t'4 ← PMem.ldU64 (this + 8)
-    let t'5 ← PMem.ldU32 (t'4 + 24)
-    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
-    let t'6 ← MIN (fp + 0) (fp + 8)
-    let mut n2 : UInt64 := t'6
-    let t'7 ← PMem.ldU64 (this + 8)
-    let t'8 ← PMem.ldU64 (t'7 + 16)
-    let t'9 ← PMem.memcpy b (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) n2
-    discard <| pure (t'9)
-    let t'10 ← PMem.ldU64 (fp + 0)
-    return (t'10 == n2)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'11 := true
-  repeat
-    if !first'11 then
-      let t'12 := i
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        return (0 : UInt64)
+      let mut info' : UInt64 := default  -- uninitialized in C
+      PMem.stI64 (fp + 8) group_offset
+      let t'9 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 8)
+      if !t'9 then
+        continue
+      let t'10 ← PMem.ldU8 group_nesting
+      if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'10))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((2 : UInt8)))))) then
+        return (0 : UInt64)
+      let t'11 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let t'12 ← PMem.ldU8 group_nesting
       let t'13 := (t'12 + 1)
-      i := t'13
-      pure ()
-    first'11 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-    let t'14 ← PMem.ldU16 (area + 6)
-    let mut length : UInt16 := t'14
-    let t'15 ← PMem.ldU16 (area + 4)
-    let mut offset : UInt16 := t'15
-    let t'16 ← PMem.ldU32 area
-    let t'17 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'16)) != (UInt32.toInt32 (t'17))) then
-      continue
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'18 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
-      addr := t'18
-      continue
-    let t'19 ← PMem.ldU64 (fp + 0)
-    let mut count : UInt16 := UInt64.toUInt16 (t'19)
-    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'20 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
-      count := t'20
-    PMem.halRead b (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) (UInt16.toUInt64 (count))
-    let t'21 ← PMem.ldU64 (fp + 0)
-    let t'22 := (t'21 - (UInt16.toUInt64 (count)))
-    PMem.stU64 (fp + 0) t'22
-    let t'23 ← PMem.ldU64 (fp + 0)
-    if (t'23 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
-      break
-    let t'24 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
-    b := t'24
-    let t'25 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    addr := t'25
-  let t'26 ← PMem.ldU64 (fp + 0)
-  return (t'26 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
+      PMem.stU8 group_nesting t'13
+      PMem.stU64 ((group_nesting + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (t'12))) * 8).toUInt64) t'11
+      let t'14 ← AP_Param.group_id group_info group_base i group_shift
+      let t'15 ← PMem.ldI64 (fp + 8)
+      let t'16 ← AP_Param.find_var_info_group'rec rec'd this ginfo vindex t'14 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'15 group_element group_ret group_nesting idx
+      info' := t'16
+      if (info' != (0 : UInt64)) then
+        return info'
+      let t'17 ← PMem.ldU8 group_nesting
+      let t'18 := (t'17 - 1)
+      PMem.stU8 group_nesting t'18
+    else
+      let t'19 ← PMem.ldI64 (fp + 0)
+      if ((UInt64.toInt64 (this)) == (t'19 + ofs)) then
+        let t'20 ← AP_Param.group_id group_info group_base i group_shift
+        PMem.stU32 group_element t'20
+        let t'21 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+        PMem.stU64 group_ret t'21
+        let t'22 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+        PMem.stU8 idx t'22
+        let t'23 ← AP_Param.var_info vindex
+        return t'23
+      else
+        let mut sc'27 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32))))
+        if sc'27 then
+          let t'24 ← PMem.ldI64 (fp + 0)
+          let mut sc'26 := (((t'24 + ofs) + (UInt64.toInt64 ((4 : UInt64)))) == (UInt64.toInt64 (this)))
+          if !sc'26 then
+            let t'25 ← PMem.ldI64 (fp + 0)
+            sc'26 := (((t'25 + ofs) + ((Int32.toInt64 ((2 : Int32))) * (UInt64.toInt64 ((4 : UInt64))))) == (UInt64.toInt64 (this)))
+          sc'27 := sc'26
+        if sc'27 then
+          let t'28 ← PMem.ldI64 (fp + 0)
+          let t'29 := UInt64.toUInt8 (((Int64.toUInt64 (((UInt64.toInt64 (this)) - (t'28 + ofs)))) / (4 : UInt64)))
+          PMem.stU8 idx t'29
+          let t'30 ← AP_Param.group_id group_info group_base i group_shift
+          PMem.stU32 group_element t'30
+          let t'31 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+          PMem.stU64 group_ret t'31
+          let t'32 ← AP_Param.var_info vindex
+          return t'32
+  return (0 : UInt64)
 
-partial def StorageAccess.read_block (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 12
-  let r ← StorageAccess.read_block.body fp this data addr n
+def AP_Param.find_var_info_group'rec (rec'depth : Nat) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 16
+  let r ← AP_Param.find_var_info_group.body'rec rec'd fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::Param_header::Param_header : void (const Param_header &) noexcept`, `AP_Param.h:?-?`. -/
-partial def AP_Param.Param_header.Param_header'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits arg 0 8
-  PMem.stBits this 0 8 (UInt32.toUInt64 ((UInt64.toUInt32 (t'1))))
-  let t'2 ← PMem.ldBits arg 8 5
-  PMem.stBits this 8 5 (UInt32.toUInt64 ((UInt64.toUInt32 (t'2))))
-  let t'3 ← PMem.ldBits arg 13 1
-  PMem.stBits this 13 1 (UInt32.toUInt64 ((UInt64.toUInt32 (t'3))))
-  let t'4 ← PMem.ldBits arg 14 18
-  PMem.stBits this 14 18 (UInt32.toUInt64 ((UInt64.toUInt32 (t'4))))
-  return ()
+end
+
+/-- `AP_Param.find_var_info_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_var_info_group.body (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_var_info_group.body'rec 64 fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
+
+/-- `AP_Param.find_var_info_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_var_info_group (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_var_info_group'rec 64 this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
 
 /-- C++ `AP_Param::find_var_info : const struct AP_Param::Info *(uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:615-654`. -/
-partial def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let mut group_element := group_element
   let mut idx := idx
   PMem.stU64 group_ret (0 : UInt64)
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -3940,14 +2765,14 @@ partial def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_ele
           return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_var_info (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 8
   let r ← AP_Param.find_var_info.body fp this group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::set_key : void (Param_header &, uint16_t)`, `AP_Param.cpp:751-755`. -/
-partial def AP_Param.set_key (phdr : UInt64) (key : UInt16) : PMem.M Unit := do
+def AP_Param.set_key (phdr : UInt64) (key : UInt16) : PMem.M Unit := do
   let mut key := key
   let t'1 := Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (key))) &&& (255 : Int32)))
   PMem.stBits phdr 0 8 (UInt32.toUInt64 (t'1))
@@ -3955,12 +2780,180 @@ partial def AP_Param.set_key (phdr : UInt64) (key : UInt16) : PMem.M Unit := do
   PMem.stBits phdr 13 1 (UInt32.toUInt64 (t'2))
   return ()
 
-/-- C++ `AP_Param::EEPROM_header::EEPROM_header : void () noexcept`, `AP_Param.h:648-?`. -/
-partial def AP_Param.EEPROM_header.EEPROM_header (this : UInt64) : PMem.M Unit := do
+/-- C++ `AP_Param::load : bool ()`, `AP_Param.cpp:1339-1399`. -/
+def AP_Param.load.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  if (info' == (0 : UInt64)) then
+    return false
+  AP_Param.Param_header.Param_header (fp + 48)
+  let t'2 ← PMem.ldU64 (fp + 8)
+  if (t'2 != (0 : UInt64)) then
+    let t'3 ← PMem.ldU64 (fp + 8)
+    let t'4 ← PMem.ldU8 (t'3 + 27)
+    let t'5 := UInt8.toUInt32 (t'4)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
+  else
+    let t'6 ← PMem.ldU8 (info' + 28)
+    let t'7 := UInt8.toUInt32 (t'6)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'7))
+  let t'8 ← PMem.ldU16 (info' + 26)
+  AP_Param.set_key (fp + 48) t'8
+  let t'9 ← PMem.ldU32 (fp + 0)
+  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'9))
+  let t'10 ← AP_Param.scan (fp + 48) (fp + 56)
+  if !t'10 then
+    let t'11 ← AP_Param.get_base info' (fp + 64)
+    if !t'11 then
+      return false
+    let t'12 ← PMem.ldU64 (fp + 8)
+    if (t'12 != (0 : UInt64)) then
+      let mut group_offset : Int64 := Int32.toInt64 ((0 : Int32))
+      let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+      let mut first'13 := true
+      for _ in PMem.loopFuel do
+        if !first'13 then
+          let t'14 := i
+          let t'15 := (t'14 + 1)
+          i := t'15
+          pure ()
+        first'13 := false
+        let t'16 ← PMem.ldU8 (fp + 16)
+        if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'16)))))) then break
+        let t'17 ← PMem.ldU64 (((fp + 16) + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+        let t'18 ← PMem.ldI64 (t'17 + 8)
+        let t'19 := (group_offset + t'18)
+        group_offset := t'19
+      let t'20 ← PMem.ldBits (fp + 48) 8 5
+      let t'21 ← PMem.ldI64 (fp + 64)
+      let t'22 ← PMem.ldU64 (fp + 8)
+      let t'23 ← PMem.ldI64 (t'22 + 8)
+      let t'24 ← PMem.ldU64 (fp + 8)
+      let t'25 ← AP_Param.get_default_value'2 this t'24
+      AP_Param.set_value (UInt64.toUInt32 (t'20)) (Int64.toUInt64 (((t'21 + t'23) + group_offset))) t'25
+    else
+      let t'26 ← PMem.ldBits (fp + 48) 8 5
+      let t'27 ← PMem.ldI64 (fp + 64)
+      let t'28 ← AP_Param.get_default_value this info'
+      AP_Param.set_value (UInt64.toUInt32 (t'26)) (Int64.toUInt64 (t'27)) t'28
+    return false
+  let t'29 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'31 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'29)))) != (UInt32.toInt32 ((5 : UInt32))))
+  if sc'31 then
+    let t'30 ← PMem.ldU8 (fp + 40)
+    sc'31 := ((UInt32.toInt32 (UInt8.toUInt32 (t'30))) != (0 : Int32))
+  if sc'31 then
+    return false
+  let mut ap : UInt64 := this
+  let t'32 ← PMem.ldU8 (fp + 40)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'32))) != (0 : Int32)) then
+    let t'33 ← PMem.ldU8 (fp + 40)
+    let t'34 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'33)) * (4 : UInt64)))) * 1).toUInt64)
+    ap := t'34
+  let t'35 ← PMem.ldU16 (fp + 56)
+  let t'36 ← PMem.ldBits (fp + 48) 8 5
+  let t'37 ← AP_Param.type_size (UInt64.toUInt32 (t'36))
+  let t'38 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'35)) + (4 : UInt64)))) (UInt8.toUInt64 (t'37))
+  discard <| pure (t'38)
+  return true
+
+def AP_Param.load (this : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 72
+  let r ← AP_Param.load.body fp this
+  PMem.leave fp
+  return r
+
+/-- `AP_Param.EEPROM_header.EEPROM_header` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.EEPROM_header.EEPROM_header.pure' (this : UInt64) : Id Unit := do
   return ()
 
+/-- C++ `AP_Param::EEPROM_header::EEPROM_header : void () noexcept`, `AP_Param.h:648-?`. -/
+def AP_Param.EEPROM_header.EEPROM_header (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Param.EEPROM_header.EEPROM_header.pure' this)
+
+/-- C++ `StorageAccess::write_block : bool (uint16_t, const void *, size_t) const`, `StorageManager.cpp:193-244`. -/
+def StorageAccess.write_block.body (fp : UInt64) (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
+  let mut addr := addr
+  let mut data := data
+  PMem.stU64 (fp + 0) n
+  let mut b : UInt64 := data
+  let t'1 ← PMem.ldU64 (this + 8)
+  if (t'1 != (0 : UInt64)) then
+    let t'2 ← PMem.ldU64 (this + 8)
+    let t'3 ← PMem.ldU32 (t'2 + 24)
+    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
+      return false
+    let t'4 ← PMem.ldU64 (this + 8)
+    let t'5 ← PMem.ldU32 (t'4 + 24)
+    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
+    let t'6 ← MIN (fp + 0) (fp + 8)
+    let mut n2 : UInt64 := t'6
+    let t'7 ← PMem.ldU64 (this + 8)
+    let t'8 ← PMem.ldU64 (t'7 + 16)
+    let t'9 ← PMem.memcpy (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) b n2
+    discard <| pure (t'9)
+    let mut i : UInt8 := UInt32.toUInt8 (((UInt16.toUInt32 (addr)) / (1024 : UInt32)))
+    let mut first'10 := true
+    for _ in PMem.loopFuel do
+      if !first'10 then
+        let t'11 := i
+        let t'12 := (t'11 + 1)
+        i := t'12
+        pure ()
+      first'10 := false
+      if !((decide ((UInt8.toUInt64 (i)) < ((((UInt16.toUInt64 (addr)) + n2) + (UInt32.toUInt64 ((1023 : UInt32)))) / (UInt32.toUInt64 ((1024 : UInt32))))))) then break
+      let t'13 ← PMem.ldU64 (this + 8)
+      let t'14 := (t'13 + 40)
+      let t'15 ← PMem.ldU64 t'14
+      let t'16 := (t'15 ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (i))))))))
+      PMem.stU64 t'14 t'16
+    let t'17 ← PMem.ldU64 (fp + 0)
+    return (t'17 == n2)
+  for i'2'18 in [0:15] do
+    let i'2 : UInt8 := UInt8.ofNat i'2'18
+    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i'2))) * 8).toUInt64)
+    let t'19 ← PMem.ldU16 (area + 6)
+    let mut length : UInt16 := t'19
+    let t'20 ← PMem.ldU16 (area + 4)
+    let mut offset : UInt16 := t'20
+    let t'21 ← PMem.ldU32 area
+    let t'22 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'21)) != (UInt32.toInt32 (t'22))) then
+      continue
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'23 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
+      addr := t'23
+      continue
+    let t'24 ← PMem.ldU64 (fp + 0)
+    let mut count : UInt16 := UInt64.toUInt16 (t'24)
+    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'25 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
+      count := t'25
+    PMem.halWrite (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) b (UInt16.toUInt64 (count))
+    let t'26 ← PMem.ldU64 (fp + 0)
+    let t'27 := (t'26 - (UInt16.toUInt64 (count)))
+    PMem.stU64 (fp + 0) t'27
+    let t'28 ← PMem.ldU64 (fp + 0)
+    if (t'28 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
+      break
+    let t'29 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
+    b := t'29
+    let t'30 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    addr := t'30
+  let t'31 ← PMem.ldU64 (fp + 0)
+  return (t'31 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
+
+def StorageAccess.write_block (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 12
+  let r ← StorageAccess.write_block.body fp this addr data n
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::eeprom_write_check : void (const void *, uint16_t, uint8_t)`, `AP_Param.cpp:156-162`. -/
-partial def AP_Param.eeprom_write_check (ptr' : UInt64) (ofs : UInt16) (size : UInt8) : PMem.M Unit := do
+def AP_Param.eeprom_write_check (ptr' : UInt64) (ofs : UInt16) (size : UInt8) : PMem.M Unit := do
   let mut ptr' := ptr'
   let mut ofs := ofs
   let mut size := size
@@ -3969,7 +2962,7 @@ partial def AP_Param.eeprom_write_check (ptr' : UInt64) (ofs : UInt16) (size : U
   return ()
 
 /-- C++ `AP_Param::write_sentinel : void (uint16_t)`, `AP_Param.cpp:167-175`. -/
-partial def AP_Param.write_sentinel.body (fp : UInt64) (ofs : UInt16) : PMem.M Unit := do
+def AP_Param.write_sentinel.body (fp : UInt64) (ofs : UInt16) : PMem.M Unit := do
   let mut ofs := ofs
   AP_Param.Param_header.Param_header (fp + 0)
   let t'1 := UInt8.toUInt32 ((31 : UInt8))
@@ -3981,14 +2974,32 @@ partial def AP_Param.write_sentinel.body (fp : UInt64) (ofs : UInt16) : PMem.M U
   PMem.stU16 (0xba98 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
   return ()
 
-partial def AP_Param.write_sentinel (ofs : UInt16) : PMem.M Unit := do
+def AP_Param.write_sentinel (ofs : UInt16) : PMem.M Unit := do
   let fp ← PMem.enter 4
   let r ← AP_Param.write_sentinel.body fp ofs
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::erase_all : void ()`, `AP_Param.cpp:179-192`. -/
+def AP_Param.erase_all.body (fp : UInt64)  : PMem.M Unit := do
+  AP_Param.EEPROM_header.EEPROM_header (fp + 0)
+  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) (80 : UInt8)
+  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (65 : UInt8)
+  PMem.stU8 ((fp + 0) + 2) (6 : UInt8)
+  let t'1 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  PMem.stU8 ((fp + 0) + 3) t'1
+  AP_Param.eeprom_write_check (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (UInt64.toUInt8 ((4 : UInt64)))
+  AP_Param.write_sentinel (UInt64.toUInt16 ((4 : UInt64)))
+  return ()
+
+def AP_Param.erase_all  : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.erase_all.body fp 
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::check_default : void (AP_Param *, float *)`, `AP_Param.cpp:2962-2975`. -/
-partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem.M Unit := do
+def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem.M Unit := do
   let mut ap := ap
   let mut default_value := default_value
   if ((default_value == (0 : UInt64)) || (ap == (0 : UInt64))) then
@@ -3998,7 +3009,7 @@ partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem
     let t'2 ← PMem.ldU64 (0xbe60 : UInt64) /- &AP_Param::default_list -/
     let mut item : UInt64 := t'2
     let mut first'3 := true
-    repeat
+    for _ in PMem.loopFuel do
       if !first'3 then
         let t'4 ← PMem.ldU64 (item + 16)
         item := t'4
@@ -4012,8 +3023,47 @@ partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem
         return ()
   return ()
 
+/-- C++ `AP_Param::first : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1765-1788`. -/
+def AP_Param.first.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut default_val := default_val
+  let t'1 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 0 9 (UInt32.toUInt64 (t'1))
+  let t'2 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 13 18 (UInt32.toUInt64 (t'2))
+  let t'3 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 9 4 (UInt32.toUInt64 (t'3))
+  let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
+    return (0 : UInt64)
+  let t'5 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  let t'6 ← AP_Param.get_base t'5 (fp + 0)
+  if !t'6 then
+    return (0 : UInt64)
+  if (ptype != (0 : UInt64)) then
+    let t'7 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+    let t'8 ← PMem.ldU8 (t'7 + 28)
+    let t'9 := UInt8.toUInt32 (t'8)
+    PMem.stU32 ptype t'9
+  if (default_val != (0 : UInt64)) then
+    let t'10 ← PMem.ldI64 (fp + 0)
+    let t'11 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+    let t'12 ← AP_Param.get_default_value (Int64.toUInt64 (t'10)) t'11
+    PMem.stF32 default_val t'12
+  let t'13 ← PMem.ldI64 (fp + 0)
+  AP_Param.check_default (Int64.toUInt64 (t'13)) default_val
+  let t'14 ← PMem.ldI64 (fp + 0)
+  return Int64.toUInt64 (t'14)
+
+def AP_Param.first (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 8
+  let r ← AP_Param.first.body fp token ptype default_val
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::check_frame_type : bool (uint16_t)`, `AP_Param.cpp:221-232`. -/
-partial def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
+def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
   let mut flags := flags
   if ((UInt32.toInt32 (UInt16.toUInt32 (flags))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
     return false
@@ -4023,8 +3073,19 @@ partial def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
   let t'1 ← PMem.ldU16 (0xbac8 : UInt64) /- &AP_Param::_frame_type_flags -/
   return (((UInt32.toInt32 (UInt16.toUInt32 (frame_flags))) &&& (UInt32.toInt32 (UInt16.toUInt32 (t'1)))) != (0 : Int32))
 
+/-- `AP_ParamTBase'signed_char_1.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamTBase'signed_char_1.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamTBase<signed char, 1>::get : const signed char &() const`, `AP_Param.h:917-919`. -/
+def AP_ParamTBase'signed_char_1.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamTBase'signed_char_1.get.pure' this)
+
+mutual
+
 /-- C++ `AP_Param::next_group : AP_Param *(const uint16_t, const struct GroupInfo *, bool *, const uint32_t, const uint8_t, const ptrdiff_t, ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1792-1887`. -/
-partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.next_group.body'rec (rec'depth : Nat) (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut vindex := vindex
   let mut group_info := group_info
   let mut found_current := found_current
@@ -4038,7 +3099,7 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
   let mut type' : UInt32 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -4065,7 +3126,7 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
         continue
       let t'10 ← AP_Param.group_id group_info group_base i group_shift
       let t'11 ← PMem.ldI64 (fp + 0)
-      let t'12 ← AP_Param.next_group vindex ginfo found_current t'10 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'11 token ptype skip_disabled default_val
+      let t'12 ← AP_Param.next_group'rec rec'd vindex ginfo found_current t'10 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'11 token ptype skip_disabled default_val
       ap := t'12
       if (ap != (0 : UInt64)) then
         return ap
@@ -4147,14 +3208,150 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
           return Int64.toUInt64 (ofs)
   return (0 : UInt64)
 
-partial def AP_Param.next_group (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.next_group'rec (rec'depth : Nat) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 24
-  let r ← AP_Param.next_group.body fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+  let r ← AP_Param.next_group.body'rec rec'd fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+  PMem.leave fp
+  return r
+
+end
+
+/-- `AP_Param.next_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 :=
+  AP_Param.next_group.body'rec 64 fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+
+/-- `AP_Param.next_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.next_group (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 :=
+  AP_Param.next_group'rec 64 vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+
+/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1891-1953`. -/
+def AP_Param.next'2.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut skip_disabled := skip_disabled
+  let mut default_val := default_val
+  let t'1 ← PMem.ldBits token 0 9
+  let mut i : UInt16 := UInt32.toUInt16 ((UInt64.toUInt32 (t'1)))
+  PMem.stB (fp + 0) false
+  let t'2 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2))))) then
+    return (0 : UInt64)
+  let t'3 ← AP_Param.var_info i
+  let t'4 ← PMem.ldU8 (t'3 + 28)
+  let mut type' : UInt32 := UInt8.toUInt32 (t'4)
+  let mut sc'6 := ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((5 : UInt32))))
+  if sc'6 then
+    let t'5 ← PMem.ldBits token 9 4
+    sc'6 := (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'5)))) < (3 : Int32)))
+  if sc'6 then
+    let t'7 ← PMem.ldBits token 9 4
+    let t'8 := UInt64.toUInt32 (t'7)
+    let t'9 := (t'8 + 1)
+    PMem.stBits token 9 4 (UInt32.toUInt64 (t'9))
+    if (ptype != (0 : UInt64)) then
+      PMem.stU32 ptype (4 : UInt32)
+    let t'10 ← PMem.ldBits token 9 4
+    let t'11 ← AP_Param.var_info i
+    let t'12 ← PMem.ldU64 (t'11 + 8)
+    let mut ret : UInt64 := (((UInt32.toUInt64 (((UInt64.toUInt32 (t'10)) - (1 : UInt32)))) * (4 : UInt64)) + (Int64.toUInt64 ((UInt64.toInt64 (t'12)))))
+    if (default_val != (0 : UInt64)) then
+      let t'13 ← AP_Param.var_info i
+      let t'14 ← AP_Param.get_default_value ret t'13
+      PMem.stF32 default_val t'14
+    return ret
+  if ((UInt32.toInt32 (type')) != (UInt32.toInt32 ((6 : UInt32)))) then
+    let t'15 := i
+    let t'16 := (t'15 + 1)
+    i := t'16
+    PMem.stB (fp + 0) true
+  let mut first'17 := true
+  for _ in PMem.loopFuel do
+    if !first'17 then
+      let t'18 := i
+      let t'19 := (t'18 + 1)
+      i := t'19
+      pure ()
+    first'17 := false
+    let t'20 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'20)))))) then break
+    let t'21 ← AP_Param.var_info i
+    let info' : UInt64 := t'21
+    let t'22 ← PMem.ldU16 (info' + 24)
+    let t'23 ← AP_Param.check_frame_type t'22
+    if !t'23 then
+      continue
+    let t'24 ← PMem.ldU8 (info' + 28)
+    let t'25 := UInt8.toUInt32 (t'24)
+    type' := t'25
+    if ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((6 : UInt32)))) then
+      let t'26 ← AP_Param.get_group_info info'
+      let mut group_info : UInt64 := t'26
+      if (group_info == (0 : UInt64)) then
+        continue
+      let t'27 ← AP_Param.next_group i group_info (fp + 0) (Int32.toUInt32 ((0 : Int32))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (Int32.toInt64 ((0 : Int32))) token ptype skip_disabled default_val
+      let mut ap : UInt64 := t'27
+      if (ap != (0 : UInt64)) then
+        return ap
+    else
+      let t'28 := UInt16.toUInt32 (i)
+      PMem.stBits token 0 9 (UInt32.toUInt64 (t'28))
+      let t'29 := Int32.toUInt32 ((0 : Int32))
+      PMem.stBits token 13 18 (UInt32.toUInt64 (t'29))
+      let t'30 := Int32.toUInt32 ((0 : Int32))
+      PMem.stBits token 9 4 (UInt32.toUInt64 (t'30))
+      if (ptype != (0 : UInt64)) then
+        PMem.stU32 ptype type'
+      if (default_val != (0 : UInt64)) then
+        let t'31 ← PMem.ldU64 (info' + 8)
+        let t'32 ← AP_Param.get_default_value t'31 info'
+        PMem.stF32 default_val t'32
+      let t'33 ← PMem.ldU64 (info' + 8)
+      return t'33
+  return (0 : UInt64)
+
+def AP_Param.next'2 (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 1
+  let r ← AP_Param.next'2.body fp token ptype skip_disabled default_val
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *)`, `AP_Param.h:561-?`. -/
+def AP_Param.next (token : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let t'1 ← AP_Param.next'2 token ptype false (0 : UInt64)
+  return t'1
+
+/-- C++ `AP_Param::next_scalar : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1957-1972`. -/
+def AP_Param.next_scalar.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut default_val := default_val
+  let mut ap : UInt64 := default  -- uninitialized in C
+  for _ in PMem.loopFuel do
+    let t'1 ← AP_Param.next'2 token (fp + 0) true default_val
+    ap := t'1
+    let mut sc'3 := (ap != (0 : UInt64))
+    if sc'3 then
+      let t'2 ← PMem.ldU32 (fp + 0)
+      sc'3 := (decide ((UInt32.toInt32 (t'2)) > (UInt32.toInt32 ((4 : UInt32)))))
+    if !(sc'3) then break
+  if (ap != (0 : UInt64)) then
+    if (ptype != (0 : UInt64)) then
+      let t'4 ← PMem.ldU32 (fp + 0)
+      PMem.stU32 ptype t'4
+  AP_Param.check_default ap default_val
+  return ap
+
+def AP_Param.next_scalar (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.next_scalar.body fp token ptype default_val
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::find_var_info_token : const struct AP_Param::Info *(const ParamToken &, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:658-697`. -/
-partial def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let mut group_element := group_element
   let mut idx := idx
   let t'1 ← PMem.ldBits token 0 9
@@ -4203,14 +3400,30 @@ partial def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (tok
         return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_var_info_token (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info_token (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 8
   let r ← AP_Param.find_var_info_token.body fp this token group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::add_vector3f_suffix : void (char *, size_t, uint8_t) const`, `AP_Param.cpp:816-826`. -/
+def AP_Param.add_vector3f_suffix (this : UInt64) (buffer : UInt64) (buffer_size : UInt64) (idx : UInt8) : PMem.M Unit := do
+  let mut buffer := buffer
+  let mut buffer_size := buffer_size
+  let mut idx := idx
+  let t'1 ← PMem.strnlen buffer buffer_size
+  let mut len : UInt64 := t'1
+  if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))) ≤ buffer_size)) then
+    PMem.stI8 (buffer + ((UInt64.toInt64 (len)) * 1).toUInt64) (95 : Int8)
+    let t'2 := Int32.toInt8 (((Int8.toInt32 ((88 : Int8))) + (UInt32.toInt32 (UInt8.toUInt32 (idx)))))
+    PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))) * 1).toUInt64) t'2
+    if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((3 : Int32))))) ≤ buffer_size)) then
+      let t'3 := Int32.toInt8 ((0 : Int32))
+      PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))))) * 1).toUInt64) t'3
+  return ()
+
 /-- C++ `AP_Param::copy_name_info : void (const struct AP_Param::Info *, const struct GroupInfo *, const struct GroupNesting &, uint8_t, char *, size_t, bool) const`, `AP_Param.cpp:847-871`. -/
-partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UInt64) (group_nesting : UInt64) (idx : UInt8) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UInt64) (group_nesting : UInt64) (idx : UInt8) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
   let mut info' := info'
   let mut ginfo := ginfo
   let mut idx := idx
@@ -4222,7 +3435,7 @@ partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UI
   discard <| pure (t'2)
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'3 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'3 then
       let t'4 := i
       let t'5 := (t'4 + 1)
@@ -4260,8 +3473,82 @@ partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UI
       AP_Param.add_vector3f_suffix this buffer buffer_size idx
   return ()
 
+/-- C++ `AP_Param::copy_name_token : void (const ParamToken &, char *, size_t, bool) const`, `AP_Param.cpp:832-845`. -/
+def AP_Param.copy_name_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+  let mut buffer := buffer
+  let mut buffer_size := buffer_size
+  let mut force_scalar := force_scalar
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info_token this token (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  if (info' == (0 : UInt64)) then
+    let t'2 := Int32.toInt8 ((0 : Int32))
+    PMem.stI8 buffer t'2
+    return ()
+  let t'3 ← PMem.ldU64 (fp + 8)
+  let t'4 ← PMem.ldU8 (fp + 40)
+  AP_Param.copy_name_info this info' t'3 (fp + 16) t'4 buffer buffer_size force_scalar
+  return ()
+
+def AP_Param.copy_name_token (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+  let fp ← PMem.enter 41
+  let r ← AP_Param.copy_name_token.body fp this token buffer buffer_size force_scalar
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::find_by_name : AP_Param *(const char *, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:1003-1025`. -/
+def AP_Param.find_by_name.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let mut name := name
+  let mut ptype := ptype
+  let mut token := token
+  let mut ap : UInt64 := default  -- uninitialized in C
+  let t'1 ← AP_Param.first token ptype (0 : UInt64)
+  ap := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
+      ap := t'3
+      pure ()
+    first'2 := false
+    let mut sc'5 := (ap != 0)
+    if sc'5 then
+      let t'4 ← PMem.ldU32 ptype
+      sc'5 := ((UInt32.toInt32 (t'4)) != (UInt32.toInt32 ((6 : UInt32))))
+    let mut sc'7 := sc'5
+    if sc'7 then
+      let t'6 ← PMem.ldU32 ptype
+      sc'7 := ((UInt32.toInt32 (t'6)) != (UInt32.toInt32 ((0 : UInt32))))
+    if !(sc'7) then break
+    let t'8 ← PMem.ldBits token 0 9
+    let t'9 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'8))))
+    let t'10 ← PMem.ldU64 t'9
+    let t'11 ← PMem.strlen t'10
+    let mut nlen : UInt64 := t'11
+    let t'12 ← PMem.ldBits token 0 9
+    let t'13 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'12))))
+    let t'14 ← PMem.ldU64 t'13
+    let t'15 ← PMem.strncasecmp name t'14 nlen
+    let mut ret : Int32 := t'15
+    if (ret == (0 : Int32)) then
+      AP_Param.copy_name_token ap token (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) false
+      let t'16 ← PMem.strncasecmp name (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
+      if (t'16 == (0 : Int32)) then
+        break
+  return ap
+
+def AP_Param.find_by_name (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 16
+  let r ← AP_Param.find_by_name.body fp name ptype token
+  PMem.leave fp
+  return r
+
+mutual
+
 /-- C++ `AP_Param::find_group : AP_Param *(const char *, uint16_t, ptrdiff_t, const struct GroupInfo *, enum ap_var_type *)`, `AP_Param.cpp:874-933`. -/
-partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_group.body'rec (rec'depth : Nat) (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut name := name
   let mut vindex := vindex
   let mut group_offset := group_offset
@@ -4270,7 +3557,7 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
   let mut type' : UInt8 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -4298,7 +3585,7 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
       let t'11 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
       let t'12 ← PMem.strlen t'11
       let t'13 ← PMem.ldI64 (fp + 0)
-      let t'14 ← AP_Param.find_group (name + ((UInt64.toInt64 (t'12)) * 1).toUInt64) vindex t'13 ginfo ptype
+      let t'14 ← AP_Param.find_group'rec rec'd (name + ((UInt64.toInt64 (t'12)) * 1).toUInt64) vindex t'13 ginfo ptype
       let mut ap : UInt64 := t'14
       if (ap != (0 : UInt64)) then
         return ap
@@ -4359,58 +3646,216 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
               pure ()
   return (0 : UInt64)
 
-partial def AP_Param.find_group (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_group'rec (rec'depth : Nat) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 24
-  let r ← AP_Param.find_group.body fp name vindex group_offset group_info ptype
+  let r ← AP_Param.find_group.body'rec rec'd fp name vindex group_offset group_info ptype
+  PMem.leave fp
+  return r
+
+end
+
+/-- `AP_Param.find_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_group.body'rec 64 fp name vindex group_offset group_info ptype
+
+/-- `AP_Param.find_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_group (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_group'rec 64 name vindex group_offset group_info ptype
+
+/-- C++ `AP_Param::find : AP_Param *(const char *, enum ap_var_type *, uint16_t *)`, `AP_Param.cpp:938-985`. -/
+def AP_Param.find.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
+  let mut name := name
+  let mut ptype := ptype
+  let mut flags := flags
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← AP_Param.var_info i
+    let info' : UInt64 := t'5
+    let t'6 ← PMem.ldU8 (info' + 28)
+    let mut type' : UInt8 := t'6
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      let t'7 ← PMem.ldU64 info'
+      let t'8 ← PMem.strnlen t'7 (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
+      let mut len : UInt8 := UInt64.toUInt8 (t'8)
+      let t'9 ← PMem.ldU64 info'
+      let t'10 ← PMem.strncmp name t'9 (UInt8.toUInt64 (len))
+      if (t'10 != (0 : Int32)) then
+        continue
+      let t'11 ← AP_Param.get_group_info info'
+      let mut group_info : UInt64 := t'11
+      if (group_info == (0 : UInt64)) then
+        continue
+      let t'12 ← AP_Param.find_group (name + ((Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (len))))) * 1).toUInt64) i (Int32.toInt64 ((0 : Int32))) group_info ptype
+      let mut ap : UInt64 := t'12
+      if (ap != (0 : UInt64)) then
+        if (flags != (0 : UInt64)) then
+          PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+          discard <| PMem.memset ((fp + 16) + 0) 0 1
+          discard <| PMem.memset ((fp + 16) + 8) 0 16
+          let t'13 ← AP_Param.find_var_info ap (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+          discard <| pure (t'13)
+          let t'14 ← PMem.ldU64 (fp + 8)
+          if (t'14 != (0 : UInt64)) then
+            let t'15 ← PMem.ldU64 (fp + 8)
+            let t'16 ← PMem.ldU16 (t'15 + 24)
+            PMem.stU16 flags t'16
+          else
+            let t'17 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+            PMem.stU16 flags t'17
+        return ap
+    else
+      let t'18 ← PMem.ldU64 info'
+      let t'19 ← PMem.strcasecmp name t'18
+      if (t'19 == (0 : Int32)) then
+        let t'20 := UInt8.toUInt32 (type')
+        PMem.stU32 ptype t'20
+        let t'21 ← AP_Param.get_base info' (fp + 48)
+        if !t'21 then
+          return (0 : UInt64)
+        if (flags != (0 : UInt64)) then
+          let t'22 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+          PMem.stU16 flags t'22
+        let t'23 ← PMem.ldI64 (fp + 48)
+        return Int64.toUInt64 (t'23)
+  return (0 : UInt64)
+
+def AP_Param.find (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 56
+  let r ← AP_Param.find.body fp name ptype flags
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::find_by_index : AP_Param *(uint16_t, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:989-1000`. -/
+def AP_Param.find_by_index (idx : UInt16) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let mut idx := idx
+  let mut ptype := ptype
+  let mut token := token
+  let mut ap : UInt64 := default  -- uninitialized in C
+  let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let t'1 ← AP_Param.first token ptype (0 : UInt64)
+  ap := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
+      ap := t'3
+      pure ()
+    first'2 := false
+    if !(((ap != 0) && (decide ((UInt32.toInt32 (UInt16.toUInt32 (count))) < (UInt32.toInt32 (UInt16.toUInt32 (idx))))))) then break
+    let t'4 := count
+    let t'5 := (t'4 + 1)
+    count := t'5
+  return ap
+
+/-- C++ `AP_Param::count_parameters : uint16_t ()`, `AP_Param.cpp:2752-2782`. -/
+def AP_Param.count_parameters.body (fp : UInt64)  : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
+  let mut sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) != (0 : Int32))
+  if sc'4 then
+    let t'2 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
+    let t'3 ← PMem.ldU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/
+    sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 (t'3))))
+  if sc'4 then
+    let t'5 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
+    return t'5
+  let mut limit : UInt8 := Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  for _ in PMem.loopFuel do
+    let t'6 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
+    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
+    if !sc'9 then
+      let t'7 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
+      let t'8 ← PMem.ldU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/
+      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) != (UInt32.toInt32 (UInt16.toUInt32 (t'8))))
+    let mut sc'12 := sc'9
+    if sc'12 then
+      let t'10 := limit
+      let t'11 := (t'10 - 1)
+      limit := t'11
+      sc'12 := t'10 != (0 : UInt8)
+    if !(sc'12) then break
+    let mut vp : UInt64 := default  -- uninitialized in C
+    PMem.stBits (fp + 0) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
+    let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    let t'13 ← PMem.ldU16 (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
+    let mut marker : UInt16 := t'13
+    let t'14 ← AP_Param.first (fp + 0) (0 : UInt64) (0 : UInt64)
+    vp := t'14
+    let mut first'15 := true
+    for _ in PMem.loopFuel do
+      if !first'15 then
+        let t'16 ← AP_Param.next_scalar (fp + 0) (0 : UInt64) (0 : UInt64)
+        vp := t'16
+        pure ()
+      first'15 := false
+      if !((vp != (0 : UInt64))) then break
+      let t'17 := count
+      let t'18 := (t'17 + 1)
+      count := t'18
+    PMem.stU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/ count
+    PMem.stU16 (0xbab0 : UInt64) /- &AP_Param::_count_marker_done -/ marker
+  let t'19 ← PMem.ldU16 (0xbaa0 : UInt64) /- &AP_Param::_parameter_count -/
+  return t'19
+
+def AP_Param.count_parameters  : PMem.M UInt16 := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.count_parameters.body fp 
   PMem.leave fp
   return r
 
 /-- C++ `AP_ParamTBase<signed char, 1>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'signed_char_1.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'signed_char_1.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI8 this
   return Int8.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<short, 2>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'short_2.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'short_2.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI16 this
   return Int16.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<int, 3>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'int_3.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'int_3.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI32 this
   return Int32.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<float, 4>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'float_4.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'float_4.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldF32 this
   return t'1
 
-/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'signed_char_1.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI8 v
-  PMem.stI8 this t'1
-  return ()
+/-- C++ `AP_Param::cast_to_float : float (enum ap_var_type) const`, `AP_Param.cpp:1976-1990`. -/
+def AP_Param.cast_to_float (this : UInt64) (type' : UInt32) : PMem.M Binary32 := do
+  let mut type' := type'
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (1 : Int32) then
+    let t'2 ← AP_ParamTBase'signed_char_1.cast_to_float this
+    return t'2
+  else if sw'1 == (2 : Int32) then
+    let t'3 ← AP_ParamTBase'short_2.cast_to_float this
+    return t'3
+  else if sw'1 == (3 : Int32) then
+    let t'4 ← AP_ParamTBase'int_3.cast_to_float this
+    return t'4
+  else if sw'1 == (4 : Int32) then
+    let t'5 ← AP_ParamTBase'float_4.cast_to_float this
+    return t'5
+  else
+    return (Binary32.ofBits 0x7fc00000)
 
-/-- C++ `AP_ParamTBase<short, 2>::set : void (const short &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI16 v
-  PMem.stI16 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI32 v
-  PMem.stI32 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'float_4.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 v
-  PMem.stF32 this t'1
-  return ()
-
-/-- C++ `constrain_value_line : float (const float, const float, const float, uint32_t)`, `AP_Math.cpp:283-304`. -/
-partial def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : PMem.M Binary32 := do
+/-- `constrain_value_line` as a pure function of its arguments (it reads and writes no memory). -/
+def constrain_value_line.pure' (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : Id Binary32 := do
   let mut amt := amt
   let mut low := low
   let mut high := high
@@ -4423,8 +3868,86 @@ partial def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binar
     return high
   return amt
 
+/-- C++ `constrain_value_line : float (const float, const float, const float, uint32_t)`, `AP_Math.cpp:283-304`. -/
+def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : PMem.M Binary32 :=
+  pure (_root_.GCS_lib.constrain_value_line.pure' amt low high line)
+
+/-- C++ `AP_Param::set_float : void (float, enum ap_var_type)`, `AP_Param.cpp:2299-2329`. -/
+def AP_Param.set_float.body (fp : UInt64) (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
+  PMem.stF32 (fp + 0) value
+  let mut var_type := var_type
+  let t'1 ← PMem.ldF32 (fp + 0)
+  let mut sc'3 := (Binary32.isNaN t'1)
+  if !sc'3 then
+    let t'2 ← PMem.ldF32 (fp + 0)
+    sc'3 := (Binary32.isInf t'2)
+  if sc'3 then
+    return ()
+  let mut rounding_addition : Binary32 := (Binary32.ofBits 0x3c23d70a /- 999999977/100000000000 -/)
+  if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((4 : UInt32)))) then
+    AP_ParamTBase'float_4.set this (fp + 0)
+  else
+    if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((3 : UInt32)))) then
+      let t'4 ← PMem.ldF32 (fp + 0)
+      if (decide (t'4 < (Int32.toBinary32 ((0 : Int32))))) then
+        let t'5 := -rounding_addition
+        rounding_addition := t'5
+      let t'6 ← PMem.ldF32 (fp + 0)
+      let mut v : Binary32 := (t'6 + rounding_addition)
+      let t'7 ← constrain_value_line v (Int32.toBinary32 (((-(2147483647 : Int32)) - (1 : Int32)))) (Int32.toBinary32 ((2147483647 : Int32))) (Int32.toUInt32 ((2316 : Int32)))
+      v := t'7
+      PMem.stI32 (fp + 4) (Binary32.toInt32 (v))
+      AP_ParamTBase'int_3.set this (fp + 4)
+    else
+      if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((2 : UInt32)))) then
+        let t'8 ← PMem.ldF32 (fp + 0)
+        if (decide (t'8 < (Int32.toBinary32 ((0 : Int32))))) then
+          let t'9 := -rounding_addition
+          rounding_addition := t'9
+        let t'10 ← PMem.ldF32 (fp + 0)
+        let mut v'2 : Binary32 := (t'10 + rounding_addition)
+        let t'11 ← constrain_value_line v'2 (Int32.toBinary32 ((-(32768 : Int32)))) (Int32.toBinary32 ((32767 : Int32))) (Int32.toUInt32 ((2321 : Int32)))
+        v'2 := t'11
+        PMem.stI16 (fp + 8) (Binary32.toInt16 (v'2))
+        AP_ParamTBase'short_2.set this (fp + 8)
+      else
+        if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((1 : UInt32)))) then
+          let t'12 ← PMem.ldF32 (fp + 0)
+          if (decide (t'12 < (Int32.toBinary32 ((0 : Int32))))) then
+            let t'13 := -rounding_addition
+            rounding_addition := t'13
+          let t'14 ← PMem.ldF32 (fp + 0)
+          let mut v'3 : Binary32 := (t'14 + rounding_addition)
+          let t'15 ← constrain_value_line v'3 (Int32.toBinary32 ((-(128 : Int32)))) (Int32.toBinary32 ((127 : Int32))) (Int32.toUInt32 ((2326 : Int32)))
+          v'3 := t'15
+          PMem.stI8 (fp + 10) (Binary32.toInt8 (v'3))
+          AP_ParamTBase'signed_char_1.set this (fp + 10)
+  return ()
+
+def AP_Param.set_float (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 11
+  let r ← AP_Param.set_float.body fp this value var_type
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::invalidate_count : void ()`, `AP_Param.cpp:2787-2793`. -/
+def AP_Param.invalidate_count  : PMem.M Unit := do
+  let t'1 := (0xbaa8 : UInt64) /- &AP_Param::_count_marker -/
+  let t'2 ← PMem.ldU16 t'1
+  let t'3 := (t'2 + 1)
+  PMem.stU16 t'1 t'3
+  return ()
+
+/-- `AP_ParamV'Vector3_float_5.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamV'Vector3_float_5.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamV<Vector3<float>, 5>::get : const Vector3<float> &() const`, `AP_Param.h:1059-1061`. -/
+def AP_ParamV'Vector3_float_5.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamV'Vector3_float_5.get.pure' this)
+
 /-- C++ `AP_Param::send_parameter : void (const char *, enum ap_var_type, uint8_t) const`, `AP_Param.cpp:2712-2745`. -/
-partial def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
+def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
   let mut name := name
   let mut var_type := var_type
   let mut idx := idx
@@ -4447,29 +3970,173 @@ partial def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : U
   PMem.stI8 name_axis (90 : Int8)
   return ()
 
-partial def AP_Param.send_parameter (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
+def AP_Param.send_parameter (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
   let fp ← PMem.enter 17
   let r ← AP_Param.send_parameter.body fp this name var_type idx
   PMem.leave fp
   return r
 
-/-- C++ `is_equal : typename std::enable_if<std::is_floating_point<typename std::common_type<float, float>::type>::value, bool>::type (const float, const float)`, `AP_Math.cpp:25-41`. -/
-partial def is_equal (v_1 : Binary32) (v_2 : Binary32) : PMem.M Bool := do
+/-- `is_equal` as a pure function of its arguments (it reads and writes no memory). -/
+def is_equal.pure' (v_1 : Binary32) (v_2 : Binary32) : Id Bool := do
   let mut v_1 := v_1
   let mut v_2 := v_2
   if false then
     return (decide ((Binary32.toBinary64 ((Binary32.abs (v_1 - v_2)))) < (Binary64.ofBits 0x3cb0000000000000)))
   return (decide ((Binary32.abs (v_1 - v_2)) < (Binary32.ofBits 0x34000000)))
 
+/-- C++ `is_equal : typename std::enable_if<std::is_floating_point<typename std::common_type<float, float>::type>::value, bool>::type (const float, const float)`, `AP_Math.cpp:25-41`. -/
+def is_equal (v_1 : Binary32) (v_2 : Binary32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.is_equal.pure' v_1 v_2)
+
+/-- C++ `AP_Param::save_sync : void (bool, bool)`, `AP_Param.cpp:1158-1264`. -/
+def AP_Param.save_sync.body (fp : UInt64) (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
+  let mut force_save := force_save
+  let mut send_to_gcs := send_to_gcs
+  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  let mut ap : UInt64 := default  -- uninitialized in C
+  if (info' == (0 : UInt64)) then
+    return ()
+  AP_Param.Param_header.Param_header (fp + 48)
+  let t'2 ← PMem.ldU64 (fp + 8)
+  if (t'2 != (0 : UInt64)) then
+    let t'3 ← PMem.ldU64 (fp + 8)
+    let t'4 ← PMem.ldU8 (t'3 + 27)
+    let t'5 := UInt8.toUInt32 (t'4)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
+    let t'6 ← PMem.ldU64 (fp + 8)
+    let t'7 ← PMem.ldU16 (t'6 + 24)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
+      send_to_gcs := false
+  else
+    let t'8 ← PMem.ldU8 (info' + 28)
+    let t'9 := UInt8.toUInt32 (t'8)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'9))
+    let t'10 ← PMem.ldU16 (info' + 24)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'10))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
+      send_to_gcs := false
+  let t'11 ← PMem.ldU16 (info' + 26)
+  AP_Param.set_key (fp + 48) t'11
+  let t'12 ← PMem.ldU32 (fp + 0)
+  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'12))
+  ap := this
+  let t'13 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'15 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'13)))) != (UInt32.toInt32 ((5 : UInt32))))
+  if sc'15 then
+    let t'14 ← PMem.ldU8 (fp + 40)
+    sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'14))) != (0 : Int32))
+  if sc'15 then
+    return ()
+  let t'16 ← PMem.ldU8 (fp + 40)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'16))) != (0 : Int32)) then
+    let t'17 ← PMem.ldU8 (fp + 40)
+    let t'18 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'17)) * (4 : UInt64)))) * 1).toUInt64)
+    ap := t'18
+  let t'19 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'21 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (UInt32.toInt32 ((1 : UInt32))))
+  if sc'21 then
+    let t'20 ← PMem.ldU64 (fp + 8)
+    sc'21 := (t'20 != (0 : UInt64))
+  let mut sc'24 := sc'21
+  if sc'24 then
+    let t'22 ← PMem.ldU64 (fp + 8)
+    let t'23 ← PMem.ldU16 (t'22 + 24)
+    sc'24 := ((UInt32.toInt32 (UInt16.toUInt32 (t'23))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
+  if sc'24 then
+    AP_Param.invalidate_count
+  let t'25 ← PMem.ldU64 (fp + 8)
+  let t'26 ← PMem.ldU8 (fp + 40)
+  AP_Param.copy_name_info this info' t'25 (fp + 16) t'26 (fp + 56) (17 : UInt64) true
+  let t'27 ← AP_Param.scan (fp + 48) (fp + 80)
+  if t'27 then
+    let t'28 ← PMem.ldU16 (fp + 80)
+    let t'29 ← PMem.ldBits (fp + 48) 8 5
+    let t'30 ← AP_Param.type_size (UInt64.toUInt32 (t'29))
+    AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'28)) + (4 : UInt64)))) t'30
+    if send_to_gcs then
+      let t'31 ← PMem.ldBits (fp + 48) 8 5
+      let t'32 ← PMem.ldU8 (fp + 40)
+      AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'31)) t'32
+    return ()
+  let t'33 ← PMem.ldU16 (fp + 80)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'33))) == (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 ((~~~(0 : Int32))))))))) then
+    PMem.stB (0xbab8 : UInt64) /- &AP_Param::eeprom_full -/ true
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let t'34 ← PMem.ldBits (fp + 48) 8 5
+  if (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'34)))) ≤ (UInt32.toInt32 ((4 : UInt32))))) then
+    let t'35 ← PMem.ldBits (fp + 48) 8 5
+    let t'36 ← AP_Param.cast_to_float this (UInt64.toUInt32 (t'35))
+    let mut v1 : Binary32 := t'36
+    let mut v2 : Binary32 := default  -- uninitialized in C
+    let t'37 ← PMem.ldU64 (fp + 8)
+    if (t'37 != (0 : UInt64)) then
+      let t'38 ← PMem.ldU64 (fp + 8)
+      let t'39 ← AP_Param.get_default_value'2 this t'38
+      v2 := t'39
+    else
+      let t'40 ← AP_Param.get_default_value this info'
+      v2 := t'40
+    let t'41 ← is_equal v1 v2
+    if (t'41 && (!force_save)) then
+      if send_to_gcs then
+        pure ()
+      return ()
+    let mut sc'43 := !force_save
+    if sc'43 then
+      let t'42 ← PMem.ldBits (fp + 48) 8 5
+      sc'43 := (((UInt32.toInt32 ((UInt64.toUInt32 (t'42)))) != (UInt32.toInt32 ((3 : UInt32)))) && (decide ((Binary32.abs (v1 - v2)) < ((Binary32.ofBits 0x38d1b717 /- 499999987/5000000000000 -/) * (Binary32.abs v1)))))
+    if sc'43 then
+      if send_to_gcs then
+        pure ()
+      return ()
+  let t'44 ← PMem.ldU16 (fp + 80)
+  let t'45 ← PMem.ldBits (fp + 48) 8 5
+  let t'46 ← AP_Param.type_size (UInt64.toUInt32 (t'45))
+  let t'47 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
+  if (decide (((Int64.toUInt64 (Int32.toInt64 (((UInt32.toInt32 (UInt16.toUInt32 (t'44))) + (UInt32.toInt32 (UInt8.toUInt32 (t'46))))))) + ((Int64.toUInt64 (Int32.toInt64 ((2 : Int32)))) * (4 : UInt64))) ≥ (UInt16.toUInt64 (t'47)))) then
+    PMem.stB (0xbab8 : UInt64) /- &AP_Param::eeprom_full -/ true
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let t'48 ← PMem.ldU16 (fp + 80)
+  let t'49 ← PMem.ldBits (fp + 48) 8 5
+  let t'50 ← AP_Param.type_size (UInt64.toUInt32 (t'49))
+  AP_Param.write_sentinel (UInt64.toUInt16 ((((UInt16.toUInt64 (t'48)) + (4 : UInt64)) + (UInt8.toUInt64 (t'50)))))
+  let t'51 ← PMem.ldU16 (fp + 80)
+  let t'52 ← PMem.ldBits (fp + 48) 8 5
+  let t'53 ← AP_Param.type_size (UInt64.toUInt32 (t'52))
+  AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'51)) + (4 : UInt64)))) t'53
+  let t'54 ← PMem.ldU16 (fp + 80)
+  AP_Param.eeprom_write_check (fp + 48) t'54 (UInt64.toUInt8 ((4 : UInt64)))
+  if send_to_gcs then
+    let t'55 ← PMem.ldBits (fp + 48) 8 5
+    let t'56 ← PMem.ldU8 (fp + 40)
+    AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'55)) t'56
+  return ()
+
+def AP_Param.save_sync (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
+  let fp ← PMem.enter 82
+  let r ← AP_Param.save_sync.body fp this force_save send_to_gcs
+  PMem.leave fp
+  return r
+
+mutual
+
 /-- C++ `AP_Param::find_key_by_pointer_group : bool (const void *, uint16_t, const struct GroupInfo *, ptrdiff_t, uint16_t &)`, `AP_Param.cpp:1030-1064`. -/
-partial def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+def AP_Param.find_key_by_pointer_group.body'rec (rec'depth : Nat) (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut ptr' := ptr'
   let mut vindex := vindex
   let mut group_info := group_info
   let mut offset := offset
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -4512,75 +4179,226 @@ partial def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64
     if (ginfo == (0 : UInt64)) then
       continue
     let t'20 ← PMem.ldI64 (fp + 8)
-    let t'21 ← AP_Param.find_key_by_pointer_group ptr' vindex ginfo t'20 key
+    let t'21 ← AP_Param.find_key_by_pointer_group'rec rec'd ptr' vindex ginfo t'20 key
     if t'21 then
       return true
   return false
 
-partial def AP_Param.find_key_by_pointer_group (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+def AP_Param.find_key_by_pointer_group'rec (rec'depth : Nat) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 16
-  let r ← AP_Param.find_key_by_pointer_group.body fp ptr' vindex group_info offset key
+  let r ← AP_Param.find_key_by_pointer_group.body'rec rec'd fp ptr' vindex group_info offset key
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::adjust_group_offset : bool (uint16_t, const struct GroupInfo &, ptrdiff_t &)`, `AP_Param.cpp:413-435`. -/
-partial def AP_Param.adjust_group_offset.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
-  let mut vindex := vindex
-  let t'1 ← PMem.ldU16 (group_info + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldI64 new_offset
-    let t'3 ← PMem.ldI64 (group_info + 8)
-    let t'4 := (t'2 + t'3)
-    PMem.stI64 new_offset t'4
-    return true
-  let t'5 ← PMem.ldU16 (group_info + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
-    let t'6 ← AP_Param.var_info vindex
-    let t'7 ← AP_Param.get_base t'6 (fp + 0)
-    if !t'7 then
-      return false
-    let t'8 ← PMem.ldI64 (fp + 0)
-    let t'9 ← PMem.ldI64 new_offset
-    let t'10 ← PMem.ldI64 (group_info + 8)
-    let mut p : UInt64 := Int64.toUInt64 (((t'8 + t'9) + t'10))
-    let t'11 ← PMem.ldU64 p
-    if (t'11 == (0 : UInt64)) then
-      return false
-    let t'12 ← PMem.ldU64 p
-    let t'13 ← PMem.ldI64 (fp + 0)
-    let t'14 := ((UInt64.toInt64 (t'12)) - t'13)
-    PMem.stI64 new_offset t'14
-  return true
+end
 
-partial def AP_Param.adjust_group_offset (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 8
-  let r ← AP_Param.adjust_group_offset.body fp vindex group_info new_offset
+/-- `AP_Param.find_key_by_pointer_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool :=
+  AP_Param.find_key_by_pointer_group.body'rec 64 fp ptr' vindex group_info offset key
+
+/-- `AP_Param.find_key_by_pointer_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_key_by_pointer_group (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool :=
+  AP_Param.find_key_by_pointer_group'rec 64 ptr' vindex group_info offset key
+
+/-- C++ `AP_Param::find_key_by_pointer : bool (const void *, uint16_t &)`, `AP_Param.cpp:1070-1092`. -/
+def AP_Param.find_key_by_pointer (ptr' : UInt64) (key : UInt64) : PMem.M Bool := do
+  let mut ptr' := ptr'
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← AP_Param.var_info i
+    let info' : UInt64 := t'5
+    let t'6 ← PMem.ldU8 (info' + 28)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) != (UInt32.toInt32 ((6 : UInt32)))) then
+      continue
+    let t'7 ← PMem.ldU16 (info' + 24)
+    let mut sc'10 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
+    if sc'10 then
+      let t'8 ← PMem.ldU64 (info' + 8)
+      let t'9 ← PMem.ldU64 t'8
+      sc'10 := (ptr' == t'9)
+    if sc'10 then
+      let t'11 ← PMem.ldU16 (info' + 26)
+      PMem.stU16 key t'11
+      return true
+    let mut offset : Int64 := Int32.toInt64 ((0 : Int32))
+    let t'12 ← AP_Param.get_group_info info'
+    let mut ginfo : UInt64 := t'12
+    if (ginfo == (0 : UInt64)) then
+      continue
+    let t'13 ← AP_Param.find_key_by_pointer_group ptr' i ginfo offset key
+    if t'13 then
+      return true
+  return false
+
+mutual
+
+/-- C++ `AP_Param::load_object_from_eeprom : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1705-1761`. -/
+def AP_Param.load_object_from_eeprom.body'rec (rec'depth : Nat) (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let mut object_pointer := object_pointer
+  let mut group_info := group_info
+  AP_Param.Param_header.Param_header (fp + 0)
+  let t'1 ← AP_Param.find_key_by_pointer object_pointer (fp + 8)
+  if !t'1 then
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 := i
+      let t'4 := (t'3 + 1)
+      i := t'4
+      pure ()
+    first'2 := false
+    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    let t'6 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      PMem.stI64 (fp + 16) (Int32.toInt64 ((0 : Int32)))
+      let t'7 ← PMem.ldU16 (fp + 8)
+      let t'8 ← AP_Param.adjust_group_offset t'7 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 16)
+      if !t'8 then
+        continue
+      let t'9 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'9
+      if (ginfo != (0 : UInt64)) then
+        let t'10 ← PMem.ldI64 (fp + 16)
+        AP_Param.load_object_from_eeprom'rec rec'd (Int64.toUInt64 (((UInt64.toInt64 (object_pointer)) + t'10))) ginfo
+    let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
+    for _ in PMem.loopFuel do
+      let t'11 ← StorageAccess.size (0xba88 : UInt64) /- &AP_Param::_storage -/
+      if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'11)))))) then break
+      let t'12 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
+      discard <| pure (t'12)
+      let t'13 ← AP_Param.is_sentinel (fp + 0)
+      if t'13 then
+        PMem.stU16 (0xba98 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
+        break
+      let t'14 ← AP_Param.get_key (fp + 0)
+      let t'15 ← PMem.ldU16 (fp + 8)
+      if ((UInt32.toInt32 (UInt16.toUInt32 (t'14))) == (UInt32.toInt32 (UInt16.toUInt32 (t'15)))) then
+        let mut info' : UInt64 := default  -- uninitialized in C
+        AP_Param.Param_header.Param_header'2 (fp + 32) (fp + 0)
+        let t'16 ← AP_Param.find_by_header (fp + 32) (fp + 24)
+        info' := t'16
+        if (info' != (0 : UInt64)) then
+          let t'17 ← PMem.ldU64 (fp + 24)
+          let t'18 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+          if ((UInt64.toInt64 (t'17)) == ((UInt64.toInt64 (object_pointer)) + t'18)) then
+            let t'19 ← PMem.ldU64 (fp + 24)
+            let t'20 ← PMem.ldBits (fp + 0) 8 5
+            let t'21 ← AP_Param.type_size (UInt64.toUInt32 (t'20))
+            let t'22 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ t'19 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'21))
+            discard <| pure (t'22)
+            break
+      let t'23 ← PMem.ldBits (fp + 0) 8 5
+      let t'24 ← AP_Param.type_size (UInt64.toUInt32 (t'23))
+      let t'25 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'24)) + (4 : UInt64)))))
+      ofs := t'25
+  let t'26 ← PMem.ldB (0xbac0 : UInt64) /- &AP_Param::done_all_default_params -/
+  if !t'26 then
+    AP_Param.reload_defaults_file false
+  AP_Param.invalidate_count
+  return ()
+
+def AP_Param.load_object_from_eeprom'rec (rec'depth : Nat) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 36
+  let r ← AP_Param.load_object_from_eeprom.body'rec rec'd fp object_pointer group_info
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct GroupInfo &)`, `AP_Param.cpp:301-307`. -/
-partial def AP_Param.get_group_info'2 (ginfo : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU16 (ginfo + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (ginfo + 16)
-    let t'3 ← PMem.ldU64 t'2
-    return t'3
-  let t'4 ← PMem.ldU64 (ginfo + 16)
-  return t'4
+end
 
-/-- C++ `AP_Param::get_key : uint16_t (const Param_header &)`, `AP_Param.cpp:743-746`. -/
-partial def AP_Param.get_key (phdr : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldBits phdr 13 1
-  let t'2 ← PMem.ldBits phdr 0 8
-  return Int16.toUInt16 (Int32.toInt16 ((((UInt32.toInt32 (UInt16.toUInt32 ((UInt32.toUInt16 ((UInt64.toUInt32 (t'1))))))) <<< (8 : Int32)) ||| (UInt32.toInt32 ((UInt64.toUInt32 (t'2)))))))
+/-- `AP_Param.load_object_from_eeprom.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.load_object_from_eeprom.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit :=
+  AP_Param.load_object_from_eeprom.body'rec 64 fp object_pointer group_info
+
+/-- `AP_Param.load_object_from_eeprom'rec` with the depth of its recursive component (64). -/
+def AP_Param.load_object_from_eeprom (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit :=
+  AP_Param.load_object_from_eeprom'rec 64 object_pointer group_info
+
+/-- C++ `AP_Param::set_frame_type_flags : void (uint16_t)`, `AP_Param.h:599-602`. -/
+def AP_Param.set_frame_type_flags (flags_to_set : UInt16) : PMem.M Unit := do
+  let mut flags_to_set := flags_to_set
+  AP_Param.invalidate_count
+  let t'1 := (0xbac8 : UInt64) /- &AP_Param::_frame_type_flags -/
+  let t'2 ← PMem.ldU16 t'1
+  let t'3 := (t'2 ||| (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (flags_to_set)))))))
+  PMem.stU16 t'1 t'3
+  return ()
+
+/-- C++ `AP_Param::AP_Param : void (const struct Info *)`, `AP_Param.h:263-276`. -/
+def AP_Param.AP_Param (this : UInt64) (info' : UInt64) : PMem.M Unit := do
+  let mut info' := info'
+  PMem.stU64 (0xbad0 : UInt64) /- &AP_Param::_var_info -/ info'
+  let mut i : UInt16 := default  -- uninitialized in C
+  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  i := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 := i
+      let t'4 := (t'3 + 1)
+      i := t'4
+      pure ()
+    first'2 := false
+    let t'5 ← PMem.ldU8 ((info' + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64) + 28)
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+  PMem.stU16 (0xba78 : UInt64) /- &AP_Param::_num_vars -/ i
+  let t'6 ← PMem.ldU64 (0xbad8 : UInt64) /- &AP_Param::_singleton -/
+  if (t'6 != (0 : UInt64)) then
+    pure ()
+  PMem.stU64 (0xbad8 : UInt64) /- &AP_Param::_singleton -/ this
+  return ()
+
+/-- `AP_Param.AP_Param'2` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.AP_Param'2.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param::AP_Param : void ()`, `AP_Param.h:279-?`. -/
+def AP_Param.AP_Param'2 (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Param.AP_Param'2.pure' this)
+
+/-- C++ `StorageAccess::StorageAccess : void (StorageManager::StorageType)`, `StorageManager.cpp:119-133`. -/
+def StorageAccess.StorageAccess (this : UInt64) (_type : UInt32) : PMem.M Unit := do
+  let mut _type := _type
+  PMem.stU32 (this + 0) _type
+  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  PMem.stU16 (this + 4) t'1
+  PMem.stU64 (this + 8) (0 : UInt64)
+  for i'2 in [0:15] do
+    let i : UInt8 := UInt8.ofNat i'2
+    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+    let t'3 ← PMem.ldU32 area
+    let t'4 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'3)) == (UInt32.toInt32 (t'4))) then
+      let t'5 := (this + 4)
+      let t'6 ← PMem.ldU16 t'5
+      let t'7 ← PMem.ldU16 (area + 6)
+      let t'8 := (t'6 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (t'7)))))))
+      PMem.stU16 t'5 t'8
+  return ()
 
 /-- C++ `AP_HAL::Storage::erase : bool ()`, `Storage.cpp:8-17`. -/
-partial def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
   let mut ofs : UInt32 := default  -- uninitialized in C
   let t'1 := Int32.toUInt32 ((0 : Int32))
   ofs := t'1
   let mut first'2 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'2 then
       let t'3 := (ofs + (UInt64.toUInt32 ((16 : UInt64))))
       ofs := t'3
@@ -4594,19 +4412,35 @@ partial def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Boo
     PMem.halWrite (UInt32.toUInt16 (ofs)) (fp + 0) (UInt32.toUInt64 (n))
   return true
 
-partial def AP_HAL.Storage.erase (this : UInt64) : PMem.M Bool := do
+def AP_HAL.Storage.erase (this : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 28
   let r ← AP_HAL.Storage.erase.body fp this
   PMem.leave fp
   return r
 
+/-- C++ `StorageManager::erase : void ()`, `StorageManager.cpp:109-114`. -/
+def StorageManager.erase  : PMem.M Unit := do
+  let t'1 ← AP_HAL.Storage.erase (0 : UInt64)
+  if !t'1 then
+    pure ()
+  return ()
+
+/-- C++ `AP_ParamTBase<short, 2>::set_and_save : void (const short &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI16 this
+  let t'2 ← PMem.ldI16 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int16.toInt32 (t'1)) - (Int16.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'short_2.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
 /-- C++ `AP_Param::add_default : void (AP_Param *, float)`, `AP_Param.cpp:3007-3036`. -/
-partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := do
+def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := do
   let mut ap := ap
   let mut v := v
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
@@ -4624,7 +4458,7 @@ partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := d
     let t'8 ← PMem.ldU64 (0xbe60 : UInt64) /- &AP_Param::default_list -/
     let mut item : UInt64 := t'8
     let mut first'9 := true
-    repeat
+    for _ in PMem.loopFuel do
       if !first'9 then
         let t'10 ← PMem.ldU64 (item + 16)
         item := t'10
@@ -4647,941 +4481,12 @@ partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := d
   return ()
 
 /-- C++ `default_as_float : float (const short &)`, `AP_ParamT.cpp:?-?`. -/
-partial def default_as_float (v : UInt64) : PMem.M Binary32 := do
+def default_as_float (v : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI16 v
   return Int16.toBinary32 (t'1)
 
-/-- C++ `AP_Param::configured : bool () const`, `AP_Param.cpp:1456-1460`. -/
-partial def AP_Param.configured.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
-  let t'1 ← AP_Param.configured_in_defaults_file this (fp + 0)
-  let mut sc'3 := t'1
-  if !sc'3 then
-    let t'2 ← AP_Param.configured_in_storage this
-    sc'3 := t'2
-  return sc'3
-
-partial def AP_Param.configured (this : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 1
-  let r ← AP_Param.configured.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_by_header_group : const struct AP_Param::Info *(struct Param_header, void **, uint16_t, const struct GroupInfo *, uint32_t, uint8_t, ptrdiff_t)`, `AP_Param.cpp:461-508`. -/
-partial def AP_Param.find_by_header_group.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
-  let mut ptr' := ptr'
-  let mut vindex := vindex
-  let mut group_info := group_info
-  let mut group_base := group_base
-  let mut group_shift := group_shift
-  let mut group_offset := group_offset
-  let mut type' : UInt8 := default  -- uninitialized in C
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'4
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        return (0 : UInt64)
-      let t'5 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'5
-      if (ginfo == (0 : UInt64)) then
-        continue
-      PMem.stI64 (fp + 0) group_offset
-      let t'6 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 0)
-      if !t'6 then
-        continue
-      AP_Param.Param_header.Param_header'2 (fp + 8) phdr
-      let t'7 ← AP_Param.group_id group_info group_base i group_shift
-      let t'8 ← PMem.ldI64 (fp + 0)
-      let t'9 ← AP_Param.find_by_header_group (fp + 8) ptr' vindex ginfo t'7 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'8
-      let mut ret : UInt64 := t'9
-      if (ret != (0 : UInt64)) then
-        return ret
-      continue
-    let t'10 ← AP_Param.group_id group_info group_base i group_shift
-    let t'11 ← PMem.ldBits phdr 14 18
-    let mut sc'13 := (t'10 == (UInt64.toUInt32 (t'11)))
-    if sc'13 then
-      let t'12 ← PMem.ldBits phdr 8 5
-      sc'13 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((UInt64.toUInt32 (t'12)))))
-    if sc'13 then
-      let t'14 ← AP_Param.var_info vindex
-      let t'15 ← AP_Param.get_base t'14 (fp + 16)
-      if !t'15 then
-        continue
-      let t'16 ← PMem.ldI64 (fp + 16)
-      let t'17 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-      let t'18 := Int64.toUInt64 (((t'16 + t'17) + group_offset))
-      PMem.stU64 ptr' t'18
-      let t'19 ← AP_Param.var_info vindex
-      return t'19
-  return (0 : UInt64)
-
-partial def AP_Param.find_by_header_group (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 24
-  let r ← AP_Param.find_by_header_group.body fp phdr ptr' vindex group_info group_base group_shift group_offset
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::num_gcs : uint8_t () const`, `AP_Common.h:1219-?`. -/
-partial def GCS.num_gcs (this : UInt64) : PMem.M UInt8 := do
-  let t'1 ← PMem.ldU8 (this + 28)
-  return t'1
-
-/-- C++ `GCS_MAVLINK::update_receive : void (uint32_t)`, `GCS_Common.cpp:1927-2103`. -/
-partial def GCS_MAVLINK.update_receive.body (fp : UInt64) (this : UInt64) (max_time_us : UInt32) : PMem.M Unit := do
-  let mut max_time_us := max_time_us
-  let t'1 ← GCS_MAVLINK.locked this
-  if t'1 then
-    return ()
-  __mavlink_message.__mavlink_message (fp + 0)
-  __mavlink_status.__mavlink_status (fp + 304)
-  let mut tstart_us : UInt32 := (← get).clockUs.toUInt32
-  let mut now_ms : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let t'2 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  PMem.stU16 ((fp + 304) + 14) t'2
-  let t'3 ← PMem.ldU64 (this + 480)
-  let t'4 ← PMem.uartAvailable t'3
-  let mut nbytes : UInt16 := UInt32.toUInt16 (t'4)
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'5 := true
-  repeat
-    if !first'5 then
-      let t'6 := i
-      let t'7 := (t'6 + 1)
-      i := t'7
-      pure ()
-    first'5 := false
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (nbytes)))))) then break
-    let t'8 ← PMem.ldU64 (this + 480)
-    let t'9 ← PMem.uartRead t'8
-    let mut c : UInt8 := Int8.toUInt8 (Int16.toInt8 (t'9))
-    let mut protocol_timeout : UInt32 := Int32.toUInt32 ((4000 : Int32))
-    let mut sc'11 := false
-    if sc'11 then
-      let t'10 ← PMem.ldU32 ((this + 776) + 16)
-      sc'11 := (decide ((now_ms - t'10) > protocol_timeout))
-    if sc'11 then
-      if false then
-        PMem.stU32 ((this + 776) + 20) now_ms
-        let t'12 ← PMem.ldU32 (this + 40)
-        PMem.stB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'12))) * 1).toUInt64) true
-      let t'13 ← PMem.ldU32 ((this + 776) + 20)
-      if (decide ((now_ms - t'13) ≤ protocol_timeout)) then
-        continue
-    let mut parsed_packet : Bool := false
-    let t'14 ← GCS_MAVLINK.channel_buffer this
-    let t'15 ← GCS_MAVLINK.channel_status this
-    let t'16 ← mavlink_frame_char_buffer t'14 t'15 c (fp + 0) (fp + 304)
-    let mut framing : UInt8 := t'16
-    if ((UInt32.toInt32 (UInt8.toUInt32 (framing))) != (UInt32.toInt32 ((0 : UInt32)))) then
-      let t'17 ← PMem.ldBits (fp + 0) 104 24
-      let t'18 := UInt32.toUInt16 ((UInt64.toUInt32 (t'17)))
-      let t'19 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-      PMem.stU16 ((t'19 + 8) + 58) t'18
-      GCS_MAVLINK.raw_packetReceived this framing (fp + 304) (fp + 0)
-      if ((UInt32.toInt32 (UInt8.toUInt32 (framing))) == (UInt32.toInt32 ((1 : UInt32)))) then
-        parsed_packet := true
-        let t'20 ← PMem.ldU32 (this + 40)
-        PMem.stB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'20))) * 1).toUInt64) false
-        PMem.stU32 ((this + 776) + 16) now_ms
-      let t'21 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-      let t'22 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-      PMem.stU16 ((t'22 + 8) + 58) t'21
-    if (parsed_packet || (((UInt32.toInt32 (UInt16.toUInt32 (i))) % (100 : Int32)) == (0 : Int32))) then
-      if (decide ((((← get).clockUs.toUInt32) - tstart_us) > max_time_us)) then
-        break
-  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let t'23 ← PMem.ldU32 ((this + 72) + 16)
-  let t'24 ← PMem.ldU16 ((this + 72) + 20)
-  let mut sc'26 := (decide ((tnow - t'23) > (UInt16.toUInt32 (t'24))))
-  if sc'26 then
-    let t'25 ← GCS_MAVLINK.is_private this
-    sc'26 := !t'25
-  let mut sc'28 := sc'26
-  if sc'28 then
-    let t'27 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
-    sc'28 := !t'27
-  if sc'28 then
-    let t'29 ← PMem.ldU32 (this + 40)
-    let t'30 ← comm_get_txspace t'29
-    let t'31 ← PMem.ldU32 (this + 40)
-    let t'32 ← GCS_MAVLINK.packet_overhead_chan t'31
-    let mut c'33 : Bool := default
-    if (decide ((UInt16.toUInt32 (t'30)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'32))) + (16 : Int32)))))) then
-      c'33 := true
-    else
-      let t'34 ← PMem.ldU32 (this + 40)
-      gcs_out_of_space_to_send t'34
-      c'33 := false
-    if c'33 then
-      GCS_MAVLINK.send_timesync this
-      PMem.stU32 ((this + 72) + 16) tnow
-  return ()
-
-partial def GCS_MAVLINK.update_receive (this : UInt64) (max_time_us : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 344
-  let r ← GCS_MAVLINK.update_receive.body fp this max_time_us
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_Copter::chan : GCS_MAVLINK_Copter *(const uint8_t)`, `GCS.h:?-?`. -/
-partial def GCS_Copter.chan (this : UInt64) (ofs : UInt8) : PMem.M UInt64 := do
-  let mut ofs := ofs
-  let t'1 ← PMem.ldU8 (this + 28)
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (ofs))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'1))))) then
-    return (0 : UInt64)
-  let t'2 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (ofs))) * 8).toUInt64)
-  return t'2
-
-/-- C++ `AP_ParamT<unsigned int, 3>::operator const unsigned int & : const unsigned int &() const`, `AP_Param.h:978-980`. -/
-partial def AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `MissionItemProtocol_Waypoints::MissionItemProtocol_Waypoints : void (class AP_Mission &)`, `MissionItemProtocol_Waypoints.h:?-8`. -/
-partial def MissionItemProtocol_Waypoints.MissionItemProtocol_Waypoints (this : UInt64) (_mission : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 48) _mission
-  return ()
-
-/-- C++ `AP::mission : AP_Mission &()`, `AP_Mission.cpp:3301-3304`. -/
-partial def AP.mission  : PMem.M UInt64 := do
-  let t'1 ← AP_Mission.get_singleton
-  return t'1
-
-/-- C++ `MissionItemProtocol::update : void ()`, `MissionItemProtocol.cpp:379-412`. -/
-partial def MissionItemProtocol.update (this : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldB (this + 8)
-  if !t'1 then
-    return ()
-  let t'2 ← PMem.ldU64 (this + 16)
-  if (t'2 == (0 : UInt64)) then
-    return ()
-  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let t'3 ← PMem.ldU32 (this + 36)
-  let t'4 ← PMem.ldU16 (this + 44)
-  if (decide ((tnow - t'3) > (UInt16.toUInt32 (t'4)))) then
-    PMem.stB (this + 8) false
-    MissionItemProtocol_Waypoints.timeout this
-    let t'5 ← PMem.ldU64 (this + 16)
-    let t'6 ← GCS_MAVLINK.get_chan t'5
-    let mut chan : UInt32 := t'6
-    let t'7 ← comm_get_txspace chan
-    let t'8 ← GCS_MAVLINK.packet_overhead_chan chan
-    let mut c'9 : Bool := default
-    if (decide ((UInt16.toUInt32 (t'7)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'8))) + (4 : Int32)))))) then
-      c'9 := true
-    else
-      gcs_out_of_space_to_send chan
-      c'9 := false
-    if c'9 then
-      let t'10 ← PMem.ldU32 (this + 28)
-      let t'11 ← PMem.ldU8 (this + 32)
-      let t'12 ← MissionItemProtocol_Waypoints.mission_type this
-      mavlink_msg_mission_ack_send chan t'10 t'11 (UInt32.toUInt8 ((15 : UInt32))) (UInt32.toUInt8 (t'12))
-    PMem.stU64 (this + 16) (0 : UInt64)
-    MissionItemProtocol.free_upload_resources this
-    return ()
-  let t'13 ← PMem.ldU64 (this + 16)
-  let t'14 ← GCS_MAVLINK.get_stream_slowdown_ms t'13
-  let mut wp_recv_timeout_ms : UInt32 := ((1000 : UInt32) + (UInt16.toUInt32 (t'14)))
-  let t'15 ← PMem.ldU32 (this + 40)
-  if (decide ((tnow - t'15) > wp_recv_timeout_ms)) then
-    PMem.stU32 (this + 40) tnow
-    let t'16 ← MissionItemProtocol_Waypoints.next_item_ap_message_id this
-    let t'17 ← PMem.ldU64 (this + 16)
-    GCS_MAVLINK.send_message t'17 t'16
-  return ()
-
-/-- C++ `GCS_MAVLINK::update_send : void ()`, `GCS_Common.cpp:1566-1695`. -/
-partial def GCS_MAVLINK.update_send (this : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldB (this + 764)
-  if !t'1 then
-    GCS_MAVLINK.initialise_message_intervals_from_streamrates this
-    PMem.stB (this + 764) true
-  let mut start : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let mut start16 : UInt16 := UInt32.toUInt16 ((start &&& (Int32.toUInt32 ((65535 : Int32)))))
-  repeat
-    if !((decide (((((← get).clockUs / 1000).toUInt32) - start) < (Int32.toUInt32 ((5 : Int32)))))) then break
-    let t'2 ← gcs
-    let t'3 ← GCS.out_of_time t'2
-    if t'3 then
-      break
-    let t'4 ← GCS_MAVLINK.deferred_message_to_send_index this start16
-    let mut next : Int8 := t'4
-    if ((Int8.toInt32 (next)) != (-(1 : Int32))) then
-      let t'5 ← PMem.ldU8 ((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64)
-      let t'6 ← GCS_MAVLINK.do_try_send_message this t'5
-      if !t'6 then
-        break
-      let t'7 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 2)
-      let mut interval_ms : UInt16 := t'7
-      let t'8 := (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4)
-      let t'9 ← PMem.ldU16 t'8
-      let t'10 := (t'9 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms)))))))
-      PMem.stU16 t'8 t'10
-      let t'11 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4)
-      if (decide ((UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (start16))) - (UInt32.toInt32 (UInt16.toUInt32 (t'11)))))))))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))) then
-        PMem.stU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4) start16
-      let t'12 := Int32.toInt8 ((-(1 : Int32)))
-      PMem.stI8 (this + 524) t'12
-      continue
-    let t'13 ← Bitmask'102.first_set (this + 748)
-    let mut fs : Int16 := t'13
-    if ((Int16.toInt32 (fs)) != (-(1 : Int32))) then
-      let mut next'2 : UInt8 := Int8.toUInt8 (Int16.toInt8 (fs))
-      let t'14 ← GCS_MAVLINK.do_try_send_message this next'2
-      if !t'14 then
-        break
-      Bitmask'102.clear (this + 748) (UInt8.toUInt16 (next'2))
-      continue
-    let t'15 ← GCS_MAVLINK.next_deferred_bucket_message_to_send this start16
-    let mut next'3 : UInt8 := t'15
-    if ((UInt32.toInt32 (UInt8.toUInt32 (next'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
-      let t'16 ← GCS_MAVLINK.do_try_send_message this next'3
-      if !t'16 then
-        break
-      Bitmask'102.clear (this + 732) (UInt8.toUInt16 (next'3))
-      let t'17 ← Bitmask'102.count (this + 732)
-      if ((UInt32.toInt32 (UInt16.toUInt32 (t'17))) == (0 : Int32)) then
-        let t'18 ← PMem.ldU8 (this + 728)
-        let t'19 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'18))) * 20).toUInt64)
-        let mut interval_ms'2 : UInt16 := t'19
-        let t'20 ← PMem.ldU8 (this + 728)
-        let t'21 := (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'20))) * 20).toUInt64) + 18)
-        let t'22 ← PMem.ldU16 t'21
-        let t'23 := (t'22 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms'2)))))))
-        PMem.stU16 t'21 t'23
-        let t'24 ← PMem.ldU8 (this + 728)
-        let t'25 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'24))) * 20).toUInt64) + 18)
-        if (decide ((UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (start16))) - (UInt32.toInt32 (UInt16.toUInt32 (t'25)))))))))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms'2))))) then
-          let t'26 ← PMem.ldU8 (this + 728)
-          PMem.stU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'26))) * 20).toUInt64) + 18) start16
-        GCS_MAVLINK.find_next_bucket_to_send this start16
-      continue
-    break
-  let t'27 := (this + 858)
-  let t'28 ← PMem.ldU16 t'27
-  let t'29 ← PMem.ldU8 ((this + 408) + 10)
-  let t'30 ← PMem.ldU8 (this + 856)
-  let t'31 := (t'28 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt8.toUInt32 ((Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (t'29))) - (UInt32.toInt32 (UInt8.toUInt32 (t'30))))))))))))))
-  PMem.stU16 t'27 t'31
-  let t'32 ← PMem.ldU8 ((this + 408) + 10)
-  PMem.stU8 (this + 856) t'32
-  return ()
-
-/-- C++ `JitterCorrection::JitterCorrection : void (uint16_t, uint16_t)`, `JitterCorrection.cpp:39-42`. -/
-partial def JitterCorrection.JitterCorrection (this : UInt64) (_max_lag_ms : UInt16) (_convergence_loops : UInt16) : PMem.M Unit := do
-  let mut _max_lag_ms := _max_lag_ms
-  let mut _convergence_loops := _convergence_loops
-  PMem.stU16 (this + 0) _max_lag_ms
-  PMem.stU16 (this + 2) _convergence_loops
-  return ()
-
-/-- C++ `GCS_MAVLINK::pending_param_request::pending_param_request : void () noexcept`, `functor.h:994-?`. -/
-partial def GCS_MAVLINK.pending_param_request.pending_param_request (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::space : uint32_t () const`, `AP_Common.h:163-165`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_reply.space (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.space t'1
-  return UInt64.toUInt32 (((UInt32.toUInt64 (t'2)) / (48 : UInt64)))
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::pop : bool (GCS_MAVLINK::pending_param_request &)`, `AP_Common.h:203-208`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_request.pop (this : UInt64) (object : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.available t'1
-  if (decide ((UInt32.toUInt64 (t'2)) < (32 : UInt64))) then
-    return false
-  let t'3 ← PMem.ldU64 this
-  let t'4 ← ByteBuffer.read t'3 object (UInt64.toUInt32 ((32 : UInt64)))
-  return ((UInt32.toUInt64 (t'4)) == (32 : UInt64))
-
-/-- C++ `GCS_MAVLINK::pending_param_reply::pending_param_reply : void () noexcept`, `functor.h:1002-?`. -/
-partial def GCS_MAVLINK.pending_param_reply.pending_param_reply (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::push : bool (const GCS_MAVLINK::pending_param_reply &)`, `AP_Common.h:175-180`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_reply.push (this : UInt64) (object : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.space t'1
-  if (decide ((UInt32.toUInt64 (t'2)) < (48 : UInt64))) then
-    return false
-  let t'3 ← PMem.ldU64 this
-  let t'4 ← ByteBuffer.write t'3 object (UInt64.toUInt32 ((48 : UInt64)))
-  return ((UInt32.toUInt64 (t'4)) == (48 : UInt64))
-
-/-- C++ `GCS::convert_parameters : void ()`, `GCS.cpp:263-271`. -/
-partial def GCS.convert_parameters (this : UInt64) : PMem.M Unit := do
-  let t'1 ← AP_Param.convert_parameter_width (this + 160) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| pure (t'1)
-  let t'2 ← AP_Param.convert_parameter_width (this + 164) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| pure (t'2)
-  let t'3 ← AP_Param.convert_parameter_width (this + 168) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
-  discard <| pure (t'3)
-  return ()
-
-/-- C++ `GCS::sysid_this_mav : uint32_t () const`, `AP_Common.h:1323-?`. -/
-partial def GCS.sysid_this_mav (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 160)
-  let t'2 ← PMem.ldU32 t'1
-  return t'2
-
-/-- C++ `GCS::create_gcs_mavlink_backend : bool (AP_HAL::UARTDriver &)`, `GCS_Common.cpp:2828-2850`. -/
-partial def GCS.create_gcs_mavlink_backend (this : UInt64) (uart : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU8 (this + 28)
-  if (decide ((UInt8.toUInt64 (t'1)) ≥ ((128 : UInt64) / (8 : UInt64)))) then
-    return false
-  let t'2 ← GCS_Copter.new_gcs_mavlink_backend this uart
-  let t'3 ← PMem.ldU8 (this + 28)
-  PMem.stU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'3))) * 8).toUInt64) t'2
-  let t'4 ← PMem.ldU8 (this + 28)
-  let t'5 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'4))) * 8).toUInt64)
-  if (t'5 == (0 : UInt64)) then
-    return false
-  let t'6 := (0xbb88 : UInt64) /- &GCS_MAVLINK::var_info -/
-  let t'7 ← PMem.ldU8 (this + 28)
-  PMem.stU64 ((0x8658 : UInt64) /- &GCS::_chan_var_info -/ + ((UInt64.toInt64 (UInt8.toUInt64 (t'7))) * 8).toUInt64) t'6
-  let t'8 ← PMem.ldU8 (this + 28)
-  let t'9 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'8))) * 8).toUInt64)
-  let t'10 ← PMem.ldU8 (this + 28)
-  let t'11 ← PMem.ldU64 ((0x8658 : UInt64) /- &GCS::_chan_var_info -/ + ((UInt64.toInt64 (UInt8.toUInt64 (t'10))) * 8).toUInt64)
-  AP_Param.load_object_from_eeprom t'9 t'11
-  let t'12 ← PMem.ldU8 (this + 28)
-  let t'13 ← PMem.ldU8 (this + 28)
-  let t'14 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'13))) * 8).toUInt64)
-  let t'15 ← GCS_MAVLINK.init t'14 t'12
-  if !t'15 then
-    let t'16 ← PMem.ldU8 (this + 28)
-    PMem.stU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'16))) * 8).toUInt64) (0 : UInt64)
-    return false
-  let t'17 := (this + 28)
-  let t'18 ← PMem.ldU8 t'17
-  let t'19 := (t'18 + 1)
-  PMem.stU8 t'17 t'19
-  return true
-
-/-- C++ `gcs : GCS &()`, `GCS_Common.cpp:7695-7698`. -/
-partial def gcs  : PMem.M UInt64 := do
-  let t'1 ← GCS.get_singleton
-  return t'1
-
-/-- C++ `GCS_MAVLINK::is_unicast : bool () const`, `AP_Mission.h:456-?`. -/
-partial def GCS_MAVLINK.is_unicast (this : UInt64) : PMem.M Bool := do
-  let t'1 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
-  return t'1
-
-/-- C++ `GCS_MAVLINK::send_message : void (enum ap_message)`, `GCS_Common.cpp:1831-1853`. -/
-partial def GCS_MAVLINK.send_message (this : UInt64) (id : UInt8) : PMem.M Unit := do
-  let mut id := id
-  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
-  if sw'1 == (0 : Int32) then
-    let t'2 ← GCS_MAVLINK.is_streaming this
-    if t'2 then
-      let t'3 := (0xbe88 : UInt64) /- &GCS_MAVLINK::chan_is_streaming -/
-      let t'4 ← PMem.ldU32 t'3
-      let t'5 ← PMem.ldU32 (this + 40)
-      let t'6 := (t'4 ||| ((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'5)) - (UInt32.toInt32 ((0 : UInt32))))))))
-      PMem.stU32 t'3 t'6
-    else
-      let t'7 := (0xbe88 : UInt64) /- &GCS_MAVLINK::chan_is_streaming -/
-      let t'8 ← PMem.ldU32 t'7
-      let t'9 ← PMem.ldU32 (this + 40)
-      let t'10 := (t'8 &&& (~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'9)) - (UInt32.toInt32 ((0 : UInt32)))))))))
-      PMem.stU32 t'7 t'10
-  else
-    pure ()
-  Bitmask'102.set (this + 748) (UInt8.toUInt16 (id))
-  return ()
-
-/-- C++ `ByteBuffer::ByteBuffer : void (uint32_t)`, `RingBuffer.cpp:6-11`. -/
-partial def ByteBuffer.ByteBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
-  let mut _size := _size
-  PMem.stU32 (this + 12) (Int32.toUInt32 ((0 : Int32)))
-  PMem.stU32 (this + 16) (Int32.toUInt32 ((0 : Int32)))
-  let t'1 ← PMem.calloc (Int64.toUInt64 (Int32.toInt64 ((1 : Int32)))) (UInt32.toUInt64 (_size))
-  PMem.stU64 this t'1
-  let t'2 ← PMem.ldU64 this
-  let mut c'3 : UInt32 := default
-  if (t'2 != 0) then
-    c'3 := _size
-  else
-    c'3 := Int32.toUInt32 ((0 : Int32))
-  PMem.stU32 (this + 8) c'3
-  PMem.stB (this + 20) false
-  return ()
-
-/-- C++ `AC_AttitudeControl::AC_AttitudeControl : void (AP_AHRS_View &, AP_Motors &)`, `AC_AttitudeControl.h:49-63`. -/
-partial def AC_AttitudeControl.AC_AttitudeControl.body (fp : UInt64) (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
-  PMem.stF32 (fp + 0) (Binary32.ofBits 0x40900000 /- 9/2 -/)
-  AC_P.AC_P (this + 40) (fp + 0)
-  PMem.stF32 (fp + 4) (Binary32.ofBits 0x40900000 /- 9/2 -/)
-  AC_P.AC_P (this + 48) (fp + 4)
-  PMem.stF32 (fp + 8) (Binary32.ofBits 0x40900000 /- 9/2 -/)
-  AC_P.AC_P (this + 56) (fp + 8)
-  PMem.stF32 (this + 240) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 (this + 244) (Int32.toBinary32 ((0 : Int32)))
-  PMem.stB (this + 248) true
-  PMem.stF32 (this + 252) (Binary32.ofBits 0x00000000 /- 0 -/)
-  PMem.stF32 (this + 256) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
-  PMem.stF32 (this + 260) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
-  PMem.stF32 (this + 264) (Binary32.ofBits 0x3f800000 /- 1 -/)
-  Vector3'float.Vector3 (this + 276) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
-  Vector3'float.Vector3 (this + 300) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
-  Vector3'float.Vector3 (this + 324) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
-  PMem.stU64 (this + 352) ahrs
-  PMem.stU64 (this + 360) motors
-  PMem.stU64 (0xbe90 : UInt64) /- &AC_AttitudeControl::_singleton -/ this
-  AP_Param.setup_object_defaults this (0x5b38 : UInt64) /- &AC_AttitudeControl::var_info -/
-  return ()
-
-partial def AC_AttitudeControl.AC_AttitudeControl (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 12
-  let r ← AC_AttitudeControl.AC_AttitudeControl.body fp this ahrs motors
-  PMem.leave fp
-  return r
-
-/-- C++ `AC_PID::AC_PID : void (const AC_PID::Defaults &)`, `AC_PID.h:44-58`. -/
-partial def AC_PID.AC_PID (this : UInt64) (defaults : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 defaults
-  let t'2 ← PMem.ldF32 (defaults + 4)
-  let t'3 ← PMem.ldF32 (defaults + 8)
-  let t'4 ← PMem.ldF32 (defaults + 12)
-  let t'5 ← PMem.ldF32 (defaults + 16)
-  let t'6 ← PMem.ldF32 (defaults + 20)
-  let t'7 ← PMem.ldF32 (defaults + 24)
-  let t'8 ← PMem.ldF32 (defaults + 28)
-  let t'9 ← PMem.ldF32 (defaults + 32)
-  let t'10 ← PMem.ldF32 (defaults + 36)
-  let t'11 ← PMem.ldF32 (defaults + 40)
-  AC_PID.AC_PID'2 this t'1 t'2 t'3 t'4 t'5 t'6 t'7 t'8 t'9 t'10 t'11
-  return ()
-
-/-- C++ `AC_P_2D::AC_P_2D : void (float)`, `AC_P_2D.cpp:16-21`. -/
-partial def AC_P_2D.AC_P_2D (this : UInt64) (initial_p : Binary32) : PMem.M Unit := do
-  let mut initial_p := initial_p
-  PMem.stF32 (this + 20) initial_p
-  AP_Param.setup_object_defaults this (0x6208 : UInt64) /- &AC_P_2D::var_info -/
-  return ()
-
-/-- C++ `AC_P_1D::AC_P_1D : void (float)`, `AC_P_1D.cpp:16-21`. -/
-partial def AC_P_1D.AC_P_1D (this : UInt64) (initial_p : Binary32) : PMem.M Unit := do
-  let mut initial_p := initial_p
-  PMem.stF32 (this + 20) initial_p
-  AP_Param.setup_object_defaults this (0x61b8 : UInt64) /- &AC_P_1D::var_info -/
-  return ()
-
-/-- C++ `AC_PID_2D::AC_PID_2D : void (float, float, float, float, float, float, float)`, `AC_PID_2D.cpp:51-65`. -/
-partial def AC_PID_2D.AC_PID_2D (this : UInt64) (initial_kP : Binary32) (initial_kI : Binary32) (initial_kD : Binary32) (initial_kFF : Binary32) (initial_imax : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) : PMem.M Unit := do
-  let mut initial_kP := initial_kP
-  let mut initial_kI := initial_kI
-  let mut initial_kD := initial_kD
-  let mut initial_kFF := initial_kFF
-  let mut initial_imax := initial_imax
-  let mut initial_filt_E_hz := initial_filt_E_hz
-  let mut initial_filt_D_hz := initial_filt_D_hz
-  PMem.stF32 (this + 152) initial_kP
-  PMem.stF32 (this + 156) initial_kI
-  PMem.stF32 (this + 160) initial_kD
-  PMem.stF32 (this + 164) initial_kFF
-  PMem.stF32 (this + 168) initial_imax
-  PMem.stF32 (this + 172) initial_filt_E_hz
-  PMem.stF32 (this + 176) initial_filt_D_hz
-  AP_Param.setup_object_defaults this (0x6398 : UInt64) /- &AC_PID_2D::var_info -/
-  PMem.stB (this + 60) true
-  return ()
-
-/-- C++ `AC_PID_Basic::AC_PID_Basic : void (float, float, float, float, float, float, float)`, `AC_PID_Basic.cpp:53-67`. -/
-partial def AC_PID_Basic.AC_PID_Basic (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) : PMem.M Unit := do
-  let mut initial_p := initial_p
-  let mut initial_i := initial_i
-  let mut initial_d := initial_d
-  let mut initial_ff := initial_ff
-  let mut initial_imax := initial_imax
-  let mut initial_filt_E_hz := initial_filt_E_hz
-  let mut initial_filt_D_hz := initial_filt_D_hz
-  PMem.stF32 (this + 92) initial_p
-  PMem.stF32 (this + 96) initial_i
-  PMem.stF32 (this + 100) initial_d
-  PMem.stF32 (this + 104) initial_ff
-  PMem.stF32 (this + 108) initial_imax
-  PMem.stF32 (this + 112) initial_filt_E_hz
-  PMem.stF32 (this + 116) initial_filt_D_hz
-  AP_Param.setup_object_defaults this (0x6258 : UInt64) /- &AC_PID_Basic::var_info -/
-  PMem.stB (this + 44) true
-  return ()
-
-/-- C++ `AC_PID::AC_PID : void (float, float, float, float, float, float, float, float, float, float, float)`, `AC_PID.cpp:103-130`. -/
-partial def AC_PID.AC_PID'2.body (fp : UInt64) (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_T_hz : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) (initial_srmax : Binary32) (initial_srtau : Binary32) (initial_dff : Binary32) : PMem.M Unit := do
-  let mut initial_p := initial_p
-  let mut initial_i := initial_i
-  let mut initial_d := initial_d
-  let mut initial_ff := initial_ff
-  let mut initial_imax := initial_imax
-  let mut initial_filt_T_hz := initial_filt_T_hz
-  let mut initial_filt_E_hz := initial_filt_E_hz
-  let mut initial_filt_D_hz := initial_filt_D_hz
-  let mut initial_srmax := initial_srmax
-  PMem.stF32 (fp + 0) initial_srtau
-  let mut initial_dff := initial_dff
-  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 36)
-  let t'2 ← AP_ParamT'float_4.operator_const_float__ (this + 44)
-  SlewLimiter.SlewLimiter (this + 48) t'1 t'2
-  PMem.stBits (this + 128) 0 1 (if (1 : Int32) != (0 : Int32) then (1 : UInt64) else 0)
-  PMem.stBits (this + 128) 1 1 (if (1 : Int32) != (0 : Int32) then (1 : UInt64) else 0)
-  PMem.stF32 (this + 200) initial_p
-  PMem.stF32 (this + 204) initial_i
-  PMem.stF32 (this + 208) initial_d
-  PMem.stF32 (this + 212) initial_ff
-  PMem.stF32 (this + 216) initial_dff
-  PMem.stF32 (this + 220) initial_imax
-  PMem.stF32 (this + 224) initial_filt_T_hz
-  PMem.stF32 (this + 228) initial_filt_E_hz
-  PMem.stF32 (this + 232) initial_filt_D_hz
-  PMem.stF32 (this + 236) initial_srmax
-  AP_Param.setup_object_defaults this (0x5ec0 : UInt64) /- &AC_PID::var_info -/
-  AP_ParamTBase'float_4.set (this + 44) (fp + 0)
-  PMem.stBits (this + 128) 0 1 (if true then (1 : UInt64) else 0)
-  let t'3 ← PMem.memset (this + 156) (0 : Int32) (44 : UInt64)
-  discard <| pure (t'3)
-  let t'4 := Int32.toInt8 ((1 : Int32))
-  PMem.stI8 (this + 148) t'4
-  return ()
-
-partial def AC_PID.AC_PID'2 (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_T_hz : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) (initial_srmax : Binary32) (initial_srtau : Binary32) (initial_dff : Binary32) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← AC_PID.AC_PID'2.body fp this initial_p initial_i initial_d initial_ff initial_imax initial_filt_T_hz initial_filt_E_hz initial_filt_D_hz initial_srmax initial_srtau initial_dff
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_ParamT<float, 4>::operator const float & : const float &() const`, `AP_Param.h:1006-1008`. -/
-partial def AP_ParamT'float_4.operator_const_float__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AC_WPNav::get_default_speed_down_ms : float () const`, `AC_WPNav.h:124-?`. -/
-partial def AC_WPNav.get_default_speed_down_ms (this : UInt64) : PMem.M Binary32 := do
-  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 48)
-  let t'2 ← PMem.ldF32 t'1
-  return (Binary32.abs t'2)
-
-/-- C++ `radians : float (float)`, `AP_Math.h:232-235`. -/
-partial def radians (deg : Binary32) : PMem.M Binary32 := do
-  let mut deg := deg
-  return (deg * ((Binary64.toBinary32 ((Binary64.ofBits 0x400921fb54442d18 /- 31415926535897931/10000000000000000 -/))) / (Binary32.ofBits 0x43340000 /- 180 -/)))
-
-/-- C++ `AP_BattMonitor_Backend::AP_BattMonitor_Backend : void (AP_BattMonitor &, AP_BattMonitor::BattMonitor_State &, AP_BattMonitor_Params &)`, `AP_BattMonitor_Backend.cpp:55-61`. -/
-partial def AP_BattMonitor_Backend.AP_BattMonitor_Backend (this : UInt64) (mon : UInt64) (mon_state : UInt64) (params : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 8) mon
-  PMem.stU64 (this + 16) mon_state
-  PMem.stU64 (this + 24) params
-  return ()
-
-/-- C++ `AP_Enum<AP_BattMonitor_Params::Type>::operator const AP_BattMonitor_Params::Type : const AP_BattMonitor_Params::Type () const`, `AP_Param.h:1140-1142`. -/
-partial def AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (this : UInt64) : PMem.M Int32 := do
-  let t'1 ← PMem.ldI8 this
-  return Int8.toInt32 (t'1)
-
-/-- C++ `AP_ParamTBase<short, 2>::get : const short &() const`, `AP_Param.h:917-919`. -/
-partial def AP_ParamTBase'short_2.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AP_Mission::check_eeprom_version : void ()`, `AP_Mission.cpp:2521-2531`. -/
-partial def AP_Mission.check_eeprom_version (this : UInt64) : PMem.M Unit := do
-  let t'1 ← StorageAccess.read_uint32 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  let mut eeprom_version : UInt32 := t'1
-  if (eeprom_version != (Int32.toUInt32 ((26030 : Int32)))) then
-    let t'2 ← AP_Mission.clear this
-    if t'2 then
-      StorageAccess.write_uint32 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (Int32.toUInt32 ((26030 : Int32)))
-  return ()
-
-/-- C++ `AP_Mission::init_jump_tracking : void ()`, `AP_Mission.cpp:2451-2457`. -/
-partial def AP_Mission.init_jump_tracking (this : UInt64) : PMem.M Unit := do
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (100 : Int32)))) then break
-    let t'4 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-    PMem.stU16 ((this + 196) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 4).toUInt64) t'4
-    let t'5 := Int32.toInt16 ((0 : Int32))
-    PMem.stI16 (((this + 196) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 4).toUInt64) + 2) t'5
-  return ()
-
-/-- C++ `AP_Mission::option_is_set : bool (Option) const`, `sitl.h:780-782`. -/
-partial def AP_Mission.option_is_set (this : UInt64) (option : Int32) : PMem.M Bool := do
-  let mut option := option
-  let t'1 ← AP_ParamTBase'unsigned_short_2.get (this + 82)
-  let t'2 ← PMem.ldU16 t'1
-  return (((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (option))))))) != (0 : Int32))
-
-/-- C++ `AP_Mission::clear : bool ()`, `AP_Mission.cpp:278-296`. -/
-partial def AP_Mission.clear (this : UInt64) : PMem.M Bool := do
-  let mut sc'2 := (← get).armed
-  if sc'2 then
-    let t'1 ← PMem.ldU32 (this + 4)
-    sc'2 := ((UInt32.toInt32 (t'1)) == (UInt32.toInt32 ((1 : UInt32))))
-  if sc'2 then
-    return false
-  AP_Mission.truncate this (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  let t'3 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  PMem.stU16 (this + 88) t'3
-  let t'4 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  PMem.stU16 (this + 116) t'4
-  PMem.stB ((this + 4) + 4) false
-  PMem.stB ((this + 4) + 5) false
-  PMem.stU32 (this + 4) (0 : UInt32)
-  return true
-
-/-- C++ `MIN : auto (const unsigned long &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
-partial def MIN (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU64 one
-  let t'2 ← PMem.ldU32 two
-  let mut c'3 : UInt64 := default
-  if (decide (t'1 < (UInt32.toUInt64 (t'2)))) then
-    let t'4 ← PMem.ldU64 one
-    c'3 := t'4
-  else
-    let t'5 ← PMem.ldU32 two
-    c'3 := UInt32.toUInt64 (t'5)
-  return c'3
-
-/-- C++ `AP_Param::find_var_info_group : const struct AP_Param::Info *(const struct GroupInfo *, uint16_t, uint32_t, uint8_t, ptrdiff_t, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:544-612`. -/
-partial def AP_Param.find_var_info_group.body (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
-  let mut group_info := group_info
-  let mut vindex := vindex
-  let mut group_base := group_base
-  let mut group_shift := group_shift
-  let mut group_offset := group_offset
-  let mut group_element := group_element
-  let mut idx := idx
-  let t'1 ← AP_Param.var_info vindex
-  let t'2 ← AP_Param.get_base t'1 (fp + 0)
-  if !t'2 then
-    return (0 : UInt64)
-  let mut type' : UInt8 := default  -- uninitialized in C
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'3 := true
-  repeat
-    if !first'3 then
-      let t'4 := i
-      let t'5 := (t'4 + 1)
-      i := t'5
-      pure ()
-    first'3 := false
-    let t'6 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'6
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'7 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-    let mut ofs : Int64 := (t'7 + group_offset)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'8 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'8
-      if (ginfo == (0 : UInt64)) then
-        continue
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        return (0 : UInt64)
-      let mut info' : UInt64 := default  -- uninitialized in C
-      PMem.stI64 (fp + 8) group_offset
-      let t'9 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 8)
-      if !t'9 then
-        continue
-      let t'10 ← PMem.ldU8 group_nesting
-      if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'10))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((2 : UInt8)))))) then
-        return (0 : UInt64)
-      let t'11 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let t'12 ← PMem.ldU8 group_nesting
-      let t'13 := (t'12 + 1)
-      PMem.stU8 group_nesting t'13
-      PMem.stU64 ((group_nesting + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (t'12))) * 8).toUInt64) t'11
-      let t'14 ← AP_Param.group_id group_info group_base i group_shift
-      let t'15 ← PMem.ldI64 (fp + 8)
-      let t'16 ← AP_Param.find_var_info_group this ginfo vindex t'14 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'15 group_element group_ret group_nesting idx
-      info' := t'16
-      if (info' != (0 : UInt64)) then
-        return info'
-      let t'17 ← PMem.ldU8 group_nesting
-      let t'18 := (t'17 - 1)
-      PMem.stU8 group_nesting t'18
-    else
-      let t'19 ← PMem.ldI64 (fp + 0)
-      if ((UInt64.toInt64 (this)) == (t'19 + ofs)) then
-        let t'20 ← AP_Param.group_id group_info group_base i group_shift
-        PMem.stU32 group_element t'20
-        let t'21 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-        PMem.stU64 group_ret t'21
-        let t'22 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-        PMem.stU8 idx t'22
-        let t'23 ← AP_Param.var_info vindex
-        return t'23
-      else
-        let mut sc'27 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32))))
-        if sc'27 then
-          let t'24 ← PMem.ldI64 (fp + 0)
-          let mut sc'26 := (((t'24 + ofs) + (UInt64.toInt64 ((4 : UInt64)))) == (UInt64.toInt64 (this)))
-          if !sc'26 then
-            let t'25 ← PMem.ldI64 (fp + 0)
-            sc'26 := (((t'25 + ofs) + ((Int32.toInt64 ((2 : Int32))) * (UInt64.toInt64 ((4 : UInt64))))) == (UInt64.toInt64 (this)))
-          sc'27 := sc'26
-        if sc'27 then
-          let t'28 ← PMem.ldI64 (fp + 0)
-          let t'29 := UInt64.toUInt8 (((Int64.toUInt64 (((UInt64.toInt64 (this)) - (t'28 + ofs)))) / (4 : UInt64)))
-          PMem.stU8 idx t'29
-          let t'30 ← AP_Param.group_id group_info group_base i group_shift
-          PMem.stU32 group_element t'30
-          let t'31 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-          PMem.stU64 group_ret t'31
-          let t'32 ← AP_Param.var_info vindex
-          return t'32
-  return (0 : UInt64)
-
-partial def AP_Param.find_var_info_group (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 16
-  let r ← AP_Param.find_var_info_group.body fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::write_block : bool (uint16_t, const void *, size_t) const`, `StorageManager.cpp:193-244`. -/
-partial def StorageAccess.write_block.body (fp : UInt64) (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
-  let mut addr := addr
-  let mut data := data
-  PMem.stU64 (fp + 0) n
-  let mut b : UInt64 := data
-  let t'1 ← PMem.ldU64 (this + 8)
-  if (t'1 != (0 : UInt64)) then
-    let t'2 ← PMem.ldU64 (this + 8)
-    let t'3 ← PMem.ldU32 (t'2 + 24)
-    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
-      return false
-    let t'4 ← PMem.ldU64 (this + 8)
-    let t'5 ← PMem.ldU32 (t'4 + 24)
-    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
-    let t'6 ← MIN (fp + 0) (fp + 8)
-    let mut n2 : UInt64 := t'6
-    let t'7 ← PMem.ldU64 (this + 8)
-    let t'8 ← PMem.ldU64 (t'7 + 16)
-    let t'9 ← PMem.memcpy (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) b n2
-    discard <| pure (t'9)
-    let mut i : UInt8 := UInt32.toUInt8 (((UInt16.toUInt32 (addr)) / (1024 : UInt32)))
-    let mut first'10 := true
-    repeat
-      if !first'10 then
-        let t'11 := i
-        let t'12 := (t'11 + 1)
-        i := t'12
-        pure ()
-      first'10 := false
-      if !((decide ((UInt8.toUInt64 (i)) < ((((UInt16.toUInt64 (addr)) + n2) + (UInt32.toUInt64 ((1023 : UInt32)))) / (UInt32.toUInt64 ((1024 : UInt32))))))) then break
-      let t'13 ← PMem.ldU64 (this + 8)
-      let t'14 := (t'13 + 40)
-      let t'15 ← PMem.ldU64 t'14
-      let t'16 := (t'15 ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (i))))))))
-      PMem.stU64 t'14 t'16
-    let t'17 ← PMem.ldU64 (fp + 0)
-    return (t'17 == n2)
-  let mut i'2 : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'18 := true
-  repeat
-    if !first'18 then
-      let t'19 := i'2
-      let t'20 := (t'19 + 1)
-      i'2 := t'20
-      pure ()
-    first'18 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i'2))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xbae0 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i'2))) * 8).toUInt64)
-    let t'21 ← PMem.ldU16 (area + 6)
-    let mut length : UInt16 := t'21
-    let t'22 ← PMem.ldU16 (area + 4)
-    let mut offset : UInt16 := t'22
-    let t'23 ← PMem.ldU32 area
-    let t'24 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'23)) != (UInt32.toInt32 (t'24))) then
-      continue
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'25 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
-      addr := t'25
-      continue
-    let t'26 ← PMem.ldU64 (fp + 0)
-    let mut count : UInt16 := UInt64.toUInt16 (t'26)
-    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'27 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
-      count := t'27
-    PMem.halWrite (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) b (UInt16.toUInt64 (count))
-    let t'28 ← PMem.ldU64 (fp + 0)
-    let t'29 := (t'28 - (UInt16.toUInt64 (count)))
-    PMem.stU64 (fp + 0) t'29
-    let t'30 ← PMem.ldU64 (fp + 0)
-    if (t'30 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
-      break
-    let t'31 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
-    b := t'31
-    let t'32 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    addr := t'32
-  let t'33 ← PMem.ldU64 (fp + 0)
-  return (t'33 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
-
-partial def StorageAccess.write_block (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 12
-  let r ← StorageAccess.write_block.body fp this addr data n
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::group_id : uint32_t (const struct GroupInfo *, uint32_t, uint8_t, uint8_t)`, `AP_Param.cpp:201-213`. -/
-partial def AP_Param.group_id (grpinfo : UInt64) (base : UInt32) (i : UInt8) (shift : UInt8) : PMem.M UInt32 := do
-  let mut grpinfo := grpinfo
-  let mut base := base
-  let mut i := i
-  let mut shift := shift
-  let t'1 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-  let mut sc'3 := (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (shift))) != (0 : Int32)))
-  if sc'3 then
-    let t'2 ← PMem.ldU16 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 24)
-    sc'3 := !(((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32))
-  if sc'3 then
-    return (base + ((63 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
-  let t'4 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-  return (base + (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) <<< (UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
-
-/-- C++ `AP_ParamTBase<signed char, 1>::get : const signed char &() const`, `AP_Param.h:917-919`. -/
-partial def AP_ParamTBase'signed_char_1.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AP_Param::add_vector3f_suffix : void (char *, size_t, uint8_t) const`, `AP_Param.cpp:816-826`. -/
-partial def AP_Param.add_vector3f_suffix (this : UInt64) (buffer : UInt64) (buffer_size : UInt64) (idx : UInt8) : PMem.M Unit := do
-  let mut buffer := buffer
-  let mut buffer_size := buffer_size
-  let mut idx := idx
-  let t'1 ← PMem.strnlen buffer buffer_size
-  let mut len : UInt64 := t'1
-  if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))) ≤ buffer_size)) then
-    PMem.stI8 (buffer + ((UInt64.toInt64 (len)) * 1).toUInt64) (95 : Int8)
-    let t'2 := Int32.toInt8 (((Int8.toInt32 ((88 : Int8))) + (UInt32.toInt32 (UInt8.toUInt32 (idx)))))
-    PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))) * 1).toUInt64) t'2
-    if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((3 : Int32))))) ≤ buffer_size)) then
-      let t'3 := Int32.toInt8 ((0 : Int32))
-      PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))))) * 1).toUInt64) t'3
-  return ()
-
-/-- C++ `AP_ParamV<Vector3<float>, 5>::get : const Vector3<float> &() const`, `AP_Param.h:1059-1061`. -/
-partial def AP_ParamV'Vector3_float_5.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
 /-- C++ `AP_Param::configured_in_defaults_file : bool (bool &) const`, `AP_Param.cpp:1431-1454`. -/
-partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
   let t'1 ← PMem.ldU16 (0xbe50 : UInt64) /- &AP_Param::num_param_overrides -/
   if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
     return false
@@ -5594,7 +4499,7 @@ partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt
     return false
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'3 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'3 then
       let t'4 := i
       let t'5 := (t'4 + 1)
@@ -5612,14 +4517,14 @@ partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt
       return true
   return false
 
-partial def AP_Param.configured_in_defaults_file (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_defaults_file (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 41
   let r ← AP_Param.configured_in_defaults_file.body fp this read_only
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::configured_in_storage : bool () const`, `AP_Param.cpp:1401-1429`. -/
-partial def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
   PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
   discard <| PMem.memset ((fp + 16) + 0) 0 1
   discard <| PMem.memset ((fp + 16) + 8) 0 16
@@ -5653,27 +4558,211 @@ partial def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : 
     sc'14 := sc'13
   return sc'14
 
-partial def AP_Param.configured_in_storage (this : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_storage (this : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 58
   let r ← AP_Param.configured_in_storage.body fp this
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::configured : bool () const`, `AP_Param.cpp:1456-1460`. -/
+def AP_Param.configured.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+  let t'1 ← AP_Param.configured_in_defaults_file this (fp + 0)
+  let mut sc'3 := t'1
+  if !sc'3 then
+    let t'2 ← AP_Param.configured_in_storage this
+    sc'3 := t'2
+  return sc'3
+
+def AP_Param.configured (this : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 1
+  let r ← AP_Param.configured.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_ParamTBase<short, 2>::set_default : void (const short &)`, `AP_ParamT.cpp:45-52`. -/
+def AP_ParamTBase'short_2.set_default (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← default_as_float v
+  AP_Param.add_default this t'1
+  let t'2 ← AP_Param.configured this
+  if !t'2 then
+    AP_ParamTBase'short_2.set this v
+  return ()
+
+/-- C++ `AP_ParamTBase<float, 4>::set_and_save : void (const float &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'float_4.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 this
+  let t'2 ← PMem.ldF32 v
+  let mut force : Bool := (decide ((Binary32.abs (t'1 - t'2)) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'float_4.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AP_ParamTBase<signed char, 1>::set_and_save : void (const signed char &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'signed_char_1.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI8 this
+  let t'2 ← PMem.ldI8 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int8.toInt32 (t'1)) - (Int8.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'signed_char_1.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AP_ParamTBase<int, 3>::set_and_save : void (const int &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'int_3.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI32 this
+  let t'2 ← PMem.ldI32 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 ((t'1 - t'2)))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'int_3.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AC_CommandModel::AC_CommandModel : void (float, float, float)`, `AC_CommandModel.cpp:42-48`. -/
+def AC_CommandModel.AC_CommandModel (this : UInt64) (initial_rate : Binary32) (initial_expo : Binary32) (initial_tc : Binary32) : PMem.M Unit := do
+  let mut initial_rate := initial_rate
+  let mut initial_expo := initial_expo
+  let mut initial_tc := initial_tc
+  PMem.stF32 (this + 12) initial_tc
+  PMem.stF32 (this + 16) initial_rate
+  PMem.stF32 (this + 20) initial_expo
+  AP_Param.setup_object_defaults this (0x7668 : UInt64) /- &AC_CommandModel::var_info -/
+  return ()
+
+/-- C++ `SRV_Channels::SRV_Channels : void ()`, `SRV_Channels.cpp:344-362`. -/
+def SRV_Channels.SRV_Channels.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  PMem.stU64 (0xbb58 : UInt64) /- &SRV_Channels::_singleton -/ this
+  let t'1 := (this + 4)
+  PMem.stU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/ t'1
+  AP_Param.setup_object_defaults this (0x6c90 : UInt64) /- &SRV_Channels::var_info -/
+  for i'2 in [0:32] do
+    let i : UInt8 := UInt8.ofNat i'2
+    let t'3 ← PMem.ldU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/
+    PMem.stU8 ((t'3 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 13) i
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) ≥ (16 : Int32))) then
+      PMem.stI16 (fp + 0) (Int32.toInt16 ((-1 : Int32)))
+      let t'4 ← PMem.ldU64 (0xbb60 : UInt64) /- &SRV_Channels::channels -/
+      AP_ParamTBase'short_2.set_default ((t'4 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 8) (fp + 0)
+  return ()
+
+def SRV_Channels.SRV_Channels (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← SRV_Channels.SRV_Channels.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS::num_gcs : uint8_t () const`, `AP_Common.h:1219-?`. -/
+def GCS.num_gcs (this : UInt64) : PMem.M UInt8 := do
+  let t'1 ← PMem.ldU8 (this + 28)
+  return t'1
+
 /-- C++ `GCS_MAVLINK::locked : bool () const`, `AP_Mission.h:430-432`. -/
-partial def GCS_MAVLINK.locked (this : UInt64) : PMem.M Bool := do
+def GCS_MAVLINK.locked (this : UInt64) : PMem.M Bool := do
   let t'1 ← PMem.ldB (this + 870)
   return t'1
 
+/-- `__mavlink_message.__mavlink_message` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_message.__mavlink_message.pure' (this : UInt64) : Id Unit := do
+  return ()
+
 /-- C++ `__mavlink_message::__mavlink_message : void () noexcept`, `mavlink_types.h:?-?`. -/
-partial def __mavlink_message.__mavlink_message (this : UInt64) : PMem.M Unit := do
+def __mavlink_message.__mavlink_message (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_message.__mavlink_message.pure' this)
+
+/-- `__mavlink_status.__mavlink_status` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_status.__mavlink_status.pure' (this : UInt64) : Id Unit := do
   return ()
 
 /-- C++ `__mavlink_status::__mavlink_status : void () noexcept`, `mavlink_types.h:?-?`. -/
-partial def __mavlink_status.__mavlink_status (this : UInt64) : PMem.M Unit := do
+def __mavlink_status.__mavlink_status (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_status.__mavlink_status.pure' this)
+
+/-- C++ `crc_init : void (uint16_t *)`, `checksum.h:52-55`. -/
+def crc_init (crcAccum : UInt64) : PMem.M Unit := do
+  let mut crcAccum := crcAccum
+  let t'1 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  PMem.stU16 crcAccum t'1
   return ()
 
+/-- C++ `mavlink_start_checksum : void (mavlink_message_t *)`, `mavlink_helpers.h:564-569`. -/
+def mavlink_start_checksum.body (fp : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  PMem.stU16 (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  crc_init (fp + 0)
+  let t'1 ← PMem.ldU16 (fp + 0)
+  PMem.stU16 msg t'1
+  return ()
+
+def mavlink_start_checksum (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← mavlink_start_checksum.body fp msg
+  PMem.leave fp
+  return r
+
+/-- C++ `_mav_parse_error : void (mavlink_status_t *)`, `mavlink_helpers.h:281-284`. -/
+def _mav_parse_error (status : UInt64) : PMem.M Unit := do
+  let mut status := status
+  let t'1 := (status + 2)
+  let t'2 ← PMem.ldU8 t'1
+  let t'3 := (t'2 + 1)
+  PMem.stU8 t'1 t'3
+  return ()
+
+/-- C++ `crc_accumulate : void (uint8_t, uint16_t *)`, `checksum.h:35-43`. -/
+def crc_accumulate (data : UInt8) (crcAccum : UInt64) : PMem.M Unit := do
+  let mut data := data
+  let mut crcAccum := crcAccum
+  let mut tmp : UInt8 := default  -- uninitialized in C
+  let t'1 ← PMem.ldU16 crcAccum
+  let t'2 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (data))) ^^^ (UInt32.toInt32 (UInt8.toUInt32 ((Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& (255 : Int32)))))))))))
+  tmp := t'2
+  let t'3 := (tmp ^^^ (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (4 : Int32))))))
+  tmp := t'3
+  let t'4 ← PMem.ldU16 crcAccum
+  let t'5 := Int16.toUInt16 (Int32.toInt16 ((((((UInt32.toInt32 (UInt16.toUInt32 (t'4))) >>> (8 : Int32)) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (8 : Int32))) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (3 : Int32))) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) >>> (4 : Int32)))))
+  PMem.stU16 crcAccum t'5
+  return ()
+
+/-- C++ `mavlink_update_checksum : void (mavlink_message_t *, uint8_t)`, `mavlink_helpers.h:571-576`. -/
+def mavlink_update_checksum.body (fp : UInt64) (msg : UInt64) (c : UInt8) : PMem.M Unit := do
+  let mut msg := msg
+  let mut c := c
+  let t'1 ← PMem.ldU16 msg
+  PMem.stU16 (fp + 0) t'1
+  crc_accumulate c (fp + 0)
+  let t'2 ← PMem.ldU16 (fp + 0)
+  PMem.stU16 msg t'2
+  return ()
+
+def mavlink_update_checksum (msg : UInt64) (c : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← mavlink_update_checksum.body fp msg c
+  PMem.leave fp
+  return r
+
+/-- C++ `mavlink_get_msg_entry : const mavlink_msg_entry_t *(uint32_t)`, `mavlink_helpers.h:582-608`. -/
+def mavlink_get_msg_entry (msgid : UInt32) : PMem.M UInt64 := do
+  let mut msgid := msgid
+  let mut low : UInt32 := Int32.toUInt32 ((0 : Int32))
+  let mut high : UInt32 := UInt64.toUInt32 ((((4284 : UInt64) / (12 : UInt64)) - (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))
+  for _ in PMem.loopFuel do
+    if !((decide (low < high))) then break
+    let mut mid : UInt32 := (((low + (Int32.toUInt32 ((1 : Int32)))) + high) / (Int32.toUInt32 ((2 : Int32))))
+    let t'1 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (mid))) * 12).toUInt64)
+    if (decide (msgid < t'1)) then
+      let t'2 := (mid - (Int32.toUInt32 ((1 : Int32))))
+      high := t'2
+      continue
+    let t'3 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (mid))) * 12).toUInt64)
+    if (decide (msgid > t'3)) then
+      low := mid
+      continue
+    low := mid
+    break
+  let t'4 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (low))) * 12).toUInt64)
+  if (t'4 != msgid) then
+    return (0 : UInt64)
+  return ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (low))) * 12).toUInt64)
+
 /-- C++ `mavlink_frame_char_buffer : uint8_t (mavlink_message_t *, mavlink_status_t *, uint8_t, mavlink_message_t *, mavlink_status_t *)`, `mavlink_helpers.h:724-1077`. -/
-partial def mavlink_frame_char_buffer.body (fp : UInt64) (rxmsg : UInt64) (status : UInt64) (c : UInt8) (r_message : UInt64) (r_mavlink_status : UInt64) : PMem.M UInt8 := do
+def mavlink_frame_char_buffer.body (fp : UInt64) (rxmsg : UInt64) (status : UInt64) (c : UInt8) (r_message : UInt64) (r_mavlink_status : UInt64) : PMem.M UInt8 := do
   PMem.stU64 (fp + 0) rxmsg
   let mut status := status
   let mut c := c
@@ -5681,7 +4770,7 @@ partial def mavlink_frame_char_buffer.body (fp : UInt64) (rxmsg : UInt64) (statu
   let mut r_mavlink_status := r_mavlink_status
   let t'1 := UInt32.toUInt8 ((0 : UInt32))
   PMem.stU8 status t'1
-  repeat
+  for _ in [0:1] do
     let t'2 ← PMem.ldU32 (status + 4)
     let sw'3 := UInt32.toInt32 (t'2)
     if sw'3 == (0 : Int32) || sw'3 == (1 : Int32) then
@@ -6081,7 +5170,6 @@ partial def mavlink_frame_char_buffer.body (fp : UInt64) (rxmsg : UInt64) (statu
           discard <| pure (t'187)
     else
       pure ()
-    break
   let t'188 ← PMem.ldU8 status
   if ((UInt32.toInt32 (UInt8.toUInt32 (t'188))) == (UInt32.toInt32 ((1 : UInt32)))) then
     let t'189 ← PMem.ldU64 (fp + 0)
@@ -6128,63 +5216,167 @@ partial def mavlink_frame_char_buffer.body (fp : UInt64) (rxmsg : UInt64) (statu
   let t'213 ← PMem.ldU8 status
   return t'213
 
-partial def mavlink_frame_char_buffer (rxmsg : UInt64) (status : UInt64) (c : UInt8) (r_message : UInt64) (r_mavlink_status : UInt64) : PMem.M UInt8 := do
+def mavlink_frame_char_buffer (rxmsg : UInt64) (status : UInt64) (c : UInt8) (r_message : UInt64) (r_mavlink_status : UInt64) : PMem.M UInt8 := do
   let fp ← PMem.enter 8
   let r ← mavlink_frame_char_buffer.body fp rxmsg status c r_message r_mavlink_status
   PMem.leave fp
   return r
 
-/-- C++ `GCS_MAVLINK::channel_buffer : mavlink_message_t *()`, `GCS.h:189-?`. -/
-partial def GCS_MAVLINK.channel_buffer (this : UInt64) : PMem.M UInt64 := do
+/-- `GCS_MAVLINK.channel_buffer` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.channel_buffer.pure' (this : UInt64) : Id UInt64 := do
   return (this + 104)
 
-/-- C++ `GCS_MAVLINK::channel_status : mavlink_status_t *()`, `GCS.h:190-?`. -/
-partial def GCS_MAVLINK.channel_status (this : UInt64) : PMem.M UInt64 := do
+/-- C++ `GCS_MAVLINK::channel_buffer : mavlink_message_t *()`, `GCS.h:189-?`. -/
+def GCS_MAVLINK.channel_buffer (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.channel_buffer.pure' this)
+
+/-- `GCS_MAVLINK.channel_status` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.channel_status.pure' (this : UInt64) : Id UInt64 := do
   return (this + 408)
 
-/-- C++ `GCS_MAVLINK::raw_packetReceived : void (uint8_t, const mavlink_status_t &, const mavlink_message_t &)`, `GCS_Common.cpp:1884-1925`. -/
-partial def GCS_MAVLINK.raw_packetReceived (this : UInt64) (framing_status : UInt8) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let mut framing_status := framing_status
-  if ((UInt32.toInt32 (UInt8.toUInt32 (framing_status))) == (UInt32.toInt32 ((1 : UInt32)))) then
-    GCS_MAVLINK_Copter.packetReceived this status msg
-  let t'1 ← MAVLink_routing.check_and_forward (0xbe98 : UInt64) /- &GCS_MAVLINK::routing -/ framing_status this msg
-  if !t'1 then
-    return ()
-  let t'2 ← PMem.ldBits msg 104 24
-  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'2)))) == (33 : Int32)) then
-    pure ()
-  let t'3 ← GCS_MAVLINK.accept_packet this status msg
-  if !t'3 then
-    return ()
-  GCS_MAVLINK_Copter.handle_message this msg
+/-- C++ `GCS_MAVLINK::channel_status : mavlink_status_t *()`, `GCS.h:190-?`. -/
+def GCS_MAVLINK.channel_status (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.channel_status.pure' this)
+
+/-- C++ `GCS_MAVLINK::packetReceived : void (const mavlink_status_t &, const mavlink_message_t &)`, `GCS_Common.cpp:1864-1882`. -/
+def GCS_MAVLINK.packetReceived (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits msg 104 24
+  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) != (166 : Int32))
+  if sc'3 then
+    let t'2 ← PMem.ldBits msg 104 24
+    sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'2)))) != (109 : Int32))
+  if sc'3 then
+    let t'4 := (0xd290 : UInt64) /- &GCS_MAVLINK::mavlink_active -/
+    let t'5 ← PMem.ldU32 t'4
+    let t'6 ← PMem.ldU32 (this + 40)
+    let t'7 := (t'5 ||| ((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'6)) - (UInt32.toInt32 ((0 : UInt32))))))))
+    PMem.stU32 t'4 t'7
+  let mut mavlink_protocol : Int32 := (2 : Int32)
+  let t'8 ← PMem.ldU8 (status + 16)
+  let mut sc'10 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'8))) &&& (1 : Int32)) != (0 : Int32))
+  if sc'10 then
+    let t'9 ← PMem.ldU8 (status + 16)
+    sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) &&& (2 : Int32)) != (0 : Int32)
+  if (sc'10 && ((mavlink_protocol == (2 : Int32)) || (mavlink_protocol == (43 : Int32)))) then
+    let t'11 := ((this + 408) + 16)
+    let t'12 ← PMem.ldU8 t'11
+    let t'13 := (t'12 &&& (Int8.toUInt8 (Int32.toInt8 ((~~~(2 : Int32))))))
+    PMem.stU8 t'11 t'13
   return ()
 
+/-- C++ `GCS_MAVLINK_Copter::packetReceived : void (const mavlink_status_t &, const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:346-357`. -/
+def GCS_MAVLINK_Copter.packetReceived (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
+  GCS_MAVLINK.packetReceived this status msg
+  return ()
+
+/-- C++ `GCS_MAVLINK::is_private : bool (mavlink_channel_t)`, `AP_Mission.h:449-451`. -/
+def GCS_MAVLINK.is_private'2 (_chan : UInt32) : PMem.M Bool := do
+  let mut _chan := _chan
+  let t'1 ← PMem.ldU32 (0xd288 : UInt64) /- &GCS_MAVLINK::mavlink_private -/
+  return ((t'1 &&& ((1 : UInt32) <<< _chan)) != (Int32.toUInt32 ((0 : Int32))))
+
 /-- C++ `GCS_MAVLINK::is_private : bool () const`, `AP_Mission.h:454-?`. -/
-partial def GCS_MAVLINK.is_private (this : UInt64) : PMem.M Bool := do
+def GCS_MAVLINK.is_private (this : UInt64) : PMem.M Bool := do
   let t'1 ← PMem.ldU32 (this + 40)
   let t'2 ← GCS_MAVLINK.is_private'2 t'1
   return t'2
 
+/-- `AP_ParamT'unsigned_short_2.operator_const_unsigned_short__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'unsigned_short_2.operator_const_unsigned_short__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<unsigned short, 2>::operator const unsigned short & : const unsigned short &() const`, `AP_Param.h:978-980`. -/
+def AP_ParamT'unsigned_short_2.operator_const_unsigned_short__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'unsigned_short_2.operator_const_unsigned_short__.pure' this)
+
 /-- C++ `GCS_MAVLINK::option_enabled : bool (Option) const`, `functor.h:555-557`. -/
-partial def GCS_MAVLINK.option_enabled (this : UInt64) (option : UInt16) : PMem.M Bool := do
+def GCS_MAVLINK.option_enabled (this : UInt64) (option : UInt16) : PMem.M Bool := do
   let mut option := option
   let t'1 ← AP_ParamT'unsigned_short_2.operator_const_unsigned_short__ (this + 68)
   let t'2 ← PMem.ldU16 t'1
   return ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& (UInt32.toInt32 (UInt16.toUInt32 (option)))) != (0 : Int32)
 
-/-- C++ `comm_get_txspace : uint16_t (mavlink_channel_t)`, `GCS_MAVLink.cpp:139-146`. -/
-partial def comm_get_txspace (chan : UInt32) : PMem.M UInt16 := do
+/-- C++ `GCS_Copter::chan : GCS_MAVLINK_Copter *(const uint8_t)`, `GCS.h:?-?`. -/
+def GCS_Copter.chan (this : UInt64) (ofs : UInt8) : PMem.M UInt64 := do
+  let mut ofs := ofs
+  let t'1 ← PMem.ldU8 (this + 28)
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (ofs))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'1))))) then
+    return (0 : UInt64)
+  let t'2 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (ofs))) * 8).toUInt64)
+  return t'2
+
+/-- C++ `GCS::get_singleton : class GCS *()`, `GCS.h:1161-1163`. -/
+def GCS.get_singleton  : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU64 (0xc1c0 : UInt64) /- &GCS::_singleton -/
+  return t'1
+
+/-- C++ `gcs : GCS &()`, `GCS_Common.cpp:7695-7698`. -/
+def gcs  : PMem.M UInt64 := do
+  let t'1 ← GCS.get_singleton
+  return t'1
+
+/-- C++ `GCS_MAVLINK::out_of_space_to_send : void ()`, `AP_Common.h:219-?`. -/
+def GCS_MAVLINK.out_of_space_to_send (this : UInt64) : PMem.M Unit := do
+  let t'1 := (this + 860)
+  let t'2 ← PMem.ldU16 t'1
+  let t'3 := (t'2 + 1)
+  PMem.stU16 t'1 t'3
+  return ()
+
+/-- C++ `gcs_out_of_space_to_send : void (mavlink_channel_t)`, `GCS.cpp:700-707`. -/
+def gcs_out_of_space_to_send (chan : UInt32) : PMem.M Unit := do
   let mut chan := chan
   let t'1 ← gcs
   let t'2 ← GCS_Copter.chan t'1 (UInt32.toUInt8 (chan))
   let mut link : UInt64 := t'2
   if (link == (0 : UInt64)) then
+    return ()
+  GCS_MAVLINK.out_of_space_to_send link
+  return ()
+
+/-- C++ `MIN : auto (const unsigned int &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
+def MIN'2 (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU32 one
+  let t'2 ← PMem.ldU32 two
+  let mut c'3 : UInt64 := 0
+  if (decide (t'1 < t'2)) then
+    c'3 := one
+  else
+    c'3 := two
+  return c'3
+
+/-- C++ `GCS_MAVLINK::txspace : uint16_t () const`, `AP_Common.h:206-214`. -/
+def GCS_MAVLINK.txspace.body (fp : UInt64) (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldB (this + 870)
+  if t'1 then
     return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'3 ← GCS_MAVLINK.txspace link
+  let t'2 ← PMem.ldU64 (this + 480)
+  let t'3 ← PMem.uartTxspace t'2
+  PMem.stU32 (fp + 0) t'3
+  PMem.stU32 (fp + 4) (8192 : UInt32)
+  let t'4 ← MIN'2 (fp + 0) (fp + 4)
+  let t'5 ← PMem.ldU32 t'4
+  return UInt32.toUInt16 (t'5)
+
+def GCS_MAVLINK.txspace (this : UInt64) : PMem.M UInt16 := do
+  let fp ← PMem.enter 8
+  let r ← GCS_MAVLINK.txspace.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `mavlink_get_channel_status : mavlink_status_t *(uint8_t)`, `GCS_MAVLink.cpp:56-66`. -/
+def mavlink_get_channel_status (chan : UInt8) : PMem.M UInt64 := do
+  let mut chan := chan
+  let t'1 ← gcs
+  let t'2 ← GCS_Copter.chan t'1 chan
+  let mut link : UInt64 := t'2
+  if (link == (0 : UInt64)) then
+    return (0 : UInt64)
+  let t'3 ← GCS_MAVLINK.channel_status link
   return t'3
 
 /-- C++ `GCS_MAVLINK::packet_overhead_chan : uint8_t (mavlink_channel_t)`, `GCS_Signing.cpp:247-273`. -/
-partial def GCS_MAVLINK.packet_overhead_chan (chan : UInt32) : PMem.M UInt8 := do
+def GCS_MAVLINK.packet_overhead_chan (chan : UInt32) : PMem.M UInt8 := do
   let mut chan := chan
   let mut reserved_space : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let t'1 ← PMem.ldU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/
@@ -6214,1718 +5406,179 @@ partial def GCS_MAVLINK.packet_overhead_chan (chan : UInt32) : PMem.M UInt8 := d
     return Int8.toUInt8 (Int32.toInt8 (((((((9 : Int32) + (1 : Int32)) + (2 : Int32)) + (UInt32.toInt32 (UInt8.toUInt32 (ext_header_space)))) + (13 : Int32)) + (UInt32.toInt32 (UInt8.toUInt32 (reserved_space))))))
   return Int8.toUInt8 (Int32.toInt8 ((((((9 : Int32) + (1 : Int32)) + (2 : Int32)) + (UInt32.toInt32 (UInt8.toUInt32 (ext_header_space)))) + (UInt32.toInt32 (UInt8.toUInt32 (reserved_space))))))
 
-/-- C++ `gcs_out_of_space_to_send : void (mavlink_channel_t)`, `GCS.cpp:700-707`. -/
-partial def gcs_out_of_space_to_send (chan : UInt32) : PMem.M Unit := do
-  let mut chan := chan
-  let t'1 ← gcs
-  let t'2 ← GCS_Copter.chan t'1 (UInt32.toUInt8 (chan))
-  let mut link : UInt64 := t'2
-  if (link == (0 : UInt64)) then
-    return ()
-  GCS_MAVLINK.out_of_space_to_send link
-  return ()
-
-/-- C++ `GCS_MAVLINK::send_timesync : void ()`, `GCS_Common.cpp:3738-3751`. -/
-partial def GCS_MAVLINK.send_timesync (this : UInt64) : PMem.M Unit := do
-  let t'1 := (((← get).clockUs) * (1000 : UInt64))
-  PMem.stU64 ((this + 72) + 8) t'1
-  let t'2 ← PMem.ldU64 ((this + 72) + 8)
-  let t'3 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  let t'4 := UInt64.toInt64 ((t'2 + (UInt32.toUInt64 ((t'3 % (1000 : UInt32))))))
-  PMem.stI64 (this + 72) t'4
-  let t'5 ← PMem.ldU32 (this + 40)
-  let t'6 ← PMem.ldI64 (this + 72)
-  mavlink_msg_timesync_send t'5 (Int32.toInt64 ((0 : Int32))) t'6
-  return ()
-
-/-- C++ `AP_Mission::get_singleton : AP_Mission *()`, `functor.h:500-503`. -/
-partial def AP_Mission.get_singleton  : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/
-  return t'1
-
-/-- C++ `MissionItemProtocol_Waypoints::timeout : void ()`, `MissionItemProtocol_Waypoints.cpp:123-126`. -/
-partial def MissionItemProtocol_Waypoints.timeout (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `GCS_MAVLINK::get_chan : mavlink_channel_t () const`, `mavlink_msg_mission_ack.h:311-?`. -/
-partial def GCS_MAVLINK.get_chan (this : UInt64) : PMem.M UInt32 := do
+/-- C++ `GCS_MAVLINK::packet_overhead : uint8_t () const`, `functor.h:536-?`. -/
+def GCS_MAVLINK.packet_overhead (this : UInt64) : PMem.M UInt8 := do
   let t'1 ← PMem.ldU32 (this + 40)
-  return t'1
+  let t'2 ← GCS_MAVLINK.packet_overhead_chan t'1
+  return t'2
 
-/-- C++ `mavlink_msg_mission_ack_send : void (mavlink_channel_t, uint32_t, uint8_t, uint8_t, uint8_t)`, `mavlink_msg_mission_ack.h:218-237`. -/
-partial def mavlink_msg_mission_ack_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (type' : UInt8) (mission_type : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut target_system := target_system
-  let mut target_component := target_component
-  let mut type' := type'
-  let mut mission_type := mission_type
-  __mavlink_mission_ack_t.__mavlink_mission_ack_t (fp + 0)
-  let t'1 ← mavlink_msg_target_field target_system
-  PMem.stU8 (fp + 0) t'1
-  PMem.stU8 ((fp + 0) + 1) target_component
-  PMem.stU8 ((fp + 0) + 2) type'
-  PMem.stU8 ((fp + 0) + 3) mission_type
-  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((47 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((153 : Int32)))) target_system
-  return ()
-
-partial def mavlink_msg_mission_ack_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (type' : UInt8) (mission_type : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← mavlink_msg_mission_ack_send.body fp chan target_system target_component type' mission_type
-  PMem.leave fp
-  return r
-
-/-- C++ `MissionItemProtocol_Waypoints::mission_type : MAV_MISSION_TYPE () const`, `MissionItemProtocol_Waypoints.h:12-14`. -/
-partial def MissionItemProtocol_Waypoints.mission_type (this : UInt64) : PMem.M UInt32 := do
-  return (0 : UInt32)
-
-/-- C++ `MissionItemProtocol::free_upload_resources : void ()`, `AP_Common.h:118-?`. -/
-partial def MissionItemProtocol.free_upload_resources (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `GCS_MAVLINK::get_stream_slowdown_ms : uint16_t () const`, `functor.h:509-?`. -/
-partial def GCS_MAVLINK.get_stream_slowdown_ms (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (this + 504)
-  return t'1
-
-/-- C++ `MissionItemProtocol_Waypoints::next_item_ap_message_id : ap_message () const`, `MissionItemProtocol_Waypoints.h:37-39`. -/
-partial def MissionItemProtocol_Waypoints.next_item_ap_message_id (this : UInt64) : PMem.M UInt8 := do
-  return (28 : UInt8)
-
-/-- C++ `GCS_MAVLINK::initialise_message_intervals_from_streamrates : void ()`, `GCS_Common.cpp:7288-7313`. -/
-partial def GCS_MAVLINK.initialise_message_intervals_from_streamrates (this : UInt64) : PMem.M Unit := do
-  let t'1 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
-  if t'1 then
-    let t'2 ← GCS_MAVLINK.set_mavlink_message_id_interval this (Int32.toUInt32 ((0 : Int32))) (Int16.toUInt16 (Int32.toInt16 ((1000 : Int32))))
-    discard <| pure (t'2)
-    return ()
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'3 := true
-  repeat
-    if !first'3 then
-      let t'4 := i
-      let t'5 := (t'4 + 1)
-      i := t'5
-      pure ()
-    first'3 := false
-    let t'6 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
-    if !((t'6 != (0 : UInt64))) then break
-    let t'7 ← PMem.ldU8 ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
-    GCS_MAVLINK.initialise_message_intervals_for_stream this t'7
-  let t'8 ← GCS_MAVLINK.set_mavlink_message_id_interval this (Int32.toUInt32 ((0 : Int32))) (Int16.toUInt16 (Int32.toInt16 ((1000 : Int32))))
-  discard <| pure (t'8)
-  return ()
-
-/-- C++ `GCS::out_of_time : bool () const`, `GCS.cpp:674-698`. -/
-partial def GCS.out_of_time (this : UInt64) : PMem.M Bool := do
-  if (← get).inDelayCb then
-    return false
-  if false then
-    return false
-  let t'1 ← GCS_Copter.min_loop_time_remaining_for_message_send_us this
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) ≤ (UInt32.toInt32 (UInt16.toUInt32 (((← get).timeAvail)))))) then
+/-- C++ `GCS_MAVLINK::check_payload_size : bool (uint16_t)`, `GCS.cpp:712-719`. -/
+def GCS_MAVLINK.check_payload_size (this : UInt64) (max_payload_len : UInt16) : PMem.M Bool := do
+  let mut max_payload_len := max_payload_len
+  let t'1 ← GCS_MAVLINK.txspace this
+  let t'2 ← GCS_MAVLINK.packet_overhead this
+  if (decide ((UInt16.toUInt32 (t'1)) < (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'2))) + (UInt32.toInt32 (UInt16.toUInt32 (max_payload_len)))))))) then
+    let t'3 ← PMem.ldU32 (this + 40)
+    gcs_out_of_space_to_send t'3
     return false
   return true
 
-/-- C++ `GCS_MAVLINK::deferred_message_to_send_index : int8_t (uint16_t)`, `GCS_Common.cpp:1399-1441`. -/
-partial def GCS_MAVLINK.deferred_message_to_send_index (this : UInt64) (now16_ms : UInt16) : PMem.M Int8 := do
-  let mut now16_ms := now16_ms
-  let t'1 ← PMem.ldI8 (this + 524)
-  if ((Int8.toInt32 (t'1)) == (-(1 : Int32))) then
-    let mut ms_before_next_message_to_send : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-    let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    let mut first'2 := true
-    repeat
-      if !first'2 then
-        let t'3 := i
-        let t'4 := (t'3 + 1)
-        i := t'4
-        pure ()
-      first'2 := false
-      if !((decide ((UInt8.toUInt64 (i)) < ((18 : UInt64) / (6 : UInt64))))) then break
-      let t'5 ← PMem.ldU16 (((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64) + 2)
-      let mut interval_ms : UInt16 := t'5
-      if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
-        continue
-      let t'6 ← PMem.ldU16 (((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64) + 4)
-      let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'6))))))
-      let mut ms_before_send_this_message : UInt16 := default  -- uninitialized in C
-      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))) then
-        let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-        ms_before_send_this_message := t'7
-      else
-        let t'8 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))))))
-        ms_before_send_this_message := t'8
-      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_this_message))) < (UInt32.toInt32 (UInt16.toUInt32 (ms_before_next_message_to_send))))) then
-        let t'9 := UInt8.toInt8 (i)
-        PMem.stI8 (this + 524) t'9
-        ms_before_next_message_to_send := ms_before_send_this_message
-  let t'10 ← PMem.ldI8 (this + 524)
-  if ((Int8.toInt32 (t'10)) == (-(1 : Int32))) then
-    return Int32.toInt8 ((-(1 : Int32)))
-  let t'11 ← PMem.ldI8 (this + 524)
-  let t'12 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (t'11)) * 6).toUInt64) + 4)
-  let mut ms_since_last_sent'2 : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'12))))))
-  let t'13 ← PMem.ldI8 (this + 524)
-  let t'14 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (t'13)) * 6).toUInt64) + 2)
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent'2))) < (UInt32.toInt32 (UInt16.toUInt32 (t'14))))) then
-    return Int32.toInt8 ((-(1 : Int32)))
-  let t'15 ← PMem.ldI8 (this + 524)
-  return t'15
-
-/-- C++ `GCS_MAVLINK::do_try_send_message : bool (const ap_message)`, `GCS_Common.cpp:1356-1387`. -/
-partial def GCS_MAVLINK.do_try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
-  let mut id := id
-  let mut in_delay_callback : Bool := (← get).inDelayCb
-  let mut sc'2 := in_delay_callback
-  if sc'2 then
-    let t'1 ← GCS_MAVLINK.should_send_message_in_delay_callback this id
-    sc'2 := !t'1
-  if sc'2 then
-    return true
-  let t'3 ← GCS_MAVLINK.telemetry_delayed this
-  if t'3 then
-    return false
-  let t'4 ← GCS_MAVLINK_Copter.try_send_message this id
-  if !t'4 then
-    return false
-  return true
-
-/-- C++ `Bitmask<102>::first_set : int16_t () const`, `stdint.h:145-152`. -/
-partial def Bitmask'102.first_set (this : UInt64) : PMem.M Int16 := do
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 ((4 : UInt16))))))) then break
-    let t'4 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
-    if (t'4 != (Int32.toUInt32 ((0 : Int32)))) then
-      let t'5 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
-      let t'6 ← PMem.ffs (UInt32.toInt32 (t'5))
-      return Int32.toInt16 (((((UInt32.toInt32 (UInt16.toUInt32 (i))) * (32 : Int32)) + t'6) - (1 : Int32)))
-  return Int32.toInt16 ((-(1 : Int32)))
-
-/-- C++ `Bitmask<102>::clear : void (uint16_t)`, `stdint.h:92-99`. -/
-partial def Bitmask'102.clear (this : UInt64) (bit : UInt16) : PMem.M Unit := do
-  let mut bit := bit
-  let t'1 ← Bitmask'102.validate this bit
-  if !t'1 then
-    return ()
-  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
-  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
-  let t'2 := (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
-  let t'3 ← PMem.ldU32 t'2
-  let t'4 := (t'3 &&& (~~~((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs))))))))
-  PMem.stU32 t'2 t'4
-  return ()
-
-/-- C++ `GCS_MAVLINK::next_deferred_bucket_message_to_send : ap_message (uint16_t)`, `GCS_Common.cpp:1328-1351`. -/
-partial def GCS_MAVLINK.next_deferred_bucket_message_to_send (this : UInt64) (now16_ms : UInt16) : PMem.M UInt8 := do
-  let mut now16_ms := now16_ms
-  let t'1 ← PMem.ldU8 (this + 728)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
-    return (255 : UInt8)
-  let t'2 ← PMem.ldU8 (this + 728)
-  let t'3 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'2))) * 20).toUInt64) + 18)
-  let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'3))))))
-  let t'4 ← PMem.ldU8 (this + 728)
-  let t'5 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'4))) * 20).toUInt64)
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) < (UInt32.toInt32 (UInt16.toUInt32 (t'5))))) then
-    return (255 : UInt8)
-  let t'6 ← Bitmask'102.first_set (this + 732)
-  let mut next : Int16 := t'6
-  if ((Int16.toInt32 (next)) == (-(1 : Int32))) then
-    GCS_MAVLINK.find_next_bucket_to_send this now16_ms
-    return (255 : UInt8)
-  return Int8.toUInt8 (Int16.toInt8 (next))
-
-/-- C++ `Bitmask<102>::count : uint16_t () const`, `stdint.h:136-142`. -/
-partial def Bitmask'102.count (this : UInt64) : PMem.M UInt16 := do
-  let mut sum : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 ((4 : UInt16))))))) then break
-    let t'4 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
-    let t'5 ← PMem.popcount t'4
-    let t'6 := (sum + (Int16.toUInt16 (Int32.toInt16 (t'5))))
-    sum := t'6
-  return sum
-
-/-- C++ `GCS_MAVLINK::get_reschedule_interval_ms : uint16_t (const deferred_message_bucket_t &) const`, `GCS_Common.cpp:1253-1281`. -/
-partial def GCS_MAVLINK.get_reschedule_interval_ms (this : UInt64) (deferred : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (deferred + 16)
-  let mut interval_ms : UInt32 := UInt16.toUInt32 (t'1)
-  let t'2 ← PMem.ldU16 (this + 504)
-  let t'3 := (interval_ms + (UInt16.toUInt32 (t'2)))
-  interval_ms := t'3
-  let t'4 ← PMem.ldU64 (this + 32)
-  if (t'4 != 0) then
-    let t'5 := (interval_ms * (Int32.toUInt32 ((4 : Int32))))
-    interval_ms := t'5
-  let t'6 ← GCS_MAVLINK.requesting_mission_items this
-  if t'6 then
-    let t'7 := (interval_ms * (Int32.toUInt32 ((4 : Int32))))
-    interval_ms := t'7
-  if (decide (interval_ms > (Int32.toUInt32 ((60000 : Int32))))) then
-    return Int16.toUInt16 (Int32.toInt16 ((60000 : Int32)))
-  return UInt32.toUInt16 (interval_ms)
-
-/-- C++ `GCS_MAVLINK::find_next_bucket_to_send : void (uint16_t)`, `GCS_Common.cpp:1284-1326`. -/
-partial def GCS_MAVLINK.find_next_bucket_to_send (this : UInt64) (now16_ms : UInt16) : PMem.M Unit := do
-  let mut now16_ms := now16_ms
-  PMem.stU8 (this + 728) (255 : UInt8)
-  let mut ms_before_send_next_bucket_to_send : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt8.toUInt64 (i)) < ((200 : UInt64) / (20 : UInt64))))) then break
-    let t'4 ← Bitmask'102.count ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
-      continue
-    let t'5 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
-    let mut interval : UInt16 := t'5
-    let t'6 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 18)
-    let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'6))))))
-    let mut ms_before_send_this_bucket : UInt16 := default  -- uninitialized in C
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) > (UInt32.toInt32 (UInt16.toUInt32 (interval))))) then
-      let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-      ms_before_send_this_bucket := t'7
-    else
-      let t'8 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (interval))) - (UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))))))
-      ms_before_send_this_bucket := t'8
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_this_bucket))) < (UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_next_bucket_to_send))))) then
-      PMem.stU8 (this + 728) i
-      ms_before_send_next_bucket_to_send := ms_before_send_this_bucket
-  let t'9 ← PMem.ldU8 (this + 728)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
-    let t'10 ← PMem.ldU8 (this + 728)
-    discard <| PMem.memcpy (this + 732) ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'10))) * 20).toUInt64) 16
-    discard <| pure ((this + 732))
-  else
-    Bitmask'102.clearall (this + 732)
-  return ()
-
-/-- C++ `ByteBuffer::space : uint32_t () const`, `RingBuffer.cpp:75-93`. -/
-partial def ByteBuffer.space (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU32 (this + 8)
-  if (t'1 == (Int32.toUInt32 ((0 : Int32)))) then
+/-- C++ `mavlink_msg_get_target_sysid : uint32_t (const mavlink_message_t *, const mavlink_msg_entry_t *)`, `mavlink_helpers.h:679-692`. -/
+def mavlink_msg_get_target_sysid.body (fp : UInt64) (msg : UInt64) (entry : UInt64) : PMem.M UInt32 := do
+  PMem.stU64 (fp + 0) msg
+  let mut entry := entry
+  let t'1 ← PMem.ldU64 (fp + 0)
+  let t'2 ← PMem.ldU8 (t'1 + 4)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) &&& (4 : Int32)) != (0 : Int32) then
+    let t'3 ← PMem.ldU64 (fp + 0)
+    let t'4 ← PMem.ldU32 (t'3 + 296)
+    return t'4
+  let mut sc'6 := (entry == (0 : UInt64))
+  if !sc'6 then
+    let t'5 ← PMem.ldU8 (entry + 7)
+    sc'6 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) &&& (1 : Int32)) != (0 : Int32))
+  if sc'6 then
     return Int32.toUInt32 ((0 : Int32))
-  let t'2 ← PMem.ldU32 (this + 12)
-  let mut _head : UInt32 := t'2
-  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
-  let t'3 ← PMem.ldU32 (this + 16)
-  if (decide (_head ≤ t'3)) then
-    let t'4 ← PMem.ldU32 (this + 8)
-    ret := t'4
-  let t'5 ← PMem.ldU32 (this + 16)
-  let t'6 := (ret + ((_head - t'5) - (Int32.toUInt32 ((1 : Int32)))))
-  ret := t'6
-  return ret
+  let t'7 ← PMem.ldU8 (entry + 8)
+  let t'8 ← PMem.ldU64 (fp + 0)
+  let t'9 ← PMem.ldU8 (t'8 + 3)
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'7))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'9))))) then
+    return Int32.toUInt32 ((0 : Int32))
+  let t'10 ← PMem.ldU64 (fp + 0)
+  let t'11 ← PMem.ldU8 (entry + 8)
+  let t'12 ← PMem.ldI8 (((t'10 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) + ((UInt64.toInt64 (UInt8.toUInt64 (t'11))) * 1).toUInt64)
+  return UInt8.toUInt32 ((Int8.toUInt8 (t'12)))
 
-/-- C++ `ByteBuffer::available : uint32_t () const`, `RingBuffer.cpp:58-68`. -/
-partial def ByteBuffer.available (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU32 (this + 16)
-  let mut _tail : UInt32 := t'1
-  let t'2 ← PMem.ldU32 (this + 12)
-  if (decide (t'2 > _tail)) then
-    let t'3 ← PMem.ldU32 (this + 8)
-    let t'4 ← PMem.ldU32 (this + 12)
-    return ((t'3 - t'4) + _tail)
-  let t'5 ← PMem.ldU32 (this + 12)
-  return (_tail - t'5)
-
-/-- C++ `ByteBuffer::read : uint32_t (uint8_t *, uint32_t)`, `RingBuffer.cpp:240-245`. -/
-partial def ByteBuffer.read (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
-  let mut data := data
-  let mut len := len
-  let t'1 ← ByteBuffer.peekbytes this data len
-  let mut ret : UInt32 := t'1
-  let t'2 ← ByteBuffer.advance this ret
-  discard <| pure (t'2)
-  return ret
-
-/-- C++ `ByteBuffer::write : uint32_t (const uint8_t *, uint32_t)`, `RingBuffer.cpp:100-113`. -/
-partial def ByteBuffer.write.body (fp : UInt64) (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
-  let mut data := data
-  let mut len := len
-  ByteBuffer.IoVec.IoVec ((fp + 0) + 0)
-  ByteBuffer.IoVec.IoVec ((fp + 0) + 16)
-  let t'1 ← ByteBuffer.reserve this (fp + 0) len
-  let mut n_vec : UInt8 := t'1
-  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
-  let mut i : Int32 := (0 : Int32)
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := i
-      let t'4 := (t'3 + 1)
-      i := t'4
-      pure ()
-    first'2 := false
-    if !((decide (i < (UInt32.toInt32 (UInt8.toUInt32 (n_vec)))))) then break
-    let t'5 ← PMem.ldU64 ((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64)
-    let t'6 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
-    let t'7 ← PMem.memcpy t'5 (data + ((UInt64.toInt64 (UInt32.toUInt64 (ret))) * 1).toUInt64) (UInt32.toUInt64 (t'6))
-    discard <| pure (t'7)
-    let t'8 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
-    let t'9 := (ret + t'8)
-    ret := t'9
-  let t'10 ← ByteBuffer.commit this ret
-  discard <| pure (t'10)
-  return ret
-
-partial def ByteBuffer.write (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
-  let fp ← PMem.enter 32
-  let r ← ByteBuffer.write.body fp this data len
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::convert_parameter_width : bool (ap_var_type, float)`, `AP_Param.h:517-519`. -/
-partial def AP_Param.convert_parameter_width (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) : PMem.M Bool := do
-  let mut old_ptype := old_ptype
-  let mut scale_factor := scale_factor
-  let t'1 ← AP_Param._convert_parameter_width this old_ptype scale_factor false
-  return t'1
-
-/-- C++ `GCS_Copter::new_gcs_mavlink_backend : GCS_MAVLINK_Copter *(AP_HAL::UARTDriver &)`, `GCS.h:42-44`. -/
-partial def GCS_Copter.new_gcs_mavlink_backend (this : UInt64) (uart : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.alloc 880
-  GCS_MAVLINK.GCS_MAVLINK t'1 uart
-  return t'1
-
-/-- C++ `GCS_MAVLINK::init : bool (uint8_t)`, `GCS_Common.cpp:143-248`. -/
-partial def GCS_MAVLINK.init.body (fp : UInt64) (this : UInt64) (instance' : UInt8) : PMem.M Bool := do
-  let mut instance' := instance'
-  let t'1 := Int32.toUInt32 (((UInt32.toInt32 ((0 : UInt32))) + (UInt32.toInt32 (UInt8.toUInt32 (instance')))))
-  PMem.stU32 (this + 40) t'1
-  let t'2 ← PMem.ldU32 (this + 40)
-  let t'3 ← valid_channel t'2
-  if !t'3 then
-    return false
-  let t'4 ← PMem.findSerial instance'
-  PMem.stU64 (this + 448) t'4
-  let t'5 ← PMem.ldU64 (this + 448)
-  if (t'5 == (0 : UInt64)) then
-    return false
-  let t'6 ← PMem.ldU64 (this + 448)
-  let t'7 ← PMem.serialDevId t'6
-  PMem.stU32 (fp + 0) t'7
-  AP_ParamTBase'unsigned_int_3.set (this + 64) (fp + 0)
-  let t'8 ← AP_ParamT'signed_char_1.operator_const_signed_char__ (this + 70)
-  let t'9 ← PMem.ldI8 t'8
-  if !(t'9 != (0 : Int8)) then
-    let t'10 := (0x30 : UInt64)
-    let sm : UInt64 := t'10
-    PMem.stI8 (fp + 4) (Int32.toInt8 ((1 : Int32)))
-    AP_ParamTBase'signed_char_1.set_and_save (this + 70) (fp + 4)
-    if false then
-      GCS_MAVLINK.enable_option this (2 : UInt16)
-    if false then
-      GCS_MAVLINK.enable_option this (4 : UInt16)
-  let t'11 ← GCS_MAVLINK.option_enabled this (2 : UInt16)
-  if t'11 then
-    let t'12 ← PMem.ldU32 (this + 40)
-    GCS_MAVLINK.set_channel_private t'12
-  let mut old_flow_control : UInt32 := (0 : UInt32)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'13 := true
-  repeat
-    if !first'13 then
-      let t'14 := i
-      let t'15 := (t'14 + 1)
-      i := t'15
-      pure ()
-    first'13 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (3 : Int32)))) then break
-    PMem.delayMark (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
-    let t'16 ← PMem.ldU64 (this + 480)
-    let t'17 ← PMem.uartWrite1 t'16 (Int8.toUInt8 (Int32.toInt8 ((48 : Int32))))
-    discard <| pure (t'17)
-    let t'18 ← PMem.ldU64 (this + 480)
-    let t'19 ← PMem.uartWrite1 t'18 (Int8.toUInt8 (Int32.toInt8 ((32 : Int32))))
-    discard <| pure (t'19)
-  PMem.delayMark (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
-  let t'20 ← PMem.ldU64 (this + 480)
-  let t'21 ← PMem.ldU32 (this + 40)
-  PMem.stU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'21))) * 8).toUInt64) t'20
-  let mut mavlink_protocol : Int32 := (2 : Int32)
-  if ((mavlink_protocol == (2 : Int32)) || (mavlink_protocol == (43 : Int32))) then
-    pure ()
-  else
-    let t'22 := ((this + 408) + 16)
-    let t'23 ← PMem.ldU8 t'22
-    let t'24 := (t'23 ||| (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
-    PMem.stU8 t'22 t'24
-  return true
-
-partial def GCS_MAVLINK.init (this : UInt64) (instance' : UInt8) : PMem.M Bool := do
-  let fp ← PMem.enter 5
-  let r ← GCS_MAVLINK.init.body fp this instance'
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::get_singleton : class GCS *()`, `GCS.h:1161-1163`. -/
-partial def GCS.get_singleton  : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU64 (0xc1c0 : UInt64) /- &GCS::_singleton -/
-  return t'1
-
-/-- C++ `GCS_MAVLINK::is_streaming : bool () const`, `mavlink_msg_mission_ack.h:307-309`. -/
-partial def GCS_MAVLINK.is_streaming (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU8 (this + 728)
-  return ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8)))))
-
-/-- C++ `Bitmask<102>::set : void (uint16_t)`, `stdint.h:69-76`. -/
-partial def Bitmask'102.set (this : UInt64) (bit : UInt16) : PMem.M Unit := do
-  let mut bit := bit
-  let t'1 ← Bitmask'102.validate this bit
-  if !t'1 then
-    return ()
-  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
-  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
-  let t'2 := (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
-  let t'3 ← PMem.ldU32 t'2
-  let t'4 := (t'3 ||| ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs)))))))
-  PMem.stU32 t'2 t'4
-  return ()
-
-/-- C++ `AC_P::AC_P : void (const float &)`, `AC_P.h:24-28`. -/
-partial def AC_P.AC_P (this : UInt64) (initial_p : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 initial_p
-  PMem.stF32 (this + 4) t'1
-  AP_Param.setup_object_defaults this (0x7d80 : UInt64) /- &AC_P::var_info -/
-  return ()
-
-/-- C++ `SlewLimiter::SlewLimiter : void (const float &, const float &)`, `SlewLimiter.cpp:33-39`. -/
-partial def SlewLimiter.SlewLimiter.body (fp : UInt64) (this : UInt64) (_slew_rate_max : UInt64) (_slew_rate_tau : UInt64) : PMem.M Unit := do
-  PMem.stU64 (this + 0) _slew_rate_max
-  PMem.stU64 (this + 8) _slew_rate_tau
-  PMem.stF32 (fp + 0) (Binary32.ofBits 0x41c80000 /- 25 -/)
-  LowPassFilter'float.set_cutoff_frequency (this + 16) (fp + 0)
-  PMem.stF32 (fp + 4) (Binary64.toBinary32 ((Binary64.ofBits 0x0000000000000000 /- 0 -/)))
-  DigitalLPF'float.reset (this + 16) (fp + 4)
-  return ()
-
-partial def SlewLimiter.SlewLimiter (this : UInt64) (_slew_rate_max : UInt64) (_slew_rate_tau : UInt64) : PMem.M Unit := do
+def mavlink_msg_get_target_sysid (msg : UInt64) (entry : UInt64) : PMem.M UInt32 := do
   let fp ← PMem.enter 8
-  let r ← SlewLimiter.SlewLimiter.body fp this _slew_rate_max _slew_rate_tau
+  let r ← mavlink_msg_get_target_sysid.body fp msg entry
   PMem.leave fp
   return r
 
-/-- C++ `StorageAccess::read_uint32 : uint32_t (uint16_t) const`, `StorageManager.cpp:269-274`. -/
-partial def StorageAccess.read_uint32.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt32 := do
-  let mut loc := loc
-  let t'1 ← StorageAccess.read_block this (fp + 0) loc (4 : UInt64)
-  discard <| pure (t'1)
-  let t'2 ← PMem.ldU32 (fp + 0)
-  return t'2
-
-partial def StorageAccess.read_uint32 (this : UInt64) (loc : UInt16) : PMem.M UInt32 := do
-  let fp ← PMem.enter 4
-  let r ← StorageAccess.read_uint32.body fp this loc
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::write_uint32 : void (uint16_t, uint32_t) const`, `StorageManager.cpp:305-308`. -/
-partial def StorageAccess.write_uint32.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt32) : PMem.M Unit := do
-  let mut loc := loc
-  PMem.stU32 (fp + 0) value
-  let t'1 ← StorageAccess.write_block this loc (fp + 0) (4 : UInt64)
-  discard <| pure (t'1)
-  return ()
-
-partial def StorageAccess.write_uint32 (this : UInt64) (loc : UInt16) (value : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← StorageAccess.write_uint32.body fp this loc value
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_ParamTBase<unsigned short, 2>::get : const unsigned short &() const`, `AP_Param.h:917-919`. -/
-partial def AP_ParamTBase'unsigned_short_2.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AP_Mission::truncate : void (uint16_t)`, `AP_Mission.cpp:300-306`. -/
-partial def AP_Mission.truncate.body (fp : UInt64) (this : UInt64) (index : UInt16) : PMem.M Unit := do
-  let mut index := index
-  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'2 ← PMem.ldI16 t'1
-  if (decide ((Int32.toUInt32 (Int16.toInt32 (t'2))) > (UInt16.toUInt32 (index)))) then
-    PMem.stI16 (fp + 0) (UInt16.toInt16 (index))
-    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 0)
-    let t'3 := ((← get).clockUs / 1000).toUInt32
-    PMem.stU32 (this + 596) t'3
-  return ()
-
-partial def AP_Mission.truncate (this : UInt64) (index : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← AP_Mission.truncate.body fp this index
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_start_checksum : void (mavlink_message_t *)`, `mavlink_helpers.h:564-569`. -/
-partial def mavlink_start_checksum.body (fp : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  PMem.stU16 (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  crc_init (fp + 0)
-  let t'1 ← PMem.ldU16 (fp + 0)
-  PMem.stU16 msg t'1
-  return ()
-
-partial def mavlink_start_checksum (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← mavlink_start_checksum.body fp msg
-  PMem.leave fp
-  return r
-
-/-- C++ `_mav_parse_error : void (mavlink_status_t *)`, `mavlink_helpers.h:281-284`. -/
-partial def _mav_parse_error (status : UInt64) : PMem.M Unit := do
-  let mut status := status
-  let t'1 := (status + 2)
-  let t'2 ← PMem.ldU8 t'1
-  let t'3 := (t'2 + 1)
-  PMem.stU8 t'1 t'3
-  return ()
-
-/-- C++ `mavlink_update_checksum : void (mavlink_message_t *, uint8_t)`, `mavlink_helpers.h:571-576`. -/
-partial def mavlink_update_checksum.body (fp : UInt64) (msg : UInt64) (c : UInt8) : PMem.M Unit := do
-  let mut msg := msg
-  let mut c := c
-  let t'1 ← PMem.ldU16 msg
-  PMem.stU16 (fp + 0) t'1
-  crc_accumulate c (fp + 0)
-  let t'2 ← PMem.ldU16 (fp + 0)
-  PMem.stU16 msg t'2
-  return ()
-
-partial def mavlink_update_checksum (msg : UInt64) (c : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← mavlink_update_checksum.body fp msg c
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_get_msg_entry : const mavlink_msg_entry_t *(uint32_t)`, `mavlink_helpers.h:582-608`. -/
-partial def mavlink_get_msg_entry (msgid : UInt32) : PMem.M UInt64 := do
-  let mut msgid := msgid
-  let mut low : UInt32 := Int32.toUInt32 ((0 : Int32))
-  let mut high : UInt32 := UInt64.toUInt32 ((((4284 : UInt64) / (12 : UInt64)) - (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))
-  repeat
-    if !((decide (low < high))) then break
-    let mut mid : UInt32 := (((low + (Int32.toUInt32 ((1 : Int32)))) + high) / (Int32.toUInt32 ((2 : Int32))))
-    let t'1 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (mid))) * 12).toUInt64)
-    if (decide (msgid < t'1)) then
-      let t'2 := (mid - (Int32.toUInt32 ((1 : Int32))))
-      high := t'2
-      continue
-    let t'3 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (mid))) * 12).toUInt64)
-    if (decide (msgid > t'3)) then
-      low := mid
-      continue
-    low := mid
-    break
-  let t'4 ← PMem.ldU32 ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (low))) * 12).toUInt64)
-  if (t'4 != msgid) then
-    return (0 : UInt64)
-  return ((0xc1c8 : UInt64) /- &mavlink_get_msg_entry(...)::mavlink_message_crcs -/ + ((UInt64.toInt64 (UInt32.toUInt64 (low))) * 12).toUInt64)
-
-/-- C++ `GCS_MAVLINK_Copter::packetReceived : void (const mavlink_status_t &, const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:346-357`. -/
-partial def GCS_MAVLINK_Copter.packetReceived (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
-  GCS_MAVLINK.packetReceived this status msg
-  return ()
-
-/-- C++ `MAVLink_routing::check_and_forward : bool (uint8_t, GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:97-172`. -/
-partial def MAVLink_routing.check_and_forward (this : UInt64) (framing_status : UInt8) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
-  let mut framing_status := framing_status
-  let t'1 ← PMem.ldU32 (msg + 8)
-  let t'2 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  let mut sc'5 := (t'1 == t'2)
-  if sc'5 then
-    let t'3 ← PMem.ldU8 (msg + 12)
-    let t'4 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
-    sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (UInt32.toInt32 (UInt8.toUInt32 (t'4))))
-  if sc'5 then
-    return false
-  let sw'6 := UInt32.toInt32 (UInt8.toUInt32 (framing_status))
-  if sw'6 == (1 : Int32) then
-    pure ()
-  else if sw'6 == (2 : Int32) then
-    let t'7 ← GCS_MAVLINK.option_enabled in_link (8 : UInt16)
-    let mut sc'9 := t'7
-    if sc'9 then
-      let t'8 ← PMem.ldBits msg 104 24
-      sc'9 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'8)))) != (166 : Int32))
-    let mut sc'11 := sc'9
-    if sc'11 then
-      let t'10 ← PMem.ldBits msg 104 24
-      sc'11 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'10)))) != (109 : Int32))
-    let mut sc'13 := sc'11
-    if sc'13 then
-      let t'12 ← PMem.ldBits msg 104 24
-      sc'13 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'12)))) != (246 : Int32))
-    if sc'13 then
-      let t'14 ← MAVLink_routing.forward this in_link msg
-      discard <| pure (t'14)
-    return false
-  else if sw'6 == (3 : Int32) then
-    return false
-  else
-    return false
-  MAVLink_routing.learn_route this in_link msg
-  let t'15 ← PMem.ldBits msg 104 24
-  let mut sc'17 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'15)))) == (166 : Int32))
-  if !sc'17 then
-    let t'16 ← PMem.ldBits msg 104 24
-    sc'17 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'16)))) == (109 : Int32))
-  if sc'17 then
-    return true
-  let t'18 ← GCS_MAVLINK.is_private in_link
-  let mut from_private_channel : Bool := t'18
-  let t'19 ← PMem.ldBits msg 104 24
-  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (0 : Int32)) then
-    let mut sc'21 := !from_private_channel
-    if sc'21 then
-      let t'20 ← GCS_MAVLINK.option_enabled in_link (16 : UInt16)
-      sc'21 := !t'20
-    if sc'21 then
-      MAVLink_routing.handle_heartbeat this in_link msg
-    return true
-  let t'22 ← MAVLink_routing.forward this in_link msg
-  return t'22
-
-/-- C++ `GCS_MAVLINK::accept_packet : bool (const mavlink_status_t &, const mavlink_message_t &) const`, `GCS_Common.cpp:7386-7409`. -/
-partial def GCS_MAVLINK.accept_packet (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU32 (msg + 8)
-  let t'2 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  if (t'1 == t'2) then
-    return true
-  let t'3 ← PMem.ldU32 (msg + 8)
-  let t'4 ← gcs
-  let t'5 ← GCS.sysid_is_gcs t'4 t'3
-  if t'5 then
-    return true
-  let t'6 ← PMem.ldBits msg 104 24
-  let mut sc'8 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'6)))) == (166 : Int32))
-  if !sc'8 then
-    let t'7 ← PMem.ldBits msg 104 24
-    sc'8 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'7)))) == (109 : Int32))
-  if sc'8 then
-    return true
-  let t'9 ← gcs
-  let t'10 ← GCS.option_is_enabled t'9 (1 : Int32)
-  if !t'10 then
-    return true
-  return false
-
-/-- C++ `GCS_MAVLINK_Copter::handle_message : void (const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:1179-1204`. -/
-partial def GCS_MAVLINK_Copter.handle_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits msg 104 24
-  let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
-  if sw'2 == (82 : Int32) then
-    pure ()
-  else if sw'2 == (84 : Int32) then
-    pure ()
-  else if sw'2 == (86 : Int32) then
-    pure ()
-  else
-    GCS_MAVLINK.handle_message this msg
-  return ()
-
-/-- C++ `GCS_MAVLINK::is_private : bool (mavlink_channel_t)`, `AP_Mission.h:449-451`. -/
-partial def GCS_MAVLINK.is_private'2 (_chan : UInt32) : PMem.M Bool := do
-  let mut _chan := _chan
-  let t'1 ← PMem.ldU32 (0xd288 : UInt64) /- &GCS_MAVLINK::mavlink_private -/
-  return ((t'1 &&& ((1 : UInt32) <<< _chan)) != (Int32.toUInt32 ((0 : Int32))))
-
-/-- C++ `AP_ParamT<unsigned short, 2>::operator const unsigned short & : const unsigned short &() const`, `AP_Param.h:978-980`. -/
-partial def AP_ParamT'unsigned_short_2.operator_const_unsigned_short__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `GCS_MAVLINK::txspace : uint16_t () const`, `AP_Common.h:206-214`. -/
-partial def GCS_MAVLINK.txspace.body (fp : UInt64) (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldB (this + 870)
-  if t'1 then
-    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'2 ← PMem.ldU64 (this + 480)
-  let t'3 ← PMem.uartTxspace t'2
-  PMem.stU32 (fp + 0) t'3
-  PMem.stU32 (fp + 4) (8192 : UInt32)
-  let t'4 ← MIN'2 (fp + 0) (fp + 4)
-  let t'5 ← PMem.ldU32 t'4
-  return UInt32.toUInt16 (t'5)
-
-partial def GCS_MAVLINK.txspace (this : UInt64) : PMem.M UInt16 := do
-  let fp ← PMem.enter 8
-  let r ← GCS_MAVLINK.txspace.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_get_channel_status : mavlink_status_t *(uint8_t)`, `GCS_MAVLink.cpp:56-66`. -/
-partial def mavlink_get_channel_status (chan : UInt8) : PMem.M UInt64 := do
-  let mut chan := chan
-  let t'1 ← gcs
-  let t'2 ← GCS_Copter.chan t'1 chan
-  let mut link : UInt64 := t'2
-  if (link == (0 : UInt64)) then
-    return (0 : UInt64)
-  let t'3 ← GCS_MAVLINK.channel_status link
-  return t'3
-
-/-- C++ `GCS_MAVLINK::out_of_space_to_send : void ()`, `AP_Common.h:219-?`. -/
-partial def GCS_MAVLINK.out_of_space_to_send (this : UInt64) : PMem.M Unit := do
-  let t'1 := (this + 860)
-  let t'2 ← PMem.ldU16 t'1
-  let t'3 := (t'2 + 1)
-  PMem.stU16 t'1 t'3
-  return ()
-
-/-- C++ `mavlink_msg_timesync_send : void (mavlink_channel_t, int64_t, int64_t)`, `mavlink_msg_timesync.h:192-207`. -/
-partial def mavlink_msg_timesync_send.body (fp : UInt64) (chan : UInt32) (tc1 : Int64) (ts1 : Int64) : PMem.M Unit := do
-  let mut chan := chan
-  let mut tc1 := tc1
-  let mut ts1 := ts1
-  __mavlink_timesync_t.__mavlink_timesync_t (fp + 0)
-  PMem.stI64 (fp + 0) tc1
-  PMem.stI64 ((fp + 0) + 8) ts1
-  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((111 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((16 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((16 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((34 : Int32))))
-  return ()
-
-partial def mavlink_msg_timesync_send (chan : UInt32) (tc1 : Int64) (ts1 : Int64) : PMem.M Unit := do
-  let fp ← PMem.enter 16
-  let r ← mavlink_msg_timesync_send.body fp chan tc1 ts1
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_mission_ack_t::__mavlink_mission_ack_t : void () noexcept`, `mavlink_msg_mission_ack.h:9-?`. -/
-partial def __mavlink_mission_ack_t.__mavlink_mission_ack_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_target_field : uint8_t (uint32_t)`, `protocol.h:52-55`. -/
-partial def mavlink_msg_target_field (target_system : UInt32) : PMem.M UInt8 := do
-  let mut target_system := target_system
-  let mut c'1 : Int32 := default
-  if (decide (target_system > (Int32.toUInt32 ((255 : Int32))))) then
-    c'1 := (255 : Int32)
-  else
-    c'1 := UInt32.toInt32 (UInt8.toUInt32 ((UInt32.toUInt8 (target_system))))
-  return Int8.toUInt8 (Int32.toInt8 (c'1))
-
-/-- C++ `_mav_finalize_message_chan_send_target : void (mavlink_channel_t, uint32_t, const char *, uint8_t, uint8_t, uint8_t, uint32_t)`, `mavlink_helpers.h:411-475`. -/
-partial def _mav_finalize_message_chan_send_target.body (fp : UInt64) (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) (target_sysid : UInt32) : PMem.M Unit := do
-  let mut chan := chan
-  let mut msgid := msgid
-  let mut packet := packet
-  let mut min_length := min_length
-  let mut length := length
-  let mut crc_extra := crc_extra
-  let mut target_sysid := target_sysid
-  let t'1 ← mavlink_get_channel_status (UInt32.toUInt8 (chan))
-  let mut status : UInt64 := t'1
-  let mut header_len : UInt8 := default  -- uninitialized in C
-  let mut signature_len : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let t'2 ← PMem.ldU8 (status + 16)
-  let mut mavlink1 : Bool := (((UInt32.toInt32 (UInt8.toUInt32 (t'2))) &&& (2 : Int32)) != (0 : Int32))
-  let mut sc'4 := !mavlink1
-  if sc'4 then
-    let t'3 ← PMem.ldU64 (status + 24)
-    sc'4 := (t'3 != 0)
-  let mut sc'7 := sc'4
-  if sc'7 then
-    let t'5 ← PMem.ldU64 (status + 24)
-    let t'6 ← PMem.ldU8 t'5
-    sc'7 := ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) &&& (1 : Int32)) != (0 : Int32)
-  let mut signing : Bool := sc'7
-  let mut incompat_flags : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  if mavlink1 then
-    length := min_length
-    let mut sc'9 := (decide (msgid > (Int32.toUInt32 ((255 : Int32)))))
-    if !sc'9 then
-      let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-      sc'9 := (decide (t'8 > (Int32.toUInt32 ((255 : Int32)))))
-    if (sc'9 || (decide (target_sysid > (Int32.toUInt32 ((255 : Int32)))))) then
-      _mav_parse_error status
-      return ()
-  else
-    if signing then
-      let t'10 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))))
-      incompat_flags := t'10
-    let t'11 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-    if (decide (t'11 > (Int32.toUInt32 ((255 : Int32))))) then
-      let t'12 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
-      incompat_flags := t'12
-    if (decide (target_sysid > (Int32.toUInt32 ((255 : Int32))))) then
-      let t'13 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))))
-      incompat_flags := t'13
-    let t'14 ← _mav_trim_payload packet length
-    length := t'14
-  let mut c'15 : Int32 := default
-  if mavlink1 then
-    c'15 := (254 : Int32)
-  else
-    c'15 := (253 : Int32)
-  let t'16 ← PMem.ldU8 (status + 10)
-  let t'17 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  let t'18 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
-  let t'19 ← _mav_header_pack (fp + 8) (Int8.toUInt8 (Int32.toInt8 (c'15))) length incompat_flags (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) t'16 t'17 t'18 msgid target_sysid
-  header_len := t'19
-  let t'20 := (status + 10)
-  let t'21 ← PMem.ldU8 t'20
-  let t'22 := (t'21 + 1)
-  PMem.stU8 t'20 t'22
-  let t'23 ← crc_calculate ((fp + 8) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt8.toUInt32 (header_len))) - (1 : Int32)))))
-  PMem.stU16 (fp + 0) t'23
-  crc_accumulate_buffer (fp + 0) packet (UInt8.toUInt16 (length))
-  crc_accumulate crc_extra (fp + 0)
-  let t'24 ← PMem.ldU16 (fp + 0)
-  let t'25 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'24))) &&& (255 : Int32))))
-  PMem.stU8 ((fp + 32) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) t'25
-  let t'26 ← PMem.ldU16 (fp + 0)
-  let t'27 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'26))) >>> (8 : Int32))))
-  PMem.stU8 ((fp + 32) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) t'27
-  if signing then
-    PMem.unreached "mavlink_sign_packet"
-    let t'28 := (default : UInt8)
-    signature_len := t'28
-  comm_send_lock chan (Int16.toUInt16 (Int32.toInt16 (((((UInt32.toInt32 (UInt8.toUInt32 (header_len))) + (2 : Int32)) + (UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (length)))))) + (UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (signature_len)))))))))
-  _mavlink_send_uart chan (fp + 8) (UInt8.toUInt16 (header_len))
-  _mavlink_send_uart chan packet (UInt8.toUInt16 (length))
-  _mavlink_send_uart chan (fp + 32) (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
-  if ((UInt32.toInt32 (UInt8.toUInt32 (signature_len))) != (0 : Int32)) then
-    _mavlink_send_uart chan (fp + 40) (UInt8.toUInt16 (signature_len))
-  comm_send_unlock chan
-  return ()
-
-partial def _mav_finalize_message_chan_send_target (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) (target_sysid : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 53
-  let r ← _mav_finalize_message_chan_send_target.body fp chan msgid packet min_length length crc_extra target_sysid
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::set_mavlink_message_id_interval : bool (const uint32_t, const uint16_t)`, `GCS_Common.cpp:1220-1231`. -/
-partial def GCS_MAVLINK.set_mavlink_message_id_interval (this : UInt64) (mavlink_id : UInt32) (interval_ms : UInt16) : PMem.M Bool := do
-  let mut mavlink_id := mavlink_id
-  let mut interval_ms := interval_ms
-  let t'1 ← GCS_MAVLINK.mavlink_id_to_ap_message_id this mavlink_id
-  let mut id : UInt8 := t'1
-  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((102 : UInt8))))) then
-    return false
-  let t'2 ← GCS_MAVLINK.set_ap_message_interval this id interval_ms
-  return t'2
-
-/-- C++ `GCS_MAVLINK::initialise_message_intervals_for_stream : void (GCS_MAVLINK::streams)`, `GCS_Common.cpp:7096-7110`. -/
-partial def GCS_MAVLINK.initialise_message_intervals_for_stream (this : UInt64) (id : UInt8) : PMem.M Unit := do
-  let mut id := id
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    let t'4 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
-    if !((t'4 != (0 : UInt64))) then break
-    let entries : UInt64 := ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
-    let t'5 ← PMem.ldU8 entries
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
-      continue
-    let t'6 ← GCS_MAVLINK.get_interval_for_stream this id
-    let mut interval_ms : UInt16 := t'6
-    let mut j : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    let mut first'7 := true
-    repeat
-      if !first'7 then
-        let t'8 := j
-        let t'9 := (t'8 + 1)
-        j := t'9
-        pure ()
-      first'7 := false
-      let t'10 ← PMem.ldU8 (entries + 16)
-      if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (j))) < (UInt32.toInt32 (UInt8.toUInt32 (t'10)))))) then break
-      let t'11 ← PMem.ldU64 (entries + 8)
-      let t'12 ← PMem.ldU8 (t'11 + ((UInt64.toInt64 (UInt8.toUInt64 (j))) * 1).toUInt64)
-      let t'13 ← GCS_MAVLINK.set_ap_message_interval this t'12 interval_ms
-      discard <| pure (t'13)
-    break
-  return ()
-
-/-- C++ `GCS_Copter::min_loop_time_remaining_for_message_send_us : uint16_t () const`, `GCS.h:38-40`. -/
-partial def GCS_Copter.min_loop_time_remaining_for_message_send_us (this : UInt64) : PMem.M UInt16 := do
-  return Int16.toUInt16 (Int32.toInt16 ((250 : Int32)))
-
-/-- C++ `GCS_MAVLINK::should_send_message_in_delay_callback : bool (const ap_message) const`, `GCS_Common.cpp:1233-1251`. -/
-partial def GCS_MAVLINK.should_send_message_in_delay_callback (this : UInt64) (id : UInt8) : PMem.M Bool := do
-  let mut id := id
-  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
-  if sw'1 == (31 : Int32) || sw'1 == (0 : Int32) || sw'1 == (73 : Int32) then
-    return true
-  else
-    return false
-  return false
-
-/-- C++ `GCS_MAVLINK::telemetry_delayed : bool () const`, `GCS_Common.cpp:3383-3396`. -/
-partial def GCS_MAVLINK.telemetry_delayed (this : UInt64) : PMem.M Bool := do
-  let mut tnow : UInt32 := ((((← get).clockUs / 1000).toUInt32) >>> (Int32.toUInt32 ((10 : Int32))))
-  let t'1 ← gcs
-  let t'2 ← GCS.telem_delay t'1
-  if (decide (tnow ≥ t'2)) then
-    return false
-  let t'3 ← PMem.ldU32 (this + 40)
-  if (((UInt32.toInt32 (t'3)) == (UInt32.toInt32 ((0 : UInt32)))) && false) then
-    return false
-  return true
-
-/-- C++ `GCS_MAVLINK_Copter::try_send_message : bool (enum ap_message)`, `GCS_MAVLink_Copter.cpp:293-324`. -/
-partial def GCS_MAVLINK_Copter.try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
-  let mut id := id
-  repeat
-    let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
-    if sw'1 == (36 : Int32) then
-      let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((12 : Int32))))
-      if !t'2 then
-        return false
-      PMem.bframe this 168
-    else if sw'1 == (64 : Int32) then
-      break
-      let t'3 ← GCS_MAVLINK.try_send_message this id
-      return t'3
-    else
-      let t'4 ← GCS_MAVLINK.try_send_message this id
-      return t'4
-    break
-  return true
-
-/-- C++ `Bitmask<102>::validate : bool (uint16_t) const`, `stdint.h:160-166`. -/
-partial def Bitmask'102.validate (this : UInt64) (bit : UInt16) : PMem.M Bool := do
-  let mut bit := bit
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (bit))) ≥ (UInt32.toInt32 (UInt16.toUInt32 ((102 : UInt16)))))) then
-    return false
-  return true
-
-/-- C++ `GCS_MAVLINK::requesting_mission_items : bool () const`, `GCS_Common.cpp:821-829`. -/
-partial def GCS_MAVLINK.requesting_mission_items (this : UInt64) : PMem.M Bool := do
-  let __range1 : UInt64 := (0xbb70 : UInt64) /- &GCS::missionitemprotocols -/
-  let mut __begin1 : UInt64 := __range1
-  let mut __end1 : UInt64 := (__range1 + ((3 : Int64) * 8).toUInt64)
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (__begin1 + 8)
-      __begin1 := t'2
-      pure ()
-    first'1 := false
-    if !((__begin1 != __end1)) then break
-    let t'3 ← PMem.ldU64 __begin1
-    let mut prot : UInt64 := t'3
-    let mut sc'5 := (prot != 0)
-    if sc'5 then
-      let t'4 ← PMem.ldB (prot + 8)
-      sc'5 := t'4
-    let mut sc'7 := sc'5
-    if sc'7 then
-      let t'6 ← MissionItemProtocol.active_link_is prot this
-      sc'7 := t'6
-    if sc'7 then
-      return true
-  return false
-
-/-- C++ `Bitmask<102>::clearall : void ()`, `stdint.h:111-113`. -/
-partial def Bitmask'102.clearall (this : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.memset this (0 : Int32) ((UInt16.toUInt64 ((4 : UInt16))) * (4 : UInt64))
-  discard <| pure (t'1)
-  return ()
-
-/-- C++ `ByteBuffer::peekbytes : uint32_t (uint8_t *, uint32_t)`, `RingBuffer.cpp:185-197`. -/
-partial def ByteBuffer.peekbytes.body (fp : UInt64) (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
-  let mut data := data
-  let mut len := len
-  ByteBuffer.IoVec.IoVec ((fp + 0) + 0)
-  ByteBuffer.IoVec.IoVec ((fp + 0) + 16)
-  let t'1 ← ByteBuffer.peekiovec this (fp + 0) len
-  let mut n_vec : UInt8 := t'1
-  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
-  let mut i : Int32 := (0 : Int32)
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := i
-      let t'4 := (t'3 + 1)
-      i := t'4
-      pure ()
-    first'2 := false
-    if !((decide (i < (UInt32.toInt32 (UInt8.toUInt32 (n_vec)))))) then break
-    let t'5 ← PMem.ldU64 ((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64)
-    let t'6 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
-    let t'7 ← PMem.memcpy (data + ((UInt64.toInt64 (UInt32.toUInt64 (ret))) * 1).toUInt64) t'5 (UInt32.toUInt64 (t'6))
-    discard <| pure (t'7)
-    let t'8 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
-    let t'9 := (ret + t'8)
-    ret := t'9
-  return ret
-
-partial def ByteBuffer.peekbytes (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
-  let fp ← PMem.enter 32
-  let r ← ByteBuffer.peekbytes.body fp this data len
-  PMem.leave fp
-  return r
-
-/-- C++ `ByteBuffer::advance : bool (uint32_t)`, `RingBuffer.cpp:137-144`. -/
-partial def ByteBuffer.advance (this : UInt64) (n : UInt32) : PMem.M Bool := do
-  let mut n := n
-  let t'1 ← ByteBuffer.available this
-  if (decide (n > t'1)) then
-    return false
-  let t'2 ← PMem.ldU32 (this + 12)
-  let t'3 ← PMem.ldU32 (this + 8)
-  let t'4 ← PMem.atomicStU32 (this + 12) ((t'2 + n) % t'3)
-  discard <| pure (t'4)
-  return true
-
-/-- C++ `ByteBuffer::IoVec::IoVec : void () noexcept`, `AP_Common.h:76-?`. -/
-partial def ByteBuffer.IoVec.IoVec (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `ByteBuffer::reserve : uint8_t (ByteBuffer::IoVec *, uint32_t)`, `RingBuffer.cpp:199-225`. -/
-partial def ByteBuffer.reserve (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
-  let mut iovec := iovec
-  let mut len := len
-  let t'1 ← ByteBuffer.space this
-  let mut n : UInt32 := t'1
-  if (decide (len > n)) then
-    len := n
-  if !(len != (0 : UInt32)) then
+/-- C++ `mavlink_msg_get_target_compid : uint8_t (const mavlink_message_t *, const mavlink_msg_entry_t *)`, `mavlink_helpers.h:698-708`. -/
+def mavlink_msg_get_target_compid.body (fp : UInt64) (msg : UInt64) (entry : UInt64) : PMem.M UInt8 := do
+  PMem.stU64 (fp + 0) msg
+  let mut entry := entry
+  let mut sc'2 := (entry == (0 : UInt64))
+  if !sc'2 then
+    let t'1 ← PMem.ldU8 (entry + 7)
+    sc'2 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'1))) &&& (2 : Int32)) != (0 : Int32))
+  if sc'2 then
     return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let t'2 ← PMem.ldU64 this
-  let t'3 ← PMem.ldU32 (this + 16)
-  let t'4 := (t'2 + ((UInt64.toInt64 (UInt32.toUInt64 (t'3))) * 1).toUInt64)
-  PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) t'4
-  let t'5 ← PMem.ldU32 (this + 8)
-  let t'6 ← PMem.ldU32 (this + 16)
-  let t'7 := (t'5 - t'6)
-  n := t'7
-  if (decide (len ≤ n)) then
-    PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) len
-    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) n
-  let t'8 ← PMem.ldU64 this
-  PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) t'8
-  let t'9 := (len - n)
-  PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'9
-  return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
+  let t'3 ← PMem.ldU8 (entry + 9)
+  let t'4 ← PMem.ldU64 (fp + 0)
+  let t'5 ← PMem.ldU8 (t'4 + 3)
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'5))))) then
+    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let t'6 ← PMem.ldU64 (fp + 0)
+  let t'7 ← PMem.ldU8 (entry + 9)
+  let t'8 ← PMem.ldI8 (((t'6 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) + ((UInt64.toInt64 (UInt8.toUInt64 (t'7))) * 1).toUInt64)
+  return Int8.toUInt8 (t'8)
 
-/-- C++ `ByteBuffer::commit : bool (uint32_t)`, `RingBuffer.cpp:230-238`. -/
-partial def ByteBuffer.commit (this : UInt64) (len : UInt32) : PMem.M Bool := do
-  let mut len := len
-  let t'1 ← ByteBuffer.space this
-  if (decide (len > t'1)) then
-    return false
-  let t'2 ← PMem.ldU32 (this + 16)
-  let t'3 ← PMem.ldU32 (this + 8)
-  let t'4 ← PMem.atomicStU32 (this + 16) ((t'2 + len) % t'3)
-  discard <| pure (t'4)
-  return true
-
-/-- C++ `AP_Param::_convert_parameter_width : bool (ap_var_type, float, bool)`, `AP_Param.cpp:2204-2294`. -/
-partial def AP_Param._convert_parameter_width.body (fp : UInt64) (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) (bitmask : Bool) : PMem.M Bool := do
-  let mut old_ptype := old_ptype
-  let mut scale_factor := scale_factor
-  let mut bitmask := bitmask
-  let t'1 ← AP_Param.configured_in_storage this
-  if t'1 then
-    return false
-  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'2 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'2
-  if (info' == (0 : UInt64)) then
-    return false
-  let mut new_ptype : UInt32 := default  -- uninitialized in C
-  let t'3 ← PMem.ldU64 (fp + 8)
-  if (t'3 != (0 : UInt64)) then
-    let t'4 ← PMem.ldU64 (fp + 8)
-    let t'5 ← PMem.ldU8 (t'4 + 27)
-    let t'6 := UInt8.toUInt32 (t'5)
-    new_ptype := t'6
-  else
-    let t'7 ← PMem.ldU8 (info' + 28)
-    let t'8 := UInt8.toUInt32 (t'7)
-    new_ptype := t'8
-  AP_Param.Param_header.Param_header (fp + 48)
-  PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (old_ptype))
-  let t'9 ← PMem.ldU16 (info' + 26)
-  AP_Param.set_key (fp + 48) t'9
-  let t'10 ← PMem.ldU32 (fp + 0)
-  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'10))
-  let t'11 ← AP_Param.scan (fp + 48) (fp + 56)
-  if !t'11 then
-    return false
-  AP_Param_value_storage.AP_Param_value_storage (fp + 64)
-  let t'12 ← PMem.ldU16 (fp + 56)
-  let t'13 ← AP_Param.type_size old_ptype
-  let t'14 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 64) (UInt64.toUInt16 (((UInt16.toUInt64 (t'12)) + (4 : UInt64)))) (UInt8.toUInt64 (t'13))
-  discard <| pure (t'14)
-  let mut old_ap : UInt64 := (fp + 64)
-  if !bitmask then
-    let t'15 ← AP_Param.cast_to_float old_ap old_ptype
-    let mut old_float_value : Binary32 := t'15
-    AP_Param.set_value new_ptype this (old_float_value * scale_factor)
-  else
-    let mut mask : UInt32 := default  -- uninitialized in C
-    let sw'16 := UInt32.toInt32 (old_ptype)
-    if sw'16 == (1 : Int32) then
-      let t'17 ← AP_ParamT'signed_char_1.operator_const_signed_char__ old_ap
-      let t'18 ← PMem.ldI8 t'17
-      let t'19 := UInt8.toUInt32 ((Int8.toUInt8 (t'18)))
-      mask := t'19
-    else if sw'16 == (2 : Int32) then
-      let t'20 ← AP_ParamT'short_2.operator_const_short__ old_ap
-      let t'21 ← PMem.ldI16 t'20
-      let t'22 := UInt16.toUInt32 ((Int16.toUInt16 (t'21)))
-      mask := t'22
-    else if sw'16 == (3 : Int32) then
-      let t'23 ← AP_ParamT'int_3.operator_const_int__ old_ap
-      let t'24 ← PMem.ldI32 t'23
-      let t'25 := Int32.toUInt32 (t'24)
-      mask := t'25
-    else
-      return false
-    let sw'26 := UInt32.toInt32 (new_ptype)
-    if sw'26 == (1 : Int32) then
-      PMem.stI8 (fp + 76) (UInt8.toInt8 (UInt32.toUInt8 (mask)))
-      AP_ParamTBase'signed_char_1.set this (fp + 76)
-    else if sw'26 == (2 : Int32) then
-      PMem.stI16 (fp + 78) (UInt16.toInt16 (UInt32.toUInt16 (mask)))
-      AP_ParamTBase'short_2.set this (fp + 78)
-    else if sw'26 == (3 : Int32) then
-      PMem.stI32 (fp + 80) (UInt32.toInt32 (mask))
-      AP_ParamTBase'int_3.set this (fp + 80)
-    else
-      return false
-  -- AP_Param::save: dropped (configuration)
-  return true
-
-partial def AP_Param._convert_parameter_width (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) (bitmask : Bool) : PMem.M Bool := do
-  let fp ← PMem.enter 84
-  let r ← AP_Param._convert_parameter_width.body fp this old_ptype scale_factor bitmask
+def mavlink_msg_get_target_compid (msg : UInt64) (entry : UInt64) : PMem.M UInt8 := do
+  let fp ← PMem.enter 8
+  let r ← mavlink_msg_get_target_compid.body fp msg entry
   PMem.leave fp
   return r
 
-/-- C++ `valid_channel : bool (mavlink_channel_t)`, `GCS_MAVLink.h:62-65`. -/
-partial def valid_channel (chan : UInt32) : PMem.M Bool := do
+/-- C++ `MAVLink_routing::get_targets : void (const mavlink_message_t &, int64_t &, int16_t &)`, `MAVLink_routing.cpp:472-487`. -/
+def MAVLink_routing.get_targets (this : UInt64) (msg : UInt64) (sysid : UInt64) (compid : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits msg 104 24
+  let t'2 ← mavlink_get_msg_entry (UInt64.toUInt32 (t'1))
+  let mut msg_entry : UInt64 := t'2
+  let t'3 ← PMem.ldU8 (msg + 4)
+  let mut targetted : Bool := (((UInt32.toInt32 (UInt8.toUInt32 (t'3))) &&& (4 : Int32)) != (0 : Int32))
+  if ((msg_entry == (0 : UInt64)) && (!targetted)) then
+    return ()
+  let mut sc'6 := targetted
+  if !sc'6 then
+    let mut sc'5 := (msg_entry != (0 : UInt64))
+    if sc'5 then
+      let t'4 ← PMem.ldU8 (msg_entry + 7)
+      sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) &&& (1 : Int32)) != (0 : Int32)
+    sc'6 := sc'5
+  if sc'6 then
+    let t'7 ← mavlink_msg_get_target_sysid msg msg_entry
+    let t'8 := UInt64.toInt64 (UInt32.toUInt64 (t'7))
+    PMem.stI64 sysid t'8
+  let mut sc'11 := targetted
+  if !sc'11 then
+    let mut sc'10 := (msg_entry != (0 : UInt64))
+    if sc'10 then
+      let t'9 ← PMem.ldU8 (msg_entry + 7)
+      sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) &&& (2 : Int32)) != (0 : Int32)
+    sc'11 := sc'10
+  if sc'11 then
+    let t'12 ← mavlink_msg_get_target_compid msg msg_entry
+    let t'13 := UInt16.toInt16 (UInt8.toUInt16 (t'12))
+    PMem.stI16 compid t'13
+  return ()
+
+/-- C++ `comm_send_lock : void (mavlink_channel_t, uint16_t)`, `GCS_MAVLink.cpp:183-191`. -/
+def comm_send_lock (chan_m : UInt32) (size : UInt16) : PMem.M Unit := do
+  let mut chan_m := chan_m
+  let mut size := size
+  let mut chan : UInt8 := UInt32.toUInt8 (chan_m)
+  let t'1 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 8).toUInt64)
+  let t'2 ← PMem.uartTxspace t'1
+  if (decide (t'2 < (UInt16.toUInt32 (size)))) then
+    PMem.stB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 1).toUInt64) true
+    gcs_out_of_space_to_send chan_m
+  return ()
+
+/-- `valid_channel` as a pure function of its arguments (it reads and writes no memory). -/
+def valid_channel.pure' (chan : UInt32) : Id Bool := do
   let mut chan := chan
   return (decide ((UInt32.toInt32 (chan)) < (16 : Int32)))
 
-/-- C++ `AP_ParamTBase<unsigned int, 3>::set : void (const unsigned int &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'unsigned_int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldU32 v
-  PMem.stU32 this t'1
-  return ()
+/-- C++ `valid_channel : bool (mavlink_channel_t)`, `GCS_MAVLink.h:62-65`. -/
+def valid_channel (chan : UInt32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.valid_channel.pure' chan)
 
-/-- C++ `AP_ParamT<signed char, 1>::operator const signed char & : const signed char &() const`, `AP_Param.h:978-980`. -/
-partial def AP_ParamT'signed_char_1.operator_const_signed_char__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `GCS_MAVLINK::enable_option : void (Option)`, `functor.h:558-560`. -/
-partial def GCS_MAVLINK.enable_option.body (fp : UInt64) (this : UInt64) (option : UInt16) : PMem.M Unit := do
-  let mut option := option
-  let t'1 ← AP_ParamT'unsigned_short_2.operator_const_unsigned_short__ (this + 68)
-  let t'2 ← PMem.ldU16 t'1
-  PMem.stU16 (fp + 0) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (t'2))) ||| (UInt32.toInt32 (UInt16.toUInt32 (option)))))))
-  AP_ParamTBase'unsigned_short_2.set_and_save (this + 68) (fp + 0)
-  return ()
-
-partial def GCS_MAVLINK.enable_option (this : UInt64) (option : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← GCS_MAVLINK.enable_option.body fp this option
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::set_channel_private : void (mavlink_channel_t)`, `GCS_MAVLink.cpp:112-116`. -/
-partial def GCS_MAVLINK.set_channel_private (_chan : UInt32) : PMem.M Unit := do
-  let mut _chan := _chan
-  let mut mask : UInt8 := UInt32.toUInt8 (((1 : UInt32) <<< _chan))
-  let t'1 := (0xd288 : UInt64) /- &GCS_MAVLINK::mavlink_private -/
-  let t'2 ← PMem.ldU32 t'1
-  let t'3 := (t'2 ||| (UInt8.toUInt32 (mask)))
-  PMem.stU32 t'1 t'3
-  return ()
-
-/-- C++ `LowPassFilter<float>::set_cutoff_frequency : void (const float &)`, `LowPassFilter.cpp:107-109`. -/
-partial def LowPassFilter'float.set_cutoff_frequency (this : UInt64) (new_cutoff_freq : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 new_cutoff_freq
-  PMem.stF32 (this + 8) t'1
-  return ()
-
-/-- C++ `DigitalLPF<float>::reset : void (const float &)`, `LowPassFilter.cpp:41-44`. -/
-partial def DigitalLPF'float.reset (this : UInt64) (value : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 value
-  PMem.stF32 this t'1
-  PMem.stB (this + 4) true
-  return ()
-
-/-- C++ `AP_ParamT<short, 2>::operator const short & : const short &() const`, `AP_Param.h:978-980`. -/
-partial def AP_ParamT'short_2.operator_const_short__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `crc_init : void (uint16_t *)`, `checksum.h:52-55`. -/
-partial def crc_init (crcAccum : UInt64) : PMem.M Unit := do
-  let mut crcAccum := crcAccum
-  let t'1 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  PMem.stU16 crcAccum t'1
-  return ()
-
-/-- C++ `crc_accumulate : void (uint8_t, uint16_t *)`, `checksum.h:35-43`. -/
-partial def crc_accumulate (data : UInt8) (crcAccum : UInt64) : PMem.M Unit := do
-  let mut data := data
-  let mut crcAccum := crcAccum
-  let mut tmp : UInt8 := default  -- uninitialized in C
-  let t'1 ← PMem.ldU16 crcAccum
-  let t'2 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (data))) ^^^ (UInt32.toInt32 (UInt8.toUInt32 ((Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& (255 : Int32)))))))))))
-  tmp := t'2
-  let t'3 := (tmp ^^^ (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (4 : Int32))))))
-  tmp := t'3
-  let t'4 ← PMem.ldU16 crcAccum
-  let t'5 := Int16.toUInt16 (Int32.toInt16 ((((((UInt32.toInt32 (UInt16.toUInt32 (t'4))) >>> (8 : Int32)) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (8 : Int32))) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) <<< (3 : Int32))) ^^^ ((UInt32.toInt32 (UInt8.toUInt32 (tmp))) >>> (4 : Int32)))))
-  PMem.stU16 crcAccum t'5
-  return ()
-
-/-- C++ `GCS_MAVLINK::packetReceived : void (const mavlink_status_t &, const mavlink_message_t &)`, `GCS_Common.cpp:1864-1882`. -/
-partial def GCS_MAVLINK.packetReceived (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits msg 104 24
-  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) != (166 : Int32))
-  if sc'3 then
-    let t'2 ← PMem.ldBits msg 104 24
-    sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'2)))) != (109 : Int32))
-  if sc'3 then
-    let t'4 := (0xd290 : UInt64) /- &GCS_MAVLINK::mavlink_active -/
-    let t'5 ← PMem.ldU32 t'4
-    let t'6 ← PMem.ldU32 (this + 40)
-    let t'7 := (t'5 ||| ((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'6)) - (UInt32.toInt32 ((0 : UInt32))))))))
-    PMem.stU32 t'4 t'7
-  let mut mavlink_protocol : Int32 := (2 : Int32)
-  let t'8 ← PMem.ldU8 (status + 16)
-  let mut sc'10 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'8))) &&& (1 : Int32)) != (0 : Int32))
-  if sc'10 then
-    let t'9 ← PMem.ldU8 (status + 16)
-    sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) &&& (2 : Int32)) != (0 : Int32)
-  if (sc'10 && ((mavlink_protocol == (2 : Int32)) || (mavlink_protocol == (43 : Int32)))) then
-    let t'11 := ((this + 408) + 16)
-    let t'12 ← PMem.ldU8 t'11
-    let t'13 := (t'12 &&& (Int8.toUInt8 (Int32.toInt8 ((~~~(2 : Int32))))))
-    PMem.stU8 t'11 t'13
-  return ()
-
-/-- C++ `MAVLink_routing::forward : bool (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:174-265`. -/
-partial def MAVLink_routing.forward.body (fp : UInt64) (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
-  PMem.stI64 (fp + 0) (Int32.toInt64 ((-(1 : Int32))))
-  PMem.stI16 (fp + 8) (Int32.toInt16 ((-(1 : Int32))))
-  MAVLink_routing.get_targets this msg (fp + 0) (fp + 8)
-  let t'1 ← PMem.ldI64 (fp + 0)
-  let mut sc'3 := (t'1 == (Int32.toInt64 ((0 : Int32))))
-  if !sc'3 then
-    let t'2 ← PMem.ldI64 (fp + 0)
-    sc'3 := (t'2 == (Int32.toInt64 ((-(1 : Int32)))))
-  let mut broadcast_system : Bool := sc'3
-  let t'4 ← PMem.ldI16 (fp + 8)
-  let mut sc'6 := ((Int16.toInt32 (t'4)) == (0 : Int32))
-  if !sc'6 then
-    let t'5 ← PMem.ldI16 (fp + 8)
-    sc'6 := ((Int16.toInt32 (t'5)) == (-(1 : Int32)))
-  let mut broadcast_component : Bool := sc'6
-  let mut sc'9 := broadcast_system
-  if !sc'9 then
-    let t'7 ← PMem.ldI64 (fp + 0)
-    let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-    sc'9 := (t'7 == (UInt64.toInt64 (UInt32.toUInt64 (t'8))))
-  let mut match_system : Bool := sc'9
-  let mut sc'13 := match_system
-  if sc'13 then
-    let mut sc'12 := broadcast_component
-    if !sc'12 then
-      let t'10 ← PMem.ldI16 (fp + 8)
-      let t'11 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
-      sc'12 := ((Int16.toInt32 (t'10)) == (UInt32.toInt32 (UInt8.toUInt32 (t'11))))
-    sc'13 := sc'12
-  let mut match_component : Bool := sc'13
-  let mut process_locally : Bool := (match_system && match_component)
-  let t'14 ← GCS_MAVLINK.is_private in_link
-  let mut from_private_channel : Bool := t'14
-  let mut should_process_locally : Bool := from_private_channel
-  if should_process_locally then
-    return process_locally
-  let t'15 ← GCS_MAVLINK.option_enabled in_link (16 : UInt16)
-  if (t'15 && (broadcast_system || broadcast_component)) then
-    return (process_locally || broadcast_system)
-  if ((process_locally && (!broadcast_system)) && (!broadcast_component)) then
-    return true
-  let mut forwarded : Bool := false
-  let t'16 ← PMem.memset (fp + 16) (0 : Int32) (16 : UInt64)
-  discard <| pure (t'16)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'17 := true
-  repeat
-    if !first'17 then
-      let t'18 := i
-      let t'19 := (t'18 + 1)
-      i := t'19
-      pure ()
-    first'17 := false
-    let t'20 ← PMem.ldU8 this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'20)))))) then break
-    let t'21 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-    let t'22 ← gcs
-    let t'23 ← GCS_Copter.chan t'22 (UInt32.toUInt8 (t'21))
-    let mut out_link : UInt64 := t'23
-    if (out_link == (0 : UInt64)) then
-      continue
-    let t'24 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
-    if (t'24 && (broadcast_system || broadcast_component)) then
-      continue
-    let t'25 ← GCS_MAVLINK.is_private out_link
-    let mut sc'27 := t'25
-    if !sc'27 then
-      let t'26 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
-      sc'27 := t'26
-    let mut sc'33 := sc'27
-    if sc'33 then
-      let t'28 ← PMem.ldI64 (fp + 0)
-      let t'29 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
-      let mut sc'32 := (t'28 != (UInt64.toInt64 (UInt32.toUInt64 (t'29))))
-      if !sc'32 then
-        let t'30 ← PMem.ldI16 (fp + 8)
-        let t'31 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
-        sc'32 := ((Int16.toInt32 (t'30)) != (UInt32.toInt32 (UInt8.toUInt32 (t'31))))
-      sc'33 := sc'32
-    if sc'33 then
-      continue
-    let mut sc'40 := broadcast_system
-    if !sc'40 then
-      let t'34 ← PMem.ldI64 (fp + 0)
-      let t'35 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
-      let mut sc'39 := (t'34 == (UInt64.toInt64 (UInt32.toUInt64 (t'35))))
-      if sc'39 then
-        let mut sc'38 := broadcast_component
-        if !sc'38 then
-          let t'36 ← PMem.ldI16 (fp + 8)
-          let t'37 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
-          sc'38 := ((Int16.toInt32 (t'36)) == (UInt32.toInt32 (UInt8.toUInt32 (t'37))))
-        sc'39 := (sc'38 || (!match_system))
-      sc'40 := sc'39
-    if sc'40 then
-      let mut sc'43 := (in_link != out_link)
-      if sc'43 then
-        let t'41 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-        let t'42 ← PMem.ldB ((fp + 16) + ((UInt64.toInt64 (UInt32.toUInt64 (t'41))) * 1).toUInt64)
-        sc'43 := !t'42
-      if sc'43 then
-        let t'44 ← PMem.ldU8 (msg + 3)
-        let t'45 ← GCS_MAVLINK.check_payload_size out_link (UInt8.toUInt16 (t'44))
-        if t'45 then
-          let t'46 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-          _mavlink_resend_uart t'46 msg
-        let t'47 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-        PMem.stB ((fp + 16) + ((UInt64.toInt64 (UInt32.toUInt64 (t'47))) * 1).toUInt64) true
-        forwarded := true
-  if (((!forwarded) && match_system) || broadcast_system) then
-    process_locally := true
-  return process_locally
-
-partial def MAVLink_routing.forward (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 32
-  let r ← MAVLink_routing.forward.body fp this in_link msg
-  PMem.leave fp
-  return r
-
-/-- C++ `MAVLink_routing::learn_route : void (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:365-410`. -/
-partial def MAVLink_routing.learn_route (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let mut i : UInt8 := default  -- uninitialized in C
-  let t'1 ← PMem.ldU32 (msg + 8)
-  if (t'1 == (Int32.toUInt32 ((0 : Int32)))) then
-    return ()
-  let t'2 ← PMem.ldU32 (msg + 8)
-  let t'3 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  let mut sc'6 := (t'2 == t'3)
-  if sc'6 then
-    let t'4 ← PMem.ldU8 (msg + 12)
-    let t'5 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
-    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) == (UInt32.toInt32 (UInt8.toUInt32 (t'5))))
-  if sc'6 then
-    return ()
-  let t'7 ← PMem.ldU32 (msg + 8)
-  let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
-  let mut sc'10 := (t'7 == t'8)
-  if sc'10 then
-    let t'9 ← PMem.ldU8 (msg + 12)
-    sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) == (UInt32.toInt32 ((0 : UInt32))))
-  if sc'10 then
-    return ()
-  let t'11 ← GCS_MAVLINK.get_chan in_link
-  let mut in_channel : UInt32 := t'11
-  let t'12 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  i := t'12
-  let mut first'13 := true
-  repeat
-    if !first'13 then
-      let t'14 := i
-      let t'15 := (t'14 + 1)
-      i := t'15
-      pure ()
-    first'13 := false
-    let t'16 ← PMem.ldU8 this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'16)))))) then break
-    let t'17 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
-    let t'18 ← PMem.ldU32 (msg + 8)
-    let mut sc'21 := (t'17 == t'18)
-    if sc'21 then
-      let t'19 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
-      let t'20 ← PMem.ldU8 (msg + 12)
-      sc'21 := ((UInt32.toInt32 (UInt8.toUInt32 (t'19))) == (UInt32.toInt32 (UInt8.toUInt32 (t'20))))
-    let mut sc'23 := sc'21
-    if sc'23 then
-      let t'22 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-      sc'23 := ((UInt32.toInt32 (t'22)) == (UInt32.toInt32 (in_channel)))
-    if sc'23 then
-      let t'24 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12)
-      let mut sc'26 := ((UInt32.toInt32 (UInt8.toUInt32 (t'24))) == (0 : Int32))
-      if sc'26 then
-        let t'25 ← PMem.ldBits msg 104 24
-        sc'26 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'25)))) == (0 : Int32))
-      if sc'26 then
-        let t'27 ← mavlink_msg_heartbeat_get_type msg
-        PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12) t'27
-      break
-  let t'28 ← PMem.ldU8 this
-  if (((UInt32.toInt32 (UInt8.toUInt32 (i))) == (UInt32.toInt32 (UInt8.toUInt32 (t'28)))) && (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (20 : Int32)))) then
-    let t'29 ← PMem.ldU32 (msg + 8)
-    PMem.stU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) t'29
-    let t'30 ← PMem.ldU8 (msg + 12)
-    PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4) t'30
-    PMem.stU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8) in_channel
-    let t'31 ← PMem.ldBits msg 104 24
-    if ((UInt32.toInt32 ((UInt64.toUInt32 (t'31)))) == (0 : Int32)) then
-      let t'32 ← mavlink_msg_heartbeat_get_type msg
-      PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12) t'32
-    let t'33 ← PMem.ldU8 this
-    let t'34 := (t'33 + 1)
-    PMem.stU8 this t'34
-  return ()
-
-/-- C++ `MAVLink_routing::handle_heartbeat : void (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:418-464`. -/
-partial def MAVLink_routing.handle_heartbeat (this : UInt64) (link : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← GCS_MAVLINK.active_channel_mask
-  let t'2 ← GCS_MAVLINK.private_channel_mask
-  let mut mask : UInt16 := UInt32.toUInt16 ((t'1 &&& (~~~t'2)))
-  let t'3 ← GCS_MAVLINK.get_chan link
-  let mut in_channel : UInt32 := t'3
-  let t'4 := (mask &&& (UInt32.toUInt16 ((~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (in_channel)) - (UInt32.toInt32 ((0 : UInt32)))))))))))
-  mask := t'4
-  let t'5 ← PMem.ldU8 (this + 324)
-  let t'6 := (mask &&& (Int16.toUInt16 (Int32.toInt16 ((~~~(UInt32.toInt32 (UInt8.toUInt32 (t'5))))))))
-  mask := t'6
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'7 := true
-  repeat
-    if !first'7 then
-      let t'8 := i
-      let t'9 := (t'8 + 1)
-      i := t'9
-      pure ()
-    first'7 := false
-    let t'10 ← PMem.ldU8 this
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'10)))))) then break
-    let t'11 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
-    let t'12 ← PMem.ldU32 (msg + 8)
-    let mut sc'15 := (t'11 == t'12)
-    if sc'15 then
-      let t'13 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
-      let t'14 ← PMem.ldU8 (msg + 12)
-      sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'13))) == (UInt32.toInt32 (UInt8.toUInt32 (t'14))))
-    if sc'15 then
-      let t'16 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
-      let t'17 := (mask &&& (UInt32.toUInt16 ((~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'16)) - (UInt32.toInt32 ((0 : UInt32)))))))))))
-      mask := t'17
-  if ((UInt32.toInt32 (UInt16.toUInt32 (mask))) == (0 : Int32)) then
-    return ()
-  let mut i'2 : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'18 := true
-  repeat
-    if !first'18 then
-      let t'19 := i'2
-      let t'20 := (t'19 + 1)
-      i'2 := t'20
-      pure ()
-    first'18 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i'2))) < (16 : Int32)))) then break
-    if ((UInt16.toUInt32 (mask)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (i'2))))))) != (0 : UInt32) then
-      let mut channel : UInt32 := Int32.toUInt32 (((UInt32.toInt32 ((0 : UInt32))) + (UInt32.toInt32 (UInt8.toUInt32 (i'2)))))
-      let t'21 ← gcs
-      let t'22 ← GCS_Copter.chan t'21 (UInt32.toUInt8 (channel))
-      let mut out_link : UInt64 := t'22
-      let mut sc'24 := (out_link == (0 : UInt64))
-      if !sc'24 then
-        let t'23 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
-        sc'24 := t'23
-      if sc'24 then
-        continue
-      let t'25 ← comm_get_txspace channel
-      let t'26 ← PMem.ldU8 (msg + 3)
-      let t'27 ← GCS_MAVLINK.packet_overhead_chan channel
-      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'25))) ≥ ((UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (t'26))))) + (UInt32.toInt32 (UInt8.toUInt32 (t'27)))))) then
-        _mavlink_resend_uart channel msg
-  return ()
-
-/-- C++ `GCS::sysid_is_gcs : bool (uint32_t) const`, `GCS.cpp:745-753`. -/
-partial def GCS.sysid_is_gcs (this : UInt64) (_sysid : UInt32) : PMem.M Bool := do
-  let mut _sysid := _sysid
-  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 164)
-  let t'2 ← PMem.ldU32 t'1
-  let mut low : UInt32 := t'2
-  let t'3 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 168)
-  let t'4 ← PMem.ldU32 t'3
-  let mut high : UInt32 := t'4
-  if (decide (high ≤ low)) then
-    return (low == _sysid)
-  return ((decide (_sysid ≥ low)) && (decide (_sysid ≤ high)))
-
-/-- C++ `GCS::option_is_enabled : bool (Option) const`, `AP_Common.h:1258-1260`. -/
-partial def GCS.option_is_enabled (this : UInt64) (option : Int32) : PMem.M Bool := do
-  let mut option := option
-  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 172)
-  let t'2 ← PMem.ldI16 t'1
-  return (((Int16.toInt32 (t'2)) &&& (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (option))))))) != (0 : Int32))
-
-/-- C++ `GCS_MAVLINK::handle_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:4283-4629`. -/
-partial def GCS_MAVLINK.handle_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  repeat
-    let t'1 ← PMem.ldBits msg 104 24
-    let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
-    if sw'2 == (0 : Int32) then
-      GCS_MAVLINK.handle_heartbeat this msg
-      break
-      PMem.unreached "GCS_MAVLINK::handle_command_ack"
-      break
-      GCS_MAVLINK.handle_setup_signing this msg
-    else if sw'2 == (77 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_command_ack"
-      break
-      GCS_MAVLINK.handle_setup_signing this msg
-    else if sw'2 == (256 : Int32) then
-      GCS_MAVLINK.handle_setup_signing this msg
-    else if sw'2 == (21 : Int32) || sw'2 == (23 : Int32) || sw'2 == (20 : Int32) then
-      GCS_MAVLINK.handle_common_param_message this msg
-    else if sw'2 == (48 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_set_gps_global_origin"
-    else if sw'2 == (111 : Int32) then
-      GCS_MAVLINK.handle_timesync this msg
-    else if sw'2 == (11 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_set_mode"
-    else if sw'2 == (183 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_send_autopilot_version"
-    else if sw'2 == (38 : Int32) || sw'2 == (43 : Int32) || sw'2 == (44 : Int32) || sw'2 == (45 : Int32) || sw'2 == (39 : Int32) || sw'2 == (73 : Int32) || sw'2 == (51 : Int32) || sw'2 == (40 : Int32) || sw'2 == (47 : Int32) || sw'2 == (41 : Int32) then
-      GCS_MAVLINK.handle_common_mission_message this msg
-    else if sw'2 == (76 : Int32) then
-      GCS_MAVLINK.handle_command_long this msg
-    else if sw'2 == (75 : Int32) then
-      GCS_MAVLINK.handle_command_int this msg
-    else if sw'2 == (22 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_param_value"
-    else if sw'2 == (166 : Int32) || sw'2 == (109 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_radio_status"
-    else if sw'2 == (233 : Int32) || sw'2 == (232 : Int32) || sw'2 == (123 : Int32) then
-      PMem.unreached "AP_GPS::handle_msg"
-    else if sw'2 == (253 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_statustext"
-    else if sw'2 == (186 : Int32) then
-      PMem.unreached "handle_led_control"
-    else if sw'2 == (69 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_manual_control"
-    else if sw'2 == (258 : Int32) then
-      PMem.unreached "handle_play_tune"
-    else if sw'2 == (66 : Int32) then
-      let t'3 ← GCS_MAVLINK.option_enabled this (4 : UInt16)
-      if t'3 then
-        break
-      GCS_MAVLINK.handle_request_data_stream this msg
-    else if sw'2 == (172 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_data_packet"
-    else if sw'2 == (2 : Int32) then
-      GCS_MAVLINK.handle_system_time_message this msg
-    else if sw'2 == (70 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_rc_channels_override"
-    else if sw'2 == (132 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_distance_sensor"
-    else if sw'2 == (149 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_landing_target"
-    else if sw'2 == (251 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_named_value"
-    else if sw'2 == (386 : Int32) || sw'2 == (387 : Int32) then
-      PMem.unreached "GCS_MAVLINK::handle_can_frame"
-    else if sw'2 == (388 : Int32) then
-      PMem.unreached "handle_can_filter_modify"
-    else
-      pure ()
-    break
-  return ()
-
-/-- C++ `MIN : auto (const unsigned int &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
-partial def MIN'2 (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU32 one
-  let t'2 ← PMem.ldU32 two
-  let mut c'3 : UInt64 := 0
-  if (decide (t'1 < t'2)) then
-    c'3 := one
-  else
-    c'3 := two
-  return c'3
-
-/-- C++ `__mavlink_timesync_t::__mavlink_timesync_t : void () noexcept`, `mavlink_msg_timesync.h:9-?`. -/
-partial def __mavlink_timesync_t.__mavlink_timesync_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `_mav_finalize_message_chan_send : void (mavlink_channel_t, uint32_t, const char *, uint8_t, uint8_t, uint8_t)`, `mavlink_helpers.h:477-482`. -/
-partial def _mav_finalize_message_chan_send (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) : PMem.M Unit := do
+/-- C++ `comm_send_buffer : void (mavlink_channel_t, const uint8_t *, uint8_t)`, `GCS_MAVLink.cpp:151-175`. -/
+def comm_send_buffer (chan : UInt32) (buf : UInt64) (len : UInt8) : PMem.M Unit := do
   let mut chan := chan
-  let mut msgid := msgid
-  let mut packet := packet
-  let mut min_length := min_length
-  let mut length := length
-  let mut crc_extra := crc_extra
-  _mav_finalize_message_chan_send_target chan msgid packet min_length length crc_extra (Int32.toUInt32 ((0 : Int32)))
+  let mut buf := buf
+  let mut len := len
+  let t'1 ← valid_channel chan
+  let mut sc'3 := !t'1
+  if !sc'3 then
+    let t'2 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 8).toUInt64)
+    sc'3 := (t'2 == (0 : UInt64))
+  let mut sc'5 := sc'3
+  if !sc'5 then
+    let t'4 ← PMem.ldB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 1).toUInt64)
+    sc'5 := t'4
+  if sc'5 then
+    return ()
+  let t'6 ← PMem.ldB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 1).toUInt64)
+  if t'6 then
+    return ()
+  let t'7 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 8).toUInt64)
+  let t'8 ← PMem.uartWrite t'7 buf (UInt8.toUInt64 (len))
+  let mut written : UInt64 := t'8
+  if ((decide (written < (UInt8.toUInt64 (len)))) && (!false)) then
+    pure ()
   return ()
 
-/-- C++ `_mav_trim_payload : uint8_t (const char *, uint8_t)`, `mavlink_helpers.h:115-121`. -/
-partial def _mav_trim_payload (payload : UInt64) (length : UInt8) : PMem.M UInt8 := do
-  let mut payload := payload
-  let mut length := length
-  repeat
-    let mut sc'2 := (decide ((UInt32.toInt32 (UInt8.toUInt32 (length))) > (1 : Int32)))
-    if sc'2 then
-      let t'1 ← PMem.ldI8 (payload + ((Int32.toInt64 (((UInt32.toInt32 (UInt8.toUInt32 (length))) - (1 : Int32)))) * 1).toUInt64)
-      sc'2 := ((Int8.toInt32 (t'1)) == (0 : Int32))
-    if !(sc'2) then break
-    let t'3 := length
-    let t'4 := (t'3 - 1)
-    length := t'4
-  return length
+/-- C++ `_mavlink_send_uart : void (mavlink_channel_t, const char *, uint16_t)`, `mavlink_helpers.h:1244-1257`. -/
+def _mavlink_send_uart (chan : UInt32) (buf : UInt64) (len : UInt16) : PMem.M Unit := do
+  let mut chan := chan
+  let mut buf := buf
+  let mut len := len
+  comm_send_buffer chan buf (UInt16.toUInt8 (len))
+  return ()
+
+/-- C++ `comm_send_unlock : void (mavlink_channel_t)`, `GCS_MAVLink.cpp:196-201`. -/
+def comm_send_unlock (chan_m : UInt32) : PMem.M Unit := do
+  let mut chan_m := chan_m
+  let mut chan : UInt8 := UInt32.toUInt8 (chan_m)
+  PMem.stB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 1).toUInt64) false
+  discard <| pure (true)
+  return ()
 
 /-- C++ `_mav_header_pack : uint8_t (uint8_t *, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t, uint32_t, uint8_t, uint32_t, uint32_t)`, `mavlink_helpers.h:129-168`. -/
-partial def _mav_header_pack (buf : UInt64) (magic : UInt8) (len : UInt8) (incompat_flags : UInt8) (compat_flags : UInt8) (seq : UInt8) (sysid : UInt32) (compid : UInt8) (msgid : UInt32) (target_sysid : UInt32) : PMem.M UInt8 := do
+def _mav_header_pack (buf : UInt64) (magic : UInt8) (len : UInt8) (incompat_flags : UInt8) (compat_flags : UInt8) (seq : UInt8) (sysid : UInt32) (compid : UInt8) (msgid : UInt32) (target_sysid : UInt32) : PMem.M UInt8 := do
   let mut buf := buf
   let mut magic := magic
   let mut len := len
@@ -8024,546 +5677,24 @@ partial def _mav_header_pack (buf : UInt64) (magic : UInt8) (len : UInt8) (incom
     PMem.stU8 (buf + ((UInt64.toInt64 (UInt8.toUInt64 (t'42))) * 1).toUInt64) t'41
   return ofs
 
-/-- C++ `crc_calculate : uint16_t (const uint8_t *, uint16_t)`, `checksum.h:65-73`. -/
-partial def crc_calculate.body (fp : UInt64) (pBuffer : UInt64) (length : UInt16) : PMem.M UInt16 := do
-  let mut pBuffer := pBuffer
-  let mut length := length
-  crc_init (fp + 0)
-  repeat
-    let t'1 := length
-    let t'2 := (t'1 - 1)
-    length := t'2
-    if !(t'1 != (0 : UInt16)) then break
-    let t'3 := pBuffer
-    let t'4 := (t'3 + 1)
-    pBuffer := t'4
-    let t'5 ← PMem.ldU8 t'3
-    crc_accumulate t'5 (fp + 0)
-  let t'6 ← PMem.ldU16 (fp + 0)
-  return t'6
-
-partial def crc_calculate (pBuffer : UInt64) (length : UInt16) : PMem.M UInt16 := do
-  let fp ← PMem.enter 2
-  let r ← crc_calculate.body fp pBuffer length
-  PMem.leave fp
-  return r
-
-/-- C++ `crc_accumulate_buffer : void (uint16_t *, const char *, uint16_t)`, `checksum.h:85-91`. -/
-partial def crc_accumulate_buffer (crcAccum : UInt64) (pBuffer : UInt64) (length : UInt16) : PMem.M Unit := do
-  let mut crcAccum := crcAccum
-  let mut pBuffer := pBuffer
-  let mut length := length
-  let mut p : UInt64 := pBuffer
-  repeat
-    let t'1 := length
-    let t'2 := (t'1 - 1)
-    length := t'2
-    if !(t'1 != (0 : UInt16)) then break
-    let t'3 := p
-    let t'4 := (t'3 + 1)
-    p := t'4
-    let t'5 ← PMem.ldU8 t'3
-    crc_accumulate t'5 crcAccum
-  return ()
-
-/-- C++ `comm_send_lock : void (mavlink_channel_t, uint16_t)`, `GCS_MAVLink.cpp:183-191`. -/
-partial def comm_send_lock (chan_m : UInt32) (size : UInt16) : PMem.M Unit := do
-  let mut chan_m := chan_m
-  let mut size := size
-  let mut chan : UInt8 := UInt32.toUInt8 (chan_m)
-  let t'1 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 8).toUInt64)
-  let t'2 ← PMem.uartTxspace t'1
-  if (decide (t'2 < (UInt16.toUInt32 (size)))) then
-    PMem.stB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 1).toUInt64) true
-    gcs_out_of_space_to_send chan_m
-  return ()
-
-/-- C++ `_mavlink_send_uart : void (mavlink_channel_t, const char *, uint16_t)`, `mavlink_helpers.h:1244-1257`. -/
-partial def _mavlink_send_uart (chan : UInt32) (buf : UInt64) (len : UInt16) : PMem.M Unit := do
-  let mut chan := chan
+/-- C++ `mavlink_header_to_send_buffer : uint8_t (uint8_t *, const mavlink_message_t *)`, `mavlink_helpers.h:177-183`. -/
+def mavlink_header_to_send_buffer (buf : UInt64) (msg : UInt64) : PMem.M UInt8 := do
   let mut buf := buf
-  let mut len := len
-  comm_send_buffer chan buf (UInt16.toUInt8 (len))
-  return ()
-
-/-- C++ `comm_send_unlock : void (mavlink_channel_t)`, `GCS_MAVLink.cpp:196-201`. -/
-partial def comm_send_unlock (chan_m : UInt32) : PMem.M Unit := do
-  let mut chan_m := chan_m
-  let mut chan : UInt8 := UInt32.toUInt8 (chan_m)
-  PMem.stB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt8.toUInt64 (chan))) * 1).toUInt64) false
-  discard <| pure (true)
-  return ()
-
-/-- C++ `GCS_MAVLINK::mavlink_id_to_ap_message_id : ap_message (const uint32_t) const`, `GCS_Common.cpp:1035-1218`. -/
-partial def GCS_MAVLINK.mavlink_id_to_ap_message_id (this : UInt64) (mavlink_id : UInt32) : PMem.M UInt8 := do
-  let mut mavlink_id := mavlink_id
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt8.toUInt64 (i)) < ((384 : UInt64) / (8 : UInt64))))) then break
-    let t'4 ← PMem.ldU32 ((0xd2a8 : UInt64) /- &GCS_MAVLINK::mavlink_id_to_ap_message_id(...)::map -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-    if (t'4 == mavlink_id) then
-      let t'5 ← PMem.ldU8 (((0xd2a8 : UInt64) /- &GCS_MAVLINK::mavlink_id_to_ap_message_id(...)::map -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64) + 4)
-      return t'5
-  return (102 : UInt8)
-
-/-- C++ `GCS_MAVLINK::set_ap_message_interval : bool (enum ap_message, uint16_t)`, `GCS_Common.cpp:1725-1827`. -/
-partial def GCS_MAVLINK.set_ap_message_interval (this : UInt64) (id : UInt8) (interval_ms : UInt16) : PMem.M Bool := do
-  let mut id := id
-  let mut interval_ms := interval_ms
-  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8))))) then
-    if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
-      let t'1 := Int16.toUInt16 (Int32.toInt16 ((100 : Int32)))
-      interval_ms := t'1
-    else
-      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) > (1000 : Int32))) then
-        let t'2 := Int16.toUInt16 (Int32.toInt16 ((1000 : Int32)))
-        interval_ms := t'2
-  let t'3 ← GCS_MAVLINK.cap_message_interval this interval_ms
-  interval_ms := t'3
-  let t'4 ← GCS_MAVLINK.get_deferred_message_index this id
-  let mut deferred_offset : Int8 := t'4
-  if ((Int8.toInt32 (deferred_offset)) != (-(1 : Int32))) then
-    PMem.stU16 (((this + 506) + ((Int8.toInt64 (deferred_offset)) * 6).toUInt64) + 2) interval_ms
-    let t'5 := ((← get).clockUs / 1000).toUInt16
-    PMem.stU16 (((this + 506) + ((Int8.toInt64 (deferred_offset)) * 6).toUInt64) + 4) t'5
-    return true
-  let mut closest_bucket : Int8 := Int32.toInt8 ((-(1 : Int32)))
-  let mut closest_bucket_interval_delta : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
-  let mut in_bucket : Int8 := Int32.toInt8 ((-(1 : Int32)))
-  let mut empty_bucket_id : Int8 := Int32.toInt8 ((-(1 : Int32)))
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'6 := true
-  repeat
-    if !first'6 then
-      let t'7 := i
-      let t'8 := (t'7 + 1)
-      i := t'8
-      pure ()
-    first'6 := false
-    if !((decide ((UInt8.toUInt64 (i)) < ((200 : UInt64) / (20 : UInt64))))) then break
-    let bucket : UInt64 := ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
-    let t'9 ← PMem.ldU16 (bucket + 16)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'9))) == (0 : Int32)) then
-      if ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32))) then
-        let t'10 := UInt8.toInt8 (i)
-        empty_bucket_id := t'10
-      let t'11 ← Bitmask'102.count bucket
-      if ((UInt32.toInt32 (UInt16.toUInt32 (t'11))) != (0 : Int32)) then
-        pure ()
-      continue
-    let t'12 ← Bitmask'102.get bucket (UInt8.toUInt16 (id))
-    if t'12 then
-      let t'13 := UInt8.toInt8 (i)
-      in_bucket := t'13
-    let t'14 ← PMem.ldU16 (bucket + 16)
-    let t'15 ← PMem.iabs ((UInt32.toInt32 (UInt16.toUInt32 (t'14))) - (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))
-    let mut interval_delta : UInt16 := Int16.toUInt16 (Int32.toInt16 (t'15))
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (interval_delta))) < (UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))))) then
-      let t'16 := UInt8.toInt8 (i)
-      closest_bucket := t'16
-      closest_bucket_interval_delta := interval_delta
-  if (((Int8.toInt32 (in_bucket)) == (-(1 : Int32))) && ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32))) then
-    return true
-  if ((Int8.toInt32 (in_bucket)) != (-(1 : Int32))) then
-    if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
-      GCS_MAVLINK.remove_message_from_bucket this in_bucket id
-      return true
-    if (((UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))) == (0 : Int32)) && ((Int8.toInt32 (in_bucket)) == (Int8.toInt32 (closest_bucket)))) then
-      return true
-    GCS_MAVLINK.remove_message_from_bucket this in_bucket id
-    let mut sc'18 := ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32)))
-    if sc'18 then
-      let t'17 ← Bitmask'102.count ((this + 528) + ((Int8.toInt64 (in_bucket)) * 20).toUInt64)
-      sc'18 := ((UInt32.toInt32 (UInt16.toUInt32 (t'17))) == (0 : Int32))
-    if sc'18 then
-      empty_bucket_id := in_bucket
-  if (((Int8.toInt32 (closest_bucket)) == (-(1 : Int32))) && ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32)))) then
-    discard <| pure ((0 : Int32))
-    GCS_MAVLINK_InProgress.abort this
-    return false
-  if (((UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))) != (0 : Int32)) && ((Int8.toInt32 (empty_bucket_id)) != (-(1 : Int32)))) then
-    PMem.stU16 (((this + 528) + ((Int8.toInt64 (empty_bucket_id)) * 20).toUInt64) + 16) interval_ms
-    let t'19 := ((← get).clockUs / 1000).toUInt16
-    PMem.stU16 (((this + 528) + ((Int8.toInt64 (empty_bucket_id)) * 20).toUInt64) + 18) t'19
-    closest_bucket := empty_bucket_id
-  Bitmask'102.set ((this + 528) + ((Int8.toInt64 (closest_bucket)) * 20).toUInt64) (UInt8.toUInt16 (id))
-  let t'20 ← PMem.ldU8 (this + 728)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'20))) == (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
-    let t'21 := Int8.toUInt8 (closest_bucket)
-    PMem.stU8 (this + 728) t'21
-    discard <| PMem.memcpy (this + 732) ((this + 528) + ((Int8.toInt64 (closest_bucket)) * 20).toUInt64) 16
-    discard <| pure ((this + 732))
-  return true
-
-/-- C++ `GCS_MAVLINK::get_interval_for_stream : uint16_t (GCS_MAVLINK::streams) const`, `GCS_Common.cpp:7083-7094`. -/
-partial def GCS_MAVLINK.get_interval_for_stream (this : UInt64) (id : UInt8) : PMem.M UInt16 := do
-  let mut id := id
-  let t'1 ← AP_ParamTBase'short_2.get ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (id))) * 2).toUInt64)
-  let t'2 ← PMem.ldI16 t'1
-  let mut frate : Int16 := t'2
-  if ((Int16.toInt32 (frate)) == (0 : Int32)) then
-    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut ret : UInt32 := Int32.toUInt32 (((1000 : Int32) / (Int16.toInt32 (frate))))
-  if (decide (ret > (Int32.toUInt32 ((60000 : Int32))))) then
-    return Int16.toUInt16 (Int32.toInt16 ((60000 : Int32)))
-  return UInt32.toUInt16 (ret)
-
-/-- C++ `GCS::telem_delay : uint32_t () const`, `AP_Common.h:1324-?`. -/
-partial def GCS.telem_delay (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← AP_ParamT'signed_char_1.operator_const_signed_char__ (this + 174)
-  let t'2 ← PMem.ldI8 t'1
-  return Int32.toUInt32 (Int8.toInt32 (t'2))
-
-/-- C++ `GCS_MAVLINK::check_payload_size : bool (uint16_t)`, `GCS.cpp:712-719`. -/
-partial def GCS_MAVLINK.check_payload_size (this : UInt64) (max_payload_len : UInt16) : PMem.M Bool := do
-  let mut max_payload_len := max_payload_len
-  let t'1 ← GCS_MAVLINK.txspace this
-  let t'2 ← GCS_MAVLINK.packet_overhead this
-  if (decide ((UInt16.toUInt32 (t'1)) < (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'2))) + (UInt32.toInt32 (UInt16.toUInt32 (max_payload_len)))))))) then
-    let t'3 ← PMem.ldU32 (this + 40)
-    gcs_out_of_space_to_send t'3
-    return false
-  return true
-
-/-- C++ `GCS_MAVLINK::try_send_message : bool (const enum ap_message)`, `GCS_Common.cpp:6606-7081`. -/
-partial def GCS_MAVLINK.try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
-  let mut id := id
-  let mut ret : Bool := true
-  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
-  if sw'1 == (3 : Int32) then
-    let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
-    if !t'2 then
-      return false
-    PMem.bframe this 30
-  else if sw'1 == (4 : Int32) then
-    let t'3 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((48 : Int32))))
-    if !t'3 then
-      return false
-    PMem.bframe this 31
-  else if sw'1 == (31 : Int32) then
-    let t'4 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((25 : Int32))))
-    if !t'4 then
-      return false
-    GCS_MAVLINK.queued_param_send this
-  else if sw'1 == (0 : Int32) then
-    let t'5 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((9 : Int32))))
-    if !t'5 then
-      return false
-    let t'6 := ((← get).clockUs / 1000).toUInt32
-    PMem.stU32 (this + 8) t'6
-    PMem.bframe this 0
-  else if sw'1 == (5 : Int32) then
-    let t'7 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
-    if !t'7 then
-      return false
-    PMem.bframe this 33
-  else if sw'1 == (70 : Int32) then
-    let t'8 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((60 : Int32))))
-    if !t'8 then
-      return false
-    PMem.bframe this 242
-  else if sw'1 == (69 : Int32) then
-    let t'9 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((20 : Int32))))
-    if !t'9 then
-      return false
-    PMem.bframe this 49
-  else if sw'1 == (101 : Int32) then
-    let t'10 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((70 : Int32))))
-    if !t'10 then
-      return false
-    PMem.bframe this 340
-  else if sw'1 == (11 : Int32) || sw'1 == (61 : Int32) || sw'1 == (28 : Int32) || sw'1 == (29 : Int32) || sw'1 == (30 : Int32) then
-    let t'11 ← GCS_MAVLINK.try_send_mission_message this id
-    ret := t'11
-  else if sw'1 == (65 : Int32) then
-    let t'12 ← PMem.bframe this 147
-    discard <| pure (t'12)
-  else if sw'1 == (55 : Int32) then
-    let t'13 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((26 : Int32))))
-    if !t'13 then
-      return false
-    PMem.bframe (0 : UInt64) 193
-  else if sw'1 == (9 : Int32) then
-    let t'14 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((8 : Int32))))
-    if !t'14 then
-      return false
-    PMem.bframe this 152
-  else if sw'1 == (38 : Int32) then
-    PMem.bframe this 132
-  else if sw'1 == (26 : Int32) then
-    let t'15 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((12 : Int32))))
-    if !t'15 then
-      return false
-    PMem.bframe this 2
-  else if sw'1 == (22 : Int32) then
-    let t'16 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((52 : Int32))))
-    if !t'16 then
-      return false
-    PMem.bframe (0 : UInt64) 24
-  else if sw'1 == (24 : Int32) then
-    let t'17 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((57 : Int32))))
-    if !t'17 then
-      return false
-    PMem.bframe (0 : UInt64) 124
-  else if sw'1 == (56 : Int32) then
-    let t'18 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
-    if !t'18 then
-      return false
-    PMem.bframe this 32
-  else if sw'1 == (92 : Int32) then
-    let t'19 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((37 : Int32))))
-    if !t'19 then
-      return false
-    PMem.bframe this 83
-  else if sw'1 == (62 : Int32) then
-    let t'20 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((51 : Int32))))
-    if !t'20 then
-      return false
-    PMem.bframe this 87
-  else if sw'1 == (63 : Int32) then
-    let t'21 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((51 : Int32))))
-    if !t'21 then
-      return false
-    PMem.bframe this 85
-  else if sw'1 == (8 : Int32) then
-    let t'22 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((6 : Int32))))
-    if !t'22 then
-      return false
-    PMem.bframe this 125
-  else if sw'1 == (13 : Int32) then
-    let t'23 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((42 : Int32))))
-    if !t'23 then
-      return false
-    PMem.bframe this 65
-  else if sw'1 == (14 : Int32) then
-    let t'24 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((22 : Int32))))
-    if !t'24 then
-      return false
-    PMem.bframe this 35
-  else if sw'1 == (15 : Int32) then
-    let t'25 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((29 : Int32))))
-    if !t'25 then
-      return false
-    PMem.bframe this 27
-  else if sw'1 == (16 : Int32) then
-    let t'26 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
-    if !t'26 then
-      return false
-  else if sw'1 == (17 : Int32) then
-    let t'27 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
-    if !t'27 then
-      return false
-  else if sw'1 == (18 : Int32) then
-    let t'28 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
-    if !t'28 then
-      return false
-  else if sw'1 == (96 : Int32) then
-    let t'29 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((63 : Int32))))
-    if !t'29 then
-      return false
-    PMem.bframe this 105
-  else if sw'1 == (19 : Int32) then
-    let t'30 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
-    if !t'30 then
-      return false
-    PMem.bframe this 29
-  else if sw'1 == (20 : Int32) then
-    let t'31 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
-    if !t'31 then
-      return false
-    PMem.bframe this 137
-  else if sw'1 == (21 : Int32) then
-    let t'32 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
-    if !t'32 then
-      return false
-    PMem.bframe this 143
-  else if sw'1 == (12 : Int32) then
-    let t'33 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((37 : Int32))))
-    if !t'33 then
-      return false
-    PMem.bframe this 36
-  else if sw'1 == (33 : Int32) then
-    let t'34 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((44 : Int32))))
-    if !t'34 then
-      return false
-    PMem.bframe this 164
-  else if sw'1 == (34 : Int32) then
-    let t'35 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((92 : Int32))))
-    if !t'35 then
-      return false
-    PMem.bframe this 108
-  else if sw'1 == (7 : Int32) then
-    let t'36 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((43 : Int32))))
-    if !t'36 then
-      return false
-    PMem.bframe this 1
-  else if sw'1 == (2 : Int32) then
-    let t'37 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
-    if !t'37 then
-      return false
-    PMem.bframe this 178
-  else if sw'1 == (57 : Int32) then
-    let t'38 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((33 : Int32))))
-    if !t'38 then
-      return false
-    PMem.bframe this 194
-  else if sw'1 == (10 : Int32) then
-    let t'39 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((26 : Int32))))
-    if !t'39 then
-      return false
-    PMem.bframe this 62
-  else if sw'1 == (1 : Int32) then
-    let t'40 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
-    if !t'40 then
-      return false
-    PMem.bframe this 163
-  else if sw'1 == (72 : Int32) then
-    let t'41 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
-    if !t'41 then
-      return false
-    PMem.bframe this 245
-  else if sw'1 == (6 : Int32) then
-    let t'42 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((20 : Int32))))
-    if !t'42 then
-      return false
-    PMem.bframe this 74
-  else if sw'1 == (58 : Int32) then
-    let t'43 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((32 : Int32))))
-    if !t'43 then
-      return false
-    PMem.bframe this 241
-  else if sw'1 == (73 : Int32) then
-    let t'44 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((78 : Int32))))
-    if !t'44 then
-      return false
-    PMem.bframe this 148
-  else if sw'1 == (98 : Int32) then
-    let t'45 ← GCS_MAVLINK.send_available_modes this
-    ret := t'45
-  else if sw'1 == (99 : Int32) then
-    let t'46 ← GCS_MAVLINK.send_available_mode_monitor this
-    ret := t'46
-  else if sw'1 == (100 : Int32) then
-    let t'47 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((32 : Int32))))
-    if !t'47 then
-      return false
-    PMem.bframe this 264
-  else if sw'1 == (64 : Int32) then
-    pure ()
-  else
-    pure ()
-  return ret
-
-/-- C++ `MissionItemProtocol::active_link_is : bool (const GCS_MAVLINK *) const`, `MissionItemProtocol.h:58-?`. -/
-partial def MissionItemProtocol.active_link_is (this : UInt64) (_link : UInt64) : PMem.M Bool := do
-  let mut _link := _link
-  let t'1 ← PMem.ldU64 (this + 16)
-  return (_link == t'1)
-
-/-- C++ `ByteBuffer::peekiovec : uint8_t (ByteBuffer::IoVec *, uint32_t)`, `RingBuffer.cpp:146-180`. -/
-partial def ByteBuffer.peekiovec.body (fp : UInt64) (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
-  let mut iovec := iovec
-  let mut len := len
-  let t'1 ← ByteBuffer.available this
-  PMem.stU32 (fp + 0) t'1
-  let t'2 ← PMem.ldU32 (fp + 0)
-  if (decide (len > t'2)) then
-    let t'3 ← PMem.ldU32 (fp + 0)
-    len := t'3
-  if (len == (Int32.toUInt32 ((0 : Int32)))) then
-    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let t'4 ← ByteBuffer.readptr this (fp + 0)
-  let mut b : UInt64 := t'4
-  let t'5 ← PMem.ldU32 (fp + 0)
-  if (t'5 == (Int32.toUInt32 ((0 : Int32)))) then
-    let t'6 ← PMem.ldU64 this
-    PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) t'6
-    PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) len
-    PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) (0 : UInt64)
-    let t'7 := Int32.toUInt32 ((0 : Int32))
-    PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'7
-    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  let t'8 ← PMem.ldU32 (fp + 0)
-  if (decide (t'8 > len)) then
-    PMem.stU32 (fp + 0) len
-  PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) b
-  let t'9 ← PMem.ldU32 (fp + 0)
-  PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) t'9
-  let t'10 ← PMem.ldU32 (fp + 0)
-  if (decide (len ≤ t'10)) then
-    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  let t'11 ← PMem.ldU64 this
-  PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) t'11
-  let t'12 ← PMem.ldU32 (fp + 0)
-  let t'13 := (len - t'12)
-  PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'13
-  return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
-
-partial def ByteBuffer.peekiovec (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
-  let fp ← PMem.enter 4
-  let r ← ByteBuffer.peekiovec.body fp this iovec len
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param_value_storage::AP_Param_value_storage : void ()`, `AP_Param.cpp:732-?`. -/
-partial def AP_Param_value_storage.AP_Param_value_storage (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `AP_ParamT<int, 3>::operator const int & : const int &() const`, `AP_Param.h:978-980`. -/
-partial def AP_ParamT'int_3.operator_const_int__ (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AP_ParamTBase<unsigned short, 2>::set_and_save : void (const unsigned short &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'unsigned_short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldU16 this
-  let t'2 ← PMem.ldU16 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((UInt32.toInt32 (UInt16.toUInt32 (t'1))) - (UInt32.toInt32 (UInt16.toUInt32 (t'2))))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'unsigned_short_2.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `MAVLink_routing::get_targets : void (const mavlink_message_t &, int64_t &, int16_t &)`, `MAVLink_routing.cpp:472-487`. -/
-partial def MAVLink_routing.get_targets (this : UInt64) (msg : UInt64) (sysid : UInt64) (compid : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits msg 104 24
-  let t'2 ← mavlink_get_msg_entry (UInt64.toUInt32 (t'1))
-  let mut msg_entry : UInt64 := t'2
+  let mut msg := msg
+  let t'1 ← PMem.ldU8 (msg + 2)
+  let t'2 ← PMem.ldU8 (msg + 3)
   let t'3 ← PMem.ldU8 (msg + 4)
-  let mut targetted : Bool := (((UInt32.toInt32 (UInt8.toUInt32 (t'3))) &&& (4 : Int32)) != (0 : Int32))
-  if ((msg_entry == (0 : UInt64)) && (!targetted)) then
-    return ()
-  let mut sc'6 := targetted
-  if !sc'6 then
-    let mut sc'5 := (msg_entry != (0 : UInt64))
-    if sc'5 then
-      let t'4 ← PMem.ldU8 (msg_entry + 7)
-      sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) &&& (1 : Int32)) != (0 : Int32)
-    sc'6 := sc'5
-  if sc'6 then
-    let t'7 ← mavlink_msg_get_target_sysid msg msg_entry
-    let t'8 := UInt64.toInt64 (UInt32.toUInt64 (t'7))
-    PMem.stI64 sysid t'8
-  let mut sc'11 := targetted
-  if !sc'11 then
-    let mut sc'10 := (msg_entry != (0 : UInt64))
-    if sc'10 then
-      let t'9 ← PMem.ldU8 (msg_entry + 7)
-      sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) &&& (2 : Int32)) != (0 : Int32)
-    sc'11 := sc'10
-  if sc'11 then
-    let t'12 ← mavlink_msg_get_target_compid msg msg_entry
-    let t'13 := UInt16.toInt16 (UInt8.toUInt16 (t'12))
-    PMem.stI16 compid t'13
-  return ()
+  let t'4 ← PMem.ldU8 (msg + 5)
+  let t'5 ← PMem.ldU8 (msg + 6)
+  let t'6 ← PMem.ldU32 (msg + 8)
+  let t'7 ← PMem.ldU8 (msg + 12)
+  let t'8 ← PMem.ldBits msg 104 24
+  let t'9 ← PMem.ldU32 (msg + 296)
+  let t'10 ← _mav_header_pack buf t'1 t'2 t'3 t'4 t'5 t'6 t'7 (UInt64.toUInt32 (t'8)) t'9
+  return t'10
 
 /-- C++ `_mavlink_resend_uart : void (mavlink_channel_t, const mavlink_message_t *)`, `mavlink_helpers.h:489-519`. -/
-partial def _mavlink_resend_uart.body (fp : UInt64) (chan : UInt32) (msg : UInt64) : PMem.M Unit := do
+def _mavlink_resend_uart.body (fp : UInt64) (chan : UInt32) (msg : UInt64) : PMem.M Unit := do
   let mut chan := chan
   PMem.stU64 (fp + 0) msg
   let t'1 ← PMem.ldU64 (fp + 0)
@@ -8610,37 +5741,437 @@ partial def _mavlink_resend_uart.body (fp : UInt64) (chan : UInt32) (msg : UInt6
   comm_send_unlock chan
   return ()
 
-partial def _mavlink_resend_uart (chan : UInt32) (msg : UInt64) : PMem.M Unit := do
+def _mavlink_resend_uart (chan : UInt32) (msg : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 33
   let r ← _mavlink_resend_uart.body fp chan msg
   PMem.leave fp
   return r
 
+/-- C++ `MAVLink_routing::forward : bool (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:174-265`. -/
+def MAVLink_routing.forward.body (fp : UInt64) (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
+  PMem.stI64 (fp + 0) (Int32.toInt64 ((-(1 : Int32))))
+  PMem.stI16 (fp + 8) (Int32.toInt16 ((-(1 : Int32))))
+  MAVLink_routing.get_targets this msg (fp + 0) (fp + 8)
+  let t'1 ← PMem.ldI64 (fp + 0)
+  let mut sc'3 := (t'1 == (Int32.toInt64 ((0 : Int32))))
+  if !sc'3 then
+    let t'2 ← PMem.ldI64 (fp + 0)
+    sc'3 := (t'2 == (Int32.toInt64 ((-(1 : Int32)))))
+  let mut broadcast_system : Bool := sc'3
+  let t'4 ← PMem.ldI16 (fp + 8)
+  let mut sc'6 := ((Int16.toInt32 (t'4)) == (0 : Int32))
+  if !sc'6 then
+    let t'5 ← PMem.ldI16 (fp + 8)
+    sc'6 := ((Int16.toInt32 (t'5)) == (-(1 : Int32)))
+  let mut broadcast_component : Bool := sc'6
+  let mut sc'9 := broadcast_system
+  if !sc'9 then
+    let t'7 ← PMem.ldI64 (fp + 0)
+    let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+    sc'9 := (t'7 == (UInt64.toInt64 (UInt32.toUInt64 (t'8))))
+  let mut match_system : Bool := sc'9
+  let mut sc'13 := match_system
+  if sc'13 then
+    let mut sc'12 := broadcast_component
+    if !sc'12 then
+      let t'10 ← PMem.ldI16 (fp + 8)
+      let t'11 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
+      sc'12 := ((Int16.toInt32 (t'10)) == (UInt32.toInt32 (UInt8.toUInt32 (t'11))))
+    sc'13 := sc'12
+  let mut match_component : Bool := sc'13
+  let mut process_locally : Bool := (match_system && match_component)
+  let t'14 ← GCS_MAVLINK.is_private in_link
+  let mut from_private_channel : Bool := t'14
+  let mut should_process_locally : Bool := from_private_channel
+  if should_process_locally then
+    return process_locally
+  let t'15 ← GCS_MAVLINK.option_enabled in_link (16 : UInt16)
+  if (t'15 && (broadcast_system || broadcast_component)) then
+    return (process_locally || broadcast_system)
+  if ((process_locally && (!broadcast_system)) && (!broadcast_component)) then
+    return true
+  let mut forwarded : Bool := false
+  let t'16 ← PMem.memset (fp + 16) (0 : Int32) (16 : UInt64)
+  discard <| pure (t'16)
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'17 := true
+  for _ in PMem.loopFuel do
+    if !first'17 then
+      let t'18 := i
+      let t'19 := (t'18 + 1)
+      i := t'19
+      pure ()
+    first'17 := false
+    let t'20 ← PMem.ldU8 this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'20)))))) then break
+    let t'21 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+    let t'22 ← gcs
+    let t'23 ← GCS_Copter.chan t'22 (UInt32.toUInt8 (t'21))
+    let mut out_link : UInt64 := t'23
+    if (out_link == (0 : UInt64)) then
+      continue
+    let t'24 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
+    if (t'24 && (broadcast_system || broadcast_component)) then
+      continue
+    let t'25 ← GCS_MAVLINK.is_private out_link
+    let mut sc'27 := t'25
+    if !sc'27 then
+      let t'26 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
+      sc'27 := t'26
+    let mut sc'33 := sc'27
+    if sc'33 then
+      let t'28 ← PMem.ldI64 (fp + 0)
+      let t'29 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
+      let mut sc'32 := (t'28 != (UInt64.toInt64 (UInt32.toUInt64 (t'29))))
+      if !sc'32 then
+        let t'30 ← PMem.ldI16 (fp + 8)
+        let t'31 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
+        sc'32 := ((Int16.toInt32 (t'30)) != (UInt32.toInt32 (UInt8.toUInt32 (t'31))))
+      sc'33 := sc'32
+    if sc'33 then
+      continue
+    let mut sc'40 := broadcast_system
+    if !sc'40 then
+      let t'34 ← PMem.ldI64 (fp + 0)
+      let t'35 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
+      let mut sc'39 := (t'34 == (UInt64.toInt64 (UInt32.toUInt64 (t'35))))
+      if sc'39 then
+        let mut sc'38 := broadcast_component
+        if !sc'38 then
+          let t'36 ← PMem.ldI16 (fp + 8)
+          let t'37 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
+          sc'38 := ((Int16.toInt32 (t'36)) == (UInt32.toInt32 (UInt8.toUInt32 (t'37))))
+        sc'39 := (sc'38 || (!match_system))
+      sc'40 := sc'39
+    if sc'40 then
+      let mut sc'43 := (in_link != out_link)
+      if sc'43 then
+        let t'41 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+        let t'42 ← PMem.ldB ((fp + 16) + ((UInt64.toInt64 (UInt32.toUInt64 (t'41))) * 1).toUInt64)
+        sc'43 := !t'42
+      if sc'43 then
+        let t'44 ← PMem.ldU8 (msg + 3)
+        let t'45 ← GCS_MAVLINK.check_payload_size out_link (UInt8.toUInt16 (t'44))
+        if t'45 then
+          let t'46 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+          _mavlink_resend_uart t'46 msg
+        let t'47 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+        PMem.stB ((fp + 16) + ((UInt64.toInt64 (UInt32.toUInt64 (t'47))) * 1).toUInt64) true
+        forwarded := true
+  if (((!forwarded) && match_system) || broadcast_system) then
+    process_locally := true
+  return process_locally
+
+def MAVLink_routing.forward (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 32
+  let r ← MAVLink_routing.forward.body fp this in_link msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::get_chan : mavlink_channel_t () const`, `mavlink_msg_mission_ack.h:311-?`. -/
+def GCS_MAVLINK.get_chan (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU32 (this + 40)
+  return t'1
+
 /-- C++ `mavlink_msg_heartbeat_get_type : uint8_t (const mavlink_message_t *)`, `mavlink_msg_heartbeat.h:323-326`. -/
-partial def mavlink_msg_heartbeat_get_type.body (fp : UInt64) (msg : UInt64) : PMem.M UInt8 := do
+def mavlink_msg_heartbeat_get_type.body (fp : UInt64) (msg : UInt64) : PMem.M UInt8 := do
   PMem.stU64 (fp + 0) msg
   let t'1 ← PMem.ldU64 (fp + 0)
   let t'2 ← PMem.ldI8 (((t'1 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) + ((Int32.toInt64 ((4 : Int32))) * 1).toUInt64)
   return Int8.toUInt8 (t'2)
 
-partial def mavlink_msg_heartbeat_get_type (msg : UInt64) : PMem.M UInt8 := do
+def mavlink_msg_heartbeat_get_type (msg : UInt64) : PMem.M UInt8 := do
   let fp ← PMem.enter 8
   let r ← mavlink_msg_heartbeat_get_type.body fp msg
   PMem.leave fp
   return r
 
+/-- C++ `MAVLink_routing::learn_route : void (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:365-410`. -/
+def MAVLink_routing.learn_route (this : UInt64) (in_link : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let mut i : UInt8 := default  -- uninitialized in C
+  let t'1 ← PMem.ldU32 (msg + 8)
+  if (t'1 == (Int32.toUInt32 ((0 : Int32)))) then
+    return ()
+  let t'2 ← PMem.ldU32 (msg + 8)
+  let t'3 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  let mut sc'6 := (t'2 == t'3)
+  if sc'6 then
+    let t'4 ← PMem.ldU8 (msg + 12)
+    let t'5 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
+    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) == (UInt32.toInt32 (UInt8.toUInt32 (t'5))))
+  if sc'6 then
+    return ()
+  let t'7 ← PMem.ldU32 (msg + 8)
+  let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  let mut sc'10 := (t'7 == t'8)
+  if sc'10 then
+    let t'9 ← PMem.ldU8 (msg + 12)
+    sc'10 := ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) == (UInt32.toInt32 ((0 : UInt32))))
+  if sc'10 then
+    return ()
+  let t'11 ← GCS_MAVLINK.get_chan in_link
+  let mut in_channel : UInt32 := t'11
+  let t'12 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  i := t'12
+  let mut first'13 := true
+  for _ in PMem.loopFuel do
+    if !first'13 then
+      let t'14 := i
+      let t'15 := (t'14 + 1)
+      i := t'15
+      pure ()
+    first'13 := false
+    let t'16 ← PMem.ldU8 this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'16)))))) then break
+    let t'17 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
+    let t'18 ← PMem.ldU32 (msg + 8)
+    let mut sc'21 := (t'17 == t'18)
+    if sc'21 then
+      let t'19 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
+      let t'20 ← PMem.ldU8 (msg + 12)
+      sc'21 := ((UInt32.toInt32 (UInt8.toUInt32 (t'19))) == (UInt32.toInt32 (UInt8.toUInt32 (t'20))))
+    let mut sc'23 := sc'21
+    if sc'23 then
+      let t'22 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+      sc'23 := ((UInt32.toInt32 (t'22)) == (UInt32.toInt32 (in_channel)))
+    if sc'23 then
+      let t'24 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12)
+      let mut sc'26 := ((UInt32.toInt32 (UInt8.toUInt32 (t'24))) == (0 : Int32))
+      if sc'26 then
+        let t'25 ← PMem.ldBits msg 104 24
+        sc'26 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'25)))) == (0 : Int32))
+      if sc'26 then
+        let t'27 ← mavlink_msg_heartbeat_get_type msg
+        PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12) t'27
+      break
+  let t'28 ← PMem.ldU8 this
+  if (((UInt32.toInt32 (UInt8.toUInt32 (i))) == (UInt32.toInt32 (UInt8.toUInt32 (t'28)))) && (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (20 : Int32)))) then
+    let t'29 ← PMem.ldU32 (msg + 8)
+    PMem.stU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) t'29
+    let t'30 ← PMem.ldU8 (msg + 12)
+    PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4) t'30
+    PMem.stU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8) in_channel
+    let t'31 ← PMem.ldBits msg 104 24
+    if ((UInt32.toInt32 ((UInt64.toUInt32 (t'31)))) == (0 : Int32)) then
+      let t'32 ← mavlink_msg_heartbeat_get_type msg
+      PMem.stU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 12) t'32
+    let t'33 ← PMem.ldU8 this
+    let t'34 := (t'33 + 1)
+    PMem.stU8 this t'34
+  return ()
+
+/-- C++ `comm_get_txspace : uint16_t (mavlink_channel_t)`, `GCS_MAVLink.cpp:139-146`. -/
+def comm_get_txspace (chan : UInt32) : PMem.M UInt16 := do
+  let mut chan := chan
+  let t'1 ← gcs
+  let t'2 ← GCS_Copter.chan t'1 (UInt32.toUInt8 (chan))
+  let mut link : UInt64 := t'2
+  if (link == (0 : UInt64)) then
+    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let t'3 ← GCS_MAVLINK.txspace link
+  return t'3
+
 /-- C++ `GCS_MAVLINK::active_channel_mask : mavlink_channel_mask_t ()`, `AP_Mission.h:436-?`. -/
-partial def GCS_MAVLINK.active_channel_mask  : PMem.M UInt32 := do
+def GCS_MAVLINK.active_channel_mask  : PMem.M UInt32 := do
   let t'1 ← PMem.ldU32 (0xd290 : UInt64) /- &GCS_MAVLINK::mavlink_active -/
   return t'1
 
 /-- C++ `GCS_MAVLINK::private_channel_mask : mavlink_channel_mask_t ()`, `AP_Mission.h:442-?`. -/
-partial def GCS_MAVLINK.private_channel_mask  : PMem.M UInt32 := do
+def GCS_MAVLINK.private_channel_mask  : PMem.M UInt32 := do
   let t'1 ← PMem.ldU32 (0xd288 : UInt64) /- &GCS_MAVLINK::mavlink_private -/
   return t'1
 
+/-- C++ `MAVLink_routing::handle_heartbeat : void (GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:418-464`. -/
+def MAVLink_routing.handle_heartbeat (this : UInt64) (link : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← GCS_MAVLINK.active_channel_mask
+  let t'2 ← GCS_MAVLINK.private_channel_mask
+  let mut mask : UInt16 := UInt32.toUInt16 ((t'1 &&& (~~~t'2)))
+  let t'3 ← GCS_MAVLINK.get_chan link
+  let mut in_channel : UInt32 := t'3
+  let t'4 := (mask &&& (UInt32.toUInt16 ((~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (in_channel)) - (UInt32.toInt32 ((0 : UInt32)))))))))))
+  mask := t'4
+  let t'5 ← PMem.ldU8 (this + 324)
+  let t'6 := (mask &&& (Int16.toUInt16 (Int32.toInt16 ((~~~(UInt32.toInt32 (UInt8.toUInt32 (t'5))))))))
+  mask := t'6
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'7 := true
+  for _ in PMem.loopFuel do
+    if !first'7 then
+      let t'8 := i
+      let t'9 := (t'8 + 1)
+      i := t'9
+      pure ()
+    first'7 := false
+    let t'10 ← PMem.ldU8 this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'10)))))) then break
+    let t'11 ← PMem.ldU32 ((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64)
+    let t'12 ← PMem.ldU32 (msg + 8)
+    let mut sc'15 := (t'11 == t'12)
+    if sc'15 then
+      let t'13 ← PMem.ldU8 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 4)
+      let t'14 ← PMem.ldU8 (msg + 12)
+      sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'13))) == (UInt32.toInt32 (UInt8.toUInt32 (t'14))))
+    if sc'15 then
+      let t'16 ← PMem.ldU32 (((this + 4) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 16).toUInt64) + 8)
+      let t'17 := (mask &&& (UInt32.toUInt16 ((~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'16)) - (UInt32.toInt32 ((0 : UInt32)))))))))))
+      mask := t'17
+  if ((UInt32.toInt32 (UInt16.toUInt32 (mask))) == (0 : Int32)) then
+    return ()
+  for i'2'18 in [0:16] do
+    let i'2 : UInt8 := UInt8.ofNat i'2'18
+    if ((UInt16.toUInt32 (mask)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (i'2))))))) != (0 : UInt32) then
+      let mut channel : UInt32 := Int32.toUInt32 (((UInt32.toInt32 ((0 : UInt32))) + (UInt32.toInt32 (UInt8.toUInt32 (i'2)))))
+      let t'19 ← gcs
+      let t'20 ← GCS_Copter.chan t'19 (UInt32.toUInt8 (channel))
+      let mut out_link : UInt64 := t'20
+      let mut sc'22 := (out_link == (0 : UInt64))
+      if !sc'22 then
+        let t'21 ← GCS_MAVLINK.option_enabled out_link (16 : UInt16)
+        sc'22 := t'21
+      if sc'22 then
+        continue
+      let t'23 ← comm_get_txspace channel
+      let t'24 ← PMem.ldU8 (msg + 3)
+      let t'25 ← GCS_MAVLINK.packet_overhead_chan channel
+      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'23))) ≥ ((UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (t'24))))) + (UInt32.toInt32 (UInt8.toUInt32 (t'25)))))) then
+        _mavlink_resend_uart channel msg
+  return ()
+
+/-- C++ `MAVLink_routing::check_and_forward : bool (uint8_t, GCS_MAVLINK &, const mavlink_message_t &)`, `MAVLink_routing.cpp:97-172`. -/
+def MAVLink_routing.check_and_forward (this : UInt64) (framing_status : UInt8) (in_link : UInt64) (msg : UInt64) : PMem.M Bool := do
+  let mut framing_status := framing_status
+  let t'1 ← PMem.ldU32 (msg + 8)
+  let t'2 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  let mut sc'5 := (t'1 == t'2)
+  if sc'5 then
+    let t'3 ← PMem.ldU8 (msg + 12)
+    let t'4 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
+    sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (UInt32.toInt32 (UInt8.toUInt32 (t'4))))
+  if sc'5 then
+    return false
+  let sw'6 := UInt32.toInt32 (UInt8.toUInt32 (framing_status))
+  if sw'6 == (1 : Int32) then
+    pure ()
+  else if sw'6 == (2 : Int32) then
+    let t'7 ← GCS_MAVLINK.option_enabled in_link (8 : UInt16)
+    let mut sc'9 := t'7
+    if sc'9 then
+      let t'8 ← PMem.ldBits msg 104 24
+      sc'9 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'8)))) != (166 : Int32))
+    let mut sc'11 := sc'9
+    if sc'11 then
+      let t'10 ← PMem.ldBits msg 104 24
+      sc'11 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'10)))) != (109 : Int32))
+    let mut sc'13 := sc'11
+    if sc'13 then
+      let t'12 ← PMem.ldBits msg 104 24
+      sc'13 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'12)))) != (246 : Int32))
+    if sc'13 then
+      let t'14 ← MAVLink_routing.forward this in_link msg
+      discard <| pure (t'14)
+    return false
+  else if sw'6 == (3 : Int32) then
+    return false
+  else
+    return false
+  MAVLink_routing.learn_route this in_link msg
+  let t'15 ← PMem.ldBits msg 104 24
+  let mut sc'17 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'15)))) == (166 : Int32))
+  if !sc'17 then
+    let t'16 ← PMem.ldBits msg 104 24
+    sc'17 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'16)))) == (109 : Int32))
+  if sc'17 then
+    return true
+  let t'18 ← GCS_MAVLINK.is_private in_link
+  let mut from_private_channel : Bool := t'18
+  let t'19 ← PMem.ldBits msg 104 24
+  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (0 : Int32)) then
+    let mut sc'21 := !from_private_channel
+    if sc'21 then
+      let t'20 ← GCS_MAVLINK.option_enabled in_link (16 : UInt16)
+      sc'21 := !t'20
+    if sc'21 then
+      MAVLink_routing.handle_heartbeat this in_link msg
+    return true
+  let t'22 ← MAVLink_routing.forward this in_link msg
+  return t'22
+
+/-- `AP_ParamT'unsigned_int_3.operator_const_unsigned_int__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'unsigned_int_3.operator_const_unsigned_int__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<unsigned int, 3>::operator const unsigned int & : const unsigned int &() const`, `AP_Param.h:978-980`. -/
+def AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'unsigned_int_3.operator_const_unsigned_int__.pure' this)
+
+/-- C++ `GCS::sysid_is_gcs : bool (uint32_t) const`, `GCS.cpp:745-753`. -/
+def GCS.sysid_is_gcs (this : UInt64) (_sysid : UInt32) : PMem.M Bool := do
+  let mut _sysid := _sysid
+  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 164)
+  let t'2 ← PMem.ldU32 t'1
+  let mut low : UInt32 := t'2
+  let t'3 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 168)
+  let t'4 ← PMem.ldU32 t'3
+  let mut high : UInt32 := t'4
+  if (decide (high ≤ low)) then
+    return (low == _sysid)
+  return ((decide (_sysid ≥ low)) && (decide (_sysid ≤ high)))
+
+/-- `AP_ParamT'short_2.operator_const_short__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'short_2.operator_const_short__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<short, 2>::operator const short & : const short &() const`, `AP_Param.h:978-980`. -/
+def AP_ParamT'short_2.operator_const_short__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'short_2.operator_const_short__.pure' this)
+
+/-- C++ `GCS::option_is_enabled : bool (Option) const`, `AP_Common.h:1258-1260`. -/
+def GCS.option_is_enabled (this : UInt64) (option : Int32) : PMem.M Bool := do
+  let mut option := option
+  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 172)
+  let t'2 ← PMem.ldI16 t'1
+  return (((Int16.toInt32 (t'2)) &&& (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (option))))))) != (0 : Int32))
+
+/-- C++ `GCS_MAVLINK::accept_packet : bool (const mavlink_status_t &, const mavlink_message_t &) const`, `GCS_Common.cpp:7386-7409`. -/
+def GCS_MAVLINK.accept_packet (this : UInt64) (status : UInt64) (msg : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU32 (msg + 8)
+  let t'2 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  if (t'1 == t'2) then
+    return true
+  let t'3 ← PMem.ldU32 (msg + 8)
+  let t'4 ← gcs
+  let t'5 ← GCS.sysid_is_gcs t'4 t'3
+  if t'5 then
+    return true
+  let t'6 ← PMem.ldBits msg 104 24
+  let mut sc'8 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'6)))) == (166 : Int32))
+  if !sc'8 then
+    let t'7 ← PMem.ldBits msg 104 24
+    sc'8 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'7)))) == (109 : Int32))
+  if sc'8 then
+    return true
+  let t'9 ← gcs
+  let t'10 ← GCS.option_is_enabled t'9 (1 : Int32)
+  if !t'10 then
+    return true
+  return false
+
+/-- C++ `GCS::sysid_mygcs_seen : void (uint32_t)`, `sitl.h:1205-1207`. -/
+def GCS.sysid_mygcs_seen (this : UInt64) (seen_time_ms : UInt32) : PMem.M Unit := do
+  let mut seen_time_ms := seen_time_ms
+  PMem.stU32 (this + 432) seen_time_ms
+  return ()
+
+/-- C++ `GCS_MAVLINK::sysid_mygcs_seen : void (uint32_t)`, `GCS_Common.cpp:7671-7675`. -/
+def GCS_MAVLINK.sysid_mygcs_seen (this : UInt64) (seen_time_ms : UInt32) : PMem.M Unit := do
+  let mut seen_time_ms := seen_time_ms
+  let t'1 ← gcs
+  GCS.sysid_mygcs_seen t'1 seen_time_ms
+  PMem.stU32 (this + 472) seen_time_ms
+  return ()
+
 /-- C++ `GCS_MAVLINK::handle_heartbeat : void (const mavlink_message_t &)`, `GCS_Common.cpp:4271-4278`. -/
-partial def GCS_MAVLINK.handle_heartbeat (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_heartbeat (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   let t'1 ← PMem.ldU32 (msg + 8)
   let t'2 ← gcs
   let t'3 ← GCS.sysid_is_gcs t'2 t'1
@@ -8648,612 +6179,77 @@ partial def GCS_MAVLINK.handle_heartbeat (this : UInt64) (msg : UInt64) : PMem.M
     GCS_MAVLINK.sysid_mygcs_seen this (((← get).clockUs / 1000).toUInt32)
   return ()
 
+/-- `GCS_MAVLINK.handle_setup_signing` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.handle_setup_signing.pure' (this : UInt64) (msg : UInt64) : Id Unit := do
+  return ()
+
 /-- C++ `GCS_MAVLINK::handle_setup_signing : void (const mavlink_message_t &) const`, `GCS_Signing.cpp:277-280`. -/
-partial def GCS_MAVLINK.handle_setup_signing (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_setup_signing (this : UInt64) (msg : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.handle_setup_signing.pure' this msg)
+
+/-- `__mavlink_param_request_list_t.__mavlink_param_request_list_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_param_request_list_t.__mavlink_param_request_list_t.pure' (this : UInt64) : Id Unit := do
   return ()
 
-/-- C++ `GCS_MAVLINK::handle_common_param_message : void (const mavlink_message_t &)`, `GCS_Param.cpp:524-537`. -/
-partial def GCS_MAVLINK.handle_common_param_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits msg 104 24
-  let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
-  if sw'2 == (21 : Int32) then
-    GCS_MAVLINK.handle_param_request_list this msg
-  else if sw'2 == (23 : Int32) then
-    GCS_MAVLINK.handle_param_set this msg
-  else if sw'2 == (20 : Int32) then
-    GCS_MAVLINK.handle_param_request_read this msg
-  else
-    pure ()
-  return ()
+/-- C++ `__mavlink_param_request_list_t::__mavlink_param_request_list_t : void () noexcept`, `mavlink_msg_param_request_list.h:9-?`. -/
+def __mavlink_param_request_list_t.__mavlink_param_request_list_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_param_request_list_t.__mavlink_param_request_list_t.pure' this)
 
-/-- C++ `GCS_MAVLINK::handle_timesync : void (const mavlink_message_t &)`, `GCS_Common.cpp:3674-3733`. -/
-partial def GCS_MAVLINK.handle_timesync.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_timesync_t.__mavlink_timesync_t (fp + 0)
-  mavlink_msg_timesync_decode msg (fp + 0)
-  let t'1 ← PMem.ldI64 (fp + 0)
-  if (t'1 != (Int32.toInt64 ((0 : Int32)))) then
-    let t'2 ← PMem.ldI64 ((fp + 0) + 8)
-    let t'3 ← PMem.ldI64 (this + 72)
-    if (t'2 != t'3) then
-      return ()
-    return ()
-  let t'4 ← PMem.ldU32 (this + 40)
-  let t'5 ← comm_get_txspace t'4
-  let t'6 ← PMem.ldU32 (this + 40)
-  let t'7 ← GCS_MAVLINK.packet_overhead_chan t'6
-  let mut c'8 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'5)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (16 : Int32)))))) then
-    c'8 := true
-  else
-    let t'9 ← PMem.ldU32 (this + 40)
-    gcs_out_of_space_to_send t'9
-    c'8 := false
-  if !c'8 then
-    return ()
-  __mavlink_timesync_t.__mavlink_timesync_t (fp + 16)
-  let t'10 ← GCS_MAVLINK.timesync_receive_timestamp_ns this
-  let t'11 := UInt64.toInt64 (t'10)
-  PMem.stI64 (fp + 16) t'11
-  let t'12 ← PMem.ldI64 ((fp + 0) + 8)
-  PMem.stI64 ((fp + 16) + 8) t'12
-  let t'13 ← PMem.ldU32 (this + 40)
-  let t'14 ← PMem.ldI64 (fp + 16)
-  let t'15 ← PMem.ldI64 ((fp + 16) + 8)
-  mavlink_msg_timesync_send t'13 t'14 t'15
-  return ()
-
-partial def GCS_MAVLINK.handle_timesync (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 32
-  let r ← GCS_MAVLINK.handle_timesync.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_common_mission_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:4648-4705`. -/
-partial def GCS_MAVLINK.handle_common_mission_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  repeat
-    let t'1 ← PMem.ldBits msg 104 24
-    let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
-    if sw'2 == (38 : Int32) then
-      GCS_MAVLINK.handle_mission_write_partial_list this msg
-      break
-      GCS_MAVLINK.handle_mission_item this msg
-    else if sw'2 == (39 : Int32) || sw'2 == (73 : Int32) then
-      GCS_MAVLINK.handle_mission_item this msg
-    else if sw'2 == (51 : Int32) then
-      GCS_MAVLINK.handle_mission_request_int this msg
-    else if sw'2 == (40 : Int32) then
-      GCS_MAVLINK.handle_mission_request this msg
-    else if sw'2 == (41 : Int32) then
-      let t'3 ← AP.mission
-      GCS_MAVLINK.handle_mission_set_current this t'3 msg
-    else if sw'2 == (43 : Int32) then
-      GCS_MAVLINK.handle_mission_request_list this msg
-      break
-      GCS_MAVLINK.handle_mission_count this msg
-      break
-      GCS_MAVLINK.handle_mission_clear_all this msg
-      break
-    else if sw'2 == (44 : Int32) then
-      GCS_MAVLINK.handle_mission_count this msg
-      break
-      GCS_MAVLINK.handle_mission_clear_all this msg
-      break
-    else if sw'2 == (45 : Int32) then
-      GCS_MAVLINK.handle_mission_clear_all this msg
-      break
-    else if sw'2 == (47 : Int32) then
-      pure ()
-    else
-      pure ()
-    break
-  return ()
-
-/-- C++ `GCS_MAVLINK::handle_command_long : void (const mavlink_message_t &)`, `GCS_Common.cpp:5367-5402`. -/
-partial def GCS_MAVLINK.handle_command_long.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_command_long_t.__mavlink_command_long_t (fp + 0)
-  mavlink_msg_command_long_decode msg (fp + 0)
-  let t'1 ← PMem.ldU16 ((fp + 0) + 28)
-  let t'2 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-  PMem.stU16 ((t'2 + 8) + 60) t'1
-  let t'3 ← GCS_MAVLINK.try_command_long_as_command_int this (fp + 0) msg
-  let mut result : UInt32 := t'3
-  let t'4 ← PMem.ldU32 (this + 40)
-  let t'5 ← PMem.ldU16 ((fp + 0) + 28)
-  let t'6 ← camera_command_result_param2 (fp + 0) result
-  let t'7 ← PMem.ldU32 (msg + 8)
-  let t'8 ← PMem.ldU8 (msg + 12)
-  mavlink_msg_command_ack_send t'4 t'5 (UInt32.toUInt8 (result)) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (UInt32.toInt32 (UInt8.toUInt32 (t'6))) t'7 t'8
-  let t'9 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'10 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-  PMem.stU16 ((t'10 + 8) + 60) t'9
-  return ()
-
-partial def GCS_MAVLINK.handle_command_long (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 36
-  let r ← GCS_MAVLINK.handle_command_long.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_command_int : void (const mavlink_message_t &)`, `GCS_Common.cpp:5890-5922`. -/
-partial def GCS_MAVLINK.handle_command_int.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_command_int_t.__mavlink_command_int_t (fp + 0)
-  mavlink_msg_command_int_decode msg (fp + 0)
-  let t'1 ← PMem.ldU16 ((fp + 0) + 28)
-  let t'2 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-  PMem.stU16 ((t'2 + 8) + 60) t'1
-  let t'3 ← GCS_MAVLINK_Copter.handle_command_int_packet this (fp + 0) msg
-  let mut result : UInt32 := t'3
-  let t'4 ← PMem.ldU32 (this + 40)
-  let t'5 ← PMem.ldU16 ((fp + 0) + 28)
-  let t'6 ← camera_command_result_param2'2 (fp + 0) result
-  let t'7 ← PMem.ldU32 (msg + 8)
-  let t'8 ← PMem.ldU8 (msg + 12)
-  mavlink_msg_command_ack_send t'4 t'5 (UInt32.toUInt8 (result)) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (UInt32.toInt32 (UInt8.toUInt32 (t'6))) t'7 t'8
-  let t'9 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'10 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
-  PMem.stU16 ((t'10 + 8) + 60) t'9
-  return ()
-
-partial def GCS_MAVLINK.handle_command_int (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 36
-  let r ← GCS_MAVLINK.handle_command_int.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_request_data_stream : void (const mavlink_message_t &)`, `GCS_Param.cpp:129-204`. -/
-partial def GCS_MAVLINK.handle_request_data_stream.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_request_data_stream_t.__mavlink_request_data_stream_t (fp + 0)
-  mavlink_msg_request_data_stream_decode msg (fp + 0)
-  PMem.stI16 (fp + 8) (Int32.toInt16 ((0 : Int32)))
-  let t'1 ← PMem.ldU8 ((fp + 0) + 5)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) then
-    let t'2 := Int32.toInt16 ((0 : Int32))
-    PMem.stI16 (fp + 8) t'2
-  else
-    let t'3 ← PMem.ldU8 ((fp + 0) + 5)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (1 : Int32)) then
-      let t'4 ← PMem.ldU16 (fp + 0)
-      let t'5 := UInt16.toInt16 (t'4)
-      PMem.stI16 (fp + 8) t'5
-    else
-      return ()
-  let mut stream_id : UInt8 := (10 : UInt8)
-  let t'6 ← PMem.ldU8 ((fp + 0) + 4)
-  let sw'7 := UInt32.toInt32 (UInt8.toUInt32 (t'6))
-  if sw'7 == (0 : Int32) then
-    let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    let mut first'8 := true
-    repeat
-      if !first'8 then
-        let t'9 := i
-        let t'10 := (t'9 + 1)
-        i := t'10
-        pure ()
-      first'8 := false
-      if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 ((10 : UInt8))))))) then break
-      if ((UInt32.toInt32 (UInt8.toUInt32 (i))) == (UInt32.toInt32 (UInt8.toUInt32 ((8 : UInt8))))) then
-        continue
-      let t'11 ← GCS_MAVLINK.persist_streamrates this
-      if t'11 then
-        AP_ParamTBase'short_2.set_and_save_ifchanged ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 2).toUInt64) (fp + 8)
-      else
-        AP_ParamTBase'short_2.set ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 2).toUInt64) (fp + 8)
-      GCS_MAVLINK.initialise_message_intervals_for_stream this i
-  else if sw'7 == (1 : Int32) then
-    stream_id := (0 : UInt8)
-  else if sw'7 == (2 : Int32) then
-    stream_id := (1 : UInt8)
-  else if sw'7 == (3 : Int32) then
-    stream_id := (2 : UInt8)
-  else if sw'7 == (4 : Int32) then
-    stream_id := (3 : UInt8)
-  else if sw'7 == (6 : Int32) then
-    stream_id := (4 : UInt8)
-  else if sw'7 == (10 : Int32) then
-    stream_id := (5 : UInt8)
-  else if sw'7 == (11 : Int32) then
-    stream_id := (6 : UInt8)
-  else if sw'7 == (12 : Int32) then
-    stream_id := (7 : UInt8)
-  else
-    pure ()
-  if ((UInt32.toInt32 (UInt8.toUInt32 (stream_id))) == (UInt32.toInt32 (UInt8.toUInt32 ((10 : UInt8))))) then
-    return ()
-  let mut rate : UInt64 := ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (stream_id))) * 2).toUInt64)
-  if (rate != (0 : UInt64)) then
-    let t'12 ← GCS_MAVLINK.persist_streamrates this
-    if t'12 then
-      AP_ParamTBase'short_2.set_and_save_ifchanged rate (fp + 8)
-    else
-      AP_ParamTBase'short_2.set rate (fp + 8)
-    GCS_MAVLINK.initialise_message_intervals_for_stream this stream_id
-  return ()
-
-partial def GCS_MAVLINK.handle_request_data_stream (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 10
-  let r ← GCS_MAVLINK.handle_request_data_stream.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_system_time_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:3830-3836`. -/
-partial def GCS_MAVLINK.handle_system_time_message.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_system_time_t.__mavlink_system_time_t (fp + 0)
-  mavlink_msg_system_time_decode msg (fp + 0)
-  return ()
-
-partial def GCS_MAVLINK.handle_system_time_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 16
-  let r ← GCS_MAVLINK.handle_system_time_message.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `comm_send_buffer : void (mavlink_channel_t, const uint8_t *, uint8_t)`, `GCS_MAVLink.cpp:151-175`. -/
-partial def comm_send_buffer (chan : UInt32) (buf : UInt64) (len : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut buf := buf
-  let mut len := len
-  let t'1 ← valid_channel chan
-  let mut sc'3 := !t'1
-  if !sc'3 then
-    let t'2 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 8).toUInt64)
-    sc'3 := (t'2 == (0 : UInt64))
-  let mut sc'5 := sc'3
-  if !sc'5 then
-    let t'4 ← PMem.ldB ((0xd298 : UInt64) /- &chan_discard -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 1).toUInt64)
-    sc'5 := t'4
-  if sc'5 then
-    return ()
-  let t'6 ← PMem.ldB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 1).toUInt64)
-  if t'6 then
-    return ()
-  let t'7 ← PMem.ldU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (chan))) * 8).toUInt64)
-  let t'8 ← PMem.uartWrite t'7 buf (UInt8.toUInt64 (len))
-  let mut written : UInt64 := t'8
-  if ((decide (written < (UInt8.toUInt64 (len)))) && (!false)) then
-    pure ()
-  return ()
-
-/-- C++ `GCS_MAVLINK::cap_message_interval : uint16_t (uint16_t) const`, `GCS_Common.cpp:272-281`. -/
-partial def GCS_MAVLINK.cap_message_interval (this : UInt64) (interval_ms : UInt16) : PMem.M UInt16 := do
-  let mut interval_ms := interval_ms
-  if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
-    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  if (decide ((Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) * (800 : Int32)))) < (2500 : UInt32))) then
-    return Binary32.toUInt16 (((UInt32.toBinary32 ((2500 : UInt32))) / (Binary32.ofBits 0x44480000 /- 800 -/)))
-  return interval_ms
-
-/-- C++ `GCS_MAVLINK::get_deferred_message_index : int8_t (const ap_message) const`, `GCS_Common.cpp:1389-1397`. -/
-partial def GCS_MAVLINK.get_deferred_message_index (this : UInt64) (id : UInt8) : PMem.M Int8 := do
-  let mut id := id
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := i
-      let t'3 := (t'2 + 1)
-      i := t'3
-      pure ()
-    first'1 := false
-    if !((decide ((UInt8.toUInt64 (i)) < ((18 : UInt64) / (6 : UInt64))))) then break
-    let t'4 ← PMem.ldU8 ((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
-      return UInt8.toInt8 (i)
-  return Int32.toInt8 ((-(1 : Int32)))
-
-/-- C++ `Bitmask<102>::get : bool (uint16_t) const`, `stdint.h:116-123`. -/
-partial def Bitmask'102.get (this : UInt64) (bit : UInt16) : PMem.M Bool := do
-  let mut bit := bit
-  let t'1 ← Bitmask'102.validate this bit
-  if !t'1 then
-    return false
-  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
-  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
-  let t'2 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
-  return ((t'2 &&& ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs))))))) != (Int32.toUInt32 ((0 : Int32))))
-
-/-- C++ `GCS_MAVLINK::remove_message_from_bucket : void (int8_t, ap_message)`, `GCS_Common.cpp:1697-1723`. -/
-partial def GCS_MAVLINK.remove_message_from_bucket (this : UInt64) (bucket : Int8) (id : UInt8) : PMem.M Unit := do
-  let mut bucket := bucket
-  let mut id := id
-  Bitmask'102.clear ((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) (UInt8.toUInt16 (id))
-  let t'1 ← Bitmask'102.count ((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
-    let t'2 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    PMem.stU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 16) t'2
-    let t'3 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    PMem.stU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 18) t'3
-  let t'4 ← PMem.ldU8 (this + 728)
-  if ((Int8.toInt32 (bucket)) == (UInt32.toInt32 (UInt8.toUInt32 (t'4)))) then
-    Bitmask'102.clear (this + 732) (UInt8.toUInt16 (id))
-    let t'5 ← Bitmask'102.count (this + 732)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) == (0 : Int32)) then
-      GCS_MAVLINK.find_next_bucket_to_send this (((← get).clockUs / 1000).toUInt16)
-    else
-      let t'6 ← PMem.ldU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 16)
-      let mut sc'8 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
-      if sc'8 then
-        let t'7 ← PMem.ldU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 18)
-        sc'8 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) == (0 : Int32))
-      if sc'8 then
-        pure ()
-  return ()
-
-/-- C++ `GCS_MAVLINK_InProgress::abort : void ()`, `GCS.h:147-?`. -/
-partial def GCS_MAVLINK_InProgress.abort (this : UInt64) : PMem.M Unit := do
-  PMem.stI32 this (0 : Int32)
-  return ()
-
-/-- C++ `GCS_MAVLINK::packet_overhead : uint8_t () const`, `functor.h:536-?`. -/
-partial def GCS_MAVLINK.packet_overhead (this : UInt64) : PMem.M UInt8 := do
-  let t'1 ← PMem.ldU32 (this + 40)
-  let t'2 ← GCS_MAVLINK.packet_overhead_chan t'1
-  return t'2
-
-/-- C++ `GCS_MAVLINK::queued_param_send : void ()`, `GCS_Param.cpp:40-100`. -/
-partial def GCS_MAVLINK.queued_param_send.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  let t'1 ← GCS_MAVLINK.send_parameter_async_replies this
-  let mut async_replies_sent_count : UInt8 := t'1
-  let t'2 ← PMem.ldU64 (this + 32)
-  if (t'2 == (0 : UInt64)) then
-    return ()
-  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
-  let mut tstart : UInt32 := (← get).clockUs.toUInt32
-  let mut link_bw : UInt32 := (1000000 : UInt32)
-  let t'3 ← PMem.ldU32 (this + 500)
-  let mut bytes_allowed : UInt32 := ((link_bw * (tnow - t'3)) / (Int32.toUInt32 ((3333 : Int32))))
-  let t'4 ← GCS_MAVLINK.packet_overhead this
-  let mut size_for_one_param_value_msg : UInt16 := Int16.toUInt16 (Int32.toInt16 (((25 : Int32) + (UInt32.toInt32 (UInt8.toUInt32 (t'4))))))
-  if (decide (bytes_allowed < (UInt16.toUInt32 (size_for_one_param_value_msg)))) then
-    let t'5 := UInt16.toUInt32 (size_for_one_param_value_msg)
-    bytes_allowed := t'5
-  let t'6 ← GCS_MAVLINK.txspace this
-  if (decide (bytes_allowed > (UInt16.toUInt32 (t'6)))) then
-    let t'7 ← GCS_MAVLINK.txspace this
-    let t'8 := UInt16.toUInt32 (t'7)
-    bytes_allowed := t'8
-  let mut count : UInt32 := (bytes_allowed / (UInt16.toUInt32 (size_for_one_param_value_msg)))
-  let t'9 ← GCS_MAVLINK.have_flow_control this
-  if ((!t'9) && (decide (count > (Int32.toUInt32 ((5 : Int32)))))) then
-    let t'10 := Int32.toUInt32 ((5 : Int32))
-    count := t'10
-  if (decide ((UInt8.toUInt32 (async_replies_sent_count)) ≥ count)) then
-    return ()
-  let t'11 := (count - (UInt8.toUInt32 (async_replies_sent_count)))
-  count := t'11
-  repeat
-    let mut sc'13 := count != (0 : UInt32)
-    if sc'13 then
-      let t'12 ← PMem.ldU64 (this + 32)
-      sc'13 := (t'12 != (0 : UInt64))
-    let mut sc'15 := sc'13
-    if sc'15 then
-      let t'14 ← GCS_MAVLINK.last_txbuf_is_greater (Int8.toUInt8 (Int32.toInt8 ((33 : Int32))))
-      sc'15 := t'14
-    if !(sc'15) then break
-    let t'16 ← PMem.ldU64 (this + 32)
-    AP_Param.copy_name_token t'16 (this + 492) (fp + 0) (16 : UInt64) true
-    let t'17 ← PMem.ldU32 (this + 40)
-    let t'18 ← PMem.ldU32 (this + 488)
-    let t'19 ← PMem.ldU64 (this + 32)
-    let t'20 ← AP_Param.cast_to_float t'19 t'18
-    let t'21 ← PMem.ldU32 (this + 488)
-    let t'22 ← GCS_MAVLINK.mav_param_type t'21
-    let t'23 ← PMem.ldU16 (this + 498)
-    let t'24 ← PMem.ldU16 (this + 496)
-    mavlink_msg_param_value_send t'17 (fp + 0) t'20 (UInt32.toUInt8 (t'22)) t'23 t'24
-    let t'25 ← AP_Param.next_scalar (this + 492) (this + 488) (0 : UInt64)
-    PMem.stU64 (this + 32) t'25
-    let t'26 := (this + 496)
-    let t'27 ← PMem.ldU16 t'26
-    let t'28 := (t'27 + 1)
-    PMem.stU16 t'26 t'28
-    if (decide ((((← get).clockUs.toUInt32) - tstart) > (Int32.toUInt32 ((1000 : Int32))))) then
-      break
-    let t'29 := count
-    let t'30 := (t'29 - 1)
-    count := t'30
-  PMem.stU32 (this + 500) tnow
-  return ()
-
-partial def GCS_MAVLINK.queued_param_send (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 16
-  let r ← GCS_MAVLINK.queued_param_send.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::try_send_mission_message : bool (const enum ap_message)`, `GCS_Common.cpp:5932-5968`. -/
-partial def GCS_MAVLINK.try_send_mission_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
-  let mut id := id
-  repeat
-    let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
-    if sw'1 == (11 : Int32) then
-      let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((6 : Int32))))
-      if !t'2 then
-        return false
-      let t'3 ← AP.mission
-      let mission : UInt64 := t'3
-      PMem.bframe this 42
-      break
-      let t'4 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
-      if !t'4 then
-        return false
-      let t'5 ← PMem.ldU32 (this + 40)
-      let t'6 ← PMem.ldU16 (this + 12)
-      mavlink_msg_mission_item_reached_send t'5 t'6
-    else if sw'1 == (61 : Int32) then
-      let t'7 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
-      if !t'7 then
-        return false
-      let t'8 ← PMem.ldU32 (this + 40)
-      let t'9 ← PMem.ldU16 (this + 12)
-      mavlink_msg_mission_item_reached_send t'8 t'9
-    else if sw'1 == (28 : Int32) then
-      let t'10 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((5 : Int32))))
-      if !t'10 then
-        return false
-      let t'11 ← gcs
-      GCS.try_send_queued_message_for_type t'11 (0 : UInt32)
-    else
-      pure ()
-    break
-  return true
-
-/-- C++ `GCS_MAVLINK::send_available_modes : bool ()`, `GCS_Common.cpp:6547-6578`. -/
-partial def GCS_MAVLINK.send_available_modes (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldB ((this + 871) + 1)
-  if !t'1 then
-    return true
-  let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((46 : Int32))))
-  if !t'2 then
-    return false
-  let t'3 ← PMem.ldU8 ((this + 871) + 2)
-  let mut send_all : Bool := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (0 : Int32))
-  let mut request_index : UInt8 := default  -- uninitialized in C
-  if !send_all then
-    let t'4 ← PMem.ldU8 ((this + 871) + 2)
-    request_index := t'4
-    PMem.stB ((this + 871) + 1) false
-  else
-    let t'5 ← PMem.ldU8 ((this + 871) + 3)
-    request_index := t'5
-    let t'6 := ((this + 871) + 3)
-    let t'7 ← PMem.ldU8 t'6
-    let t'8 := (t'7 + (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))))
-    PMem.stU8 t'6 t'8
-  let t'9 ← PMem.bframeCount this 435 9
-  let mut mode_count : UInt8 := t'9
-  let mut sc'11 := send_all
-  if sc'11 then
-    let t'10 ← PMem.ldU8 ((this + 871) + 3)
-    sc'11 := (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'10))) > (UInt32.toInt32 (UInt8.toUInt32 (mode_count)))))
-  if sc'11 then
-    PMem.stB ((this + 871) + 1) false
-  return true
-
-/-- C++ `GCS_MAVLINK::send_available_mode_monitor : bool ()`, `GCS_Common.cpp:6580-6590`. -/
-partial def GCS_MAVLINK.send_available_mode_monitor (this : UInt64) : PMem.M Bool := do
-  let t'1 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
-  if !t'1 then
-    return false
-  let t'2 ← PMem.ldU32 (this + 40)
-  let t'3 ← PMem.ldU8 ((this + 871) + 4)
-  mavlink_msg_available_modes_monitor_send t'2 t'3
-  return true
-
-/-- C++ `ByteBuffer::readptr : const uint8_t *(uint32_t &)`, `RingBuffer.cpp:266-272`. -/
-partial def ByteBuffer.readptr (this : UInt64) (available_bytes : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU32 (this + 16)
-  let mut _tail : UInt32 := t'1
-  let t'2 ← PMem.ldU32 (this + 12)
-  let mut c'3 : UInt32 := default
-  if (decide (t'2 > _tail)) then
-    let t'4 ← PMem.ldU32 (this + 8)
-    let t'5 ← PMem.ldU32 (this + 12)
-    c'3 := (t'4 - t'5)
-  else
-    let t'6 ← PMem.ldU32 (this + 12)
-    c'3 := (_tail - t'6)
-  PMem.stU32 available_bytes c'3
-  let t'7 ← PMem.ldU32 available_bytes
-  let mut c'8 : UInt64 := default
-  if t'7 != (0 : UInt32) then
-    let t'9 ← PMem.ldU64 this
-    let t'10 ← PMem.ldU32 (this + 12)
-    c'8 := (t'9 + ((UInt64.toInt64 (UInt32.toUInt64 (t'10))) * 1).toUInt64)
-  else
-    c'8 := (0 : UInt64)
-  return c'8
-
-/-- C++ `AP_ParamTBase<unsigned short, 2>::set : void (const unsigned short &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'unsigned_short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldU16 v
-  PMem.stU16 this t'1
-  return ()
-
-/-- C++ `mavlink_msg_get_target_sysid : uint32_t (const mavlink_message_t *, const mavlink_msg_entry_t *)`, `mavlink_helpers.h:679-692`. -/
-partial def mavlink_msg_get_target_sysid.body (fp : UInt64) (msg : UInt64) (entry : UInt64) : PMem.M UInt32 := do
+/-- C++ `mavlink_msg_decode_target : void (const mavlink_message_t *, void *, uint8_t, uint8_t)`, `mavlink_helpers.h:644-652`. -/
+def mavlink_msg_decode_target.body (fp : UInt64) (msg : UInt64) (payload : UInt64) (length : UInt8) (target_system_ofs : UInt8) : PMem.M Unit := do
   PMem.stU64 (fp + 0) msg
-  let mut entry := entry
+  let mut payload := payload
+  PMem.stU8 (fp + 8) length
+  let mut target_system_ofs := target_system_ofs
   let t'1 ← PMem.ldU64 (fp + 0)
-  let t'2 ← PMem.ldU8 (t'1 + 4)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) &&& (4 : Int32)) != (0 : Int32) then
-    let t'3 ← PMem.ldU64 (fp + 0)
-    let t'4 ← PMem.ldU32 (t'3 + 296)
-    return t'4
-  let mut sc'6 := (entry == (0 : UInt64))
-  if !sc'6 then
-    let t'5 ← PMem.ldU8 (entry + 7)
-    sc'6 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) &&& (1 : Int32)) != (0 : Int32))
-  if sc'6 then
-    return Int32.toUInt32 ((0 : Int32))
-  let t'7 ← PMem.ldU8 (entry + 8)
-  let t'8 ← PMem.ldU64 (fp + 0)
-  let t'9 ← PMem.ldU8 (t'8 + 3)
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'7))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'9))))) then
-    return Int32.toUInt32 ((0 : Int32))
+  let t'2 ← PMem.ldU8 (t'1 + 3)
+  let t'3 ← PMem.ldU8 (fp + 8)
+  let mut c'4 : UInt8 := default
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) < (UInt32.toInt32 (UInt8.toUInt32 (t'3))))) then
+    let t'5 ← PMem.ldU64 (fp + 0)
+    let t'6 ← PMem.ldU8 (t'5 + 3)
+    c'4 := t'6
+  else
+    let t'7 ← PMem.ldU8 (fp + 8)
+    c'4 := t'7
+  let mut len : UInt8 := c'4
+  let t'8 ← PMem.ldU8 (fp + 8)
+  let t'9 ← PMem.memset payload (0 : Int32) (UInt8.toUInt64 (t'8))
+  discard <| pure (t'9)
   let t'10 ← PMem.ldU64 (fp + 0)
-  let t'11 ← PMem.ldU8 (entry + 8)
-  let t'12 ← PMem.ldI8 (((t'10 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) + ((UInt64.toInt64 (UInt8.toUInt64 (t'11))) * 1).toUInt64)
-  return UInt8.toUInt32 ((Int8.toUInt8 (t'12)))
+  let t'11 ← PMem.memcpy payload ((t'10 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) (UInt8.toUInt64 (len))
+  discard <| pure (t'11)
+  let t'12 ← PMem.ldU64 (fp + 0)
+  let t'13 ← PMem.ldU8 (t'12 + 4)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'13))) &&& (4 : Int32)) != (0 : Int32) then
+    let t'14 ← PMem.ldU64 (fp + 0)
+    let t'15 ← PMem.ldU32 (t'14 + 296)
+    let mut c'16 : Int32 := default
+    if (decide (t'15 > (Int32.toUInt32 ((255 : Int32))))) then
+      c'16 := (255 : Int32)
+    else
+      let t'17 ← PMem.ldU64 (fp + 0)
+      let t'18 ← PMem.ldU32 (t'17 + 296)
+      c'16 := UInt32.toInt32 (UInt8.toUInt32 ((UInt32.toUInt8 (t'18))))
+    let t'19 := Int8.toUInt8 (Int32.toInt8 (c'16))
+    PMem.stU8 (payload + ((UInt64.toInt64 (UInt8.toUInt64 (target_system_ofs))) * 1).toUInt64) t'19
+  return ()
 
-partial def mavlink_msg_get_target_sysid (msg : UInt64) (entry : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 8
-  let r ← mavlink_msg_get_target_sysid.body fp msg entry
+def mavlink_msg_decode_target (msg : UInt64) (payload : UInt64) (length : UInt8) (target_system_ofs : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 9
+  let r ← mavlink_msg_decode_target.body fp msg payload length target_system_ofs
   PMem.leave fp
   return r
 
-/-- C++ `mavlink_msg_get_target_compid : uint8_t (const mavlink_message_t *, const mavlink_msg_entry_t *)`, `mavlink_helpers.h:698-708`. -/
-partial def mavlink_msg_get_target_compid.body (fp : UInt64) (msg : UInt64) (entry : UInt64) : PMem.M UInt8 := do
-  PMem.stU64 (fp + 0) msg
-  let mut entry := entry
-  let mut sc'2 := (entry == (0 : UInt64))
-  if !sc'2 then
-    let t'1 ← PMem.ldU8 (entry + 7)
-    sc'2 := !(((UInt32.toInt32 (UInt8.toUInt32 (t'1))) &&& (2 : Int32)) != (0 : Int32))
-  if sc'2 then
-    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let t'3 ← PMem.ldU8 (entry + 9)
-  let t'4 ← PMem.ldU64 (fp + 0)
-  let t'5 ← PMem.ldU8 (t'4 + 3)
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'5))))) then
-    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let t'6 ← PMem.ldU64 (fp + 0)
-  let t'7 ← PMem.ldU8 (entry + 9)
-  let t'8 ← PMem.ldI8 (((t'6 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) + ((UInt64.toInt64 (UInt8.toUInt64 (t'7))) * 1).toUInt64)
-  return Int8.toUInt8 (t'8)
-
-partial def mavlink_msg_get_target_compid (msg : UInt64) (entry : UInt64) : PMem.M UInt8 := do
-  let fp ← PMem.enter 8
-  let r ← mavlink_msg_get_target_compid.body fp msg entry
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_header_to_send_buffer : uint8_t (uint8_t *, const mavlink_message_t *)`, `mavlink_helpers.h:177-183`. -/
-partial def mavlink_header_to_send_buffer (buf : UInt64) (msg : UInt64) : PMem.M UInt8 := do
-  let mut buf := buf
+/-- C++ `mavlink_msg_param_request_list_decode : void (const mavlink_message_t *, mavlink_param_request_list_t *)`, `mavlink_msg_param_request_list.h:270-285`. -/
+def mavlink_msg_param_request_list_decode (msg : UInt64) (param_request_list : UInt64) : PMem.M Unit := do
   let mut msg := msg
-  let t'1 ← PMem.ldU8 (msg + 2)
-  let t'2 ← PMem.ldU8 (msg + 3)
-  let t'3 ← PMem.ldU8 (msg + 4)
-  let t'4 ← PMem.ldU8 (msg + 5)
-  let t'5 ← PMem.ldU8 (msg + 6)
-  let t'6 ← PMem.ldU32 (msg + 8)
-  let t'7 ← PMem.ldU8 (msg + 12)
-  let t'8 ← PMem.ldBits msg 104 24
-  let t'9 ← PMem.ldU32 (msg + 296)
-  let t'10 ← _mav_header_pack buf t'1 t'2 t'3 t'4 t'5 t'6 t'7 (UInt64.toUInt32 (t'8)) t'9
-  return t'10
-
-/-- C++ `GCS_MAVLINK::sysid_mygcs_seen : void (uint32_t)`, `GCS_Common.cpp:7671-7675`. -/
-partial def GCS_MAVLINK.sysid_mygcs_seen (this : UInt64) (seen_time_ms : UInt32) : PMem.M Unit := do
-  let mut seen_time_ms := seen_time_ms
-  let t'1 ← gcs
-  GCS.sysid_mygcs_seen t'1 seen_time_ms
-  PMem.stU32 (this + 472) seen_time_ms
+  let mut param_request_list := param_request_list
+  mavlink_msg_decode_target msg param_request_list (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
   return ()
 
 /-- C++ `GCS_MAVLINK::handle_param_request_list : void (const mavlink_message_t &)`, `GCS_Param.cpp:206-223`. -/
-partial def GCS_MAVLINK.handle_param_request_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_request_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   if !true then
     return ()
   __mavlink_param_request_list_t.__mavlink_param_request_list_t (fp + 0)
@@ -9268,14 +6264,401 @@ partial def GCS_MAVLINK.handle_param_request_list.body (fp : UInt64) (this : UIn
   PMem.stU32 (this + 500) t'4
   return ()
 
-partial def GCS_MAVLINK.handle_param_request_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_request_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 2
   let r ← GCS_MAVLINK.handle_param_request_list.body fp this msg
   PMem.leave fp
   return r
 
+/-- `__mavlink_param_set_t.__mavlink_param_set_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_param_set_t.__mavlink_param_set_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_param_set_t::__mavlink_param_set_t : void () noexcept`, `mavlink_msg_param_set.h:9-?`. -/
+def __mavlink_param_set_t.__mavlink_param_set_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_param_set_t.__mavlink_param_set_t.pure' this)
+
+/-- C++ `mavlink_msg_param_set_decode : void (const mavlink_message_t *, mavlink_param_set_t *)`, `mavlink_msg_param_set.h:341-359`. -/
+def mavlink_msg_param_set_decode (msg : UInt64) (param_set : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut param_set := param_set
+  mavlink_msg_decode_target msg param_set (Int8.toUInt8 (Int32.toInt8 ((23 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32))))
+  return ()
+
+/-- C++ `strncpy_noterm : size_t (char *, const char *, size_t)`, `AP_Common.cpp:124-134`. -/
+def strncpy_noterm (dest : UInt64) (src : UInt64) (n : UInt64) : PMem.M UInt64 := do
+  let mut dest := dest
+  let mut src := src
+  let mut n := n
+  let t'1 ← PMem.strnlen src n
+  let mut len : UInt64 := t'1
+  let mut ret : UInt64 := len
+  if (decide (len < n)) then
+    let t'2 := len
+    let t'3 := (t'2 + 1)
+    len := t'3
+  let t'4 ← PMem.memcpy dest src len
+  discard <| pure (t'4)
+  return ret
+
+/-- `mavlink_msg_target_field` as a pure function of its arguments (it reads and writes no memory). -/
+def mavlink_msg_target_field.pure' (target_system : UInt32) : Id UInt8 := do
+  let mut target_system := target_system
+  let mut c'1 : Int32 := default
+  if (decide (target_system > (Int32.toUInt32 ((255 : Int32))))) then
+    c'1 := (255 : Int32)
+  else
+    c'1 := UInt32.toInt32 (UInt8.toUInt32 ((UInt32.toUInt8 (target_system))))
+  return Int8.toUInt8 (Int32.toInt8 (c'1))
+
+/-- C++ `mavlink_msg_target_field : uint8_t (uint32_t)`, `protocol.h:52-55`. -/
+def mavlink_msg_target_field (target_system : UInt32) : PMem.M UInt8 :=
+  pure (_root_.GCS_lib.mavlink_msg_target_field.pure' target_system)
+
+/-- C++ `_mav_trim_payload : uint8_t (const char *, uint8_t)`, `mavlink_helpers.h:115-121`. -/
+def _mav_trim_payload (payload : UInt64) (length : UInt8) : PMem.M UInt8 := do
+  let mut payload := payload
+  let mut length := length
+  for _ in PMem.loopFuel do
+    let mut sc'2 := (decide ((UInt32.toInt32 (UInt8.toUInt32 (length))) > (1 : Int32)))
+    if sc'2 then
+      let t'1 ← PMem.ldI8 (payload + ((Int32.toInt64 (((UInt32.toInt32 (UInt8.toUInt32 (length))) - (1 : Int32)))) * 1).toUInt64)
+      sc'2 := ((Int8.toInt32 (t'1)) == (0 : Int32))
+    if !(sc'2) then break
+    let t'3 := length
+    let t'4 := (t'3 - 1)
+    length := t'4
+  return length
+
+/-- C++ `crc_calculate : uint16_t (const uint8_t *, uint16_t)`, `checksum.h:65-73`. -/
+def crc_calculate.body (fp : UInt64) (pBuffer : UInt64) (length : UInt16) : PMem.M UInt16 := do
+  let mut pBuffer := pBuffer
+  let mut length := length
+  crc_init (fp + 0)
+  for _ in PMem.loopFuel do
+    let t'1 := length
+    let t'2 := (t'1 - 1)
+    length := t'2
+    if !(t'1 != (0 : UInt16)) then break
+    let t'3 := pBuffer
+    let t'4 := (t'3 + 1)
+    pBuffer := t'4
+    let t'5 ← PMem.ldU8 t'3
+    crc_accumulate t'5 (fp + 0)
+  let t'6 ← PMem.ldU16 (fp + 0)
+  return t'6
+
+def crc_calculate (pBuffer : UInt64) (length : UInt16) : PMem.M UInt16 := do
+  let fp ← PMem.enter 2
+  let r ← crc_calculate.body fp pBuffer length
+  PMem.leave fp
+  return r
+
+/-- C++ `crc_accumulate_buffer : void (uint16_t *, const char *, uint16_t)`, `checksum.h:85-91`. -/
+def crc_accumulate_buffer (crcAccum : UInt64) (pBuffer : UInt64) (length : UInt16) : PMem.M Unit := do
+  let mut crcAccum := crcAccum
+  let mut pBuffer := pBuffer
+  let mut length := length
+  let mut p : UInt64 := pBuffer
+  for _ in PMem.loopFuel do
+    let t'1 := length
+    let t'2 := (t'1 - 1)
+    length := t'2
+    if !(t'1 != (0 : UInt16)) then break
+    let t'3 := p
+    let t'4 := (t'3 + 1)
+    p := t'4
+    let t'5 ← PMem.ldU8 t'3
+    crc_accumulate t'5 crcAccum
+  return ()
+
+/-- C++ `_mav_finalize_message_chan_send_target : void (mavlink_channel_t, uint32_t, const char *, uint8_t, uint8_t, uint8_t, uint32_t)`, `mavlink_helpers.h:411-475`. -/
+def _mav_finalize_message_chan_send_target.body (fp : UInt64) (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) (target_sysid : UInt32) : PMem.M Unit := do
+  let mut chan := chan
+  let mut msgid := msgid
+  let mut packet := packet
+  let mut min_length := min_length
+  let mut length := length
+  let mut crc_extra := crc_extra
+  let mut target_sysid := target_sysid
+  let t'1 ← mavlink_get_channel_status (UInt32.toUInt8 (chan))
+  let mut status : UInt64 := t'1
+  let mut header_len : UInt8 := default  -- uninitialized in C
+  let mut signature_len : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let t'2 ← PMem.ldU8 (status + 16)
+  let mut mavlink1 : Bool := (((UInt32.toInt32 (UInt8.toUInt32 (t'2))) &&& (2 : Int32)) != (0 : Int32))
+  let mut sc'4 := !mavlink1
+  if sc'4 then
+    let t'3 ← PMem.ldU64 (status + 24)
+    sc'4 := (t'3 != 0)
+  let mut sc'7 := sc'4
+  if sc'7 then
+    let t'5 ← PMem.ldU64 (status + 24)
+    let t'6 ← PMem.ldU8 t'5
+    sc'7 := ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) &&& (1 : Int32)) != (0 : Int32)
+  let mut signing : Bool := sc'7
+  let mut incompat_flags : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  if mavlink1 then
+    length := min_length
+    let mut sc'9 := (decide (msgid > (Int32.toUInt32 ((255 : Int32)))))
+    if !sc'9 then
+      let t'8 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+      sc'9 := (decide (t'8 > (Int32.toUInt32 ((255 : Int32)))))
+    if (sc'9 || (decide (target_sysid > (Int32.toUInt32 ((255 : Int32)))))) then
+      _mav_parse_error status
+      return ()
+  else
+    if signing then
+      let t'10 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))))
+      incompat_flags := t'10
+    let t'11 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+    if (decide (t'11 > (Int32.toUInt32 ((255 : Int32))))) then
+      let t'12 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
+      incompat_flags := t'12
+    if (decide (target_sysid > (Int32.toUInt32 ((255 : Int32))))) then
+      let t'13 := (incompat_flags ||| (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))))
+      incompat_flags := t'13
+    let t'14 ← _mav_trim_payload packet length
+    length := t'14
+  let mut c'15 : Int32 := default
+  if mavlink1 then
+    c'15 := (254 : Int32)
+  else
+    c'15 := (253 : Int32)
+  let t'16 ← PMem.ldU8 (status + 10)
+  let t'17 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  let t'18 ← PMem.ldU8 ((0xbb68 : UInt64) /- &mavlink_system -/ + 4)
+  let t'19 ← _mav_header_pack (fp + 8) (Int8.toUInt8 (Int32.toInt8 (c'15))) length incompat_flags (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) t'16 t'17 t'18 msgid target_sysid
+  header_len := t'19
+  let t'20 := (status + 10)
+  let t'21 ← PMem.ldU8 t'20
+  let t'22 := (t'21 + 1)
+  PMem.stU8 t'20 t'22
+  let t'23 ← crc_calculate ((fp + 8) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt8.toUInt32 (header_len))) - (1 : Int32)))))
+  PMem.stU16 (fp + 0) t'23
+  crc_accumulate_buffer (fp + 0) packet (UInt8.toUInt16 (length))
+  crc_accumulate crc_extra (fp + 0)
+  let t'24 ← PMem.ldU16 (fp + 0)
+  let t'25 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'24))) &&& (255 : Int32))))
+  PMem.stU8 ((fp + 32) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) t'25
+  let t'26 ← PMem.ldU16 (fp + 0)
+  let t'27 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (t'26))) >>> (8 : Int32))))
+  PMem.stU8 ((fp + 32) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) t'27
+  if signing then
+    PMem.unreached "mavlink_sign_packet"
+    let t'28 := (default : UInt8)
+    signature_len := t'28
+  comm_send_lock chan (Int16.toUInt16 (Int32.toInt16 (((((UInt32.toInt32 (UInt8.toUInt32 (header_len))) + (2 : Int32)) + (UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (length)))))) + (UInt32.toInt32 (UInt16.toUInt32 ((UInt8.toUInt16 (signature_len)))))))))
+  _mavlink_send_uart chan (fp + 8) (UInt8.toUInt16 (header_len))
+  _mavlink_send_uart chan packet (UInt8.toUInt16 (length))
+  _mavlink_send_uart chan (fp + 32) (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
+  if ((UInt32.toInt32 (UInt8.toUInt32 (signature_len))) != (0 : Int32)) then
+    _mavlink_send_uart chan (fp + 40) (UInt8.toUInt16 (signature_len))
+  comm_send_unlock chan
+  return ()
+
+def _mav_finalize_message_chan_send_target (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) (target_sysid : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 53
+  let r ← _mav_finalize_message_chan_send_target.body fp chan msgid packet min_length length crc_extra target_sysid
+  PMem.leave fp
+  return r
+
+/-- C++ `mav_array_memcpy : void (void *, const void *, size_t)`, `protocol.h:220-234`. -/
+def mav_array_memcpy (dest : UInt64) (src : UInt64) (n : UInt64) : PMem.M Unit := do
+  let mut dest := dest
+  let mut src := src
+  let mut n := n
+  if (src == (0 : UInt64)) then
+    let t'1 ← PMem.memset dest (0 : Int32) n
+    discard <| pure (t'1)
+  else
+    let t'2 ← PMem.memcpy dest src n
+    discard <| pure (t'2)
+  return ()
+
+/-- `__mavlink_param_error_t.__mavlink_param_error_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_param_error_t.__mavlink_param_error_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_param_error_t::__mavlink_param_error_t : void () noexcept`, `mavlink_msg_param_error.h:9-?`. -/
+def __mavlink_param_error_t.__mavlink_param_error_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_param_error_t.__mavlink_param_error_t.pure' this)
+
+/-- C++ `mavlink_msg_param_error_send : void (mavlink_channel_t, uint32_t, uint8_t, const char *, int16_t, uint8_t)`, `mavlink_msg_param_error.h:230-249`. -/
+def mavlink_msg_param_error_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (param_id : UInt64) (param_index : Int16) (error : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut target_system := target_system
+  let mut target_component := target_component
+  let mut param_id := param_id
+  let mut param_index := param_index
+  let mut error := error
+  __mavlink_param_error_t.__mavlink_param_error_t (fp + 0)
+  PMem.stI16 (fp + 0) param_index
+  let t'1 ← mavlink_msg_target_field target_system
+  PMem.stU8 ((fp + 0) + 2) t'1
+  PMem.stU8 ((fp + 0) + 3) target_component
+  PMem.stU8 ((fp + 0) + 20) error
+  mav_array_memcpy ((fp + 0) + 4) param_id ((1 : UInt64) * (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))))
+  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((345 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((21 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((21 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((209 : Int32)))) target_system
+  return ()
+
+def mavlink_msg_param_error_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (param_id : UInt64) (param_index : Int16) (error : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 22
+  let r ← mavlink_msg_param_error_send.body fp chan target_system target_component param_id param_index error
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::send_param_error : void (const mavlink_message_t &, const mavlink_param_set_t &, MAV_PARAM_ERROR)`, `GCS_Param.cpp:430-445`. -/
+def GCS_MAVLINK.send_param_error.body (fp : UInt64) (this : UInt64) (msg : UInt64) (param_set : UInt64) (error : UInt32) : PMem.M Unit := do
+  let mut error := error
+  let t'1 ← PMem.ldU32 (this + 40)
+  let t'2 ← comm_get_txspace t'1
+  let t'3 ← PMem.ldU32 (this + 40)
+  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+  let mut c'5 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (21 : Int32)))))) then
+    c'5 := true
+  else
+    let t'6 ← PMem.ldU32 (this + 40)
+    gcs_out_of_space_to_send t'6
+    c'5 := false
+  if !c'5 then
+    return ()
+  let t'7 ← strncpy_noterm (fp + 0) (param_set + 6) ((16 : UInt64) / (1 : UInt64))
+  discard <| pure (t'7)
+  let t'8 ← PMem.ldU32 (this + 40)
+  let t'9 ← PMem.ldU32 (msg + 8)
+  let t'10 ← PMem.ldU8 (msg + 12)
+  mavlink_msg_param_error_send t'8 t'9 t'10 (fp + 0) (Int32.toInt16 ((-(1 : Int32)))) (UInt32.toUInt8 (error))
+  return ()
+
+def GCS_MAVLINK.send_param_error (this : UInt64) (msg : UInt64) (param_set : UInt64) (error : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 16
+  let r ← GCS_MAVLINK.send_param_error.body fp this msg param_set error
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS::get_allow_param_set : bool () const`, `AP_Common.h:1264-1266`. -/
+def GCS.get_allow_param_set (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldB (this + 436)
+  return t'1
+
+/-- C++ `AP_Param::is_read_only : bool () const`, `AP_Param.cpp:1462-1472`. -/
+def AP_Param.is_read_only.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU16 (0xd460 : UInt64) /- &AP_Param::num_read_only -/
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
+    return false
+  let t'2 ← AP_Param.configured_in_defaults_file this (fp + 0)
+  if t'2 then
+    let t'3 ← PMem.ldB (fp + 0)
+    return t'3
+  return false
+
+def AP_Param.is_read_only (this : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 1
+  let r ← AP_Param.is_read_only.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::allow_set_via_mavlink : bool (uint16_t) const`, `AP_Param.cpp:1476-1498`. -/
+def AP_Param.allow_set_via_mavlink (this : UInt64) (flags : UInt16) : PMem.M Bool := do
+  let mut flags := flags
+  let t'1 ← AP_Param.is_read_only this
+  if t'1 then
+    return false
+  if ((UInt32.toInt32 (UInt16.toUInt32 (flags))) &&& ((1 : Int32) <<< (5 : Int32))) != (0 : Int32) then
+    PMem.unreached "AP_BoardConfig::allow_set_internal_parameters"
+    if !(default : Bool) then
+      return false
+  let t'2 ← gcs
+  let t'3 ← GCS.get_allow_param_set t'2
+  if !t'3 then
+    return false
+  return true
+
+/-- C++ `_mav_finalize_message_chan_send : void (mavlink_channel_t, uint32_t, const char *, uint8_t, uint8_t, uint8_t)`, `mavlink_helpers.h:477-482`. -/
+def _mav_finalize_message_chan_send (chan : UInt32) (msgid : UInt32) (packet : UInt64) (min_length : UInt8) (length : UInt8) (crc_extra : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut msgid := msgid
+  let mut packet := packet
+  let mut min_length := min_length
+  let mut length := length
+  let mut crc_extra := crc_extra
+  _mav_finalize_message_chan_send_target chan msgid packet min_length length crc_extra (Int32.toUInt32 ((0 : Int32)))
+  return ()
+
+/-- `__mavlink_param_value_t.__mavlink_param_value_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_param_value_t.__mavlink_param_value_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_param_value_t::__mavlink_param_value_t : void () noexcept`, `mavlink_msg_param_value.h:9-?`. -/
+def __mavlink_param_value_t.__mavlink_param_value_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_param_value_t.__mavlink_param_value_t.pure' this)
+
+/-- C++ `mavlink_msg_param_value_send : void (mavlink_channel_t, const char *, float, uint8_t, uint16_t, uint16_t)`, `mavlink_msg_param_value.h:225-244`. -/
+def mavlink_msg_param_value_send.body (fp : UInt64) (chan : UInt32) (param_id : UInt64) (param_value : Binary32) (param_type : UInt8) (param_count : UInt16) (param_index : UInt16) : PMem.M Unit := do
+  let mut chan := chan
+  let mut param_id := param_id
+  let mut param_value := param_value
+  let mut param_type := param_type
+  let mut param_count := param_count
+  let mut param_index := param_index
+  __mavlink_param_value_t.__mavlink_param_value_t (fp + 0)
+  PMem.stF32 (fp + 0) param_value
+  PMem.stU16 ((fp + 0) + 4) param_count
+  PMem.stU16 ((fp + 0) + 6) param_index
+  PMem.stU8 ((fp + 0) + 24) param_type
+  mav_array_memcpy ((fp + 0) + 8) param_id ((1 : UInt64) * (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))))
+  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((22 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((25 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((25 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((220 : Int32))))
+  return ()
+
+def mavlink_msg_param_value_send (chan : UInt32) (param_id : UInt64) (param_value : Binary32) (param_type : UInt8) (param_count : UInt16) (param_index : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 28
+  let r ← mavlink_msg_param_value_send.body fp chan param_id param_value param_type param_count param_index
+  PMem.leave fp
+  return r
+
+/-- `GCS_MAVLINK.mav_param_type` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.mav_param_type.pure' (t : UInt32) : Id UInt32 := do
+  let mut t := t
+  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((1 : UInt32)))) then
+    return (2 : UInt32)
+  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((2 : UInt32)))) then
+    return (4 : UInt32)
+  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((3 : UInt32)))) then
+    return (6 : UInt32)
+  return (9 : UInt32)
+
+/-- C++ `GCS_MAVLINK::mav_param_type : MAV_PARAM_TYPE (enum ap_var_type)`, `GCS_MAVLink.cpp:119-132`. -/
+def GCS_MAVLINK.mav_param_type (t : UInt32) : PMem.M UInt32 :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.mav_param_type.pure' t)
+
+/-- C++ `GCS_MAVLINK::send_parameter_value : void (const char *, ap_var_type, float)`, `GCS_Param.cpp:332-344`. -/
+def GCS_MAVLINK.send_parameter_value (this : UInt64) (param_name : UInt64) (param_type : UInt32) (param_value : Binary32) : PMem.M Unit := do
+  let mut param_name := param_name
+  let mut param_type := param_type
+  let mut param_value := param_value
+  let t'1 ← PMem.ldU32 (this + 40)
+  let t'2 ← comm_get_txspace t'1
+  let t'3 ← PMem.ldU32 (this + 40)
+  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+  let mut c'5 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (25 : Int32)))))) then
+    c'5 := true
+  else
+    let t'6 ← PMem.ldU32 (this + 40)
+    gcs_out_of_space_to_send t'6
+    c'5 := false
+  if !c'5 then
+    return ()
+  let t'7 ← PMem.ldU32 (this + 40)
+  let t'8 ← GCS_MAVLINK.mav_param_type param_type
+  let t'9 ← AP_Param.count_parameters
+  mavlink_msg_param_value_send t'7 param_name param_value (UInt32.toUInt8 (t'8)) t'9 (Int16.toUInt16 (Int32.toInt16 ((-(1 : Int32)))))
+  return ()
+
 /-- C++ `GCS_MAVLINK::handle_param_set : void (const mavlink_message_t &)`, `GCS_Param.cpp:265-330`. -/
-partial def GCS_MAVLINK.handle_param_set.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_set.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   __mavlink_param_set_t.__mavlink_param_set_t (fp + 0)
   mavlink_msg_param_set_decode msg (fp + 0)
   let mut vp : UInt64 := default  -- uninitialized in C
@@ -9325,14 +6708,157 @@ partial def GCS_MAVLINK.handle_param_set.body (fp : UInt64) (this : UInt64) (msg
     AP_Param.invalidate_count
   return ()
 
-partial def GCS_MAVLINK.handle_param_set (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_set (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 58
   let r ← GCS_MAVLINK.handle_param_set.body fp this msg
   PMem.leave fp
   return r
 
+/-- `GCS_MAVLINK.pending_param_request.pending_param_request` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.pending_param_request.pending_param_request.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `GCS_MAVLINK::pending_param_request::pending_param_request : void () noexcept`, `functor.h:994-?`. -/
+def GCS_MAVLINK.pending_param_request.pending_param_request (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.pending_param_request.pending_param_request.pure' this)
+
+/-- C++ `ByteBuffer::space : uint32_t () const`, `RingBuffer.cpp:75-93`. -/
+def ByteBuffer.space (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU32 (this + 8)
+  if (t'1 == (Int32.toUInt32 ((0 : Int32)))) then
+    return Int32.toUInt32 ((0 : Int32))
+  let t'2 ← PMem.ldU32 (this + 12)
+  let mut _head : UInt32 := t'2
+  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
+  let t'3 ← PMem.ldU32 (this + 16)
+  if (decide (_head ≤ t'3)) then
+    let t'4 ← PMem.ldU32 (this + 8)
+    ret := t'4
+  let t'5 ← PMem.ldU32 (this + 16)
+  let t'6 := (ret + ((_head - t'5) - (Int32.toUInt32 ((1 : Int32)))))
+  ret := t'6
+  return ret
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::space : uint32_t () const`, `AP_Common.h:163-165`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_request.space (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.space t'1
+  return UInt64.toUInt32 (((UInt32.toUInt64 (t'2)) / (32 : UInt64)))
+
+/-- `__mavlink_param_request_read_t.__mavlink_param_request_read_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_param_request_read_t.__mavlink_param_request_read_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_param_request_read_t::__mavlink_param_request_read_t : void () noexcept`, `mavlink_msg_param_request_read.h:9-?`. -/
+def __mavlink_param_request_read_t.__mavlink_param_request_read_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_param_request_read_t.__mavlink_param_request_read_t.pure' this)
+
+/-- C++ `mavlink_msg_param_request_read_decode : void (const mavlink_message_t *, mavlink_param_request_read_t *)`, `mavlink_msg_param_request_read.h:314-331`. -/
+def mavlink_msg_param_request_read_decode (msg : UInt64) (param_request_read : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut param_request_read := param_request_read
+  mavlink_msg_decode_target msg param_request_read (Int8.toUInt8 (Int32.toInt8 ((20 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
+  return ()
+
+/-- C++ `MIN : auto (const unsigned long &, const unsigned long &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
+def MIN'3 (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU64 one
+  let t'2 ← PMem.ldU64 two
+  let mut c'3 : UInt64 := 0
+  if (decide (t'1 < t'2)) then
+    c'3 := one
+  else
+    c'3 := two
+  return c'3
+
+/-- `ByteBuffer.IoVec.IoVec` as a pure function of its arguments (it reads and writes no memory). -/
+def ByteBuffer.IoVec.IoVec.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `ByteBuffer::IoVec::IoVec : void () noexcept`, `AP_Common.h:76-?`. -/
+def ByteBuffer.IoVec.IoVec (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.ByteBuffer.IoVec.IoVec.pure' this)
+
+/-- C++ `ByteBuffer::reserve : uint8_t (ByteBuffer::IoVec *, uint32_t)`, `RingBuffer.cpp:199-225`. -/
+def ByteBuffer.reserve (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
+  let mut iovec := iovec
+  let mut len := len
+  let t'1 ← ByteBuffer.space this
+  let mut n : UInt32 := t'1
+  if (decide (len > n)) then
+    len := n
+  if !(len != (0 : UInt32)) then
+    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let t'2 ← PMem.ldU64 this
+  let t'3 ← PMem.ldU32 (this + 16)
+  let t'4 := (t'2 + ((UInt64.toInt64 (UInt32.toUInt64 (t'3))) * 1).toUInt64)
+  PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) t'4
+  let t'5 ← PMem.ldU32 (this + 8)
+  let t'6 ← PMem.ldU32 (this + 16)
+  let t'7 := (t'5 - t'6)
+  n := t'7
+  if (decide (len ≤ n)) then
+    PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) len
+    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+  PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) n
+  let t'8 ← PMem.ldU64 this
+  PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) t'8
+  let t'9 := (len - n)
+  PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'9
+  return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
+
+/-- C++ `ByteBuffer::commit : bool (uint32_t)`, `RingBuffer.cpp:230-238`. -/
+def ByteBuffer.commit (this : UInt64) (len : UInt32) : PMem.M Bool := do
+  let mut len := len
+  let t'1 ← ByteBuffer.space this
+  if (decide (len > t'1)) then
+    return false
+  let t'2 ← PMem.ldU32 (this + 16)
+  let t'3 ← PMem.ldU32 (this + 8)
+  let t'4 ← PMem.atomicStU32 (this + 16) ((t'2 + len) % t'3)
+  discard <| pure (t'4)
+  return true
+
+/-- C++ `ByteBuffer::write : uint32_t (const uint8_t *, uint32_t)`, `RingBuffer.cpp:100-113`. -/
+def ByteBuffer.write.body (fp : UInt64) (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
+  let mut data := data
+  let mut len := len
+  ByteBuffer.IoVec.IoVec ((fp + 0) + 0)
+  ByteBuffer.IoVec.IoVec ((fp + 0) + 16)
+  let t'1 ← ByteBuffer.reserve this (fp + 0) len
+  let mut n_vec : UInt8 := t'1
+  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
+  for i'2 in [0:n_vec.toNat] do
+    let i : Int32 := Int32.ofNat i'2
+    let t'3 ← PMem.ldU64 ((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64)
+    let t'4 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
+    let t'5 ← PMem.memcpy t'3 (data + ((UInt64.toInt64 (UInt32.toUInt64 (ret))) * 1).toUInt64) (UInt32.toUInt64 (t'4))
+    discard <| pure (t'5)
+    let t'6 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
+    let t'7 := (ret + t'6)
+    ret := t'7
+  let t'8 ← ByteBuffer.commit this ret
+  discard <| pure (t'8)
+  return ret
+
+def ByteBuffer.write (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
+  let fp ← PMem.enter 32
+  let r ← ByteBuffer.write.body fp this data len
+  PMem.leave fp
+  return r
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::push : bool (const GCS_MAVLINK::pending_param_request &)`, `AP_Common.h:175-180`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_request.push (this : UInt64) (object : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.space t'1
+  if (decide ((UInt32.toUInt64 (t'2)) < (32 : UInt64))) then
+    return false
+  let t'3 ← PMem.ldU64 this
+  let t'4 ← ByteBuffer.write t'3 object (UInt64.toUInt32 ((32 : UInt64)))
+  return ((UInt32.toUInt64 (t'4)) == (32 : UInt64))
+
 /-- C++ `GCS_MAVLINK::handle_param_request_read : void (const mavlink_message_t &)`, `GCS_Param.cpp:225-263`. -/
-partial def GCS_MAVLINK.handle_param_request_read.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_request_read.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   let t'1 ← ObjectBuffer'GCS_MAVLINK_pending_param_request.space (0xbe00 : UInt64) /- &GCS_MAVLINK::param_requests -/
   if (t'1 == (Int32.toUInt32 ((0 : Int32)))) then
     return ()
@@ -9382,14 +6908,53 @@ partial def GCS_MAVLINK.handle_param_request_read.body (fp : UInt64) (this : UIn
     PMem.stB (0xd428 : UInt64) /- &GCS_MAVLINK::param_timer_registered -/ true
   return ()
 
-partial def GCS_MAVLINK.handle_param_request_read (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+def GCS_MAVLINK.handle_param_request_read (this : UInt64) (msg : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 72
   let r ← GCS_MAVLINK.handle_param_request_read.body fp this msg
   PMem.leave fp
   return r
 
+/-- C++ `GCS_MAVLINK::handle_common_param_message : void (const mavlink_message_t &)`, `GCS_Param.cpp:524-537`. -/
+def GCS_MAVLINK.handle_common_param_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits msg 104 24
+  let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
+  if sw'2 == (21 : Int32) then
+    GCS_MAVLINK.handle_param_request_list this msg
+  else if sw'2 == (23 : Int32) then
+    GCS_MAVLINK.handle_param_set this msg
+  else if sw'2 == (20 : Int32) then
+    GCS_MAVLINK.handle_param_request_read this msg
+  else
+    pure ()
+  return ()
+
+/-- `__mavlink_timesync_t.__mavlink_timesync_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_timesync_t.__mavlink_timesync_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_timesync_t::__mavlink_timesync_t : void () noexcept`, `mavlink_msg_timesync.h:9-?`. -/
+def __mavlink_timesync_t.__mavlink_timesync_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_timesync_t.__mavlink_timesync_t.pure' this)
+
+/-- C++ `mavlink_msg_timesync_send : void (mavlink_channel_t, int64_t, int64_t)`, `mavlink_msg_timesync.h:192-207`. -/
+def mavlink_msg_timesync_send.body (fp : UInt64) (chan : UInt32) (tc1 : Int64) (ts1 : Int64) : PMem.M Unit := do
+  let mut chan := chan
+  let mut tc1 := tc1
+  let mut ts1 := ts1
+  __mavlink_timesync_t.__mavlink_timesync_t (fp + 0)
+  PMem.stI64 (fp + 0) tc1
+  PMem.stI64 ((fp + 0) + 8) ts1
+  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((111 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((16 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((16 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((34 : Int32))))
+  return ()
+
+def mavlink_msg_timesync_send (chan : UInt32) (tc1 : Int64) (ts1 : Int64) : PMem.M Unit := do
+  let fp ← PMem.enter 16
+  let r ← mavlink_msg_timesync_send.body fp chan tc1 ts1
+  PMem.leave fp
+  return r
+
 /-- C++ `mavlink_msg_timesync_decode : void (const mavlink_message_t *, mavlink_timesync_t *)`, `mavlink_msg_timesync.h:280-291`. -/
-partial def mavlink_msg_timesync_decode.body (fp : UInt64) (msg : UInt64) (timesync : UInt64) : PMem.M Unit := do
+def mavlink_msg_timesync_decode.body (fp : UInt64) (msg : UInt64) (timesync : UInt64) : PMem.M Unit := do
   PMem.stU64 (fp + 0) msg
   let mut timesync := timesync
   let t'1 ← PMem.ldU64 (fp + 0)
@@ -9409,771 +6974,127 @@ partial def mavlink_msg_timesync_decode.body (fp : UInt64) (msg : UInt64) (times
   discard <| pure (t'8)
   return ()
 
-partial def mavlink_msg_timesync_decode (msg : UInt64) (timesync : UInt64) : PMem.M Unit := do
+def mavlink_msg_timesync_decode (msg : UInt64) (timesync : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 8
   let r ← mavlink_msg_timesync_decode.body fp msg timesync
   PMem.leave fp
   return r
 
 /-- C++ `GCS_MAVLINK::timesync_receive_timestamp_ns : uint64_t () const`, `GCS_Common.cpp:3661-3668`. -/
-partial def GCS_MAVLINK.timesync_receive_timestamp_ns (this : UInt64) : PMem.M UInt64 := do
+def GCS_MAVLINK.timesync_receive_timestamp_ns (this : UInt64) : PMem.M UInt64 := do
   let mut ret : UInt64 := (← get).clockUs
   if (ret == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
     let t'1 := (← get).clockUs
     ret := t'1
   return (ret * (Int64.toUInt64 ((1000 : Int64))))
 
-/-- C++ `GCS_MAVLINK::handle_mission_write_partial_list : void (const mavlink_message_t &)`, `GCS_Common.cpp:831-843`. -/
-partial def GCS_MAVLINK.handle_mission_write_partial_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t (fp + 0)
-  mavlink_msg_mission_write_partial_list_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 6)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
-  let mut use_prot : UInt64 := t'3
-  if (use_prot == (0 : UInt64)) then
-    let t'4 ← PMem.ldU8 ((fp + 0) + 6)
-    GCS_MAVLINK.send_mission_ack this msg (UInt8.toUInt32 (t'4)) (3 : UInt32)
-    return ()
-  MissionItemProtocol.handle_mission_write_partial_list use_prot this msg (fp + 0)
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_write_partial_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 8
-  let r ← GCS_MAVLINK.handle_mission_write_partial_list.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_item : void (const mavlink_message_t &)`, `GCS_Common.cpp:957-1033`. -/
-partial def GCS_MAVLINK.handle_mission_item.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
-  let mut send_mission_item_warning : Bool := false
-  let t'1 ← PMem.ldBits msg 104 24
-  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (39 : Int32)) then
-    __mavlink_mission_item_t.__mavlink_mission_item_t (fp + 40)
-    mavlink_msg_mission_item_decode msg (fp + 40)
-    let t'2 ← AP_Mission.convert_MISSION_ITEM_to_MISSION_ITEM_INT (fp + 40) (fp + 0)
-    let mut ret : UInt32 := t'2
-    if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
-      let t'3 ← PMem.ldU8 ((fp + 0) + 37)
-      let mut type' : UInt32 := UInt8.toUInt32 (t'3)
-      GCS_MAVLINK.send_mission_ack this msg type' ret
+/-- C++ `GCS_MAVLINK::handle_timesync : void (const mavlink_message_t &)`, `GCS_Common.cpp:3674-3733`. -/
+def GCS_MAVLINK.handle_timesync.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_timesync_t.__mavlink_timesync_t (fp + 0)
+  mavlink_msg_timesync_decode msg (fp + 0)
+  let t'1 ← PMem.ldI64 (fp + 0)
+  if (t'1 != (Int32.toInt64 ((0 : Int32)))) then
+    let t'2 ← PMem.ldI64 ((fp + 0) + 8)
+    let t'3 ← PMem.ldI64 (this + 72)
+    if (t'2 != t'3) then
       return ()
-    send_mission_item_warning := true
+    return ()
+  let t'4 ← PMem.ldU32 (this + 40)
+  let t'5 ← comm_get_txspace t'4
+  let t'6 ← PMem.ldU32 (this + 40)
+  let t'7 ← GCS_MAVLINK.packet_overhead_chan t'6
+  let mut c'8 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'5)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (16 : Int32)))))) then
+    c'8 := true
   else
-    mavlink_msg_mission_item_int_decode msg (fp + 0)
-  let t'4 ← PMem.ldU8 ((fp + 0) + 37)
-  let mut type''2 : UInt32 := UInt8.toUInt32 (t'4)
-  let t'5 ← PMem.ldU8 ((fp + 0) + 35)
-  let mut current : UInt8 := t'5
-  if (((UInt32.toInt32 (type''2)) == (UInt32.toInt32 ((0 : UInt32)))) && (((UInt32.toInt32 (UInt8.toUInt32 (current))) == (2 : Int32)) || ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (3 : Int32)))) then
-    discard <| PMem.memset ((fp + 80) + 0) 0 2
-    discard <| PMem.memset ((fp + 80) + 2) 0 2
-    discard <| PMem.memset ((fp + 80) + 4) 0 2
-    AP_Mission.Content.Content ((fp + 80) + 8)
-    discard <| PMem.memset ((fp + 80) + 24) 0 1
-    let t'6 ← AP_Mission.mavlink_int_to_mission_cmd (fp + 0) (fp + 80)
-    let mut result : UInt32 := t'6
-    if ((UInt32.toInt32 (result)) != (UInt32.toInt32 ((0 : UInt32)))) then
-      GCS_MAVLINK.send_mission_ack this msg (0 : UInt32) result
-      return ()
-    if ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (2 : Int32)) then
-      PMem.unreached "GCS_MAVLINK::handle_guided_request"
-      let mut c'7 : UInt32 := default
-      if (default : Bool) then
-        c'7 := (0 : UInt32)
-      else
-        c'7 := (1 : UInt32)
-      result := c'7
-    else
-      if ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (3 : Int32)) then
-        GCS_MAVLINK.handle_change_alt_request this ((fp + 80) + 8)
-        result := (0 : UInt32)
-    GCS_MAVLINK.send_mission_ack this msg (0 : UInt32) result
+    let t'9 ← PMem.ldU32 (this + 40)
+    gcs_out_of_space_to_send t'9
+    c'8 := false
+  if !c'8 then
     return ()
-  let t'8 ← gcs
-  let t'9 ← GCS.get_prot_for_mission_type t'8 type''2
-  let mut prot : UInt64 := t'9
-  if (prot == (0 : UInt64)) then
-    GCS_MAVLINK.send_mission_ack this msg type''2 (3 : UInt32)
-    return ()
-  if send_mission_item_warning then
-    MissionItemProtocol.send_mission_item_warning prot
-  let t'10 ← PMem.ldB (prot + 8)
-  if !t'10 then
-    GCS_MAVLINK.send_mission_ack this msg type''2 (1 : UInt32)
-    return ()
-  MissionItemProtocol.handle_mission_item prot msg (fp + 0)
+  __mavlink_timesync_t.__mavlink_timesync_t (fp + 16)
+  let t'10 ← GCS_MAVLINK.timesync_receive_timestamp_ns this
+  let t'11 := UInt64.toInt64 (t'10)
+  PMem.stI64 (fp + 16) t'11
+  let t'12 ← PMem.ldI64 ((fp + 0) + 8)
+  PMem.stI64 ((fp + 16) + 8) t'12
+  let t'13 ← PMem.ldU32 (this + 40)
+  let t'14 ← PMem.ldI64 (fp + 16)
+  let t'15 ← PMem.ldI64 ((fp + 16) + 8)
+  mavlink_msg_timesync_send t'13 t'14 t'15
   return ()
 
-partial def GCS_MAVLINK.handle_mission_item (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 108
-  let r ← GCS_MAVLINK.handle_mission_item.body fp this msg
+def GCS_MAVLINK.handle_timesync (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 32
+  let r ← GCS_MAVLINK.handle_timesync.body fp this msg
   PMem.leave fp
   return r
 
-/-- C++ `GCS_MAVLINK::handle_mission_request_int : void (const mavlink_message_t &)`, `GCS_Common.cpp:671-682`. -/
-partial def GCS_MAVLINK.handle_mission_request_int.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_request_int_t.__mavlink_mission_request_int_t (fp + 0)
-  mavlink_msg_mission_request_int_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
-  let mut prot : UInt64 := t'3
-  if (prot == (0 : UInt64)) then
-    return ()
-  MissionItemProtocol.handle_mission_request_int prot this (fp + 0) msg
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_request_int (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 6
-  let r ← GCS_MAVLINK.handle_mission_request_int.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_request : void (const mavlink_message_t &)`, `GCS_Common.cpp:685-696`. -/
-partial def GCS_MAVLINK.handle_mission_request.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_request_t.__mavlink_mission_request_t (fp + 0)
-  mavlink_msg_mission_request_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
-  let mut prot : UInt64 := t'3
-  if (prot == (0 : UInt64)) then
-    return ()
-  MissionItemProtocol.handle_mission_request prot this (fp + 0) msg
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_request (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 6
-  let r ← GCS_MAVLINK.handle_mission_request.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_set_current : void (AP_Mission &, const mavlink_message_t &)`, `GCS_Common.cpp:752-777`. -/
-partial def GCS_MAVLINK.handle_mission_set_current.body (fp : UInt64) (this : UInt64) (mission : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_set_current_t.__mavlink_mission_set_current_t (fp + 0)
-  mavlink_msg_mission_set_current_decode msg (fp + 0)
-  PMem.unreached "AP_Mission::set_current_cmd"
-  if (default : Bool) then
-    let t'1 ← PMem.ldU32 (this + 40)
-    let t'2 ← comm_get_txspace t'1
-    let t'3 ← PMem.ldU32 (this + 40)
-    let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-    let mut c'5 : Bool := default
-    if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (6 : Int32)))))) then
-      c'5 := true
-    else
-      let t'6 ← PMem.ldU32 (this + 40)
-      gcs_out_of_space_to_send t'6
-      c'5 := false
-    if c'5 then
-      PMem.bframe this 42
-    else
-      GCS_MAVLINK.send_message this (11 : UInt8)
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_set_current (this : UInt64) (mission : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← GCS_MAVLINK.handle_mission_set_current.body fp this mission msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_request_list : void (const mavlink_message_t &)`, `GCS_Common.cpp:649-666`. -/
-partial def GCS_MAVLINK.handle_mission_request_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_request_list_t.__mavlink_mission_request_list_t (fp + 0)
-  mavlink_msg_mission_request_list_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 2)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
-  let mut prot : UInt64 := t'3
-  if (prot == (0 : UInt64)) then
-    let t'4 ← PMem.ldU32 (this + 40)
-    let t'5 ← PMem.ldU32 (msg + 8)
-    let t'6 ← PMem.ldU8 (msg + 12)
-    let t'7 ← PMem.ldU8 ((fp + 0) + 2)
-    mavlink_msg_mission_ack_send t'4 t'5 t'6 (UInt32.toUInt8 ((3 : UInt32))) t'7
-    return ()
-  MissionItemProtocol.handle_mission_request_list prot this (fp + 0) msg
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_request_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 3
-  let r ← GCS_MAVLINK.handle_mission_request_list.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_count : void (const mavlink_message_t &)`, `GCS_Common.cpp:783-800`. -/
-partial def GCS_MAVLINK.handle_mission_count.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_count_t.__mavlink_mission_count_t (fp + 0)
-  mavlink_msg_mission_count_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
-  let mut prot : UInt64 := t'3
-  if (prot == (0 : UInt64)) then
-    let t'4 ← PMem.ldU32 (this + 40)
-    let t'5 ← PMem.ldU32 (msg + 8)
-    let t'6 ← PMem.ldU8 (msg + 12)
-    let t'7 ← PMem.ldU8 ((fp + 0) + 4)
-    mavlink_msg_mission_ack_send t'4 t'5 t'6 (UInt32.toUInt8 ((3 : UInt32))) t'7
-    return ()
-  MissionItemProtocol.handle_mission_count prot this (fp + 0) msg
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_count (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 6
-  let r ← GCS_MAVLINK.handle_mission_count.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::handle_mission_clear_all : void (const mavlink_message_t &)`, `GCS_Common.cpp:805-819`. -/
-partial def GCS_MAVLINK.handle_mission_clear_all.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  __mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t (fp + 0)
-  mavlink_msg_mission_clear_all_decode msg (fp + 0)
-  let t'1 ← PMem.ldU8 ((fp + 0) + 2)
-  let mut mission_type : UInt32 := UInt8.toUInt32 (t'1)
-  let t'2 ← gcs
-  let t'3 ← GCS.get_prot_for_mission_type t'2 mission_type
-  let mut prot : UInt64 := t'3
-  if (prot == (0 : UInt64)) then
-    GCS_MAVLINK.send_mission_ack this msg mission_type (3 : UInt32)
-    return ()
-  MissionItemProtocol.handle_mission_clear_all prot this msg
-  return ()
-
-partial def GCS_MAVLINK.handle_mission_clear_all (this : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 3
-  let r ← GCS_MAVLINK.handle_mission_clear_all.body fp this msg
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_command_long_t::__mavlink_command_long_t : void () noexcept`, `mavlink_msg_command_long.h:9-?`. -/
-partial def __mavlink_command_long_t.__mavlink_command_long_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_command_long_decode : void (const mavlink_message_t *, mavlink_command_long_t *)`, `mavlink_msg_command_long.h:513-537`. -/
-partial def mavlink_msg_command_long_decode (msg : UInt64) (command_long : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut command_long := command_long
-  mavlink_msg_decode_target msg command_long (Int8.toUInt8 (Int32.toInt8 ((33 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
-  return ()
-
-/-- C++ `GCS_MAVLINK::try_command_long_as_command_int : MAV_RESULT (const mavlink_command_long_t &, const mavlink_message_t &)`, `GCS_Common.cpp:5301-5331`. -/
-partial def GCS_MAVLINK.try_command_long_as_command_int.body (fp : UInt64) (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU16 (packet + 28)
-  let t'2 ← GCS_MAVLINK_Copter.command_int_only this (UInt16.toUInt32 (t'1))
-  if t'2 then
-    return (8 : UInt32)
-  PMem.stU32 (fp + 0) (3 : UInt32)
-  let t'3 ← PMem.ldU16 (packet + 28)
-  let t'4 ← GCS_MAVLINK.command_long_stores_location (UInt16.toUInt32 (t'3))
-  if t'4 then
-    let t'5 ← PMem.ldU16 (packet + 28)
-    let t'6 ← GCS_MAVLINK.mav_frame_for_command_long this (fp + 0) (UInt16.toUInt32 (t'5))
-    if !t'6 then
-      return (8 : UInt32)
-  __mavlink_command_int_t.__mavlink_command_int_t (fp + 8)
-  let t'7 ← PMem.ldU32 (fp + 0)
-  GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT this packet (fp + 8) t'7
-  let t'8 ← GCS_MAVLINK_Copter.handle_command_int_packet this (fp + 8) msg
-  return t'8
-
-partial def GCS_MAVLINK.try_command_long_as_command_int (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 44
-  let r ← GCS_MAVLINK.try_command_long_as_command_int.body fp this packet msg
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_msg_command_ack_send : void (mavlink_channel_t, uint16_t, uint8_t, uint8_t, int32_t, uint32_t, uint8_t)`, `mavlink_msg_command_ack.h:244-267`. -/
-partial def mavlink_msg_command_ack_send.body (fp : UInt64) (chan : UInt32) (command : UInt16) (result : UInt8) (progress : UInt8) (result_param2 : Int32) (target_system : UInt32) (target_component : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut command := command
-  let mut result := result
-  let mut progress := progress
-  let mut result_param2 := result_param2
-  let mut target_system := target_system
-  let mut target_component := target_component
-  __mavlink_command_ack_t.__mavlink_command_ack_t (fp + 0)
-  PMem.stU16 (fp + 0) command
-  PMem.stU8 ((fp + 0) + 2) result
-  PMem.stU8 ((fp + 0) + 3) progress
-  PMem.stI32 ((fp + 0) + 4) result_param2
-  let t'1 ← mavlink_msg_target_field target_system
-  PMem.stU8 ((fp + 0) + 8) t'1
-  PMem.stU8 ((fp + 0) + 9) target_component
-  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((77 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((10 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((143 : Int32)))) target_system
-  return ()
-
-partial def mavlink_msg_command_ack_send (chan : UInt32) (command : UInt16) (result : UInt8) (progress : UInt8) (result_param2 : Int32) (target_system : UInt32) (target_component : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 12
-  let r ← mavlink_msg_command_ack_send.body fp chan command result progress result_param2 target_system target_component
-  PMem.leave fp
-  return r
-
-/-- C++ `camera_command_result_param2 : uint8_t (const __mavlink_command_long_t &, MAV_RESULT)`, `GCS_Common.cpp:5262-5271`. -/
-partial def camera_command_result_param2 (packet : UInt64) (result : UInt32) : PMem.M UInt8 := do
-  let mut result := result
-  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-
-/-- C++ `__mavlink_command_int_t::__mavlink_command_int_t : void () noexcept`, `mavlink_msg_command_int.h:9-?`. -/
-partial def __mavlink_command_int_t.__mavlink_command_int_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_command_int_decode : void (const mavlink_message_t *, mavlink_command_int_t *)`, `mavlink_msg_command_int.h:567-593`. -/
-partial def mavlink_msg_command_int_decode (msg : UInt64) (command_int : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut command_int := command_int
-  mavlink_msg_decode_target msg command_int (Int8.toUInt8 (Int32.toInt8 ((35 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
-  return ()
-
-/-- C++ `GCS_MAVLINK_Copter::handle_command_int_packet : MAV_RESULT (const mavlink_command_int_t &, const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:470-557`. -/
-partial def GCS_MAVLINK_Copter.handle_command_int_packet (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU16 (packet + 28)
-  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
-  if sw'2 == (115 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_CONDITION_YAW"
-    return (default : UInt32)
-  else if sw'2 == (178 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_CHANGE_SPEED"
-    return (default : UInt32)
-  else if sw'2 == (192 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_command_int_do_reposition"
-    return (default : UInt32)
-  else if sw'2 == (193 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_command_pause_continue"
-    return (default : UInt32)
-  else if sw'2 == (209 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_MOTOR_TEST"
-    return (default : UInt32)
-  else if sw'2 == (22 : Int32) || sw'2 == (84 : Int32) then
-    return (← PMem.answer "takeoff").toUInt32
-  else if sw'2 == (42003 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_PAUSE_CLICK"
-    return (default : UInt32)
-  else if sw'2 == (42002 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_HOLD"
-    return (default : UInt32)
-  else if sw'2 == (42001 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_CLICK"
-    return (default : UInt32)
-  else if sw'2 == (300 : Int32) then
-    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_MISSION_START"
-    return (default : UInt32)
-  else if sw'2 == (17 : Int32) then
-    PMem.unreached "Copter::set_mode"
-    if !(default : Bool) then
-      return (4 : UInt32)
-    return (0 : UInt32)
-  else if sw'2 == (20 : Int32) then
-    PMem.unreached "Copter::set_mode"
-    if !(default : Bool) then
-      return (4 : UInt32)
-    return (0 : UInt32)
-  else if sw'2 == (85 : Int32) || sw'2 == (21 : Int32) then
-    PMem.unreached "Copter::set_mode"
-    if !(default : Bool) then
-      return (4 : UInt32)
-    return (0 : UInt32)
-  else if sw'2 == (188 : Int32) then
-    PMem.unreached "ModeAuto::return_path_start_auto_RTL"
-    if (default : Bool) then
-      return (0 : UInt32)
-    return (4 : UInt32)
-  else if sw'2 == (189 : Int32) then
-    PMem.unreached "ModeAuto::jump_to_landing_sequence_auto_RTL"
-    if (default : Bool) then
-      return (0 : UInt32)
-    return (4 : UInt32)
-  else
-    let t'3 ← GCS_MAVLINK.handle_command_int_packet this packet msg
-    return t'3
-
-/-- C++ `camera_command_result_param2 : uint8_t (const __mavlink_command_int_t &, MAV_RESULT)`, `GCS_Common.cpp:5262-5271`. -/
-partial def camera_command_result_param2'2 (packet : UInt64) (result : UInt32) : PMem.M UInt8 := do
-  let mut result := result
-  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-
-/-- C++ `__mavlink_request_data_stream_t::__mavlink_request_data_stream_t : void () noexcept`, `mavlink_msg_request_data_stream.h:9-?`. -/
-partial def __mavlink_request_data_stream_t.__mavlink_request_data_stream_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_request_data_stream_decode : void (const mavlink_message_t *, mavlink_request_data_stream_t *)`, `mavlink_msg_request_data_stream.h:351-369`. -/
-partial def mavlink_msg_request_data_stream_decode (msg : UInt64) (request_data_stream : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut request_data_stream := request_data_stream
-  mavlink_msg_decode_target msg request_data_stream (Int8.toUInt8 (Int32.toInt8 ((6 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
-  return ()
-
-/-- C++ `GCS_MAVLINK::persist_streamrates : bool () const`, `functor.h:544-?`. -/
-partial def GCS_MAVLINK.persist_streamrates (this : UInt64) : PMem.M Bool := do
-  return false
-
-/-- C++ `AP_ParamTBase<short, 2>::set_and_save_ifchanged : void (const short &)`, `<built-in>:91-100`. -/
-partial def AP_ParamTBase'short_2.set_and_save_ifchanged (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI16 v
-  let t'2 ← PMem.ldI16 this
-  if ((Int16.toInt32 (t'1)) == (Int16.toInt32 (t'2))) then
-    return ()
-  AP_ParamTBase'short_2.set this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `__mavlink_system_time_t::__mavlink_system_time_t : void () noexcept`, `mavlink_msg_system_time.h:9-?`. -/
-partial def __mavlink_system_time_t.__mavlink_system_time_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_system_time_decode : void (const mavlink_message_t *, mavlink_system_time_t *)`, `mavlink_msg_system_time.h:280-291`. -/
-partial def mavlink_msg_system_time_decode.body (fp : UInt64) (msg : UInt64) (system_time : UInt64) : PMem.M Unit := do
-  PMem.stU64 (fp + 0) msg
-  let mut system_time := system_time
-  let t'1 ← PMem.ldU64 (fp + 0)
-  let t'2 ← PMem.ldU8 (t'1 + 3)
-  let mut c'3 : Int32 := default
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) < (12 : Int32))) then
-    let t'4 ← PMem.ldU64 (fp + 0)
-    let t'5 ← PMem.ldU8 (t'4 + 3)
-    c'3 := UInt32.toInt32 (UInt8.toUInt32 (t'5))
-  else
-    c'3 := (12 : Int32)
-  let mut len : UInt8 := Int8.toUInt8 (Int32.toInt8 (c'3))
-  let t'6 ← PMem.memset system_time (0 : Int32) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
-  discard <| pure (t'6)
-  let t'7 ← PMem.ldU64 (fp + 0)
-  let t'8 ← PMem.memcpy system_time ((t'7 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) (UInt8.toUInt64 (len))
-  discard <| pure (t'8)
-  return ()
-
-partial def mavlink_msg_system_time_decode (msg : UInt64) (system_time : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 8
-  let r ← mavlink_msg_system_time_decode.body fp msg system_time
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::send_parameter_async_replies : uint8_t ()`, `GCS_Param.cpp:471-522`. -/
-partial def GCS_MAVLINK.send_parameter_async_replies.body (fp : UInt64) (this : UInt64) : PMem.M UInt8 := do
-  let mut async_replies_sent_count : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  repeat
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (async_replies_sent_count))) < (5 : Int32)))) then break
-    GCS_MAVLINK.pending_param_reply.pending_param_reply (fp + 0)
-    let t'1 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.peek (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/ (fp + 0)
-    if !t'1 then
-      return async_replies_sent_count
-    let mut required_space : UInt16 := default  -- uninitialized in C
-    let t'2 ← PMem.ldU32 ((fp + 0) + 44)
-    if ((UInt32.toInt32 (t'2)) == (UInt32.toInt32 ((0 : UInt32)))) then
-      let t'3 ← PMem.ldU32 (this + 40)
-      let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-      let t'5 := UInt32.toUInt16 ((Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (25 : Int32)))))
-      required_space := t'5
-    else
-      let t'6 ← PMem.ldU32 (this + 40)
-      let t'7 ← GCS_MAVLINK.packet_overhead_chan t'6
-      let t'8 := UInt32.toUInt16 ((Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (21 : Int32)))))
-      required_space := t'8
-    let t'9 ← PMem.ldU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/
-    let mut saved_reserve_param_space_start_ms : UInt32 := t'9
-    let t'10 := Int32.toUInt32 ((0 : Int32))
-    PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ t'10
-    let t'11 ← GCS_MAVLINK.txspace this
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'11))) < (UInt32.toInt32 (UInt16.toUInt32 (required_space))))) then
-      GCS_MAVLINK.out_of_space_to_send this
-      let t'12 := ((← get).clockUs / 1000).toUInt32
-      PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ t'12
-      return async_replies_sent_count
-    PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ saved_reserve_param_space_start_ms
-    let t'13 ← PMem.ldU32 ((fp + 0) + 44)
-    if ((UInt32.toInt32 (t'13)) == (UInt32.toInt32 ((0 : UInt32)))) then
-      let t'14 ← PMem.ldU32 (fp + 0)
-      let t'15 ← PMem.ldF32 ((fp + 0) + 4)
-      let t'16 ← PMem.ldU32 ((fp + 0) + 8)
-      let t'17 ← GCS_MAVLINK.mav_param_type t'16
-      let t'18 ← PMem.ldU16 ((fp + 0) + 14)
-      let t'19 ← PMem.ldI16 ((fp + 0) + 12)
-      mavlink_msg_param_value_send t'14 ((fp + 0) + 16) t'15 (UInt32.toUInt8 (t'17)) t'18 (Int16.toUInt16 (t'19))
-    else
-      let t'20 ← PMem.ldU32 ((fp + 0) + 44)
-      GCS_MAVLINK.send_param_error'2 this (fp + 0) t'20
-    let t'21 := ((← get).clockUs / 1000).toUInt32
-    PMem.stU32 (this + 500) t'21
-    let t'22 := async_replies_sent_count
-    let t'23 := (t'22 + 1)
-    async_replies_sent_count := t'23
-    let t'24 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.pop (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/
-    if !t'24 then
-      return async_replies_sent_count
-  return async_replies_sent_count
-
-partial def GCS_MAVLINK.send_parameter_async_replies (this : UInt64) : PMem.M UInt8 := do
-  let fp ← PMem.enter 48
-  let r ← GCS_MAVLINK.send_parameter_async_replies.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::have_flow_control : bool ()`, `GCS_Param.cpp:105-121`. -/
-partial def GCS_MAVLINK.have_flow_control (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 (this + 480)
-  if (t'1 == (0 : UInt64)) then
-    return false
-  if false then
-    return true
-  let t'2 ← PMem.ldU32 (this + 40)
-  if ((UInt32.toInt32 (t'2)) == (UInt32.toInt32 ((0 : UInt32)))) then
-    return false
-  return false
-
-/-- C++ `GCS_MAVLINK::last_txbuf_is_greater : bool (uint8_t)`, `GCS_Common.cpp:895-902`. -/
-partial def GCS_MAVLINK.last_txbuf_is_greater (txbuf_limit : UInt8) : PMem.M Bool := do
-  let mut txbuf_limit := txbuf_limit
-  let t'1 ← PMem.ldU32 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 8)
-  if (decide (((((← get).clockUs / 1000).toUInt32) - t'1) > (Int32.toUInt32 ((5000 : Int32))))) then
-    return true
-  let t'2 ← PMem.ldU8 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 12)
-  return (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) > (UInt32.toInt32 (UInt8.toUInt32 (txbuf_limit)))))
-
-/-- C++ `mavlink_msg_param_value_send : void (mavlink_channel_t, const char *, float, uint8_t, uint16_t, uint16_t)`, `mavlink_msg_param_value.h:225-244`. -/
-partial def mavlink_msg_param_value_send.body (fp : UInt64) (chan : UInt32) (param_id : UInt64) (param_value : Binary32) (param_type : UInt8) (param_count : UInt16) (param_index : UInt16) : PMem.M Unit := do
-  let mut chan := chan
-  let mut param_id := param_id
-  let mut param_value := param_value
-  let mut param_type := param_type
-  let mut param_count := param_count
-  let mut param_index := param_index
-  __mavlink_param_value_t.__mavlink_param_value_t (fp + 0)
-  PMem.stF32 (fp + 0) param_value
-  PMem.stU16 ((fp + 0) + 4) param_count
-  PMem.stU16 ((fp + 0) + 6) param_index
-  PMem.stU8 ((fp + 0) + 24) param_type
-  mav_array_memcpy ((fp + 0) + 8) param_id ((1 : UInt64) * (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))))
-  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((22 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((25 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((25 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((220 : Int32))))
-  return ()
-
-partial def mavlink_msg_param_value_send (chan : UInt32) (param_id : UInt64) (param_value : Binary32) (param_type : UInt8) (param_count : UInt16) (param_index : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 28
-  let r ← mavlink_msg_param_value_send.body fp chan param_id param_value param_type param_count param_index
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::mav_param_type : MAV_PARAM_TYPE (enum ap_var_type)`, `GCS_MAVLink.cpp:119-132`. -/
-partial def GCS_MAVLINK.mav_param_type (t : UInt32) : PMem.M UInt32 := do
-  let mut t := t
-  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((1 : UInt32)))) then
-    return (2 : UInt32)
-  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((2 : UInt32)))) then
-    return (4 : UInt32)
-  if ((UInt32.toInt32 (t)) == (UInt32.toInt32 ((3 : UInt32)))) then
-    return (6 : UInt32)
-  return (9 : UInt32)
-
-/-- C++ `mavlink_msg_mission_item_reached_send : void (mavlink_channel_t, uint16_t)`, `mavlink_msg_mission_item_reached.h:179-192`. -/
-partial def mavlink_msg_mission_item_reached_send.body (fp : UInt64) (chan : UInt32) (seq : UInt16) : PMem.M Unit := do
-  let mut chan := chan
-  let mut seq := seq
-  __mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t (fp + 0)
-  PMem.stU16 (fp + 0) seq
-  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((46 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((11 : Int32))))
-  return ()
-
-partial def mavlink_msg_mission_item_reached_send (chan : UInt32) (seq : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← mavlink_msg_mission_item_reached_send.body fp chan seq
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::try_send_queued_message_for_type : void (MAV_MISSION_TYPE) const`, `GCS_Common.cpp:5924-5930`. -/
-partial def GCS.try_send_queued_message_for_type (this : UInt64) (type' : UInt32) : PMem.M Unit := do
-  let mut type' := type'
-  let t'1 ← GCS.get_prot_for_mission_type this type'
-  let mut prot : UInt64 := t'1
-  if (prot == (0 : UInt64)) then
-    return ()
-  MissionItemProtocol.queued_request_send prot
-  return ()
-
-/-- C++ `mavlink_msg_available_modes_monitor_send : void (mavlink_channel_t, uint8_t)`, `mavlink_msg_available_modes_monitor.h:179-192`. -/
-partial def mavlink_msg_available_modes_monitor_send.body (fp : UInt64) (chan : UInt32) (seq : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut seq := seq
-  __mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t (fp + 0)
-  PMem.stU8 (fp + 0) seq
-  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((437 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
-  return ()
-
-partial def mavlink_msg_available_modes_monitor_send (chan : UInt32) (seq : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 1
-  let r ← mavlink_msg_available_modes_monitor_send.body fp chan seq
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS::sysid_mygcs_seen : void (uint32_t)`, `sitl.h:1205-1207`. -/
-partial def GCS.sysid_mygcs_seen (this : UInt64) (seen_time_ms : UInt32) : PMem.M Unit := do
-  let mut seen_time_ms := seen_time_ms
-  PMem.stU32 (this + 432) seen_time_ms
-  return ()
-
-/-- C++ `GCS_MAVLINK_Copter::params_ready : bool () const`, `GCS_MAVLink_Copter.cpp:359-369`. -/
-partial def GCS_MAVLINK_Copter.params_ready (this : UInt64) : PMem.M Bool := do
-  if false then
-    return true
-  let t'1 ← PMem.ldB (((0x86d8 : UInt64) /- &copter -/ + 9448) + 22)
+/-- C++ `AP_Mission::get_singleton : AP_Mission *()`, `functor.h:500-503`. -/
+def AP_Mission.get_singleton  : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/
   return t'1
 
-/-- C++ `__mavlink_param_request_list_t::__mavlink_param_request_list_t : void () noexcept`, `mavlink_msg_param_request_list.h:9-?`. -/
-partial def __mavlink_param_request_list_t.__mavlink_param_request_list_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_param_request_list_decode : void (const mavlink_message_t *, mavlink_param_request_list_t *)`, `mavlink_msg_param_request_list.h:270-285`. -/
-partial def mavlink_msg_param_request_list_decode (msg : UInt64) (param_request_list : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut param_request_list := param_request_list
-  mavlink_msg_decode_target msg param_request_list (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
-  return ()
-
-/-- C++ `__mavlink_param_set_t::__mavlink_param_set_t : void () noexcept`, `mavlink_msg_param_set.h:9-?`. -/
-partial def __mavlink_param_set_t.__mavlink_param_set_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_param_set_decode : void (const mavlink_message_t *, mavlink_param_set_t *)`, `mavlink_msg_param_set.h:341-359`. -/
-partial def mavlink_msg_param_set_decode (msg : UInt64) (param_set : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut param_set := param_set
-  mavlink_msg_decode_target msg param_set (Int8.toUInt8 (Int32.toInt8 ((23 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32))))
-  return ()
-
-/-- C++ `GCS_MAVLINK::send_param_error : void (const mavlink_message_t &, const mavlink_param_set_t &, MAV_PARAM_ERROR)`, `GCS_Param.cpp:430-445`. -/
-partial def GCS_MAVLINK.send_param_error.body (fp : UInt64) (this : UInt64) (msg : UInt64) (param_set : UInt64) (error : UInt32) : PMem.M Unit := do
-  let mut error := error
-  let t'1 ← PMem.ldU32 (this + 40)
-  let t'2 ← comm_get_txspace t'1
-  let t'3 ← PMem.ldU32 (this + 40)
-  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-  let mut c'5 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (21 : Int32)))))) then
-    c'5 := true
-  else
-    let t'6 ← PMem.ldU32 (this + 40)
-    gcs_out_of_space_to_send t'6
-    c'5 := false
-  if !c'5 then
-    return ()
-  let t'7 ← strncpy_noterm (fp + 0) (param_set + 6) ((16 : UInt64) / (1 : UInt64))
-  discard <| pure (t'7)
-  let t'8 ← PMem.ldU32 (this + 40)
-  let t'9 ← PMem.ldU32 (msg + 8)
-  let t'10 ← PMem.ldU8 (msg + 12)
-  mavlink_msg_param_error_send t'8 t'9 t'10 (fp + 0) (Int32.toInt16 ((-(1 : Int32)))) (UInt32.toUInt8 (error))
-  return ()
-
-partial def GCS_MAVLINK.send_param_error (this : UInt64) (msg : UInt64) (param_set : UInt64) (error : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 16
-  let r ← GCS_MAVLINK.send_param_error.body fp this msg param_set error
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::allow_set_via_mavlink : bool (uint16_t) const`, `AP_Param.cpp:1476-1498`. -/
-partial def AP_Param.allow_set_via_mavlink (this : UInt64) (flags : UInt16) : PMem.M Bool := do
-  let mut flags := flags
-  let t'1 ← AP_Param.is_read_only this
-  if t'1 then
-    return false
-  if ((UInt32.toInt32 (UInt16.toUInt32 (flags))) &&& ((1 : Int32) <<< (5 : Int32))) != (0 : Int32) then
-    PMem.unreached "AP_BoardConfig::allow_set_internal_parameters"
-    if !(default : Bool) then
-      return false
-  let t'2 ← gcs
-  let t'3 ← GCS.get_allow_param_set t'2
-  if !t'3 then
-    return false
-  return true
-
-/-- C++ `GCS::get_allow_param_set : bool () const`, `AP_Common.h:1264-1266`. -/
-partial def GCS.get_allow_param_set (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldB (this + 436)
+/-- C++ `AP::mission : AP_Mission &()`, `AP_Mission.cpp:3301-3304`. -/
+def AP.mission  : PMem.M UInt64 := do
+  let t'1 ← AP_Mission.get_singleton
   return t'1
 
-/-- C++ `GCS_MAVLINK::send_parameter_value : void (const char *, ap_var_type, float)`, `GCS_Param.cpp:332-344`. -/
-partial def GCS_MAVLINK.send_parameter_value (this : UInt64) (param_name : UInt64) (param_type : UInt32) (param_value : Binary32) : PMem.M Unit := do
-  let mut param_name := param_name
-  let mut param_type := param_type
-  let mut param_value := param_value
-  let t'1 ← PMem.ldU32 (this + 40)
-  let t'2 ← comm_get_txspace t'1
-  let t'3 ← PMem.ldU32 (this + 40)
-  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-  let mut c'5 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (25 : Int32)))))) then
-    c'5 := true
-  else
-    let t'6 ← PMem.ldU32 (this + 40)
-    gcs_out_of_space_to_send t'6
-    c'5 := false
-  if !c'5 then
-    return ()
-  let t'7 ← PMem.ldU32 (this + 40)
-  let t'8 ← GCS_MAVLINK.mav_param_type param_type
-  let t'9 ← AP_Param.count_parameters
-  mavlink_msg_param_value_send t'7 param_name param_value (UInt32.toUInt8 (t'8)) t'9 (Int16.toUInt16 (Int32.toInt16 ((-(1 : Int32)))))
+/-- `__mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t.pure' (this : UInt64) : Id Unit := do
   return ()
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::space : uint32_t () const`, `AP_Common.h:163-165`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_request.space (this : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.space t'1
-  return UInt64.toUInt32 (((UInt32.toUInt64 (t'2)) / (32 : UInt64)))
-
-/-- C++ `__mavlink_param_request_read_t::__mavlink_param_request_read_t : void () noexcept`, `mavlink_msg_param_request_read.h:9-?`. -/
-partial def __mavlink_param_request_read_t.__mavlink_param_request_read_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_param_request_read_decode : void (const mavlink_message_t *, mavlink_param_request_read_t *)`, `mavlink_msg_param_request_read.h:314-331`. -/
-partial def mavlink_msg_param_request_read_decode (msg : UInt64) (param_request_read : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut param_request_read := param_request_read
-  mavlink_msg_decode_target msg param_request_read (Int8.toUInt8 (Int32.toInt8 ((20 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
-  return ()
-
-/-- C++ `MIN : auto (const unsigned long &, const unsigned long &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
-partial def MIN'3 (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU64 one
-  let t'2 ← PMem.ldU64 two
-  let mut c'3 : UInt64 := 0
-  if (decide (t'1 < t'2)) then
-    c'3 := one
-  else
-    c'3 := two
-  return c'3
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::push : bool (const GCS_MAVLINK::pending_param_request &)`, `AP_Common.h:175-180`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_request.push (this : UInt64) (object : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.space t'1
-  if (decide ((UInt32.toUInt64 (t'2)) < (32 : UInt64))) then
-    return false
-  let t'3 ← PMem.ldU64 this
-  let t'4 ← ByteBuffer.write t'3 object (UInt64.toUInt32 ((32 : UInt64)))
-  return ((UInt32.toUInt64 (t'4)) == (32 : UInt64))
 
 /-- C++ `__mavlink_mission_write_partial_list_t::__mavlink_mission_write_partial_list_t : void () noexcept`, `mavlink_msg_mission_write_partial_list.h:9-?`. -/
-partial def __mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t (this : UInt64) : PMem.M Unit := do
-  return ()
+def __mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t.pure' this)
 
 /-- C++ `mavlink_msg_mission_write_partial_list_decode : void (const mavlink_message_t *, mavlink_mission_write_partial_list_t *)`, `mavlink_msg_mission_write_partial_list.h:351-369`. -/
-partial def mavlink_msg_mission_write_partial_list_decode (msg : UInt64) (mission_write_partial_list : UInt64) : PMem.M Unit := do
+def mavlink_msg_mission_write_partial_list_decode (msg : UInt64) (mission_write_partial_list : UInt64) : PMem.M Unit := do
   let mut msg := msg
   let mut mission_write_partial_list := mission_write_partial_list
   mavlink_msg_decode_target msg mission_write_partial_list (Int8.toUInt8 (Int32.toInt8 ((7 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32))))
   return ()
 
 /-- C++ `GCS::get_prot_for_mission_type : MissionItemProtocol *(const MAV_MISSION_TYPE) const`, `GCS_Common.cpp:640-646`. -/
-partial def GCS.get_prot_for_mission_type (this : UInt64) (mission_type : UInt32) : PMem.M UInt64 := do
+def GCS.get_prot_for_mission_type (this : UInt64) (mission_type : UInt32) : PMem.M UInt64 := do
   let mut mission_type := mission_type
   if (decide ((UInt32.toUInt64 (mission_type)) ≥ ((24 : UInt64) / (8 : UInt64)))) then
     return (0 : UInt64)
   let t'1 ← PMem.ldU64 ((0xbb70 : UInt64) /- &GCS::missionitemprotocols -/ + ((UInt64.toInt64 (UInt32.toUInt64 (mission_type))) * 8).toUInt64)
   return t'1
 
+/-- `__mavlink_mission_ack_t.__mavlink_mission_ack_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_ack_t.__mavlink_mission_ack_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_ack_t::__mavlink_mission_ack_t : void () noexcept`, `mavlink_msg_mission_ack.h:9-?`. -/
+def __mavlink_mission_ack_t.__mavlink_mission_ack_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_ack_t.__mavlink_mission_ack_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_ack_send : void (mavlink_channel_t, uint32_t, uint8_t, uint8_t, uint8_t)`, `mavlink_msg_mission_ack.h:218-237`. -/
+def mavlink_msg_mission_ack_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (type' : UInt8) (mission_type : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut target_system := target_system
+  let mut target_component := target_component
+  let mut type' := type'
+  let mut mission_type := mission_type
+  __mavlink_mission_ack_t.__mavlink_mission_ack_t (fp + 0)
+  let t'1 ← mavlink_msg_target_field target_system
+  PMem.stU8 (fp + 0) t'1
+  PMem.stU8 ((fp + 0) + 1) target_component
+  PMem.stU8 ((fp + 0) + 2) type'
+  PMem.stU8 ((fp + 0) + 3) mission_type
+  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((47 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((153 : Int32)))) target_system
+  return ()
+
+def mavlink_msg_mission_ack_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (type' : UInt8) (mission_type : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← mavlink_msg_mission_ack_send.body fp chan target_system target_component type' mission_type
+  PMem.leave fp
+  return r
+
 /-- C++ `GCS_MAVLINK::send_mission_ack : void (const mavlink_message_t &, MAV_MISSION_TYPE, MAV_MISSION_RESULT) const`, `AP_Common.h:221-230`. -/
-partial def GCS_MAVLINK.send_mission_ack (this : UInt64) (msg : UInt64) (mission_type : UInt32) (result : UInt32) : PMem.M Unit := do
+def GCS_MAVLINK.send_mission_ack (this : UInt64) (msg : UInt64) (mission_type : UInt32) (result : UInt32) : PMem.M Unit := do
   let mut mission_type := mission_type
   let mut result := result
   let t'1 ← PMem.ldU32 (this + 40)
@@ -10195,8 +7116,161 @@ partial def GCS_MAVLINK.send_mission_ack (this : UInt64) (msg : UInt64) (mission
   mavlink_msg_mission_ack_send t'7 t'8 t'9 (UInt32.toUInt8 (result)) (UInt32.toUInt8 (mission_type))
   return ()
 
+/-- `MissionItemProtocol_Waypoints.mission_type` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol_Waypoints.mission_type.pure' (this : UInt64) : Id UInt32 := do
+  return (0 : UInt32)
+
+/-- C++ `MissionItemProtocol_Waypoints::mission_type : MAV_MISSION_TYPE () const`, `MissionItemProtocol_Waypoints.h:12-14`. -/
+def MissionItemProtocol_Waypoints.mission_type (this : UInt64) : PMem.M UInt32 :=
+  pure (_root_.GCS_lib.MissionItemProtocol_Waypoints.mission_type.pure' this)
+
+/-- C++ `MissionItemProtocol::send_mission_ack : void (const GCS_MAVLINK &, const mavlink_message_t &, MAV_MISSION_RESULT) const`, `MissionItemProtocol.cpp:341-351`. -/
+def MissionItemProtocol.send_mission_ack (this : UInt64) (_link : UInt64) (msg : UInt64) (result : UInt32) : PMem.M Unit := do
+  let mut result := result
+  let t'1 ← GCS_MAVLINK.get_chan _link
+  let t'2 ← comm_get_txspace t'1
+  let t'3 ← GCS_MAVLINK.get_chan _link
+  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+  let mut c'5 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (4 : Int32)))))) then
+    c'5 := true
+  else
+    let t'6 ← GCS_MAVLINK.get_chan _link
+    gcs_out_of_space_to_send t'6
+    c'5 := false
+  if !c'5 then
+    return ()
+  let t'7 ← GCS_MAVLINK.get_chan _link
+  let t'8 ← PMem.ldU32 (msg + 8)
+  let t'9 ← PMem.ldU8 (msg + 12)
+  let t'10 ← MissionItemProtocol_Waypoints.mission_type this
+  mavlink_msg_mission_ack_send t'7 t'8 t'9 (UInt32.toUInt8 (result)) (UInt32.toUInt8 (t'10))
+  return ()
+
+/-- C++ `GCS_MAVLINK::sending_mavlink1 : bool () const`, `GCS_Common.cpp:2164-2167`. -/
+def GCS_MAVLINK.sending_mavlink1 (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU8 ((this + 408) + 16)
+  return (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) &&& (2 : Int32)) != (0 : Int32))
+
+/-- C++ `MissionItemProtocol::mavlink2_requirement_met : bool (const GCS_MAVLINK &, const mavlink_message_t &) const`, `MissionItemProtocol.cpp:41-53`. -/
+def MissionItemProtocol.mavlink2_requirement_met (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Bool := do
+  let t'1 ← MissionItemProtocol_Waypoints.mission_type this
+  if ((UInt32.toInt32 (t'1)) == (UInt32.toInt32 ((0 : UInt32)))) then
+    return true
+  let t'2 ← GCS_MAVLINK.sending_mavlink1 _link
+  if !t'2 then
+    return true
+  MissionItemProtocol.send_mission_ack this _link msg (3 : UInt32)
+  return false
+
+/-- C++ `AP_Mission::num_commands : uint16_t () const`, `AP_Common.h:530-533`. -/
+def AP_Mission.num_commands (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'2 ← PMem.ldI16 t'1
+  return Int16.toUInt16 (t'2)
+
+/-- C++ `MissionItemProtocol_Waypoints::item_count : uint16_t () const`, `MissionItemProtocol_Waypoints.cpp:94-96`. -/
+def MissionItemProtocol_Waypoints.item_count (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU64 (this + 48)
+  let t'2 ← AP_Mission.num_commands t'1
+  return t'2
+
+/-- `MissionItemProtocol.allocate_update_resources` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol.allocate_update_resources.pure' (this : UInt64) : Id UInt32 := do
+  return (0 : UInt32)
+
+/-- C++ `MissionItemProtocol::allocate_update_resources : MAV_MISSION_RESULT ()`, `AP_Common.h:115-117`. -/
+def MissionItemProtocol.allocate_update_resources (this : UInt64) : PMem.M UInt32 :=
+  pure (_root_.GCS_lib.MissionItemProtocol.allocate_update_resources.pure' this)
+
+/-- C++ `GCS_MAVLINK::is_streaming : bool () const`, `mavlink_msg_mission_ack.h:307-309`. -/
+def GCS_MAVLINK.is_streaming (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU8 (this + 728)
+  return ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8)))))
+
+/-- `Bitmask'102.validate` as a pure function of its arguments (it reads and writes no memory). -/
+def Bitmask'102.validate.pure' (this : UInt64) (bit : UInt16) : Id Bool := do
+  let mut bit := bit
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (bit))) ≥ (UInt32.toInt32 (UInt16.toUInt32 ((102 : UInt16)))))) then
+    return false
+  return true
+
+/-- C++ `Bitmask<102>::validate : bool (uint16_t) const`, `stdint.h:160-166`. -/
+def Bitmask'102.validate (this : UInt64) (bit : UInt16) : PMem.M Bool :=
+  pure (_root_.GCS_lib.Bitmask'102.validate.pure' this bit)
+
+/-- C++ `Bitmask<102>::set : void (uint16_t)`, `stdint.h:69-76`. -/
+def Bitmask'102.set (this : UInt64) (bit : UInt16) : PMem.M Unit := do
+  let mut bit := bit
+  let t'1 ← Bitmask'102.validate this bit
+  if !t'1 then
+    return ()
+  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
+  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
+  let t'2 := (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
+  let t'3 ← PMem.ldU32 t'2
+  let t'4 := (t'3 ||| ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs)))))))
+  PMem.stU32 t'2 t'4
+  return ()
+
+/-- C++ `GCS_MAVLINK::send_message : void (enum ap_message)`, `GCS_Common.cpp:1831-1853`. -/
+def GCS_MAVLINK.send_message (this : UInt64) (id : UInt8) : PMem.M Unit := do
+  let mut id := id
+  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
+  if sw'1 == (0 : Int32) then
+    let t'2 ← GCS_MAVLINK.is_streaming this
+    if t'2 then
+      let t'3 := (0xbe88 : UInt64) /- &GCS_MAVLINK::chan_is_streaming -/
+      let t'4 ← PMem.ldU32 t'3
+      let t'5 ← PMem.ldU32 (this + 40)
+      let t'6 := (t'4 ||| ((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'5)) - (UInt32.toInt32 ((0 : UInt32))))))))
+      PMem.stU32 t'3 t'6
+    else
+      let t'7 := (0xbe88 : UInt64) /- &GCS_MAVLINK::chan_is_streaming -/
+      let t'8 ← PMem.ldU32 t'7
+      let t'9 ← PMem.ldU32 (this + 40)
+      let t'10 := (t'8 &&& (~~~((1 : UInt32) <<< (Int32.toUInt32 (((UInt32.toInt32 (t'9)) - (UInt32.toInt32 ((0 : UInt32)))))))))
+      PMem.stU32 t'7 t'10
+  else
+    pure ()
+  Bitmask'102.set (this + 748) (UInt8.toUInt16 (id))
+  return ()
+
+/-- `MissionItemProtocol_Waypoints.next_item_ap_message_id` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol_Waypoints.next_item_ap_message_id.pure' (this : UInt64) : Id UInt8 := do
+  return (28 : UInt8)
+
+/-- C++ `MissionItemProtocol_Waypoints::next_item_ap_message_id : ap_message () const`, `MissionItemProtocol_Waypoints.h:37-39`. -/
+def MissionItemProtocol_Waypoints.next_item_ap_message_id (this : UInt64) : PMem.M UInt8 :=
+  pure (_root_.GCS_lib.MissionItemProtocol_Waypoints.next_item_ap_message_id.pure' this)
+
+/-- C++ `MissionItemProtocol::init_send_requests : void (GCS_MAVLINK &, const mavlink_message_t &, const int16_t, const int16_t)`, `MissionItemProtocol.cpp:9-30`. -/
+def MissionItemProtocol.init_send_requests (this : UInt64) (_link : UInt64) (msg : UInt64) (_request_first : Int16) (_request_last : Int16) : PMem.M Unit := do
+  let mut _request_first := _request_first
+  let mut _request_last := _request_last
+  let t'1 := ((← get).clockUs / 1000).toUInt32
+  PMem.stU32 (this + 36) t'1
+  PMem.stB (this + 8) true
+  let t'2 := Int16.toUInt16 (_request_first)
+  PMem.stU16 (this + 26) t'2
+  let t'3 := Int16.toUInt16 (_request_last)
+  PMem.stU16 (this + 24) t'3
+  let t'4 ← PMem.ldU32 (msg + 8)
+  PMem.stU32 (this + 28) t'4
+  let t'5 ← PMem.ldU8 (msg + 12)
+  PMem.stU8 (this + 32) t'5
+  PMem.stU64 (this + 16) _link
+  let t'6 := ((← get).clockUs / 1000).toUInt32
+  PMem.stU32 (this + 40) t'6
+  let t'7 ← MissionItemProtocol_Waypoints.next_item_ap_message_id this
+  let t'8 ← PMem.ldU64 (this + 16)
+  GCS_MAVLINK.send_message t'8 t'7
+  PMem.stB (this + 47) false
+  PMem.stB (this + 46) false
+  return ()
+
 /-- C++ `MissionItemProtocol::handle_mission_write_partial_list : void (GCS_MAVLINK &, const mavlink_message_t &, const mavlink_mission_write_partial_list_t &)`, `MissionItemProtocol.cpp:228-262`. -/
-partial def MissionItemProtocol.handle_mission_write_partial_list (this : UInt64) (_link : UInt64) (msg : UInt64) (packet : UInt64) : PMem.M Unit := do
+def MissionItemProtocol.handle_mission_write_partial_list (this : UInt64) (_link : UInt64) (msg : UInt64) (packet : UInt64) : PMem.M Unit := do
   let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
   if !t'1 then
     return ()
@@ -10229,23 +7303,93 @@ partial def MissionItemProtocol.handle_mission_write_partial_list (this : UInt64
   MissionItemProtocol.init_send_requests this _link msg t'12 t'13
   return ()
 
+/-- C++ `GCS_MAVLINK::handle_mission_write_partial_list : void (const mavlink_message_t &)`, `GCS_Common.cpp:831-843`. -/
+def GCS_MAVLINK.handle_mission_write_partial_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_write_partial_list_t.__mavlink_mission_write_partial_list_t (fp + 0)
+  mavlink_msg_mission_write_partial_list_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 6)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
+  let mut use_prot : UInt64 := t'3
+  if (use_prot == (0 : UInt64)) then
+    let t'4 ← PMem.ldU8 ((fp + 0) + 6)
+    GCS_MAVLINK.send_mission_ack this msg (UInt8.toUInt32 (t'4)) (3 : UInt32)
+    return ()
+  MissionItemProtocol.handle_mission_write_partial_list use_prot this msg (fp + 0)
+  return ()
+
+def GCS_MAVLINK.handle_mission_write_partial_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 8
+  let r ← GCS_MAVLINK.handle_mission_write_partial_list.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_item_int_t.__mavlink_mission_item_int_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_item_int_t.__mavlink_mission_item_int_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
 /-- C++ `__mavlink_mission_item_int_t::__mavlink_mission_item_int_t : void () noexcept`, `mavlink_msg_mission_item_int.h:9-?`. -/
-partial def __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (this : UInt64) : PMem.M Unit := do
+def __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_item_int_t.__mavlink_mission_item_int_t.pure' this)
+
+/-- `__mavlink_mission_item_t.__mavlink_mission_item_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_item_t.__mavlink_mission_item_t.pure' (this : UInt64) : Id Unit := do
   return ()
 
 /-- C++ `__mavlink_mission_item_t::__mavlink_mission_item_t : void () noexcept`, `mavlink_msg_mission_item.h:9-?`. -/
-partial def __mavlink_mission_item_t.__mavlink_mission_item_t (this : UInt64) : PMem.M Unit := do
-  return ()
+def __mavlink_mission_item_t.__mavlink_mission_item_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_item_t.__mavlink_mission_item_t.pure' this)
 
 /-- C++ `mavlink_msg_mission_item_decode : void (const mavlink_message_t *, mavlink_mission_item_t *)`, `mavlink_msg_mission_item.h:621-649`. -/
-partial def mavlink_msg_mission_item_decode (msg : UInt64) (mission_item : UInt64) : PMem.M Unit := do
+def mavlink_msg_mission_item_decode (msg : UInt64) (mission_item : UInt64) : PMem.M Unit := do
   let mut msg := msg
   let mut mission_item := mission_item
   mavlink_msg_decode_target msg mission_item (Int8.toUInt8 (Int32.toInt8 ((38 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((32 : Int32))))
   return ()
 
+/-- `AP_Mission.stored_in_location` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Mission.stored_in_location.pure' (id : UInt16) : Id Bool := do
+  let mut id := id
+  let sw'1 := UInt32.toInt32 (UInt16.toUInt32 (id))
+  if sw'1 == (16 : Int32) || sw'1 == (17 : Int32) || sw'1 == (18 : Int32) || sw'1 == (19 : Int32) || sw'1 == (21 : Int32) || sw'1 == (22 : Int32) || sw'1 == (30 : Int32) || sw'1 == (31 : Int32) || sw'1 == (82 : Int32) || sw'1 == (92 : Int32) || sw'1 == (179 : Int32) || sw'1 == (188 : Int32) || sw'1 == (189 : Int32) || sw'1 == (191 : Int32) || sw'1 == (195 : Int32) || sw'1 == (201 : Int32) || sw'1 == (84 : Int32) || sw'1 == (85 : Int32) || sw'1 == (94 : Int32) || sw'1 == (5001 : Int32) || sw'1 == (5002 : Int32) || sw'1 == (5003 : Int32) || sw'1 == (5004 : Int32) || sw'1 == (5000 : Int32) || sw'1 == (5100 : Int32) || sw'1 == (36 : Int32) then
+    return true
+  else
+    return false
+
+/-- C++ `AP_Mission::stored_in_location : bool (uint16_t)`, `AP_Mission.cpp:908-941`. -/
+def AP_Mission.stored_in_location (id : UInt16) : PMem.M Bool :=
+  pure (_root_.GCS_lib.AP_Mission.stored_in_location.pure' id)
+
+/-- `AP_Mission.cmd_has_location` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Mission.cmd_has_location.pure' (command : UInt16) : Id Bool := do
+  let mut command := command
+  let t'1 ← _root_.GCS_lib.AP_Mission.stored_in_location.pure' command
+  return t'1
+
+/-- C++ `AP_Mission::cmd_has_location : bool (const uint16_t)`, `AP_Mission.cpp:3100-3103`. -/
+def AP_Mission.cmd_has_location (command : UInt16) : PMem.M Bool :=
+  pure (_root_.GCS_lib.AP_Mission.cmd_has_location.pure' command)
+
+/-- `check_lat` as a pure function of its arguments (it reads and writes no memory). -/
+def check_lat.pure' (lat : Binary32) : Id Bool := do
+  let mut lat := lat
+  return (decide ((Binary32.abs lat) ≤ (Int32.toBinary32 ((90 : Int32)))))
+
+/-- C++ `check_lat : bool (float)`, `location.cpp:39-42`. -/
+def check_lat (lat : Binary32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.check_lat.pure' lat)
+
+/-- `check_lng` as a pure function of its arguments (it reads and writes no memory). -/
+def check_lng.pure' (lng : Binary32) : Id Bool := do
+  let mut lng := lng
+  return (decide ((Binary32.abs lng) ≤ (Int32.toBinary32 ((180 : Int32)))))
+
+/-- C++ `check_lng : bool (float)`, `location.cpp:43-46`. -/
+def check_lng (lng : Binary32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.check_lng.pure' lng)
+
 /-- C++ `AP_Mission::convert_MISSION_ITEM_to_MISSION_ITEM_INT : MAV_MISSION_RESULT (const mavlink_mission_item_t &, mavlink_mission_item_int_t &)`, `AP_Mission.cpp:1614-1658`. -/
-partial def AP_Mission.convert_MISSION_ITEM_to_MISSION_ITEM_INT (packet : UInt64) (mav_cmd : UInt64) : PMem.M UInt32 := do
+def AP_Mission.convert_MISSION_ITEM_to_MISSION_ITEM_INT (packet : UInt64) (mav_cmd : UInt64) : PMem.M UInt32 := do
   let t'1 ← PMem.ldF32 packet
   PMem.stF32 mav_cmd t'1
   let t'2 ← PMem.ldF32 (packet + 4)
@@ -10299,18 +7443,161 @@ partial def AP_Mission.convert_MISSION_ITEM_to_MISSION_ITEM_INT (packet : UInt64
   return (0 : UInt32)
 
 /-- C++ `mavlink_msg_mission_item_int_decode : void (const mavlink_message_t *, mavlink_mission_item_int_t *)`, `mavlink_msg_mission_item_int.h:621-649`. -/
-partial def mavlink_msg_mission_item_int_decode (msg : UInt64) (mission_item_int : UInt64) : PMem.M Unit := do
+def mavlink_msg_mission_item_int_decode (msg : UInt64) (mission_item_int : UInt64) : PMem.M Unit := do
   let mut msg := msg
   let mut mission_item_int := mission_item_int
   mavlink_msg_decode_target msg mission_item_int (Int8.toUInt8 (Int32.toInt8 ((38 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((32 : Int32))))
   return ()
 
-/-- C++ `AP_Mission::Content::Content : void () noexcept(false)`, `AP_Common.h:?-?`. -/
-partial def AP_Mission.Content.Content (this : UInt64) : PMem.M Unit := do
+/-- `AP_Mission.Content.Content` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Mission.Content.Content.pure' (this : UInt64) : Id Unit := do
   return ()
 
+/-- C++ `AP_Mission::Content::Content : void () noexcept(false)`, `AP_Common.h:?-?`. -/
+def AP_Mission.Content.Content (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Mission.Content.Content.pure' this)
+
+/-- C++ `__mavlink_mission_item_int_t::__mavlink_mission_item_int_t : void (const __mavlink_mission_item_int_t &) noexcept`, `mavlink_msg_mission_item_int.h:?-?`. -/
+def __mavlink_mission_item_int_t.__mavlink_mission_item_int_t'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 arg
+  PMem.stF32 (this + 0) t'1
+  let t'2 ← PMem.ldF32 (arg + 4)
+  PMem.stF32 (this + 4) t'2
+  let t'3 ← PMem.ldF32 (arg + 8)
+  PMem.stF32 (this + 8) t'3
+  let t'4 ← PMem.ldF32 (arg + 12)
+  PMem.stF32 (this + 12) t'4
+  let t'5 ← PMem.ldI32 (arg + 16)
+  PMem.stI32 (this + 16) t'5
+  let t'6 ← PMem.ldI32 (arg + 20)
+  PMem.stI32 (this + 20) t'6
+  let t'7 ← PMem.ldF32 (arg + 24)
+  PMem.stF32 (this + 24) t'7
+  let t'8 ← PMem.ldU16 (arg + 28)
+  PMem.stU16 (this + 28) t'8
+  let t'9 ← PMem.ldU16 (arg + 30)
+  PMem.stU16 (this + 30) t'9
+  let t'10 ← PMem.ldU8 (arg + 32)
+  PMem.stU8 (this + 32) t'10
+  let t'11 ← PMem.ldU8 (arg + 33)
+  PMem.stU8 (this + 33) t'11
+  let t'12 ← PMem.ldU8 (arg + 34)
+  PMem.stU8 (this + 34) t'12
+  let t'13 ← PMem.ldU8 (arg + 35)
+  PMem.stU8 (this + 35) t'13
+  let t'14 ← PMem.ldU8 (arg + 36)
+  PMem.stU8 (this + 36) t'14
+  let t'15 ← PMem.ldU8 (arg + 37)
+  PMem.stU8 (this + 37) t'15
+  return ()
+
+/-- C++ `AP_Mission::sanity_check_params : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `AP_Mission.cpp:1024-1071`. -/
+def AP_Mission.sanity_check_params (packet : UInt64) : PMem.M UInt32 := do
+  let mut nan_mask : UInt8 := default  -- uninitialized in C
+  let t'1 ← PMem.ldU16 (packet + 30)
+  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
+  if sw'2 == (16 : Int32) then
+    let t'3 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
+    nan_mask := t'3
+  else if sw'2 == (17 : Int32) then
+    let t'4 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
+    nan_mask := t'4
+  else if sw'2 == (21 : Int32) then
+    let t'5 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
+    nan_mask := t'5
+  else if sw'2 == (22 : Int32) then
+    let t'6 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
+    nan_mask := t'6
+  else if sw'2 == (36 : Int32) then
+    let t'7 := Int8.toUInt8 (Int32.toInt8 ((~~~((((1 : Int32) <<< (1 : Int32)) ||| ((1 : Int32) <<< (2 : Int32))) ||| ((1 : Int32) <<< (3 : Int32))))))
+    nan_mask := t'7
+  else if sw'2 == (84 : Int32) then
+    let t'8 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
+    nan_mask := t'8
+  else if sw'2 == (85 : Int32) then
+    let t'9 := Int8.toUInt8 (Int32.toInt8 ((~~~(((1 : Int32) <<< (2 : Int32)) ||| ((1 : Int32) <<< (3 : Int32))))))
+    nan_mask := t'9
+  else
+    let t'10 := Int8.toUInt8 (Int32.toInt8 ((255 : Int32)))
+    nan_mask := t'10
+  let mut sc'12 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32)
+  if sc'12 then
+    let t'11 ← PMem.ldF32 packet
+    sc'12 := (Binary32.isNaN t'11)
+  let mut sc'14 := sc'12
+  if !sc'14 then
+    let t'13 ← PMem.ldF32 packet
+    sc'14 := (Binary32.isInf t'13)
+  if sc'14 then
+    return (6 : UInt32)
+  let mut sc'16 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
+  if sc'16 then
+    let t'15 ← PMem.ldF32 (packet + 4)
+    sc'16 := (Binary32.isNaN t'15)
+  let mut sc'18 := sc'16
+  if !sc'18 then
+    let t'17 ← PMem.ldF32 (packet + 4)
+    sc'18 := (Binary32.isInf t'17)
+  if sc'18 then
+    return (7 : UInt32)
+  let mut sc'20 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
+  if sc'20 then
+    let t'19 ← PMem.ldF32 (packet + 8)
+    sc'20 := (Binary32.isNaN t'19)
+  let mut sc'22 := sc'20
+  if !sc'22 then
+    let t'21 ← PMem.ldF32 (packet + 8)
+    sc'22 := (Binary32.isInf t'21)
+  if sc'22 then
+    return (8 : UInt32)
+  let mut sc'24 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32)
+  if sc'24 then
+    let t'23 ← PMem.ldF32 (packet + 12)
+    sc'24 := (Binary32.isNaN t'23)
+  let mut sc'26 := sc'24
+  if !sc'26 then
+    let t'25 ← PMem.ldF32 (packet + 12)
+    sc'26 := (Binary32.isInf t'25)
+  if sc'26 then
+    return (9 : UInt32)
+  return (0 : UInt32)
+
+/-- C++ `MIN : auto (const int &, const float &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
+def MIN'4 (one : UInt64) (two : UInt64) : PMem.M Binary32 := do
+  let t'1 ← PMem.ldI32 one
+  let t'2 ← PMem.ldF32 two
+  let mut c'3 : Binary32 := default
+  if (decide ((Int32.toBinary32 (t'1)) < t'2)) then
+    let t'4 ← PMem.ldI32 one
+    c'3 := Int32.toBinary32 (t'4)
+  else
+    let t'5 ← PMem.ldF32 two
+    c'3 := t'5
+  return c'3
+
+/-- `is_negative` as a pure function of its arguments (it reads and writes no memory). -/
+def is_negative.pure' (fVal1 : Binary32) : Id Bool := do
+  let mut fVal1 := fVal1
+  return (decide ((Binary32.toBinary64 (fVal1)) ≤ ((-(Binary64.ofBits 0x3ff0000000000000 /- 1 -/)) * (Binary32.toBinary64 ((Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/))))))
+
+/-- C++ `is_negative : bool (const float)`, `<built-in>:76-80`. -/
+def is_negative (fVal1 : Binary32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.is_negative.pure' fVal1)
+
+/-- C++ `check_lat : bool (int32_t)`, `location.cpp:47-50`. -/
+def check_lat'2 (lat : Int32) : PMem.M Bool := do
+  let mut lat := lat
+  let t'1 ← PMem.labs (Int32.toInt64 (lat))
+  return (decide ((Int64.toBinary32 (t'1)) ≤ ((Int32.toBinary32 ((90 : Int32))) * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/))))))
+
+/-- C++ `check_lng : bool (int32_t)`, `location.cpp:51-54`. -/
+def check_lng'2 (lng : Int32) : PMem.M Bool := do
+  let mut lng := lng
+  let t'1 ← PMem.labs (Int32.toInt64 (lng))
+  return (decide ((Int64.toBinary32 (t'1)) ≤ ((Int32.toBinary32 ((180 : Int32))) * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/))))))
+
 /-- C++ `AP_Mission::mavlink_int_to_mission_cmd : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &, AP_Mission::Mission_Command &)`, `AP_Mission.cpp:1075-1612`. -/
-partial def AP_Mission.mavlink_int_to_mission_cmd.body (fp : UInt64) (input_packet : UInt64) (cmd : UInt64) : PMem.M UInt32 := do
+def AP_Mission.mavlink_int_to_mission_cmd.body (fp : UInt64) (input_packet : UInt64) (cmd : UInt64) : PMem.M UInt32 := do
   __mavlink_mission_item_int_t.__mavlink_mission_item_int_t'2 (fp + 0) input_packet
   let mut selector : UInt64 := (0 : UInt64)
   let mut selector_error : UInt32 := (6 : UInt32)
@@ -10996,26 +8283,402 @@ partial def AP_Mission.mavlink_int_to_mission_cmd.body (fp : UInt64) (input_pack
       return (2 : UInt32)
   return (0 : UInt32)
 
-partial def AP_Mission.mavlink_int_to_mission_cmd (input_packet : UInt64) (cmd : UInt64) : PMem.M UInt32 := do
+def AP_Mission.mavlink_int_to_mission_cmd (input_packet : UInt64) (cmd : UInt64) : PMem.M UInt32 := do
   let fp ← PMem.enter 104
   let r ← AP_Mission.mavlink_int_to_mission_cmd.body fp input_packet cmd
   PMem.leave fp
   return r
 
-/-- C++ `GCS_MAVLINK::handle_change_alt_request : void (Location &)`, `functor.h:1032-?`. -/
-partial def GCS_MAVLINK.handle_change_alt_request (this : UInt64) (location : UInt64) : PMem.M Unit := do
+/-- `GCS_MAVLINK.handle_change_alt_request` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.handle_change_alt_request.pure' (this : UInt64) (location : UInt64) : Id Unit := do
   return ()
 
+/-- C++ `GCS_MAVLINK::handle_change_alt_request : void (Location &)`, `functor.h:1032-?`. -/
+def GCS_MAVLINK.handle_change_alt_request (this : UInt64) (location : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.handle_change_alt_request.pure' this location)
+
 /-- C++ `MissionItemProtocol::send_mission_item_warning : void ()`, `MissionItemProtocol.cpp:219-226`. -/
-partial def MissionItemProtocol.send_mission_item_warning (this : UInt64) : PMem.M Unit := do
+def MissionItemProtocol.send_mission_item_warning (this : UInt64) : PMem.M Unit := do
   let t'1 ← PMem.ldB (this + 47)
   if t'1 then
     return ()
   PMem.stB (this + 47) true
   return ()
 
+/-- `MissionItemProtocol.free_upload_resources` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol.free_upload_resources.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `MissionItemProtocol::free_upload_resources : void ()`, `AP_Common.h:118-?`. -/
+def MissionItemProtocol.free_upload_resources (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.MissionItemProtocol.free_upload_resources.pure' this)
+
+/-- `__mavlink_mission_request_t.__mavlink_mission_request_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_request_t.__mavlink_mission_request_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_request_t::__mavlink_mission_request_t : void () noexcept`, `mavlink_msg_mission_request.h:9-?`. -/
+def __mavlink_mission_request_t.__mavlink_mission_request_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_request_t.__mavlink_mission_request_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_request_send : void (mavlink_channel_t, uint32_t, uint8_t, uint16_t, uint8_t)`, `mavlink_msg_mission_request.h:218-237`. -/
+def mavlink_msg_mission_request_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (seq : UInt16) (mission_type : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut target_system := target_system
+  let mut target_component := target_component
+  let mut seq := seq
+  let mut mission_type := mission_type
+  __mavlink_mission_request_t.__mavlink_mission_request_t (fp + 0)
+  PMem.stU16 (fp + 0) seq
+  let t'1 ← mavlink_msg_target_field target_system
+  PMem.stU8 ((fp + 0) + 2) t'1
+  PMem.stU8 ((fp + 0) + 3) target_component
+  PMem.stU8 ((fp + 0) + 4) mission_type
+  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((40 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((230 : Int32)))) target_system
+  return ()
+
+def mavlink_msg_mission_request_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (seq : UInt16) (mission_type : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 6
+  let r ← mavlink_msg_mission_request_send.body fp chan target_system target_component seq mission_type
+  PMem.leave fp
+  return r
+
+/-- C++ `MissionItemProtocol::queued_request_send : void ()`, `MissionItemProtocol.cpp:357-377`. -/
+def MissionItemProtocol.queued_request_send (this : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldB (this + 8)
+  if !t'1 then
+    return ()
+  let t'2 ← PMem.ldU16 (this + 26)
+  let t'3 ← PMem.ldU16 (this + 24)
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) > (UInt32.toInt32 (UInt16.toUInt32 (t'3))))) then
+    return ()
+  let t'4 ← PMem.ldU64 (this + 16)
+  if (t'4 == (0 : UInt64)) then
+    return ()
+  let t'5 ← PMem.ldU64 (this + 16)
+  let t'6 ← GCS_MAVLINK.get_chan t'5
+  let t'7 ← comm_get_txspace t'6
+  let t'8 ← PMem.ldU64 (this + 16)
+  let t'9 ← GCS_MAVLINK.get_chan t'8
+  let t'10 ← GCS_MAVLINK.packet_overhead_chan t'9
+  let mut c'11 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'7)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'10))) + (5 : Int32)))))) then
+    c'11 := true
+  else
+    let t'12 ← PMem.ldU64 (this + 16)
+    let t'13 ← GCS_MAVLINK.get_chan t'12
+    gcs_out_of_space_to_send t'13
+    c'11 := false
+  if !c'11 then
+    return ()
+  let t'14 ← PMem.ldU64 (this + 16)
+  let t'15 ← GCS_MAVLINK.get_chan t'14
+  let t'16 ← PMem.ldU32 (this + 28)
+  let t'17 ← PMem.ldU8 (this + 32)
+  let t'18 ← PMem.ldU16 (this + 26)
+  let t'19 ← MissionItemProtocol_Waypoints.mission_type this
+  mavlink_msg_mission_request_send t'15 t'16 t'17 t'18 (UInt32.toUInt8 (t'19))
+  let t'20 := ((← get).clockUs / 1000).toUInt32
+  PMem.stU32 (this + 40) t'20
+  return ()
+
+/-- C++ `MissionItemProtocol::send_mission_ack : void (const mavlink_message_t &, MAV_MISSION_RESULT) const`, `MissionItemProtocol.cpp:332-340`. -/
+def MissionItemProtocol.send_mission_ack'2 (this : UInt64) (msg : UInt64) (result : UInt32) : PMem.M Unit := do
+  let mut result := result
+  let t'1 ← PMem.ldU64 (this + 16)
+  if (t'1 == (0 : UInt64)) then
+    return ()
+  let t'2 ← PMem.ldU64 (this + 16)
+  MissionItemProtocol.send_mission_ack this t'2 msg result
+  return ()
+
+/-- C++ `AP_Mission::num_commands_max : uint16_t () const`, `AP_Common.h:536-538`. -/
+def AP_Mission.num_commands_max (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (this + 604)
+  return t'1
+
+/-- C++ `StorageAccess::write_byte : void (uint16_t, uint8_t) const`, `StorageManager.cpp:289-292`. -/
+def StorageAccess.write_byte.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt8) : PMem.M Unit := do
+  let mut loc := loc
+  PMem.stU8 (fp + 0) value
+  let t'1 ← StorageAccess.write_block this loc (fp + 0) (1 : UInt64)
+  discard <| pure (t'1)
+  return ()
+
+def StorageAccess.write_byte (this : UInt64) (loc : UInt16) (value : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 1
+  let r ← StorageAccess.write_byte.body fp this loc value
+  PMem.leave fp
+  return r
+
+/-- C++ `StorageAccess::write_uint16 : void (uint16_t, uint16_t) const`, `StorageManager.cpp:297-300`. -/
+def StorageAccess.write_uint16.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt16) : PMem.M Unit := do
+  let mut loc := loc
+  PMem.stU16 (fp + 0) value
+  let t'1 ← StorageAccess.write_block this loc (fp + 0) (2 : UInt64)
+  discard <| pure (t'1)
+  return ()
+
+def StorageAccess.write_uint16 (this : UInt64) (loc : UInt16) (value : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← StorageAccess.write_uint16.body fp this loc value
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::write_cmd_to_storage : bool (uint16_t, const Mission_Command &)`, `AP_Mission.cpp:946-1007`. -/
+def AP_Mission.write_cmd_to_storage.body (fp : UInt64) (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
+  let mut index := index
+  let t'1 ← AP_Mission.num_commands_max this
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (index))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'1))))) then
+    return false
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 0 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 1 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 2 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 3 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 4 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 5 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 6 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 7 1 (UInt8.toUInt64 ((0 : UInt8)))
+  PMem.stBits ((fp + 0) + 0) 8 24 (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))
+  discard <| PMem.memset (((fp + 0) + 0) + 4) 0 4
+  discard <| PMem.memset (((fp + 0) + 0) + 8) 0 4
+  let t'2 ← PMem.ldU16 (cmd + 2)
+  let t'3 ← AP_Mission.stored_in_location t'2
+  if t'3 then
+    let t'4 ← PMem.ldBits (cmd + 8) 0 1
+    let t'5 := UInt64.toUInt8 (t'4)
+    PMem.stBits (fp + 0) 0 1 (UInt8.toUInt64 (t'5))
+    let t'6 ← PMem.ldBits (cmd + 8) 1 1
+    let t'7 := UInt64.toUInt8 (t'6)
+    PMem.stBits (fp + 0) 2 1 (UInt8.toUInt64 (t'7))
+    let t'8 ← PMem.ldBits (cmd + 8) 2 1
+    let t'9 := UInt64.toUInt8 (t'8)
+    PMem.stBits (fp + 0) 3 1 (UInt8.toUInt64 (t'9))
+    let t'10 ← PMem.ldBits (cmd + 8) 3 1
+    let t'11 := UInt64.toUInt8 (t'10)
+    PMem.stBits (fp + 0) 4 1 (UInt8.toUInt64 (t'11))
+    let t'12 ← PMem.ldBits (cmd + 8) 4 1
+    let t'13 := UInt64.toUInt8 (t'12)
+    PMem.stBits (fp + 0) 5 1 (UInt8.toUInt64 (t'13))
+    let t'14 ← PMem.ldU8 (cmd + 24)
+    let t'15 := UInt32.toUInt8 ((((UInt8.toUInt32 (t'14)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((0 : Int32))))) >>> (Int32.toUInt32 ((0 : Int32)))))
+    PMem.stBits (fp + 0) 6 1 (UInt8.toUInt64 (t'15))
+    let t'16 ← PMem.ldU8 (cmd + 24)
+    let t'17 := UInt32.toUInt8 ((((UInt8.toUInt32 (t'16)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((1 : Int32))))) >>> (Int32.toUInt32 ((1 : Int32)))))
+    PMem.stBits (fp + 0) 7 1 (UInt8.toUInt64 (t'17))
+    let t'18 ← PMem.ldI32 ((cmd + 8) + 4)
+    PMem.stBits (fp + 0) 8 24 (Int64.toUInt64 (Int32.toInt64 (t'18)))
+    let t'19 ← PMem.ldI32 ((cmd + 8) + 8)
+    PMem.stI32 ((fp + 0) + 4) t'19
+    let t'20 ← PMem.ldI32 ((cmd + 8) + 12)
+    PMem.stI32 ((fp + 0) + 8) t'20
+  else
+    let t'21 ← PMem.memcpy (fp + 0) (cmd + 8) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
+    discard <| pure (t'21)
+  let mut pos_in_storage : UInt16 := Int16.toUInt16 (Int32.toInt16 (((4 : Int32) + ((UInt32.toInt32 (UInt16.toUInt32 (index))) * (15 : Int32)))))
+  let t'22 ← PMem.ldU16 (cmd + 2)
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'22))) < (256 : Int32))) then
+    let t'23 ← PMem.ldU16 (cmd + 2)
+    StorageAccess.write_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage (UInt16.toUInt8 (t'23))
+    let t'24 ← PMem.ldU16 (cmd + 4)
+    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32))))) t'24
+    let t'25 ← StorageAccess.write_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
+    discard <| pure (t'25)
+  else
+    let mut tag_byte : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+    let t'26 ← PMem.ldU16 (cmd + 2)
+    let mut sc'28 := ((UInt32.toInt32 (UInt16.toUInt32 (t'26))) == (UInt32.toInt32 ((42702 : UInt32))))
+    if !sc'28 then
+      let t'27 ← PMem.ldU16 (cmd + 2)
+      sc'28 := ((UInt32.toInt32 (UInt16.toUInt32 (t'27))) == (UInt32.toInt32 ((2500 : UInt32))))
+    let mut sc'30 := sc'28
+    if !sc'30 then
+      let t'29 ← PMem.ldU16 (cmd + 2)
+      sc'30 := ((UInt32.toInt32 (UInt16.toUInt32 (t'29))) == (UInt32.toInt32 ((2501 : UInt32))))
+    if sc'30 then
+      let t'31 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+      tag_byte := t'31
+    StorageAccess.write_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage tag_byte
+    let t'32 ← PMem.ldU16 (cmd + 2)
+    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32))))) t'32
+    let t'33 ← PMem.ldU16 (cmd + 4)
+    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) t'33
+    let t'34 ← StorageAccess.write_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (5 : Int32))))) (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((10 : Int32))))
+    discard <| pure (t'34)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (index))) != (0 : Int32)) then
+    let t'35 := ((← get).clockUs / 1000).toUInt32
+    PMem.stU32 (this + 596) t'35
+  return true
+
+def AP_Mission.write_cmd_to_storage (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 12
+  let r ← AP_Mission.write_cmd_to_storage.body fp this index cmd
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::replace_cmd : bool (uint16_t, const Mission_Command &)`, `AP_Mission.cpp:533-548`. -/
+def AP_Mission.replace_cmd (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
+  let mut index := index
+  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'2 ← PMem.ldI16 t'1
+  if (decide ((UInt16.toUInt32 (index)) ≥ (Int32.toUInt32 (Int16.toInt32 (t'2))))) then
+    return false
+  if ((UInt32.toInt32 (UInt16.toUInt32 (index))) == (0 : Int32)) then
+    return true
+  let t'3 ← AP_Mission.write_cmd_to_storage this index cmd
+  return t'3
+
+/-- C++ `MissionItemProtocol_Waypoints::replace_item : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:102-121`. -/
+def MissionItemProtocol_Waypoints.replace_item.body (fp : UInt64) (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
+  discard <| PMem.memset ((fp + 0) + 0) 0 2
+  discard <| PMem.memset ((fp + 0) + 2) 0 2
+  discard <| PMem.memset ((fp + 0) + 4) 0 2
+  AP_Mission.Content.Content ((fp + 0) + 8)
+  discard <| PMem.memset ((fp + 0) + 24) 0 1
+  let t'1 ← AP_Mission.mavlink_int_to_mission_cmd mission_item_int (fp + 0)
+  let mut res : UInt32 := t'1
+  if ((UInt32.toInt32 (res)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    return res
+  let t'2 ← PMem.ldU16 ((fp + 0) + 2)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((177 : UInt32)))) then
+    let t'3 ← PMem.ldU16 ((fp + 0) + 8)
+    let t'4 ← MissionItemProtocol_Waypoints.item_count this
+    let mut sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))
+    if sc'7 then
+      let t'5 ← PMem.ldU16 ((fp + 0) + 8)
+      let t'6 ← PMem.ldU16 (this + 24)
+      sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) > (UInt32.toInt32 (UInt16.toUInt32 (t'6)))))
+    let mut sc'9 := sc'7
+    if !sc'9 then
+      let t'8 ← PMem.ldU16 ((fp + 0) + 8)
+      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (0 : Int32))
+    if sc'9 then
+      return (1 : UInt32)
+  let t'10 ← PMem.ldU16 (fp + 0)
+  let t'11 ← PMem.ldU64 (this + 48)
+  let t'12 ← AP_Mission.replace_cmd t'11 t'10 (fp + 0)
+  if !t'12 then
+    return (1 : UInt32)
+  return (0 : UInt32)
+
+def MissionItemProtocol_Waypoints.replace_item (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
+  let fp ← PMem.enter 28
+  let r ← MissionItemProtocol_Waypoints.replace_item.body fp this mission_item_int
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::write_home_to_storage : void ()`, `AP_Mission.cpp:1011-1022`. -/
+def AP_Mission.write_home_to_storage.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  discard <| PMem.memset ((fp + 0) + 0) 0 2
+  discard <| PMem.memset ((fp + 0) + 2) 0 2
+  discard <| PMem.memset ((fp + 0) + 4) 0 2
+  AP_Mission.Content.Content ((fp + 0) + 8)
+  discard <| PMem.memset ((fp + 0) + 24) 0 1
+  let t'1 := UInt32.toUInt16 ((16 : UInt32))
+  PMem.stU16 ((fp + 0) + 2) t'1
+  let t'2 := (← get).homeAddr
+  discard <| PMem.memcpy ((fp + 0) + 8) t'2 16
+  discard <| pure (((fp + 0) + 8))
+  let t'3 ← AP_Mission.write_cmd_to_storage this (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (fp + 0)
+  discard <| pure (t'3)
+  let t'4 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'5 ← PMem.ldI16 t'4
+  if (decide ((Int16.toInt32 (t'5)) < (1 : Int32))) then
+    PMem.stI16 (fp + 28) (Int32.toInt16 ((1 : Int32)))
+    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 28)
+  return ()
+
+def AP_Mission.write_home_to_storage (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 30
+  let r ← AP_Mission.write_home_to_storage.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::add_cmd : bool (Mission_Command &)`, `AP_Mission.cpp:510-528`. -/
+def AP_Mission.add_cmd.body (fp : UInt64) (this : UInt64) (cmd : UInt64) : PMem.M Bool := do
+  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'2 ← PMem.ldI16 t'1
+  if (decide ((Int16.toInt32 (t'2)) < (1 : Int32))) then
+    AP_Mission.write_home_to_storage this
+  let t'3 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'4 ← PMem.ldI16 t'3
+  let t'5 ← AP_Mission.write_cmd_to_storage this (Int16.toUInt16 (t'4)) cmd
+  let mut ret : Bool := t'5
+  if ret then
+    let t'6 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+    let t'7 ← PMem.ldI16 t'6
+    let t'8 := Int16.toUInt16 (t'7)
+    PMem.stU16 cmd t'8
+    let t'9 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+    let t'10 ← PMem.ldI16 t'9
+    PMem.stI16 (fp + 0) (Int32.toInt16 (((Int16.toInt32 (t'10)) + (1 : Int32))))
+    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 0)
+  return ret
+
+def AP_Mission.add_cmd (this : UInt64) (cmd : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 2
+  let r ← AP_Mission.add_cmd.body fp this cmd
+  PMem.leave fp
+  return r
+
+/-- C++ `MissionItemProtocol_Waypoints::append_item : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:31-51`. -/
+def MissionItemProtocol_Waypoints.append_item.body (fp : UInt64) (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
+  discard <| PMem.memset ((fp + 0) + 0) 0 2
+  discard <| PMem.memset ((fp + 0) + 2) 0 2
+  discard <| PMem.memset ((fp + 0) + 4) 0 2
+  AP_Mission.Content.Content ((fp + 0) + 8)
+  discard <| PMem.memset ((fp + 0) + 24) 0 1
+  let t'1 ← AP_Mission.mavlink_int_to_mission_cmd mission_item_int (fp + 0)
+  let mut res : UInt32 := t'1
+  if ((UInt32.toInt32 (res)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    return res
+  let t'2 ← PMem.ldU16 ((fp + 0) + 2)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((177 : UInt32)))) then
+    let t'3 ← PMem.ldU16 ((fp + 0) + 8)
+    let t'4 ← MissionItemProtocol_Waypoints.item_count this
+    let mut sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))
+    if sc'7 then
+      let t'5 ← PMem.ldU16 ((fp + 0) + 8)
+      let t'6 ← PMem.ldU16 (this + 24)
+      sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) > (UInt32.toInt32 (UInt16.toUInt32 (t'6)))))
+    let mut sc'9 := sc'7
+    if !sc'9 then
+      let t'8 ← PMem.ldU16 ((fp + 0) + 8)
+      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (0 : Int32))
+    if sc'9 then
+      return (1 : UInt32)
+  let t'10 ← PMem.ldU64 (this + 48)
+  let t'11 ← AP_Mission.add_cmd t'10 (fp + 0)
+  if !t'11 then
+    return (1 : UInt32)
+  return (0 : UInt32)
+
+def MissionItemProtocol_Waypoints.append_item (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
+  let fp ← PMem.enter 28
+  let r ← MissionItemProtocol_Waypoints.append_item.body fp this mission_item_int
+  PMem.leave fp
+  return r
+
+/-- `MissionItemProtocol_Waypoints.complete` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol_Waypoints.complete.pure' (this : UInt64) (_link : UInt64) : Id UInt32 := do
+  return (0 : UInt32)
+
+/-- C++ `MissionItemProtocol_Waypoints::complete : MAV_MISSION_RESULT (const GCS_MAVLINK &)`, `MissionItemProtocol_Waypoints.cpp:58-65`. -/
+def MissionItemProtocol_Waypoints.complete (this : UInt64) (_link : UInt64) : PMem.M UInt32 :=
+  pure (_root_.GCS_lib.MissionItemProtocol_Waypoints.complete.pure' this _link)
+
+/-- C++ `MissionItemProtocol::transfer_is_complete : void (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:323-330`. -/
+def MissionItemProtocol.transfer_is_complete (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← MissionItemProtocol_Waypoints.complete this _link
+  let mut result : UInt32 := t'1
+  MissionItemProtocol.send_mission_ack this _link msg result
+  MissionItemProtocol.free_upload_resources this
+  PMem.stB (this + 8) false
+  PMem.stU64 (this + 16) (0 : UInt64)
+  return ()
+
 /-- C++ `MissionItemProtocol::handle_mission_item : void (const mavlink_message_t &, const mavlink_mission_item_int_t &)`, `MissionItemProtocol.cpp:264-321`. -/
-partial def MissionItemProtocol.handle_mission_item (this : UInt64) (msg : UInt64) (cmd : UInt64) : PMem.M Unit := do
+def MissionItemProtocol.handle_mission_item (this : UInt64) (msg : UInt64) (cmd : UInt64) : PMem.M Unit := do
   let t'1 ← PMem.ldU64 (this + 16)
   if (t'1 == (0 : UInt64)) then
     return ()
@@ -11088,1317 +8751,145 @@ partial def MissionItemProtocol.handle_mission_item (this : UInt64) (msg : UInt6
     GCS_MAVLINK.send_message t'30 t'29
   return ()
 
-/-- C++ `__mavlink_mission_request_int_t::__mavlink_mission_request_int_t : void () noexcept`, `mavlink_msg_mission_request_int.h:9-?`. -/
-partial def __mavlink_mission_request_int_t.__mavlink_mission_request_int_t (this : UInt64) : PMem.M Unit := do
+/-- C++ `GCS_MAVLINK::handle_mission_item : void (const mavlink_message_t &)`, `GCS_Common.cpp:957-1033`. -/
+def GCS_MAVLINK.handle_mission_item.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
+  let mut send_mission_item_warning : Bool := false
+  let t'1 ← PMem.ldBits msg 104 24
+  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (39 : Int32)) then
+    __mavlink_mission_item_t.__mavlink_mission_item_t (fp + 40)
+    mavlink_msg_mission_item_decode msg (fp + 40)
+    let t'2 ← AP_Mission.convert_MISSION_ITEM_to_MISSION_ITEM_INT (fp + 40) (fp + 0)
+    let mut ret : UInt32 := t'2
+    if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
+      let t'3 ← PMem.ldU8 ((fp + 0) + 37)
+      let mut type' : UInt32 := UInt8.toUInt32 (t'3)
+      GCS_MAVLINK.send_mission_ack this msg type' ret
+      return ()
+    send_mission_item_warning := true
+  else
+    mavlink_msg_mission_item_int_decode msg (fp + 0)
+  let t'4 ← PMem.ldU8 ((fp + 0) + 37)
+  let mut type''2 : UInt32 := UInt8.toUInt32 (t'4)
+  let t'5 ← PMem.ldU8 ((fp + 0) + 35)
+  let mut current : UInt8 := t'5
+  if (((UInt32.toInt32 (type''2)) == (UInt32.toInt32 ((0 : UInt32)))) && (((UInt32.toInt32 (UInt8.toUInt32 (current))) == (2 : Int32)) || ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (3 : Int32)))) then
+    discard <| PMem.memset ((fp + 80) + 0) 0 2
+    discard <| PMem.memset ((fp + 80) + 2) 0 2
+    discard <| PMem.memset ((fp + 80) + 4) 0 2
+    AP_Mission.Content.Content ((fp + 80) + 8)
+    discard <| PMem.memset ((fp + 80) + 24) 0 1
+    let t'6 ← AP_Mission.mavlink_int_to_mission_cmd (fp + 0) (fp + 80)
+    let mut result : UInt32 := t'6
+    if ((UInt32.toInt32 (result)) != (UInt32.toInt32 ((0 : UInt32)))) then
+      GCS_MAVLINK.send_mission_ack this msg (0 : UInt32) result
+      return ()
+    if ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (2 : Int32)) then
+      PMem.unreached "GCS_MAVLINK::handle_guided_request"
+      let mut c'7 : UInt32 := default
+      if (default : Bool) then
+        c'7 := (0 : UInt32)
+      else
+        c'7 := (1 : UInt32)
+      result := c'7
+    else
+      if ((UInt32.toInt32 (UInt8.toUInt32 (current))) == (3 : Int32)) then
+        GCS_MAVLINK.handle_change_alt_request this ((fp + 80) + 8)
+        result := (0 : UInt32)
+    GCS_MAVLINK.send_mission_ack this msg (0 : UInt32) result
+    return ()
+  let t'8 ← gcs
+  let t'9 ← GCS.get_prot_for_mission_type t'8 type''2
+  let mut prot : UInt64 := t'9
+  if (prot == (0 : UInt64)) then
+    GCS_MAVLINK.send_mission_ack this msg type''2 (3 : UInt32)
+    return ()
+  if send_mission_item_warning then
+    MissionItemProtocol.send_mission_item_warning prot
+  let t'10 ← PMem.ldB (prot + 8)
+  if !t'10 then
+    GCS_MAVLINK.send_mission_ack this msg type''2 (1 : UInt32)
+    return ()
+  MissionItemProtocol.handle_mission_item prot msg (fp + 0)
   return ()
 
+def GCS_MAVLINK.handle_mission_item (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 108
+  let r ← GCS_MAVLINK.handle_mission_item.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_request_int_t.__mavlink_mission_request_int_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_request_int_t.__mavlink_mission_request_int_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_request_int_t::__mavlink_mission_request_int_t : void () noexcept`, `mavlink_msg_mission_request_int.h:9-?`. -/
+def __mavlink_mission_request_int_t.__mavlink_mission_request_int_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_request_int_t.__mavlink_mission_request_int_t.pure' this)
+
 /-- C++ `mavlink_msg_mission_request_int_decode : void (const mavlink_message_t *, mavlink_mission_request_int_t *)`, `mavlink_msg_mission_request_int.h:324-341`. -/
-partial def mavlink_msg_mission_request_int_decode (msg : UInt64) (mission_request_int : UInt64) : PMem.M Unit := do
+def mavlink_msg_mission_request_int_decode (msg : UInt64) (mission_request_int : UInt64) : PMem.M Unit := do
   let mut msg := msg
   let mut mission_request_int := mission_request_int
   mavlink_msg_decode_target msg mission_request_int (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
   return ()
 
-/-- C++ `MissionItemProtocol::handle_mission_request_int : void (GCS_MAVLINK &, const mavlink_mission_request_int_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:142-180`. -/
-partial def MissionItemProtocol.handle_mission_request_int.body (fp : UInt64) (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
-  if !t'1 then
-    return ()
-  let t'2 ← PMem.ldB (this + 8)
-  if t'2 then
-    MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
-    return ()
-  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
-  let t'3 ← PMem.ldU16 packet
-  let t'4 ← MissionItemProtocol_Waypoints.get_item this t'3 (fp + 0)
-  let mut result_code : UInt32 := t'4
-  if ((UInt32.toInt32 (result_code)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    if ((UInt32.toInt32 (result_code)) == (UInt32.toInt32 ((13 : UInt32)))) then
-      let t'5 ← GCS_MAVLINK.get_chan _link
-      let mut chan : UInt32 := t'5
-      let t'6 ← comm_get_txspace chan
-      let t'7 ← GCS_MAVLINK.packet_overhead_chan chan
-      let mut c'8 : Bool := default
-      if (decide ((UInt16.toUInt32 (t'6)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (5 : Int32)))))) then
-        c'8 := true
-      else
-        gcs_out_of_space_to_send chan
-        c'8 := false
-      if c'8 then
-        let t'9 ← PMem.ldU32 (msg + 8)
-        let t'10 ← PMem.ldU8 (msg + 12)
-        let t'11 ← MissionItemProtocol_Waypoints.item_count this
-        let t'12 ← MissionItemProtocol_Waypoints.mission_type this
-        mavlink_msg_mission_count_send chan t'9 t'10 t'11 (UInt32.toUInt8 (t'12))
-    MissionItemProtocol.send_mission_ack this _link msg result_code
-    return ()
-  let t'13 ← PMem.ldU32 (msg + 8)
-  let t'14 ← mavlink_msg_target_field t'13
-  PMem.stU8 ((fp + 0) + 32) t'14
-  let t'15 ← PMem.ldU8 (msg + 12)
-  PMem.stU8 ((fp + 0) + 33) t'15
-  let t'16 ← PMem.ldU32 (msg + 8)
-  GCS_MAVLINK.send_message_target _link (Int32.toUInt32 ((73 : Int32))) (fp + 0) t'16
+/-- `AP_Mission.Mission_Command.Mission_Command` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Mission.Mission_Command.Mission_Command.pure' (this : UInt64) : Id Unit := do
   return ()
-
-partial def MissionItemProtocol.handle_mission_request_int (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 40
-  let r ← MissionItemProtocol.handle_mission_request_int.body fp this _link packet msg
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_mission_request_t::__mavlink_mission_request_t : void () noexcept`, `mavlink_msg_mission_request.h:9-?`. -/
-partial def __mavlink_mission_request_t.__mavlink_mission_request_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_mission_request_decode : void (const mavlink_message_t *, mavlink_mission_request_t *)`, `mavlink_msg_mission_request.h:324-341`. -/
-partial def mavlink_msg_mission_request_decode (msg : UInt64) (mission_request : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut mission_request := mission_request
-  mavlink_msg_decode_target msg mission_request (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
-  return ()
-
-/-- C++ `MissionItemProtocol::handle_mission_request : void (GCS_MAVLINK &, const mavlink_mission_request_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:183-216`. -/
-partial def MissionItemProtocol.handle_mission_request.body (fp : UInt64) (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
-  if !t'1 then
-    return ()
-  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
-  let t'2 ← PMem.ldU16 packet
-  let t'3 ← MissionItemProtocol_Waypoints.get_item this t'2 (fp + 0)
-  let mut ret : UInt32 := t'3
-  if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    MissionItemProtocol.send_mission_ack this _link msg ret
-    return ()
-  let t'4 ← PMem.ldU32 (msg + 8)
-  let t'5 ← mavlink_msg_target_field t'4
-  PMem.stU8 ((fp + 0) + 32) t'5
-  let t'6 ← PMem.ldU8 (msg + 12)
-  PMem.stU8 ((fp + 0) + 33) t'6
-  discard <| PMem.memset ((fp + 40) + 0) 0 4
-  discard <| PMem.memset ((fp + 40) + 4) 0 4
-  discard <| PMem.memset ((fp + 40) + 8) 0 4
-  discard <| PMem.memset ((fp + 40) + 12) 0 4
-  discard <| PMem.memset ((fp + 40) + 16) 0 4
-  discard <| PMem.memset ((fp + 40) + 20) 0 4
-  discard <| PMem.memset ((fp + 40) + 24) 0 4
-  discard <| PMem.memset ((fp + 40) + 28) 0 2
-  discard <| PMem.memset ((fp + 40) + 30) 0 2
-  discard <| PMem.memset ((fp + 40) + 32) 0 1
-  discard <| PMem.memset ((fp + 40) + 33) 0 1
-  discard <| PMem.memset ((fp + 40) + 34) 0 1
-  discard <| PMem.memset ((fp + 40) + 35) 0 1
-  discard <| PMem.memset ((fp + 40) + 36) 0 1
-  discard <| PMem.memset ((fp + 40) + 37) 0 1
-  let t'7 ← AP_Mission.convert_MISSION_ITEM_INT_to_MISSION_ITEM (fp + 0) (fp + 40)
-  ret := t'7
-  if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    MissionItemProtocol.send_mission_ack this _link msg ret
-    return ()
-  let t'8 ← PMem.ldB (this + 46)
-  if !t'8 then
-    PMem.stB (this + 46) true
-  let t'9 ← PMem.ldU32 (msg + 8)
-  GCS_MAVLINK.send_message_target _link (Int32.toUInt32 ((39 : Int32))) (fp + 40) t'9
-  return ()
-
-partial def MissionItemProtocol.handle_mission_request (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 80
-  let r ← MissionItemProtocol.handle_mission_request.body fp this _link packet msg
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_mission_set_current_t::__mavlink_mission_set_current_t : void () noexcept`, `mavlink_msg_mission_set_current.h:9-?`. -/
-partial def __mavlink_mission_set_current_t.__mavlink_mission_set_current_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_mission_set_current_decode : void (const mavlink_message_t *, mavlink_mission_set_current_t *)`, `mavlink_msg_mission_set_current.h:297-313`. -/
-partial def mavlink_msg_mission_set_current_decode (msg : UInt64) (mission_set_current : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut mission_set_current := mission_set_current
-  mavlink_msg_decode_target msg mission_set_current (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
-  return ()
-
-/-- C++ `__mavlink_mission_request_list_t::__mavlink_mission_request_list_t : void () noexcept`, `mavlink_msg_mission_request_list.h:9-?`. -/
-partial def __mavlink_mission_request_list_t.__mavlink_mission_request_list_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_mission_request_list_decode : void (const mavlink_message_t *, mavlink_mission_request_list_t *)`, `mavlink_msg_mission_request_list.h:297-313`. -/
-partial def mavlink_msg_mission_request_list_decode (msg : UInt64) (mission_request_list : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut mission_request_list := mission_request_list
-  mavlink_msg_decode_target msg mission_request_list (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
-  return ()
-
-/-- C++ `MissionItemProtocol::handle_mission_request_list : void (const GCS_MAVLINK &, const mavlink_mission_request_list_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:116-140`. -/
-partial def MissionItemProtocol.handle_mission_request_list (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
-  if !t'1 then
-    return ()
-  let t'2 ← PMem.ldB (this + 8)
-  if t'2 then
-    MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
-    return ()
-  let t'3 ← GCS_MAVLINK.get_chan _link
-  let t'4 ← comm_get_txspace t'3
-  let t'5 ← GCS_MAVLINK.get_chan _link
-  let t'6 ← GCS_MAVLINK.packet_overhead_chan t'5
-  let mut c'7 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'4)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'6))) + (5 : Int32)))))) then
-    c'7 := true
-  else
-    let t'8 ← GCS_MAVLINK.get_chan _link
-    gcs_out_of_space_to_send t'8
-    c'7 := false
-  if !c'7 then
-    return ()
-  let t'9 ← GCS_MAVLINK.get_chan _link
-  let t'10 ← PMem.ldU32 (msg + 8)
-  let t'11 ← PMem.ldU8 (msg + 12)
-  let t'12 ← MissionItemProtocol_Waypoints.item_count this
-  let t'13 ← MissionItemProtocol_Waypoints.mission_type this
-  mavlink_msg_mission_count_send t'9 t'10 t'11 t'12 (UInt32.toUInt8 (t'13))
-  return ()
-
-/-- C++ `__mavlink_mission_count_t::__mavlink_mission_count_t : void () noexcept`, `mavlink_msg_mission_count.h:9-?`. -/
-partial def __mavlink_mission_count_t.__mavlink_mission_count_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_mission_count_decode : void (const mavlink_message_t *, mavlink_mission_count_t *)`, `mavlink_msg_mission_count.h:324-341`. -/
-partial def mavlink_msg_mission_count_decode (msg : UInt64) (mission_count : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut mission_count := mission_count
-  mavlink_msg_decode_target msg mission_count (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
-  return ()
-
-/-- C++ `MissionItemProtocol::handle_mission_count : void (GCS_MAVLINK &, const mavlink_mission_count_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:78-114`. -/
-partial def MissionItemProtocol.handle_mission_count (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
-  if !t'1 then
-    return ()
-  let t'2 ← MissionItemProtocol.cancel_upload this _link msg
-  if !t'2 then
-    return ()
-  let t'3 ← PMem.ldU16 packet
-  let t'4 ← MissionItemProtocol_Waypoints.max_items this
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) > (UInt32.toInt32 (UInt16.toUInt32 (t'4))))) then
-    MissionItemProtocol.send_mission_ack this _link msg (4 : UInt32)
-    return ()
-  let t'5 ← PMem.ldU16 packet
-  let t'6 ← MissionItemProtocol.allocate_receive_resources this t'5
-  let mut ret_alloc : UInt32 := t'6
-  if ((UInt32.toInt32 (ret_alloc)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    MissionItemProtocol.send_mission_ack this _link msg ret_alloc
-    return ()
-  MissionItemProtocol_Waypoints.truncate this packet
-  let t'7 ← PMem.ldU16 packet
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) == (0 : Int32)) then
-    MissionItemProtocol.transfer_is_complete this _link msg
-    return ()
-  let t'8 ← PMem.ldU16 packet
-  MissionItemProtocol.init_send_requests this _link msg (Int32.toInt16 ((0 : Int32))) (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) - (1 : Int32))))
-  return ()
-
-/-- C++ `__mavlink_mission_clear_all_t::__mavlink_mission_clear_all_t : void () noexcept`, `mavlink_msg_mission_clear_all.h:9-?`. -/
-partial def __mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mavlink_msg_mission_clear_all_decode : void (const mavlink_message_t *, mavlink_mission_clear_all_t *)`, `mavlink_msg_mission_clear_all.h:297-313`. -/
-partial def mavlink_msg_mission_clear_all_decode (msg : UInt64) (mission_clear_all : UInt64) : PMem.M Unit := do
-  let mut msg := msg
-  let mut mission_clear_all := mission_clear_all
-  mavlink_msg_decode_target msg mission_clear_all (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
-  return ()
-
-/-- C++ `MissionItemProtocol::handle_mission_clear_all : void (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:32-39`. -/
-partial def MissionItemProtocol.handle_mission_clear_all (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let mut success : Bool := true
-  let mut sc'2 := success
-  if sc'2 then
-    let t'1 ← MissionItemProtocol.cancel_upload this _link msg
-    sc'2 := t'1
-  success := sc'2
-  let mut sc'4 := success
-  if sc'4 then
-    let t'3 ← MissionItemProtocol_Waypoints.clear_all_items this
-    sc'4 := t'3
-  success := sc'4
-  let mut c'5 : UInt32 := default
-  if success then
-    c'5 := (0 : UInt32)
-  else
-    c'5 := (1 : UInt32)
-  MissionItemProtocol.send_mission_ack this _link msg c'5
-  return ()
-
-/-- C++ `mavlink_msg_decode_target : void (const mavlink_message_t *, void *, uint8_t, uint8_t)`, `mavlink_helpers.h:644-652`. -/
-partial def mavlink_msg_decode_target.body (fp : UInt64) (msg : UInt64) (payload : UInt64) (length : UInt8) (target_system_ofs : UInt8) : PMem.M Unit := do
-  PMem.stU64 (fp + 0) msg
-  let mut payload := payload
-  PMem.stU8 (fp + 8) length
-  let mut target_system_ofs := target_system_ofs
-  let t'1 ← PMem.ldU64 (fp + 0)
-  let t'2 ← PMem.ldU8 (t'1 + 3)
-  let t'3 ← PMem.ldU8 (fp + 8)
-  let mut c'4 : UInt8 := default
-  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) < (UInt32.toInt32 (UInt8.toUInt32 (t'3))))) then
-    let t'5 ← PMem.ldU64 (fp + 0)
-    let t'6 ← PMem.ldU8 (t'5 + 3)
-    c'4 := t'6
-  else
-    let t'7 ← PMem.ldU8 (fp + 8)
-    c'4 := t'7
-  let mut len : UInt8 := c'4
-  let t'8 ← PMem.ldU8 (fp + 8)
-  let t'9 ← PMem.memset payload (0 : Int32) (UInt8.toUInt64 (t'8))
-  discard <| pure (t'9)
-  let t'10 ← PMem.ldU64 (fp + 0)
-  let t'11 ← PMem.memcpy payload ((t'10 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) (UInt8.toUInt64 (len))
-  discard <| pure (t'11)
-  let t'12 ← PMem.ldU64 (fp + 0)
-  let t'13 ← PMem.ldU8 (t'12 + 4)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'13))) &&& (4 : Int32)) != (0 : Int32) then
-    let t'14 ← PMem.ldU64 (fp + 0)
-    let t'15 ← PMem.ldU32 (t'14 + 296)
-    let mut c'16 : Int32 := default
-    if (decide (t'15 > (Int32.toUInt32 ((255 : Int32))))) then
-      c'16 := (255 : Int32)
-    else
-      let t'17 ← PMem.ldU64 (fp + 0)
-      let t'18 ← PMem.ldU32 (t'17 + 296)
-      c'16 := UInt32.toInt32 (UInt8.toUInt32 ((UInt32.toUInt8 (t'18))))
-    let t'19 := Int8.toUInt8 (Int32.toInt8 (c'16))
-    PMem.stU8 (payload + ((UInt64.toInt64 (UInt8.toUInt64 (target_system_ofs))) * 1).toUInt64) t'19
-  return ()
-
-partial def mavlink_msg_decode_target (msg : UInt64) (payload : UInt64) (length : UInt8) (target_system_ofs : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 9
-  let r ← mavlink_msg_decode_target.body fp msg payload length target_system_ofs
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK_Copter::command_int_only : bool (MAV_CMD) const`, `GCS_MAVLink_Copter.cpp:602-610`. -/
-partial def GCS_MAVLINK_Copter.command_int_only (this : UInt64) (command : UInt32) : PMem.M Bool := do
-  let mut command := command
-  let sw'1 := UInt32.toInt32 (command)
-  if sw'1 == (84 : Int32) then
-    return true
-  else
-    return false
-
-/-- C++ `GCS_MAVLINK::command_long_stores_location : bool (const MAV_CMD)`, `GCS_Common.cpp:5241-5257`. -/
-partial def GCS_MAVLINK.command_long_stores_location (command : UInt32) : PMem.M Bool := do
-  let mut command := command
-  let sw'1 := UInt32.toInt32 (command)
-  if sw'1 == (179 : Int32) || sw'1 == (201 : Int32) || sw'1 == (195 : Int32) || sw'1 == (192 : Int32) || sw'1 == (43003 : Int32) || sw'1 == (611 : Int32) then
-    return true
-  else
-    return false
-  return false
-
-/-- C++ `GCS_MAVLINK::mav_frame_for_command_long : bool (MAV_FRAME &, MAV_CMD) const`, `GCS_Common.cpp:5277-5299`. -/
-partial def GCS_MAVLINK.mav_frame_for_command_long (this : UInt64) (frame : UInt64) (packet_command : UInt32) : PMem.M Bool := do
-  let mut packet_command := packet_command
-  let __range1 : UInt64 := (0xd440 : UInt64) /- &GCS_MAVLINK::mav_frame_for_command_long(...)::frame_map -/
-  let mut __begin1 : UInt64 := __range1
-  let mut __end1 : UInt64 := (__range1 + ((4 : Int64) * 8).toUInt64)
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (__begin1 + 8)
-      __begin1 := t'2
-      pure ()
-    first'1 := false
-    if !((__begin1 != __end1)) then break
-    let map : UInt64 := __begin1
-    let t'3 ← PMem.ldU32 map
-    if (t'3 != packet_command) then
-      continue
-    let t'4 ← PMem.ldU32 (map + 4)
-    PMem.stU32 frame t'4
-    return true
-  return false
-
-/-- C++ `GCS_MAVLINK::convert_COMMAND_LONG_to_COMMAND_INT : void (const mavlink_command_long_t &, mavlink_command_int_t &, MAV_FRAME)`, `GCS_Common.cpp:5348-5365`. -/
-partial def GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT.body (fp : UInt64) (this : UInt64) (in' : UInt64) (out : UInt64) (frame : UInt32) : PMem.M Unit := do
-  let mut frame := frame
-  discard <| PMem.memset ((fp + 0) + 0) 0 4
-  discard <| PMem.memset ((fp + 0) + 4) 0 4
-  discard <| PMem.memset ((fp + 0) + 8) 0 4
-  discard <| PMem.memset ((fp + 0) + 12) 0 4
-  discard <| PMem.memset ((fp + 0) + 16) 0 4
-  discard <| PMem.memset ((fp + 0) + 20) 0 4
-  discard <| PMem.memset ((fp + 0) + 24) 0 4
-  discard <| PMem.memset ((fp + 0) + 28) 0 2
-  discard <| PMem.memset ((fp + 0) + 30) 0 1
-  discard <| PMem.memset ((fp + 0) + 31) 0 1
-  discard <| PMem.memset ((fp + 0) + 32) 0 1
-  discard <| PMem.memset ((fp + 0) + 33) 0 1
-  discard <| PMem.memset ((fp + 0) + 34) 0 1
-  discard <| PMem.memcpy out (fp + 0) 36
-  discard <| pure (out)
-  let t'1 ← PMem.ldU8 (in' + 30)
-  PMem.stU8 (out + 30) t'1
-  let t'2 ← PMem.ldU8 (in' + 31)
-  PMem.stU8 (out + 31) t'2
-  let t'3 := UInt32.toUInt8 (frame)
-  PMem.stU8 (out + 32) t'3
-  let t'4 ← PMem.ldU16 (in' + 28)
-  PMem.stU16 (out + 28) t'4
-  let t'5 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  PMem.stU8 (out + 33) t'5
-  let t'6 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  PMem.stU8 (out + 34) t'6
-  let t'7 ← PMem.ldF32 in'
-  PMem.stF32 out t'7
-  let t'8 ← PMem.ldF32 (in' + 4)
-  PMem.stF32 (out + 4) t'8
-  let t'9 ← PMem.ldF32 (in' + 8)
-  PMem.stF32 (out + 8) t'9
-  let t'10 ← PMem.ldF32 (in' + 12)
-  PMem.stF32 (out + 12) t'10
-  let t'11 ← PMem.ldU16 (in' + 28)
-  let t'12 ← GCS_MAVLINK.command_long_stores_location (UInt16.toUInt32 (t'11))
-  let mut stores_location : Bool := t'12
-  let t'13 ← PMem.ldF32 (in' + 16)
-  let t'14 ← convert_COMMAND_LONG_loc_param t'13 stores_location
-  PMem.stI32 (out + 16) t'14
-  let t'15 ← PMem.ldF32 (in' + 20)
-  let t'16 ← convert_COMMAND_LONG_loc_param t'15 stores_location
-  PMem.stI32 (out + 20) t'16
-  let t'17 ← PMem.ldF32 (in' + 24)
-  PMem.stF32 (out + 24) t'17
-  return ()
-
-partial def GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT (this : UInt64) (in' : UInt64) (out : UInt64) (frame : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 36
-  let r ← GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT.body fp this in' out frame
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_command_ack_t::__mavlink_command_ack_t : void () noexcept`, `mavlink_msg_command_ack.h:9-?`. -/
-partial def __mavlink_command_ack_t.__mavlink_command_ack_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `GCS_MAVLINK::handle_command_int_packet : MAV_RESULT (const mavlink_command_int_t &, const mavlink_message_t &)`, `GCS_Common.cpp:5654-5888`. -/
-partial def GCS_MAVLINK.handle_command_int_packet (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldU16 (packet + 28)
-  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
-  if sw'2 == (42651 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_battery_reset"
-    return (default : UInt32)
-  else if sw'2 == (32000 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_can_forward"
-    return (default : UInt32)
-  else if sw'2 == (42700 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_debug_trap"
-    return (default : UInt32)
-  else if sw'2 == (611 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_set_global_origin"
-    return (default : UInt32)
-  else if sw'2 == (218 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_aux_function"
-    return (default : UInt32)
-  else if sw'2 == (185 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_flight_termination"
-    return (default : UInt32)
-  else if sw'2 == (601 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_jump_tag"
-    return (default : UInt32)
-  else if sw'2 == (224 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_set_mission_current"
-    return (default : UInt32)
-  else if sw'2 == (176 : Int32) then
-    return (← PMem.answer "set_mode").toUInt32
-  else if sw'2 == (197 : Int32) || sw'2 == (195 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_set_roi_location"
-    return (default : UInt32)
-  else if sw'2 == (201 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_set_roi"
-    return (default : UInt32)
-  else if sw'2 == (42428 : Int32) then
-    return (0 : UInt32)
-  else if sw'2 == (179 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_do_set_home"
-    return (default : UInt32)
-  else if sw'2 == (43003 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_int_external_position_estimate"
-    return (default : UInt32)
-  else if sw'2 == (43004 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_int_external_wind_estimate"
-    return (default : UInt32)
-  else if sw'2 == (400 : Int32) then
-    return (← PMem.answer "arm").toUInt32
-  else if sw'2 == (410 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_get_home_position"
-    return (default : UInt32)
-  else if sw'2 == (241 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_preflight_calibration"
-    return (default : UInt32)
-  else if sw'2 == (245 : Int32) then
-    let t'3 ← PMem.ldF32 packet
-    let mut sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 ((Binary32.toUInt8 (t'3))))) == (UInt32.toInt32 ((2 : UInt32))))
-    if !sc'5 then
-      let t'4 ← PMem.ldF32 packet
-      sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 ((Binary32.toUInt8 (t'4))))) == (UInt32.toInt32 ((4 : UInt32))))
-    if sc'5 then
-      PMem.unreached "AP_Param::erase_all"
-      return (0 : UInt32)
-    return (2 : UInt32)
-  else if sw'2 == (246 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_preflight_reboot"
-    return (default : UInt32)
-  else if sw'2 == (5300 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_do_set_safety_switch_state"
-    return (default : UInt32)
-  else if sw'2 == (520 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_request_autopilot_capabilities"
-    return (default : UInt32)
-  else if sw'2 == (401 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_run_prearm_checks"
-    return (default : UInt32)
-  else if sw'2 == (42007 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_set_ekf_source_set"
-    return (default : UInt32)
-  else if sw'2 == (526 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_storage_format"
-    return (default : UInt32)
-  else if sw'2 == (511 : Int32) then
-    let t'6 ← GCS_MAVLINK.handle_command_set_message_interval this packet
-    return t'6
-  else if sw'2 == (510 : Int32) then
-    PMem.unreached "GCS_MAVLINK::handle_command_get_message_interval"
-    return (default : UInt32)
-  else if sw'2 == (512 : Int32) then
-    let t'7 ← GCS_MAVLINK.handle_command_request_message this packet
-    return t'7
-  else
-    pure ()
-  return (3 : UInt32)
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::peek : bool (GCS_MAVLINK::pending_param_reply &)`, `AP_Common.h:239-241`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_reply.peek (this : UInt64) (object : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.peekbytes t'1 object (UInt64.toUInt32 ((48 : UInt64)))
-  return ((UInt32.toUInt64 (t'2)) == (48 : UInt64))
-
-/-- C++ `GCS_MAVLINK::send_param_error : void (const GCS_MAVLINK::pending_param_reply &, MAV_PARAM_ERROR)`, `GCS_Param.cpp:451-466`. -/
-partial def GCS_MAVLINK.send_param_error'2.body (fp : UInt64) (this : UInt64) (reply : UInt64) (error : UInt32) : PMem.M Unit := do
-  let mut error := error
-  let t'1 ← PMem.ldU32 (this + 40)
-  let t'2 ← comm_get_txspace t'1
-  let t'3 ← PMem.ldU32 (this + 40)
-  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-  let mut c'5 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (21 : Int32)))))) then
-    c'5 := true
-  else
-    let t'6 ← PMem.ldU32 (this + 40)
-    gcs_out_of_space_to_send t'6
-    c'5 := false
-  if !c'5 then
-    return ()
-  let t'7 ← strncpy_noterm (fp + 0) (reply + 16) ((16 : UInt64) / (1 : UInt64))
-  discard <| pure (t'7)
-  let t'8 ← PMem.ldU32 (this + 40)
-  let t'9 ← PMem.ldU32 (reply + 36)
-  let t'10 ← PMem.ldU8 (reply + 40)
-  let t'11 ← PMem.ldI16 (reply + 12)
-  mavlink_msg_param_error_send t'8 t'9 t'10 (fp + 0) t'11 (UInt32.toUInt8 (error))
-  return ()
-
-partial def GCS_MAVLINK.send_param_error'2 (this : UInt64) (reply : UInt64) (error : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 16
-  let r ← GCS_MAVLINK.send_param_error'2.body fp this reply error
-  PMem.leave fp
-  return r
-
-/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::pop : bool ()`, `AP_Common.h:195-197`. -/
-partial def ObjectBuffer'GCS_MAVLINK_pending_param_reply.pop (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 this
-  let t'2 ← ByteBuffer.advance t'1 (UInt64.toUInt32 ((48 : UInt64)))
-  return t'2
-
-/-- C++ `__mavlink_param_value_t::__mavlink_param_value_t : void () noexcept`, `mavlink_msg_param_value.h:9-?`. -/
-partial def __mavlink_param_value_t.__mavlink_param_value_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `mav_array_memcpy : void (void *, const void *, size_t)`, `protocol.h:220-234`. -/
-partial def mav_array_memcpy (dest : UInt64) (src : UInt64) (n : UInt64) : PMem.M Unit := do
-  let mut dest := dest
-  let mut src := src
-  let mut n := n
-  if (src == (0 : UInt64)) then
-    let t'1 ← PMem.memset dest (0 : Int32) n
-    discard <| pure (t'1)
-  else
-    let t'2 ← PMem.memcpy dest src n
-    discard <| pure (t'2)
-  return ()
-
-/-- C++ `__mavlink_mission_item_reached_t::__mavlink_mission_item_reached_t : void () noexcept`, `mavlink_msg_mission_item_reached.h:9-?`. -/
-partial def __mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `MissionItemProtocol::queued_request_send : void ()`, `MissionItemProtocol.cpp:357-377`. -/
-partial def MissionItemProtocol.queued_request_send (this : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldB (this + 8)
-  if !t'1 then
-    return ()
-  let t'2 ← PMem.ldU16 (this + 26)
-  let t'3 ← PMem.ldU16 (this + 24)
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) > (UInt32.toInt32 (UInt16.toUInt32 (t'3))))) then
-    return ()
-  let t'4 ← PMem.ldU64 (this + 16)
-  if (t'4 == (0 : UInt64)) then
-    return ()
-  let t'5 ← PMem.ldU64 (this + 16)
-  let t'6 ← GCS_MAVLINK.get_chan t'5
-  let t'7 ← comm_get_txspace t'6
-  let t'8 ← PMem.ldU64 (this + 16)
-  let t'9 ← GCS_MAVLINK.get_chan t'8
-  let t'10 ← GCS_MAVLINK.packet_overhead_chan t'9
-  let mut c'11 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'7)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'10))) + (5 : Int32)))))) then
-    c'11 := true
-  else
-    let t'12 ← PMem.ldU64 (this + 16)
-    let t'13 ← GCS_MAVLINK.get_chan t'12
-    gcs_out_of_space_to_send t'13
-    c'11 := false
-  if !c'11 then
-    return ()
-  let t'14 ← PMem.ldU64 (this + 16)
-  let t'15 ← GCS_MAVLINK.get_chan t'14
-  let t'16 ← PMem.ldU32 (this + 28)
-  let t'17 ← PMem.ldU8 (this + 32)
-  let t'18 ← PMem.ldU16 (this + 26)
-  let t'19 ← MissionItemProtocol_Waypoints.mission_type this
-  mavlink_msg_mission_request_send t'15 t'16 t'17 t'18 (UInt32.toUInt8 (t'19))
-  let t'20 := ((← get).clockUs / 1000).toUInt32
-  PMem.stU32 (this + 40) t'20
-  return ()
-
-/-- C++ `__mavlink_available_modes_monitor_t::__mavlink_available_modes_monitor_t : void () noexcept`, `mavlink_msg_available_modes_monitor.h:9-?`. -/
-partial def __mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `strncpy_noterm : size_t (char *, const char *, size_t)`, `AP_Common.cpp:124-134`. -/
-partial def strncpy_noterm (dest : UInt64) (src : UInt64) (n : UInt64) : PMem.M UInt64 := do
-  let mut dest := dest
-  let mut src := src
-  let mut n := n
-  let t'1 ← PMem.strnlen src n
-  let mut len : UInt64 := t'1
-  let mut ret : UInt64 := len
-  if (decide (len < n)) then
-    let t'2 := len
-    let t'3 := (t'2 + 1)
-    len := t'3
-  let t'4 ← PMem.memcpy dest src len
-  discard <| pure (t'4)
-  return ret
-
-/-- C++ `mavlink_msg_param_error_send : void (mavlink_channel_t, uint32_t, uint8_t, const char *, int16_t, uint8_t)`, `mavlink_msg_param_error.h:230-249`. -/
-partial def mavlink_msg_param_error_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (param_id : UInt64) (param_index : Int16) (error : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut target_system := target_system
-  let mut target_component := target_component
-  let mut param_id := param_id
-  let mut param_index := param_index
-  let mut error := error
-  __mavlink_param_error_t.__mavlink_param_error_t (fp + 0)
-  PMem.stI16 (fp + 0) param_index
-  let t'1 ← mavlink_msg_target_field target_system
-  PMem.stU8 ((fp + 0) + 2) t'1
-  PMem.stU8 ((fp + 0) + 3) target_component
-  PMem.stU8 ((fp + 0) + 20) error
-  mav_array_memcpy ((fp + 0) + 4) param_id ((1 : UInt64) * (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))))
-  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((345 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((21 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((21 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((209 : Int32)))) target_system
-  return ()
-
-partial def mavlink_msg_param_error_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (param_id : UInt64) (param_index : Int16) (error : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 22
-  let r ← mavlink_msg_param_error_send.body fp chan target_system target_component param_id param_index error
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::is_read_only : bool () const`, `AP_Param.cpp:1462-1472`. -/
-partial def AP_Param.is_read_only.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU16 (0xd460 : UInt64) /- &AP_Param::num_read_only -/
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
-    return false
-  let t'2 ← AP_Param.configured_in_defaults_file this (fp + 0)
-  if t'2 then
-    let t'3 ← PMem.ldB (fp + 0)
-    return t'3
-  return false
-
-partial def AP_Param.is_read_only (this : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 1
-  let r ← AP_Param.is_read_only.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `MissionItemProtocol::mavlink2_requirement_met : bool (const GCS_MAVLINK &, const mavlink_message_t &) const`, `MissionItemProtocol.cpp:41-53`. -/
-partial def MissionItemProtocol.mavlink2_requirement_met (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Bool := do
-  let t'1 ← MissionItemProtocol_Waypoints.mission_type this
-  if ((UInt32.toInt32 (t'1)) == (UInt32.toInt32 ((0 : UInt32)))) then
-    return true
-  let t'2 ← GCS_MAVLINK.sending_mavlink1 _link
-  if !t'2 then
-    return true
-  MissionItemProtocol.send_mission_ack this _link msg (3 : UInt32)
-  return false
-
-/-- C++ `MissionItemProtocol::send_mission_ack : void (const GCS_MAVLINK &, const mavlink_message_t &, MAV_MISSION_RESULT) const`, `MissionItemProtocol.cpp:341-351`. -/
-partial def MissionItemProtocol.send_mission_ack (this : UInt64) (_link : UInt64) (msg : UInt64) (result : UInt32) : PMem.M Unit := do
-  let mut result := result
-  let t'1 ← GCS_MAVLINK.get_chan _link
-  let t'2 ← comm_get_txspace t'1
-  let t'3 ← GCS_MAVLINK.get_chan _link
-  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
-  let mut c'5 : Bool := default
-  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (4 : Int32)))))) then
-    c'5 := true
-  else
-    let t'6 ← GCS_MAVLINK.get_chan _link
-    gcs_out_of_space_to_send t'6
-    c'5 := false
-  if !c'5 then
-    return ()
-  let t'7 ← GCS_MAVLINK.get_chan _link
-  let t'8 ← PMem.ldU32 (msg + 8)
-  let t'9 ← PMem.ldU8 (msg + 12)
-  let t'10 ← MissionItemProtocol_Waypoints.mission_type this
-  mavlink_msg_mission_ack_send t'7 t'8 t'9 (UInt32.toUInt8 (result)) (UInt32.toUInt8 (t'10))
-  return ()
-
-/-- C++ `MissionItemProtocol_Waypoints::item_count : uint16_t () const`, `MissionItemProtocol_Waypoints.cpp:94-96`. -/
-partial def MissionItemProtocol_Waypoints.item_count (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU64 (this + 48)
-  let t'2 ← AP_Mission.num_commands t'1
-  return t'2
-
-/-- C++ `MissionItemProtocol::allocate_update_resources : MAV_MISSION_RESULT ()`, `AP_Common.h:115-117`. -/
-partial def MissionItemProtocol.allocate_update_resources (this : UInt64) : PMem.M UInt32 := do
-  return (0 : UInt32)
-
-/-- C++ `MissionItemProtocol::init_send_requests : void (GCS_MAVLINK &, const mavlink_message_t &, const int16_t, const int16_t)`, `MissionItemProtocol.cpp:9-30`. -/
-partial def MissionItemProtocol.init_send_requests (this : UInt64) (_link : UInt64) (msg : UInt64) (_request_first : Int16) (_request_last : Int16) : PMem.M Unit := do
-  let mut _request_first := _request_first
-  let mut _request_last := _request_last
-  let t'1 := ((← get).clockUs / 1000).toUInt32
-  PMem.stU32 (this + 36) t'1
-  PMem.stB (this + 8) true
-  let t'2 := Int16.toUInt16 (_request_first)
-  PMem.stU16 (this + 26) t'2
-  let t'3 := Int16.toUInt16 (_request_last)
-  PMem.stU16 (this + 24) t'3
-  let t'4 ← PMem.ldU32 (msg + 8)
-  PMem.stU32 (this + 28) t'4
-  let t'5 ← PMem.ldU8 (msg + 12)
-  PMem.stU8 (this + 32) t'5
-  PMem.stU64 (this + 16) _link
-  let t'6 := ((← get).clockUs / 1000).toUInt32
-  PMem.stU32 (this + 40) t'6
-  let t'7 ← MissionItemProtocol_Waypoints.next_item_ap_message_id this
-  let t'8 ← PMem.ldU64 (this + 16)
-  GCS_MAVLINK.send_message t'8 t'7
-  PMem.stB (this + 47) false
-  PMem.stB (this + 46) false
-  return ()
-
-/-- C++ `AP_Mission::cmd_has_location : bool (const uint16_t)`, `AP_Mission.cpp:3100-3103`. -/
-partial def AP_Mission.cmd_has_location (command : UInt16) : PMem.M Bool := do
-  let mut command := command
-  let t'1 ← AP_Mission.stored_in_location command
-  return t'1
-
-/-- C++ `check_lat : bool (float)`, `location.cpp:39-42`. -/
-partial def check_lat (lat : Binary32) : PMem.M Bool := do
-  let mut lat := lat
-  return (decide ((Binary32.abs lat) ≤ (Int32.toBinary32 ((90 : Int32)))))
-
-/-- C++ `check_lng : bool (float)`, `location.cpp:43-46`. -/
-partial def check_lng (lng : Binary32) : PMem.M Bool := do
-  let mut lng := lng
-  return (decide ((Binary32.abs lng) ≤ (Int32.toBinary32 ((180 : Int32)))))
-
-/-- C++ `__mavlink_mission_item_int_t::__mavlink_mission_item_int_t : void (const __mavlink_mission_item_int_t &) noexcept`, `mavlink_msg_mission_item_int.h:?-?`. -/
-partial def __mavlink_mission_item_int_t.__mavlink_mission_item_int_t'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 arg
-  PMem.stF32 (this + 0) t'1
-  let t'2 ← PMem.ldF32 (arg + 4)
-  PMem.stF32 (this + 4) t'2
-  let t'3 ← PMem.ldF32 (arg + 8)
-  PMem.stF32 (this + 8) t'3
-  let t'4 ← PMem.ldF32 (arg + 12)
-  PMem.stF32 (this + 12) t'4
-  let t'5 ← PMem.ldI32 (arg + 16)
-  PMem.stI32 (this + 16) t'5
-  let t'6 ← PMem.ldI32 (arg + 20)
-  PMem.stI32 (this + 20) t'6
-  let t'7 ← PMem.ldF32 (arg + 24)
-  PMem.stF32 (this + 24) t'7
-  let t'8 ← PMem.ldU16 (arg + 28)
-  PMem.stU16 (this + 28) t'8
-  let t'9 ← PMem.ldU16 (arg + 30)
-  PMem.stU16 (this + 30) t'9
-  let t'10 ← PMem.ldU8 (arg + 32)
-  PMem.stU8 (this + 32) t'10
-  let t'11 ← PMem.ldU8 (arg + 33)
-  PMem.stU8 (this + 33) t'11
-  let t'12 ← PMem.ldU8 (arg + 34)
-  PMem.stU8 (this + 34) t'12
-  let t'13 ← PMem.ldU8 (arg + 35)
-  PMem.stU8 (this + 35) t'13
-  let t'14 ← PMem.ldU8 (arg + 36)
-  PMem.stU8 (this + 36) t'14
-  let t'15 ← PMem.ldU8 (arg + 37)
-  PMem.stU8 (this + 37) t'15
-  return ()
-
-/-- C++ `AP_Mission::sanity_check_params : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `AP_Mission.cpp:1024-1071`. -/
-partial def AP_Mission.sanity_check_params (packet : UInt64) : PMem.M UInt32 := do
-  let mut nan_mask : UInt8 := default  -- uninitialized in C
-  let t'1 ← PMem.ldU16 (packet + 30)
-  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
-  if sw'2 == (16 : Int32) then
-    let t'3 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
-    nan_mask := t'3
-  else if sw'2 == (17 : Int32) then
-    let t'4 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
-    nan_mask := t'4
-  else if sw'2 == (21 : Int32) then
-    let t'5 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
-    nan_mask := t'5
-  else if sw'2 == (22 : Int32) then
-    let t'6 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
-    nan_mask := t'6
-  else if sw'2 == (36 : Int32) then
-    let t'7 := Int8.toUInt8 (Int32.toInt8 ((~~~((((1 : Int32) <<< (1 : Int32)) ||| ((1 : Int32) <<< (2 : Int32))) ||| ((1 : Int32) <<< (3 : Int32))))))
-    nan_mask := t'7
-  else if sw'2 == (84 : Int32) then
-    let t'8 := Int8.toUInt8 (Int32.toInt8 ((~~~((1 : Int32) <<< (3 : Int32)))))
-    nan_mask := t'8
-  else if sw'2 == (85 : Int32) then
-    let t'9 := Int8.toUInt8 (Int32.toInt8 ((~~~(((1 : Int32) <<< (2 : Int32)) ||| ((1 : Int32) <<< (3 : Int32))))))
-    nan_mask := t'9
-  else
-    let t'10 := Int8.toUInt8 (Int32.toInt8 ((255 : Int32)))
-    nan_mask := t'10
-  let mut sc'12 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32)
-  if sc'12 then
-    let t'11 ← PMem.ldF32 packet
-    sc'12 := (Binary32.isNaN t'11)
-  let mut sc'14 := sc'12
-  if !sc'14 then
-    let t'13 ← PMem.ldF32 packet
-    sc'14 := (Binary32.isInf t'13)
-  if sc'14 then
-    return (6 : UInt32)
-  let mut sc'16 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
-  if sc'16 then
-    let t'15 ← PMem.ldF32 (packet + 4)
-    sc'16 := (Binary32.isNaN t'15)
-  let mut sc'18 := sc'16
-  if !sc'18 then
-    let t'17 ← PMem.ldF32 (packet + 4)
-    sc'18 := (Binary32.isInf t'17)
-  if sc'18 then
-    return (7 : UInt32)
-  let mut sc'20 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
-  if sc'20 then
-    let t'19 ← PMem.ldF32 (packet + 8)
-    sc'20 := (Binary32.isNaN t'19)
-  let mut sc'22 := sc'20
-  if !sc'22 then
-    let t'21 ← PMem.ldF32 (packet + 8)
-    sc'22 := (Binary32.isInf t'21)
-  if sc'22 then
-    return (8 : UInt32)
-  let mut sc'24 := ((UInt32.toInt32 (UInt8.toUInt32 (nan_mask))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32)
-  if sc'24 then
-    let t'23 ← PMem.ldF32 (packet + 12)
-    sc'24 := (Binary32.isNaN t'23)
-  let mut sc'26 := sc'24
-  if !sc'26 then
-    let t'25 ← PMem.ldF32 (packet + 12)
-    sc'26 := (Binary32.isInf t'25)
-  if sc'26 then
-    return (9 : UInt32)
-  return (0 : UInt32)
-
-/-- C++ `MIN : auto (const int &, const float &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
-partial def MIN'4 (one : UInt64) (two : UInt64) : PMem.M Binary32 := do
-  let t'1 ← PMem.ldI32 one
-  let t'2 ← PMem.ldF32 two
-  let mut c'3 : Binary32 := default
-  if (decide ((Int32.toBinary32 (t'1)) < t'2)) then
-    let t'4 ← PMem.ldI32 one
-    c'3 := Int32.toBinary32 (t'4)
-  else
-    let t'5 ← PMem.ldF32 two
-    c'3 := t'5
-  return c'3
-
-/-- C++ `is_negative : bool (const float)`, `<built-in>:76-80`. -/
-partial def is_negative (fVal1 : Binary32) : PMem.M Bool := do
-  let mut fVal1 := fVal1
-  return (decide ((Binary32.toBinary64 (fVal1)) ≤ ((-(Binary64.ofBits 0x3ff0000000000000 /- 1 -/)) * (Binary32.toBinary64 ((Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/))))))
-
-/-- C++ `AP_Mission::stored_in_location : bool (uint16_t)`, `AP_Mission.cpp:908-941`. -/
-partial def AP_Mission.stored_in_location (id : UInt16) : PMem.M Bool := do
-  let mut id := id
-  let sw'1 := UInt32.toInt32 (UInt16.toUInt32 (id))
-  if sw'1 == (16 : Int32) || sw'1 == (17 : Int32) || sw'1 == (18 : Int32) || sw'1 == (19 : Int32) || sw'1 == (21 : Int32) || sw'1 == (22 : Int32) || sw'1 == (30 : Int32) || sw'1 == (31 : Int32) || sw'1 == (82 : Int32) || sw'1 == (92 : Int32) || sw'1 == (179 : Int32) || sw'1 == (188 : Int32) || sw'1 == (189 : Int32) || sw'1 == (191 : Int32) || sw'1 == (195 : Int32) || sw'1 == (201 : Int32) || sw'1 == (84 : Int32) || sw'1 == (85 : Int32) || sw'1 == (94 : Int32) || sw'1 == (5001 : Int32) || sw'1 == (5002 : Int32) || sw'1 == (5003 : Int32) || sw'1 == (5004 : Int32) || sw'1 == (5000 : Int32) || sw'1 == (5100 : Int32) || sw'1 == (36 : Int32) then
-    return true
-  else
-    return false
-
-/-- C++ `check_lat : bool (int32_t)`, `location.cpp:47-50`. -/
-partial def check_lat'2 (lat : Int32) : PMem.M Bool := do
-  let mut lat := lat
-  let t'1 ← PMem.labs (Int32.toInt64 (lat))
-  return (decide ((Int64.toBinary32 (t'1)) ≤ ((Int32.toBinary32 ((90 : Int32))) * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/))))))
-
-/-- C++ `check_lng : bool (int32_t)`, `location.cpp:51-54`. -/
-partial def check_lng'2 (lng : Int32) : PMem.M Bool := do
-  let mut lng := lng
-  let t'1 ← PMem.labs (Int32.toInt64 (lng))
-  return (decide ((Int64.toBinary32 (t'1)) ≤ ((Int32.toBinary32 ((180 : Int32))) * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/))))))
-
-/-- C++ `MissionItemProtocol::send_mission_ack : void (const mavlink_message_t &, MAV_MISSION_RESULT) const`, `MissionItemProtocol.cpp:332-340`. -/
-partial def MissionItemProtocol.send_mission_ack'2 (this : UInt64) (msg : UInt64) (result : UInt32) : PMem.M Unit := do
-  let mut result := result
-  let t'1 ← PMem.ldU64 (this + 16)
-  if (t'1 == (0 : UInt64)) then
-    return ()
-  let t'2 ← PMem.ldU64 (this + 16)
-  MissionItemProtocol.send_mission_ack this t'2 msg result
-  return ()
-
-/-- C++ `MissionItemProtocol_Waypoints::replace_item : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:102-121`. -/
-partial def MissionItemProtocol_Waypoints.replace_item.body (fp : UInt64) (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
-  discard <| PMem.memset ((fp + 0) + 0) 0 2
-  discard <| PMem.memset ((fp + 0) + 2) 0 2
-  discard <| PMem.memset ((fp + 0) + 4) 0 2
-  AP_Mission.Content.Content ((fp + 0) + 8)
-  discard <| PMem.memset ((fp + 0) + 24) 0 1
-  let t'1 ← AP_Mission.mavlink_int_to_mission_cmd mission_item_int (fp + 0)
-  let mut res : UInt32 := t'1
-  if ((UInt32.toInt32 (res)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    return res
-  let t'2 ← PMem.ldU16 ((fp + 0) + 2)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((177 : UInt32)))) then
-    let t'3 ← PMem.ldU16 ((fp + 0) + 8)
-    let t'4 ← MissionItemProtocol_Waypoints.item_count this
-    let mut sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))
-    if sc'7 then
-      let t'5 ← PMem.ldU16 ((fp + 0) + 8)
-      let t'6 ← PMem.ldU16 (this + 24)
-      sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) > (UInt32.toInt32 (UInt16.toUInt32 (t'6)))))
-    let mut sc'9 := sc'7
-    if !sc'9 then
-      let t'8 ← PMem.ldU16 ((fp + 0) + 8)
-      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (0 : Int32))
-    if sc'9 then
-      return (1 : UInt32)
-  let t'10 ← PMem.ldU16 (fp + 0)
-  let t'11 ← PMem.ldU64 (this + 48)
-  let t'12 ← AP_Mission.replace_cmd t'11 t'10 (fp + 0)
-  if !t'12 then
-    return (1 : UInt32)
-  return (0 : UInt32)
-
-partial def MissionItemProtocol_Waypoints.replace_item (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 28
-  let r ← MissionItemProtocol_Waypoints.replace_item.body fp this mission_item_int
-  PMem.leave fp
-  return r
-
-/-- C++ `MissionItemProtocol_Waypoints::append_item : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:31-51`. -/
-partial def MissionItemProtocol_Waypoints.append_item.body (fp : UInt64) (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
-  discard <| PMem.memset ((fp + 0) + 0) 0 2
-  discard <| PMem.memset ((fp + 0) + 2) 0 2
-  discard <| PMem.memset ((fp + 0) + 4) 0 2
-  AP_Mission.Content.Content ((fp + 0) + 8)
-  discard <| PMem.memset ((fp + 0) + 24) 0 1
-  let t'1 ← AP_Mission.mavlink_int_to_mission_cmd mission_item_int (fp + 0)
-  let mut res : UInt32 := t'1
-  if ((UInt32.toInt32 (res)) != (UInt32.toInt32 ((0 : UInt32)))) then
-    return res
-  let t'2 ← PMem.ldU16 ((fp + 0) + 2)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((177 : UInt32)))) then
-    let t'3 ← PMem.ldU16 ((fp + 0) + 8)
-    let t'4 ← MissionItemProtocol_Waypoints.item_count this
-    let mut sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))
-    if sc'7 then
-      let t'5 ← PMem.ldU16 ((fp + 0) + 8)
-      let t'6 ← PMem.ldU16 (this + 24)
-      sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) > (UInt32.toInt32 (UInt16.toUInt32 (t'6)))))
-    let mut sc'9 := sc'7
-    if !sc'9 then
-      let t'8 ← PMem.ldU16 ((fp + 0) + 8)
-      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (0 : Int32))
-    if sc'9 then
-      return (1 : UInt32)
-  let t'10 ← PMem.ldU64 (this + 48)
-  let t'11 ← AP_Mission.add_cmd t'10 (fp + 0)
-  if !t'11 then
-    return (1 : UInt32)
-  return (0 : UInt32)
-
-partial def MissionItemProtocol_Waypoints.append_item (this : UInt64) (mission_item_int : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 28
-  let r ← MissionItemProtocol_Waypoints.append_item.body fp this mission_item_int
-  PMem.leave fp
-  return r
-
-/-- C++ `MissionItemProtocol::transfer_is_complete : void (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:323-330`. -/
-partial def MissionItemProtocol.transfer_is_complete (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Unit := do
-  let t'1 ← MissionItemProtocol_Waypoints.complete this _link
-  let mut result : UInt32 := t'1
-  MissionItemProtocol.send_mission_ack this _link msg result
-  MissionItemProtocol.free_upload_resources this
-  PMem.stB (this + 8) false
-  PMem.stU64 (this + 16) (0 : UInt64)
-  return ()
-
-/-- C++ `MissionItemProtocol_Waypoints::get_item : MAV_MISSION_RESULT (uint16_t, mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:67-92`. -/
-partial def MissionItemProtocol_Waypoints.get_item.body (fp : UInt64) (this : UInt64) (seq : UInt16) (ret_packet : UInt64) : PMem.M UInt32 := do
-  let mut seq := seq
-  let mut sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (seq))) != (0 : Int32))
-  if sc'3 then
-    let t'1 ← PMem.ldU64 (this + 48)
-    let t'2 ← AP_Mission.num_commands t'1
-    sc'3 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (seq))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))
-  if sc'3 then
-    return (13 : UInt32)
-  AP_Mission.Mission_Command.Mission_Command (fp + 0)
-  let t'4 ← PMem.ldU64 (this + 48)
-  let t'5 ← AP_Mission.read_cmd_from_storage t'4 seq (fp + 0)
-  if !t'5 then
-    return (1 : UInt32)
-  let t'6 ← AP_Mission.mission_cmd_to_mavlink_int (fp + 0) ret_packet
-  if !t'6 then
-    return (1 : UInt32)
-  let t'7 := UInt32.toUInt8 ((0 : UInt32))
-  PMem.stU8 (ret_packet + 37) t'7
-  let t'8 ← PMem.ldU16 ((fp + 0) + 2)
-  let t'9 ← PMem.ldU64 (this + 48)
-  let t'10 ← AP_Mission.get_current_nav_cmd t'9
-  let t'11 ← PMem.ldU16 t'10
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (UInt32.toInt32 (UInt16.toUInt32 (t'11)))) then
-    let t'12 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-    PMem.stU8 (ret_packet + 35) t'12
-  return (0 : UInt32)
-
-partial def MissionItemProtocol_Waypoints.get_item (this : UInt64) (seq : UInt16) (ret_packet : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 28
-  let r ← MissionItemProtocol_Waypoints.get_item.body fp this seq ret_packet
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_msg_mission_count_send : void (mavlink_channel_t, uint32_t, uint8_t, uint16_t, uint8_t)`, `mavlink_msg_mission_count.h:218-237`. -/
-partial def mavlink_msg_mission_count_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (count : UInt16) (mission_type : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut target_system := target_system
-  let mut target_component := target_component
-  let mut count := count
-  let mut mission_type := mission_type
-  __mavlink_mission_count_t.__mavlink_mission_count_t (fp + 0)
-  PMem.stU16 (fp + 0) count
-  let t'1 ← mavlink_msg_target_field target_system
-  PMem.stU8 ((fp + 0) + 2) t'1
-  PMem.stU8 ((fp + 0) + 3) target_component
-  PMem.stU8 ((fp + 0) + 4) mission_type
-  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((44 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((221 : Int32)))) target_system
-  return ()
-
-partial def mavlink_msg_mission_count_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (count : UInt16) (mission_type : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 6
-  let r ← mavlink_msg_mission_count_send.body fp chan target_system target_component count mission_type
-  PMem.leave fp
-  return r
-
-/-- C++ `GCS_MAVLINK::send_message_target : void (uint32_t, const char *, uint32_t)`, `GCS_MAVLink.cpp:84-100`. -/
-partial def GCS_MAVLINK.send_message_target (this : UInt64) (msgid : UInt32) (pkt : UInt64) (target_sysid : UInt32) : PMem.M Unit := do
-  let mut msgid := msgid
-  let mut pkt := pkt
-  let mut target_sysid := target_sysid
-  let t'1 ← mavlink_get_msg_entry msgid
-  let mut entry : UInt64 := t'1
-  if (entry == (0 : UInt64)) then
-    return ()
-  let t'2 ← PMem.ldU8 (entry + 6)
-  let t'3 ← GCS_MAVLINK.check_payload_size this (UInt8.toUInt16 (t'2))
-  if !t'3 then
-    return ()
-  let t'4 ← PMem.ldU32 (this + 40)
-  let t'5 ← PMem.ldU32 entry
-  let t'6 ← PMem.ldU8 (entry + 5)
-  let t'7 ← PMem.ldU8 (entry + 6)
-  let t'8 ← PMem.ldU8 (entry + 4)
-  _mav_finalize_message_chan_send_target t'4 t'5 pkt t'6 t'7 t'8 target_sysid
-  return ()
-
-/-- C++ `AP_Mission::convert_MISSION_ITEM_INT_to_MISSION_ITEM : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &, mavlink_mission_item_t &)`, `AP_Mission.cpp:1660-1695`. -/
-partial def AP_Mission.convert_MISSION_ITEM_INT_to_MISSION_ITEM (item_int : UInt64) (item : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldF32 item_int
-  PMem.stF32 item t'1
-  let t'2 ← PMem.ldF32 (item_int + 4)
-  PMem.stF32 (item + 4) t'2
-  let t'3 ← PMem.ldF32 (item_int + 8)
-  PMem.stF32 (item + 8) t'3
-  let t'4 ← PMem.ldF32 (item_int + 12)
-  PMem.stF32 (item + 12) t'4
-  let t'5 ← PMem.ldF32 (item_int + 24)
-  PMem.stF32 (item + 24) t'5
-  let t'6 ← PMem.ldU16 (item_int + 28)
-  PMem.stU16 (item + 28) t'6
-  let t'7 ← PMem.ldU16 (item_int + 30)
-  PMem.stU16 (item + 30) t'7
-  let t'8 ← PMem.ldU8 (item_int + 32)
-  PMem.stU8 (item + 32) t'8
-  let t'9 ← PMem.ldU8 (item_int + 33)
-  PMem.stU8 (item + 33) t'9
-  let t'10 ← PMem.ldU8 (item_int + 34)
-  PMem.stU8 (item + 34) t'10
-  let t'11 ← PMem.ldU8 (item_int + 35)
-  PMem.stU8 (item + 35) t'11
-  let t'12 ← PMem.ldU8 (item_int + 36)
-  PMem.stU8 (item + 36) t'12
-  let t'13 ← PMem.ldU8 (item_int + 37)
-  PMem.stU8 (item + 37) t'13
-  let t'14 ← PMem.ldU16 (item_int + 30)
-  let t'15 ← AP_Mission.cmd_has_location t'14
-  if !t'15 then
-    let t'16 ← PMem.ldI32 (item_int + 16)
-    let t'17 := Int32.toBinary32 (t'16)
-    PMem.stF32 (item + 16) t'17
-    let t'18 ← PMem.ldI32 (item_int + 20)
-    let t'19 := Int32.toBinary32 (t'18)
-    PMem.stF32 (item + 20) t'19
-  else
-    let t'20 ← PMem.ldI32 (item_int + 16)
-    let t'21 := ((Int32.toBinary32 (t'20)) * (Binary32.ofBits 0x33d6bf95 /- 100000001/1000000000000000 -/))
-    PMem.stF32 (item + 16) t'21
-    let t'22 ← PMem.ldI32 (item_int + 20)
-    let t'23 := ((Int32.toBinary32 (t'22)) * (Binary32.ofBits 0x33d6bf95 /- 100000001/1000000000000000 -/))
-    PMem.stF32 (item + 20) t'23
-    let t'24 ← PMem.ldF32 (item + 16)
-    let t'25 ← check_lat t'24
-    if !t'25 then
-      return (10 : UInt32)
-    let t'26 ← PMem.ldF32 (item + 20)
-    let t'27 ← check_lng t'26
-    if !t'27 then
-      return (11 : UInt32)
-  return (0 : UInt32)
-
-/-- C++ `MissionItemProtocol::cancel_upload : bool (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:57-76`. -/
-partial def MissionItemProtocol.cancel_upload (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldB (this + 8)
-  if t'1 then
-    let t'2 ← PMem.ldU32 (msg + 8)
-    let t'3 ← PMem.ldU32 (this + 28)
-    let mut sc'6 := (t'2 != t'3)
-    if !sc'6 then
-      let t'4 ← PMem.ldU8 (msg + 12)
-      let t'5 ← PMem.ldU8 (this + 32)
-      sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) != (UInt32.toInt32 (UInt8.toUInt32 (t'5))))
-    if sc'6 then
-      MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
-      return false
-    MissionItemProtocol.free_upload_resources this
-    PMem.stB (this + 8) false
-    PMem.stU64 (this + 16) (0 : UInt64)
-  return true
-
-/-- C++ `MissionItemProtocol_Waypoints::max_items : uint16_t () const`, `MissionItemProtocol_Waypoints.cpp:98-100`. -/
-partial def MissionItemProtocol_Waypoints.max_items (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU64 (this + 48)
-  let t'2 ← AP_Mission.num_commands_max t'1
-  return t'2
-
-/-- C++ `MissionItemProtocol::allocate_receive_resources : MAV_MISSION_RESULT (const uint16_t)`, `MissionItemProtocol.h:112-114`. -/
-partial def MissionItemProtocol.allocate_receive_resources (this : UInt64) (count : UInt16) : PMem.M UInt32 := do
-  let mut count := count
-  return (0 : UInt32)
-
-/-- C++ `MissionItemProtocol_Waypoints::truncate : void (const mavlink_mission_count_t &)`, `MissionItemProtocol_Waypoints.cpp:128-132`. -/
-partial def MissionItemProtocol_Waypoints.truncate (this : UInt64) (packet : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldU16 packet
-  let t'2 ← PMem.ldU64 (this + 48)
-  AP_Mission.truncate t'2 t'1
-  return ()
-
-/-- C++ `MissionItemProtocol_Waypoints::clear_all_items : bool ()`, `MissionItemProtocol_Waypoints.cpp:53-56`. -/
-partial def MissionItemProtocol_Waypoints.clear_all_items (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU64 (this + 48)
-  let t'2 ← AP_Mission.clear t'1
-  return t'2
-
-/-- C++ `convert_COMMAND_LONG_loc_param : int32_t (float, bool)`, `GCS_Common.cpp:5335-5346`. -/
-partial def convert_COMMAND_LONG_loc_param (param : Binary32) (stores_location : Bool) : PMem.M Int32 := do
-  let mut param := param
-  let mut stores_location := stores_location
-  if (Binary32.isNaN param) then
-    return (0 : Int32)
-  if stores_location then
-    return Binary32.toInt32 ((param * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/)))))
-  return Binary32.toInt32 (param)
-
-/-- C++ `GCS_MAVLINK::handle_command_set_message_interval : MAV_RESULT (const mavlink_command_int_t &)`, `GCS_Common.cpp:3205-3211`. -/
-partial def GCS_MAVLINK.handle_command_set_message_interval (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldF32 (packet + 8)
-  let t'2 ← is_zero t'1
-  if !t'2 then
-    return (2 : UInt32)
-  let t'3 ← PMem.ldF32 packet
-  let t'4 ← PMem.ldF32 (packet + 4)
-  let t'5 ← GCS_MAVLINK.set_message_interval this (Binary32.toUInt32 (t'3)) (Binary32.toInt32 (t'4))
-  return t'5
-
-/-- C++ `GCS_MAVLINK::handle_command_request_message : MAV_RESULT (const mavlink_command_int_t &)`, `GCS_Common.cpp:3288-3328`. -/
-partial def GCS_MAVLINK.handle_command_request_message.body (fp : UInt64) (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
-  let t'1 ← PMem.ldF32 packet
-  let mut mavlink_id : UInt32 := Binary32.toUInt32 (t'1)
-  if (mavlink_id == (Int32.toUInt32 ((244 : Int32)))) then
-    let t'2 ← PMem.ldF32 (packet + 4)
-    PMem.stF32 ((fp + 0) + 0) t'2
-    discard <| PMem.memset ((fp + 0) + 4) 0 4
-    discard <| PMem.memset ((fp + 0) + 8) 0 4
-    discard <| PMem.memset ((fp + 0) + 12) 0 4
-    discard <| PMem.memset ((fp + 0) + 16) 0 4
-    discard <| PMem.memset ((fp + 0) + 20) 0 4
-    discard <| PMem.memset ((fp + 0) + 24) 0 4
-    discard <| PMem.memset ((fp + 0) + 28) 0 2
-    discard <| PMem.memset ((fp + 0) + 30) 0 1
-    discard <| PMem.memset ((fp + 0) + 31) 0 1
-    discard <| PMem.memset ((fp + 0) + 32) 0 1
-    discard <| PMem.memset ((fp + 0) + 33) 0 1
-    discard <| PMem.memset ((fp + 0) + 34) 0 1
-    PMem.unreached "GCS_MAVLINK::handle_command_get_message_interval"
-    return (default : UInt32)
-  let t'3 ← GCS_MAVLINK.mavlink_id_to_ap_message_id this mavlink_id
-  let mut id : UInt8 := t'3
-  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((102 : UInt8))))) then
-    return (4 : UInt32)
-  let sw'4 := UInt32.toInt32 (UInt8.toUInt32 (id))
-  if sw'4 == (98 : Int32) then
-    PMem.stB (this + 871) true
-    PMem.stB ((this + 871) + 1) true
-    let t'5 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-    PMem.stU8 ((this + 871) + 3) t'5
-    let t'6 ← PMem.ldF32 (packet + 4)
-    let t'7 := Binary32.toUInt8 (t'6)
-    PMem.stU8 ((this + 871) + 2) t'7
-  else
-    pure ()
-  GCS_MAVLINK.send_message this id
-  return (0 : UInt32)
-
-partial def GCS_MAVLINK.handle_command_request_message (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
-  let fp ← PMem.enter 36
-  let r ← GCS_MAVLINK.handle_command_request_message.body fp this packet
-  PMem.leave fp
-  return r
-
-/-- C++ `mavlink_msg_mission_request_send : void (mavlink_channel_t, uint32_t, uint8_t, uint16_t, uint8_t)`, `mavlink_msg_mission_request.h:218-237`. -/
-partial def mavlink_msg_mission_request_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (seq : UInt16) (mission_type : UInt8) : PMem.M Unit := do
-  let mut chan := chan
-  let mut target_system := target_system
-  let mut target_component := target_component
-  let mut seq := seq
-  let mut mission_type := mission_type
-  __mavlink_mission_request_t.__mavlink_mission_request_t (fp + 0)
-  PMem.stU16 (fp + 0) seq
-  let t'1 ← mavlink_msg_target_field target_system
-  PMem.stU8 ((fp + 0) + 2) t'1
-  PMem.stU8 ((fp + 0) + 3) target_component
-  PMem.stU8 ((fp + 0) + 4) mission_type
-  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((40 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((230 : Int32)))) target_system
-  return ()
-
-partial def mavlink_msg_mission_request_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (seq : UInt16) (mission_type : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 6
-  let r ← mavlink_msg_mission_request_send.body fp chan target_system target_component seq mission_type
-  PMem.leave fp
-  return r
-
-/-- C++ `__mavlink_param_error_t::__mavlink_param_error_t : void () noexcept`, `mavlink_msg_param_error.h:9-?`. -/
-partial def __mavlink_param_error_t.__mavlink_param_error_t (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `GCS_MAVLINK::sending_mavlink1 : bool () const`, `GCS_Common.cpp:2164-2167`. -/
-partial def GCS_MAVLINK.sending_mavlink1 (this : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU8 ((this + 408) + 16)
-  return (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) &&& (2 : Int32)) != (0 : Int32))
-
-/-- C++ `AP_Mission::num_commands : uint16_t () const`, `AP_Common.h:530-533`. -/
-partial def AP_Mission.num_commands (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'2 ← PMem.ldI16 t'1
-  return Int16.toUInt16 (t'2)
-
-/-- C++ `AP_Mission::replace_cmd : bool (uint16_t, const Mission_Command &)`, `AP_Mission.cpp:533-548`. -/
-partial def AP_Mission.replace_cmd (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
-  let mut index := index
-  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'2 ← PMem.ldI16 t'1
-  if (decide ((UInt16.toUInt32 (index)) ≥ (Int32.toUInt32 (Int16.toInt32 (t'2))))) then
-    return false
-  if ((UInt32.toInt32 (UInt16.toUInt32 (index))) == (0 : Int32)) then
-    return true
-  let t'3 ← AP_Mission.write_cmd_to_storage this index cmd
-  return t'3
-
-/-- C++ `AP_Mission::add_cmd : bool (Mission_Command &)`, `AP_Mission.cpp:510-528`. -/
-partial def AP_Mission.add_cmd.body (fp : UInt64) (this : UInt64) (cmd : UInt64) : PMem.M Bool := do
-  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'2 ← PMem.ldI16 t'1
-  if (decide ((Int16.toInt32 (t'2)) < (1 : Int32))) then
-    AP_Mission.write_home_to_storage this
-  let t'3 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'4 ← PMem.ldI16 t'3
-  let t'5 ← AP_Mission.write_cmd_to_storage this (Int16.toUInt16 (t'4)) cmd
-  let mut ret : Bool := t'5
-  if ret then
-    let t'6 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-    let t'7 ← PMem.ldI16 t'6
-    let t'8 := Int16.toUInt16 (t'7)
-    PMem.stU16 cmd t'8
-    let t'9 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-    let t'10 ← PMem.ldI16 t'9
-    PMem.stI16 (fp + 0) (Int32.toInt16 (((Int16.toInt32 (t'10)) + (1 : Int32))))
-    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 0)
-  return ret
-
-partial def AP_Mission.add_cmd (this : UInt64) (cmd : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 2
-  let r ← AP_Mission.add_cmd.body fp this cmd
-  PMem.leave fp
-  return r
-
-/-- C++ `MissionItemProtocol_Waypoints::complete : MAV_MISSION_RESULT (const GCS_MAVLINK &)`, `MissionItemProtocol_Waypoints.cpp:58-65`. -/
-partial def MissionItemProtocol_Waypoints.complete (this : UInt64) (_link : UInt64) : PMem.M UInt32 := do
-  return (0 : UInt32)
 
 /-- C++ `AP_Mission::Mission_Command::Mission_Command : void () noexcept(false)`, `AP_Common.h:?-?`. -/
-partial def AP_Mission.Mission_Command.Mission_Command (this : UInt64) : PMem.M Unit := do
+def AP_Mission.Mission_Command.Mission_Command (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Mission.Mission_Command.Mission_Command.pure' this)
+
+/-- C++ `StorageAccess::read_byte : uint8_t (uint16_t) const`, `StorageManager.cpp:249-254`. -/
+def StorageAccess.read_byte.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt8 := do
+  let mut loc := loc
+  let t'1 ← StorageAccess.read_block this (fp + 0) loc (1 : UInt64)
+  discard <| pure (t'1)
+  let t'2 ← PMem.ldU8 (fp + 0)
+  return t'2
+
+def StorageAccess.read_byte (this : UInt64) (loc : UInt16) : PMem.M UInt8 := do
+  let fp ← PMem.enter 1
+  let r ← StorageAccess.read_byte.body fp this loc
+  PMem.leave fp
+  return r
+
+/-- C++ `StorageAccess::read_uint16 : uint16_t (uint16_t) const`, `StorageManager.cpp:259-264`. -/
+def StorageAccess.read_uint16.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt16 := do
+  let mut loc := loc
+  let t'1 ← StorageAccess.read_block this (fp + 0) loc (2 : UInt64)
+  discard <| pure (t'1)
+  let t'2 ← PMem.ldU16 (fp + 0)
+  return t'2
+
+def StorageAccess.read_uint16 (this : UInt64) (loc : UInt16) : PMem.M UInt16 := do
+  let fp ← PMem.enter 2
+  let r ← StorageAccess.read_uint16.body fp this loc
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::format_conversion : void (uint8_t, const Mission_Command &, PackedContent &) const`, `AP_Mission.cpp:3248-3269`. -/
+def AP_Mission.format_conversion (this : UInt64) (tag_byte : UInt8) (cmd : UInt64) (packed_content : UInt64) : PMem.M Unit := do
+  let mut tag_byte := tag_byte
+  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (tag_byte))) == (0 : Int32))
+  if sc'4 then
+    let t'1 ← PMem.ldU16 (cmd + 2)
+    let mut sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (UInt32.toInt32 ((2500 : UInt32))))
+    if !sc'3 then
+      let t'2 ← PMem.ldU16 (cmd + 2)
+      sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((2501 : UInt32))))
+    sc'4 := sc'3
+  if sc'4 then
+    let t'5 ← PMem.memset (packed_content + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (0 : Int32) ((12 : UInt64) - (Int64.toUInt64 (Int32.toInt64 ((1 : Int32)))))
+    discard <| pure (t'5)
   return ()
 
 /-- C++ `AP_Mission::read_cmd_from_storage : bool (uint16_t, Mission_Command &) const`, `AP_Mission.cpp:829-906`. -/
-partial def AP_Mission.read_cmd_from_storage.body (fp : UInt64) (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
+def AP_Mission.read_cmd_from_storage.body (fp : UInt64) (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
   let mut index := index
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      if !(false) then break
-    first'1 := false
+  for _ in [0:1] do
     discard <| pure ((fp + 0))
   if ((UInt32.toInt32 (UInt16.toUInt32 (index))) == (0 : Int32)) then
     discard <| PMem.memset ((fp + 8) + 0) 0 2
@@ -12408,19 +8899,19 @@ partial def AP_Mission.read_cmd_from_storage.body (fp : UInt64) (this : UInt64) 
     discard <| PMem.memset ((fp + 8) + 24) 0 1
     discard <| PMem.memcpy cmd (fp + 8) 28
     discard <| pure (cmd)
-    let t'2 := UInt32.toUInt16 ((16 : UInt32))
-    PMem.stU16 (cmd + 2) t'2
-    let t'3 := (← get).homeAddr
-    discard <| PMem.memcpy (cmd + 8) t'3 16
+    let t'1 := UInt32.toUInt16 ((16 : UInt32))
+    PMem.stU16 (cmd + 2) t'1
+    let t'2 := (← get).homeAddr
+    discard <| PMem.memcpy (cmd + 8) t'2 16
     discard <| pure ((cmd + 8))
     return true
-  let t'4 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'5 ← PMem.ldI16 t'4
-  let mut sc'7 := (decide ((UInt16.toUInt32 (index)) ≥ (Int32.toUInt32 (Int16.toInt32 (t'5)))))
-  if !sc'7 then
-    let t'6 ← PMem.ldU16 (this + 604)
-    sc'7 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (index))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'6)))))
-  if sc'7 then
+  let t'3 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'4 ← PMem.ldI16 t'3
+  let mut sc'6 := (decide ((UInt16.toUInt32 (index)) ≥ (Int32.toUInt32 (Int16.toInt32 (t'4)))))
+  if !sc'6 then
+    let t'5 ← PMem.ldU16 (this + 604)
+    sc'6 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (index))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'5)))))
+  if sc'6 then
     return false
   discard <| PMem.memset ((fp + 40) + 0) 0 2
   discard <| PMem.memset ((fp + 40) + 2) 0 2
@@ -12441,76 +8932,76 @@ partial def AP_Mission.read_cmd_from_storage.body (fp : UInt64) (this : UInt64) 
   PMem.stBits ((fp + 72) + 0) 8 24 (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))
   discard <| PMem.memset (((fp + 72) + 0) + 4) 0 4
   discard <| PMem.memset (((fp + 72) + 0) + 8) 0 4
-  let t'8 ← StorageAccess.read_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage
-  let mut b1 : UInt8 := t'8
+  let t'7 ← StorageAccess.read_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage
+  let mut b1 : UInt8 := t'7
   if (((UInt32.toInt32 (UInt8.toUInt32 (b1))) == (0 : Int32)) || ((UInt32.toInt32 (UInt8.toUInt32 (b1))) == (1 : Int32))) then
-    let t'9 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32)))))
-    PMem.stU16 (cmd + 2) t'9
-    let t'10 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32)))))
-    PMem.stU16 (cmd + 4) t'10
-    let t'11 ← StorageAccess.read_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (fp + 72) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (5 : Int32))))) (Int64.toUInt64 (Int32.toInt64 ((10 : Int32))))
-    discard <| pure (t'11)
+    let t'8 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32)))))
+    PMem.stU16 (cmd + 2) t'8
+    let t'9 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32)))))
+    PMem.stU16 (cmd + 4) t'9
+    let t'10 ← StorageAccess.read_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (fp + 72) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (5 : Int32))))) (Int64.toUInt64 (Int32.toInt64 ((10 : Int32))))
+    discard <| pure (t'10)
     AP_Mission.format_conversion this b1 cmd (fp + 72)
   else
-    let t'12 := UInt8.toUInt16 (b1)
-    PMem.stU16 (cmd + 2) t'12
-    let t'13 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32)))))
-    PMem.stU16 (cmd + 4) t'13
-    let t'14 ← StorageAccess.read_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (fp + 72) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
-    discard <| pure (t'14)
-  let t'15 ← PMem.ldU16 (cmd + 2)
-  let t'16 ← AP_Mission.stored_in_location t'15
-  if t'16 then
+    let t'11 := UInt8.toUInt16 (b1)
+    PMem.stU16 (cmd + 2) t'11
+    let t'12 ← StorageAccess.read_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32)))))
+    PMem.stU16 (cmd + 4) t'12
+    let t'13 ← StorageAccess.read_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (fp + 72) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
+    discard <| pure (t'13)
+  let t'14 ← PMem.ldU16 (cmd + 2)
+  let t'15 ← AP_Mission.stored_in_location t'14
+  if t'15 then
     if ((UInt32.toInt32 (UInt8.toUInt32 (b1))) == (0 : Int32)) then
       pure ()
-    let t'17 ← PMem.ldBits (fp + 72) 0 1
-    let t'18 := UInt64.toUInt8 (t'17)
-    PMem.stBits (cmd + 8) 0 1 (UInt8.toUInt64 (t'18))
-    let t'19 ← PMem.ldBits (fp + 72) 2 1
-    let t'20 := UInt64.toUInt8 (t'19)
-    PMem.stBits (cmd + 8) 1 1 (UInt8.toUInt64 (t'20))
-    let t'21 ← PMem.ldBits (fp + 72) 3 1
-    let t'22 := UInt64.toUInt8 (t'21)
-    PMem.stBits (cmd + 8) 2 1 (UInt8.toUInt64 (t'22))
-    let t'23 ← PMem.ldBits (fp + 72) 4 1
-    let t'24 := UInt64.toUInt8 (t'23)
-    PMem.stBits (cmd + 8) 3 1 (UInt8.toUInt64 (t'24))
-    let t'25 ← PMem.ldBits (fp + 72) 5 1
-    let t'26 := UInt64.toUInt8 (t'25)
-    PMem.stBits (cmd + 8) 4 1 (UInt8.toUInt64 (t'26))
-    let t'27 ← PMem.ldBits (fp + 72) 8 24
-    let t'28 := UInt32.toInt32 (UInt64.toUInt32 (t'27))
-    PMem.stI32 ((cmd + 8) + 4) t'28
-    let t'29 ← PMem.ldI32 ((fp + 72) + 4)
-    PMem.stI32 ((cmd + 8) + 8) t'29
-    let t'30 ← PMem.ldI32 ((fp + 72) + 8)
-    PMem.stI32 ((cmd + 8) + 12) t'30
-    let t'31 ← PMem.ldBits (fp + 72) 6 1
-    if (UInt64.toUInt8 (t'31)) != (0 : UInt8) then
-      let t'32 := (cmd + 24)
-      let t'33 ← PMem.ldU8 t'32
-      let t'34 := (t'33 ||| (UInt32.toUInt8 (((1 : UInt32) <<< (Int32.toUInt32 ((0 : Int32)))))))
-      PMem.stU8 t'32 t'34
-    let t'35 ← PMem.ldBits (fp + 72) 7 1
-    if (UInt64.toUInt8 (t'35)) != (0 : UInt8) then
-      let t'36 := (cmd + 24)
-      let t'37 ← PMem.ldU8 t'36
-      let t'38 := (t'37 ||| (UInt32.toUInt8 (((1 : UInt32) <<< (Int32.toUInt32 ((1 : Int32)))))))
-      PMem.stU8 t'36 t'38
+    let t'16 ← PMem.ldBits (fp + 72) 0 1
+    let t'17 := UInt64.toUInt8 (t'16)
+    PMem.stBits (cmd + 8) 0 1 (UInt8.toUInt64 (t'17))
+    let t'18 ← PMem.ldBits (fp + 72) 2 1
+    let t'19 := UInt64.toUInt8 (t'18)
+    PMem.stBits (cmd + 8) 1 1 (UInt8.toUInt64 (t'19))
+    let t'20 ← PMem.ldBits (fp + 72) 3 1
+    let t'21 := UInt64.toUInt8 (t'20)
+    PMem.stBits (cmd + 8) 2 1 (UInt8.toUInt64 (t'21))
+    let t'22 ← PMem.ldBits (fp + 72) 4 1
+    let t'23 := UInt64.toUInt8 (t'22)
+    PMem.stBits (cmd + 8) 3 1 (UInt8.toUInt64 (t'23))
+    let t'24 ← PMem.ldBits (fp + 72) 5 1
+    let t'25 := UInt64.toUInt8 (t'24)
+    PMem.stBits (cmd + 8) 4 1 (UInt8.toUInt64 (t'25))
+    let t'26 ← PMem.ldBits (fp + 72) 8 24
+    let t'27 := UInt32.toInt32 (UInt64.toUInt32 (t'26))
+    PMem.stI32 ((cmd + 8) + 4) t'27
+    let t'28 ← PMem.ldI32 ((fp + 72) + 4)
+    PMem.stI32 ((cmd + 8) + 8) t'28
+    let t'29 ← PMem.ldI32 ((fp + 72) + 8)
+    PMem.stI32 ((cmd + 8) + 12) t'29
+    let t'30 ← PMem.ldBits (fp + 72) 6 1
+    if (UInt64.toUInt8 (t'30)) != (0 : UInt8) then
+      let t'31 := (cmd + 24)
+      let t'32 ← PMem.ldU8 t'31
+      let t'33 := (t'32 ||| (UInt32.toUInt8 (((1 : UInt32) <<< (Int32.toUInt32 ((0 : Int32)))))))
+      PMem.stU8 t'31 t'33
+    let t'34 ← PMem.ldBits (fp + 72) 7 1
+    if (UInt64.toUInt8 (t'34)) != (0 : UInt8) then
+      let t'35 := (cmd + 24)
+      let t'36 ← PMem.ldU8 t'35
+      let t'37 := (t'36 ||| (UInt32.toUInt8 (((1 : UInt32) <<< (Int32.toUInt32 ((1 : Int32)))))))
+      PMem.stU8 t'35 t'37
   else
-    let t'39 ← PMem.memcpy (cmd + 8) (fp + 72) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
-    discard <| pure (t'39)
+    let t'38 ← PMem.memcpy (cmd + 8) (fp + 72) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
+    discard <| pure (t'38)
   PMem.stU16 cmd index
   return true
 
-partial def AP_Mission.read_cmd_from_storage (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
+def AP_Mission.read_cmd_from_storage (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 84
   let r ← AP_Mission.read_cmd_from_storage.body fp this index cmd
   PMem.leave fp
   return r
 
 /-- C++ `AP_Mission::mission_cmd_to_mavlink_int : bool (const AP_Mission::Mission_Command &, mavlink_mission_item_int_t &)`, `AP_Mission.cpp:1700-2135`. -/
-partial def AP_Mission.mission_cmd_to_mavlink_int.body (fp : UInt64) (cmd : UInt64) (packet : UInt64) : PMem.M Bool := do
+def AP_Mission.mission_cmd_to_mavlink_int.body (fp : UInt64) (cmd : UInt64) (packet : UInt64) : PMem.M Bool := do
   discard <| PMem.memset ((fp + 0) + 0) 0 4
   discard <| PMem.memset ((fp + 0) + 4) 0 4
   discard <| PMem.memset ((fp + 0) + 8) 0 4
@@ -12530,7 +9021,7 @@ partial def AP_Mission.mission_cmd_to_mavlink_int.body (fp : UInt64) (cmd : UInt
   discard <| PMem.memset ((fp + 0) + 37) 0 1
   discard <| PMem.memcpy packet (fp + 0) 40
   discard <| pure (packet)
-  repeat
+  for _ in [0:1] do
     let t'3 ← PMem.ldU16 (cmd + 2)
     let sw'4 := UInt32.toInt32 (UInt16.toUInt32 (t'3))
     if sw'4 == (0 : Int32) then
@@ -13033,7 +9524,6 @@ partial def AP_Mission.mission_cmd_to_mavlink_int.body (fp : UInt64) (cmd : UInt
       PMem.stF32 (packet + 24) t'268
     else
       return false
-    break
   let t'269 ← PMem.ldU16 (cmd + 2)
   let t'270 ← AP_Mission.stored_in_location t'269
   if t'270 then
@@ -13056,28 +9546,1098 @@ partial def AP_Mission.mission_cmd_to_mavlink_int.body (fp : UInt64) (cmd : UInt
       return false
   return true
 
-partial def AP_Mission.mission_cmd_to_mavlink_int (cmd : UInt64) (packet : UInt64) : PMem.M Bool := do
+def AP_Mission.mission_cmd_to_mavlink_int (cmd : UInt64) (packet : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 40
   let r ← AP_Mission.mission_cmd_to_mavlink_int.body fp cmd packet
   PMem.leave fp
   return r
 
-/-- C++ `AP_Mission::get_current_nav_cmd : const Mission_Command &() const`, `AP_Common.h:597-600`. -/
-partial def AP_Mission.get_current_nav_cmd (this : UInt64) : PMem.M UInt64 := do
+/-- `AP_Mission.get_current_nav_cmd` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Mission.get_current_nav_cmd.pure' (this : UInt64) : Id UInt64 := do
   return (this + 88)
 
-/-- C++ `AP_Mission::num_commands_max : uint16_t () const`, `AP_Common.h:536-538`. -/
-partial def AP_Mission.num_commands_max (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (this + 604)
-  return t'1
+/-- C++ `AP_Mission::get_current_nav_cmd : const Mission_Command &() const`, `AP_Common.h:597-600`. -/
+def AP_Mission.get_current_nav_cmd (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_Mission.get_current_nav_cmd.pure' this)
 
-/-- C++ `is_zero : bool (const float)`, `ftype.h:61-63`. -/
-partial def is_zero (x : Binary32) : PMem.M Bool := do
+/-- C++ `MissionItemProtocol_Waypoints::get_item : MAV_MISSION_RESULT (uint16_t, mavlink_mission_item_int_t &)`, `MissionItemProtocol_Waypoints.cpp:67-92`. -/
+def MissionItemProtocol_Waypoints.get_item.body (fp : UInt64) (this : UInt64) (seq : UInt16) (ret_packet : UInt64) : PMem.M UInt32 := do
+  let mut seq := seq
+  let mut sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (seq))) != (0 : Int32))
+  if sc'3 then
+    let t'1 ← PMem.ldU64 (this + 48)
+    let t'2 ← AP_Mission.num_commands t'1
+    sc'3 := (decide ((UInt32.toInt32 (UInt16.toUInt32 (seq))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))
+  if sc'3 then
+    return (13 : UInt32)
+  AP_Mission.Mission_Command.Mission_Command (fp + 0)
+  let t'4 ← PMem.ldU64 (this + 48)
+  let t'5 ← AP_Mission.read_cmd_from_storage t'4 seq (fp + 0)
+  if !t'5 then
+    return (1 : UInt32)
+  let t'6 ← AP_Mission.mission_cmd_to_mavlink_int (fp + 0) ret_packet
+  if !t'6 then
+    return (1 : UInt32)
+  let t'7 := UInt32.toUInt8 ((0 : UInt32))
+  PMem.stU8 (ret_packet + 37) t'7
+  let t'8 ← PMem.ldU16 ((fp + 0) + 2)
+  let t'9 ← PMem.ldU64 (this + 48)
+  let t'10 ← AP_Mission.get_current_nav_cmd t'9
+  let t'11 ← PMem.ldU16 t'10
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'8))) == (UInt32.toInt32 (UInt16.toUInt32 (t'11)))) then
+    let t'12 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+    PMem.stU8 (ret_packet + 35) t'12
+  return (0 : UInt32)
+
+def MissionItemProtocol_Waypoints.get_item (this : UInt64) (seq : UInt16) (ret_packet : UInt64) : PMem.M UInt32 := do
+  let fp ← PMem.enter 28
+  let r ← MissionItemProtocol_Waypoints.get_item.body fp this seq ret_packet
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_count_t.__mavlink_mission_count_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_count_t.__mavlink_mission_count_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_count_t::__mavlink_mission_count_t : void () noexcept`, `mavlink_msg_mission_count.h:9-?`. -/
+def __mavlink_mission_count_t.__mavlink_mission_count_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_count_t.__mavlink_mission_count_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_count_send : void (mavlink_channel_t, uint32_t, uint8_t, uint16_t, uint8_t)`, `mavlink_msg_mission_count.h:218-237`. -/
+def mavlink_msg_mission_count_send.body (fp : UInt64) (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (count : UInt16) (mission_type : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut target_system := target_system
+  let mut target_component := target_component
+  let mut count := count
+  let mut mission_type := mission_type
+  __mavlink_mission_count_t.__mavlink_mission_count_t (fp + 0)
+  PMem.stU16 (fp + 0) count
+  let t'1 ← mavlink_msg_target_field target_system
+  PMem.stU8 ((fp + 0) + 2) t'1
+  PMem.stU8 ((fp + 0) + 3) target_component
+  PMem.stU8 ((fp + 0) + 4) mission_type
+  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((44 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((221 : Int32)))) target_system
+  return ()
+
+def mavlink_msg_mission_count_send (chan : UInt32) (target_system : UInt32) (target_component : UInt8) (count : UInt16) (mission_type : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 6
+  let r ← mavlink_msg_mission_count_send.body fp chan target_system target_component count mission_type
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::send_message_target : void (uint32_t, const char *, uint32_t)`, `GCS_MAVLink.cpp:84-100`. -/
+def GCS_MAVLINK.send_message_target (this : UInt64) (msgid : UInt32) (pkt : UInt64) (target_sysid : UInt32) : PMem.M Unit := do
+  let mut msgid := msgid
+  let mut pkt := pkt
+  let mut target_sysid := target_sysid
+  let t'1 ← mavlink_get_msg_entry msgid
+  let mut entry : UInt64 := t'1
+  if (entry == (0 : UInt64)) then
+    return ()
+  let t'2 ← PMem.ldU8 (entry + 6)
+  let t'3 ← GCS_MAVLINK.check_payload_size this (UInt8.toUInt16 (t'2))
+  if !t'3 then
+    return ()
+  let t'4 ← PMem.ldU32 (this + 40)
+  let t'5 ← PMem.ldU32 entry
+  let t'6 ← PMem.ldU8 (entry + 5)
+  let t'7 ← PMem.ldU8 (entry + 6)
+  let t'8 ← PMem.ldU8 (entry + 4)
+  _mav_finalize_message_chan_send_target t'4 t'5 pkt t'6 t'7 t'8 target_sysid
+  return ()
+
+/-- C++ `MissionItemProtocol::handle_mission_request_int : void (GCS_MAVLINK &, const mavlink_mission_request_int_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:142-180`. -/
+def MissionItemProtocol.handle_mission_request_int.body (fp : UInt64) (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
+  if !t'1 then
+    return ()
+  let t'2 ← PMem.ldB (this + 8)
+  if t'2 then
+    MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
+    return ()
+  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
+  let t'3 ← PMem.ldU16 packet
+  let t'4 ← MissionItemProtocol_Waypoints.get_item this t'3 (fp + 0)
+  let mut result_code : UInt32 := t'4
+  if ((UInt32.toInt32 (result_code)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    if ((UInt32.toInt32 (result_code)) == (UInt32.toInt32 ((13 : UInt32)))) then
+      let t'5 ← GCS_MAVLINK.get_chan _link
+      let mut chan : UInt32 := t'5
+      let t'6 ← comm_get_txspace chan
+      let t'7 ← GCS_MAVLINK.packet_overhead_chan chan
+      let mut c'8 : Bool := default
+      if (decide ((UInt16.toUInt32 (t'6)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (5 : Int32)))))) then
+        c'8 := true
+      else
+        gcs_out_of_space_to_send chan
+        c'8 := false
+      if c'8 then
+        let t'9 ← PMem.ldU32 (msg + 8)
+        let t'10 ← PMem.ldU8 (msg + 12)
+        let t'11 ← MissionItemProtocol_Waypoints.item_count this
+        let t'12 ← MissionItemProtocol_Waypoints.mission_type this
+        mavlink_msg_mission_count_send chan t'9 t'10 t'11 (UInt32.toUInt8 (t'12))
+    MissionItemProtocol.send_mission_ack this _link msg result_code
+    return ()
+  let t'13 ← PMem.ldU32 (msg + 8)
+  let t'14 ← mavlink_msg_target_field t'13
+  PMem.stU8 ((fp + 0) + 32) t'14
+  let t'15 ← PMem.ldU8 (msg + 12)
+  PMem.stU8 ((fp + 0) + 33) t'15
+  let t'16 ← PMem.ldU32 (msg + 8)
+  GCS_MAVLINK.send_message_target _link (Int32.toUInt32 ((73 : Int32))) (fp + 0) t'16
+  return ()
+
+def MissionItemProtocol.handle_mission_request_int (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 40
+  let r ← MissionItemProtocol.handle_mission_request_int.body fp this _link packet msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_mission_request_int : void (const mavlink_message_t &)`, `GCS_Common.cpp:671-682`. -/
+def GCS_MAVLINK.handle_mission_request_int.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_request_int_t.__mavlink_mission_request_int_t (fp + 0)
+  mavlink_msg_mission_request_int_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
+  let mut prot : UInt64 := t'3
+  if (prot == (0 : UInt64)) then
+    return ()
+  MissionItemProtocol.handle_mission_request_int prot this (fp + 0) msg
+  return ()
+
+def GCS_MAVLINK.handle_mission_request_int (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 6
+  let r ← GCS_MAVLINK.handle_mission_request_int.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `mavlink_msg_mission_request_decode : void (const mavlink_message_t *, mavlink_mission_request_t *)`, `mavlink_msg_mission_request.h:324-341`. -/
+def mavlink_msg_mission_request_decode (msg : UInt64) (mission_request : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut mission_request := mission_request
+  mavlink_msg_decode_target msg mission_request (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
+  return ()
+
+/-- C++ `AP_Mission::convert_MISSION_ITEM_INT_to_MISSION_ITEM : MAV_MISSION_RESULT (const mavlink_mission_item_int_t &, mavlink_mission_item_t &)`, `AP_Mission.cpp:1660-1695`. -/
+def AP_Mission.convert_MISSION_ITEM_INT_to_MISSION_ITEM (item_int : UInt64) (item : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldF32 item_int
+  PMem.stF32 item t'1
+  let t'2 ← PMem.ldF32 (item_int + 4)
+  PMem.stF32 (item + 4) t'2
+  let t'3 ← PMem.ldF32 (item_int + 8)
+  PMem.stF32 (item + 8) t'3
+  let t'4 ← PMem.ldF32 (item_int + 12)
+  PMem.stF32 (item + 12) t'4
+  let t'5 ← PMem.ldF32 (item_int + 24)
+  PMem.stF32 (item + 24) t'5
+  let t'6 ← PMem.ldU16 (item_int + 28)
+  PMem.stU16 (item + 28) t'6
+  let t'7 ← PMem.ldU16 (item_int + 30)
+  PMem.stU16 (item + 30) t'7
+  let t'8 ← PMem.ldU8 (item_int + 32)
+  PMem.stU8 (item + 32) t'8
+  let t'9 ← PMem.ldU8 (item_int + 33)
+  PMem.stU8 (item + 33) t'9
+  let t'10 ← PMem.ldU8 (item_int + 34)
+  PMem.stU8 (item + 34) t'10
+  let t'11 ← PMem.ldU8 (item_int + 35)
+  PMem.stU8 (item + 35) t'11
+  let t'12 ← PMem.ldU8 (item_int + 36)
+  PMem.stU8 (item + 36) t'12
+  let t'13 ← PMem.ldU8 (item_int + 37)
+  PMem.stU8 (item + 37) t'13
+  let t'14 ← PMem.ldU16 (item_int + 30)
+  let t'15 ← AP_Mission.cmd_has_location t'14
+  if !t'15 then
+    let t'16 ← PMem.ldI32 (item_int + 16)
+    let t'17 := Int32.toBinary32 (t'16)
+    PMem.stF32 (item + 16) t'17
+    let t'18 ← PMem.ldI32 (item_int + 20)
+    let t'19 := Int32.toBinary32 (t'18)
+    PMem.stF32 (item + 20) t'19
+  else
+    let t'20 ← PMem.ldI32 (item_int + 16)
+    let t'21 := ((Int32.toBinary32 (t'20)) * (Binary32.ofBits 0x33d6bf95 /- 100000001/1000000000000000 -/))
+    PMem.stF32 (item + 16) t'21
+    let t'22 ← PMem.ldI32 (item_int + 20)
+    let t'23 := ((Int32.toBinary32 (t'22)) * (Binary32.ofBits 0x33d6bf95 /- 100000001/1000000000000000 -/))
+    PMem.stF32 (item + 20) t'23
+    let t'24 ← PMem.ldF32 (item + 16)
+    let t'25 ← check_lat t'24
+    if !t'25 then
+      return (10 : UInt32)
+    let t'26 ← PMem.ldF32 (item + 20)
+    let t'27 ← check_lng t'26
+    if !t'27 then
+      return (11 : UInt32)
+  return (0 : UInt32)
+
+/-- C++ `MissionItemProtocol::handle_mission_request : void (GCS_MAVLINK &, const mavlink_mission_request_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:183-216`. -/
+def MissionItemProtocol.handle_mission_request.body (fp : UInt64) (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
+  if !t'1 then
+    return ()
+  __mavlink_mission_item_int_t.__mavlink_mission_item_int_t (fp + 0)
+  let t'2 ← PMem.ldU16 packet
+  let t'3 ← MissionItemProtocol_Waypoints.get_item this t'2 (fp + 0)
+  let mut ret : UInt32 := t'3
+  if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    MissionItemProtocol.send_mission_ack this _link msg ret
+    return ()
+  let t'4 ← PMem.ldU32 (msg + 8)
+  let t'5 ← mavlink_msg_target_field t'4
+  PMem.stU8 ((fp + 0) + 32) t'5
+  let t'6 ← PMem.ldU8 (msg + 12)
+  PMem.stU8 ((fp + 0) + 33) t'6
+  discard <| PMem.memset ((fp + 40) + 0) 0 4
+  discard <| PMem.memset ((fp + 40) + 4) 0 4
+  discard <| PMem.memset ((fp + 40) + 8) 0 4
+  discard <| PMem.memset ((fp + 40) + 12) 0 4
+  discard <| PMem.memset ((fp + 40) + 16) 0 4
+  discard <| PMem.memset ((fp + 40) + 20) 0 4
+  discard <| PMem.memset ((fp + 40) + 24) 0 4
+  discard <| PMem.memset ((fp + 40) + 28) 0 2
+  discard <| PMem.memset ((fp + 40) + 30) 0 2
+  discard <| PMem.memset ((fp + 40) + 32) 0 1
+  discard <| PMem.memset ((fp + 40) + 33) 0 1
+  discard <| PMem.memset ((fp + 40) + 34) 0 1
+  discard <| PMem.memset ((fp + 40) + 35) 0 1
+  discard <| PMem.memset ((fp + 40) + 36) 0 1
+  discard <| PMem.memset ((fp + 40) + 37) 0 1
+  let t'7 ← AP_Mission.convert_MISSION_ITEM_INT_to_MISSION_ITEM (fp + 0) (fp + 40)
+  ret := t'7
+  if ((UInt32.toInt32 (ret)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    MissionItemProtocol.send_mission_ack this _link msg ret
+    return ()
+  let t'8 ← PMem.ldB (this + 46)
+  if !t'8 then
+    PMem.stB (this + 46) true
+  let t'9 ← PMem.ldU32 (msg + 8)
+  GCS_MAVLINK.send_message_target _link (Int32.toUInt32 ((39 : Int32))) (fp + 40) t'9
+  return ()
+
+def MissionItemProtocol.handle_mission_request (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 80
+  let r ← MissionItemProtocol.handle_mission_request.body fp this _link packet msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_mission_request : void (const mavlink_message_t &)`, `GCS_Common.cpp:685-696`. -/
+def GCS_MAVLINK.handle_mission_request.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_request_t.__mavlink_mission_request_t (fp + 0)
+  mavlink_msg_mission_request_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
+  let mut prot : UInt64 := t'3
+  if (prot == (0 : UInt64)) then
+    return ()
+  MissionItemProtocol.handle_mission_request prot this (fp + 0) msg
+  return ()
+
+def GCS_MAVLINK.handle_mission_request (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 6
+  let r ← GCS_MAVLINK.handle_mission_request.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_set_current_t.__mavlink_mission_set_current_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_set_current_t.__mavlink_mission_set_current_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_set_current_t::__mavlink_mission_set_current_t : void () noexcept`, `mavlink_msg_mission_set_current.h:9-?`. -/
+def __mavlink_mission_set_current_t.__mavlink_mission_set_current_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_set_current_t.__mavlink_mission_set_current_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_set_current_decode : void (const mavlink_message_t *, mavlink_mission_set_current_t *)`, `mavlink_msg_mission_set_current.h:297-313`. -/
+def mavlink_msg_mission_set_current_decode (msg : UInt64) (mission_set_current : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut mission_set_current := mission_set_current
+  mavlink_msg_decode_target msg mission_set_current (Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
+  return ()
+
+/-- C++ `GCS_MAVLINK::handle_mission_set_current : void (AP_Mission &, const mavlink_message_t &)`, `GCS_Common.cpp:752-777`. -/
+def GCS_MAVLINK.handle_mission_set_current.body (fp : UInt64) (this : UInt64) (mission : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_set_current_t.__mavlink_mission_set_current_t (fp + 0)
+  mavlink_msg_mission_set_current_decode msg (fp + 0)
+  PMem.unreached "AP_Mission::set_current_cmd"
+  if (default : Bool) then
+    let t'1 ← PMem.ldU32 (this + 40)
+    let t'2 ← comm_get_txspace t'1
+    let t'3 ← PMem.ldU32 (this + 40)
+    let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+    let mut c'5 : Bool := default
+    if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (6 : Int32)))))) then
+      c'5 := true
+    else
+      let t'6 ← PMem.ldU32 (this + 40)
+      gcs_out_of_space_to_send t'6
+      c'5 := false
+    if c'5 then
+      PMem.bframe this 42
+    else
+      GCS_MAVLINK.send_message this (11 : UInt8)
+  return ()
+
+def GCS_MAVLINK.handle_mission_set_current (this : UInt64) (mission : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← GCS_MAVLINK.handle_mission_set_current.body fp this mission msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_request_list_t.__mavlink_mission_request_list_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_request_list_t.__mavlink_mission_request_list_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_request_list_t::__mavlink_mission_request_list_t : void () noexcept`, `mavlink_msg_mission_request_list.h:9-?`. -/
+def __mavlink_mission_request_list_t.__mavlink_mission_request_list_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_request_list_t.__mavlink_mission_request_list_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_request_list_decode : void (const mavlink_message_t *, mavlink_mission_request_list_t *)`, `mavlink_msg_mission_request_list.h:297-313`. -/
+def mavlink_msg_mission_request_list_decode (msg : UInt64) (mission_request_list : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut mission_request_list := mission_request_list
+  mavlink_msg_decode_target msg mission_request_list (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
+  return ()
+
+/-- C++ `MissionItemProtocol::handle_mission_request_list : void (const GCS_MAVLINK &, const mavlink_mission_request_list_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:116-140`. -/
+def MissionItemProtocol.handle_mission_request_list (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
+  if !t'1 then
+    return ()
+  let t'2 ← PMem.ldB (this + 8)
+  if t'2 then
+    MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
+    return ()
+  let t'3 ← GCS_MAVLINK.get_chan _link
+  let t'4 ← comm_get_txspace t'3
+  let t'5 ← GCS_MAVLINK.get_chan _link
+  let t'6 ← GCS_MAVLINK.packet_overhead_chan t'5
+  let mut c'7 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'4)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'6))) + (5 : Int32)))))) then
+    c'7 := true
+  else
+    let t'8 ← GCS_MAVLINK.get_chan _link
+    gcs_out_of_space_to_send t'8
+    c'7 := false
+  if !c'7 then
+    return ()
+  let t'9 ← GCS_MAVLINK.get_chan _link
+  let t'10 ← PMem.ldU32 (msg + 8)
+  let t'11 ← PMem.ldU8 (msg + 12)
+  let t'12 ← MissionItemProtocol_Waypoints.item_count this
+  let t'13 ← MissionItemProtocol_Waypoints.mission_type this
+  mavlink_msg_mission_count_send t'9 t'10 t'11 t'12 (UInt32.toUInt8 (t'13))
+  return ()
+
+/-- C++ `GCS_MAVLINK::handle_mission_request_list : void (const mavlink_message_t &)`, `GCS_Common.cpp:649-666`. -/
+def GCS_MAVLINK.handle_mission_request_list.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_request_list_t.__mavlink_mission_request_list_t (fp + 0)
+  mavlink_msg_mission_request_list_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 2)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
+  let mut prot : UInt64 := t'3
+  if (prot == (0 : UInt64)) then
+    let t'4 ← PMem.ldU32 (this + 40)
+    let t'5 ← PMem.ldU32 (msg + 8)
+    let t'6 ← PMem.ldU8 (msg + 12)
+    let t'7 ← PMem.ldU8 ((fp + 0) + 2)
+    mavlink_msg_mission_ack_send t'4 t'5 t'6 (UInt32.toUInt8 ((3 : UInt32))) t'7
+    return ()
+  MissionItemProtocol.handle_mission_request_list prot this (fp + 0) msg
+  return ()
+
+def GCS_MAVLINK.handle_mission_request_list (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 3
+  let r ← GCS_MAVLINK.handle_mission_request_list.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `mavlink_msg_mission_count_decode : void (const mavlink_message_t *, mavlink_mission_count_t *)`, `mavlink_msg_mission_count.h:324-341`. -/
+def mavlink_msg_mission_count_decode (msg : UInt64) (mission_count : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut mission_count := mission_count
+  mavlink_msg_decode_target msg mission_count (Int8.toUInt8 (Int32.toInt8 ((5 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
+  return ()
+
+/-- C++ `MissionItemProtocol::cancel_upload : bool (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:57-76`. -/
+def MissionItemProtocol.cancel_upload (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldB (this + 8)
+  if t'1 then
+    let t'2 ← PMem.ldU32 (msg + 8)
+    let t'3 ← PMem.ldU32 (this + 28)
+    let mut sc'6 := (t'2 != t'3)
+    if !sc'6 then
+      let t'4 ← PMem.ldU8 (msg + 12)
+      let t'5 ← PMem.ldU8 (this + 32)
+      sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) != (UInt32.toInt32 (UInt8.toUInt32 (t'5))))
+    if sc'6 then
+      MissionItemProtocol.send_mission_ack this _link msg (14 : UInt32)
+      return false
+    MissionItemProtocol.free_upload_resources this
+    PMem.stB (this + 8) false
+    PMem.stU64 (this + 16) (0 : UInt64)
+  return true
+
+/-- C++ `MissionItemProtocol_Waypoints::max_items : uint16_t () const`, `MissionItemProtocol_Waypoints.cpp:98-100`. -/
+def MissionItemProtocol_Waypoints.max_items (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU64 (this + 48)
+  let t'2 ← AP_Mission.num_commands_max t'1
+  return t'2
+
+/-- `MissionItemProtocol.allocate_receive_resources` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol.allocate_receive_resources.pure' (this : UInt64) (count : UInt16) : Id UInt32 := do
+  let mut count := count
+  return (0 : UInt32)
+
+/-- C++ `MissionItemProtocol::allocate_receive_resources : MAV_MISSION_RESULT (const uint16_t)`, `MissionItemProtocol.h:112-114`. -/
+def MissionItemProtocol.allocate_receive_resources (this : UInt64) (count : UInt16) : PMem.M UInt32 :=
+  pure (_root_.GCS_lib.MissionItemProtocol.allocate_receive_resources.pure' this count)
+
+/-- C++ `AP_Mission::truncate : void (uint16_t)`, `AP_Mission.cpp:300-306`. -/
+def AP_Mission.truncate.body (fp : UInt64) (this : UInt64) (index : UInt16) : PMem.M Unit := do
+  let mut index := index
+  let t'1 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
+  let t'2 ← PMem.ldI16 t'1
+  if (decide ((Int32.toUInt32 (Int16.toInt32 (t'2))) > (UInt16.toUInt32 (index)))) then
+    PMem.stI16 (fp + 0) (UInt16.toInt16 (index))
+    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 0)
+    let t'3 := ((← get).clockUs / 1000).toUInt32
+    PMem.stU32 (this + 596) t'3
+  return ()
+
+def AP_Mission.truncate (this : UInt64) (index : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← AP_Mission.truncate.body fp this index
+  PMem.leave fp
+  return r
+
+/-- C++ `MissionItemProtocol_Waypoints::truncate : void (const mavlink_mission_count_t &)`, `MissionItemProtocol_Waypoints.cpp:128-132`. -/
+def MissionItemProtocol_Waypoints.truncate (this : UInt64) (packet : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldU16 packet
+  let t'2 ← PMem.ldU64 (this + 48)
+  AP_Mission.truncate t'2 t'1
+  return ()
+
+/-- C++ `MissionItemProtocol::handle_mission_count : void (GCS_MAVLINK &, const mavlink_mission_count_t &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:78-114`. -/
+def MissionItemProtocol.handle_mission_count (this : UInt64) (_link : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← MissionItemProtocol.mavlink2_requirement_met this _link msg
+  if !t'1 then
+    return ()
+  let t'2 ← MissionItemProtocol.cancel_upload this _link msg
+  if !t'2 then
+    return ()
+  let t'3 ← PMem.ldU16 packet
+  let t'4 ← MissionItemProtocol_Waypoints.max_items this
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) > (UInt32.toInt32 (UInt16.toUInt32 (t'4))))) then
+    MissionItemProtocol.send_mission_ack this _link msg (4 : UInt32)
+    return ()
+  let t'5 ← PMem.ldU16 packet
+  let t'6 ← MissionItemProtocol.allocate_receive_resources this t'5
+  let mut ret_alloc : UInt32 := t'6
+  if ((UInt32.toInt32 (ret_alloc)) != (UInt32.toInt32 ((0 : UInt32)))) then
+    MissionItemProtocol.send_mission_ack this _link msg ret_alloc
+    return ()
+  MissionItemProtocol_Waypoints.truncate this packet
+  let t'7 ← PMem.ldU16 packet
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) == (0 : Int32)) then
+    MissionItemProtocol.transfer_is_complete this _link msg
+    return ()
+  let t'8 ← PMem.ldU16 packet
+  MissionItemProtocol.init_send_requests this _link msg (Int32.toInt16 ((0 : Int32))) (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) - (1 : Int32))))
+  return ()
+
+/-- C++ `GCS_MAVLINK::handle_mission_count : void (const mavlink_message_t &)`, `GCS_Common.cpp:783-800`. -/
+def GCS_MAVLINK.handle_mission_count.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_count_t.__mavlink_mission_count_t (fp + 0)
+  mavlink_msg_mission_count_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 4)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 (UInt8.toUInt32 (t'1))
+  let mut prot : UInt64 := t'3
+  if (prot == (0 : UInt64)) then
+    let t'4 ← PMem.ldU32 (this + 40)
+    let t'5 ← PMem.ldU32 (msg + 8)
+    let t'6 ← PMem.ldU8 (msg + 12)
+    let t'7 ← PMem.ldU8 ((fp + 0) + 4)
+    mavlink_msg_mission_ack_send t'4 t'5 t'6 (UInt32.toUInt8 ((3 : UInt32))) t'7
+    return ()
+  MissionItemProtocol.handle_mission_count prot this (fp + 0) msg
+  return ()
+
+def GCS_MAVLINK.handle_mission_count (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 6
+  let r ← GCS_MAVLINK.handle_mission_count.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_clear_all_t::__mavlink_mission_clear_all_t : void () noexcept`, `mavlink_msg_mission_clear_all.h:9-?`. -/
+def __mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_clear_all_decode : void (const mavlink_message_t *, mavlink_mission_clear_all_t *)`, `mavlink_msg_mission_clear_all.h:297-313`. -/
+def mavlink_msg_mission_clear_all_decode (msg : UInt64) (mission_clear_all : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut mission_clear_all := mission_clear_all
+  mavlink_msg_decode_target msg mission_clear_all (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
+  return ()
+
+/-- C++ `AP_Mission::clear : bool ()`, `AP_Mission.cpp:278-296`. -/
+def AP_Mission.clear (this : UInt64) : PMem.M Bool := do
+  let mut sc'2 := (← get).armed
+  if sc'2 then
+    let t'1 ← PMem.ldU32 (this + 4)
+    sc'2 := ((UInt32.toInt32 (t'1)) == (UInt32.toInt32 ((1 : UInt32))))
+  if sc'2 then
+    return false
+  AP_Mission.truncate this (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  let t'3 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  PMem.stU16 (this + 88) t'3
+  let t'4 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  PMem.stU16 (this + 116) t'4
+  PMem.stB ((this + 4) + 4) false
+  PMem.stB ((this + 4) + 5) false
+  PMem.stU32 (this + 4) (0 : UInt32)
+  return true
+
+/-- C++ `MissionItemProtocol_Waypoints::clear_all_items : bool ()`, `MissionItemProtocol_Waypoints.cpp:53-56`. -/
+def MissionItemProtocol_Waypoints.clear_all_items (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 (this + 48)
+  let t'2 ← AP_Mission.clear t'1
+  return t'2
+
+/-- C++ `MissionItemProtocol::handle_mission_clear_all : void (const GCS_MAVLINK &, const mavlink_message_t &)`, `MissionItemProtocol.cpp:32-39`. -/
+def MissionItemProtocol.handle_mission_clear_all (this : UInt64) (_link : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let mut success : Bool := true
+  let mut sc'2 := success
+  if sc'2 then
+    let t'1 ← MissionItemProtocol.cancel_upload this _link msg
+    sc'2 := t'1
+  success := sc'2
+  let mut sc'4 := success
+  if sc'4 then
+    let t'3 ← MissionItemProtocol_Waypoints.clear_all_items this
+    sc'4 := t'3
+  success := sc'4
+  let mut c'5 : UInt32 := default
+  if success then
+    c'5 := (0 : UInt32)
+  else
+    c'5 := (1 : UInt32)
+  MissionItemProtocol.send_mission_ack this _link msg c'5
+  return ()
+
+/-- C++ `GCS_MAVLINK::handle_mission_clear_all : void (const mavlink_message_t &)`, `GCS_Common.cpp:805-819`. -/
+def GCS_MAVLINK.handle_mission_clear_all.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_mission_clear_all_t.__mavlink_mission_clear_all_t (fp + 0)
+  mavlink_msg_mission_clear_all_decode msg (fp + 0)
+  let t'1 ← PMem.ldU8 ((fp + 0) + 2)
+  let mut mission_type : UInt32 := UInt8.toUInt32 (t'1)
+  let t'2 ← gcs
+  let t'3 ← GCS.get_prot_for_mission_type t'2 mission_type
+  let mut prot : UInt64 := t'3
+  if (prot == (0 : UInt64)) then
+    GCS_MAVLINK.send_mission_ack this msg mission_type (3 : UInt32)
+    return ()
+  MissionItemProtocol.handle_mission_clear_all prot this msg
+  return ()
+
+def GCS_MAVLINK.handle_mission_clear_all (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 3
+  let r ← GCS_MAVLINK.handle_mission_clear_all.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_common_mission_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:4648-4705`. -/
+def GCS_MAVLINK.handle_common_mission_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  for _ in [0:1] do
+    let t'1 ← PMem.ldBits msg 104 24
+    let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
+    if sw'2 == (38 : Int32) then
+      GCS_MAVLINK.handle_mission_write_partial_list this msg
+      break
+      GCS_MAVLINK.handle_mission_item this msg
+    else if sw'2 == (39 : Int32) || sw'2 == (73 : Int32) then
+      GCS_MAVLINK.handle_mission_item this msg
+    else if sw'2 == (51 : Int32) then
+      GCS_MAVLINK.handle_mission_request_int this msg
+    else if sw'2 == (40 : Int32) then
+      GCS_MAVLINK.handle_mission_request this msg
+    else if sw'2 == (41 : Int32) then
+      let t'3 ← AP.mission
+      GCS_MAVLINK.handle_mission_set_current this t'3 msg
+    else if sw'2 == (43 : Int32) then
+      GCS_MAVLINK.handle_mission_request_list this msg
+      break
+      GCS_MAVLINK.handle_mission_count this msg
+      break
+      GCS_MAVLINK.handle_mission_clear_all this msg
+      break
+    else if sw'2 == (44 : Int32) then
+      GCS_MAVLINK.handle_mission_count this msg
+      break
+      GCS_MAVLINK.handle_mission_clear_all this msg
+      break
+    else if sw'2 == (45 : Int32) then
+      GCS_MAVLINK.handle_mission_clear_all this msg
+      break
+    else if sw'2 == (47 : Int32) then
+      pure ()
+    else
+      pure ()
+  return ()
+
+/-- `__mavlink_command_long_t.__mavlink_command_long_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_command_long_t.__mavlink_command_long_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_command_long_t::__mavlink_command_long_t : void () noexcept`, `mavlink_msg_command_long.h:9-?`. -/
+def __mavlink_command_long_t.__mavlink_command_long_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_command_long_t.__mavlink_command_long_t.pure' this)
+
+/-- C++ `mavlink_msg_command_long_decode : void (const mavlink_message_t *, mavlink_command_long_t *)`, `mavlink_msg_command_long.h:513-537`. -/
+def mavlink_msg_command_long_decode (msg : UInt64) (command_long : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut command_long := command_long
+  mavlink_msg_decode_target msg command_long (Int8.toUInt8 (Int32.toInt8 ((33 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
+  return ()
+
+/-- `__mavlink_command_int_t.__mavlink_command_int_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_command_int_t.__mavlink_command_int_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_command_int_t::__mavlink_command_int_t : void () noexcept`, `mavlink_msg_command_int.h:9-?`. -/
+def __mavlink_command_int_t.__mavlink_command_int_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_command_int_t.__mavlink_command_int_t.pure' this)
+
+/-- `is_zero` as a pure function of its arguments (it reads and writes no memory). -/
+def is_zero.pure' (x : Binary32) : Id Bool := do
   let mut x := x
   return (decide ((Binary32.abs x) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
 
+/-- C++ `is_zero : bool (const float)`, `ftype.h:61-63`. -/
+def is_zero (x : Binary32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.is_zero.pure' x)
+
+/-- C++ `GCS_MAVLINK::mavlink_id_to_ap_message_id : ap_message (const uint32_t) const`, `GCS_Common.cpp:1035-1218`. -/
+def GCS_MAVLINK.mavlink_id_to_ap_message_id (this : UInt64) (mavlink_id : UInt32) : PMem.M UInt8 := do
+  let mut mavlink_id := mavlink_id
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    if !((decide ((UInt8.toUInt64 (i)) < ((384 : UInt64) / (8 : UInt64))))) then break
+    let t'4 ← PMem.ldU32 ((0xd2a8 : UInt64) /- &GCS_MAVLINK::mavlink_id_to_ap_message_id(...)::map -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+    if (t'4 == mavlink_id) then
+      let t'5 ← PMem.ldU8 (((0xd2a8 : UInt64) /- &GCS_MAVLINK::mavlink_id_to_ap_message_id(...)::map -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64) + 4)
+      return t'5
+  return (102 : UInt8)
+
+/-- C++ `Bitmask<102>::count : uint16_t () const`, `stdint.h:136-142`. -/
+def Bitmask'102.count (this : UInt64) : PMem.M UInt16 := do
+  let mut sum : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 ((4 : UInt16))))))) then break
+    let t'4 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
+    let t'5 ← PMem.popcount t'4
+    let t'6 := (sum + (Int16.toUInt16 (Int32.toInt16 (t'5))))
+    sum := t'6
+  return sum
+
+/-- `GCS_MAVLINK.cap_message_interval` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.cap_message_interval.pure' (this : UInt64) (interval_ms : UInt16) : Id UInt16 := do
+  let mut interval_ms := interval_ms
+  if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
+    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  if (decide ((Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) * (800 : Int32)))) < (2500 : UInt32))) then
+    return Binary32.toUInt16 (((UInt32.toBinary32 ((2500 : UInt32))) / (Binary32.ofBits 0x44480000 /- 800 -/)))
+  return interval_ms
+
+/-- C++ `GCS_MAVLINK::cap_message_interval : uint16_t (uint16_t) const`, `GCS_Common.cpp:272-281`. -/
+def GCS_MAVLINK.cap_message_interval (this : UInt64) (interval_ms : UInt16) : PMem.M UInt16 :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.cap_message_interval.pure' this interval_ms)
+
+/-- C++ `GCS_MAVLINK::get_deferred_message_index : int8_t (const ap_message) const`, `GCS_Common.cpp:1389-1397`. -/
+def GCS_MAVLINK.get_deferred_message_index (this : UInt64) (id : UInt8) : PMem.M Int8 := do
+  let mut id := id
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    if !((decide ((UInt8.toUInt64 (i)) < ((18 : UInt64) / (6 : UInt64))))) then break
+    let t'4 ← PMem.ldU8 ((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'4))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
+      return UInt8.toInt8 (i)
+  return Int32.toInt8 ((-(1 : Int32)))
+
+/-- C++ `Bitmask<102>::get : bool (uint16_t) const`, `stdint.h:116-123`. -/
+def Bitmask'102.get (this : UInt64) (bit : UInt16) : PMem.M Bool := do
+  let mut bit := bit
+  let t'1 ← Bitmask'102.validate this bit
+  if !t'1 then
+    return false
+  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
+  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
+  let t'2 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
+  return ((t'2 &&& ((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs))))))) != (Int32.toUInt32 ((0 : Int32))))
+
+/-- C++ `Bitmask<102>::clear : void (uint16_t)`, `stdint.h:92-99`. -/
+def Bitmask'102.clear (this : UInt64) (bit : UInt16) : PMem.M Unit := do
+  let mut bit := bit
+  let t'1 ← Bitmask'102.validate this bit
+  if !t'1 then
+    return ()
+  let mut word : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) / (32 : Int32))))
+  let mut ofs : UInt8 := Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt16.toUInt32 (bit))) &&& (31 : Int32))))
+  let t'2 := (this + ((UInt64.toInt64 (UInt16.toUInt64 (word))) * 4).toUInt64)
+  let t'3 ← PMem.ldU32 t'2
+  let t'4 := (t'3 &&& (~~~((1 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (ofs))))))))
+  PMem.stU32 t'2 t'4
+  return ()
+
+/-- C++ `MissionItemProtocol::active_link_is : bool (const GCS_MAVLINK *) const`, `MissionItemProtocol.h:58-?`. -/
+def MissionItemProtocol.active_link_is (this : UInt64) (_link : UInt64) : PMem.M Bool := do
+  let mut _link := _link
+  let t'1 ← PMem.ldU64 (this + 16)
+  return (_link == t'1)
+
+/-- C++ `GCS_MAVLINK::requesting_mission_items : bool () const`, `GCS_Common.cpp:821-829`. -/
+def GCS_MAVLINK.requesting_mission_items (this : UInt64) : PMem.M Bool := do
+  let __range1 : UInt64 := (0xbb70 : UInt64) /- &GCS::missionitemprotocols -/
+  let mut __begin1 : UInt64 := __range1
+  let mut __end1 : UInt64 := (__range1 + ((3 : Int64) * 8).toUInt64)
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (__begin1 + 8)
+      __begin1 := t'2
+      pure ()
+    first'1 := false
+    if !((__begin1 != __end1)) then break
+    let t'3 ← PMem.ldU64 __begin1
+    let mut prot : UInt64 := t'3
+    let mut sc'5 := (prot != 0)
+    if sc'5 then
+      let t'4 ← PMem.ldB (prot + 8)
+      sc'5 := t'4
+    let mut sc'7 := sc'5
+    if sc'7 then
+      let t'6 ← MissionItemProtocol.active_link_is prot this
+      sc'7 := t'6
+    if sc'7 then
+      return true
+  return false
+
+/-- C++ `GCS_MAVLINK::get_reschedule_interval_ms : uint16_t (const deferred_message_bucket_t &) const`, `GCS_Common.cpp:1253-1281`. -/
+def GCS_MAVLINK.get_reschedule_interval_ms (this : UInt64) (deferred : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (deferred + 16)
+  let mut interval_ms : UInt32 := UInt16.toUInt32 (t'1)
+  let t'2 ← PMem.ldU16 (this + 504)
+  let t'3 := (interval_ms + (UInt16.toUInt32 (t'2)))
+  interval_ms := t'3
+  let t'4 ← PMem.ldU64 (this + 32)
+  if (t'4 != 0) then
+    let t'5 := (interval_ms * (Int32.toUInt32 ((4 : Int32))))
+    interval_ms := t'5
+  let t'6 ← GCS_MAVLINK.requesting_mission_items this
+  if t'6 then
+    let t'7 := (interval_ms * (Int32.toUInt32 ((4 : Int32))))
+    interval_ms := t'7
+  if (decide (interval_ms > (Int32.toUInt32 ((60000 : Int32))))) then
+    return Int16.toUInt16 (Int32.toInt16 ((60000 : Int32)))
+  return UInt32.toUInt16 (interval_ms)
+
+/-- C++ `Bitmask<102>::clearall : void ()`, `stdint.h:111-113`. -/
+def Bitmask'102.clearall (this : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.memset this (0 : Int32) ((UInt16.toUInt64 ((4 : UInt16))) * (4 : UInt64))
+  discard <| pure (t'1)
+  return ()
+
+/-- C++ `GCS_MAVLINK::find_next_bucket_to_send : void (uint16_t)`, `GCS_Common.cpp:1284-1326`. -/
+def GCS_MAVLINK.find_next_bucket_to_send (this : UInt64) (now16_ms : UInt16) : PMem.M Unit := do
+  let mut now16_ms := now16_ms
+  PMem.stU8 (this + 728) (255 : UInt8)
+  let mut ms_before_send_next_bucket_to_send : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    if !((decide ((UInt8.toUInt64 (i)) < ((200 : UInt64) / (20 : UInt64))))) then break
+    let t'4 ← Bitmask'102.count ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
+      continue
+    let t'5 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
+    let mut interval : UInt16 := t'5
+    let t'6 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 18)
+    let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'6))))))
+    let mut ms_before_send_this_bucket : UInt16 := default  -- uninitialized in C
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) > (UInt32.toInt32 (UInt16.toUInt32 (interval))))) then
+      let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+      ms_before_send_this_bucket := t'7
+    else
+      let t'8 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (interval))) - (UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))))))
+      ms_before_send_this_bucket := t'8
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_this_bucket))) < (UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_next_bucket_to_send))))) then
+      PMem.stU8 (this + 728) i
+      ms_before_send_next_bucket_to_send := ms_before_send_this_bucket
+  let t'9 ← PMem.ldU8 (this + 728)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
+    let t'10 ← PMem.ldU8 (this + 728)
+    discard <| PMem.memcpy (this + 732) ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'10))) * 20).toUInt64) 16
+    discard <| pure ((this + 732))
+  else
+    Bitmask'102.clearall (this + 732)
+  return ()
+
+/-- C++ `GCS_MAVLINK::remove_message_from_bucket : void (int8_t, ap_message)`, `GCS_Common.cpp:1697-1723`. -/
+def GCS_MAVLINK.remove_message_from_bucket (this : UInt64) (bucket : Int8) (id : UInt8) : PMem.M Unit := do
+  let mut bucket := bucket
+  let mut id := id
+  Bitmask'102.clear ((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) (UInt8.toUInt16 (id))
+  let t'1 ← Bitmask'102.count ((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
+    let t'2 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    PMem.stU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 16) t'2
+    let t'3 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    PMem.stU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 18) t'3
+  let t'4 ← PMem.ldU8 (this + 728)
+  if ((Int8.toInt32 (bucket)) == (UInt32.toInt32 (UInt8.toUInt32 (t'4)))) then
+    Bitmask'102.clear (this + 732) (UInt8.toUInt16 (id))
+    let t'5 ← Bitmask'102.count (this + 732)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) == (0 : Int32)) then
+      GCS_MAVLINK.find_next_bucket_to_send this (((← get).clockUs / 1000).toUInt16)
+    else
+      let t'6 ← PMem.ldU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 16)
+      let mut sc'8 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
+      if sc'8 then
+        let t'7 ← PMem.ldU16 (((this + 528) + ((Int8.toInt64 (bucket)) * 20).toUInt64) + 18)
+        sc'8 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) == (0 : Int32))
+      if sc'8 then
+        pure ()
+  return ()
+
+/-- C++ `GCS_MAVLINK_InProgress::abort : void ()`, `GCS.h:147-?`. -/
+def GCS_MAVLINK_InProgress.abort (this : UInt64) : PMem.M Unit := do
+  PMem.stI32 this (0 : Int32)
+  return ()
+
+/-- C++ `GCS_MAVLINK::set_ap_message_interval : bool (enum ap_message, uint16_t)`, `GCS_Common.cpp:1725-1827`. -/
+def GCS_MAVLINK.set_ap_message_interval (this : UInt64) (id : UInt8) (interval_ms : UInt16) : PMem.M Bool := do
+  let mut id := id
+  let mut interval_ms := interval_ms
+  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8))))) then
+    if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
+      let t'1 := Int16.toUInt16 (Int32.toInt16 ((100 : Int32)))
+      interval_ms := t'1
+    else
+      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) > (1000 : Int32))) then
+        let t'2 := Int16.toUInt16 (Int32.toInt16 ((1000 : Int32)))
+        interval_ms := t'2
+  let t'3 ← GCS_MAVLINK.cap_message_interval this interval_ms
+  interval_ms := t'3
+  let t'4 ← GCS_MAVLINK.get_deferred_message_index this id
+  let mut deferred_offset : Int8 := t'4
+  if ((Int8.toInt32 (deferred_offset)) != (-(1 : Int32))) then
+    PMem.stU16 (((this + 506) + ((Int8.toInt64 (deferred_offset)) * 6).toUInt64) + 2) interval_ms
+    let t'5 := ((← get).clockUs / 1000).toUInt16
+    PMem.stU16 (((this + 506) + ((Int8.toInt64 (deferred_offset)) * 6).toUInt64) + 4) t'5
+    return true
+  let mut closest_bucket : Int8 := Int32.toInt8 ((-(1 : Int32)))
+  let mut closest_bucket_interval_delta : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  let mut in_bucket : Int8 := Int32.toInt8 ((-(1 : Int32)))
+  let mut empty_bucket_id : Int8 := Int32.toInt8 ((-(1 : Int32)))
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'6 := true
+  for _ in PMem.loopFuel do
+    if !first'6 then
+      let t'7 := i
+      let t'8 := (t'7 + 1)
+      i := t'8
+      pure ()
+    first'6 := false
+    if !((decide ((UInt8.toUInt64 (i)) < ((200 : UInt64) / (20 : UInt64))))) then break
+    let bucket : UInt64 := ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64)
+    let t'9 ← PMem.ldU16 (bucket + 16)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'9))) == (0 : Int32)) then
+      if ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32))) then
+        let t'10 := UInt8.toInt8 (i)
+        empty_bucket_id := t'10
+      let t'11 ← Bitmask'102.count bucket
+      if ((UInt32.toInt32 (UInt16.toUInt32 (t'11))) != (0 : Int32)) then
+        pure ()
+      continue
+    let t'12 ← Bitmask'102.get bucket (UInt8.toUInt16 (id))
+    if t'12 then
+      let t'13 := UInt8.toInt8 (i)
+      in_bucket := t'13
+    let t'14 ← PMem.ldU16 (bucket + 16)
+    let t'15 ← PMem.iabs ((UInt32.toInt32 (UInt16.toUInt32 (t'14))) - (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))
+    let mut interval_delta : UInt16 := Int16.toUInt16 (Int32.toInt16 (t'15))
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (interval_delta))) < (UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))))) then
+      let t'16 := UInt8.toInt8 (i)
+      closest_bucket := t'16
+      closest_bucket_interval_delta := interval_delta
+  if (((Int8.toInt32 (in_bucket)) == (-(1 : Int32))) && ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32))) then
+    return true
+  if ((Int8.toInt32 (in_bucket)) != (-(1 : Int32))) then
+    if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
+      GCS_MAVLINK.remove_message_from_bucket this in_bucket id
+      return true
+    if (((UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))) == (0 : Int32)) && ((Int8.toInt32 (in_bucket)) == (Int8.toInt32 (closest_bucket)))) then
+      return true
+    GCS_MAVLINK.remove_message_from_bucket this in_bucket id
+    let mut sc'18 := ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32)))
+    if sc'18 then
+      let t'17 ← Bitmask'102.count ((this + 528) + ((Int8.toInt64 (in_bucket)) * 20).toUInt64)
+      sc'18 := ((UInt32.toInt32 (UInt16.toUInt32 (t'17))) == (0 : Int32))
+    if sc'18 then
+      empty_bucket_id := in_bucket
+  if (((Int8.toInt32 (closest_bucket)) == (-(1 : Int32))) && ((Int8.toInt32 (empty_bucket_id)) == (-(1 : Int32)))) then
+    discard <| pure ((0 : Int32))
+    GCS_MAVLINK_InProgress.abort this
+    return false
+  if (((UInt32.toInt32 (UInt16.toUInt32 (closest_bucket_interval_delta))) != (0 : Int32)) && ((Int8.toInt32 (empty_bucket_id)) != (-(1 : Int32)))) then
+    PMem.stU16 (((this + 528) + ((Int8.toInt64 (empty_bucket_id)) * 20).toUInt64) + 16) interval_ms
+    let t'19 := ((← get).clockUs / 1000).toUInt16
+    PMem.stU16 (((this + 528) + ((Int8.toInt64 (empty_bucket_id)) * 20).toUInt64) + 18) t'19
+    closest_bucket := empty_bucket_id
+  Bitmask'102.set ((this + 528) + ((Int8.toInt64 (closest_bucket)) * 20).toUInt64) (UInt8.toUInt16 (id))
+  let t'20 ← PMem.ldU8 (this + 728)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'20))) == (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
+    let t'21 := Int8.toUInt8 (closest_bucket)
+    PMem.stU8 (this + 728) t'21
+    discard <| PMem.memcpy (this + 732) ((this + 528) + ((Int8.toInt64 (closest_bucket)) * 20).toUInt64) 16
+    discard <| pure ((this + 732))
+  return true
+
+/-- `AP_ParamTBase'short_2.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamTBase'short_2.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamTBase<short, 2>::get : const short &() const`, `AP_Param.h:917-919`. -/
+def AP_ParamTBase'short_2.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamTBase'short_2.get.pure' this)
+
+/-- C++ `GCS_MAVLINK::get_interval_for_stream : uint16_t (GCS_MAVLINK::streams) const`, `GCS_Common.cpp:7083-7094`. -/
+def GCS_MAVLINK.get_interval_for_stream (this : UInt64) (id : UInt8) : PMem.M UInt16 := do
+  let mut id := id
+  let t'1 ← AP_ParamTBase'short_2.get ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (id))) * 2).toUInt64)
+  let t'2 ← PMem.ldI16 t'1
+  let mut frate : Int16 := t'2
+  if ((Int16.toInt32 (frate)) == (0 : Int32)) then
+    return Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut ret : UInt32 := Int32.toUInt32 (((1000 : Int32) / (Int16.toInt32 (frate))))
+  if (decide (ret > (Int32.toUInt32 ((60000 : Int32))))) then
+    return Int16.toUInt16 (Int32.toInt16 ((60000 : Int32)))
+  return UInt32.toUInt16 (ret)
+
+/-- C++ `DefaultIntervalsFromFiles::get_interval_for_ap_message_id : bool (ap_message, uint16_t &) const`, `GCS_Common.cpp:7153-7162`. -/
+def DefaultIntervalsFromFiles.get_interval_for_ap_message_id (this : UInt64) (id : UInt8) (interval : UInt64) : PMem.M Bool := do
+  let mut id := id
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← PMem.ldU16 (this + 8)
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
+    let t'5 ← PMem.ldU64 this
+    let t'6 ← PMem.ldU8 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
+      let t'7 ← PMem.ldU64 this
+      let t'8 ← PMem.ldU16 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64) + 2)
+      PMem.stU16 interval t'8
+      return true
+  return false
+
+/-- C++ `GCS_MAVLINK::get_default_interval_for_ap_message : bool (const ap_message, uint16_t &) const`, `GCS_Common.cpp:7315-7358`. -/
+def GCS_MAVLINK.get_default_interval_for_ap_message (this : UInt64) (id : UInt8) (interval : UInt64) : PMem.M Bool := do
+  let mut id := id
+  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((0 : UInt8))))) then
+    let t'1 := Int16.toUInt16 (Int32.toInt16 ((1000 : Int32)))
+    PMem.stU16 interval t'1
+    return true
+  let t'2 ← PMem.ldU64 (this + 768)
+  let mut sc'5 := (t'2 != (0 : UInt64))
+  if sc'5 then
+    let t'3 ← PMem.ldU64 (this + 768)
+    let t'4 ← DefaultIntervalsFromFiles.get_interval_for_ap_message_id t'3 id interval
+    sc'5 := t'4
+  if sc'5 then
+    return true
+  let t'6 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
+  if t'6 then
+    let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    PMem.stU16 interval t'7
+    return true
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'8 := true
+  for _ in PMem.loopFuel do
+    if !first'8 then
+      let t'9 := i
+      let t'10 := (t'9 + 1)
+      i := t'10
+      pure ()
+    first'8 := false
+    let t'11 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
+    if !((t'11 != (0 : UInt64))) then break
+    let entries : UInt64 := ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
+    let mut j : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+    let mut first'12 := true
+    for _ in PMem.loopFuel do
+      if !first'12 then
+        let t'13 := j
+        let t'14 := (t'13 + 1)
+        j := t'14
+        pure ()
+      first'12 := false
+      let t'15 ← PMem.ldU8 (entries + 16)
+      if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (j))) < (UInt32.toInt32 (UInt8.toUInt32 (t'15)))))) then break
+      let t'16 ← PMem.ldU64 (entries + 8)
+      let t'17 ← PMem.ldU8 (t'16 + ((UInt64.toInt64 (UInt8.toUInt64 (j))) * 1).toUInt64)
+      if ((UInt32.toInt32 (UInt8.toUInt32 (t'17))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
+        let t'18 ← PMem.ldU8 ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
+        let t'19 ← GCS_MAVLINK.get_interval_for_stream this t'18
+        PMem.stU16 interval t'19
+        return true
+  return false
+
 /-- C++ `GCS_MAVLINK::set_message_interval : MAV_RESULT (uint32_t, int32_t)`, `GCS_Common.cpp:3213-3260`. -/
-partial def GCS_MAVLINK.set_message_interval.body (fp : UInt64) (this : UInt64) (msg_id : UInt32) (interval_us : Int32) : PMem.M UInt32 := do
+def GCS_MAVLINK.set_message_interval.body (fp : UInt64) (this : UInt64) (msg_id : UInt32) (interval_us : Int32) : PMem.M UInt32 := do
   let mut msg_id := msg_id
   let mut interval_us := interval_us
   let t'1 ← GCS_MAVLINK.mavlink_id_to_ap_message_id this msg_id
@@ -13122,281 +10682,3015 @@ partial def GCS_MAVLINK.set_message_interval.body (fp : UInt64) (this : UInt64) 
     return (0 : UInt32)
   return (4 : UInt32)
 
-partial def GCS_MAVLINK.set_message_interval (this : UInt64) (msg_id : UInt32) (interval_us : Int32) : PMem.M UInt32 := do
+def GCS_MAVLINK.set_message_interval (this : UInt64) (msg_id : UInt32) (interval_us : Int32) : PMem.M UInt32 := do
   let fp ← PMem.enter 2
   let r ← GCS_MAVLINK.set_message_interval.body fp this msg_id interval_us
   PMem.leave fp
   return r
 
-/-- C++ `AP_Mission::write_cmd_to_storage : bool (uint16_t, const Mission_Command &)`, `AP_Mission.cpp:946-1007`. -/
-partial def AP_Mission.write_cmd_to_storage.body (fp : UInt64) (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
-  let mut index := index
-  let t'1 ← AP_Mission.num_commands_max this
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (index))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'1))))) then
+/-- C++ `GCS_MAVLINK::handle_command_set_message_interval : MAV_RESULT (const mavlink_command_int_t &)`, `GCS_Common.cpp:3205-3211`. -/
+def GCS_MAVLINK.handle_command_set_message_interval (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldF32 (packet + 8)
+  let t'2 ← is_zero t'1
+  if !t'2 then
+    return (2 : UInt32)
+  let t'3 ← PMem.ldF32 packet
+  let t'4 ← PMem.ldF32 (packet + 4)
+  let t'5 ← GCS_MAVLINK.set_message_interval this (Binary32.toUInt32 (t'3)) (Binary32.toInt32 (t'4))
+  return t'5
+
+/-- C++ `GCS_MAVLINK::handle_command_request_message : MAV_RESULT (const mavlink_command_int_t &)`, `GCS_Common.cpp:3288-3328`. -/
+def GCS_MAVLINK.handle_command_request_message.body (fp : UInt64) (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldF32 packet
+  let mut mavlink_id : UInt32 := Binary32.toUInt32 (t'1)
+  if (mavlink_id == (Int32.toUInt32 ((244 : Int32)))) then
+    let t'2 ← PMem.ldF32 (packet + 4)
+    PMem.stF32 ((fp + 0) + 0) t'2
+    discard <| PMem.memset ((fp + 0) + 4) 0 4
+    discard <| PMem.memset ((fp + 0) + 8) 0 4
+    discard <| PMem.memset ((fp + 0) + 12) 0 4
+    discard <| PMem.memset ((fp + 0) + 16) 0 4
+    discard <| PMem.memset ((fp + 0) + 20) 0 4
+    discard <| PMem.memset ((fp + 0) + 24) 0 4
+    discard <| PMem.memset ((fp + 0) + 28) 0 2
+    discard <| PMem.memset ((fp + 0) + 30) 0 1
+    discard <| PMem.memset ((fp + 0) + 31) 0 1
+    discard <| PMem.memset ((fp + 0) + 32) 0 1
+    discard <| PMem.memset ((fp + 0) + 33) 0 1
+    discard <| PMem.memset ((fp + 0) + 34) 0 1
+    PMem.unreached "GCS_MAVLINK::handle_command_get_message_interval"
+    return (default : UInt32)
+  let t'3 ← GCS_MAVLINK.mavlink_id_to_ap_message_id this mavlink_id
+  let mut id : UInt8 := t'3
+  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((102 : UInt8))))) then
+    return (4 : UInt32)
+  let sw'4 := UInt32.toInt32 (UInt8.toUInt32 (id))
+  if sw'4 == (98 : Int32) then
+    PMem.stB (this + 871) true
+    PMem.stB ((this + 871) + 1) true
+    let t'5 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+    PMem.stU8 ((this + 871) + 3) t'5
+    let t'6 ← PMem.ldF32 (packet + 4)
+    let t'7 := Binary32.toUInt8 (t'6)
+    PMem.stU8 ((this + 871) + 2) t'7
+  else
+    pure ()
+  GCS_MAVLINK.send_message this id
+  return (0 : UInt32)
+
+def GCS_MAVLINK.handle_command_request_message (this : UInt64) (packet : UInt64) : PMem.M UInt32 := do
+  let fp ← PMem.enter 36
+  let r ← GCS_MAVLINK.handle_command_request_message.body fp this packet
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_command_int_packet : MAV_RESULT (const mavlink_command_int_t &, const mavlink_message_t &)`, `GCS_Common.cpp:5654-5888`. -/
+def GCS_MAVLINK.handle_command_int_packet (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU16 (packet + 28)
+  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
+  if sw'2 == (42651 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_battery_reset"
+    return (default : UInt32)
+  else if sw'2 == (32000 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_can_forward"
+    return (default : UInt32)
+  else if sw'2 == (42700 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_debug_trap"
+    return (default : UInt32)
+  else if sw'2 == (611 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_set_global_origin"
+    return (default : UInt32)
+  else if sw'2 == (218 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_aux_function"
+    return (default : UInt32)
+  else if sw'2 == (185 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_flight_termination"
+    return (default : UInt32)
+  else if sw'2 == (601 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_jump_tag"
+    return (default : UInt32)
+  else if sw'2 == (224 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_set_mission_current"
+    return (default : UInt32)
+  else if sw'2 == (176 : Int32) then
+    return (← PMem.answer "set_mode").toUInt32
+  else if sw'2 == (197 : Int32) || sw'2 == (195 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_set_roi_location"
+    return (default : UInt32)
+  else if sw'2 == (201 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_set_roi"
+    return (default : UInt32)
+  else if sw'2 == (42428 : Int32) then
+    return (0 : UInt32)
+  else if sw'2 == (179 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_do_set_home"
+    return (default : UInt32)
+  else if sw'2 == (43003 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_int_external_position_estimate"
+    return (default : UInt32)
+  else if sw'2 == (43004 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_int_external_wind_estimate"
+    return (default : UInt32)
+  else if sw'2 == (400 : Int32) then
+    return (← PMem.answer "arm").toUInt32
+  else if sw'2 == (410 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_get_home_position"
+    return (default : UInt32)
+  else if sw'2 == (241 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_preflight_calibration"
+    return (default : UInt32)
+  else if sw'2 == (245 : Int32) then
+    let t'3 ← PMem.ldF32 packet
+    let mut sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 ((Binary32.toUInt8 (t'3))))) == (UInt32.toInt32 ((2 : UInt32))))
+    if !sc'5 then
+      let t'4 ← PMem.ldF32 packet
+      sc'5 := ((UInt32.toInt32 (UInt8.toUInt32 ((Binary32.toUInt8 (t'4))))) == (UInt32.toInt32 ((4 : UInt32))))
+    if sc'5 then
+      PMem.unreached "AP_Param::erase_all"
+      return (0 : UInt32)
+    return (2 : UInt32)
+  else if sw'2 == (246 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_preflight_reboot"
+    return (default : UInt32)
+  else if sw'2 == (5300 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_do_set_safety_switch_state"
+    return (default : UInt32)
+  else if sw'2 == (520 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_request_autopilot_capabilities"
+    return (default : UInt32)
+  else if sw'2 == (401 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_run_prearm_checks"
+    return (default : UInt32)
+  else if sw'2 == (42007 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_set_ekf_source_set"
+    return (default : UInt32)
+  else if sw'2 == (526 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_storage_format"
+    return (default : UInt32)
+  else if sw'2 == (511 : Int32) then
+    let t'6 ← GCS_MAVLINK.handle_command_set_message_interval this packet
+    return t'6
+  else if sw'2 == (510 : Int32) then
+    PMem.unreached "GCS_MAVLINK::handle_command_get_message_interval"
+    return (default : UInt32)
+  else if sw'2 == (512 : Int32) then
+    let t'7 ← GCS_MAVLINK.handle_command_request_message this packet
+    return t'7
+  else
+    pure ()
+  return (3 : UInt32)
+
+/-- C++ `GCS_MAVLINK_Copter::handle_command_int_packet : MAV_RESULT (const mavlink_command_int_t &, const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:470-557`. -/
+def GCS_MAVLINK_Copter.handle_command_int_packet (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU16 (packet + 28)
+  let sw'2 := UInt32.toInt32 (UInt16.toUInt32 (t'1))
+  if sw'2 == (115 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_CONDITION_YAW"
+    return (default : UInt32)
+  else if sw'2 == (178 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_CHANGE_SPEED"
+    return (default : UInt32)
+  else if sw'2 == (192 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_command_int_do_reposition"
+    return (default : UInt32)
+  else if sw'2 == (193 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_command_pause_continue"
+    return (default : UInt32)
+  else if sw'2 == (209 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_DO_MOTOR_TEST"
+    return (default : UInt32)
+  else if sw'2 == (22 : Int32) || sw'2 == (84 : Int32) then
+    return (← PMem.answer "takeoff").toUInt32
+  else if sw'2 == (42003 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_PAUSE_CLICK"
+    return (default : UInt32)
+  else if sw'2 == (42002 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_HOLD"
+    return (default : UInt32)
+  else if sw'2 == (42001 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_SOLO_BTN_FLY_CLICK"
+    return (default : UInt32)
+  else if sw'2 == (300 : Int32) then
+    PMem.unreached "GCS_MAVLINK_Copter::handle_MAV_CMD_MISSION_START"
+    return (default : UInt32)
+  else if sw'2 == (17 : Int32) then
+    PMem.unreached "Copter::set_mode"
+    if !(default : Bool) then
+      return (4 : UInt32)
+    return (0 : UInt32)
+  else if sw'2 == (20 : Int32) then
+    PMem.unreached "Copter::set_mode"
+    if !(default : Bool) then
+      return (4 : UInt32)
+    return (0 : UInt32)
+  else if sw'2 == (85 : Int32) || sw'2 == (21 : Int32) then
+    PMem.unreached "Copter::set_mode"
+    if !(default : Bool) then
+      return (4 : UInt32)
+    return (0 : UInt32)
+  else if sw'2 == (188 : Int32) then
+    PMem.unreached "ModeAuto::return_path_start_auto_RTL"
+    if (default : Bool) then
+      return (0 : UInt32)
+    return (4 : UInt32)
+  else if sw'2 == (189 : Int32) then
+    PMem.unreached "ModeAuto::jump_to_landing_sequence_auto_RTL"
+    if (default : Bool) then
+      return (0 : UInt32)
+    return (4 : UInt32)
+  else
+    let t'3 ← GCS_MAVLINK.handle_command_int_packet this packet msg
+    return t'3
+
+/-- `GCS_MAVLINK_Copter.command_int_only` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK_Copter.command_int_only.pure' (this : UInt64) (command : UInt32) : Id Bool := do
+  let mut command := command
+  let sw'1 := UInt32.toInt32 (command)
+  if sw'1 == (84 : Int32) then
+    return true
+  else
     return false
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 0 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 1 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 2 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 3 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 4 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 5 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 6 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((((fp + 0) + 0) + 0) + 0) 7 1 (UInt8.toUInt64 ((0 : UInt8)))
-  PMem.stBits ((fp + 0) + 0) 8 24 (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))
-  discard <| PMem.memset (((fp + 0) + 0) + 4) 0 4
-  discard <| PMem.memset (((fp + 0) + 0) + 8) 0 4
-  let t'2 ← PMem.ldU16 (cmd + 2)
-  let t'3 ← AP_Mission.stored_in_location t'2
-  if t'3 then
-    let t'4 ← PMem.ldBits (cmd + 8) 0 1
-    let t'5 := UInt64.toUInt8 (t'4)
-    PMem.stBits (fp + 0) 0 1 (UInt8.toUInt64 (t'5))
-    let t'6 ← PMem.ldBits (cmd + 8) 1 1
-    let t'7 := UInt64.toUInt8 (t'6)
-    PMem.stBits (fp + 0) 2 1 (UInt8.toUInt64 (t'7))
-    let t'8 ← PMem.ldBits (cmd + 8) 2 1
-    let t'9 := UInt64.toUInt8 (t'8)
-    PMem.stBits (fp + 0) 3 1 (UInt8.toUInt64 (t'9))
-    let t'10 ← PMem.ldBits (cmd + 8) 3 1
-    let t'11 := UInt64.toUInt8 (t'10)
-    PMem.stBits (fp + 0) 4 1 (UInt8.toUInt64 (t'11))
-    let t'12 ← PMem.ldBits (cmd + 8) 4 1
-    let t'13 := UInt64.toUInt8 (t'12)
-    PMem.stBits (fp + 0) 5 1 (UInt8.toUInt64 (t'13))
-    let t'14 ← PMem.ldU8 (cmd + 24)
-    let t'15 := UInt32.toUInt8 ((((UInt8.toUInt32 (t'14)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((0 : Int32))))) >>> (Int32.toUInt32 ((0 : Int32)))))
-    PMem.stBits (fp + 0) 6 1 (UInt8.toUInt64 (t'15))
-    let t'16 ← PMem.ldU8 (cmd + 24)
-    let t'17 := UInt32.toUInt8 ((((UInt8.toUInt32 (t'16)) &&& ((1 : UInt32) <<< (Int32.toUInt32 ((1 : Int32))))) >>> (Int32.toUInt32 ((1 : Int32)))))
-    PMem.stBits (fp + 0) 7 1 (UInt8.toUInt64 (t'17))
-    let t'18 ← PMem.ldI32 ((cmd + 8) + 4)
-    PMem.stBits (fp + 0) 8 24 (Int64.toUInt64 (Int32.toInt64 (t'18)))
-    let t'19 ← PMem.ldI32 ((cmd + 8) + 8)
-    PMem.stI32 ((fp + 0) + 4) t'19
-    let t'20 ← PMem.ldI32 ((cmd + 8) + 12)
-    PMem.stI32 ((fp + 0) + 8) t'20
+
+/-- C++ `GCS_MAVLINK_Copter::command_int_only : bool (MAV_CMD) const`, `GCS_MAVLink_Copter.cpp:602-610`. -/
+def GCS_MAVLINK_Copter.command_int_only (this : UInt64) (command : UInt32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.GCS_MAVLINK_Copter.command_int_only.pure' this command)
+
+/-- `GCS_MAVLINK.command_long_stores_location` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.command_long_stores_location.pure' (command : UInt32) : Id Bool := do
+  let mut command := command
+  let sw'1 := UInt32.toInt32 (command)
+  if sw'1 == (179 : Int32) || sw'1 == (201 : Int32) || sw'1 == (195 : Int32) || sw'1 == (192 : Int32) || sw'1 == (43003 : Int32) || sw'1 == (611 : Int32) then
+    return true
   else
-    let t'21 ← PMem.memcpy (fp + 0) (cmd + 8) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
-    discard <| pure (t'21)
-  let mut pos_in_storage : UInt16 := Int16.toUInt16 (Int32.toInt16 (((4 : Int32) + ((UInt32.toInt32 (UInt16.toUInt32 (index))) * (15 : Int32)))))
-  let t'22 ← PMem.ldU16 (cmd + 2)
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'22))) < (256 : Int32))) then
-    let t'23 ← PMem.ldU16 (cmd + 2)
-    StorageAccess.write_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage (UInt16.toUInt8 (t'23))
-    let t'24 ← PMem.ldU16 (cmd + 4)
-    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32))))) t'24
-    let t'25 ← StorageAccess.write_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
-    discard <| pure (t'25)
-  else
-    let mut tag_byte : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    let t'26 ← PMem.ldU16 (cmd + 2)
-    let mut sc'28 := ((UInt32.toInt32 (UInt16.toUInt32 (t'26))) == (UInt32.toInt32 ((42702 : UInt32))))
-    if !sc'28 then
-      let t'27 ← PMem.ldU16 (cmd + 2)
-      sc'28 := ((UInt32.toInt32 (UInt16.toUInt32 (t'27))) == (UInt32.toInt32 ((2500 : UInt32))))
-    let mut sc'30 := sc'28
-    if !sc'30 then
-      let t'29 ← PMem.ldU16 (cmd + 2)
-      sc'30 := ((UInt32.toInt32 (UInt16.toUInt32 (t'29))) == (UInt32.toInt32 ((2501 : UInt32))))
-    if sc'30 then
-      let t'31 := Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-      tag_byte := t'31
-    StorageAccess.write_byte (0xbe40 : UInt64) /- &AP_Mission::_storage -/ pos_in_storage tag_byte
-    let t'32 ← PMem.ldU16 (cmd + 2)
-    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (1 : Int32))))) t'32
-    let t'33 ← PMem.ldU16 (cmd + 4)
-    StorageAccess.write_uint16 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (3 : Int32))))) t'33
-    let t'34 ← StorageAccess.write_block (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (pos_in_storage))) + (5 : Int32))))) (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((10 : Int32))))
-    discard <| pure (t'34)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (index))) != (0 : Int32)) then
-    let t'35 := ((← get).clockUs / 1000).toUInt32
-    PMem.stU32 (this + 596) t'35
-  return true
-
-partial def AP_Mission.write_cmd_to_storage (this : UInt64) (index : UInt16) (cmd : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 12
-  let r ← AP_Mission.write_cmd_to_storage.body fp this index cmd
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Mission::write_home_to_storage : void ()`, `AP_Mission.cpp:1011-1022`. -/
-partial def AP_Mission.write_home_to_storage.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  discard <| PMem.memset ((fp + 0) + 0) 0 2
-  discard <| PMem.memset ((fp + 0) + 2) 0 2
-  discard <| PMem.memset ((fp + 0) + 4) 0 2
-  AP_Mission.Content.Content ((fp + 0) + 8)
-  discard <| PMem.memset ((fp + 0) + 24) 0 1
-  let t'1 := UInt32.toUInt16 ((16 : UInt32))
-  PMem.stU16 ((fp + 0) + 2) t'1
-  let t'2 := (← get).homeAddr
-  discard <| PMem.memcpy ((fp + 0) + 8) t'2 16
-  discard <| pure (((fp + 0) + 8))
-  let t'3 ← AP_Mission.write_cmd_to_storage this (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (fp + 0)
-  discard <| pure (t'3)
-  let t'4 ← AP_ParamT'short_2.operator_const_short__ (this + 80)
-  let t'5 ← PMem.ldI16 t'4
-  if (decide ((Int16.toInt32 (t'5)) < (1 : Int32))) then
-    PMem.stI16 (fp + 28) (Int32.toInt16 ((1 : Int32)))
-    AP_ParamTBase'short_2.set_and_save (this + 80) (fp + 28)
-  return ()
-
-partial def AP_Mission.write_home_to_storage (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 30
-  let r ← AP_Mission.write_home_to_storage.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::read_byte : uint8_t (uint16_t) const`, `StorageManager.cpp:249-254`. -/
-partial def StorageAccess.read_byte.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt8 := do
-  let mut loc := loc
-  let t'1 ← StorageAccess.read_block this (fp + 0) loc (1 : UInt64)
-  discard <| pure (t'1)
-  let t'2 ← PMem.ldU8 (fp + 0)
-  return t'2
-
-partial def StorageAccess.read_byte (this : UInt64) (loc : UInt16) : PMem.M UInt8 := do
-  let fp ← PMem.enter 1
-  let r ← StorageAccess.read_byte.body fp this loc
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::read_uint16 : uint16_t (uint16_t) const`, `StorageManager.cpp:259-264`. -/
-partial def StorageAccess.read_uint16.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt16 := do
-  let mut loc := loc
-  let t'1 ← StorageAccess.read_block this (fp + 0) loc (2 : UInt64)
-  discard <| pure (t'1)
-  let t'2 ← PMem.ldU16 (fp + 0)
-  return t'2
-
-partial def StorageAccess.read_uint16 (this : UInt64) (loc : UInt16) : PMem.M UInt16 := do
-  let fp ← PMem.enter 2
-  let r ← StorageAccess.read_uint16.body fp this loc
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Mission::format_conversion : void (uint8_t, const Mission_Command &, PackedContent &) const`, `AP_Mission.cpp:3248-3269`. -/
-partial def AP_Mission.format_conversion (this : UInt64) (tag_byte : UInt8) (cmd : UInt64) (packed_content : UInt64) : PMem.M Unit := do
-  let mut tag_byte := tag_byte
-  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (tag_byte))) == (0 : Int32))
-  if sc'4 then
-    let t'1 ← PMem.ldU16 (cmd + 2)
-    let mut sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (UInt32.toInt32 ((2500 : UInt32))))
-    if !sc'3 then
-      let t'2 ← PMem.ldU16 (cmd + 2)
-      sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 ((2501 : UInt32))))
-    sc'4 := sc'3
-  if sc'4 then
-    let t'5 ← PMem.memset (packed_content + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (0 : Int32) ((12 : UInt64) - (Int64.toUInt64 (Int32.toInt64 ((1 : Int32)))))
-    discard <| pure (t'5)
-  return ()
-
-/-- C++ `GCS_MAVLINK::get_default_interval_for_ap_message : bool (const ap_message, uint16_t &) const`, `GCS_Common.cpp:7315-7358`. -/
-partial def GCS_MAVLINK.get_default_interval_for_ap_message (this : UInt64) (id : UInt8) (interval : UInt64) : PMem.M Bool := do
-  let mut id := id
-  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((0 : UInt8))))) then
-    let t'1 := Int16.toUInt16 (Int32.toInt16 ((1000 : Int32)))
-    PMem.stU16 interval t'1
-    return true
-  let t'2 ← PMem.ldU64 (this + 768)
-  let mut sc'5 := (t'2 != (0 : UInt64))
-  if sc'5 then
-    let t'3 ← PMem.ldU64 (this + 768)
-    let t'4 ← DefaultIntervalsFromFiles.get_interval_for_ap_message_id t'3 id interval
-    sc'5 := t'4
-  if sc'5 then
-    return true
-  let t'6 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
-  if t'6 then
-    let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    PMem.stU16 interval t'7
-    return true
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'8 := true
-  repeat
-    if !first'8 then
-      let t'9 := i
-      let t'10 := (t'9 + 1)
-      i := t'10
-      pure ()
-    first'8 := false
-    let t'11 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
-    if !((t'11 != (0 : UInt64))) then break
-    let entries : UInt64 := ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
-    let mut j : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-    let mut first'12 := true
-    repeat
-      if !first'12 then
-        let t'13 := j
-        let t'14 := (t'13 + 1)
-        j := t'14
-        pure ()
-      first'12 := false
-      let t'15 ← PMem.ldU8 (entries + 16)
-      if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (j))) < (UInt32.toInt32 (UInt8.toUInt32 (t'15)))))) then break
-      let t'16 ← PMem.ldU64 (entries + 8)
-      let t'17 ← PMem.ldU8 (t'16 + ((UInt64.toInt64 (UInt8.toUInt64 (j))) * 1).toUInt64)
-      if ((UInt32.toInt32 (UInt8.toUInt32 (t'17))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
-        let t'18 ← PMem.ldU8 ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
-        let t'19 ← GCS_MAVLINK.get_interval_for_stream this t'18
-        PMem.stU16 interval t'19
-        return true
+    return false
   return false
 
-/-- C++ `StorageAccess::write_byte : void (uint16_t, uint8_t) const`, `StorageManager.cpp:289-292`. -/
-partial def StorageAccess.write_byte.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt8) : PMem.M Unit := do
-  let mut loc := loc
-  PMem.stU8 (fp + 0) value
-  let t'1 ← StorageAccess.write_block this loc (fp + 0) (1 : UInt64)
-  discard <| pure (t'1)
-  return ()
+/-- C++ `GCS_MAVLINK::command_long_stores_location : bool (const MAV_CMD)`, `GCS_Common.cpp:5241-5257`. -/
+def GCS_MAVLINK.command_long_stores_location (command : UInt32) : PMem.M Bool :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.command_long_stores_location.pure' command)
 
-partial def StorageAccess.write_byte (this : UInt64) (loc : UInt16) (value : UInt8) : PMem.M Unit := do
-  let fp ← PMem.enter 1
-  let r ← StorageAccess.write_byte.body fp this loc value
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::write_uint16 : void (uint16_t, uint16_t) const`, `StorageManager.cpp:297-300`. -/
-partial def StorageAccess.write_uint16.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt16) : PMem.M Unit := do
-  let mut loc := loc
-  PMem.stU16 (fp + 0) value
-  let t'1 ← StorageAccess.write_block this loc (fp + 0) (2 : UInt64)
-  discard <| pure (t'1)
-  return ()
-
-partial def StorageAccess.write_uint16 (this : UInt64) (loc : UInt16) (value : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← StorageAccess.write_uint16.body fp this loc value
-  PMem.leave fp
-  return r
-
-/-- C++ `DefaultIntervalsFromFiles::get_interval_for_ap_message_id : bool (ap_message, uint16_t &) const`, `GCS_Common.cpp:7153-7162`. -/
-partial def DefaultIntervalsFromFiles.get_interval_for_ap_message_id (this : UInt64) (id : UInt8) (interval : UInt64) : PMem.M Bool := do
-  let mut id := id
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+/-- C++ `GCS_MAVLINK::mav_frame_for_command_long : bool (MAV_FRAME &, MAV_CMD) const`, `GCS_Common.cpp:5277-5299`. -/
+def GCS_MAVLINK.mav_frame_for_command_long (this : UInt64) (frame : UInt64) (packet_command : UInt32) : PMem.M Bool := do
+  let mut packet_command := packet_command
+  let __range1 : UInt64 := (0xd440 : UInt64) /- &GCS_MAVLINK::mav_frame_for_command_long(...)::frame_map -/
+  let mut __begin1 : UInt64 := __range1
+  let mut __end1 : UInt64 := (__range1 + ((4 : Int64) * 8).toUInt64)
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (__begin1 + 8)
+      __begin1 := t'2
+      pure ()
+    first'1 := false
+    if !((__begin1 != __end1)) then break
+    let map : UInt64 := __begin1
+    let t'3 ← PMem.ldU32 map
+    if (t'3 != packet_command) then
+      continue
+    let t'4 ← PMem.ldU32 (map + 4)
+    PMem.stU32 frame t'4
+    return true
+  return false
+
+/-- `convert_COMMAND_LONG_loc_param` as a pure function of its arguments (it reads and writes no memory). -/
+def convert_COMMAND_LONG_loc_param.pure' (param : Binary32) (stores_location : Bool) : Id Int32 := do
+  let mut param := param
+  let mut stores_location := stores_location
+  if (Binary32.isNaN param) then
+    return (0 : Int32)
+  if stores_location then
+    return Binary32.toInt32 ((param * (Binary64.toBinary32 ((Binary64.ofBits 0x416312d000000000 /- 10000000 -/)))))
+  return Binary32.toInt32 (param)
+
+/-- C++ `convert_COMMAND_LONG_loc_param : int32_t (float, bool)`, `GCS_Common.cpp:5335-5346`. -/
+def convert_COMMAND_LONG_loc_param (param : Binary32) (stores_location : Bool) : PMem.M Int32 :=
+  pure (_root_.GCS_lib.convert_COMMAND_LONG_loc_param.pure' param stores_location)
+
+/-- C++ `GCS_MAVLINK::convert_COMMAND_LONG_to_COMMAND_INT : void (const mavlink_command_long_t &, mavlink_command_int_t &, MAV_FRAME)`, `GCS_Common.cpp:5348-5365`. -/
+def GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT.body (fp : UInt64) (this : UInt64) (in' : UInt64) (out : UInt64) (frame : UInt32) : PMem.M Unit := do
+  let mut frame := frame
+  discard <| PMem.memset ((fp + 0) + 0) 0 4
+  discard <| PMem.memset ((fp + 0) + 4) 0 4
+  discard <| PMem.memset ((fp + 0) + 8) 0 4
+  discard <| PMem.memset ((fp + 0) + 12) 0 4
+  discard <| PMem.memset ((fp + 0) + 16) 0 4
+  discard <| PMem.memset ((fp + 0) + 20) 0 4
+  discard <| PMem.memset ((fp + 0) + 24) 0 4
+  discard <| PMem.memset ((fp + 0) + 28) 0 2
+  discard <| PMem.memset ((fp + 0) + 30) 0 1
+  discard <| PMem.memset ((fp + 0) + 31) 0 1
+  discard <| PMem.memset ((fp + 0) + 32) 0 1
+  discard <| PMem.memset ((fp + 0) + 33) 0 1
+  discard <| PMem.memset ((fp + 0) + 34) 0 1
+  discard <| PMem.memcpy out (fp + 0) 36
+  discard <| pure (out)
+  let t'1 ← PMem.ldU8 (in' + 30)
+  PMem.stU8 (out + 30) t'1
+  let t'2 ← PMem.ldU8 (in' + 31)
+  PMem.stU8 (out + 31) t'2
+  let t'3 := UInt32.toUInt8 (frame)
+  PMem.stU8 (out + 32) t'3
+  let t'4 ← PMem.ldU16 (in' + 28)
+  PMem.stU16 (out + 28) t'4
+  let t'5 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  PMem.stU8 (out + 33) t'5
+  let t'6 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  PMem.stU8 (out + 34) t'6
+  let t'7 ← PMem.ldF32 in'
+  PMem.stF32 out t'7
+  let t'8 ← PMem.ldF32 (in' + 4)
+  PMem.stF32 (out + 4) t'8
+  let t'9 ← PMem.ldF32 (in' + 8)
+  PMem.stF32 (out + 8) t'9
+  let t'10 ← PMem.ldF32 (in' + 12)
+  PMem.stF32 (out + 12) t'10
+  let t'11 ← PMem.ldU16 (in' + 28)
+  let t'12 ← GCS_MAVLINK.command_long_stores_location (UInt16.toUInt32 (t'11))
+  let mut stores_location : Bool := t'12
+  let t'13 ← PMem.ldF32 (in' + 16)
+  let t'14 ← convert_COMMAND_LONG_loc_param t'13 stores_location
+  PMem.stI32 (out + 16) t'14
+  let t'15 ← PMem.ldF32 (in' + 20)
+  let t'16 ← convert_COMMAND_LONG_loc_param t'15 stores_location
+  PMem.stI32 (out + 20) t'16
+  let t'17 ← PMem.ldF32 (in' + 24)
+  PMem.stF32 (out + 24) t'17
+  return ()
+
+def GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT (this : UInt64) (in' : UInt64) (out : UInt64) (frame : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 36
+  let r ← GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT.body fp this in' out frame
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::try_command_long_as_command_int : MAV_RESULT (const mavlink_command_long_t &, const mavlink_message_t &)`, `GCS_Common.cpp:5301-5331`. -/
+def GCS_MAVLINK.try_command_long_as_command_int.body (fp : UInt64) (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU16 (packet + 28)
+  let t'2 ← GCS_MAVLINK_Copter.command_int_only this (UInt16.toUInt32 (t'1))
+  if t'2 then
+    return (8 : UInt32)
+  PMem.stU32 (fp + 0) (3 : UInt32)
+  let t'3 ← PMem.ldU16 (packet + 28)
+  let t'4 ← GCS_MAVLINK.command_long_stores_location (UInt16.toUInt32 (t'3))
+  if t'4 then
+    let t'5 ← PMem.ldU16 (packet + 28)
+    let t'6 ← GCS_MAVLINK.mav_frame_for_command_long this (fp + 0) (UInt16.toUInt32 (t'5))
+    if !t'6 then
+      return (8 : UInt32)
+  __mavlink_command_int_t.__mavlink_command_int_t (fp + 8)
+  let t'7 ← PMem.ldU32 (fp + 0)
+  GCS_MAVLINK.convert_COMMAND_LONG_to_COMMAND_INT this packet (fp + 8) t'7
+  let t'8 ← GCS_MAVLINK_Copter.handle_command_int_packet this (fp + 8) msg
+  return t'8
+
+def GCS_MAVLINK.try_command_long_as_command_int (this : UInt64) (packet : UInt64) (msg : UInt64) : PMem.M UInt32 := do
+  let fp ← PMem.enter 44
+  let r ← GCS_MAVLINK.try_command_long_as_command_int.body fp this packet msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_command_ack_t.__mavlink_command_ack_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_command_ack_t.__mavlink_command_ack_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_command_ack_t::__mavlink_command_ack_t : void () noexcept`, `mavlink_msg_command_ack.h:9-?`. -/
+def __mavlink_command_ack_t.__mavlink_command_ack_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_command_ack_t.__mavlink_command_ack_t.pure' this)
+
+/-- C++ `mavlink_msg_command_ack_send : void (mavlink_channel_t, uint16_t, uint8_t, uint8_t, int32_t, uint32_t, uint8_t)`, `mavlink_msg_command_ack.h:244-267`. -/
+def mavlink_msg_command_ack_send.body (fp : UInt64) (chan : UInt32) (command : UInt16) (result : UInt8) (progress : UInt8) (result_param2 : Int32) (target_system : UInt32) (target_component : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut command := command
+  let mut result := result
+  let mut progress := progress
+  let mut result_param2 := result_param2
+  let mut target_system := target_system
+  let mut target_component := target_component
+  __mavlink_command_ack_t.__mavlink_command_ack_t (fp + 0)
+  PMem.stU16 (fp + 0) command
+  PMem.stU8 ((fp + 0) + 2) result
+  PMem.stU8 ((fp + 0) + 3) progress
+  PMem.stI32 ((fp + 0) + 4) result_param2
+  let t'1 ← mavlink_msg_target_field target_system
+  PMem.stU8 ((fp + 0) + 8) t'1
+  PMem.stU8 ((fp + 0) + 9) target_component
+  _mav_finalize_message_chan_send_target chan (Int32.toUInt32 ((77 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((3 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((10 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((143 : Int32)))) target_system
+  return ()
+
+def mavlink_msg_command_ack_send (chan : UInt32) (command : UInt16) (result : UInt8) (progress : UInt8) (result_param2 : Int32) (target_system : UInt32) (target_component : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 12
+  let r ← mavlink_msg_command_ack_send.body fp chan command result progress result_param2 target_system target_component
+  PMem.leave fp
+  return r
+
+/-- `camera_command_result_param2` as a pure function of its arguments (it reads and writes no memory). -/
+def camera_command_result_param2.pure' (packet : UInt64) (result : UInt32) : Id UInt8 := do
+  let mut result := result
+  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+
+/-- C++ `camera_command_result_param2 : uint8_t (const __mavlink_command_long_t &, MAV_RESULT)`, `GCS_Common.cpp:5262-5271`. -/
+def camera_command_result_param2 (packet : UInt64) (result : UInt32) : PMem.M UInt8 :=
+  pure (_root_.GCS_lib.camera_command_result_param2.pure' packet result)
+
+/-- C++ `GCS_MAVLINK::handle_command_long : void (const mavlink_message_t &)`, `GCS_Common.cpp:5367-5402`. -/
+def GCS_MAVLINK.handle_command_long.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_command_long_t.__mavlink_command_long_t (fp + 0)
+  mavlink_msg_command_long_decode msg (fp + 0)
+  let t'1 ← PMem.ldU16 ((fp + 0) + 28)
+  let t'2 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+  PMem.stU16 ((t'2 + 8) + 60) t'1
+  let t'3 ← GCS_MAVLINK.try_command_long_as_command_int this (fp + 0) msg
+  let mut result : UInt32 := t'3
+  let t'4 ← PMem.ldU32 (this + 40)
+  let t'5 ← PMem.ldU16 ((fp + 0) + 28)
+  let t'6 ← camera_command_result_param2 (fp + 0) result
+  let t'7 ← PMem.ldU32 (msg + 8)
+  let t'8 ← PMem.ldU8 (msg + 12)
+  mavlink_msg_command_ack_send t'4 t'5 (UInt32.toUInt8 (result)) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (UInt32.toInt32 (UInt8.toUInt32 (t'6))) t'7 t'8
+  let t'9 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let t'10 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+  PMem.stU16 ((t'10 + 8) + 60) t'9
+  return ()
+
+def GCS_MAVLINK.handle_command_long (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 36
+  let r ← GCS_MAVLINK.handle_command_long.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `mavlink_msg_command_int_decode : void (const mavlink_message_t *, mavlink_command_int_t *)`, `mavlink_msg_command_int.h:567-593`. -/
+def mavlink_msg_command_int_decode (msg : UInt64) (command_int : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut command_int := command_int
+  mavlink_msg_decode_target msg command_int (Int8.toUInt8 (Int32.toInt8 ((35 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
+  return ()
+
+/-- `camera_command_result_param2'2` as a pure function of its arguments (it reads and writes no memory). -/
+def camera_command_result_param2'2.pure' (packet : UInt64) (result : UInt32) : Id UInt8 := do
+  let mut result := result
+  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+
+/-- C++ `camera_command_result_param2 : uint8_t (const __mavlink_command_int_t &, MAV_RESULT)`, `GCS_Common.cpp:5262-5271`. -/
+def camera_command_result_param2'2 (packet : UInt64) (result : UInt32) : PMem.M UInt8 :=
+  pure (_root_.GCS_lib.camera_command_result_param2'2.pure' packet result)
+
+/-- C++ `GCS_MAVLINK::handle_command_int : void (const mavlink_message_t &)`, `GCS_Common.cpp:5890-5922`. -/
+def GCS_MAVLINK.handle_command_int.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_command_int_t.__mavlink_command_int_t (fp + 0)
+  mavlink_msg_command_int_decode msg (fp + 0)
+  let t'1 ← PMem.ldU16 ((fp + 0) + 28)
+  let t'2 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+  PMem.stU16 ((t'2 + 8) + 60) t'1
+  let t'3 ← GCS_MAVLINK_Copter.handle_command_int_packet this (fp + 0) msg
+  let mut result : UInt32 := t'3
+  let t'4 ← PMem.ldU32 (this + 40)
+  let t'5 ← PMem.ldU16 ((fp + 0) + 28)
+  let t'6 ← camera_command_result_param2'2 (fp + 0) result
+  let t'7 ← PMem.ldU32 (msg + 8)
+  let t'8 ← PMem.ldU8 (msg + 12)
+  mavlink_msg_command_ack_send t'4 t'5 (UInt32.toUInt8 (result)) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (UInt32.toInt32 (UInt8.toUInt32 (t'6))) t'7 t'8
+  let t'9 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let t'10 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+  PMem.stU16 ((t'10 + 8) + 60) t'9
+  return ()
+
+def GCS_MAVLINK.handle_command_int (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 36
+  let r ← GCS_MAVLINK.handle_command_int.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::initialise_message_intervals_for_stream : void (GCS_MAVLINK::streams)`, `GCS_Common.cpp:7096-7110`. -/
+def GCS_MAVLINK.initialise_message_intervals_for_stream (this : UInt64) (id : UInt8) : PMem.M Unit := do
+  let mut id := id
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := i
       let t'3 := (t'2 + 1)
       i := t'3
       pure ()
     first'1 := false
-    let t'4 ← PMem.ldU16 (this + 8)
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'4)))))) then break
-    let t'5 ← PMem.ldU64 this
-    let t'6 ← PMem.ldU8 (t'5 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) == (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
-      let t'7 ← PMem.ldU64 this
-      let t'8 ← PMem.ldU16 ((t'7 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64) + 2)
-      PMem.stU16 interval t'8
-      return true
+    let t'4 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
+    if !((t'4 != (0 : UInt64))) then break
+    let entries : UInt64 := ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
+    let t'5 ← PMem.ldU8 entries
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 (id)))) then
+      continue
+    let t'6 ← GCS_MAVLINK.get_interval_for_stream this id
+    let mut interval_ms : UInt16 := t'6
+    let mut j : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+    let mut first'7 := true
+    for _ in PMem.loopFuel do
+      if !first'7 then
+        let t'8 := j
+        let t'9 := (t'8 + 1)
+        j := t'9
+        pure ()
+      first'7 := false
+      let t'10 ← PMem.ldU8 (entries + 16)
+      if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (j))) < (UInt32.toInt32 (UInt8.toUInt32 (t'10)))))) then break
+      let t'11 ← PMem.ldU64 (entries + 8)
+      let t'12 ← PMem.ldU8 (t'11 + ((UInt64.toInt64 (UInt8.toUInt64 (j))) * 1).toUInt64)
+      let t'13 ← GCS_MAVLINK.set_ap_message_interval this t'12 interval_ms
+      discard <| pure (t'13)
+    break
+  return ()
+
+/-- `__mavlink_request_data_stream_t.__mavlink_request_data_stream_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_request_data_stream_t.__mavlink_request_data_stream_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_request_data_stream_t::__mavlink_request_data_stream_t : void () noexcept`, `mavlink_msg_request_data_stream.h:9-?`. -/
+def __mavlink_request_data_stream_t.__mavlink_request_data_stream_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_request_data_stream_t.__mavlink_request_data_stream_t.pure' this)
+
+/-- C++ `mavlink_msg_request_data_stream_decode : void (const mavlink_message_t *, mavlink_request_data_stream_t *)`, `mavlink_msg_request_data_stream.h:351-369`. -/
+def mavlink_msg_request_data_stream_decode (msg : UInt64) (request_data_stream : UInt64) : PMem.M Unit := do
+  let mut msg := msg
+  let mut request_data_stream := request_data_stream
+  mavlink_msg_decode_target msg request_data_stream (Int8.toUInt8 (Int32.toInt8 ((6 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32))))
+  return ()
+
+/-- `GCS_MAVLINK.persist_streamrates` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.persist_streamrates.pure' (this : UInt64) : Id Bool := do
   return false
 
-/-- Dynamic initialization of statics with default member initializers (1 statics). -/
-partial def staticDynamicInit : PMem.M Unit := do
-  PMem.stU8 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 12) (Int8.toUInt8 (Int32.toInt8 ((100 : Int32))))
+/-- C++ `GCS_MAVLINK::persist_streamrates : bool () const`, `functor.h:544-?`. -/
+def GCS_MAVLINK.persist_streamrates (this : UInt64) : PMem.M Bool :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.persist_streamrates.pure' this)
 
-end
+/-- C++ `AP_ParamTBase<short, 2>::set_and_save_ifchanged : void (const short &)`, `<built-in>:91-100`. -/
+def AP_ParamTBase'short_2.set_and_save_ifchanged (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI16 v
+  let t'2 ← PMem.ldI16 this
+  if ((Int16.toInt32 (t'1)) == (Int16.toInt32 (t'2))) then
+    return ()
+  AP_ParamTBase'short_2.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `GCS_MAVLINK::handle_request_data_stream : void (const mavlink_message_t &)`, `GCS_Param.cpp:129-204`. -/
+def GCS_MAVLINK.handle_request_data_stream.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_request_data_stream_t.__mavlink_request_data_stream_t (fp + 0)
+  mavlink_msg_request_data_stream_decode msg (fp + 0)
+  PMem.stI16 (fp + 8) (Int32.toInt16 ((0 : Int32)))
+  let t'1 ← PMem.ldU8 ((fp + 0) + 5)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) then
+    let t'2 := Int32.toInt16 ((0 : Int32))
+    PMem.stI16 (fp + 8) t'2
+  else
+    let t'3 ← PMem.ldU8 ((fp + 0) + 5)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (1 : Int32)) then
+      let t'4 ← PMem.ldU16 (fp + 0)
+      let t'5 := UInt16.toInt16 (t'4)
+      PMem.stI16 (fp + 8) t'5
+    else
+      return ()
+  let mut stream_id : UInt8 := (10 : UInt8)
+  let t'6 ← PMem.ldU8 ((fp + 0) + 4)
+  let sw'7 := UInt32.toInt32 (UInt8.toUInt32 (t'6))
+  if sw'7 == (0 : Int32) then
+    for i'8 in [0:10] do
+      let i : UInt8 := UInt8.ofNat i'8
+      if ((UInt32.toInt32 (UInt8.toUInt32 (i))) == (UInt32.toInt32 (UInt8.toUInt32 ((8 : UInt8))))) then
+        continue
+      let t'9 ← GCS_MAVLINK.persist_streamrates this
+      if t'9 then
+        AP_ParamTBase'short_2.set_and_save_ifchanged ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 2).toUInt64) (fp + 8)
+      else
+        AP_ParamTBase'short_2.set ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 2).toUInt64) (fp + 8)
+      GCS_MAVLINK.initialise_message_intervals_for_stream this i
+  else if sw'7 == (1 : Int32) then
+    stream_id := (0 : UInt8)
+  else if sw'7 == (2 : Int32) then
+    stream_id := (1 : UInt8)
+  else if sw'7 == (3 : Int32) then
+    stream_id := (2 : UInt8)
+  else if sw'7 == (4 : Int32) then
+    stream_id := (3 : UInt8)
+  else if sw'7 == (6 : Int32) then
+    stream_id := (4 : UInt8)
+  else if sw'7 == (10 : Int32) then
+    stream_id := (5 : UInt8)
+  else if sw'7 == (11 : Int32) then
+    stream_id := (6 : UInt8)
+  else if sw'7 == (12 : Int32) then
+    stream_id := (7 : UInt8)
+  else
+    pure ()
+  if ((UInt32.toInt32 (UInt8.toUInt32 (stream_id))) == (UInt32.toInt32 (UInt8.toUInt32 ((10 : UInt8))))) then
+    return ()
+  let mut rate : UInt64 := ((this + 44) + ((UInt64.toInt64 (UInt8.toUInt64 (stream_id))) * 2).toUInt64)
+  if (rate != (0 : UInt64)) then
+    let t'10 ← GCS_MAVLINK.persist_streamrates this
+    if t'10 then
+      AP_ParamTBase'short_2.set_and_save_ifchanged rate (fp + 8)
+    else
+      AP_ParamTBase'short_2.set rate (fp + 8)
+    GCS_MAVLINK.initialise_message_intervals_for_stream this stream_id
+  return ()
+
+def GCS_MAVLINK.handle_request_data_stream (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 10
+  let r ← GCS_MAVLINK.handle_request_data_stream.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_system_time_t.__mavlink_system_time_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_system_time_t.__mavlink_system_time_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_system_time_t::__mavlink_system_time_t : void () noexcept`, `mavlink_msg_system_time.h:9-?`. -/
+def __mavlink_system_time_t.__mavlink_system_time_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_system_time_t.__mavlink_system_time_t.pure' this)
+
+/-- C++ `mavlink_msg_system_time_decode : void (const mavlink_message_t *, mavlink_system_time_t *)`, `mavlink_msg_system_time.h:280-291`. -/
+def mavlink_msg_system_time_decode.body (fp : UInt64) (msg : UInt64) (system_time : UInt64) : PMem.M Unit := do
+  PMem.stU64 (fp + 0) msg
+  let mut system_time := system_time
+  let t'1 ← PMem.ldU64 (fp + 0)
+  let t'2 ← PMem.ldU8 (t'1 + 3)
+  let mut c'3 : Int32 := default
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) < (12 : Int32))) then
+    let t'4 ← PMem.ldU64 (fp + 0)
+    let t'5 ← PMem.ldU8 (t'4 + 3)
+    c'3 := UInt32.toInt32 (UInt8.toUInt32 (t'5))
+  else
+    c'3 := (12 : Int32)
+  let mut len : UInt8 := Int8.toUInt8 (Int32.toInt8 (c'3))
+  let t'6 ← PMem.memset system_time (0 : Int32) (Int64.toUInt64 (Int32.toInt64 ((12 : Int32))))
+  discard <| pure (t'6)
+  let t'7 ← PMem.ldU64 (fp + 0)
+  let t'8 ← PMem.memcpy system_time ((t'7 + 16) + ((Int32.toInt64 ((0 : Int32))) * 8).toUInt64) (UInt8.toUInt64 (len))
+  discard <| pure (t'8)
+  return ()
+
+def mavlink_msg_system_time_decode (msg : UInt64) (system_time : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 8
+  let r ← mavlink_msg_system_time_decode.body fp msg system_time
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_system_time_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:3830-3836`. -/
+def GCS_MAVLINK.handle_system_time_message.body (fp : UInt64) (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  __mavlink_system_time_t.__mavlink_system_time_t (fp + 0)
+  mavlink_msg_system_time_decode msg (fp + 0)
+  return ()
+
+def GCS_MAVLINK.handle_system_time_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 16
+  let r ← GCS_MAVLINK.handle_system_time_message.body fp this msg
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::handle_message : void (const mavlink_message_t &)`, `GCS_Common.cpp:4283-4629`. -/
+def GCS_MAVLINK.handle_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  for _ in [0:1] do
+    let t'1 ← PMem.ldBits msg 104 24
+    let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
+    if sw'2 == (0 : Int32) then
+      GCS_MAVLINK.handle_heartbeat this msg
+      break
+      PMem.unreached "GCS_MAVLINK::handle_command_ack"
+      break
+      GCS_MAVLINK.handle_setup_signing this msg
+    else if sw'2 == (77 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_command_ack"
+      break
+      GCS_MAVLINK.handle_setup_signing this msg
+    else if sw'2 == (256 : Int32) then
+      GCS_MAVLINK.handle_setup_signing this msg
+    else if sw'2 == (21 : Int32) || sw'2 == (23 : Int32) || sw'2 == (20 : Int32) then
+      GCS_MAVLINK.handle_common_param_message this msg
+    else if sw'2 == (48 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_set_gps_global_origin"
+    else if sw'2 == (111 : Int32) then
+      GCS_MAVLINK.handle_timesync this msg
+    else if sw'2 == (11 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_set_mode"
+    else if sw'2 == (183 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_send_autopilot_version"
+    else if sw'2 == (38 : Int32) || sw'2 == (43 : Int32) || sw'2 == (44 : Int32) || sw'2 == (45 : Int32) || sw'2 == (39 : Int32) || sw'2 == (73 : Int32) || sw'2 == (51 : Int32) || sw'2 == (40 : Int32) || sw'2 == (47 : Int32) || sw'2 == (41 : Int32) then
+      GCS_MAVLINK.handle_common_mission_message this msg
+    else if sw'2 == (76 : Int32) then
+      GCS_MAVLINK.handle_command_long this msg
+    else if sw'2 == (75 : Int32) then
+      GCS_MAVLINK.handle_command_int this msg
+    else if sw'2 == (22 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_param_value"
+    else if sw'2 == (166 : Int32) || sw'2 == (109 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_radio_status"
+    else if sw'2 == (233 : Int32) || sw'2 == (232 : Int32) || sw'2 == (123 : Int32) then
+      PMem.unreached "AP_GPS::handle_msg"
+    else if sw'2 == (253 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_statustext"
+    else if sw'2 == (186 : Int32) then
+      PMem.unreached "handle_led_control"
+    else if sw'2 == (69 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_manual_control"
+    else if sw'2 == (258 : Int32) then
+      PMem.unreached "handle_play_tune"
+    else if sw'2 == (66 : Int32) then
+      let t'3 ← GCS_MAVLINK.option_enabled this (4 : UInt16)
+      if t'3 then
+        break
+      GCS_MAVLINK.handle_request_data_stream this msg
+    else if sw'2 == (172 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_data_packet"
+    else if sw'2 == (2 : Int32) then
+      GCS_MAVLINK.handle_system_time_message this msg
+    else if sw'2 == (70 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_rc_channels_override"
+    else if sw'2 == (132 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_distance_sensor"
+    else if sw'2 == (149 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_landing_target"
+    else if sw'2 == (251 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_named_value"
+    else if sw'2 == (386 : Int32) || sw'2 == (387 : Int32) then
+      PMem.unreached "GCS_MAVLINK::handle_can_frame"
+    else if sw'2 == (388 : Int32) then
+      PMem.unreached "handle_can_filter_modify"
+    else
+      pure ()
+  return ()
+
+/-- C++ `GCS_MAVLINK_Copter::handle_message : void (const mavlink_message_t &)`, `GCS_MAVLink_Copter.cpp:1179-1204`. -/
+def GCS_MAVLINK_Copter.handle_message (this : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits msg 104 24
+  let sw'2 := UInt32.toInt32 ((UInt64.toUInt32 (t'1)))
+  if sw'2 == (82 : Int32) then
+    pure ()
+  else if sw'2 == (84 : Int32) then
+    pure ()
+  else if sw'2 == (86 : Int32) then
+    pure ()
+  else
+    GCS_MAVLINK.handle_message this msg
+  return ()
+
+/-- C++ `GCS_MAVLINK::raw_packetReceived : void (uint8_t, const mavlink_status_t &, const mavlink_message_t &)`, `GCS_Common.cpp:1884-1925`. -/
+def GCS_MAVLINK.raw_packetReceived (this : UInt64) (framing_status : UInt8) (status : UInt64) (msg : UInt64) : PMem.M Unit := do
+  let mut framing_status := framing_status
+  if ((UInt32.toInt32 (UInt8.toUInt32 (framing_status))) == (UInt32.toInt32 ((1 : UInt32)))) then
+    GCS_MAVLINK_Copter.packetReceived this status msg
+  let t'1 ← MAVLink_routing.check_and_forward (0xbe98 : UInt64) /- &GCS_MAVLINK::routing -/ framing_status this msg
+  if !t'1 then
+    return ()
+  let t'2 ← PMem.ldBits msg 104 24
+  if ((UInt32.toInt32 ((UInt64.toUInt32 (t'2)))) == (33 : Int32)) then
+    pure ()
+  let t'3 ← GCS_MAVLINK.accept_packet this status msg
+  if !t'3 then
+    return ()
+  GCS_MAVLINK_Copter.handle_message this msg
+  return ()
+
+/-- C++ `GCS_MAVLINK::send_timesync : void ()`, `GCS_Common.cpp:3738-3751`. -/
+def GCS_MAVLINK.send_timesync (this : UInt64) : PMem.M Unit := do
+  let t'1 := (((← get).clockUs) * (1000 : UInt64))
+  PMem.stU64 ((this + 72) + 8) t'1
+  let t'2 ← PMem.ldU64 ((this + 72) + 8)
+  let t'3 ← PMem.ldU32 (0xbb68 : UInt64) /- &mavlink_system -/
+  let t'4 := UInt64.toInt64 ((t'2 + (UInt32.toUInt64 ((t'3 % (1000 : UInt32))))))
+  PMem.stI64 (this + 72) t'4
+  let t'5 ← PMem.ldU32 (this + 40)
+  let t'6 ← PMem.ldI64 (this + 72)
+  mavlink_msg_timesync_send t'5 (Int32.toInt64 ((0 : Int32))) t'6
+  return ()
+
+/-- C++ `GCS_MAVLINK::update_receive : void (uint32_t)`, `GCS_Common.cpp:1927-2103`. -/
+def GCS_MAVLINK.update_receive.body (fp : UInt64) (this : UInt64) (max_time_us : UInt32) : PMem.M Unit := do
+  let mut max_time_us := max_time_us
+  let t'1 ← GCS_MAVLINK.locked this
+  if t'1 then
+    return ()
+  __mavlink_message.__mavlink_message (fp + 0)
+  __mavlink_status.__mavlink_status (fp + 304)
+  let mut tstart_us : UInt32 := (← get).clockUs.toUInt32
+  let mut now_ms : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let t'2 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  PMem.stU16 ((fp + 304) + 14) t'2
+  let t'3 ← PMem.ldU64 (this + 480)
+  let t'4 ← PMem.uartAvailable t'3
+  let mut nbytes : UInt16 := UInt32.toUInt16 (t'4)
+  for i'5 in [0:nbytes.toNat] do
+    let i : UInt16 := UInt16.ofNat i'5
+    let t'6 ← PMem.ldU64 (this + 480)
+    let t'7 ← PMem.uartRead t'6
+    let mut c : UInt8 := Int8.toUInt8 (Int16.toInt8 (t'7))
+    let mut protocol_timeout : UInt32 := Int32.toUInt32 ((4000 : Int32))
+    let mut sc'9 := false
+    if sc'9 then
+      let t'8 ← PMem.ldU32 ((this + 776) + 16)
+      sc'9 := (decide ((now_ms - t'8) > protocol_timeout))
+    if sc'9 then
+      if false then
+        PMem.stU32 ((this + 776) + 20) now_ms
+        let t'10 ← PMem.ldU32 (this + 40)
+        PMem.stB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'10))) * 1).toUInt64) true
+      let t'11 ← PMem.ldU32 ((this + 776) + 20)
+      if (decide ((now_ms - t'11) ≤ protocol_timeout)) then
+        continue
+    let mut parsed_packet : Bool := false
+    let t'12 ← GCS_MAVLINK.channel_buffer this
+    let t'13 ← GCS_MAVLINK.channel_status this
+    let t'14 ← mavlink_frame_char_buffer t'12 t'13 c (fp + 0) (fp + 304)
+    let mut framing : UInt8 := t'14
+    if ((UInt32.toInt32 (UInt8.toUInt32 (framing))) != (UInt32.toInt32 ((0 : UInt32)))) then
+      let t'15 ← PMem.ldBits (fp + 0) 104 24
+      let t'16 := UInt32.toUInt16 ((UInt64.toUInt32 (t'15)))
+      let t'17 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+      PMem.stU16 ((t'17 + 8) + 58) t'16
+      GCS_MAVLINK.raw_packetReceived this framing (fp + 304) (fp + 0)
+      if ((UInt32.toInt32 (UInt8.toUInt32 (framing))) == (UInt32.toInt32 ((1 : UInt32)))) then
+        parsed_packet := true
+        let t'18 ← PMem.ldU32 (this + 40)
+        PMem.stB ((0xbe70 : UInt64) /- &gcs_alternative_active -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'18))) * 1).toUInt64) false
+        PMem.stU32 ((this + 776) + 16) now_ms
+      let t'19 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+      let t'20 ← PMem.ldU64 ((0xbe80 : UInt64) /- &hal -/ + 88)
+      PMem.stU16 ((t'20 + 8) + 58) t'19
+    if (parsed_packet || (((UInt32.toInt32 (UInt16.toUInt32 (i))) % (100 : Int32)) == (0 : Int32))) then
+      if (decide ((((← get).clockUs.toUInt32) - tstart_us) > max_time_us)) then
+        break
+  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let t'21 ← PMem.ldU32 ((this + 72) + 16)
+  let t'22 ← PMem.ldU16 ((this + 72) + 20)
+  let mut sc'24 := (decide ((tnow - t'21) > (UInt16.toUInt32 (t'22))))
+  if sc'24 then
+    let t'23 ← GCS_MAVLINK.is_private this
+    sc'24 := !t'23
+  let mut sc'26 := sc'24
+  if sc'26 then
+    let t'25 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
+    sc'26 := !t'25
+  if sc'26 then
+    let t'27 ← PMem.ldU32 (this + 40)
+    let t'28 ← comm_get_txspace t'27
+    let t'29 ← PMem.ldU32 (this + 40)
+    let t'30 ← GCS_MAVLINK.packet_overhead_chan t'29
+    let mut c'31 : Bool := default
+    if (decide ((UInt16.toUInt32 (t'28)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'30))) + (16 : Int32)))))) then
+      c'31 := true
+    else
+      let t'32 ← PMem.ldU32 (this + 40)
+      gcs_out_of_space_to_send t'32
+      c'31 := false
+    if c'31 then
+      GCS_MAVLINK.send_timesync this
+      PMem.stU32 ((this + 72) + 16) tnow
+  return ()
+
+def GCS_MAVLINK.update_receive (this : UInt64) (max_time_us : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 344
+  let r ← GCS_MAVLINK.update_receive.body fp this max_time_us
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS::update_receive : void ()`, `GCS_Common.cpp:2795-2802`. -/
+def GCS.update_receive (this : UInt64) : PMem.M Unit := do
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← GCS.num_gcs this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'4)))))) then break
+    let t'5 ← GCS_Copter.chan this i
+    GCS_MAVLINK.update_receive t'5 (Int32.toUInt32 ((1000 : Int32)))
+  -- GCS::update_passthru: dropped (configuration)
+  return ()
+
+/-- C++ `MissionItemProtocol_Waypoints::MissionItemProtocol_Waypoints : void (class AP_Mission &)`, `MissionItemProtocol_Waypoints.h:?-8`. -/
+def MissionItemProtocol_Waypoints.MissionItemProtocol_Waypoints (this : UInt64) (_mission : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 48) _mission
+  return ()
+
+/-- `MissionItemProtocol_Waypoints.timeout` as a pure function of its arguments (it reads and writes no memory). -/
+def MissionItemProtocol_Waypoints.timeout.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `MissionItemProtocol_Waypoints::timeout : void ()`, `MissionItemProtocol_Waypoints.cpp:123-126`. -/
+def MissionItemProtocol_Waypoints.timeout (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.MissionItemProtocol_Waypoints.timeout.pure' this)
+
+/-- C++ `GCS_MAVLINK::get_stream_slowdown_ms : uint16_t () const`, `functor.h:509-?`. -/
+def GCS_MAVLINK.get_stream_slowdown_ms (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (this + 504)
+  return t'1
+
+/-- C++ `MissionItemProtocol::update : void ()`, `MissionItemProtocol.cpp:379-412`. -/
+def MissionItemProtocol.update (this : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldB (this + 8)
+  if !t'1 then
+    return ()
+  let t'2 ← PMem.ldU64 (this + 16)
+  if (t'2 == (0 : UInt64)) then
+    return ()
+  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let t'3 ← PMem.ldU32 (this + 36)
+  let t'4 ← PMem.ldU16 (this + 44)
+  if (decide ((tnow - t'3) > (UInt16.toUInt32 (t'4)))) then
+    PMem.stB (this + 8) false
+    MissionItemProtocol_Waypoints.timeout this
+    let t'5 ← PMem.ldU64 (this + 16)
+    let t'6 ← GCS_MAVLINK.get_chan t'5
+    let mut chan : UInt32 := t'6
+    let t'7 ← comm_get_txspace chan
+    let t'8 ← GCS_MAVLINK.packet_overhead_chan chan
+    let mut c'9 : Bool := default
+    if (decide ((UInt16.toUInt32 (t'7)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'8))) + (4 : Int32)))))) then
+      c'9 := true
+    else
+      gcs_out_of_space_to_send chan
+      c'9 := false
+    if c'9 then
+      let t'10 ← PMem.ldU32 (this + 28)
+      let t'11 ← PMem.ldU8 (this + 32)
+      let t'12 ← MissionItemProtocol_Waypoints.mission_type this
+      mavlink_msg_mission_ack_send chan t'10 t'11 (UInt32.toUInt8 ((15 : UInt32))) (UInt32.toUInt8 (t'12))
+    PMem.stU64 (this + 16) (0 : UInt64)
+    MissionItemProtocol.free_upload_resources this
+    return ()
+  let t'13 ← PMem.ldU64 (this + 16)
+  let t'14 ← GCS_MAVLINK.get_stream_slowdown_ms t'13
+  let mut wp_recv_timeout_ms : UInt32 := ((1000 : UInt32) + (UInt16.toUInt32 (t'14)))
+  let t'15 ← PMem.ldU32 (this + 40)
+  if (decide ((tnow - t'15) > wp_recv_timeout_ms)) then
+    PMem.stU32 (this + 40) tnow
+    let t'16 ← MissionItemProtocol_Waypoints.next_item_ap_message_id this
+    let t'17 ← PMem.ldU64 (this + 16)
+    GCS_MAVLINK.send_message t'17 t'16
+  return ()
+
+/-- C++ `GCS_MAVLINK::set_mavlink_message_id_interval : bool (const uint32_t, const uint16_t)`, `GCS_Common.cpp:1220-1231`. -/
+def GCS_MAVLINK.set_mavlink_message_id_interval (this : UInt64) (mavlink_id : UInt32) (interval_ms : UInt16) : PMem.M Bool := do
+  let mut mavlink_id := mavlink_id
+  let mut interval_ms := interval_ms
+  let t'1 ← GCS_MAVLINK.mavlink_id_to_ap_message_id this mavlink_id
+  let mut id : UInt8 := t'1
+  if ((UInt32.toInt32 (UInt8.toUInt32 (id))) == (UInt32.toInt32 (UInt8.toUInt32 ((102 : UInt8))))) then
+    return false
+  let t'2 ← GCS_MAVLINK.set_ap_message_interval this id interval_ms
+  return t'2
+
+/-- C++ `GCS_MAVLINK::initialise_message_intervals_from_streamrates : void ()`, `GCS_Common.cpp:7288-7313`. -/
+def GCS_MAVLINK.initialise_message_intervals_from_streamrates (this : UInt64) : PMem.M Unit := do
+  let t'1 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
+  if t'1 then
+    let t'2 ← GCS_MAVLINK.set_mavlink_message_id_interval this (Int32.toUInt32 ((0 : Int32))) (Int16.toUInt16 (Int32.toInt16 ((1000 : Int32))))
+    discard <| pure (t'2)
+    return ()
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'3 := true
+  for _ in PMem.loopFuel do
+    if !first'3 then
+      let t'4 := i
+      let t'5 := (t'4 + 1)
+      i := t'5
+      pure ()
+    first'3 := false
+    let t'6 ← PMem.ldU64 (((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64) + 8)
+    if !((t'6 != (0 : UInt64))) then break
+    let t'7 ← PMem.ldU8 ((0xbfe8 : UInt64) /- &GCS_MAVLINK::all_stream_entries -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 24).toUInt64)
+    GCS_MAVLINK.initialise_message_intervals_for_stream this t'7
+  let t'8 ← GCS_MAVLINK.set_mavlink_message_id_interval this (Int32.toUInt32 ((0 : Int32))) (Int16.toUInt16 (Int32.toInt16 ((1000 : Int32))))
+  discard <| pure (t'8)
+  return ()
+
+/-- `GCS_Copter.min_loop_time_remaining_for_message_send_us` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_Copter.min_loop_time_remaining_for_message_send_us.pure' (this : UInt64) : Id UInt16 := do
+  return Int16.toUInt16 (Int32.toInt16 ((250 : Int32)))
+
+/-- C++ `GCS_Copter::min_loop_time_remaining_for_message_send_us : uint16_t () const`, `GCS.h:38-40`. -/
+def GCS_Copter.min_loop_time_remaining_for_message_send_us (this : UInt64) : PMem.M UInt16 :=
+  pure (_root_.GCS_lib.GCS_Copter.min_loop_time_remaining_for_message_send_us.pure' this)
+
+/-- C++ `GCS::out_of_time : bool () const`, `GCS.cpp:674-698`. -/
+def GCS.out_of_time (this : UInt64) : PMem.M Bool := do
+  if (← get).inDelayCb then
+    return false
+  if false then
+    return false
+  let t'1 ← GCS_Copter.min_loop_time_remaining_for_message_send_us this
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) ≤ (UInt32.toInt32 (UInt16.toUInt32 (((← get).timeAvail)))))) then
+    return false
+  return true
+
+/-- C++ `GCS_MAVLINK::deferred_message_to_send_index : int8_t (uint16_t)`, `GCS_Common.cpp:1399-1441`. -/
+def GCS_MAVLINK.deferred_message_to_send_index (this : UInt64) (now16_ms : UInt16) : PMem.M Int8 := do
+  let mut now16_ms := now16_ms
+  let t'1 ← PMem.ldI8 (this + 524)
+  if ((Int8.toInt32 (t'1)) == (-(1 : Int32))) then
+    let mut ms_before_next_message_to_send : UInt16 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+    let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+    let mut first'2 := true
+    for _ in PMem.loopFuel do
+      if !first'2 then
+        let t'3 := i
+        let t'4 := (t'3 + 1)
+        i := t'4
+        pure ()
+      first'2 := false
+      if !((decide ((UInt8.toUInt64 (i)) < ((18 : UInt64) / (6 : UInt64))))) then break
+      let t'5 ← PMem.ldU16 (((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64) + 2)
+      let mut interval_ms : UInt16 := t'5
+      if ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) == (0 : Int32)) then
+        continue
+      let t'6 ← PMem.ldU16 (((this + 506) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 6).toUInt64) + 4)
+      let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'6))))))
+      let mut ms_before_send_this_message : UInt16 := default  -- uninitialized in C
+      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))) then
+        let t'7 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+        ms_before_send_this_message := t'7
+      else
+        let t'8 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (interval_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))))))
+        ms_before_send_this_message := t'8
+      if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_before_send_this_message))) < (UInt32.toInt32 (UInt16.toUInt32 (ms_before_next_message_to_send))))) then
+        let t'9 := UInt8.toInt8 (i)
+        PMem.stI8 (this + 524) t'9
+        ms_before_next_message_to_send := ms_before_send_this_message
+  let t'10 ← PMem.ldI8 (this + 524)
+  if ((Int8.toInt32 (t'10)) == (-(1 : Int32))) then
+    return Int32.toInt8 ((-(1 : Int32)))
+  let t'11 ← PMem.ldI8 (this + 524)
+  let t'12 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (t'11)) * 6).toUInt64) + 4)
+  let mut ms_since_last_sent'2 : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'12))))))
+  let t'13 ← PMem.ldI8 (this + 524)
+  let t'14 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (t'13)) * 6).toUInt64) + 2)
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent'2))) < (UInt32.toInt32 (UInt16.toUInt32 (t'14))))) then
+    return Int32.toInt8 ((-(1 : Int32)))
+  let t'15 ← PMem.ldI8 (this + 524)
+  return t'15
+
+/-- `GCS_MAVLINK.should_send_message_in_delay_callback` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.should_send_message_in_delay_callback.pure' (this : UInt64) (id : UInt8) : Id Bool := do
+  let mut id := id
+  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
+  if sw'1 == (31 : Int32) || sw'1 == (0 : Int32) || sw'1 == (73 : Int32) then
+    return true
+  else
+    return false
+  return false
+
+/-- C++ `GCS_MAVLINK::should_send_message_in_delay_callback : bool (const ap_message) const`, `GCS_Common.cpp:1233-1251`. -/
+def GCS_MAVLINK.should_send_message_in_delay_callback (this : UInt64) (id : UInt8) : PMem.M Bool :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.should_send_message_in_delay_callback.pure' this id)
+
+/-- `AP_ParamT'signed_char_1.operator_const_signed_char__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'signed_char_1.operator_const_signed_char__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<signed char, 1>::operator const signed char & : const signed char &() const`, `AP_Param.h:978-980`. -/
+def AP_ParamT'signed_char_1.operator_const_signed_char__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'signed_char_1.operator_const_signed_char__.pure' this)
+
+/-- C++ `GCS::telem_delay : uint32_t () const`, `AP_Common.h:1324-?`. -/
+def GCS.telem_delay (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← AP_ParamT'signed_char_1.operator_const_signed_char__ (this + 174)
+  let t'2 ← PMem.ldI8 t'1
+  return Int32.toUInt32 (Int8.toInt32 (t'2))
+
+/-- C++ `GCS_MAVLINK::telemetry_delayed : bool () const`, `GCS_Common.cpp:3383-3396`. -/
+def GCS_MAVLINK.telemetry_delayed (this : UInt64) : PMem.M Bool := do
+  let mut tnow : UInt32 := ((((← get).clockUs / 1000).toUInt32) >>> (Int32.toUInt32 ((10 : Int32))))
+  let t'1 ← gcs
+  let t'2 ← GCS.telem_delay t'1
+  if (decide (tnow ≥ t'2)) then
+    return false
+  let t'3 ← PMem.ldU32 (this + 40)
+  if (((UInt32.toInt32 (t'3)) == (UInt32.toInt32 ((0 : UInt32)))) && false) then
+    return false
+  return true
+
+/-- `GCS_MAVLINK.pending_param_reply.pending_param_reply` as a pure function of its arguments (it reads and writes no memory). -/
+def GCS_MAVLINK.pending_param_reply.pending_param_reply.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `GCS_MAVLINK::pending_param_reply::pending_param_reply : void () noexcept`, `functor.h:1002-?`. -/
+def GCS_MAVLINK.pending_param_reply.pending_param_reply (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.GCS_MAVLINK.pending_param_reply.pending_param_reply.pure' this)
+
+/-- C++ `ByteBuffer::available : uint32_t () const`, `RingBuffer.cpp:58-68`. -/
+def ByteBuffer.available (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU32 (this + 16)
+  let mut _tail : UInt32 := t'1
+  let t'2 ← PMem.ldU32 (this + 12)
+  if (decide (t'2 > _tail)) then
+    let t'3 ← PMem.ldU32 (this + 8)
+    let t'4 ← PMem.ldU32 (this + 12)
+    return ((t'3 - t'4) + _tail)
+  let t'5 ← PMem.ldU32 (this + 12)
+  return (_tail - t'5)
+
+/-- C++ `ByteBuffer::readptr : const uint8_t *(uint32_t &)`, `RingBuffer.cpp:266-272`. -/
+def ByteBuffer.readptr (this : UInt64) (available_bytes : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU32 (this + 16)
+  let mut _tail : UInt32 := t'1
+  let t'2 ← PMem.ldU32 (this + 12)
+  let mut c'3 : UInt32 := default
+  if (decide (t'2 > _tail)) then
+    let t'4 ← PMem.ldU32 (this + 8)
+    let t'5 ← PMem.ldU32 (this + 12)
+    c'3 := (t'4 - t'5)
+  else
+    let t'6 ← PMem.ldU32 (this + 12)
+    c'3 := (_tail - t'6)
+  PMem.stU32 available_bytes c'3
+  let t'7 ← PMem.ldU32 available_bytes
+  let mut c'8 : UInt64 := default
+  if t'7 != (0 : UInt32) then
+    let t'9 ← PMem.ldU64 this
+    let t'10 ← PMem.ldU32 (this + 12)
+    c'8 := (t'9 + ((UInt64.toInt64 (UInt32.toUInt64 (t'10))) * 1).toUInt64)
+  else
+    c'8 := (0 : UInt64)
+  return c'8
+
+/-- C++ `ByteBuffer::peekiovec : uint8_t (ByteBuffer::IoVec *, uint32_t)`, `RingBuffer.cpp:146-180`. -/
+def ByteBuffer.peekiovec.body (fp : UInt64) (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
+  let mut iovec := iovec
+  let mut len := len
+  let t'1 ← ByteBuffer.available this
+  PMem.stU32 (fp + 0) t'1
+  let t'2 ← PMem.ldU32 (fp + 0)
+  if (decide (len > t'2)) then
+    let t'3 ← PMem.ldU32 (fp + 0)
+    len := t'3
+  if (len == (Int32.toUInt32 ((0 : Int32)))) then
+    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let t'4 ← ByteBuffer.readptr this (fp + 0)
+  let mut b : UInt64 := t'4
+  let t'5 ← PMem.ldU32 (fp + 0)
+  if (t'5 == (Int32.toUInt32 ((0 : Int32)))) then
+    let t'6 ← PMem.ldU64 this
+    PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) t'6
+    PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) len
+    PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) (0 : UInt64)
+    let t'7 := Int32.toUInt32 ((0 : Int32))
+    PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'7
+    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+  let t'8 ← PMem.ldU32 (fp + 0)
+  if (decide (t'8 > len)) then
+    PMem.stU32 (fp + 0) len
+  PMem.stU64 (iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) b
+  let t'9 ← PMem.ldU32 (fp + 0)
+  PMem.stU32 ((iovec + ((Int32.toInt64 ((0 : Int32))) * 16).toUInt64) + 8) t'9
+  let t'10 ← PMem.ldU32 (fp + 0)
+  if (decide (len ≤ t'10)) then
+    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+  let t'11 ← PMem.ldU64 this
+  PMem.stU64 (iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) t'11
+  let t'12 ← PMem.ldU32 (fp + 0)
+  let t'13 := (len - t'12)
+  PMem.stU32 ((iovec + ((Int32.toInt64 ((1 : Int32))) * 16).toUInt64) + 8) t'13
+  return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
+
+def ByteBuffer.peekiovec (this : UInt64) (iovec : UInt64) (len : UInt32) : PMem.M UInt8 := do
+  let fp ← PMem.enter 4
+  let r ← ByteBuffer.peekiovec.body fp this iovec len
+  PMem.leave fp
+  return r
+
+/-- C++ `ByteBuffer::peekbytes : uint32_t (uint8_t *, uint32_t)`, `RingBuffer.cpp:185-197`. -/
+def ByteBuffer.peekbytes.body (fp : UInt64) (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
+  let mut data := data
+  let mut len := len
+  ByteBuffer.IoVec.IoVec ((fp + 0) + 0)
+  ByteBuffer.IoVec.IoVec ((fp + 0) + 16)
+  let t'1 ← ByteBuffer.peekiovec this (fp + 0) len
+  let mut n_vec : UInt8 := t'1
+  let mut ret : UInt32 := Int32.toUInt32 ((0 : Int32))
+  for i'2 in [0:n_vec.toNat] do
+    let i : Int32 := Int32.ofNat i'2
+    let t'3 ← PMem.ldU64 ((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64)
+    let t'4 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
+    let t'5 ← PMem.memcpy (data + ((UInt64.toInt64 (UInt32.toUInt64 (ret))) * 1).toUInt64) t'3 (UInt32.toUInt64 (t'4))
+    discard <| pure (t'5)
+    let t'6 ← PMem.ldU32 (((fp + 0) + ((Int32.toInt64 (i)) * 16).toUInt64) + 8)
+    let t'7 := (ret + t'6)
+    ret := t'7
+  return ret
+
+def ByteBuffer.peekbytes (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
+  let fp ← PMem.enter 32
+  let r ← ByteBuffer.peekbytes.body fp this data len
+  PMem.leave fp
+  return r
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::peek : bool (GCS_MAVLINK::pending_param_reply &)`, `AP_Common.h:239-241`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_reply.peek (this : UInt64) (object : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.peekbytes t'1 object (UInt64.toUInt32 ((48 : UInt64)))
+  return ((UInt32.toUInt64 (t'2)) == (48 : UInt64))
+
+/-- C++ `GCS_MAVLINK::send_param_error : void (const GCS_MAVLINK::pending_param_reply &, MAV_PARAM_ERROR)`, `GCS_Param.cpp:451-466`. -/
+def GCS_MAVLINK.send_param_error'2.body (fp : UInt64) (this : UInt64) (reply : UInt64) (error : UInt32) : PMem.M Unit := do
+  let mut error := error
+  let t'1 ← PMem.ldU32 (this + 40)
+  let t'2 ← comm_get_txspace t'1
+  let t'3 ← PMem.ldU32 (this + 40)
+  let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+  let mut c'5 : Bool := default
+  if (decide ((UInt16.toUInt32 (t'2)) ≥ (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (21 : Int32)))))) then
+    c'5 := true
+  else
+    let t'6 ← PMem.ldU32 (this + 40)
+    gcs_out_of_space_to_send t'6
+    c'5 := false
+  if !c'5 then
+    return ()
+  let t'7 ← strncpy_noterm (fp + 0) (reply + 16) ((16 : UInt64) / (1 : UInt64))
+  discard <| pure (t'7)
+  let t'8 ← PMem.ldU32 (this + 40)
+  let t'9 ← PMem.ldU32 (reply + 36)
+  let t'10 ← PMem.ldU8 (reply + 40)
+  let t'11 ← PMem.ldI16 (reply + 12)
+  mavlink_msg_param_error_send t'8 t'9 t'10 (fp + 0) t'11 (UInt32.toUInt8 (error))
+  return ()
+
+def GCS_MAVLINK.send_param_error'2 (this : UInt64) (reply : UInt64) (error : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 16
+  let r ← GCS_MAVLINK.send_param_error'2.body fp this reply error
+  PMem.leave fp
+  return r
+
+/-- C++ `ByteBuffer::advance : bool (uint32_t)`, `RingBuffer.cpp:137-144`. -/
+def ByteBuffer.advance (this : UInt64) (n : UInt32) : PMem.M Bool := do
+  let mut n := n
+  let t'1 ← ByteBuffer.available this
+  if (decide (n > t'1)) then
+    return false
+  let t'2 ← PMem.ldU32 (this + 12)
+  let t'3 ← PMem.ldU32 (this + 8)
+  let t'4 ← PMem.atomicStU32 (this + 12) ((t'2 + n) % t'3)
+  discard <| pure (t'4)
+  return true
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::pop : bool ()`, `AP_Common.h:195-197`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_reply.pop (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.advance t'1 (UInt64.toUInt32 ((48 : UInt64)))
+  return t'2
+
+/-- C++ `GCS_MAVLINK::send_parameter_async_replies : uint8_t ()`, `GCS_Param.cpp:471-522`. -/
+def GCS_MAVLINK.send_parameter_async_replies.body (fp : UInt64) (this : UInt64) : PMem.M UInt8 := do
+  let mut async_replies_sent_count : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  for _ in PMem.loopFuel do
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (async_replies_sent_count))) < (5 : Int32)))) then break
+    GCS_MAVLINK.pending_param_reply.pending_param_reply (fp + 0)
+    let t'1 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.peek (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/ (fp + 0)
+    if !t'1 then
+      return async_replies_sent_count
+    let mut required_space : UInt16 := default  -- uninitialized in C
+    let t'2 ← PMem.ldU32 ((fp + 0) + 44)
+    if ((UInt32.toInt32 (t'2)) == (UInt32.toInt32 ((0 : UInt32)))) then
+      let t'3 ← PMem.ldU32 (this + 40)
+      let t'4 ← GCS_MAVLINK.packet_overhead_chan t'3
+      let t'5 := UInt32.toUInt16 ((Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) + (25 : Int32)))))
+      required_space := t'5
+    else
+      let t'6 ← PMem.ldU32 (this + 40)
+      let t'7 ← GCS_MAVLINK.packet_overhead_chan t'6
+      let t'8 := UInt32.toUInt16 ((Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'7))) + (21 : Int32)))))
+      required_space := t'8
+    let t'9 ← PMem.ldU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/
+    let mut saved_reserve_param_space_start_ms : UInt32 := t'9
+    let t'10 := Int32.toUInt32 ((0 : Int32))
+    PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ t'10
+    let t'11 ← GCS_MAVLINK.txspace this
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'11))) < (UInt32.toInt32 (UInt16.toUInt32 (required_space))))) then
+      GCS_MAVLINK.out_of_space_to_send this
+      let t'12 := ((← get).clockUs / 1000).toUInt32
+      PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ t'12
+      return async_replies_sent_count
+    PMem.stU32 (0xbfe0 : UInt64) /- &GCS_MAVLINK::reserve_param_space_start_ms -/ saved_reserve_param_space_start_ms
+    let t'13 ← PMem.ldU32 ((fp + 0) + 44)
+    if ((UInt32.toInt32 (t'13)) == (UInt32.toInt32 ((0 : UInt32)))) then
+      let t'14 ← PMem.ldU32 (fp + 0)
+      let t'15 ← PMem.ldF32 ((fp + 0) + 4)
+      let t'16 ← PMem.ldU32 ((fp + 0) + 8)
+      let t'17 ← GCS_MAVLINK.mav_param_type t'16
+      let t'18 ← PMem.ldU16 ((fp + 0) + 14)
+      let t'19 ← PMem.ldI16 ((fp + 0) + 12)
+      mavlink_msg_param_value_send t'14 ((fp + 0) + 16) t'15 (UInt32.toUInt8 (t'17)) t'18 (Int16.toUInt16 (t'19))
+    else
+      let t'20 ← PMem.ldU32 ((fp + 0) + 44)
+      GCS_MAVLINK.send_param_error'2 this (fp + 0) t'20
+    let t'21 := ((← get).clockUs / 1000).toUInt32
+    PMem.stU32 (this + 500) t'21
+    let t'22 := async_replies_sent_count
+    let t'23 := (t'22 + 1)
+    async_replies_sent_count := t'23
+    let t'24 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.pop (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/
+    if !t'24 then
+      return async_replies_sent_count
+  return async_replies_sent_count
+
+def GCS_MAVLINK.send_parameter_async_replies (this : UInt64) : PMem.M UInt8 := do
+  let fp ← PMem.enter 48
+  let r ← GCS_MAVLINK.send_parameter_async_replies.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::have_flow_control : bool ()`, `GCS_Param.cpp:105-121`. -/
+def GCS_MAVLINK.have_flow_control (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 (this + 480)
+  if (t'1 == (0 : UInt64)) then
+    return false
+  if false then
+    return true
+  let t'2 ← PMem.ldU32 (this + 40)
+  if ((UInt32.toInt32 (t'2)) == (UInt32.toInt32 ((0 : UInt32)))) then
+    return false
+  return false
+
+/-- C++ `GCS_MAVLINK::last_txbuf_is_greater : bool (uint8_t)`, `GCS_Common.cpp:895-902`. -/
+def GCS_MAVLINK.last_txbuf_is_greater (txbuf_limit : UInt8) : PMem.M Bool := do
+  let mut txbuf_limit := txbuf_limit
+  let t'1 ← PMem.ldU32 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 8)
+  if (decide (((((← get).clockUs / 1000).toUInt32) - t'1) > (Int32.toUInt32 ((5000 : Int32))))) then
+    return true
+  let t'2 ← PMem.ldU8 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 12)
+  return (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) > (UInt32.toInt32 (UInt8.toUInt32 (txbuf_limit)))))
+
+/-- C++ `GCS_MAVLINK::queued_param_send : void ()`, `GCS_Param.cpp:40-100`. -/
+def GCS_MAVLINK.queued_param_send.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  let t'1 ← GCS_MAVLINK.send_parameter_async_replies this
+  let mut async_replies_sent_count : UInt8 := t'1
+  let t'2 ← PMem.ldU64 (this + 32)
+  if (t'2 == (0 : UInt64)) then
+    return ()
+  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let mut tstart : UInt32 := (← get).clockUs.toUInt32
+  let mut link_bw : UInt32 := (1000000 : UInt32)
+  let t'3 ← PMem.ldU32 (this + 500)
+  let mut bytes_allowed : UInt32 := ((link_bw * (tnow - t'3)) / (Int32.toUInt32 ((3333 : Int32))))
+  let t'4 ← GCS_MAVLINK.packet_overhead this
+  let mut size_for_one_param_value_msg : UInt16 := Int16.toUInt16 (Int32.toInt16 (((25 : Int32) + (UInt32.toInt32 (UInt8.toUInt32 (t'4))))))
+  if (decide (bytes_allowed < (UInt16.toUInt32 (size_for_one_param_value_msg)))) then
+    let t'5 := UInt16.toUInt32 (size_for_one_param_value_msg)
+    bytes_allowed := t'5
+  let t'6 ← GCS_MAVLINK.txspace this
+  if (decide (bytes_allowed > (UInt16.toUInt32 (t'6)))) then
+    let t'7 ← GCS_MAVLINK.txspace this
+    let t'8 := UInt16.toUInt32 (t'7)
+    bytes_allowed := t'8
+  let mut count : UInt32 := (bytes_allowed / (UInt16.toUInt32 (size_for_one_param_value_msg)))
+  let t'9 ← GCS_MAVLINK.have_flow_control this
+  if ((!t'9) && (decide (count > (Int32.toUInt32 ((5 : Int32)))))) then
+    let t'10 := Int32.toUInt32 ((5 : Int32))
+    count := t'10
+  if (decide ((UInt8.toUInt32 (async_replies_sent_count)) ≥ count)) then
+    return ()
+  let t'11 := (count - (UInt8.toUInt32 (async_replies_sent_count)))
+  count := t'11
+  for _ in PMem.loopFuel do
+    let mut sc'13 := count != (0 : UInt32)
+    if sc'13 then
+      let t'12 ← PMem.ldU64 (this + 32)
+      sc'13 := (t'12 != (0 : UInt64))
+    let mut sc'15 := sc'13
+    if sc'15 then
+      let t'14 ← GCS_MAVLINK.last_txbuf_is_greater (Int8.toUInt8 (Int32.toInt8 ((33 : Int32))))
+      sc'15 := t'14
+    if !(sc'15) then break
+    let t'16 ← PMem.ldU64 (this + 32)
+    AP_Param.copy_name_token t'16 (this + 492) (fp + 0) (16 : UInt64) true
+    let t'17 ← PMem.ldU32 (this + 40)
+    let t'18 ← PMem.ldU32 (this + 488)
+    let t'19 ← PMem.ldU64 (this + 32)
+    let t'20 ← AP_Param.cast_to_float t'19 t'18
+    let t'21 ← PMem.ldU32 (this + 488)
+    let t'22 ← GCS_MAVLINK.mav_param_type t'21
+    let t'23 ← PMem.ldU16 (this + 498)
+    let t'24 ← PMem.ldU16 (this + 496)
+    mavlink_msg_param_value_send t'17 (fp + 0) t'20 (UInt32.toUInt8 (t'22)) t'23 t'24
+    let t'25 ← AP_Param.next_scalar (this + 492) (this + 488) (0 : UInt64)
+    PMem.stU64 (this + 32) t'25
+    let t'26 := (this + 496)
+    let t'27 ← PMem.ldU16 t'26
+    let t'28 := (t'27 + 1)
+    PMem.stU16 t'26 t'28
+    if (decide ((((← get).clockUs.toUInt32) - tstart) > (Int32.toUInt32 ((1000 : Int32))))) then
+      break
+    let t'29 := count
+    let t'30 := (t'29 - 1)
+    count := t'30
+  PMem.stU32 (this + 500) tnow
+  return ()
+
+def GCS_MAVLINK.queued_param_send (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 16
+  let r ← GCS_MAVLINK.queued_param_send.body fp this
+  PMem.leave fp
+  return r
+
+/-- `__mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_mission_item_reached_t::__mavlink_mission_item_reached_t : void () noexcept`, `mavlink_msg_mission_item_reached.h:9-?`. -/
+def __mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t.pure' this)
+
+/-- C++ `mavlink_msg_mission_item_reached_send : void (mavlink_channel_t, uint16_t)`, `mavlink_msg_mission_item_reached.h:179-192`. -/
+def mavlink_msg_mission_item_reached_send.body (fp : UInt64) (chan : UInt32) (seq : UInt16) : PMem.M Unit := do
+  let mut chan := chan
+  let mut seq := seq
+  __mavlink_mission_item_reached_t.__mavlink_mission_item_reached_t (fp + 0)
+  PMem.stU16 (fp + 0) seq
+  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((46 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((11 : Int32))))
+  return ()
+
+def mavlink_msg_mission_item_reached_send (chan : UInt32) (seq : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← mavlink_msg_mission_item_reached_send.body fp chan seq
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS::try_send_queued_message_for_type : void (MAV_MISSION_TYPE) const`, `GCS_Common.cpp:5924-5930`. -/
+def GCS.try_send_queued_message_for_type (this : UInt64) (type' : UInt32) : PMem.M Unit := do
+  let mut type' := type'
+  let t'1 ← GCS.get_prot_for_mission_type this type'
+  let mut prot : UInt64 := t'1
+  if (prot == (0 : UInt64)) then
+    return ()
+  MissionItemProtocol.queued_request_send prot
+  return ()
+
+/-- C++ `GCS_MAVLINK::try_send_mission_message : bool (const enum ap_message)`, `GCS_Common.cpp:5932-5968`. -/
+def GCS_MAVLINK.try_send_mission_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
+  let mut id := id
+  for _ in [0:1] do
+    let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
+    if sw'1 == (11 : Int32) then
+      let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((6 : Int32))))
+      if !t'2 then
+        return false
+      let t'3 ← AP.mission
+      let mission : UInt64 := t'3
+      PMem.bframe this 42
+      break
+      let t'4 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
+      if !t'4 then
+        return false
+      let t'5 ← PMem.ldU32 (this + 40)
+      let t'6 ← PMem.ldU16 (this + 12)
+      mavlink_msg_mission_item_reached_send t'5 t'6
+    else if sw'1 == (61 : Int32) then
+      let t'7 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
+      if !t'7 then
+        return false
+      let t'8 ← PMem.ldU32 (this + 40)
+      let t'9 ← PMem.ldU16 (this + 12)
+      mavlink_msg_mission_item_reached_send t'8 t'9
+    else if sw'1 == (28 : Int32) then
+      let t'10 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((5 : Int32))))
+      if !t'10 then
+        return false
+      let t'11 ← gcs
+      GCS.try_send_queued_message_for_type t'11 (0 : UInt32)
+    else
+      pure ()
+  return true
+
+/-- C++ `GCS_MAVLINK::send_available_modes : bool ()`, `GCS_Common.cpp:6547-6578`. -/
+def GCS_MAVLINK.send_available_modes (this : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldB ((this + 871) + 1)
+  if !t'1 then
+    return true
+  let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((46 : Int32))))
+  if !t'2 then
+    return false
+  let t'3 ← PMem.ldU8 ((this + 871) + 2)
+  let mut send_all : Bool := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) == (0 : Int32))
+  let mut request_index : UInt8 := default  -- uninitialized in C
+  if !send_all then
+    let t'4 ← PMem.ldU8 ((this + 871) + 2)
+    request_index := t'4
+    PMem.stB ((this + 871) + 1) false
+  else
+    let t'5 ← PMem.ldU8 ((this + 871) + 3)
+    request_index := t'5
+    let t'6 := ((this + 871) + 3)
+    let t'7 ← PMem.ldU8 t'6
+    let t'8 := (t'7 + (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))))
+    PMem.stU8 t'6 t'8
+  let t'9 ← PMem.bframeCount this 435 9
+  let mut mode_count : UInt8 := t'9
+  let mut sc'11 := send_all
+  if sc'11 then
+    let t'10 ← PMem.ldU8 ((this + 871) + 3)
+    sc'11 := (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'10))) > (UInt32.toInt32 (UInt8.toUInt32 (mode_count)))))
+  if sc'11 then
+    PMem.stB ((this + 871) + 1) false
+  return true
+
+/-- `__mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t` as a pure function of its arguments (it reads and writes no memory). -/
+def __mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `__mavlink_available_modes_monitor_t::__mavlink_available_modes_monitor_t : void () noexcept`, `mavlink_msg_available_modes_monitor.h:9-?`. -/
+def __mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.__mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t.pure' this)
+
+/-- C++ `mavlink_msg_available_modes_monitor_send : void (mavlink_channel_t, uint8_t)`, `mavlink_msg_available_modes_monitor.h:179-192`. -/
+def mavlink_msg_available_modes_monitor_send.body (fp : UInt64) (chan : UInt32) (seq : UInt8) : PMem.M Unit := do
+  let mut chan := chan
+  let mut seq := seq
+  __mavlink_available_modes_monitor_t.__mavlink_available_modes_monitor_t (fp + 0)
+  PMem.stU8 (fp + 0) seq
+  _mav_finalize_message_chan_send chan (Int32.toUInt32 ((437 : Int32))) (fp + 0) (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 ((30 : Int32))))
+  return ()
+
+def mavlink_msg_available_modes_monitor_send (chan : UInt32) (seq : UInt8) : PMem.M Unit := do
+  let fp ← PMem.enter 1
+  let r ← mavlink_msg_available_modes_monitor_send.body fp chan seq
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::send_available_mode_monitor : bool ()`, `GCS_Common.cpp:6580-6590`. -/
+def GCS_MAVLINK.send_available_mode_monitor (this : UInt64) : PMem.M Bool := do
+  let t'1 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
+  if !t'1 then
+    return false
+  let t'2 ← PMem.ldU32 (this + 40)
+  let t'3 ← PMem.ldU8 ((this + 871) + 4)
+  mavlink_msg_available_modes_monitor_send t'2 t'3
+  return true
+
+/-- C++ `GCS_MAVLINK::try_send_message : bool (const enum ap_message)`, `GCS_Common.cpp:6606-7081`. -/
+def GCS_MAVLINK.try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
+  let mut id := id
+  let mut ret : Bool := true
+  let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
+  if sw'1 == (3 : Int32) then
+    let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
+    if !t'2 then
+      return false
+    PMem.bframe this 30
+  else if sw'1 == (4 : Int32) then
+    let t'3 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((48 : Int32))))
+    if !t'3 then
+      return false
+    PMem.bframe this 31
+  else if sw'1 == (31 : Int32) then
+    let t'4 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((25 : Int32))))
+    if !t'4 then
+      return false
+    GCS_MAVLINK.queued_param_send this
+  else if sw'1 == (0 : Int32) then
+    let t'5 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((9 : Int32))))
+    if !t'5 then
+      return false
+    let t'6 := ((← get).clockUs / 1000).toUInt32
+    PMem.stU32 (this + 8) t'6
+    PMem.bframe this 0
+  else if sw'1 == (5 : Int32) then
+    let t'7 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
+    if !t'7 then
+      return false
+    PMem.bframe this 33
+  else if sw'1 == (70 : Int32) then
+    let t'8 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((60 : Int32))))
+    if !t'8 then
+      return false
+    PMem.bframe this 242
+  else if sw'1 == (69 : Int32) then
+    let t'9 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((20 : Int32))))
+    if !t'9 then
+      return false
+    PMem.bframe this 49
+  else if sw'1 == (101 : Int32) then
+    let t'10 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((70 : Int32))))
+    if !t'10 then
+      return false
+    PMem.bframe this 340
+  else if sw'1 == (11 : Int32) || sw'1 == (61 : Int32) || sw'1 == (28 : Int32) || sw'1 == (29 : Int32) || sw'1 == (30 : Int32) then
+    let t'11 ← GCS_MAVLINK.try_send_mission_message this id
+    ret := t'11
+  else if sw'1 == (65 : Int32) then
+    let t'12 ← PMem.bframe this 147
+    discard <| pure (t'12)
+  else if sw'1 == (55 : Int32) then
+    let t'13 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((26 : Int32))))
+    if !t'13 then
+      return false
+    PMem.bframe (0 : UInt64) 193
+  else if sw'1 == (9 : Int32) then
+    let t'14 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((8 : Int32))))
+    if !t'14 then
+      return false
+    PMem.bframe this 152
+  else if sw'1 == (38 : Int32) then
+    PMem.bframe this 132
+  else if sw'1 == (26 : Int32) then
+    let t'15 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((12 : Int32))))
+    if !t'15 then
+      return false
+    PMem.bframe this 2
+  else if sw'1 == (22 : Int32) then
+    let t'16 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((52 : Int32))))
+    if !t'16 then
+      return false
+    PMem.bframe (0 : UInt64) 24
+  else if sw'1 == (24 : Int32) then
+    let t'17 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((57 : Int32))))
+    if !t'17 then
+      return false
+    PMem.bframe (0 : UInt64) 124
+  else if sw'1 == (56 : Int32) then
+    let t'18 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
+    if !t'18 then
+      return false
+    PMem.bframe this 32
+  else if sw'1 == (92 : Int32) then
+    let t'19 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((37 : Int32))))
+    if !t'19 then
+      return false
+    PMem.bframe this 83
+  else if sw'1 == (62 : Int32) then
+    let t'20 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((51 : Int32))))
+    if !t'20 then
+      return false
+    PMem.bframe this 87
+  else if sw'1 == (63 : Int32) then
+    let t'21 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((51 : Int32))))
+    if !t'21 then
+      return false
+    PMem.bframe this 85
+  else if sw'1 == (8 : Int32) then
+    let t'22 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((6 : Int32))))
+    if !t'22 then
+      return false
+    PMem.bframe this 125
+  else if sw'1 == (13 : Int32) then
+    let t'23 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((42 : Int32))))
+    if !t'23 then
+      return false
+    PMem.bframe this 65
+  else if sw'1 == (14 : Int32) then
+    let t'24 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((22 : Int32))))
+    if !t'24 then
+      return false
+    PMem.bframe this 35
+  else if sw'1 == (15 : Int32) then
+    let t'25 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((29 : Int32))))
+    if !t'25 then
+      return false
+    PMem.bframe this 27
+  else if sw'1 == (16 : Int32) then
+    let t'26 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
+    if !t'26 then
+      return false
+  else if sw'1 == (17 : Int32) then
+    let t'27 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
+    if !t'27 then
+      return false
+  else if sw'1 == (18 : Int32) then
+    let t'28 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
+    if !t'28 then
+      return false
+  else if sw'1 == (96 : Int32) then
+    let t'29 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((63 : Int32))))
+    if !t'29 then
+      return false
+    PMem.bframe this 105
+  else if sw'1 == (19 : Int32) then
+    let t'30 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
+    if !t'30 then
+      return false
+    PMem.bframe this 29
+  else if sw'1 == (20 : Int32) then
+    let t'31 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
+    if !t'31 then
+      return false
+    PMem.bframe this 137
+  else if sw'1 == (21 : Int32) then
+    let t'32 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((16 : Int32))))
+    if !t'32 then
+      return false
+    PMem.bframe this 143
+  else if sw'1 == (12 : Int32) then
+    let t'33 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((37 : Int32))))
+    if !t'33 then
+      return false
+    PMem.bframe this 36
+  else if sw'1 == (33 : Int32) then
+    let t'34 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((44 : Int32))))
+    if !t'34 then
+      return false
+    PMem.bframe this 164
+  else if sw'1 == (34 : Int32) then
+    let t'35 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((92 : Int32))))
+    if !t'35 then
+      return false
+    PMem.bframe this 108
+  else if sw'1 == (7 : Int32) then
+    let t'36 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((43 : Int32))))
+    if !t'36 then
+      return false
+    PMem.bframe this 1
+  else if sw'1 == (2 : Int32) then
+    let t'37 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((24 : Int32))))
+    if !t'37 then
+      return false
+    PMem.bframe this 178
+  else if sw'1 == (57 : Int32) then
+    let t'38 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((33 : Int32))))
+    if !t'38 then
+      return false
+    PMem.bframe this 194
+  else if sw'1 == (10 : Int32) then
+    let t'39 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((26 : Int32))))
+    if !t'39 then
+      return false
+    PMem.bframe this 62
+  else if sw'1 == (1 : Int32) then
+    let t'40 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((28 : Int32))))
+    if !t'40 then
+      return false
+    PMem.bframe this 163
+  else if sw'1 == (72 : Int32) then
+    let t'41 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((2 : Int32))))
+    if !t'41 then
+      return false
+    PMem.bframe this 245
+  else if sw'1 == (6 : Int32) then
+    let t'42 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((20 : Int32))))
+    if !t'42 then
+      return false
+    PMem.bframe this 74
+  else if sw'1 == (58 : Int32) then
+    let t'43 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((32 : Int32))))
+    if !t'43 then
+      return false
+    PMem.bframe this 241
+  else if sw'1 == (73 : Int32) then
+    let t'44 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((78 : Int32))))
+    if !t'44 then
+      return false
+    PMem.bframe this 148
+  else if sw'1 == (98 : Int32) then
+    let t'45 ← GCS_MAVLINK.send_available_modes this
+    ret := t'45
+  else if sw'1 == (99 : Int32) then
+    let t'46 ← GCS_MAVLINK.send_available_mode_monitor this
+    ret := t'46
+  else if sw'1 == (100 : Int32) then
+    let t'47 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((32 : Int32))))
+    if !t'47 then
+      return false
+    PMem.bframe this 264
+  else if sw'1 == (64 : Int32) then
+    pure ()
+  else
+    pure ()
+  return ret
+
+/-- C++ `GCS_MAVLINK_Copter::try_send_message : bool (enum ap_message)`, `GCS_MAVLink_Copter.cpp:293-324`. -/
+def GCS_MAVLINK_Copter.try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
+  let mut id := id
+  for _ in [0:1] do
+    let sw'1 := UInt32.toInt32 (UInt8.toUInt32 (id))
+    if sw'1 == (36 : Int32) then
+      let t'2 ← GCS_MAVLINK.check_payload_size this (Int16.toUInt16 (Int32.toInt16 ((12 : Int32))))
+      if !t'2 then
+        return false
+      PMem.bframe this 168
+    else if sw'1 == (64 : Int32) then
+      break
+      let t'3 ← GCS_MAVLINK.try_send_message this id
+      return t'3
+    else
+      let t'4 ← GCS_MAVLINK.try_send_message this id
+      return t'4
+  return true
+
+/-- C++ `GCS_MAVLINK::do_try_send_message : bool (const ap_message)`, `GCS_Common.cpp:1356-1387`. -/
+def GCS_MAVLINK.do_try_send_message (this : UInt64) (id : UInt8) : PMem.M Bool := do
+  let mut id := id
+  let mut in_delay_callback : Bool := (← get).inDelayCb
+  let mut sc'2 := in_delay_callback
+  if sc'2 then
+    let t'1 ← GCS_MAVLINK.should_send_message_in_delay_callback this id
+    sc'2 := !t'1
+  if sc'2 then
+    return true
+  let t'3 ← GCS_MAVLINK.telemetry_delayed this
+  if t'3 then
+    return false
+  let t'4 ← GCS_MAVLINK_Copter.try_send_message this id
+  if !t'4 then
+    return false
+  return true
+
+/-- C++ `Bitmask<102>::first_set : int16_t () const`, `stdint.h:145-152`. -/
+def Bitmask'102.first_set (this : UInt64) : PMem.M Int16 := do
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 ((4 : UInt16))))))) then break
+    let t'4 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
+    if (t'4 != (Int32.toUInt32 ((0 : Int32)))) then
+      let t'5 ← PMem.ldU32 (this + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 4).toUInt64)
+      let t'6 ← PMem.ffs (UInt32.toInt32 (t'5))
+      return Int32.toInt16 (((((UInt32.toInt32 (UInt16.toUInt32 (i))) * (32 : Int32)) + t'6) - (1 : Int32)))
+  return Int32.toInt16 ((-(1 : Int32)))
+
+/-- C++ `GCS_MAVLINK::next_deferred_bucket_message_to_send : ap_message (uint16_t)`, `GCS_Common.cpp:1328-1351`. -/
+def GCS_MAVLINK.next_deferred_bucket_message_to_send (this : UInt64) (now16_ms : UInt16) : PMem.M UInt8 := do
+  let mut now16_ms := now16_ms
+  let t'1 ← PMem.ldU8 (this + 728)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
+    return (255 : UInt8)
+  let t'2 ← PMem.ldU8 (this + 728)
+  let t'3 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'2))) * 20).toUInt64) + 18)
+  let mut ms_since_last_sent : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (now16_ms))) - (UInt32.toInt32 (UInt16.toUInt32 (t'3))))))
+  let t'4 ← PMem.ldU8 (this + 728)
+  let t'5 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'4))) * 20).toUInt64)
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (ms_since_last_sent))) < (UInt32.toInt32 (UInt16.toUInt32 (t'5))))) then
+    return (255 : UInt8)
+  let t'6 ← Bitmask'102.first_set (this + 732)
+  let mut next : Int16 := t'6
+  if ((Int16.toInt32 (next)) == (-(1 : Int32))) then
+    GCS_MAVLINK.find_next_bucket_to_send this now16_ms
+    return (255 : UInt8)
+  return Int8.toUInt8 (Int16.toInt8 (next))
+
+/-- C++ `GCS_MAVLINK::update_send : void ()`, `GCS_Common.cpp:1566-1695`. -/
+def GCS_MAVLINK.update_send (this : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldB (this + 764)
+  if !t'1 then
+    GCS_MAVLINK.initialise_message_intervals_from_streamrates this
+    PMem.stB (this + 764) true
+  let mut start : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let mut start16 : UInt16 := UInt32.toUInt16 ((start &&& (Int32.toUInt32 ((65535 : Int32)))))
+  for _ in PMem.loopFuel do
+    if !((decide (((((← get).clockUs / 1000).toUInt32) - start) < (Int32.toUInt32 ((5 : Int32)))))) then break
+    let t'2 ← gcs
+    let t'3 ← GCS.out_of_time t'2
+    if t'3 then
+      break
+    let t'4 ← GCS_MAVLINK.deferred_message_to_send_index this start16
+    let mut next : Int8 := t'4
+    if ((Int8.toInt32 (next)) != (-(1 : Int32))) then
+      let t'5 ← PMem.ldU8 ((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64)
+      let t'6 ← GCS_MAVLINK.do_try_send_message this t'5
+      if !t'6 then
+        break
+      let t'7 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 2)
+      let mut interval_ms : UInt16 := t'7
+      let t'8 := (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4)
+      let t'9 ← PMem.ldU16 t'8
+      let t'10 := (t'9 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms)))))))
+      PMem.stU16 t'8 t'10
+      let t'11 ← PMem.ldU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4)
+      if (decide ((UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (start16))) - (UInt32.toInt32 (UInt16.toUInt32 (t'11)))))))))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms))))) then
+        PMem.stU16 (((this + 506) + ((Int8.toInt64 (next)) * 6).toUInt64) + 4) start16
+      let t'12 := Int32.toInt8 ((-(1 : Int32)))
+      PMem.stI8 (this + 524) t'12
+      continue
+    let t'13 ← Bitmask'102.first_set (this + 748)
+    let mut fs : Int16 := t'13
+    if ((Int16.toInt32 (fs)) != (-(1 : Int32))) then
+      let mut next'2 : UInt8 := Int8.toUInt8 (Int16.toInt8 (fs))
+      let t'14 ← GCS_MAVLINK.do_try_send_message this next'2
+      if !t'14 then
+        break
+      Bitmask'102.clear (this + 748) (UInt8.toUInt16 (next'2))
+      continue
+    let t'15 ← GCS_MAVLINK.next_deferred_bucket_message_to_send this start16
+    let mut next'3 : UInt8 := t'15
+    if ((UInt32.toInt32 (UInt8.toUInt32 (next'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((255 : UInt8))))) then
+      let t'16 ← GCS_MAVLINK.do_try_send_message this next'3
+      if !t'16 then
+        break
+      Bitmask'102.clear (this + 732) (UInt8.toUInt16 (next'3))
+      let t'17 ← Bitmask'102.count (this + 732)
+      if ((UInt32.toInt32 (UInt16.toUInt32 (t'17))) == (0 : Int32)) then
+        let t'18 ← PMem.ldU8 (this + 728)
+        let t'19 ← GCS_MAVLINK.get_reschedule_interval_ms this ((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'18))) * 20).toUInt64)
+        let mut interval_ms'2 : UInt16 := t'19
+        let t'20 ← PMem.ldU8 (this + 728)
+        let t'21 := (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'20))) * 20).toUInt64) + 18)
+        let t'22 ← PMem.ldU16 t'21
+        let t'23 := (t'22 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (interval_ms'2)))))))
+        PMem.stU16 t'21 t'23
+        let t'24 ← PMem.ldU8 (this + 728)
+        let t'25 ← PMem.ldU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'24))) * 20).toUInt64) + 18)
+        if (decide ((UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (start16))) - (UInt32.toInt32 (UInt16.toUInt32 (t'25)))))))))) > (UInt32.toInt32 (UInt16.toUInt32 (interval_ms'2))))) then
+          let t'26 ← PMem.ldU8 (this + 728)
+          PMem.stU16 (((this + 528) + ((UInt64.toInt64 (UInt8.toUInt64 (t'26))) * 20).toUInt64) + 18) start16
+        GCS_MAVLINK.find_next_bucket_to_send this start16
+      continue
+    break
+  let t'27 := (this + 858)
+  let t'28 ← PMem.ldU16 t'27
+  let t'29 ← PMem.ldU8 ((this + 408) + 10)
+  let t'30 ← PMem.ldU8 (this + 856)
+  let t'31 := (t'28 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt8.toUInt32 ((Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (t'29))) - (UInt32.toInt32 (UInt8.toUInt32 (t'30))))))))))))))
+  PMem.stU16 t'27 t'31
+  let t'32 ← PMem.ldU8 ((this + 408) + 10)
+  PMem.stU8 (this + 856) t'32
+  return ()
+
+/-- C++ `GCS::update_send : void ()`, `GCS_Common.cpp:2743-2793`. -/
+def GCS.update_send (this : UInt64) : PMem.M Unit := do
+  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 160)
+  let t'2 ← PMem.ldU32 t'1
+  PMem.stU32 (0xbb68 : UInt64) /- &mavlink_system -/ t'2
+  PMem.stB (this + 473) true
+  let t'3 ← PMem.ldB (this + 472)
+  if !t'3 then
+    PMem.stB (this + 472) true
+    let t'4 ← PMem.alloc 56
+    let t'5 ← AP.mission
+    MissionItemProtocol_Waypoints.MissionItemProtocol_Waypoints t'4 t'5
+    PMem.stU64 ((0xbb70 : UInt64) /- &GCS::missionitemprotocols -/ + ((UInt64.toInt64 (UInt32.toUInt64 ((0 : UInt32)))) * 8).toUInt64) t'4
+  let __range1 : UInt64 := (0xbb70 : UInt64) /- &GCS::missionitemprotocols -/
+  let mut __begin1 : UInt64 := __range1
+  let mut __end1 : UInt64 := (__range1 + ((3 : Int64) * 8).toUInt64)
+  let mut first'6 := true
+  for _ in PMem.loopFuel do
+    if !first'6 then
+      let t'7 := (__begin1 + 8)
+      __begin1 := t'7
+      pure ()
+    first'6 := false
+    if !((__begin1 != __end1)) then break
+    let t'8 ← PMem.ldU64 __begin1
+    let mut prot : UInt64 := t'8
+    if (prot == (0 : UInt64)) then
+      continue
+    MissionItemProtocol.update prot
+  let t'9 ← PMem.ldU8 (this + 536)
+  let mut i : UInt8 := t'9
+  let mut first'10 := true
+  for _ in PMem.loopFuel do
+    if !first'10 then
+      let t'11 := i
+      let t'12 := (t'11 + 1)
+      i := t'12
+      pure ()
+    first'10 := false
+    let t'13 ← GCS.num_gcs this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'13)))))) then break
+    let t'14 ← GCS_Copter.chan this i
+    GCS_MAVLINK.update_send t'14
+  let mut i'2 : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'15 := true
+  for _ in PMem.loopFuel do
+    if !first'15 then
+      let t'16 := i'2
+      let t'17 := (t'16 + 1)
+      i'2 := t'17
+      pure ()
+    first'15 := false
+    let t'18 ← PMem.ldU8 (this + 536)
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i'2))) < (UInt32.toInt32 (UInt8.toUInt32 (t'18)))))) then break
+    let t'19 ← GCS_Copter.chan this i'2
+    GCS_MAVLINK.update_send t'19
+  PMem.statustexts this
+  let t'20 := (this + 536)
+  let t'21 ← PMem.ldU8 t'20
+  let t'22 := (t'21 + 1)
+  PMem.stU8 t'20 t'22
+  let t'23 ← PMem.ldU8 (this + 536)
+  let t'24 ← GCS.num_gcs this
+  if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'23))) ≥ (UInt32.toInt32 (UInt8.toUInt32 (t'24))))) then
+    let t'25 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+    PMem.stU8 (this + 536) t'25
+  return ()
+
+/-- C++ `JitterCorrection::JitterCorrection : void (uint16_t, uint16_t)`, `JitterCorrection.cpp:39-42`. -/
+def JitterCorrection.JitterCorrection (this : UInt64) (_max_lag_ms : UInt16) (_convergence_loops : UInt16) : PMem.M Unit := do
+  let mut _max_lag_ms := _max_lag_ms
+  let mut _convergence_loops := _convergence_loops
+  PMem.stU16 (this + 0) _max_lag_ms
+  PMem.stU16 (this + 2) _convergence_loops
+  return ()
+
+/-- C++ `GCS_MAVLINK::GCS_MAVLINK : void (AP_HAL::UARTDriver &)`, `GCS_Common.cpp:136-141`. -/
+def GCS_MAVLINK.GCS_MAVLINK (this : UInt64) (uart : UInt64) : PMem.M Unit := do
+  PMem.stU16 (this + 12) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
+  PMem.stU16 ((this + 72) + 20) (Int16.toUInt16 (Int32.toInt16 ((10000 : Int32))))
+  PMem.stBits (this + 104) 104 24 (UInt32.toUInt64 ((Int32.toUInt32 ((24 : Int32)))))
+  PMem.stU8 (((this + 506) + 0) + 0) (0 : UInt8)
+  discard <| PMem.memset (((this + 506) + 0) + 2) 0 2
+  discard <| PMem.memset (((this + 506) + 0) + 4) 0 2
+  PMem.stU8 (((this + 506) + 6) + 0) (31 : UInt8)
+  discard <| PMem.memset (((this + 506) + 6) + 2) 0 2
+  discard <| PMem.memset (((this + 506) + 6) + 4) 0 2
+  PMem.stI8 (this + 524) (Int32.toInt8 ((-(1 : Int32))))
+  PMem.stU8 (this + 728) (255 : UInt8)
+  JitterCorrection.JitterCorrection (this + 808) (Int16.toUInt16 (Int32.toInt16 ((500 : Int32)))) (Int16.toUInt16 (Int32.toInt16 ((100 : Int32))))
+  AP_Param.setup_object_defaults this (0xbb88 : UInt64) /- &GCS_MAVLINK::var_info -/
+  PMem.stU64 (this + 480) uart
+  return ()
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::space : uint32_t () const`, `AP_Common.h:163-165`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_reply.space (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.space t'1
+  return UInt64.toUInt32 (((UInt32.toUInt64 (t'2)) / (48 : UInt64)))
+
+/-- C++ `ByteBuffer::read : uint32_t (uint8_t *, uint32_t)`, `RingBuffer.cpp:240-245`. -/
+def ByteBuffer.read (this : UInt64) (data : UInt64) (len : UInt32) : PMem.M UInt32 := do
+  let mut data := data
+  let mut len := len
+  let t'1 ← ByteBuffer.peekbytes this data len
+  let mut ret : UInt32 := t'1
+  let t'2 ← ByteBuffer.advance this ret
+  discard <| pure (t'2)
+  return ret
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::pop : bool (GCS_MAVLINK::pending_param_request &)`, `AP_Common.h:203-208`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_request.pop (this : UInt64) (object : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.available t'1
+  if (decide ((UInt32.toUInt64 (t'2)) < (32 : UInt64))) then
+    return false
+  let t'3 ← PMem.ldU64 this
+  let t'4 ← ByteBuffer.read t'3 object (UInt64.toUInt32 ((32 : UInt64)))
+  return ((UInt32.toUInt64 (t'4)) == (32 : UInt64))
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::push : bool (const GCS_MAVLINK::pending_param_reply &)`, `AP_Common.h:175-180`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_reply.push (this : UInt64) (object : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU64 this
+  let t'2 ← ByteBuffer.space t'1
+  if (decide ((UInt32.toUInt64 (t'2)) < (48 : UInt64))) then
+    return false
+  let t'3 ← PMem.ldU64 this
+  let t'4 ← ByteBuffer.write t'3 object (UInt64.toUInt32 ((48 : UInt64)))
+  return ((UInt32.toUInt64 (t'4)) == (48 : UInt64))
+
+/-- C++ `GCS_MAVLINK::param_io_timer : void ()`, `GCS_Param.cpp:375-425`. -/
+def GCS_MAVLINK.param_io_timer.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  GCS_MAVLINK.pending_param_request.pending_param_request (fp + 0)
+  let t'1 ← AP_Param.count_parameters
+  discard <| pure (t'1)
+  let t'2 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.space (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/
+  if (t'2 == (Int32.toUInt32 ((0 : Int32)))) then
+    return ()
+  let t'3 ← ObjectBuffer'GCS_MAVLINK_pending_param_request.pop (0xbe00 : UInt64) /- &GCS_MAVLINK::param_requests -/ (fp + 0)
+  if !t'3 then
+    return ()
+  GCS_MAVLINK.pending_param_reply.pending_param_reply (fp + 32)
+  let mut vp : UInt64 := default  -- uninitialized in C
+  let t'4 ← PMem.ldI16 ((fp + 0) + 4)
+  if ((Int16.toInt32 (t'4)) != (-(1 : Int32))) then
+    PMem.stBits (fp + 80) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 80) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 80) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 80) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
+    let t'5 ← PMem.ldI16 ((fp + 0) + 4)
+    let t'6 ← AP_Param.find_by_index (Int16.toUInt16 (t'5)) ((fp + 32) + 8) (fp + 80)
+    vp := t'6
+    if (vp != (0 : UInt64)) then
+      AP_Param.copy_name_token vp (fp + 80) ((fp + 32) + 16) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) true
+    else
+      let t'7 ← PMem.memset ((fp + 32) + 16) (Int8.toInt32 ((0 : Int8))) (17 : UInt64)
+      discard <| pure (t'7)
+  else
+    let t'8 ← PMem.strncpy ((fp + 32) + 16) ((fp + 0) + 6) (Int64.toUInt64 (Int32.toInt64 (((16 : Int32) + (1 : Int32)))))
+    discard <| pure (t'8)
+    let t'9 ← AP_Param.find ((fp + 0) + 6) ((fp + 32) + 8) (0 : UInt64)
+    vp := t'9
+  let t'10 ← PMem.ldU32 (fp + 0)
+  PMem.stU32 (fp + 32) t'10
+  let t'11 ← PMem.ldU32 ((fp + 0) + 24)
+  PMem.stU32 ((fp + 32) + 36) t'11
+  let t'12 ← PMem.ldU8 ((fp + 0) + 28)
+  PMem.stU8 ((fp + 32) + 40) t'12
+  let t'13 := Int32.toInt8 ((0 : Int32))
+  PMem.stI8 (((fp + 32) + 16) + ((Int32.toInt64 ((16 : Int32))) * 1).toUInt64) t'13
+  if (vp != (0 : UInt64)) then
+    let t'14 ← PMem.ldU32 ((fp + 32) + 8)
+    let t'15 ← AP_Param.cast_to_float vp t'14
+    PMem.stF32 ((fp + 32) + 4) t'15
+    PMem.stU32 ((fp + 32) + 44) (0 : UInt32)
+  else
+    let t'16 ← PMem.ldF32 (0xbe10 : UInt64) /- &NaNf -/
+    PMem.stF32 ((fp + 32) + 4) t'16
+    PMem.stU32 ((fp + 32) + 44) (1 : UInt32)
+  let t'17 ← PMem.ldI16 ((fp + 0) + 4)
+  PMem.stI16 ((fp + 32) + 12) t'17
+  let t'18 ← AP_Param.count_parameters
+  PMem.stU16 ((fp + 32) + 14) t'18
+  let t'19 ← ObjectBuffer'GCS_MAVLINK_pending_param_reply.push (0xbdf0 : UInt64) /- &GCS_MAVLINK::param_replies -/ (fp + 32)
+  discard <| pure (t'19)
+  return ()
+
+def GCS_MAVLINK.param_io_timer (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 84
+  let r ← GCS_MAVLINK.param_io_timer.body fp this
+  PMem.leave fp
+  return r
+
+/-- `AP_Param_value_storage.AP_Param_value_storage` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param_value_storage.AP_Param_value_storage.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param_value_storage::AP_Param_value_storage : void ()`, `AP_Param.cpp:732-?`. -/
+def AP_Param_value_storage.AP_Param_value_storage (this : UInt64) : PMem.M Unit :=
+  pure (_root_.GCS_lib.AP_Param_value_storage.AP_Param_value_storage.pure' this)
+
+/-- `AP_ParamT'int_3.operator_const_int__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'int_3.operator_const_int__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<int, 3>::operator const int & : const int &() const`, `AP_Param.h:978-980`. -/
+def AP_ParamT'int_3.operator_const_int__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'int_3.operator_const_int__.pure' this)
+
+/-- C++ `AP_Param::_convert_parameter_width : bool (ap_var_type, float, bool)`, `AP_Param.cpp:2204-2294`. -/
+def AP_Param._convert_parameter_width.body (fp : UInt64) (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) (bitmask : Bool) : PMem.M Bool := do
+  let mut old_ptype := old_ptype
+  let mut scale_factor := scale_factor
+  let mut bitmask := bitmask
+  let t'1 ← AP_Param.configured_in_storage this
+  if t'1 then
+    return false
+  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'2 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'2
+  if (info' == (0 : UInt64)) then
+    return false
+  let mut new_ptype : UInt32 := default  -- uninitialized in C
+  let t'3 ← PMem.ldU64 (fp + 8)
+  if (t'3 != (0 : UInt64)) then
+    let t'4 ← PMem.ldU64 (fp + 8)
+    let t'5 ← PMem.ldU8 (t'4 + 27)
+    let t'6 := UInt8.toUInt32 (t'5)
+    new_ptype := t'6
+  else
+    let t'7 ← PMem.ldU8 (info' + 28)
+    let t'8 := UInt8.toUInt32 (t'7)
+    new_ptype := t'8
+  AP_Param.Param_header.Param_header (fp + 48)
+  PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (old_ptype))
+  let t'9 ← PMem.ldU16 (info' + 26)
+  AP_Param.set_key (fp + 48) t'9
+  let t'10 ← PMem.ldU32 (fp + 0)
+  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'10))
+  let t'11 ← AP_Param.scan (fp + 48) (fp + 56)
+  if !t'11 then
+    return false
+  AP_Param_value_storage.AP_Param_value_storage (fp + 64)
+  let t'12 ← PMem.ldU16 (fp + 56)
+  let t'13 ← AP_Param.type_size old_ptype
+  let t'14 ← StorageAccess.read_block (0xba88 : UInt64) /- &AP_Param::_storage -/ (fp + 64) (UInt64.toUInt16 (((UInt16.toUInt64 (t'12)) + (4 : UInt64)))) (UInt8.toUInt64 (t'13))
+  discard <| pure (t'14)
+  let mut old_ap : UInt64 := (fp + 64)
+  if !bitmask then
+    let t'15 ← AP_Param.cast_to_float old_ap old_ptype
+    let mut old_float_value : Binary32 := t'15
+    AP_Param.set_value new_ptype this (old_float_value * scale_factor)
+  else
+    let mut mask : UInt32 := default  -- uninitialized in C
+    let sw'16 := UInt32.toInt32 (old_ptype)
+    if sw'16 == (1 : Int32) then
+      let t'17 ← AP_ParamT'signed_char_1.operator_const_signed_char__ old_ap
+      let t'18 ← PMem.ldI8 t'17
+      let t'19 := UInt8.toUInt32 ((Int8.toUInt8 (t'18)))
+      mask := t'19
+    else if sw'16 == (2 : Int32) then
+      let t'20 ← AP_ParamT'short_2.operator_const_short__ old_ap
+      let t'21 ← PMem.ldI16 t'20
+      let t'22 := UInt16.toUInt32 ((Int16.toUInt16 (t'21)))
+      mask := t'22
+    else if sw'16 == (3 : Int32) then
+      let t'23 ← AP_ParamT'int_3.operator_const_int__ old_ap
+      let t'24 ← PMem.ldI32 t'23
+      let t'25 := Int32.toUInt32 (t'24)
+      mask := t'25
+    else
+      return false
+    let sw'26 := UInt32.toInt32 (new_ptype)
+    if sw'26 == (1 : Int32) then
+      PMem.stI8 (fp + 76) (UInt8.toInt8 (UInt32.toUInt8 (mask)))
+      AP_ParamTBase'signed_char_1.set this (fp + 76)
+    else if sw'26 == (2 : Int32) then
+      PMem.stI16 (fp + 78) (UInt16.toInt16 (UInt32.toUInt16 (mask)))
+      AP_ParamTBase'short_2.set this (fp + 78)
+    else if sw'26 == (3 : Int32) then
+      PMem.stI32 (fp + 80) (UInt32.toInt32 (mask))
+      AP_ParamTBase'int_3.set this (fp + 80)
+    else
+      return false
+  -- AP_Param::save: dropped (configuration)
+  return true
+
+def AP_Param._convert_parameter_width (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) (bitmask : Bool) : PMem.M Bool := do
+  let fp ← PMem.enter 84
+  let r ← AP_Param._convert_parameter_width.body fp this old_ptype scale_factor bitmask
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::convert_parameter_width : bool (ap_var_type, float)`, `AP_Param.h:517-519`. -/
+def AP_Param.convert_parameter_width (this : UInt64) (old_ptype : UInt32) (scale_factor : Binary32) : PMem.M Bool := do
+  let mut old_ptype := old_ptype
+  let mut scale_factor := scale_factor
+  let t'1 ← AP_Param._convert_parameter_width this old_ptype scale_factor false
+  return t'1
+
+/-- C++ `GCS::convert_parameters : void ()`, `GCS.cpp:263-271`. -/
+def GCS.convert_parameters (this : UInt64) : PMem.M Unit := do
+  let t'1 ← AP_Param.convert_parameter_width (this + 160) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| pure (t'1)
+  let t'2 ← AP_Param.convert_parameter_width (this + 164) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| pure (t'2)
+  let t'3 ← AP_Param.convert_parameter_width (this + 168) (2 : UInt32) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| pure (t'3)
+  return ()
+
+/-- C++ `GCS::sysid_this_mav : uint32_t () const`, `AP_Common.h:1323-?`. -/
+def GCS.sysid_this_mav (this : UInt64) : PMem.M UInt32 := do
+  let t'1 ← AP_ParamT'unsigned_int_3.operator_const_unsigned_int__ (this + 160)
+  let t'2 ← PMem.ldU32 t'1
+  return t'2
+
+/-- C++ `GCS::init : void ()`, `GCS.cpp:273-279`. -/
+def GCS.init (this : UInt64) : PMem.M Unit := do
+  GCS.convert_parameters this
+  let t'1 ← GCS.sysid_this_mav this
+  PMem.stU32 (0xbb68 : UInt64) /- &mavlink_system -/ t'1
+  return ()
+
+/-- C++ `GCS_Copter::new_gcs_mavlink_backend : GCS_MAVLINK_Copter *(AP_HAL::UARTDriver &)`, `GCS.h:42-44`. -/
+def GCS_Copter.new_gcs_mavlink_backend (this : UInt64) (uart : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.alloc 880
+  GCS_MAVLINK.GCS_MAVLINK t'1 uart
+  return t'1
+
+/-- C++ `AP_ParamTBase<unsigned int, 3>::set : void (const unsigned int &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'unsigned_int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldU32 v
+  PMem.stU32 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<unsigned short, 2>::set : void (const unsigned short &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'unsigned_short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldU16 v
+  PMem.stU16 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<unsigned short, 2>::set_and_save : void (const unsigned short &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'unsigned_short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldU16 this
+  let t'2 ← PMem.ldU16 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((UInt32.toInt32 (UInt16.toUInt32 (t'1))) - (UInt32.toInt32 (UInt16.toUInt32 (t'2))))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'unsigned_short_2.set this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `GCS_MAVLINK::enable_option : void (Option)`, `functor.h:558-560`. -/
+def GCS_MAVLINK.enable_option.body (fp : UInt64) (this : UInt64) (option : UInt16) : PMem.M Unit := do
+  let mut option := option
+  let t'1 ← AP_ParamT'unsigned_short_2.operator_const_unsigned_short__ (this + 68)
+  let t'2 ← PMem.ldU16 t'1
+  PMem.stU16 (fp + 0) (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (t'2))) ||| (UInt32.toInt32 (UInt16.toUInt32 (option)))))))
+  AP_ParamTBase'unsigned_short_2.set_and_save (this + 68) (fp + 0)
+  return ()
+
+def GCS_MAVLINK.enable_option (this : UInt64) (option : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← GCS_MAVLINK.enable_option.body fp this option
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK::set_channel_private : void (mavlink_channel_t)`, `GCS_MAVLink.cpp:112-116`. -/
+def GCS_MAVLINK.set_channel_private (_chan : UInt32) : PMem.M Unit := do
+  let mut _chan := _chan
+  let mut mask : UInt8 := UInt32.toUInt8 (((1 : UInt32) <<< _chan))
+  let t'1 := (0xd288 : UInt64) /- &GCS_MAVLINK::mavlink_private -/
+  let t'2 ← PMem.ldU32 t'1
+  let t'3 := (t'2 ||| (UInt8.toUInt32 (mask)))
+  PMem.stU32 t'1 t'3
+  return ()
+
+/-- C++ `GCS_MAVLINK::init : bool (uint8_t)`, `GCS_Common.cpp:143-248`. -/
+def GCS_MAVLINK.init.body (fp : UInt64) (this : UInt64) (instance' : UInt8) : PMem.M Bool := do
+  let mut instance' := instance'
+  let t'1 := Int32.toUInt32 (((UInt32.toInt32 ((0 : UInt32))) + (UInt32.toInt32 (UInt8.toUInt32 (instance')))))
+  PMem.stU32 (this + 40) t'1
+  let t'2 ← PMem.ldU32 (this + 40)
+  let t'3 ← valid_channel t'2
+  if !t'3 then
+    return false
+  let t'4 ← PMem.findSerial instance'
+  PMem.stU64 (this + 448) t'4
+  let t'5 ← PMem.ldU64 (this + 448)
+  if (t'5 == (0 : UInt64)) then
+    return false
+  let t'6 ← PMem.ldU64 (this + 448)
+  let t'7 ← PMem.serialDevId t'6
+  PMem.stU32 (fp + 0) t'7
+  AP_ParamTBase'unsigned_int_3.set (this + 64) (fp + 0)
+  let t'8 ← AP_ParamT'signed_char_1.operator_const_signed_char__ (this + 70)
+  let t'9 ← PMem.ldI8 t'8
+  if !(t'9 != (0 : Int8)) then
+    let t'10 := (0x30 : UInt64)
+    let sm : UInt64 := t'10
+    PMem.stI8 (fp + 4) (Int32.toInt8 ((1 : Int32)))
+    AP_ParamTBase'signed_char_1.set_and_save (this + 70) (fp + 4)
+    if false then
+      GCS_MAVLINK.enable_option this (2 : UInt16)
+    if false then
+      GCS_MAVLINK.enable_option this (4 : UInt16)
+  let t'11 ← GCS_MAVLINK.option_enabled this (2 : UInt16)
+  if t'11 then
+    let t'12 ← PMem.ldU32 (this + 40)
+    GCS_MAVLINK.set_channel_private t'12
+  let mut old_flow_control : UInt32 := (0 : UInt32)
+  for i'13 in [0:3] do
+    let i : UInt8 := UInt8.ofNat i'13
+    PMem.delayMark (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
+    let t'14 ← PMem.ldU64 (this + 480)
+    let t'15 ← PMem.uartWrite1 t'14 (Int8.toUInt8 (Int32.toInt8 ((48 : Int32))))
+    discard <| pure (t'15)
+    let t'16 ← PMem.ldU64 (this + 480)
+    let t'17 ← PMem.uartWrite1 t'16 (Int8.toUInt8 (Int32.toInt8 ((32 : Int32))))
+    discard <| pure (t'17)
+  PMem.delayMark (Int16.toUInt16 (Int32.toInt16 ((1 : Int32))))
+  let t'18 ← PMem.ldU64 (this + 480)
+  let t'19 ← PMem.ldU32 (this + 40)
+  PMem.stU64 ((0xc140 : UInt64) /- &mavlink_comm_port -/ + ((UInt64.toInt64 (UInt32.toUInt64 (t'19))) * 8).toUInt64) t'18
+  let mut mavlink_protocol : Int32 := (2 : Int32)
+  if ((mavlink_protocol == (2 : Int32)) || (mavlink_protocol == (43 : Int32))) then
+    pure ()
+  else
+    let t'20 := ((this + 408) + 16)
+    let t'21 ← PMem.ldU8 t'20
+    let t'22 := (t'21 ||| (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
+    PMem.stU8 t'20 t'22
+  return true
+
+def GCS_MAVLINK.init (this : UInt64) (instance' : UInt8) : PMem.M Bool := do
+  let fp ← PMem.enter 5
+  let r ← GCS_MAVLINK.init.body fp this instance'
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS::create_gcs_mavlink_backend : bool (AP_HAL::UARTDriver &)`, `GCS_Common.cpp:2828-2850`. -/
+def GCS.create_gcs_mavlink_backend (this : UInt64) (uart : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU8 (this + 28)
+  if (decide ((UInt8.toUInt64 (t'1)) ≥ ((128 : UInt64) / (8 : UInt64)))) then
+    return false
+  let t'2 ← GCS_Copter.new_gcs_mavlink_backend this uart
+  let t'3 ← PMem.ldU8 (this + 28)
+  PMem.stU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'3))) * 8).toUInt64) t'2
+  let t'4 ← PMem.ldU8 (this + 28)
+  let t'5 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'4))) * 8).toUInt64)
+  if (t'5 == (0 : UInt64)) then
+    return false
+  let t'6 := (0xbb88 : UInt64) /- &GCS_MAVLINK::var_info -/
+  let t'7 ← PMem.ldU8 (this + 28)
+  PMem.stU64 ((0x8658 : UInt64) /- &GCS::_chan_var_info -/ + ((UInt64.toInt64 (UInt8.toUInt64 (t'7))) * 8).toUInt64) t'6
+  let t'8 ← PMem.ldU8 (this + 28)
+  let t'9 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'8))) * 8).toUInt64)
+  let t'10 ← PMem.ldU8 (this + 28)
+  let t'11 ← PMem.ldU64 ((0x8658 : UInt64) /- &GCS::_chan_var_info -/ + ((UInt64.toInt64 (UInt8.toUInt64 (t'10))) * 8).toUInt64)
+  AP_Param.load_object_from_eeprom t'9 t'11
+  let t'12 ← PMem.ldU8 (this + 28)
+  let t'13 ← PMem.ldU8 (this + 28)
+  let t'14 ← PMem.ldU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'13))) * 8).toUInt64)
+  let t'15 ← GCS_MAVLINK.init t'14 t'12
+  if !t'15 then
+    let t'16 ← PMem.ldU8 (this + 28)
+    PMem.stU64 ((this + 32) + ((UInt64.toInt64 (UInt8.toUInt64 (t'16))) * 8).toUInt64) (0 : UInt64)
+    return false
+  let t'17 := (this + 28)
+  let t'18 ← PMem.ldU8 t'17
+  let t'19 := (t'18 + 1)
+  PMem.stU8 t'17 t'19
+  return true
+
+/-- C++ `GCS::setup_console : void ()`, `GCS_Common.cpp:2812-2825`. -/
+def GCS.setup_console (this : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.findSerial (Int8.toUInt8 (Int32.toInt8 ((0 : Int32))))
+  let mut uart : UInt64 := t'1
+  if (uart == (0 : UInt64)) then
+    return ()
+  if (((128 : UInt64) / (8 : UInt64)) == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
+    return ()
+  let t'2 ← GCS.create_gcs_mavlink_backend this uart
+  if !t'2 then
+    pure ()
+  return ()
+
+/-- C++ `GCS::setup_uarts : void ()`, `GCS_Common.cpp:2852-2885`. -/
+def GCS.setup_uarts (this : UInt64) : PMem.M Unit := do
+  for i'1 in [1:255] do
+    let i : UInt8 := UInt8.ofNat i'1
+    let t'2 ← PMem.findSerial i
+    let mut uart : UInt64 := t'2
+    if (uart == (0 : UInt64)) then
+      return ()
+    let t'3 ← GCS.create_gcs_mavlink_backend this uart
+    if !t'3 then
+      pure ()
+  return ()
+
+/-- C++ `GCS_MAVLINK::is_unicast : bool () const`, `AP_Mission.h:456-?`. -/
+def GCS_MAVLINK.is_unicast (this : UInt64) : PMem.M Bool := do
+  let t'1 ← GCS_MAVLINK.option_enabled this (16 : UInt16)
+  return t'1
+
+/-- C++ `GCS::send_message : void (enum ap_message)`, `GCS_Common.cpp:2730-2741`. -/
+def GCS.send_message (this : UInt64) (id : UInt8) : PMem.M Unit := do
+  let mut id := id
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := i
+      let t'3 := (t'2 + 1)
+      i := t'3
+      pure ()
+    first'1 := false
+    let t'4 ← GCS.num_gcs this
+    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'4)))))) then break
+    let t'5 ← GCS_Copter.chan this i
+    let link : UInt64 := t'5
+    let t'6 ← GCS_MAVLINK.is_unicast link
+    if (t'6 && ((UInt32.toInt32 (UInt8.toUInt32 (id))) != (UInt32.toInt32 (UInt8.toUInt32 ((0 : UInt8)))))) then
+      continue
+    GCS_MAVLINK.send_message link id
+  return ()
+
+/-- C++ `AP_Vehicle::scheduler_delay_callback : void ()`, `AP_Vehicle.cpp:738-780`. -/
+def AP_Vehicle.scheduler_delay_callback  : PMem.M Unit := do
+  let mut tnow : UInt32 := ((← get).clockUs / 1000).toUInt32
+  let t'1 ← PMem.ldU32 (0xbe18 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_1hz -/
+  if (decide ((tnow - t'1) > (Int32.toUInt32 ((1000 : Int32))))) then
+    PMem.stU32 (0xbe18 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_1hz -/ tnow
+    let t'2 ← gcs
+    GCS.send_message t'2 (0 : UInt8)
+    let t'3 ← gcs
+    GCS.send_message t'3 (7 : UInt8)
+  let t'4 ← PMem.ldU32 (0xbe20 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_50hz -/
+  if (decide ((tnow - t'4) > (Int32.toUInt32 ((20 : Int32))))) then
+    PMem.stU32 (0xbe20 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_50hz -/ tnow
+    let t'5 ← gcs
+    GCS.update_receive t'5
+    let t'6 ← gcs
+    GCS.update_send t'6
+  let t'7 ← PMem.ldU32 (0xbe28 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_5s -/
+  if (decide ((tnow - t'7) > (Int32.toUInt32 ((5000 : Int32))))) then
+    PMem.stU32 (0xbe28 : UInt64) /- &AP_Vehicle::scheduler_delay_callback(...)::last_5s -/ tnow
+    if false then
+      pure ()
+    else
+      pure ()
+  return ()
+
+/-- C++ `ByteBuffer::ByteBuffer : void (uint32_t)`, `RingBuffer.cpp:6-11`. -/
+def ByteBuffer.ByteBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
+  let mut _size := _size
+  PMem.stU32 (this + 12) (Int32.toUInt32 ((0 : Int32)))
+  PMem.stU32 (this + 16) (Int32.toUInt32 ((0 : Int32)))
+  let t'1 ← PMem.calloc (Int64.toUInt64 (Int32.toInt64 ((1 : Int32)))) (UInt32.toUInt64 (_size))
+  PMem.stU64 this t'1
+  let t'2 ← PMem.ldU64 this
+  let mut c'3 : UInt32 := default
+  if (t'2 != 0) then
+    c'3 := _size
+  else
+    c'3 := Int32.toUInt32 ((0 : Int32))
+  PMem.stU32 (this + 8) c'3
+  PMem.stB (this + 20) false
+  return ()
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_request>::ObjectBuffer : void (uint32_t)`, `AP_Common.h:114-121`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_request.ObjectBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
+  let mut _size := _size
+  PMem.stU64 (this + 0) (0 : UInt64)
+  PMem.stB (this + 8) true
+  let t'1 ← PMem.alloc 24
+  ByteBuffer.ByteBuffer t'1 (UInt64.toUInt32 (((UInt32.toUInt64 ((_size + (Int32.toUInt32 ((1 : Int32)))))) * (32 : UInt64))))
+  PMem.stU64 this t'1
+  PMem.stB (this + 8) false
+  return ()
+
+/-- C++ `ObjectBuffer<GCS_MAVLINK::pending_param_reply>::ObjectBuffer : void (uint32_t)`, `AP_Common.h:114-121`. -/
+def ObjectBuffer'GCS_MAVLINK_pending_param_reply.ObjectBuffer (this : UInt64) (_size : UInt32) : PMem.M Unit := do
+  let mut _size := _size
+  PMem.stU64 (this + 0) (0 : UInt64)
+  PMem.stB (this + 8) true
+  let t'1 ← PMem.alloc 24
+  ByteBuffer.ByteBuffer t'1 (UInt64.toUInt32 (((UInt32.toUInt64 ((_size + (Int32.toUInt32 ((1 : Int32)))))) * (48 : UInt64))))
+  PMem.stU64 this t'1
+  PMem.stB (this + 8) false
+  return ()
+
+/-- C++ `AC_P::AC_P : void (const float &)`, `AC_P.h:24-28`. -/
+def AC_P.AC_P (this : UInt64) (initial_p : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 initial_p
+  PMem.stF32 (this + 4) t'1
+  AP_Param.setup_object_defaults this (0x7d80 : UInt64) /- &AC_P::var_info -/
+  return ()
+
+/-- C++ `AC_AttitudeControl::AC_AttitudeControl : void (AP_AHRS_View &, AP_Motors &)`, `AC_AttitudeControl.h:49-63`. -/
+def AC_AttitudeControl.AC_AttitudeControl.body (fp : UInt64) (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
+  PMem.stF32 (fp + 0) (Binary32.ofBits 0x40900000 /- 9/2 -/)
+  AC_P.AC_P (this + 40) (fp + 0)
+  PMem.stF32 (fp + 4) (Binary32.ofBits 0x40900000 /- 9/2 -/)
+  AC_P.AC_P (this + 48) (fp + 4)
+  PMem.stF32 (fp + 8) (Binary32.ofBits 0x40900000 /- 9/2 -/)
+  AC_P.AC_P (this + 56) (fp + 8)
+  PMem.stF32 (this + 240) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 (this + 244) (Int32.toBinary32 ((0 : Int32)))
+  PMem.stB (this + 248) true
+  PMem.stF32 (this + 252) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 (this + 256) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
+  PMem.stF32 (this + 260) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
+  PMem.stF32 (this + 264) (Binary32.ofBits 0x3f800000 /- 1 -/)
+  Vector3'float.Vector3 (this + 276) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
+  Vector3'float.Vector3 (this + 300) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
+  Vector3'float.Vector3 (this + 324) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32))) (Int32.toBinary32 ((1 : Int32)))
+  PMem.stU64 (this + 352) ahrs
+  PMem.stU64 (this + 360) motors
+  PMem.stU64 (0xbe90 : UInt64) /- &AC_AttitudeControl::_singleton -/ this
+  AP_Param.setup_object_defaults this (0x5b38 : UInt64) /- &AC_AttitudeControl::var_info -/
+  return ()
+
+def AC_AttitudeControl.AC_AttitudeControl (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 12
+  let r ← AC_AttitudeControl.AC_AttitudeControl.body fp this ahrs motors
+  PMem.leave fp
+  return r
+
+/-- `AP_ParamT'float_4.operator_const_float__` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamT'float_4.operator_const_float__.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamT<float, 4>::operator const float & : const float &() const`, `AP_Param.h:1006-1008`. -/
+def AP_ParamT'float_4.operator_const_float__ (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamT'float_4.operator_const_float__.pure' this)
+
+/-- C++ `LowPassFilter<float>::set_cutoff_frequency : void (const float &)`, `LowPassFilter.cpp:107-109`. -/
+def LowPassFilter'float.set_cutoff_frequency (this : UInt64) (new_cutoff_freq : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 new_cutoff_freq
+  PMem.stF32 (this + 8) t'1
+  return ()
+
+/-- C++ `DigitalLPF<float>::reset : void (const float &)`, `LowPassFilter.cpp:41-44`. -/
+def DigitalLPF'float.reset (this : UInt64) (value : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 value
+  PMem.stF32 this t'1
+  PMem.stB (this + 4) true
+  return ()
+
+/-- C++ `SlewLimiter::SlewLimiter : void (const float &, const float &)`, `SlewLimiter.cpp:33-39`. -/
+def SlewLimiter.SlewLimiter.body (fp : UInt64) (this : UInt64) (_slew_rate_max : UInt64) (_slew_rate_tau : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 0) _slew_rate_max
+  PMem.stU64 (this + 8) _slew_rate_tau
+  PMem.stF32 (fp + 0) (Binary32.ofBits 0x41c80000 /- 25 -/)
+  LowPassFilter'float.set_cutoff_frequency (this + 16) (fp + 0)
+  PMem.stF32 (fp + 4) (Binary64.toBinary32 ((Binary64.ofBits 0x0000000000000000 /- 0 -/)))
+  DigitalLPF'float.reset (this + 16) (fp + 4)
+  return ()
+
+def SlewLimiter.SlewLimiter (this : UInt64) (_slew_rate_max : UInt64) (_slew_rate_tau : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 8
+  let r ← SlewLimiter.SlewLimiter.body fp this _slew_rate_max _slew_rate_tau
+  PMem.leave fp
+  return r
+
+/-- C++ `AC_PID::AC_PID : void (float, float, float, float, float, float, float, float, float, float, float)`, `AC_PID.cpp:103-130`. -/
+def AC_PID.AC_PID'2.body (fp : UInt64) (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_T_hz : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) (initial_srmax : Binary32) (initial_srtau : Binary32) (initial_dff : Binary32) : PMem.M Unit := do
+  let mut initial_p := initial_p
+  let mut initial_i := initial_i
+  let mut initial_d := initial_d
+  let mut initial_ff := initial_ff
+  let mut initial_imax := initial_imax
+  let mut initial_filt_T_hz := initial_filt_T_hz
+  let mut initial_filt_E_hz := initial_filt_E_hz
+  let mut initial_filt_D_hz := initial_filt_D_hz
+  let mut initial_srmax := initial_srmax
+  PMem.stF32 (fp + 0) initial_srtau
+  let mut initial_dff := initial_dff
+  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 36)
+  let t'2 ← AP_ParamT'float_4.operator_const_float__ (this + 44)
+  SlewLimiter.SlewLimiter (this + 48) t'1 t'2
+  PMem.stBits (this + 128) 0 1 (if (1 : Int32) != (0 : Int32) then (1 : UInt64) else 0)
+  PMem.stBits (this + 128) 1 1 (if (1 : Int32) != (0 : Int32) then (1 : UInt64) else 0)
+  PMem.stF32 (this + 200) initial_p
+  PMem.stF32 (this + 204) initial_i
+  PMem.stF32 (this + 208) initial_d
+  PMem.stF32 (this + 212) initial_ff
+  PMem.stF32 (this + 216) initial_dff
+  PMem.stF32 (this + 220) initial_imax
+  PMem.stF32 (this + 224) initial_filt_T_hz
+  PMem.stF32 (this + 228) initial_filt_E_hz
+  PMem.stF32 (this + 232) initial_filt_D_hz
+  PMem.stF32 (this + 236) initial_srmax
+  AP_Param.setup_object_defaults this (0x5ec0 : UInt64) /- &AC_PID::var_info -/
+  AP_ParamTBase'float_4.set (this + 44) (fp + 0)
+  PMem.stBits (this + 128) 0 1 (if true then (1 : UInt64) else 0)
+  let t'3 ← PMem.memset (this + 156) (0 : Int32) (44 : UInt64)
+  discard <| pure (t'3)
+  let t'4 := Int32.toInt8 ((1 : Int32))
+  PMem.stI8 (this + 148) t'4
+  return ()
+
+def AC_PID.AC_PID'2 (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_T_hz : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) (initial_srmax : Binary32) (initial_srtau : Binary32) (initial_dff : Binary32) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← AC_PID.AC_PID'2.body fp this initial_p initial_i initial_d initial_ff initial_imax initial_filt_T_hz initial_filt_E_hz initial_filt_D_hz initial_srmax initial_srtau initial_dff
+  PMem.leave fp
+  return r
+
+/-- C++ `AC_PID::AC_PID : void (const AC_PID::Defaults &)`, `AC_PID.h:44-58`. -/
+def AC_PID.AC_PID (this : UInt64) (defaults : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 defaults
+  let t'2 ← PMem.ldF32 (defaults + 4)
+  let t'3 ← PMem.ldF32 (defaults + 8)
+  let t'4 ← PMem.ldF32 (defaults + 12)
+  let t'5 ← PMem.ldF32 (defaults + 16)
+  let t'6 ← PMem.ldF32 (defaults + 20)
+  let t'7 ← PMem.ldF32 (defaults + 24)
+  let t'8 ← PMem.ldF32 (defaults + 28)
+  let t'9 ← PMem.ldF32 (defaults + 32)
+  let t'10 ← PMem.ldF32 (defaults + 36)
+  let t'11 ← PMem.ldF32 (defaults + 40)
+  AC_PID.AC_PID'2 this t'1 t'2 t'3 t'4 t'5 t'6 t'7 t'8 t'9 t'10 t'11
+  return ()
+
+/-- C++ `AC_AttitudeControl_Multi::AC_AttitudeControl_Multi : void (AP_AHRS_View &, AP_MotorsMulticopter &)`, `AC_AttitudeControl_Multi.cpp:337-346`. -/
+def AC_AttitudeControl_Multi.AC_AttitudeControl_Multi.body (fp : UInt64) (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
+  AC_AttitudeControl.AC_AttitudeControl this ahrs motors
+  PMem.stU64 (this + 368) motors
+  PMem.stF32 ((fp + 0) + 0) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
+  PMem.stF32 ((fp + 0) + 4) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
+  PMem.stF32 ((fp + 0) + 8) (Binary32.ofBits 0x3b6bedfa /- 179999997/50000000000 -/)
+  PMem.stF32 ((fp + 0) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 0) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
+  PMem.stF32 ((fp + 0) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 0) + 24) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 0) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 0) + 32) (Int32.toBinary32 ((0 : Int32)))
+  PMem.stF32 ((fp + 0) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| PMem.memset ((fp + 0) + 40) 0 4
+  AC_PID.AC_PID (this + 376) (fp + 0)
+  PMem.stF32 ((fp + 48) + 0) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
+  PMem.stF32 ((fp + 48) + 4) (Binary32.ofBits 0x3e0a3d71 /- 27000001/200000000 -/)
+  PMem.stF32 ((fp + 48) + 8) (Binary32.ofBits 0x3b6bedfa /- 179999997/50000000000 -/)
+  PMem.stF32 ((fp + 48) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 48) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
+  PMem.stF32 ((fp + 48) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 48) + 24) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 48) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 48) + 32) (Int32.toBinary32 ((0 : Int32)))
+  PMem.stF32 ((fp + 48) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| PMem.memset ((fp + 48) + 40) 0 4
+  AC_PID.AC_PID (this + 616) (fp + 48)
+  PMem.stF32 ((fp + 96) + 0) (Binary32.ofBits 0x3e3851ec /- 180000007/1000000000 -/)
+  PMem.stF32 ((fp + 96) + 4) (Binary32.ofBits 0x3c9374bc /- 22499999/1250000000 -/)
+  PMem.stF32 ((fp + 96) + 8) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 96) + 12) (Binary32.ofBits 0x00000000 /- 0 -/)
+  PMem.stF32 ((fp + 96) + 16) (Binary32.ofBits 0x3f000000 /- 1/2 -/)
+  PMem.stF32 ((fp + 96) + 20) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 96) + 24) (Binary32.ofBits 0x40200000 /- 5/2 -/)
+  PMem.stF32 ((fp + 96) + 28) (Binary32.ofBits 0x41a00000 /- 20 -/)
+  PMem.stF32 ((fp + 96) + 32) (Int32.toBinary32 ((0 : Int32)))
+  PMem.stF32 ((fp + 96) + 36) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  discard <| PMem.memset ((fp + 96) + 40) 0 4
+  AC_PID.AC_PID (this + 856) (fp + 96)
+  AP_Param.setup_object_defaults this (0x19d0 : UInt64) /- &AC_AttitudeControl_Multi::var_info -/
+  return ()
+
+def AC_AttitudeControl_Multi.AC_AttitudeControl_Multi (this : UInt64) (ahrs : UInt64) (motors : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 140
+  let r ← AC_AttitudeControl_Multi.AC_AttitudeControl_Multi.body fp this ahrs motors
+  PMem.leave fp
+  return r
+
+/-- C++ `AC_P_2D::AC_P_2D : void (float)`, `AC_P_2D.cpp:16-21`. -/
+def AC_P_2D.AC_P_2D (this : UInt64) (initial_p : Binary32) : PMem.M Unit := do
+  let mut initial_p := initial_p
+  PMem.stF32 (this + 20) initial_p
+  AP_Param.setup_object_defaults this (0x6208 : UInt64) /- &AC_P_2D::var_info -/
+  return ()
+
+/-- C++ `AC_P_1D::AC_P_1D : void (float)`, `AC_P_1D.cpp:16-21`. -/
+def AC_P_1D.AC_P_1D (this : UInt64) (initial_p : Binary32) : PMem.M Unit := do
+  let mut initial_p := initial_p
+  PMem.stF32 (this + 20) initial_p
+  AP_Param.setup_object_defaults this (0x61b8 : UInt64) /- &AC_P_1D::var_info -/
+  return ()
+
+/-- C++ `AC_PID_2D::AC_PID_2D : void (float, float, float, float, float, float, float)`, `AC_PID_2D.cpp:51-65`. -/
+def AC_PID_2D.AC_PID_2D (this : UInt64) (initial_kP : Binary32) (initial_kI : Binary32) (initial_kD : Binary32) (initial_kFF : Binary32) (initial_imax : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) : PMem.M Unit := do
+  let mut initial_kP := initial_kP
+  let mut initial_kI := initial_kI
+  let mut initial_kD := initial_kD
+  let mut initial_kFF := initial_kFF
+  let mut initial_imax := initial_imax
+  let mut initial_filt_E_hz := initial_filt_E_hz
+  let mut initial_filt_D_hz := initial_filt_D_hz
+  PMem.stF32 (this + 152) initial_kP
+  PMem.stF32 (this + 156) initial_kI
+  PMem.stF32 (this + 160) initial_kD
+  PMem.stF32 (this + 164) initial_kFF
+  PMem.stF32 (this + 168) initial_imax
+  PMem.stF32 (this + 172) initial_filt_E_hz
+  PMem.stF32 (this + 176) initial_filt_D_hz
+  AP_Param.setup_object_defaults this (0x6398 : UInt64) /- &AC_PID_2D::var_info -/
+  PMem.stB (this + 60) true
+  return ()
+
+/-- C++ `AC_PID_Basic::AC_PID_Basic : void (float, float, float, float, float, float, float)`, `AC_PID_Basic.cpp:53-67`. -/
+def AC_PID_Basic.AC_PID_Basic (this : UInt64) (initial_p : Binary32) (initial_i : Binary32) (initial_d : Binary32) (initial_ff : Binary32) (initial_imax : Binary32) (initial_filt_E_hz : Binary32) (initial_filt_D_hz : Binary32) : PMem.M Unit := do
+  let mut initial_p := initial_p
+  let mut initial_i := initial_i
+  let mut initial_d := initial_d
+  let mut initial_ff := initial_ff
+  let mut initial_imax := initial_imax
+  let mut initial_filt_E_hz := initial_filt_E_hz
+  let mut initial_filt_D_hz := initial_filt_D_hz
+  PMem.stF32 (this + 92) initial_p
+  PMem.stF32 (this + 96) initial_i
+  PMem.stF32 (this + 100) initial_d
+  PMem.stF32 (this + 104) initial_ff
+  PMem.stF32 (this + 108) initial_imax
+  PMem.stF32 (this + 112) initial_filt_E_hz
+  PMem.stF32 (this + 116) initial_filt_D_hz
+  AP_Param.setup_object_defaults this (0x6258 : UInt64) /- &AC_PID_Basic::var_info -/
+  PMem.stB (this + 44) true
+  return ()
+
+/-- C++ `AC_PosControl::AC_PosControl : void (AP_AHRS_View &, const AP_Motors &, AC_AttitudeControl &)`, `AC_PosControl.cpp:353-373`. -/
+def AC_PosControl.AC_PosControl (this : UInt64) (ahrs : UInt64) (motors : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 0) ahrs
+  PMem.stU64 (this + 8) motors
+  PMem.stU64 (this + 16) attitude_control
+  AC_P_2D.AC_P_2D (this + 36) (Binary32.ofBits 0x3f800000 /- 1 -/)
+  AC_P_1D.AC_P_1D (this + 60) (Binary32.ofBits 0x3f800000 /- 1 -/)
+  AC_PID_2D.AC_PID_2D (this + 84) (Binary32.ofBits 0x40000000 /- 2 -/) (Binary32.ofBits 0x3f800000 /- 1 -/) (Binary32.ofBits 0x3e800000 /- 1/4 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41200000 /- 10 -/) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x40a00000 /- 5 -/)
+  AC_PID_Basic.AC_PID_Basic (this + 264) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41200000 /- 10 -/) (Binary32.ofBits 0x40a00000 /- 5 -/) (Binary32.ofBits 0x40a00000 /- 5 -/)
+  AC_PID.AC_PID'2 (this + 384) (Binary32.ofBits 0x3d4ccccd /- 500000007/10000000000 -/) (Binary32.ofBits 0x3dcccccd /- 100000001/1000000000 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x3f4ccccd /- 800000011/1000000000 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Binary32.ofBits 0x41a00000 /- 20 -/) (Binary32.ofBits 0x00000000 /- 0 -/) (Int32.toBinary32 ((0 : Int32))) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/))) (Int32.toBinary32 ((0 : Int32)))
+  PMem.stF32 (this + 636) (Binary32.ofBits 0x40a00000 /- 5 -/)
+  PMem.stF32 (this + 640) (Binary32.ofBits 0x40200000 /- 5/2 -/)
+  PMem.stF32 (this + 644) (Binary32.ofBits 0x3fc00000 /- 3/2 -/)
+  PMem.stF32 (this + 648) (Binary32.ofBits 0x3f800000 /- 1 -/)
+  PMem.stF32 (this + 652) (Binary32.ofBits 0x40200000 /- 5/2 -/)
+  PMem.stF32 (this + 656) (Binary32.ofBits 0x40a00000 /- 5 -/)
+  PMem.stF32 (this + 660) (Binary32.ofBits 0x40a00000 /- 5 -/)
+  PMem.stF32 (this + 664) (Binary32.ofBits 0x40000000 /- 2 -/)
+  PMem.stF32 (this + 684) (Binary64.toBinary32 ((Binary64.ofBits 0x3ff0000000000000 /- 1 -/)))
+  PMem.stU8 (this + 972) (0 : UInt8)
+  AP_Param.setup_object_defaults this (0x33c8 : UInt64) /- &AC_PosControl::var_info -/
+  PMem.stU64 (0xbe30 : UInt64) /- &AC_PosControl::_singleton -/ this
+  return ()
+
+/-- C++ `AC_WPNav::get_default_speed_down_ms : float () const`, `AC_WPNav.h:124-?`. -/
+def AC_WPNav.get_default_speed_down_ms (this : UInt64) : PMem.M Binary32 := do
+  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 48)
+  let t'2 ← PMem.ldF32 t'1
+  return (Binary32.abs t'2)
+
+/-- C++ `AC_WPNav::AC_WPNav : void (const AP_AHRS_View &, AC_PosControl &, const AC_AttitudeControl &)`, `AC_WPNav.cpp:167-182`. -/
+def AC_WPNav.AC_WPNav (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
+  PMem.stBits (this + 8) 0 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
+  PMem.stBits (this + 8) 1 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
+  PMem.stBits (this + 8) 2 1 (UInt8.toUInt64 ((Int8.toUInt8 (Int32.toInt8 ((1 : Int32))))))
+  PMem.stU64 (this + 16) ahrs
+  PMem.stU64 (this + 24) pos_control
+  PMem.stU64 (this + 32) attitude_control
+  AP_Param.setup_object_defaults this (0x2fe8 : UInt64) /- &AC_WPNav::var_info -/
+  let t'1 := if false then (1 : UInt8) else (0 : UInt8)
+  PMem.stBits (this + 8) 0 1 (UInt8.toUInt64 (t'1))
+  let t'2 := if false then (1 : UInt8) else (0 : UInt8)
+  PMem.stBits (this + 8) 1 1 (UInt8.toUInt64 (t'2))
+  let t'3 ← AP_ParamT'float_4.operator_const_float__ (this + 40)
+  let t'4 ← PMem.ldF32 t'3
+  PMem.stF32 (this + 80) t'4
+  let t'5 ← AP_ParamT'float_4.operator_const_float__ (this + 44)
+  let t'6 ← PMem.ldF32 t'5
+  PMem.stF32 (this + 84) t'6
+  let t'7 ← AC_WPNav.get_default_speed_down_ms this
+  PMem.stF32 (this + 88) t'7
+  return ()
+
+/-- C++ `AC_Loiter::AC_Loiter : void (const AP_AHRS_View &, AC_PosControl &, const AC_AttitudeControl &)`, `AC_Loiter.cpp:102-108`. -/
+def AC_Loiter.AC_Loiter (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) (attitude_control : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 0) ahrs
+  PMem.stU64 (this + 8) pos_control
+  PMem.stU64 (this + 16) attitude_control
+  AP_Param.setup_object_defaults this (0x31b8 : UInt64) /- &AC_Loiter::var_info -/
+  return ()
+
+/-- `radians` as a pure function of its arguments (it reads and writes no memory). -/
+def radians.pure' (deg : Binary32) : Id Binary32 := do
+  let mut deg := deg
+  return (deg * ((Binary64.toBinary32 ((Binary64.ofBits 0x400921fb54442d18 /- 31415926535897931/10000000000000000 -/))) / (Binary32.ofBits 0x43340000 /- 180 -/)))
+
+/-- C++ `radians : float (float)`, `AP_Math.h:232-235`. -/
+def radians (deg : Binary32) : PMem.M Binary32 :=
+  pure (_root_.GCS_lib.radians.pure' deg)
+
+/-- C++ `AC_Circle::AC_Circle : void (const AP_AHRS_View &, AC_PosControl &)`, `AC_Circle.cpp:50-57`. -/
+def AC_Circle.AC_Circle (this : UInt64) (ahrs : UInt64) (pos_control : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 0) ahrs
+  PMem.stU64 (this + 8) pos_control
+  AP_Param.setup_object_defaults this (0x3320 : UInt64) /- &AC_Circle::var_info -/
+  let t'1 ← AP_ParamT'float_4.operator_const_float__ (this + 20)
+  let t'2 ← PMem.ldF32 t'1
+  let t'3 ← radians t'2
+  PMem.stF32 (this + 60) t'3
+  return ()
+
+/-- C++ `AP_BattMonitor_Backend::AP_BattMonitor_Backend : void (AP_BattMonitor &, AP_BattMonitor::BattMonitor_State &, AP_BattMonitor_Params &)`, `AP_BattMonitor_Backend.cpp:55-61`. -/
+def AP_BattMonitor_Backend.AP_BattMonitor_Backend (this : UInt64) (mon : UInt64) (mon_state : UInt64) (params : UInt64) : PMem.M Unit := do
+  PMem.stU64 (this + 8) mon
+  PMem.stU64 (this + 16) mon_state
+  PMem.stU64 (this + 24) params
+  return ()
+
+/-- C++ `AP_Enum<AP_BattMonitor_Params::Type>::operator const AP_BattMonitor_Params::Type : const AP_BattMonitor_Params::Type () const`, `AP_Param.h:1140-1142`. -/
+def AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (this : UInt64) : PMem.M Int32 := do
+  let t'1 ← PMem.ldI8 this
+  return Int8.toInt32 (t'1)
+
+/-- C++ `AP_BattMonitor_Analog::AP_BattMonitor_Analog : void (AP_BattMonitor &, AP_BattMonitor::BattMonitor_State &, AP_BattMonitor_Params &)`, `AP_BattMonitor_Analog.cpp:109-149`. -/
+def AP_BattMonitor_Analog.AP_BattMonitor_Analog (this : UInt64) (mon : UInt64) (mon_state : UInt64) (params : UInt64) : PMem.M Unit := do
+  AP_BattMonitor_Backend.AP_BattMonitor_Backend this mon mon_state params
+  AP_Param.setup_object_defaults this (0x2020 : UInt64) /- &AP_BattMonitor_Analog::var_info -/
+  let t'1 ← PMem.ldU8 (mon_state + 92)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (1 : Int32)) then
+    pure ()
+  let t'2 := (0x2020 : UInt64) /- &AP_BattMonitor_Analog::var_info -/
+  let t'3 ← PMem.ldU64 (this + 16)
+  PMem.stU64 (t'3 + 104) t'2
+  let t'4 ← PMem.ldU64 (this + 24)
+  let t'5 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'4 + 38)
+  if (t'5 != (31 : Int32)) then
+    let t'6 := (0x20 : UInt64)
+    PMem.stU64 (this + 56) t'6
+    let t'7 ← PMem.ldU64 (this + 56)
+    if (t'7 == (0 : UInt64)) then
+      pure ()
+  let t'8 ← PMem.ldU64 (this + 24)
+  let t'9 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'8 + 38)
+  let mut sc'12 := (t'9 == (4 : Int32))
+  if !sc'12 then
+    let t'10 ← PMem.ldU64 (this + 24)
+    let t'11 ← AP_Enum'AP_BattMonitor_Params_Type.operator_const_AP_BattMonitor_Params.Type (t'10 + 38)
+    sc'12 := (t'11 == (31 : Int32))
+  if sc'12 then
+    let t'13 := (0x20 : UInt64)
+    PMem.stU64 (this + 64) t'13
+    let t'14 ← PMem.ldU64 (this + 64)
+    if (t'14 == (0 : UInt64)) then
+      pure ()
+  return ()
+
+/-- C++ `AP_Mission::AP_Mission : void (mission_cmd_fn_t, mission_cmd_fn_t, mission_complete_fn_t)`, `functor.h:476-497`. -/
+def AP_Mission.AP_Mission (this : UInt64) (cmd_start_fn : UInt64) (cmd_verify_fn : UInt64) (mission_complete_fn : UInt64) : PMem.M Unit := do
+  PMem.stU16 (this + 172) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  PMem.stU16 (this + 174) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
+  PMem.stU16 (this + 176) (Int16.toUInt16 (Int32.toInt16 ((65535 : Int32))))
+  let t'1 ← PMem.ldU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/
+  if (t'1 != (0 : UInt64)) then
+    pure ()
+  PMem.stU64 (0xbe38 : UInt64) /- &AP_Mission::_singleton -/ this
+  AP_Param.setup_object_defaults this (0x5180 : UInt64) /- &AP_Mission::var_info -/
+  let t'2 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  PMem.stU16 (this + 88) t'2
+  let t'3 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+  PMem.stU16 (this + 116) t'3
+  return ()
+
+/-- C++ `StorageAccess::read_uint32 : uint32_t (uint16_t) const`, `StorageManager.cpp:269-274`. -/
+def StorageAccess.read_uint32.body (fp : UInt64) (this : UInt64) (loc : UInt16) : PMem.M UInt32 := do
+  let mut loc := loc
+  let t'1 ← StorageAccess.read_block this (fp + 0) loc (4 : UInt64)
+  discard <| pure (t'1)
+  let t'2 ← PMem.ldU32 (fp + 0)
+  return t'2
+
+def StorageAccess.read_uint32 (this : UInt64) (loc : UInt16) : PMem.M UInt32 := do
+  let fp ← PMem.enter 4
+  let r ← StorageAccess.read_uint32.body fp this loc
+  PMem.leave fp
+  return r
+
+/-- C++ `StorageAccess::write_uint32 : void (uint16_t, uint32_t) const`, `StorageManager.cpp:305-308`. -/
+def StorageAccess.write_uint32.body (fp : UInt64) (this : UInt64) (loc : UInt16) (value : UInt32) : PMem.M Unit := do
+  let mut loc := loc
+  PMem.stU32 (fp + 0) value
+  let t'1 ← StorageAccess.write_block this loc (fp + 0) (4 : UInt64)
+  discard <| pure (t'1)
+  return ()
+
+def StorageAccess.write_uint32 (this : UInt64) (loc : UInt16) (value : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← StorageAccess.write_uint32.body fp this loc value
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Mission::check_eeprom_version : void ()`, `AP_Mission.cpp:2521-2531`. -/
+def AP_Mission.check_eeprom_version (this : UInt64) : PMem.M Unit := do
+  let t'1 ← StorageAccess.read_uint32 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  let mut eeprom_version : UInt32 := t'1
+  if (eeprom_version != (Int32.toUInt32 ((26030 : Int32)))) then
+    let t'2 ← AP_Mission.clear this
+    if t'2 then
+      StorageAccess.write_uint32 (0xbe40 : UInt64) /- &AP_Mission::_storage -/ (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (Int32.toUInt32 ((26030 : Int32)))
+  return ()
+
+/-- C++ `AP_Mission::init_jump_tracking : void ()`, `AP_Mission.cpp:2451-2457`. -/
+def AP_Mission.init_jump_tracking (this : UInt64) : PMem.M Unit := do
+  for i'1 in [0:100] do
+    let i : UInt8 := UInt8.ofNat i'1
+    let t'2 := Int16.toUInt16 (Int32.toInt16 ((65535 : Int32)))
+    PMem.stU16 ((this + 196) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 4).toUInt64) t'2
+    let t'3 := Int32.toInt16 ((0 : Int32))
+    PMem.stI16 (((this + 196) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 4).toUInt64) + 2) t'3
+  return ()
+
+/-- `AP_ParamTBase'unsigned_short_2.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamTBase'unsigned_short_2.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamTBase<unsigned short, 2>::get : const unsigned short &() const`, `AP_Param.h:917-919`. -/
+def AP_ParamTBase'unsigned_short_2.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.GCS_lib.AP_ParamTBase'unsigned_short_2.get.pure' this)
+
+/-- C++ `AP_Mission::option_is_set : bool (Option) const`, `sitl.h:780-782`. -/
+def AP_Mission.option_is_set (this : UInt64) (option : Int32) : PMem.M Bool := do
+  let mut option := option
+  let t'1 ← AP_ParamTBase'unsigned_short_2.get (this + 82)
+  let t'2 ← PMem.ldU16 t'1
+  return (((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 (option))))))) != (0 : Int32))
+
+/-- C++ `AP_Mission::init : void ()`, `AP_Mission.cpp:64-105`. -/
+def AP_Mission.init.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  let mut bc : UInt64 := (0 : UInt64)
+  if (bc != (0 : UInt64)) then
+    let mut size_kb : UInt16 := (0 : UInt16)
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (size_kb))) > (0 : Int32))) then
+      PMem.unreached "StorageAccess::attach_file"
+      let t'1 := !(default : Bool)
+      PMem.stB (this + 606) t'1
+      let t'2 ← PMem.ldB (this + 606)
+      if t'2 then
+        PMem.stI16 (fp + 0) (Int32.toInt16 ((0 : Int32)))
+        AP_ParamTBase'short_2.set (this + 80) (fp + 0)
+  let t'3 ← StorageAccess.size (0xbe40 : UInt64) /- &AP_Mission::_storage -/
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (t'3))) ≥ ((15 : Int32) + (4 : Int32)))) then
+    let t'4 ← StorageAccess.size (0xbe40 : UInt64) /- &AP_Mission::_storage -/
+    let t'5 := UInt32.toUInt16 ((((UInt16.toUInt32 (t'4)) - (4 : UInt32)) / (Int32.toUInt32 ((15 : Int32)))))
+    PMem.stU16 (this + 604) t'5
+  let t'6 ← AP_ParamTBase'short_2.get (this + 80)
+  let t'7 ← PMem.ldI16 t'6
+  let t'8 ← PMem.ldU16 (this + 604)
+  if (decide ((Int16.toInt32 (t'7)) > (UInt32.toInt32 (UInt16.toUInt32 (t'8))))) then
+    PMem.stI16 (fp + 2) (Int32.toInt16 ((0 : Int32)))
+    AP_ParamTBase'short_2.set (this + 80) (fp + 2)
+  AP_Mission.check_eeprom_version this
+  AP_Mission.init_jump_tracking this
+  let t'9 ← AP_Mission.option_is_set this (1 : Int32)
+  if t'9 then
+    let t'10 ← AP_Mission.clear this
+    discard <| pure (t'10)
+  let t'11 := ((← get).clockUs / 1000).toUInt32
+  PMem.stU32 (this + 596) t'11
+  return ()
+
+def AP_Mission.init (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← AP_Mission.init.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `GCS_MAVLINK_Copter::params_ready : bool () const`, `GCS_MAVLink_Copter.cpp:359-369`. -/
+def GCS_MAVLINK_Copter.params_ready (this : UInt64) : PMem.M Bool := do
+  if false then
+    return true
+  let t'1 ← PMem.ldB (((0x86d8 : UInt64) /- &copter -/ + 9448) + 22)
+  return t'1
+
+/-- Dynamic initialization of statics with default member initializers (1 statics). -/
+def staticDynamicInit : PMem.M Unit := do
+  PMem.stU8 ((0xd430 : UInt64) /- &GCS_MAVLINK::last_radio_status -/ + 12) (Int8.toUInt8 (Int32.toInt8 ((100 : Int32))))
 
 end GCS_lib

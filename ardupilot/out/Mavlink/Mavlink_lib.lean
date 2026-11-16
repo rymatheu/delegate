@@ -335,7 +335,7 @@ def gen_f32 (s : UInt32) : UInt32 × Binary32 := Id.run do
   let mut f : Binary32 := (Binary32.ofBits 0x00000000 /- 0.0 -/)  -- uninitialized in C++; assigned before every read
   let mut t'11 : Array UInt8 := CString.ofUInt32 (Binary32.toBits f)  -- the bytes of `f` (its object representation)
   let mut t'12 : Array UInt8 := CString.ofUInt32 u  -- the bytes of `u` (its object representation)
-  t'11 := CString.memcpy t'11 0 t'12 0 (UInt64.toUSize (4 : UInt64))
+  t'11 := CString.memcpy t'11 0 t'12 0 (4 : UInt64)
   f := (Binary32.ofBits (CString.toUInt32 t'11 0))
   return (s, f)
 
@@ -352,7 +352,7 @@ def gen_f64 (s : UInt32) : UInt32 × Binary64 := Id.run do
   let mut d : Binary64 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/)  -- uninitialized in C++; assigned before every read
   let mut t'5 : Array UInt8 := CString.ofUInt64 (Binary64.toBits d)  -- the bytes of `d` (its object representation)
   let mut t'6 : Array UInt8 := CString.ofUInt64 u  -- the bytes of `u` (its object representation)
-  t'5 := CString.memcpy t'5 0 t'6 0 (UInt64.toUSize (8 : UInt64))
+  t'5 := CString.memcpy t'5 0 t'6 0 (8 : UInt64)
   d := (Binary64.ofBits (CString.toUInt64 t'5 0))
   return (s, d)
 
@@ -369,7 +369,7 @@ def hash_f32 (h : UInt64) (f : Binary32) : UInt64 := Id.run do
   let mut u : UInt32 := (0 : UInt32)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 u  -- the bytes of `u` (its object representation)
   let mut t'2 : Array UInt8 := CString.ofUInt32 (Binary32.toBits f)  -- the bytes of `f` (its object representation)
-  t'1 := CString.memcpy t'1 0 t'2 0 (UInt64.toUSize (4 : UInt64))
+  t'1 := CString.memcpy t'1 0 t'2 0 (4 : UInt64)
   u := ((CString.toUInt32 t'1 0))
   return hash_u64 h (UInt32.toUInt64 u)
 
@@ -378,7 +378,7 @@ def hash_f64 (h : UInt64) (d : Binary64) : UInt64 := Id.run do
   let mut u : UInt64 := (0 : UInt64)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt64 u  -- the bytes of `u` (its object representation)
   let mut t'2 : Array UInt8 := CString.ofUInt64 (Binary64.toBits d)  -- the bytes of `d` (its object representation)
-  t'1 := CString.memcpy t'1 0 t'2 0 (UInt64.toUSize (8 : UInt64))
+  t'1 := CString.memcpy t'1 0 t'2 0 (8 : UInt64)
   u := ((CString.toUInt64 t'1 0))
   return hash_u64 h u
 
@@ -650,12 +650,12 @@ def mavlink_msg_to_send_buffer (buf : Array UInt8) (msg : __mavlink_message) : (
     length := _mav_trim_payload (msg.payload64.extract (Int32.toNatClampNeg (0 : Int32)) msg.payload64.size) length
     buf := buf.set! (Int32.toNatClampNeg (1 : Int32)) length
     signature_len := Int8.toUInt8 (Int32.toInt8 (if (UInt32.toInt32 (UInt8.toUInt32 msg.incompat_flags) &&& (1 : Int32)) != (0 : Int32) then (13 : Int32) else (0 : Int32)))
-  buf := CString.memcpy buf (UInt8.toNat header_len) msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 length))
+  buf := CString.memcpy buf (UInt8.toNat header_len) msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 length)
   let ck'o : Nat := 0 + Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 header_len)) + Int32.toNatClampNeg (UInt32.toInt32 (UInt16.toUInt32 (UInt8.toUInt16 length)))  -- pointer `ck`: an offset into `buf`
   buf := buf.set! ((Int.ofNat ck'o + (0 : Int32).toInt).toNat) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt16.toUInt32 msg.checksum) &&& (255 : Int32))))
   buf := buf.set! ((Int.ofNat ck'o + (1 : Int32).toInt).toNat) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt16.toUInt32 msg.checksum) >>> (8 : Int32))))
   if UInt32.toInt32 (UInt8.toUInt32 signature_len) > (0 : Int32) then
-    buf := CString.memcpy buf ((Int.ofNat ck'o + (2 : Int32).toInt).toNat) msg.signature 0 (UInt64.toUSize (UInt8.toUInt64 signature_len))
+    buf := CString.memcpy buf ((Int.ofNat ck'o + (2 : Int32).toInt).toNat) msg.signature 0 (UInt8.toUInt64 signature_len)
   return (buf, Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt8.toUInt32 header_len) + (2 : Int32) + UInt32.toInt32 (UInt16.toUInt32 (UInt8.toUInt16 length)) + UInt32.toInt32 (UInt16.toUInt32 (UInt8.toUInt16 signature_len)))))
 
 /-- C++ `struct __mavlink_heartbeat_t`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/minimal/mavlink_msg_heartbeat.h:9-16`. -/
@@ -762,7 +762,7 @@ def mavlink_msg_heartbeat_pack (system_id : UInt32) (component_id : UInt8) (msg 
   packet := { packet with system_status := system_status }
   packet := { packet with mavlink_version := Int8.toUInt8 (Int32.toInt8 (3 : Int32)) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 packet.custom_mode)) 4 (#[packet.type])) 5 (#[packet.autopilot])) 6 (#[packet.base_mode])) 7 (#[packet.system_status])) 8 (#[packet.mavlink_version])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (9 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (9 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (0 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (9 : Int32))) (Int8.toUInt8 (Int32.toInt8 (9 : Int32))) (Int8.toUInt8 (Int32.toInt8 (50 : Int32))) mav_chan_status
   msg := t'2
@@ -781,7 +781,7 @@ def mavlink_msg_heartbeat_pack_chan (system_id : UInt32) (component_id chan : UI
   packet := { packet with system_status := system_status }
   packet := { packet with mavlink_version := Int8.toUInt8 (Int32.toInt8 (3 : Int32)) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 packet.custom_mode)) 4 (#[packet.type])) 5 (#[packet.autopilot])) 6 (#[packet.base_mode])) 7 (#[packet.system_status])) 8 (#[packet.mavlink_version])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (9 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (9 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (0 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (9 : Int32))) (Int8.toUInt8 (Int32.toInt8 (9 : Int32))) (Int8.toUInt8 (Int32.toInt8 (50 : Int32))) mav_chan_status
   msg := t'2
@@ -913,7 +913,7 @@ def pk_heartbeat (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavl
       mav_chan_status := t'48
       n := t'49
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'50, t'51) := mavlink_msg_to_send_buffer buf msg
   buf := t'50
   let len : UInt16 := t'51
@@ -1146,7 +1146,7 @@ def mavlink_msg_heartbeat_get_base_mode (msg : __mavlink_message) : UInt8 := Id.
 def _MAV_RETURN_uint32_t (msg : __mavlink_message) (ofs : UInt8) : UInt32 := Id.run do
   let mut r : UInt32 := (0 : UInt32)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 r  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (4 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (4 : UInt64)
   r := ((CString.toUInt32 t'1 0))
   return r
 
@@ -1167,10 +1167,10 @@ def mavlink_msg_heartbeat_decode (msg : __mavlink_message) (heartbeat : __mavlin
   let mut heartbeat := heartbeat
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (9 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (9 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 heartbeat.custom_mode)) 4 (#[heartbeat.type])) 5 (#[heartbeat.autopilot])) 6 (#[heartbeat.base_mode])) 7 (#[heartbeat.system_status])) 8 (#[heartbeat.mavlink_version])  -- the bytes of `*heartbeat` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (9 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (9 : Int32)))
   heartbeat := ({ custom_mode := ((CString.toUInt32 t'1 (0 + 0))), type := ((CString.get t'1 (0 + 4))), autopilot := ((CString.get t'1 (0 + 5))), base_mode := ((CString.get t'1 (0 + 6))), system_status := ((CString.get t'1 (0 + 7))), mavlink_version := ((CString.get t'1 (0 + 8))) } : __mavlink_heartbeat_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 heartbeat.custom_mode)) 4 (#[heartbeat.type])) 5 (#[heartbeat.autopilot])) 6 (#[heartbeat.base_mode])) 7 (#[heartbeat.system_status])) 8 (#[heartbeat.mavlink_version])  -- the bytes of `*heartbeat` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   heartbeat := ({ custom_mode := ((CString.toUInt32 t'2 (0 + 0))), type := ((CString.get t'2 (0 + 4))), autopilot := ((CString.get t'2 (0 + 5))), base_mode := ((CString.get t'2 (0 + 6))), system_status := ((CString.get t'2 (0 + 7))), mavlink_version := ((CString.get t'2 (0 + 8))) } : __mavlink_heartbeat_t)
   return heartbeat
 
@@ -1236,7 +1236,7 @@ structure __mavlink_param_value_t where
 deriving Inhabited
 
 /-- C++ `void mav_array_memcpy(void * dest, const void * src, size_t n)`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/protocol.h:220-234`. -/
-def mav_array_memcpy (dest src : Array UInt8) (n : USize) : (Array UInt8) := Id.run do
+def mav_array_memcpy (dest src : Array UInt8) (n : UInt64) : (Array UInt8) := Id.run do
   let mut dest := dest
   if false /- C++ `==` -/ then
     dest := CString.memset dest 0 (0 : Int32) n
@@ -1253,9 +1253,9 @@ def mavlink_msg_param_value_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with param_count := param_count }
   packet := { packet with param_index := param_index }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (CString.ofUInt16 packet.param_count)) 6 (CString.ofUInt16 packet.param_index)) 8 (packet.param_id)) 24 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (25 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (25 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (22 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (25 : Int32))) (Int8.toUInt8 (Int32.toInt8 (25 : Int32))) (Int8.toUInt8 (Int32.toInt8 (220 : Int32))) mav_chan_status
   msg := t'2
@@ -1271,9 +1271,9 @@ def mavlink_msg_param_value_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with param_count := param_count }
   packet := { packet with param_index := param_index }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (CString.ofUInt16 packet.param_count)) 6 (CString.ofUInt16 packet.param_index)) 8 (packet.param_id)) 24 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (25 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (25 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (22 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (25 : Int32))) (Int8.toUInt8 (Int32.toInt8 (25 : Int32))) (Int8.toUInt8 (Int32.toInt8 (220 : Int32))) mav_chan_status
   msg := t'2
@@ -1411,7 +1411,7 @@ def pk_param_value (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'48
       n := t'49
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'50, t'51) := mavlink_msg_to_send_buffer buf msg
   buf := t'50
   let len : UInt16 := t'51
@@ -1434,7 +1434,7 @@ def mavlink_msg_param_value_send (chan : mavlink_channel_t) (param_id : Array UI
   packet := { packet with param_count := param_count }
   packet := { packet with param_index := param_index }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (22 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (CString.ofUInt16 packet.param_count)) 6 (CString.ofUInt16 packet.param_index)) 8 (packet.param_id)) 24 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
@@ -1565,7 +1565,7 @@ def sd_param_value (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
 /-- C++ `uint16_t _MAV_RETURN_char_array(const mavlink_message_t * msg, char * value, uint8_t array_length, uint8_t wire_offset)`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/protocol.h:339-344`. -/
 def _MAV_RETURN_char_array (msg : __mavlink_message) (value : Array UInt8) (array_length wire_offset : UInt8) : (Array UInt8) × UInt16 := Id.run do
   let mut value := value
-  value := CString.memcpy value 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt64.toUSize (UInt8.toUInt64 array_length))
+  value := CString.memcpy value 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt8.toUInt64 array_length)
   return (value, UInt8.toUInt16 array_length)
 
 /-- C++ `uint16_t mavlink_msg_param_value_get_param_id(const mavlink_message_t * msg, char * param_id)`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/common/mavlink_msg_param_value.h:300-303`. -/
@@ -1579,7 +1579,7 @@ def mavlink_msg_param_value_get_param_id (msg : __mavlink_message) (param_id : A
 def _MAV_RETURN_float (msg : __mavlink_message) (ofs : UInt8) : Binary32 := Id.run do
   let mut r : Binary32 := (Binary32.ofBits 0x00000000 /- 0.0 -/)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 (Binary32.toBits r)  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (4 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (4 : UInt64)
   r := (Binary32.ofBits (CString.toUInt32 t'1 0))
   return r
 
@@ -1595,7 +1595,7 @@ def mavlink_msg_param_value_get_param_type (msg : __mavlink_message) : UInt8 := 
 def _MAV_RETURN_uint16_t (msg : __mavlink_message) (ofs : UInt8) : UInt16 := Id.run do
   let mut r : UInt16 := (0 : UInt16)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt16 r  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (2 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (2 : UInt64)
   r := ((CString.toUInt16 t'1 0))
   return r
 
@@ -1612,10 +1612,10 @@ def mavlink_msg_param_value_decode (msg : __mavlink_message) (param_value : __ma
   let mut param_value := param_value
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (25 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (25 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits param_value.param_value))) 4 (CString.ofUInt16 param_value.param_count)) 6 (CString.ofUInt16 param_value.param_index)) 8 (param_value.param_id)) 24 (#[param_value.param_type])  -- the bytes of `*param_value` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (25 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (25 : Int32)))
   param_value := ({ param_value := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), param_count := ((CString.toUInt16 t'1 (0 + 4))), param_index := ((CString.toUInt16 t'1 (0 + 6))), param_id := (CString.slice t'1 (0 + 8) 16), param_type := ((CString.get t'1 (0 + 24))) } : __mavlink_param_value_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits param_value.param_value))) 4 (CString.ofUInt16 param_value.param_count)) 6 (CString.ofUInt16 param_value.param_index)) 8 (param_value.param_id)) 24 (#[param_value.param_type])  -- the bytes of `*param_value` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   param_value := ({ param_value := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), param_count := ((CString.toUInt16 t'2 (0 + 4))), param_index := ((CString.toUInt16 t'2 (0 + 6))), param_id := (CString.slice t'2 (0 + 8) 16), param_type := ((CString.get t'2 (0 + 24))) } : __mavlink_param_value_t)
   return param_value
 
@@ -1659,7 +1659,7 @@ def dc_param_value (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Array 
   let mut t'12 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits pkt.param_value))) 4 (CString.ofUInt16 pkt.param_count)) 6 (CString.ofUInt16 pkt.param_index)) 8 (pkt.param_id)) 24 (#[pkt.param_type])  -- the bytes of `pkt` (its object representation)
   h := hash_bytes t'13 t'12 (UInt64.toUInt16 (28 : UInt64))
   let mut a0 : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a0 := CString.memset a0 0 (0 : Int32) (UInt64.toUSize (16 : UInt64))
+  a0 := CString.memset a0 0 (0 : Int32) (16 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_param_value_get_param_id msg a0
   a0 := t'14
@@ -1707,9 +1707,9 @@ def mavlink_msg_param_set_pack (system_id : UInt32) (component_id : UInt8) (msg 
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (#[packet.target_system])) 5 (#[packet.target_component])) 6 (packet.param_id)) 22 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (23 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (23 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (23 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (23 : Int32))) (Int8.toUInt8 (Int32.toInt8 (23 : Int32))) (Int8.toUInt8 (Int32.toInt8 (168 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -1725,9 +1725,9 @@ def mavlink_msg_param_set_pack_chan (system_id : UInt32) (component_id chan : UI
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (#[packet.target_system])) 5 (#[packet.target_component])) 6 (packet.param_id)) 22 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (23 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (23 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (23 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (23 : Int32))) (Int8.toUInt8 (Int32.toInt8 (23 : Int32))) (Int8.toUInt8 (Int32.toInt8 (168 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -1865,7 +1865,7 @@ def pk_param_set (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavl
       mav_chan_status := t'48
       n := t'49
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'50, t'51) := mavlink_msg_to_send_buffer buf msg
   buf := t'50
   let len : UInt16 := t'51
@@ -1888,7 +1888,7 @@ def mavlink_msg_param_set_send (chan : mavlink_channel_t) (target_system : UInt3
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   packet := { packet with param_type := param_type }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (23 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param_value))) 4 (#[packet.target_system])) 5 (#[packet.target_component])) 6 (packet.param_id)) 22 (#[packet.param_type])  -- the bytes of `packet` (its object representation)
@@ -2039,8 +2039,8 @@ def mavlink_msg_param_set_get_param_type (msg : __mavlink_message) : UInt8 := Id
 def mavlink_msg_decode_target (msg : __mavlink_message) (payload : Array UInt8) (length target_system_ofs : UInt8) : (Array UInt8) := Id.run do
   let mut payload := payload
   let len : UInt8 := if UInt32.toInt32 (UInt8.toUInt32 msg.len) < UInt32.toInt32 (UInt8.toUInt32 length) then msg.len else length
-  payload := CString.memset payload 0 (0 : Int32) (UInt64.toUSize (UInt8.toUInt64 length))
-  payload := CString.memcpy payload 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  payload := CString.memset payload 0 (0 : Int32) (UInt8.toUInt64 length)
+  payload := CString.memcpy payload 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   if UInt32.toInt32 (UInt8.toUInt32 msg.incompat_flags) &&& (4 : Int32) != (0 : Int32) then
     payload := payload.set! (UInt8.toNat target_system_ofs) (Int8.toUInt8 (Int32.toInt8 (if msg.target_sysid > Int32.toUInt32 (255 : Int32) then (255 : Int32) else UInt32.toInt32 (UInt8.toUInt32 (UInt32.toUInt8 msg.target_sysid)))))
   return payload
@@ -2095,7 +2095,7 @@ def dc_param_set (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Array __
   h := hash_bytes t'13 t'12 (UInt64.toUInt16 (24 : UInt64))
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_param_set_get_target_component msg))
   let mut a1 : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a1 := CString.memset a1 0 (0 : Int32) (UInt64.toUSize (16 : UInt64))
+  a1 := CString.memset a1 0 (0 : Int32) (16 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_param_set_get_param_id msg a1
   a1 := t'14
@@ -2125,9 +2125,9 @@ def mavlink_msg_param_request_read_pack (system_id : UInt32) (component_id : UIn
   packet := { packet with param_index := param_index }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 (Int16.toUInt16 packet.param_index))) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (packet.param_id)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (20 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (214 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2142,9 +2142,9 @@ def mavlink_msg_param_request_read_pack_chan (system_id : UInt32) (component_id 
   packet := { packet with param_index := param_index }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 (Int16.toUInt16 packet.param_index))) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (packet.param_id)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (20 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (214 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2271,7 +2271,7 @@ def pk_param_request_read (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arr
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -2293,7 +2293,7 @@ def mavlink_msg_param_request_read_send (chan : mavlink_channel_t) (target_syste
   packet := { packet with param_index := param_index }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  packet := { packet with param_id := mav_array_memcpy packet.param_id param_id ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (20 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 (Int16.toUInt16 packet.param_index))) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (packet.param_id)  -- the bytes of `packet` (its object representation)
@@ -2425,7 +2425,7 @@ def mavlink_msg_param_request_read_get_param_id (msg : __mavlink_message) (param
 def _MAV_RETURN_int16_t (msg : __mavlink_message) (ofs : UInt8) : Int16 := Id.run do
   let mut r : Int16 := (0 : Int16)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt16 (Int16.toUInt16 r)  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (2 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (2 : UInt64)
   r := (UInt16.toInt16 (CString.toUInt16 t'1 0))
   return r
 
@@ -2483,7 +2483,7 @@ def dc_param_request_read (seed : UInt32) (len flags : UInt8) (mav_chan_buffer :
   h := hash_bytes t'13 t'12 (UInt64.toUInt16 (20 : UInt64))
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_param_request_read_get_target_component msg))
   let mut a1 : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a1 := CString.memset a1 0 (0 : Int32) (UInt64.toUSize (16 : UInt64))
+  a1 := CString.memset a1 0 (0 : Int32) (16 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_param_request_read_get_param_id msg a1
   a1 := t'14
@@ -2508,7 +2508,7 @@ def mavlink_msg_param_request_list_pack (system_id : UInt32) (component_id : UIn
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (21 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (159 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2523,7 +2523,7 @@ def mavlink_msg_param_request_list_pack_chan (system_id : UInt32) (component_id 
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (21 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (159 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2622,7 +2622,7 @@ def pk_param_request_list (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arr
       mav_chan_status := t'33
       n := t'34
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'35, t'36) := mavlink_msg_to_send_buffer buf msg
   buf := t'35
   let len : UInt16 := t'36
@@ -2808,7 +2808,7 @@ def mavlink_msg_mission_count_pack (system_id : UInt32) (component_id : UInt8) (
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.count)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (44 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (221 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2825,7 +2825,7 @@ def mavlink_msg_mission_count_pack_chan (system_id : UInt32) (component_id chan 
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.count)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (44 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (221 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -2946,7 +2946,7 @@ def pk_mission_count (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -3166,7 +3166,7 @@ def mavlink_msg_mission_request_int_pack (system_id : UInt32) (component_id : UI
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (51 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (196 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -3183,7 +3183,7 @@ def mavlink_msg_mission_request_int_pack_chan (system_id : UInt32) (component_id
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (51 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (196 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -3304,7 +3304,7 @@ def pk_mission_request_int (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Ar
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -3524,7 +3524,7 @@ def mavlink_msg_mission_request_pack (system_id : UInt32) (component_id : UInt8)
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (40 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (230 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -3541,7 +3541,7 @@ def mavlink_msg_mission_request_pack_chan (system_id : UInt32) (component_id cha
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (5 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (5 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (40 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (5 : Int32))) (Int8.toUInt8 (Int32.toInt8 (230 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -3662,7 +3662,7 @@ def pk_mission_request (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array 
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -3915,7 +3915,7 @@ def mavlink_msg_mission_item_int_pack (system_id : UInt32) (component_id : UInt8
   packet := { packet with autocontinue := autocontinue }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.x))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.seq)) 30 (CString.ofUInt16 packet.command)) 32 (#[packet.target_system])) 33 (#[packet.target_component])) 34 (#[packet.frame])) 35 (#[packet.current])) 36 (#[packet.autocontinue])) 37 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (38 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (38 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (73 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -3943,7 +3943,7 @@ def mavlink_msg_mission_item_int_pack_chan (system_id : UInt32) (component_id ch
   packet := { packet with autocontinue := autocontinue }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.x))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.seq)) 30 (CString.ofUInt16 packet.command)) 32 (#[packet.target_system])) 33 (#[packet.target_component])) 34 (#[packet.frame])) 35 (#[packet.current])) 36 (#[packet.autocontinue])) 37 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (38 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (38 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (73 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -4185,7 +4185,7 @@ def pk_mission_item_int (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array
       mav_chan_status := t'98
       n := t'99
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'100, t'101) := mavlink_msg_to_send_buffer buf msg
   buf := t'100
   let len : UInt16 := t'101
@@ -4494,7 +4494,7 @@ def mavlink_msg_mission_item_int_get_param4 (msg : __mavlink_message) : Binary32
 def _MAV_RETURN_int32_t (msg : __mavlink_message) (ofs : UInt8) : Int32 := Id.run do
   let mut r : Int32 := (0 : Int32)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 (Int32.toUInt32 r)  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (4 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (4 : UInt64)
   r := (UInt32.toInt32 (CString.toUInt32 t'1 0))
   return r
 
@@ -4633,7 +4633,7 @@ def mavlink_msg_mission_item_pack (system_id : UInt32) (component_id : UInt8) (m
   packet := { packet with autocontinue := autocontinue }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Binary32.toBits packet.x))) 20 (CString.ofUInt32 (Binary32.toBits packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.seq)) 30 (CString.ofUInt16 packet.command)) 32 (#[packet.target_system])) 33 (#[packet.target_component])) 34 (#[packet.frame])) 35 (#[packet.current])) 36 (#[packet.autocontinue])) 37 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (38 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (38 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (39 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -4661,7 +4661,7 @@ def mavlink_msg_mission_item_pack_chan (system_id : UInt32) (component_id chan :
   packet := { packet with autocontinue := autocontinue }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Binary32.toBits packet.x))) 20 (CString.ofUInt32 (Binary32.toBits packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.seq)) 30 (CString.ofUInt16 packet.command)) 32 (#[packet.target_system])) 33 (#[packet.target_component])) 34 (#[packet.frame])) 35 (#[packet.current])) 36 (#[packet.autocontinue])) 37 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (38 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (38 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (39 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (38 : Int32))) (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -4903,7 +4903,7 @@ def pk_mission_item (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __m
       mav_chan_status := t'98
       n := t'99
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'100, t'101) := mavlink_msg_to_send_buffer buf msg
   buf := t'100
   let len : UInt16 := t'101
@@ -5310,7 +5310,7 @@ def mavlink_msg_mission_ack_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with type := type }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 4 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.type])) 3 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (47 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (153 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -5327,7 +5327,7 @@ def mavlink_msg_mission_ack_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with type := type }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 4 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.type])) 3 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (47 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (153 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -5448,7 +5448,7 @@ def pk_mission_ack (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -5665,7 +5665,7 @@ def mavlink_msg_mission_request_list_pack (system_id : UInt32) (component_id : U
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 3 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (3 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (3 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (43 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (132 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -5681,7 +5681,7 @@ def mavlink_msg_mission_request_list_pack_chan (system_id : UInt32) (component_i
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 3 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (3 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (3 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (43 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (132 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -5791,7 +5791,7 @@ def pk_mission_request_list (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : A
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -5994,7 +5994,7 @@ def mavlink_msg_mission_current_pack (system_id : UInt32) (component_id : UInt8)
   packet := { packet with mission_state := mission_state }
   packet := { packet with mission_mode := mission_mode }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (CString.ofUInt16 packet.total)) 4 (#[packet.mission_state])) 5 (#[packet.mission_mode])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (42 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) mav_chan_status
   msg := t'2
@@ -6011,7 +6011,7 @@ def mavlink_msg_mission_current_pack_chan (system_id : UInt32) (component_id cha
   packet := { packet with mission_state := mission_state }
   packet := { packet with mission_mode := mission_mode }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (CString.ofUInt16 packet.total)) 4 (#[packet.mission_state])) 5 (#[packet.mission_mode])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (42 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) mav_chan_status
   msg := t'2
@@ -6132,7 +6132,7 @@ def pk_mission_current (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array 
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -6286,10 +6286,10 @@ def mavlink_msg_mission_current_decode (msg : __mavlink_message) (mission_curren
   let mut mission_current := mission_current
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (6 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (6 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 mission_current.seq)) 2 (CString.ofUInt16 mission_current.total)) 4 (#[mission_current.mission_state])) 5 (#[mission_current.mission_mode])  -- the bytes of `*mission_current` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))
   mission_current := ({ seq := ((CString.toUInt16 t'1 (0 + 0))), total := ((CString.toUInt16 t'1 (0 + 2))), mission_state := ((CString.get t'1 (0 + 4))), mission_mode := ((CString.get t'1 (0 + 5))) } : __mavlink_mission_current_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 mission_current.seq)) 2 (CString.ofUInt16 mission_current.total)) 4 (#[mission_current.mission_state])) 5 (#[mission_current.mission_mode])  -- the bytes of `*mission_current` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   mission_current := ({ seq := ((CString.toUInt16 t'2 (0 + 0))), total := ((CString.toUInt16 t'2 (0 + 2))), mission_state := ((CString.get t'2 (0 + 4))), mission_mode := ((CString.get t'2 (0 + 5))) } : __mavlink_mission_current_t)
   return mission_current
 
@@ -6351,7 +6351,7 @@ def mavlink_msg_mission_item_reached_pack (system_id : UInt32) (component_id : U
   let mut packet : __mavlink_mission_item_reached_t := {}
   packet := { packet with seq := seq }
   let mut t'1 : Array UInt8 := CString.write ((Array.replicate 2 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (46 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (11 : Int32))) mav_chan_status
   msg := t'2
@@ -6365,7 +6365,7 @@ def mavlink_msg_mission_item_reached_pack_chan (system_id : UInt32) (component_i
   let mut packet : __mavlink_mission_item_reached_t := {}
   packet := { packet with seq := seq }
   let mut t'1 : Array UInt8 := CString.write ((Array.replicate 2 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (46 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (11 : Int32))) mav_chan_status
   msg := t'2
@@ -6453,7 +6453,7 @@ def pk_mission_item_reached (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : A
       mav_chan_status := t'28
       n := t'29
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'30, t'31) := mavlink_msg_to_send_buffer buf msg
   buf := t'30
   let len : UInt16 := t'31
@@ -6559,10 +6559,10 @@ def mavlink_msg_mission_item_reached_decode (msg : __mavlink_message) (mission_i
   let mut mission_item_reached := mission_item_reached
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (2 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (2 : Int32)))
   let mut t'1 : Array UInt8 := CString.write ((Array.replicate 2 (0 : UInt8))) 0 (CString.ofUInt16 mission_item_reached.seq)  -- the bytes of `*mission_item_reached` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))
   mission_item_reached := ({ seq := ((CString.toUInt16 t'1 (0 + 0))) } : __mavlink_mission_item_reached_t)
   let mut t'2 : Array UInt8 := CString.write ((Array.replicate 2 (0 : UInt8))) 0 (CString.ofUInt16 mission_item_reached.seq)  -- the bytes of `*mission_item_reached` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   mission_item_reached := ({ seq := ((CString.toUInt16 t'2 (0 + 0))) } : __mavlink_mission_item_reached_t)
   return mission_item_reached
 
@@ -6627,7 +6627,7 @@ def mavlink_msg_mission_clear_all_pack (system_id : UInt32) (component_id : UInt
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 3 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (3 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (3 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (45 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (232 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -6643,7 +6643,7 @@ def mavlink_msg_mission_clear_all_pack_chan (system_id : UInt32) (component_id c
   packet := { packet with target_component := target_component }
   packet := { packet with mission_type := mission_type }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 3 (0 : UInt8))) 0 (#[packet.target_system])) 1 (#[packet.target_component])) 2 (#[packet.mission_type])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (3 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (3 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (45 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (232 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -6753,7 +6753,7 @@ def pk_mission_clear_all (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arra
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -6953,7 +6953,7 @@ def mavlink_msg_mission_set_current_pack (system_id : UInt32) (component_id : UI
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 4 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (41 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -6969,7 +6969,7 @@ def mavlink_msg_mission_set_current_pack_chan (system_id : UInt32) (component_id
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 4 (0 : UInt8))) 0 (CString.ofUInt16 packet.seq)) 2 (#[packet.target_system])) 3 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (41 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -7079,7 +7079,7 @@ def pk_mission_set_current (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Ar
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -7303,7 +7303,7 @@ def mavlink_msg_command_long_pack (system_id : UInt32) (component_id : UInt8) (m
   packet := { packet with target_component := target_component }
   packet := { packet with confirmation := confirmation }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 36 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Binary32.toBits packet.param5))) 20 (CString.ofUInt32 (Binary32.toBits packet.param6))) 24 (CString.ofUInt32 (Binary32.toBits packet.param7))) 28 (CString.ofUInt16 packet.command)) 30 (#[packet.target_system])) 31 (#[packet.target_component])) 32 (#[packet.confirmation])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (33 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (33 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (76 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (33 : Int32))) (Int8.toUInt8 (Int32.toInt8 (33 : Int32))) (Int8.toUInt8 (Int32.toInt8 (152 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -7327,7 +7327,7 @@ def mavlink_msg_command_long_pack_chan (system_id : UInt32) (component_id chan :
   packet := { packet with target_component := target_component }
   packet := { packet with confirmation := confirmation }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 36 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Binary32.toBits packet.param5))) 20 (CString.ofUInt32 (Binary32.toBits packet.param6))) 24 (CString.ofUInt32 (Binary32.toBits packet.param7))) 28 (CString.ofUInt16 packet.command)) 30 (#[packet.target_system])) 31 (#[packet.target_component])) 32 (#[packet.confirmation])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (33 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (33 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (76 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (33 : Int32))) (Int8.toUInt8 (Int32.toInt8 (33 : Int32))) (Int8.toUInt8 (Int32.toInt8 (152 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -7525,7 +7525,7 @@ def pk_command_long (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __m
       mav_chan_status := t'78
       n := t'79
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'80, t'81) := mavlink_msg_to_send_buffer buf msg
   buf := t'80
   let len : UInt16 := t'81
@@ -7891,7 +7891,7 @@ def mavlink_msg_command_int_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with current := current }
   packet := { packet with autocontinue := autocontinue }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 36 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.x))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.command)) 30 (#[packet.target_system])) 31 (#[packet.target_component])) 32 (#[packet.frame])) 33 (#[packet.current])) 34 (#[packet.autocontinue])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (35 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (35 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (75 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (35 : Int32))) (Int8.toUInt8 (Int32.toInt8 (35 : Int32))) (Int8.toUInt8 (Int32.toInt8 (158 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -7917,7 +7917,7 @@ def mavlink_msg_command_int_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with current := current }
   packet := { packet with autocontinue := autocontinue }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 36 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.param1))) 4 (CString.ofUInt32 (Binary32.toBits packet.param2))) 8 (CString.ofUInt32 (Binary32.toBits packet.param3))) 12 (CString.ofUInt32 (Binary32.toBits packet.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.x))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.y))) 24 (CString.ofUInt32 (Binary32.toBits packet.z))) 28 (CString.ofUInt16 packet.command)) 30 (#[packet.target_system])) 31 (#[packet.target_component])) 32 (#[packet.frame])) 33 (#[packet.current])) 34 (#[packet.autocontinue])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (35 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (35 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (75 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (35 : Int32))) (Int8.toUInt8 (Int32.toInt8 (35 : Int32))) (Int8.toUInt8 (Int32.toInt8 (158 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -8137,7 +8137,7 @@ def pk_command_int (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'88
       n := t'89
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'90, t'91) := mavlink_msg_to_send_buffer buf msg
   buf := t'90
   let len : UInt16 := t'91
@@ -8516,7 +8516,7 @@ def mavlink_msg_command_ack_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt16 packet.command)) 2 (#[packet.result])) 3 (#[packet.progress])) 4 (CString.ofUInt32 (Int32.toUInt32 packet.result_param2))) 8 (#[packet.target_system])) 9 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (10 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (10 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (77 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (10 : Int32))) (Int8.toUInt8 (Int32.toInt8 (143 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -8535,7 +8535,7 @@ def mavlink_msg_command_ack_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt16 packet.command)) 2 (#[packet.result])) 3 (#[packet.progress])) 4 (CString.ofUInt32 (Int32.toUInt32 packet.result_param2))) 8 (#[packet.target_system])) 9 (#[packet.target_component])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (10 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (10 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (77 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (3 : Int32))) (Int8.toUInt8 (Int32.toInt8 (10 : Int32))) (Int8.toUInt8 (Int32.toInt8 (143 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -8678,7 +8678,7 @@ def pk_command_ack (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'53
       n := t'54
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'55, t'56) := mavlink_msg_to_send_buffer buf msg
   buf := t'55
   let len : UInt16 := t'56
@@ -8930,9 +8930,9 @@ def mavlink_msg_statustext_pack (system_id : UInt32) (component_id : UInt8) (msg
   packet := { packet with severity := severity }
   packet := { packet with id := id }
   packet := { packet with chunk_seq := chunk_seq }
-  packet := { packet with text := mav_array_memcpy packet.text text (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32)))) }
+  packet := { packet with text := mav_array_memcpy packet.text text ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (#[packet.severity])) 1 (packet.text)) 51 (CString.ofUInt16 packet.id)) 53 (#[packet.chunk_seq])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (54 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (253 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (51 : Int32))) (Int8.toUInt8 (Int32.toInt8 (54 : Int32))) (Int8.toUInt8 (Int32.toInt8 (83 : Int32))) mav_chan_status
   msg := t'2
@@ -8947,9 +8947,9 @@ def mavlink_msg_statustext_pack_chan (system_id : UInt32) (component_id chan : U
   packet := { packet with severity := severity }
   packet := { packet with id := id }
   packet := { packet with chunk_seq := chunk_seq }
-  packet := { packet with text := mav_array_memcpy packet.text text (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32)))) }
+  packet := { packet with text := mav_array_memcpy packet.text text ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (#[packet.severity])) 1 (packet.text)) 51 (CString.ofUInt16 packet.id)) 53 (#[packet.chunk_seq])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (54 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (253 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (51 : Int32))) (Int8.toUInt8 (Int32.toInt8 (54 : Int32))) (Int8.toUInt8 (Int32.toInt8 (83 : Int32))) mav_chan_status
   msg := t'2
@@ -9076,7 +9076,7 @@ def pk_statustext (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mav
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -9098,7 +9098,7 @@ def mavlink_msg_statustext_send (chan : mavlink_channel_t) (severity : UInt8) (t
   packet := { packet with severity := severity }
   packet := { packet with id := id }
   packet := { packet with chunk_seq := chunk_seq }
-  packet := { packet with text := mav_array_memcpy packet.text text (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32)))) }
+  packet := { packet with text := mav_array_memcpy packet.text text ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (50 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (253 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (#[packet.severity])) 1 (packet.text)) 51 (CString.ofUInt16 packet.id)) 53 (#[packet.chunk_seq])  -- the bytes of `packet` (its object representation)
@@ -9239,10 +9239,10 @@ def mavlink_msg_statustext_decode (msg : __mavlink_message) (statustext : __mavl
   let mut statustext := statustext
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (54 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (54 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (#[statustext.severity])) 1 (statustext.text)) 51 (CString.ofUInt16 statustext.id)) 53 (#[statustext.chunk_seq])  -- the bytes of `*statustext` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))
   statustext := ({ severity := ((CString.get t'1 (0 + 0))), text := (CString.slice t'1 (0 + 1) 50), id := ((CString.toUInt16 t'1 (0 + 51))), chunk_seq := ((CString.get t'1 (0 + 53))) } : __mavlink_statustext_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (#[statustext.severity])) 1 (statustext.text)) 51 (CString.ofUInt16 statustext.id)) 53 (#[statustext.chunk_seq])  -- the bytes of `*statustext` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   statustext := ({ severity := ((CString.get t'2 (0 + 0))), text := (CString.slice t'2 (0 + 1) 50), id := ((CString.toUInt16 t'2 (0 + 51))), chunk_seq := ((CString.get t'2 (0 + 53))) } : __mavlink_statustext_t)
   return statustext
 
@@ -9287,7 +9287,7 @@ def dc_statustext (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Array _
   h := hash_bytes t'13 t'12 (UInt64.toUInt16 (54 : UInt64))
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_statustext_get_severity msg))
   let mut a1 : Array UInt8 := Array.replicate 50 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a1 := CString.memset a1 0 (0 : Int32) (UInt64.toUSize (50 : UInt64))
+  a1 := CString.memset a1 0 (0 : Int32) (50 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_statustext_get_text msg a1
   a1 := t'14
@@ -9313,7 +9313,7 @@ def mavlink_msg_timesync_pack (system_id : UInt32) (component_id : UInt8) (msg :
   packet := { packet with tc1 := tc1 }
   packet := { packet with ts1 := ts1 }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 (Int64.toUInt64 packet.tc1))) 8 (CString.ofUInt64 (Int64.toUInt64 packet.ts1))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (111 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (34 : Int32))) mav_chan_status
   msg := t'2
@@ -9328,7 +9328,7 @@ def mavlink_msg_timesync_pack_chan (system_id : UInt32) (component_id chan : UIn
   packet := { packet with tc1 := tc1 }
   packet := { packet with ts1 := ts1 }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 (Int64.toUInt64 packet.tc1))) 8 (CString.ofUInt64 (Int64.toUInt64 packet.ts1))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (111 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (34 : Int32))) mav_chan_status
   msg := t'2
@@ -9427,7 +9427,7 @@ def pk_timesync (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavli
       mav_chan_status := t'33
       n := t'34
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'35, t'36) := mavlink_msg_to_send_buffer buf msg
   buf := t'35
   let len : UInt16 := t'36
@@ -9540,7 +9540,7 @@ def sd_timesync (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavli
 def _MAV_RETURN_int64_t (msg : __mavlink_message) (ofs : UInt8) : Int64 := Id.run do
   let mut r : Int64 := (0 : Int64)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt64 (Int64.toUInt64 r)  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (8 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (8 : UInt64)
   r := (UInt64.toInt64 (CString.toUInt64 t'1 0))
   return r
 
@@ -9557,10 +9557,10 @@ def mavlink_msg_timesync_decode (msg : __mavlink_message) (timesync : __mavlink_
   let mut timesync := timesync
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (16 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (16 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 (Int64.toUInt64 timesync.tc1))) 8 (CString.ofUInt64 (Int64.toUInt64 timesync.ts1))  -- the bytes of `*timesync` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))
   timesync := ({ tc1 := (UInt64.toInt64 (CString.toUInt64 t'1 (0 + 0))), ts1 := (UInt64.toInt64 (CString.toUInt64 t'1 (0 + 8))) } : __mavlink_timesync_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 (Int64.toUInt64 timesync.tc1))) 8 (CString.ofUInt64 (Int64.toUInt64 timesync.ts1))  -- the bytes of `*timesync` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   timesync := ({ tc1 := (UInt64.toInt64 (CString.toUInt64 t'2 (0 + 0))), ts1 := (UInt64.toInt64 (CString.toUInt64 t'2 (0 + 8))) } : __mavlink_timesync_t)
   return timesync
 
@@ -9623,7 +9623,7 @@ def mavlink_msg_system_time_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with time_unix_usec := time_unix_usec }
   packet := { packet with time_boot_ms := time_boot_ms }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_unix_usec)) 8 (CString.ofUInt32 packet.time_boot_ms)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (2 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (137 : Int32))) mav_chan_status
   msg := t'2
@@ -9638,7 +9638,7 @@ def mavlink_msg_system_time_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with time_unix_usec := time_unix_usec }
   packet := { packet with time_boot_ms := time_boot_ms }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_unix_usec)) 8 (CString.ofUInt32 packet.time_boot_ms)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (2 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (137 : Int32))) mav_chan_status
   msg := t'2
@@ -9737,7 +9737,7 @@ def pk_system_time (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'33
       n := t'34
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'35, t'36) := mavlink_msg_to_send_buffer buf msg
   buf := t'35
   let len : UInt16 := t'36
@@ -9850,7 +9850,7 @@ def sd_system_time (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
 def _MAV_RETURN_uint64_t (msg : __mavlink_message) (ofs : UInt8) : UInt64 := Id.run do
   let mut r : UInt64 := (0 : UInt64)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt64 r  -- the bytes of `x` (its object representation)
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (UInt64.toUSize (8 : UInt64))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat ofs) (8 : UInt64)
   r := ((CString.toUInt64 t'1 0))
   return r
 
@@ -9867,10 +9867,10 @@ def mavlink_msg_system_time_decode (msg : __mavlink_message) (system_time : __ma
   let mut system_time := system_time
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (12 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (12 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 system_time.time_unix_usec)) 8 (CString.ofUInt32 system_time.time_boot_ms)  -- the bytes of `*system_time` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))
   system_time := ({ time_unix_usec := ((CString.toUInt64 t'1 (0 + 0))), time_boot_ms := ((CString.toUInt32 t'1 (0 + 8))) } : __mavlink_system_time_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt64 system_time.time_unix_usec)) 8 (CString.ofUInt32 system_time.time_boot_ms)  -- the bytes of `*system_time` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   system_time := ({ time_unix_usec := ((CString.toUInt64 t'2 (0 + 0))), time_boot_ms := ((CString.toUInt32 t'2 (0 + 8))) } : __mavlink_system_time_t)
   return system_time
 
@@ -9942,7 +9942,7 @@ def mavlink_msg_request_data_stream_pack (system_id : UInt32) (component_id : UI
   packet := { packet with req_stream_id := req_stream_id }
   packet := { packet with start_stop := start_stop }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.req_message_rate)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.req_stream_id])) 5 (#[packet.start_stop])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (66 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (148 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -9960,7 +9960,7 @@ def mavlink_msg_request_data_stream_pack_chan (system_id : UInt32) (component_id
   packet := { packet with req_stream_id := req_stream_id }
   packet := { packet with start_stop := start_stop }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.req_message_rate)) 2 (#[packet.target_system])) 3 (#[packet.target_component])) 4 (#[packet.req_stream_id])) 5 (#[packet.start_stop])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (66 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (148 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -10092,7 +10092,7 @@ def pk_request_data_stream (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Ar
       mav_chan_status := t'48
       n := t'49
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'50, t'51) := mavlink_msg_to_send_buffer buf msg
   buf := t'50
   let len : UInt16 := t'51
@@ -10348,12 +10348,12 @@ def mavlink_msg_autopilot_version_pack (system_id : UInt32) (component_id : UInt
   packet := { packet with board_version := board_version }
   packet := { packet with vendor_id := vendor_id }
   packet := { packet with product_id := product_id }
-  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32)))) }
+  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 80 (0 : UInt8))) 0 (CString.ofUInt64 packet.capabilities)) 8 (CString.ofUInt64 packet.uid)) 16 (CString.ofUInt32 packet.flight_sw_version)) 20 (CString.ofUInt32 packet.middleware_sw_version)) 24 (CString.ofUInt32 packet.os_sw_version)) 28 (CString.ofUInt32 packet.board_version)) 32 (CString.ofUInt16 packet.vendor_id)) 34 (CString.ofUInt16 packet.product_id)) 36 (packet.flight_custom_version)) 44 (packet.middleware_custom_version)) 52 (packet.os_custom_version)) 60 (packet.uid2)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (78 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (78 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (148 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (60 : Int32))) (Int8.toUInt8 (Int32.toInt8 (78 : Int32))) (Int8.toUInt8 (Int32.toInt8 (178 : Int32))) mav_chan_status
   msg := t'2
@@ -10373,12 +10373,12 @@ def mavlink_msg_autopilot_version_pack_chan (system_id : UInt32) (component_id c
   packet := { packet with board_version := board_version }
   packet := { packet with vendor_id := vendor_id }
   packet := { packet with product_id := product_id }
-  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32)))) }
+  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 80 (0 : UInt8))) 0 (CString.ofUInt64 packet.capabilities)) 8 (CString.ofUInt64 packet.uid)) 16 (CString.ofUInt32 packet.flight_sw_version)) 20 (CString.ofUInt32 packet.middleware_sw_version)) 24 (CString.ofUInt32 packet.os_sw_version)) 28 (CString.ofUInt32 packet.board_version)) 32 (CString.ofUInt16 packet.vendor_id)) 34 (CString.ofUInt16 packet.product_id)) 36 (packet.flight_custom_version)) 44 (packet.middleware_custom_version)) 52 (packet.os_custom_version)) 60 (packet.uid2)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (78 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (78 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (148 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (60 : Int32))) (Int8.toUInt8 (Int32.toInt8 (78 : Int32))) (Int8.toUInt8 (Int32.toInt8 (178 : Int32))) mav_chan_status
   msg := t'2
@@ -10611,7 +10611,7 @@ def pk_autopilot_version (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arra
       mav_chan_status := t'83
       n := t'84
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'85, t'86) := mavlink_msg_to_send_buffer buf msg
   buf := t'85
   let len : UInt16 := t'86
@@ -10638,10 +10638,10 @@ def mavlink_msg_autopilot_version_send (chan : mavlink_channel_t) (capabilities 
   packet := { packet with board_version := board_version }
   packet := { packet with vendor_id := vendor_id }
   packet := { packet with product_id := product_id }
-  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
-  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32)))) }
+  packet := { packet with flight_custom_version := mav_array_memcpy packet.flight_custom_version flight_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with middleware_custom_version := mav_array_memcpy packet.middleware_custom_version middleware_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with os_custom_version := mav_array_memcpy packet.os_custom_version os_custom_version ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
+  packet := { packet with uid2 := mav_array_memcpy packet.uid2 uid2 ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (18 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (148 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 80 (0 : UInt8))) 0 (CString.ofUInt64 packet.capabilities)) 8 (CString.ofUInt64 packet.uid)) 16 (CString.ofUInt32 packet.flight_sw_version)) 20 (CString.ofUInt32 packet.middleware_sw_version)) 24 (CString.ofUInt32 packet.os_sw_version)) 28 (CString.ofUInt32 packet.board_version)) 32 (CString.ofUInt16 packet.vendor_id)) 34 (CString.ofUInt16 packet.product_id)) 36 (packet.flight_custom_version)) 44 (packet.middleware_custom_version)) 52 (packet.os_custom_version)) 60 (packet.uid2)  -- the bytes of `packet` (its object representation)
@@ -10887,7 +10887,7 @@ def mavlink_msg_autopilot_version_get_board_version (msg : __mavlink_message) : 
 /-- C++ `uint16_t _MAV_RETURN_uint8_t_array(const mavlink_message_t * msg, uint8_t * value, uint8_t array_length, uint8_t wire_offset)`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/protocol.h:346-351`. -/
 def _MAV_RETURN_uint8_t_array (msg : __mavlink_message) (value : Array UInt8) (array_length wire_offset : UInt8) : (Array UInt8) × UInt16 := Id.run do
   let mut value := value
-  value := CString.memcpy value 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt64.toUSize (UInt8.toUInt64 array_length))
+  value := CString.memcpy value 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt8.toUInt64 array_length)
   return (value, UInt8.toUInt16 array_length)
 
 /-- C++ `uint16_t mavlink_msg_autopilot_version_get_flight_custom_version(const mavlink_message_t * msg, uint8_t * flight_custom_version)`, `build/reference/ap/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/standard/mavlink_msg_autopilot_version.h:484-487`. -/
@@ -10935,10 +10935,10 @@ def mavlink_msg_autopilot_version_decode (msg : __mavlink_message) (autopilot_ve
   let mut autopilot_version := autopilot_version
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (78 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (78 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 80 (0 : UInt8))) 0 (CString.ofUInt64 autopilot_version.capabilities)) 8 (CString.ofUInt64 autopilot_version.uid)) 16 (CString.ofUInt32 autopilot_version.flight_sw_version)) 20 (CString.ofUInt32 autopilot_version.middleware_sw_version)) 24 (CString.ofUInt32 autopilot_version.os_sw_version)) 28 (CString.ofUInt32 autopilot_version.board_version)) 32 (CString.ofUInt16 autopilot_version.vendor_id)) 34 (CString.ofUInt16 autopilot_version.product_id)) 36 (autopilot_version.flight_custom_version)) 44 (autopilot_version.middleware_custom_version)) 52 (autopilot_version.os_custom_version)) 60 (autopilot_version.uid2)  -- the bytes of `*autopilot_version` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (78 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (78 : Int32)))
   autopilot_version := ({ capabilities := ((CString.toUInt64 t'1 (0 + 0))), uid := ((CString.toUInt64 t'1 (0 + 8))), flight_sw_version := ((CString.toUInt32 t'1 (0 + 16))), middleware_sw_version := ((CString.toUInt32 t'1 (0 + 20))), os_sw_version := ((CString.toUInt32 t'1 (0 + 24))), board_version := ((CString.toUInt32 t'1 (0 + 28))), vendor_id := ((CString.toUInt16 t'1 (0 + 32))), product_id := ((CString.toUInt16 t'1 (0 + 34))), flight_custom_version := (CString.slice t'1 (0 + 36) 8), middleware_custom_version := (CString.slice t'1 (0 + 44) 8), os_custom_version := (CString.slice t'1 (0 + 52) 8), uid2 := (CString.slice t'1 (0 + 60) 18) } : __mavlink_autopilot_version_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 80 (0 : UInt8))) 0 (CString.ofUInt64 autopilot_version.capabilities)) 8 (CString.ofUInt64 autopilot_version.uid)) 16 (CString.ofUInt32 autopilot_version.flight_sw_version)) 20 (CString.ofUInt32 autopilot_version.middleware_sw_version)) 24 (CString.ofUInt32 autopilot_version.os_sw_version)) 28 (CString.ofUInt32 autopilot_version.board_version)) 32 (CString.ofUInt16 autopilot_version.vendor_id)) 34 (CString.ofUInt16 autopilot_version.product_id)) 36 (autopilot_version.flight_custom_version)) 44 (autopilot_version.middleware_custom_version)) 52 (autopilot_version.os_custom_version)) 60 (autopilot_version.uid2)  -- the bytes of `*autopilot_version` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   autopilot_version := ({ capabilities := ((CString.toUInt64 t'2 (0 + 0))), uid := ((CString.toUInt64 t'2 (0 + 8))), flight_sw_version := ((CString.toUInt32 t'2 (0 + 16))), middleware_sw_version := ((CString.toUInt32 t'2 (0 + 20))), os_sw_version := ((CString.toUInt32 t'2 (0 + 24))), board_version := ((CString.toUInt32 t'2 (0 + 28))), vendor_id := ((CString.toUInt16 t'2 (0 + 32))), product_id := ((CString.toUInt16 t'2 (0 + 34))), flight_custom_version := (CString.slice t'2 (0 + 36) 8), middleware_custom_version := (CString.slice t'2 (0 + 44) 8), os_custom_version := (CString.slice t'2 (0 + 52) 8), uid2 := (CString.slice t'2 (0 + 60) 18) } : __mavlink_autopilot_version_t)
   return autopilot_version
 
@@ -10987,21 +10987,21 @@ def dc_autopilot_version (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : 
   h := hash_u64 h (UInt32.toUInt64 (mavlink_msg_autopilot_version_get_os_sw_version msg))
   h := hash_u64 h (UInt32.toUInt64 (mavlink_msg_autopilot_version_get_board_version msg))
   let mut a5 : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a5 := CString.memset a5 0 (0 : Int32) (UInt64.toUSize (8 : UInt64))
+  a5 := CString.memset a5 0 (0 : Int32) (8 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_autopilot_version_get_flight_custom_version msg a5
   a5 := t'14
   h := hash_u64 t'16 (UInt16.toUInt64 t'15)
   h := hash_bytes h a5 (UInt64.toUInt16 (8 : UInt64))
   let mut a6 : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a6 := CString.memset a6 0 (0 : Int32) (UInt64.toUSize (8 : UInt64))
+  a6 := CString.memset a6 0 (0 : Int32) (8 : UInt64)
   let t'19 := h
   let (t'17, t'18) := mavlink_msg_autopilot_version_get_middleware_custom_version msg a6
   a6 := t'17
   h := hash_u64 t'19 (UInt16.toUInt64 t'18)
   h := hash_bytes h a6 (UInt64.toUInt16 (8 : UInt64))
   let mut a7 : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a7 := CString.memset a7 0 (0 : Int32) (UInt64.toUSize (8 : UInt64))
+  a7 := CString.memset a7 0 (0 : Int32) (8 : UInt64)
   let t'22 := h
   let (t'20, t'21) := mavlink_msg_autopilot_version_get_os_custom_version msg a7
   a7 := t'20
@@ -11011,7 +11011,7 @@ def dc_autopilot_version (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : 
   h := hash_u64 h (UInt16.toUInt64 (mavlink_msg_autopilot_version_get_product_id msg))
   h := hash_u64 h (mavlink_msg_autopilot_version_get_uid msg)
   let mut a11 : Array UInt8 := Array.replicate 18 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a11 := CString.memset a11 0 (0 : Int32) (UInt64.toUSize (18 : UInt64))
+  a11 := CString.memset a11 0 (0 : Int32) (18 : UInt64)
   let t'25 := h
   let (t'23, t'24) := mavlink_msg_autopilot_version_get_uid2 msg a11
   a11 := t'23
@@ -11039,9 +11039,9 @@ def mavlink_msg_file_transfer_protocol_pack (system_id : UInt32) (component_id :
   packet := { packet with target_network := target_network }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with payload := mav_array_memcpy packet.payload payload (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32)))) }
+  packet := { packet with payload := mav_array_memcpy packet.payload payload ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 254 (0 : UInt8))) 0 (#[packet.target_network])) 1 (#[packet.target_system])) 2 (#[packet.target_component])) 3 (packet.payload)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (254 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (254 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (110 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_target msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) (Int8.toUInt8 (Int32.toInt8 (84 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -11056,9 +11056,9 @@ def mavlink_msg_file_transfer_protocol_pack_chan (system_id : UInt32) (component
   packet := { packet with target_network := target_network }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with payload := mav_array_memcpy packet.payload payload (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32)))) }
+  packet := { packet with payload := mav_array_memcpy packet.payload payload ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 254 (0 : UInt8))) 0 (#[packet.target_network])) 1 (#[packet.target_system])) 2 (#[packet.target_component])) 3 (packet.payload)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (254 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (254 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (110 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan_target msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) (Int8.toUInt8 (Int32.toInt8 (254 : Int32))) (Int8.toUInt8 (Int32.toInt8 (84 : Int32))) target_system mav_chan_status
   msg := t'2
@@ -11185,7 +11185,7 @@ def pk_file_transfer_protocol (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer :
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -11207,7 +11207,7 @@ def mavlink_msg_file_transfer_protocol_send (chan : mavlink_channel_t) (target_n
   packet := { packet with target_network := target_network }
   packet := { packet with target_system := mavlink_msg_target_field target_system }
   packet := { packet with target_component := target_component }
-  packet := { packet with payload := mav_array_memcpy packet.payload payload (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32)))) }
+  packet := { packet with payload := mav_array_memcpy packet.payload payload ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (251 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (110 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 254 (0 : UInt8))) 0 (#[packet.target_network])) 1 (#[packet.target_system])) 2 (#[packet.target_component])) 3 (packet.payload)  -- the bytes of `packet` (its object representation)
@@ -11390,7 +11390,7 @@ def dc_file_transfer_protocol (seed : UInt32) (len flags : UInt8) (mav_chan_buff
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_file_transfer_protocol_get_target_network msg))
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_file_transfer_protocol_get_target_component msg))
   let mut a2 : Array UInt8 := Array.replicate 251 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a2 := CString.memset a2 0 (0 : Int32) (UInt64.toUSize (251 : UInt64))
+  a2 := CString.memset a2 0 (0 : Int32) (251 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_file_transfer_protocol_get_payload msg a2
   a2 := t'14
@@ -11429,7 +11429,7 @@ def mavlink_msg_attitude_pack (system_id : UInt32) (component_id : UInt8) (msg :
   packet := { packet with pitchspeed := pitchspeed }
   packet := { packet with yawspeed := yawspeed }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.roll))) 8 (CString.ofUInt32 (Binary32.toBits packet.pitch))) 12 (CString.ofUInt32 (Binary32.toBits packet.yaw))) 16 (CString.ofUInt32 (Binary32.toBits packet.rollspeed))) 20 (CString.ofUInt32 (Binary32.toBits packet.pitchspeed))) 24 (CString.ofUInt32 (Binary32.toBits packet.yawspeed))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (30 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (39 : Int32))) mav_chan_status
   msg := t'2
@@ -11449,7 +11449,7 @@ def mavlink_msg_attitude_pack_chan (system_id : UInt32) (component_id chan : UIn
   packet := { packet with pitchspeed := pitchspeed }
   packet := { packet with yawspeed := yawspeed }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.roll))) 8 (CString.ofUInt32 (Binary32.toBits packet.pitch))) 12 (CString.ofUInt32 (Binary32.toBits packet.yaw))) 16 (CString.ofUInt32 (Binary32.toBits packet.rollspeed))) 20 (CString.ofUInt32 (Binary32.toBits packet.pitchspeed))) 24 (CString.ofUInt32 (Binary32.toBits packet.yawspeed))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (30 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (39 : Int32))) mav_chan_status
   msg := t'2
@@ -11603,7 +11603,7 @@ def pk_attitude (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavli
       mav_chan_status := t'58
       n := t'59
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'60, t'61) := mavlink_msg_to_send_buffer buf msg
   buf := t'60
   let len : UInt16 := t'61
@@ -11805,10 +11805,10 @@ def mavlink_msg_attitude_decode (msg : __mavlink_message) (attitude : __mavlink_
   let mut attitude := attitude
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (28 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (28 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 attitude.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits attitude.roll))) 8 (CString.ofUInt32 (Binary32.toBits attitude.pitch))) 12 (CString.ofUInt32 (Binary32.toBits attitude.yaw))) 16 (CString.ofUInt32 (Binary32.toBits attitude.rollspeed))) 20 (CString.ofUInt32 (Binary32.toBits attitude.pitchspeed))) 24 (CString.ofUInt32 (Binary32.toBits attitude.yawspeed))  -- the bytes of `*attitude` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))
   attitude := ({ time_boot_ms := ((CString.toUInt32 t'1 (0 + 0))), roll := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), pitch := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), yaw := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), rollspeed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), pitchspeed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 20))), yawspeed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24))) } : __mavlink_attitude_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 attitude.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits attitude.roll))) 8 (CString.ofUInt32 (Binary32.toBits attitude.pitch))) 12 (CString.ofUInt32 (Binary32.toBits attitude.yaw))) 16 (CString.ofUInt32 (Binary32.toBits attitude.rollspeed))) 20 (CString.ofUInt32 (Binary32.toBits attitude.pitchspeed))) 24 (CString.ofUInt32 (Binary32.toBits attitude.yawspeed))  -- the bytes of `*attitude` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   attitude := ({ time_boot_ms := ((CString.toUInt32 t'2 (0 + 0))), roll := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), pitch := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), yaw := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), rollspeed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), pitchspeed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 20))), yawspeed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24))) } : __mavlink_attitude_t)
   return attitude
 
@@ -11888,7 +11888,7 @@ def mavlink_msg_ahrs2_pack (system_id : UInt32) (component_id : UInt8) (msg : __
   packet := { packet with lat := lat }
   packet := { packet with lng := lng }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.roll))) 4 (CString.ofUInt32 (Binary32.toBits packet.pitch))) 8 (CString.ofUInt32 (Binary32.toBits packet.yaw))) 12 (CString.ofUInt32 (Binary32.toBits packet.altitude))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.lng))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (24 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (24 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (178 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) (Int8.toUInt8 (Int32.toInt8 (47 : Int32))) mav_chan_status
   msg := t'2
@@ -11907,7 +11907,7 @@ def mavlink_msg_ahrs2_pack_chan (system_id : UInt32) (component_id chan : UInt8)
   packet := { packet with lat := lat }
   packet := { packet with lng := lng }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.roll))) 4 (CString.ofUInt32 (Binary32.toBits packet.pitch))) 8 (CString.ofUInt32 (Binary32.toBits packet.yaw))) 12 (CString.ofUInt32 (Binary32.toBits packet.altitude))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 20 (CString.ofUInt32 (Int32.toUInt32 packet.lng))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (24 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (24 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (178 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) (Int8.toUInt8 (Int32.toInt8 (47 : Int32))) mav_chan_status
   msg := t'2
@@ -12050,7 +12050,7 @@ def pk_ahrs2 (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlink_
       mav_chan_status := t'53
       n := t'54
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'55, t'56) := mavlink_msg_to_send_buffer buf msg
   buf := t'55
   let len : UInt16 := t'56
@@ -12236,10 +12236,10 @@ def mavlink_msg_ahrs2_decode (msg : __mavlink_message) (ahrs2 : __mavlink_ahrs2_
   let mut ahrs2 := ahrs2
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (24 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (24 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ahrs2.roll))) 4 (CString.ofUInt32 (Binary32.toBits ahrs2.pitch))) 8 (CString.ofUInt32 (Binary32.toBits ahrs2.yaw))) 12 (CString.ofUInt32 (Binary32.toBits ahrs2.altitude))) 16 (CString.ofUInt32 (Int32.toUInt32 ahrs2.lat))) 20 (CString.ofUInt32 (Int32.toUInt32 ahrs2.lng))  -- the bytes of `*ahrs2` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (24 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (24 : Int32)))
   ahrs2 := ({ roll := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), pitch := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), yaw := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), altitude := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), lat := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 16))), lng := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 20))) } : __mavlink_ahrs2_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 24 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ahrs2.roll))) 4 (CString.ofUInt32 (Binary32.toBits ahrs2.pitch))) 8 (CString.ofUInt32 (Binary32.toBits ahrs2.yaw))) 12 (CString.ofUInt32 (Binary32.toBits ahrs2.altitude))) 16 (CString.ofUInt32 (Int32.toUInt32 ahrs2.lat))) 20 (CString.ofUInt32 (Int32.toUInt32 ahrs2.lng))  -- the bytes of `*ahrs2` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   ahrs2 := ({ roll := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), pitch := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), yaw := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), altitude := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), lat := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 16))), lng := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 20))) } : __mavlink_ahrs2_t)
   return ahrs2
 
@@ -12318,7 +12318,7 @@ def mavlink_msg_vfr_hud_pack (system_id : UInt32) (component_id : UInt8) (msg : 
   packet := { packet with heading := heading }
   packet := { packet with throttle := throttle }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.airspeed))) 4 (CString.ofUInt32 (Binary32.toBits packet.groundspeed))) 8 (CString.ofUInt32 (Binary32.toBits packet.alt))) 12 (CString.ofUInt32 (Binary32.toBits packet.climb))) 16 (CString.ofUInt16 (Int16.toUInt16 packet.heading))) 18 (CString.ofUInt16 packet.throttle)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (74 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) mav_chan_status
   msg := t'2
@@ -12337,7 +12337,7 @@ def mavlink_msg_vfr_hud_pack_chan (system_id : UInt32) (component_id chan : UInt
   packet := { packet with heading := heading }
   packet := { packet with throttle := throttle }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.airspeed))) 4 (CString.ofUInt32 (Binary32.toBits packet.groundspeed))) 8 (CString.ofUInt32 (Binary32.toBits packet.alt))) 12 (CString.ofUInt32 (Binary32.toBits packet.climb))) 16 (CString.ofUInt16 (Int16.toUInt16 packet.heading))) 18 (CString.ofUInt16 packet.throttle)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (74 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) mav_chan_status
   msg := t'2
@@ -12480,7 +12480,7 @@ def pk_vfr_hud (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlin
       mav_chan_status := t'53
       n := t'54
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'55, t'56) := mavlink_msg_to_send_buffer buf msg
   buf := t'55
   let len : UInt16 := t'56
@@ -12666,10 +12666,10 @@ def mavlink_msg_vfr_hud_decode (msg : __mavlink_message) (vfr_hud : __mavlink_vf
   let mut vfr_hud := vfr_hud
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (20 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (20 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits vfr_hud.airspeed))) 4 (CString.ofUInt32 (Binary32.toBits vfr_hud.groundspeed))) 8 (CString.ofUInt32 (Binary32.toBits vfr_hud.alt))) 12 (CString.ofUInt32 (Binary32.toBits vfr_hud.climb))) 16 (CString.ofUInt16 (Int16.toUInt16 vfr_hud.heading))) 18 (CString.ofUInt16 vfr_hud.throttle)  -- the bytes of `*vfr_hud` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))
   vfr_hud := ({ airspeed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), groundspeed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), alt := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), climb := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), heading := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 16))), throttle := ((CString.toUInt16 t'1 (0 + 18))) } : __mavlink_vfr_hud_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits vfr_hud.airspeed))) 4 (CString.ofUInt32 (Binary32.toBits vfr_hud.groundspeed))) 8 (CString.ofUInt32 (Binary32.toBits vfr_hud.alt))) 12 (CString.ofUInt32 (Binary32.toBits vfr_hud.climb))) 16 (CString.ofUInt16 (Int16.toUInt16 vfr_hud.heading))) 18 (CString.ofUInt16 vfr_hud.throttle)  -- the bytes of `*vfr_hud` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   vfr_hud := ({ airspeed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), groundspeed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), alt := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), climb := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), heading := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 16))), throttle := ((CString.toUInt16 t'2 (0 + 18))) } : __mavlink_vfr_hud_t)
   return vfr_hud
 
@@ -12757,7 +12757,7 @@ def mavlink_msg_global_position_int_pack (system_id : UInt32) (component_id : UI
   packet := { packet with vz := vz }
   packet := { packet with hdg := hdg }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.lon))) 12 (CString.ofUInt32 (Int32.toUInt32 packet.alt))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.relative_alt))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.vx))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.vy))) 24 (CString.ofUInt16 (Int16.toUInt16 packet.vz))) 26 (CString.ofUInt16 packet.hdg)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (33 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (104 : Int32))) mav_chan_status
   msg := t'2
@@ -12779,7 +12779,7 @@ def mavlink_msg_global_position_int_pack_chan (system_id : UInt32) (component_id
   packet := { packet with vz := vz }
   packet := { packet with hdg := hdg }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.lon))) 12 (CString.ofUInt32 (Int32.toUInt32 packet.alt))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.relative_alt))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.vx))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.vy))) 24 (CString.ofUInt16 (Int16.toUInt16 packet.vz))) 26 (CString.ofUInt16 packet.hdg)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (33 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (104 : Int32))) mav_chan_status
   msg := t'2
@@ -12955,7 +12955,7 @@ def pk_global_position_int (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Ar
       mav_chan_status := t'68
       n := t'69
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'70, t'71) := mavlink_msg_to_send_buffer buf msg
   buf := t'70
   let len : UInt16 := t'71
@@ -13189,10 +13189,10 @@ def mavlink_msg_global_position_int_decode (msg : __mavlink_message) (global_pos
   let mut global_position_int := global_position_int
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (28 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (28 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 global_position_int.time_boot_ms)) 4 (CString.ofUInt32 (Int32.toUInt32 global_position_int.lat))) 8 (CString.ofUInt32 (Int32.toUInt32 global_position_int.lon))) 12 (CString.ofUInt32 (Int32.toUInt32 global_position_int.alt))) 16 (CString.ofUInt32 (Int32.toUInt32 global_position_int.relative_alt))) 20 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vx))) 22 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vy))) 24 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vz))) 26 (CString.ofUInt16 global_position_int.hdg)  -- the bytes of `*global_position_int` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))
   global_position_int := ({ time_boot_ms := ((CString.toUInt32 t'1 (0 + 0))), lat := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 4))), lon := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 8))), alt := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 12))), relative_alt := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 16))), vx := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 20))), vy := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 22))), vz := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 24))), hdg := ((CString.toUInt16 t'1 (0 + 26))) } : __mavlink_global_position_int_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 global_position_int.time_boot_ms)) 4 (CString.ofUInt32 (Int32.toUInt32 global_position_int.lat))) 8 (CString.ofUInt32 (Int32.toUInt32 global_position_int.lon))) 12 (CString.ofUInt32 (Int32.toUInt32 global_position_int.alt))) 16 (CString.ofUInt32 (Int32.toUInt32 global_position_int.relative_alt))) 20 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vx))) 22 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vy))) 24 (CString.ofUInt16 (Int16.toUInt16 global_position_int.vz))) 26 (CString.ofUInt16 global_position_int.hdg)  -- the bytes of `*global_position_int` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   global_position_int := ({ time_boot_ms := ((CString.toUInt32 t'2 (0 + 0))), lat := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 4))), lon := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 8))), alt := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 12))), relative_alt := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 16))), vx := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 20))), vy := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 22))), vz := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 24))), hdg := ((CString.toUInt16 t'2 (0 + 26))) } : __mavlink_global_position_int_t)
   return global_position_int
 
@@ -13277,7 +13277,7 @@ def mavlink_msg_ahrs_pack (system_id : UInt32) (component_id : UInt8) (msg : __m
   packet := { packet with error_rp := error_rp }
   packet := { packet with error_yaw := error_yaw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.omegaIx))) 4 (CString.ofUInt32 (Binary32.toBits packet.omegaIy))) 8 (CString.ofUInt32 (Binary32.toBits packet.omegaIz))) 12 (CString.ofUInt32 (Binary32.toBits packet.accel_weight))) 16 (CString.ofUInt32 (Binary32.toBits packet.renorm_val))) 20 (CString.ofUInt32 (Binary32.toBits packet.error_rp))) 24 (CString.ofUInt32 (Binary32.toBits packet.error_yaw))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (163 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (127 : Int32))) mav_chan_status
   msg := t'2
@@ -13297,7 +13297,7 @@ def mavlink_msg_ahrs_pack_chan (system_id : UInt32) (component_id chan : UInt8) 
   packet := { packet with error_rp := error_rp }
   packet := { packet with error_yaw := error_yaw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.omegaIx))) 4 (CString.ofUInt32 (Binary32.toBits packet.omegaIy))) 8 (CString.ofUInt32 (Binary32.toBits packet.omegaIz))) 12 (CString.ofUInt32 (Binary32.toBits packet.accel_weight))) 16 (CString.ofUInt32 (Binary32.toBits packet.renorm_val))) 20 (CString.ofUInt32 (Binary32.toBits packet.error_rp))) 24 (CString.ofUInt32 (Binary32.toBits packet.error_yaw))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (163 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (127 : Int32))) mav_chan_status
   msg := t'2
@@ -13451,7 +13451,7 @@ def pk_ahrs (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlink_m
       mav_chan_status := t'58
       n := t'59
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'60, t'61) := mavlink_msg_to_send_buffer buf msg
   buf := t'60
   let len : UInt16 := t'61
@@ -13653,10 +13653,10 @@ def mavlink_msg_ahrs_decode (msg : __mavlink_message) (ahrs : __mavlink_ahrs_t) 
   let mut ahrs := ahrs
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (28 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (28 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIx))) 4 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIy))) 8 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIz))) 12 (CString.ofUInt32 (Binary32.toBits ahrs.accel_weight))) 16 (CString.ofUInt32 (Binary32.toBits ahrs.renorm_val))) 20 (CString.ofUInt32 (Binary32.toBits ahrs.error_rp))) 24 (CString.ofUInt32 (Binary32.toBits ahrs.error_yaw))  -- the bytes of `*ahrs` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))
   ahrs := ({ omegaIx := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), omegaIy := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), omegaIz := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), accel_weight := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), renorm_val := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), error_rp := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 20))), error_yaw := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24))) } : __mavlink_ahrs_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIx))) 4 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIy))) 8 (CString.ofUInt32 (Binary32.toBits ahrs.omegaIz))) 12 (CString.ofUInt32 (Binary32.toBits ahrs.accel_weight))) 16 (CString.ofUInt32 (Binary32.toBits ahrs.renorm_val))) 20 (CString.ofUInt32 (Binary32.toBits ahrs.error_rp))) 24 (CString.ofUInt32 (Binary32.toBits ahrs.error_yaw))  -- the bytes of `*ahrs` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   ahrs := ({ omegaIx := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), omegaIy := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), omegaIz := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), accel_weight := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), renorm_val := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), error_rp := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 20))), error_yaw := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24))) } : __mavlink_ahrs_t)
   return ahrs
 
@@ -13739,7 +13739,7 @@ def mavlink_msg_ekf_status_report_pack (system_id : UInt32) (component_id : UInt
   packet := { packet with flags := flags }
   packet := { packet with airspeed_variance := airspeed_variance }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 26 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.velocity_variance))) 4 (CString.ofUInt32 (Binary32.toBits packet.pos_horiz_variance))) 8 (CString.ofUInt32 (Binary32.toBits packet.pos_vert_variance))) 12 (CString.ofUInt32 (Binary32.toBits packet.compass_variance))) 16 (CString.ofUInt32 (Binary32.toBits packet.terrain_alt_variance))) 20 (CString.ofUInt16 packet.flags)) 22 (CString.ofUInt32 (Binary32.toBits packet.airspeed_variance))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (26 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (193 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (22 : Int32))) (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (71 : Int32))) mav_chan_status
   msg := t'2
@@ -13759,7 +13759,7 @@ def mavlink_msg_ekf_status_report_pack_chan (system_id : UInt32) (component_id c
   packet := { packet with flags := flags }
   packet := { packet with airspeed_variance := airspeed_variance }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 26 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.velocity_variance))) 4 (CString.ofUInt32 (Binary32.toBits packet.pos_horiz_variance))) 8 (CString.ofUInt32 (Binary32.toBits packet.pos_vert_variance))) 12 (CString.ofUInt32 (Binary32.toBits packet.compass_variance))) 16 (CString.ofUInt32 (Binary32.toBits packet.terrain_alt_variance))) 20 (CString.ofUInt16 packet.flags)) 22 (CString.ofUInt32 (Binary32.toBits packet.airspeed_variance))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (26 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (193 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (22 : Int32))) (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (71 : Int32))) mav_chan_status
   msg := t'2
@@ -13913,7 +13913,7 @@ def pk_ekf_status_report (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arra
       mav_chan_status := t'58
       n := t'59
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'60, t'61) := mavlink_msg_to_send_buffer buf msg
   buf := t'60
   let len : UInt16 := t'61
@@ -14115,10 +14115,10 @@ def mavlink_msg_ekf_status_report_decode (msg : __mavlink_message) (ekf_status_r
   let mut ekf_status_report := ekf_status_report
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (26 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (26 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 26 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ekf_status_report.velocity_variance))) 4 (CString.ofUInt32 (Binary32.toBits ekf_status_report.pos_horiz_variance))) 8 (CString.ofUInt32 (Binary32.toBits ekf_status_report.pos_vert_variance))) 12 (CString.ofUInt32 (Binary32.toBits ekf_status_report.compass_variance))) 16 (CString.ofUInt32 (Binary32.toBits ekf_status_report.terrain_alt_variance))) 20 (CString.ofUInt16 ekf_status_report.flags)) 22 (CString.ofUInt32 (Binary32.toBits ekf_status_report.airspeed_variance))  -- the bytes of `*ekf_status_report` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))
   ekf_status_report := ({ velocity_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), pos_horiz_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), pos_vert_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), compass_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), terrain_alt_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), flags := ((CString.toUInt16 t'1 (0 + 20))), airspeed_variance := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 22))) } : __mavlink_ekf_status_report_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 26 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits ekf_status_report.velocity_variance))) 4 (CString.ofUInt32 (Binary32.toBits ekf_status_report.pos_horiz_variance))) 8 (CString.ofUInt32 (Binary32.toBits ekf_status_report.pos_vert_variance))) 12 (CString.ofUInt32 (Binary32.toBits ekf_status_report.compass_variance))) 16 (CString.ofUInt32 (Binary32.toBits ekf_status_report.terrain_alt_variance))) 20 (CString.ofUInt16 ekf_status_report.flags)) 22 (CString.ofUInt32 (Binary32.toBits ekf_status_report.airspeed_variance))  -- the bytes of `*ekf_status_report` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   ekf_status_report := ({ velocity_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), pos_horiz_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), pos_vert_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), compass_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), terrain_alt_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), flags := ((CString.toUInt16 t'2 (0 + 20))), airspeed_variance := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 22))) } : __mavlink_ekf_status_report_t)
   return ekf_status_report
 
@@ -14201,7 +14201,7 @@ def mavlink_msg_vibration_pack (system_id : UInt32) (component_id : UInt8) (msg 
   packet := { packet with clipping_1 := clipping_1 }
   packet := { packet with clipping_2 := clipping_2 }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 32 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt32 (Binary32.toBits packet.vibration_x))) 12 (CString.ofUInt32 (Binary32.toBits packet.vibration_y))) 16 (CString.ofUInt32 (Binary32.toBits packet.vibration_z))) 20 (CString.ofUInt32 packet.clipping_0)) 24 (CString.ofUInt32 packet.clipping_1)) 28 (CString.ofUInt32 packet.clipping_2)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (32 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (32 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (241 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (32 : Int32))) (Int8.toUInt8 (Int32.toInt8 (32 : Int32))) (Int8.toUInt8 (Int32.toInt8 (90 : Int32))) mav_chan_status
   msg := t'2
@@ -14221,7 +14221,7 @@ def mavlink_msg_vibration_pack_chan (system_id : UInt32) (component_id chan : UI
   packet := { packet with clipping_1 := clipping_1 }
   packet := { packet with clipping_2 := clipping_2 }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 32 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt32 (Binary32.toBits packet.vibration_x))) 12 (CString.ofUInt32 (Binary32.toBits packet.vibration_y))) 16 (CString.ofUInt32 (Binary32.toBits packet.vibration_z))) 20 (CString.ofUInt32 packet.clipping_0)) 24 (CString.ofUInt32 packet.clipping_1)) 28 (CString.ofUInt32 packet.clipping_2)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (32 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (32 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (241 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (32 : Int32))) (Int8.toUInt8 (Int32.toInt8 (32 : Int32))) (Int8.toUInt8 (Int32.toInt8 (90 : Int32))) mav_chan_status
   msg := t'2
@@ -14375,7 +14375,7 @@ def pk_vibration (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavl
       mav_chan_status := t'58
       n := t'59
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'60, t'61) := mavlink_msg_to_send_buffer buf msg
   buf := t'60
   let len : UInt16 := t'61
@@ -14577,10 +14577,10 @@ def mavlink_msg_vibration_decode (msg : __mavlink_message) (vibration : __mavlin
   let mut vibration := vibration
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (32 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (32 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 32 (0 : UInt8))) 0 (CString.ofUInt64 vibration.time_usec)) 8 (CString.ofUInt32 (Binary32.toBits vibration.vibration_x))) 12 (CString.ofUInt32 (Binary32.toBits vibration.vibration_y))) 16 (CString.ofUInt32 (Binary32.toBits vibration.vibration_z))) 20 (CString.ofUInt32 vibration.clipping_0)) 24 (CString.ofUInt32 vibration.clipping_1)) 28 (CString.ofUInt32 vibration.clipping_2)  -- the bytes of `*vibration` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (32 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (32 : Int32)))
   vibration := ({ time_usec := ((CString.toUInt64 t'1 (0 + 0))), vibration_x := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), vibration_y := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), vibration_z := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), clipping_0 := ((CString.toUInt32 t'1 (0 + 20))), clipping_1 := ((CString.toUInt32 t'1 (0 + 24))), clipping_2 := ((CString.toUInt32 t'1 (0 + 28))) } : __mavlink_vibration_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 32 (0 : UInt8))) 0 (CString.ofUInt64 vibration.time_usec)) 8 (CString.ofUInt32 (Binary32.toBits vibration.vibration_x))) 12 (CString.ofUInt32 (Binary32.toBits vibration.vibration_y))) 16 (CString.ofUInt32 (Binary32.toBits vibration.vibration_z))) 20 (CString.ofUInt32 vibration.clipping_0)) 24 (CString.ofUInt32 vibration.clipping_1)) 28 (CString.ofUInt32 vibration.clipping_2)  -- the bytes of `*vibration` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   vibration := ({ time_usec := ((CString.toUInt64 t'2 (0 + 0))), vibration_x := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), vibration_y := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), vibration_z := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), clipping_0 := ((CString.toUInt32 t'2 (0 + 20))), clipping_1 := ((CString.toUInt32 t'2 (0 + 24))), clipping_2 := ((CString.toUInt32 t'2 (0 + 28))) } : __mavlink_vibration_t)
   return vibration
 
@@ -14684,15 +14684,15 @@ def mavlink_msg_battery_status_pack (system_id : UInt32) (component_id : UInt8) 
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages[0]!)) 2 (CString.ofUInt16 packet.voltages[1]!)) 4 (CString.ofUInt16 packet.voltages[2]!)) 6 (CString.ofUInt16 packet.voltages[3]!)) 8 (CString.ofUInt16 packet.voltages[4]!)) 10 (CString.ofUInt16 packet.voltages[5]!)) 12 (CString.ofUInt16 packet.voltages[6]!)) 14 (CString.ofUInt16 packet.voltages[7]!)) 16 (CString.ofUInt16 packet.voltages[8]!)) 18 (CString.ofUInt16 packet.voltages[9]!)  -- the bytes of the elements of `packet.voltages`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((voltages).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32)))
   packet := { packet with voltages := #[((CString.toUInt16 t'1 (0 + 0))), ((CString.toUInt16 t'1 (0 + 2))), ((CString.toUInt16 t'1 (0 + 4))), ((CString.toUInt16 t'1 (0 + 6))), ((CString.toUInt16 t'1 (0 + 8))), ((CString.toUInt16 t'1 (0 + 10))), ((CString.toUInt16 t'1 (0 + 12))), ((CString.toUInt16 t'1 (0 + 14))), ((CString.toUInt16 t'1 (0 + 16))), ((CString.toUInt16 t'1 (0 + 18)))] }
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages_ext[0]!)) 2 (CString.ofUInt16 packet.voltages_ext[1]!)) 4 (CString.ofUInt16 packet.voltages_ext[2]!)) 6 (CString.ofUInt16 packet.voltages_ext[3]!)  -- the bytes of the elements of `packet.voltages_ext`
   let t'6 := t'4
   let mut t'5 : Array UInt8 := ((voltages_ext).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages_ext`
-  t'4 := mav_array_memcpy t'6 t'5 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'4 := mav_array_memcpy t'6 t'5 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with voltages_ext := #[((CString.toUInt16 t'4 (0 + 0))), ((CString.toUInt16 t'4 (0 + 2))), ((CString.toUInt16 t'4 (0 + 4))), ((CString.toUInt16 t'4 (0 + 6)))] }
   let mut t'7 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.current_consumed))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.energy_consumed))) 8 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))) 10 (CString.ofUInt16 packet.voltages[0]!)) 12 (CString.ofUInt16 packet.voltages[1]!)) 14 (CString.ofUInt16 packet.voltages[2]!)) 16 (CString.ofUInt16 packet.voltages[3]!)) 18 (CString.ofUInt16 packet.voltages[4]!)) 20 (CString.ofUInt16 packet.voltages[5]!)) 22 (CString.ofUInt16 packet.voltages[6]!)) 24 (CString.ofUInt16 packet.voltages[7]!)) 26 (CString.ofUInt16 packet.voltages[8]!)) 28 (CString.ofUInt16 packet.voltages[9]!)) 30 (CString.ofUInt16 (Int16.toUInt16 packet.current_battery))) 32 (#[packet.id])) 33 (#[packet.battery_function])) 34 (#[packet.type])) 35 (#[(Int8.toUInt8 packet.battery_remaining)])) 36 (CString.ofUInt32 (Int32.toUInt32 packet.time_remaining))) 40 (#[packet.charge_state])) 41 (CString.ofUInt16 packet.voltages_ext[0]!)) 43 (CString.ofUInt16 packet.voltages_ext[1]!)) 45 (CString.ofUInt16 packet.voltages_ext[2]!)) 47 (CString.ofUInt16 packet.voltages_ext[3]!)) 49 (#[packet.mode])) 50 (CString.ofUInt32 packet.fault_bitmask)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'7 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'7 0 (Int64.toUInt64 (Int32.toInt64 (54 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (147 : Int32) &&& (16777215 : UInt32) }
   let (t'8, t'9, t'10) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (36 : Int32))) (Int8.toUInt8 (Int32.toInt8 (54 : Int32))) (Int8.toUInt8 (Int32.toInt8 (154 : Int32))) mav_chan_status
   msg := t'8
@@ -14719,15 +14719,15 @@ def mavlink_msg_battery_status_pack_chan (system_id : UInt32) (component_id chan
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages[0]!)) 2 (CString.ofUInt16 packet.voltages[1]!)) 4 (CString.ofUInt16 packet.voltages[2]!)) 6 (CString.ofUInt16 packet.voltages[3]!)) 8 (CString.ofUInt16 packet.voltages[4]!)) 10 (CString.ofUInt16 packet.voltages[5]!)) 12 (CString.ofUInt16 packet.voltages[6]!)) 14 (CString.ofUInt16 packet.voltages[7]!)) 16 (CString.ofUInt16 packet.voltages[8]!)) 18 (CString.ofUInt16 packet.voltages[9]!)  -- the bytes of the elements of `packet.voltages`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((voltages).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32)))
   packet := { packet with voltages := #[((CString.toUInt16 t'1 (0 + 0))), ((CString.toUInt16 t'1 (0 + 2))), ((CString.toUInt16 t'1 (0 + 4))), ((CString.toUInt16 t'1 (0 + 6))), ((CString.toUInt16 t'1 (0 + 8))), ((CString.toUInt16 t'1 (0 + 10))), ((CString.toUInt16 t'1 (0 + 12))), ((CString.toUInt16 t'1 (0 + 14))), ((CString.toUInt16 t'1 (0 + 16))), ((CString.toUInt16 t'1 (0 + 18)))] }
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages_ext[0]!)) 2 (CString.ofUInt16 packet.voltages_ext[1]!)) 4 (CString.ofUInt16 packet.voltages_ext[2]!)) 6 (CString.ofUInt16 packet.voltages_ext[3]!)  -- the bytes of the elements of `packet.voltages_ext`
   let t'6 := t'4
   let mut t'5 : Array UInt8 := ((voltages_ext).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages_ext`
-  t'4 := mav_array_memcpy t'6 t'5 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'4 := mav_array_memcpy t'6 t'5 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with voltages_ext := #[((CString.toUInt16 t'4 (0 + 0))), ((CString.toUInt16 t'4 (0 + 2))), ((CString.toUInt16 t'4 (0 + 4))), ((CString.toUInt16 t'4 (0 + 6)))] }
   let mut t'7 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.current_consumed))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.energy_consumed))) 8 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))) 10 (CString.ofUInt16 packet.voltages[0]!)) 12 (CString.ofUInt16 packet.voltages[1]!)) 14 (CString.ofUInt16 packet.voltages[2]!)) 16 (CString.ofUInt16 packet.voltages[3]!)) 18 (CString.ofUInt16 packet.voltages[4]!)) 20 (CString.ofUInt16 packet.voltages[5]!)) 22 (CString.ofUInt16 packet.voltages[6]!)) 24 (CString.ofUInt16 packet.voltages[7]!)) 26 (CString.ofUInt16 packet.voltages[8]!)) 28 (CString.ofUInt16 packet.voltages[9]!)) 30 (CString.ofUInt16 (Int16.toUInt16 packet.current_battery))) 32 (#[packet.id])) 33 (#[packet.battery_function])) 34 (#[packet.type])) 35 (#[(Int8.toUInt8 packet.battery_remaining)])) 36 (CString.ofUInt32 (Int32.toUInt32 packet.time_remaining))) 40 (#[packet.charge_state])) 41 (CString.ofUInt16 packet.voltages_ext[0]!)) 43 (CString.ofUInt16 packet.voltages_ext[1]!)) 45 (CString.ofUInt16 packet.voltages_ext[2]!)) 47 (CString.ofUInt16 packet.voltages_ext[3]!)) 49 (#[packet.mode])) 50 (CString.ofUInt32 packet.fault_bitmask)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'7 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'7 0 (Int64.toUInt64 (Int32.toInt64 (54 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (147 : Int32) &&& (16777215 : UInt32) }
   let (t'8, t'9, t'10) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (36 : Int32))) (Int8.toUInt8 (Int32.toInt8 (54 : Int32))) (Int8.toUInt8 (Int32.toInt8 (154 : Int32))) mav_chan_status
   msg := t'8
@@ -14970,7 +14970,7 @@ def pk_battery_status (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array _
       mav_chan_status := t'93
       n := t'94
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'95, t'96) := mavlink_msg_to_send_buffer buf msg
   buf := t'95
   let len : UInt16 := t'96
@@ -15004,12 +15004,12 @@ def mavlink_msg_battery_status_send (chan : mavlink_channel_t) (id battery_funct
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages[0]!)) 2 (CString.ofUInt16 packet.voltages[1]!)) 4 (CString.ofUInt16 packet.voltages[2]!)) 6 (CString.ofUInt16 packet.voltages[3]!)) 8 (CString.ofUInt16 packet.voltages[4]!)) 10 (CString.ofUInt16 packet.voltages[5]!)) 12 (CString.ofUInt16 packet.voltages[6]!)) 14 (CString.ofUInt16 packet.voltages[7]!)) 16 (CString.ofUInt16 packet.voltages[8]!)) 18 (CString.ofUInt16 packet.voltages[9]!)  -- the bytes of the elements of `packet.voltages`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((voltages).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (10 : Int32)))
   packet := { packet with voltages := #[((CString.toUInt16 t'1 (0 + 0))), ((CString.toUInt16 t'1 (0 + 2))), ((CString.toUInt16 t'1 (0 + 4))), ((CString.toUInt16 t'1 (0 + 6))), ((CString.toUInt16 t'1 (0 + 8))), ((CString.toUInt16 t'1 (0 + 10))), ((CString.toUInt16 t'1 (0 + 12))), ((CString.toUInt16 t'1 (0 + 14))), ((CString.toUInt16 t'1 (0 + 16))), ((CString.toUInt16 t'1 (0 + 18)))] }
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 packet.voltages_ext[0]!)) 2 (CString.ofUInt16 packet.voltages_ext[1]!)) 4 (CString.ofUInt16 packet.voltages_ext[2]!)) 6 (CString.ofUInt16 packet.voltages_ext[3]!)  -- the bytes of the elements of `packet.voltages_ext`
   let t'6 := t'4
   let mut t'5 : Array UInt8 := ((voltages_ext).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `voltages_ext`
-  t'4 := mav_array_memcpy t'6 t'5 (UInt64.toUSize ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'4 := mav_array_memcpy t'6 t'5 ((2 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with voltages_ext := #[((CString.toUInt16 t'4 (0 + 0))), ((CString.toUInt16 t'4 (0 + 2))), ((CString.toUInt16 t'4 (0 + 4))), ((CString.toUInt16 t'4 (0 + 6)))] }
   let t'8 := chan
   let t'9 := Int32.toUInt32 (147 : Int32)
@@ -15263,7 +15263,7 @@ def mavlink_msg_battery_status_get_temperature (msg : __mavlink_message) : Int16
 def _MAV_RETURN_uint16_t_array (msg : __mavlink_message) (value : Array UInt16) (array_length wire_offset : UInt8) : (Array UInt16) × UInt16 := Id.run do
   let mut value := value
   let mut t'1 : Array UInt8 := ((value).foldl (fun a' x' => a' ++ CString.ofUInt16 x') (#[] : Array UInt8))  -- the bytes of the elements of `a`
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt64.toUSize (UInt8.toUInt64 array_length * (2 : UInt64)))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt8.toUInt64 array_length * (2 : UInt64))
   value := (Array.ofFn (n := (t'1.size - 0) / 2) fun i' => ((CString.toUInt16 t'1 (0 + i'.val * 2))))
   return (value, UInt64.toUInt16 (UInt8.toUInt64 array_length * (2 : UInt64)))
 
@@ -15318,10 +15318,10 @@ def mavlink_msg_battery_status_decode (msg : __mavlink_message) (battery_status 
   let mut battery_status := battery_status
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (54 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (54 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 battery_status.current_consumed))) 4 (CString.ofUInt32 (Int32.toUInt32 battery_status.energy_consumed))) 8 (CString.ofUInt16 (Int16.toUInt16 battery_status.temperature))) 10 (CString.ofUInt16 battery_status.voltages[0]!)) 12 (CString.ofUInt16 battery_status.voltages[1]!)) 14 (CString.ofUInt16 battery_status.voltages[2]!)) 16 (CString.ofUInt16 battery_status.voltages[3]!)) 18 (CString.ofUInt16 battery_status.voltages[4]!)) 20 (CString.ofUInt16 battery_status.voltages[5]!)) 22 (CString.ofUInt16 battery_status.voltages[6]!)) 24 (CString.ofUInt16 battery_status.voltages[7]!)) 26 (CString.ofUInt16 battery_status.voltages[8]!)) 28 (CString.ofUInt16 battery_status.voltages[9]!)) 30 (CString.ofUInt16 (Int16.toUInt16 battery_status.current_battery))) 32 (#[battery_status.id])) 33 (#[battery_status.battery_function])) 34 (#[battery_status.type])) 35 (#[(Int8.toUInt8 battery_status.battery_remaining)])) 36 (CString.ofUInt32 (Int32.toUInt32 battery_status.time_remaining))) 40 (#[battery_status.charge_state])) 41 (CString.ofUInt16 battery_status.voltages_ext[0]!)) 43 (CString.ofUInt16 battery_status.voltages_ext[1]!)) 45 (CString.ofUInt16 battery_status.voltages_ext[2]!)) 47 (CString.ofUInt16 battery_status.voltages_ext[3]!)) 49 (#[battery_status.mode])) 50 (CString.ofUInt32 battery_status.fault_bitmask)  -- the bytes of `*battery_status` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (54 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (54 : Int32)))
   battery_status := ({ current_consumed := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 0))), energy_consumed := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 4))), temperature := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 8))), voltages := #[((CString.toUInt16 t'1 (0 + 10 + 0))), ((CString.toUInt16 t'1 (0 + 10 + 2))), ((CString.toUInt16 t'1 (0 + 10 + 4))), ((CString.toUInt16 t'1 (0 + 10 + 6))), ((CString.toUInt16 t'1 (0 + 10 + 8))), ((CString.toUInt16 t'1 (0 + 10 + 10))), ((CString.toUInt16 t'1 (0 + 10 + 12))), ((CString.toUInt16 t'1 (0 + 10 + 14))), ((CString.toUInt16 t'1 (0 + 10 + 16))), ((CString.toUInt16 t'1 (0 + 10 + 18)))], current_battery := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 30))), id := ((CString.get t'1 (0 + 32))), battery_function := ((CString.get t'1 (0 + 33))), type := ((CString.get t'1 (0 + 34))), battery_remaining := (UInt8.toInt8 (CString.get t'1 (0 + 35))), time_remaining := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 36))), charge_state := ((CString.get t'1 (0 + 40))), voltages_ext := #[((CString.toUInt16 t'1 (0 + 41 + 0))), ((CString.toUInt16 t'1 (0 + 41 + 2))), ((CString.toUInt16 t'1 (0 + 41 + 4))), ((CString.toUInt16 t'1 (0 + 41 + 6)))], mode := ((CString.get t'1 (0 + 49))), fault_bitmask := ((CString.toUInt32 t'1 (0 + 50))) } : __mavlink_battery_status_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 54 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 battery_status.current_consumed))) 4 (CString.ofUInt32 (Int32.toUInt32 battery_status.energy_consumed))) 8 (CString.ofUInt16 (Int16.toUInt16 battery_status.temperature))) 10 (CString.ofUInt16 battery_status.voltages[0]!)) 12 (CString.ofUInt16 battery_status.voltages[1]!)) 14 (CString.ofUInt16 battery_status.voltages[2]!)) 16 (CString.ofUInt16 battery_status.voltages[3]!)) 18 (CString.ofUInt16 battery_status.voltages[4]!)) 20 (CString.ofUInt16 battery_status.voltages[5]!)) 22 (CString.ofUInt16 battery_status.voltages[6]!)) 24 (CString.ofUInt16 battery_status.voltages[7]!)) 26 (CString.ofUInt16 battery_status.voltages[8]!)) 28 (CString.ofUInt16 battery_status.voltages[9]!)) 30 (CString.ofUInt16 (Int16.toUInt16 battery_status.current_battery))) 32 (#[battery_status.id])) 33 (#[battery_status.battery_function])) 34 (#[battery_status.type])) 35 (#[(Int8.toUInt8 battery_status.battery_remaining)])) 36 (CString.ofUInt32 (Int32.toUInt32 battery_status.time_remaining))) 40 (#[battery_status.charge_state])) 41 (CString.ofUInt16 battery_status.voltages_ext[0]!)) 43 (CString.ofUInt16 battery_status.voltages_ext[1]!)) 45 (CString.ofUInt16 battery_status.voltages_ext[2]!)) 47 (CString.ofUInt16 battery_status.voltages_ext[3]!)) 49 (#[battery_status.mode])) 50 (CString.ofUInt32 battery_status.fault_bitmask)  -- the bytes of `*battery_status` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   battery_status := ({ current_consumed := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 0))), energy_consumed := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 4))), temperature := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 8))), voltages := #[((CString.toUInt16 t'2 (0 + 10 + 0))), ((CString.toUInt16 t'2 (0 + 10 + 2))), ((CString.toUInt16 t'2 (0 + 10 + 4))), ((CString.toUInt16 t'2 (0 + 10 + 6))), ((CString.toUInt16 t'2 (0 + 10 + 8))), ((CString.toUInt16 t'2 (0 + 10 + 10))), ((CString.toUInt16 t'2 (0 + 10 + 12))), ((CString.toUInt16 t'2 (0 + 10 + 14))), ((CString.toUInt16 t'2 (0 + 10 + 16))), ((CString.toUInt16 t'2 (0 + 10 + 18)))], current_battery := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 30))), id := ((CString.get t'2 (0 + 32))), battery_function := ((CString.get t'2 (0 + 33))), type := ((CString.get t'2 (0 + 34))), battery_remaining := (UInt8.toInt8 (CString.get t'2 (0 + 35))), time_remaining := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 36))), charge_state := ((CString.get t'2 (0 + 40))), voltages_ext := #[((CString.toUInt16 t'2 (0 + 41 + 0))), ((CString.toUInt16 t'2 (0 + 41 + 2))), ((CString.toUInt16 t'2 (0 + 41 + 4))), ((CString.toUInt16 t'2 (0 + 41 + 6)))], mode := ((CString.get t'2 (0 + 49))), fault_bitmask := ((CString.toUInt32 t'2 (0 + 50))) } : __mavlink_battery_status_t)
   return battery_status
 
@@ -15370,7 +15370,7 @@ def dc_battery_status (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Arr
   h := hash_u64 h (UInt16.toUInt64 (Int16.toUInt16 (mavlink_msg_battery_status_get_temperature msg)))
   let mut a4 : Array UInt16 := Array.replicate 10 (0 : UInt16)  -- uninitialized in C; every element is written before it is read
   let mut t'14 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt16 a4[0]!)) 2 (CString.ofUInt16 a4[1]!)) 4 (CString.ofUInt16 a4[2]!)) 6 (CString.ofUInt16 a4[3]!)) 8 (CString.ofUInt16 a4[4]!)) 10 (CString.ofUInt16 a4[5]!)) 12 (CString.ofUInt16 a4[6]!)) 14 (CString.ofUInt16 a4[7]!)) 16 (CString.ofUInt16 a4[8]!)) 18 (CString.ofUInt16 a4[9]!)  -- the bytes of the elements of `a4`
-  t'14 := CString.memset t'14 0 (0 : Int32) (UInt64.toUSize (20 : UInt64))
+  t'14 := CString.memset t'14 0 (0 : Int32) (20 : UInt64)
   a4 := #[((CString.toUInt16 t'14 (0 + 0))), ((CString.toUInt16 t'14 (0 + 2))), ((CString.toUInt16 t'14 (0 + 4))), ((CString.toUInt16 t'14 (0 + 6))), ((CString.toUInt16 t'14 (0 + 8))), ((CString.toUInt16 t'14 (0 + 10))), ((CString.toUInt16 t'14 (0 + 12))), ((CString.toUInt16 t'14 (0 + 14))), ((CString.toUInt16 t'14 (0 + 16))), ((CString.toUInt16 t'14 (0 + 18)))]
   let t'17 := h
   let (t'15, t'16) := mavlink_msg_battery_status_get_voltages msg a4
@@ -15387,7 +15387,7 @@ def dc_battery_status (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Arr
   h := hash_u64 h (UInt8.toUInt64 (mavlink_msg_battery_status_get_charge_state msg))
   let mut a11 : Array UInt16 := Array.replicate 4 (0 : UInt16)  -- uninitialized in C; every element is written before it is read
   let mut t'20 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 a11[0]!)) 2 (CString.ofUInt16 a11[1]!)) 4 (CString.ofUInt16 a11[2]!)) 6 (CString.ofUInt16 a11[3]!)  -- the bytes of the elements of `a11`
-  t'20 := CString.memset t'20 0 (0 : Int32) (UInt64.toUSize (8 : UInt64))
+  t'20 := CString.memset t'20 0 (0 : Int32) (8 : UInt64)
   a11 := #[((CString.toUInt16 t'20 (0 + 0))), ((CString.toUInt16 t'20 (0 + 2))), ((CString.toUInt16 t'20 (0 + 4))), ((CString.toUInt16 t'20 (0 + 6)))]
   let t'23 := h
   let (t'21, t'22) := mavlink_msg_battery_status_get_voltages_ext msg a11
@@ -15419,7 +15419,7 @@ def mavlink_msg_wind_pack (system_id : UInt32) (component_id : UInt8) (msg : __m
   packet := { packet with speed := speed }
   packet := { packet with speed_z := speed_z }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.direction))) 4 (CString.ofUInt32 (Binary32.toBits packet.speed))) 8 (CString.ofUInt32 (Binary32.toBits packet.speed_z))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (168 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (1 : Int32))) mav_chan_status
   msg := t'2
@@ -15435,7 +15435,7 @@ def mavlink_msg_wind_pack_chan (system_id : UInt32) (component_id chan : UInt8) 
   packet := { packet with speed := speed }
   packet := { packet with speed_z := speed_z }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.direction))) 4 (CString.ofUInt32 (Binary32.toBits packet.speed))) 8 (CString.ofUInt32 (Binary32.toBits packet.speed_z))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (168 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (1 : Int32))) mav_chan_status
   msg := t'2
@@ -15545,7 +15545,7 @@ def pk_wind (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlink_m
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -15683,10 +15683,10 @@ def mavlink_msg_wind_decode (msg : __mavlink_message) (wind : __mavlink_wind_t) 
   let mut wind := wind
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (12 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (12 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits wind.direction))) 4 (CString.ofUInt32 (Binary32.toBits wind.speed))) 8 (CString.ofUInt32 (Binary32.toBits wind.speed_z))  -- the bytes of `*wind` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))
   wind := ({ direction := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), speed := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), speed_z := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))) } : __mavlink_wind_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits wind.direction))) 4 (CString.ofUInt32 (Binary32.toBits wind.speed))) 8 (CString.ofUInt32 (Binary32.toBits wind.speed_z))  -- the bytes of `*wind` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   wind := ({ direction := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), speed := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), speed_z := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))) } : __mavlink_wind_t)
   return wind
 
@@ -15765,7 +15765,7 @@ def mavlink_msg_local_position_ned_pack (system_id : UInt32) (component_id : UIn
   packet := { packet with vy := vy }
   packet := { packet with vz := vz }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.x))) 8 (CString.ofUInt32 (Binary32.toBits packet.y))) 12 (CString.ofUInt32 (Binary32.toBits packet.z))) 16 (CString.ofUInt32 (Binary32.toBits packet.vx))) 20 (CString.ofUInt32 (Binary32.toBits packet.vy))) 24 (CString.ofUInt32 (Binary32.toBits packet.vz))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (32 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (185 : Int32))) mav_chan_status
   msg := t'2
@@ -15785,7 +15785,7 @@ def mavlink_msg_local_position_ned_pack_chan (system_id : UInt32) (component_id 
   packet := { packet with vy := vy }
   packet := { packet with vz := vz }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.x))) 8 (CString.ofUInt32 (Binary32.toBits packet.y))) 12 (CString.ofUInt32 (Binary32.toBits packet.z))) 16 (CString.ofUInt32 (Binary32.toBits packet.vx))) 20 (CString.ofUInt32 (Binary32.toBits packet.vy))) 24 (CString.ofUInt32 (Binary32.toBits packet.vz))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (28 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (32 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (28 : Int32))) (Int8.toUInt8 (Int32.toInt8 (185 : Int32))) mav_chan_status
   msg := t'2
@@ -15939,7 +15939,7 @@ def pk_local_position_ned (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arr
       mav_chan_status := t'58
       n := t'59
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'60, t'61) := mavlink_msg_to_send_buffer buf msg
   buf := t'60
   let len : UInt16 := t'61
@@ -16141,10 +16141,10 @@ def mavlink_msg_local_position_ned_decode (msg : __mavlink_message) (local_posit
   let mut local_position_ned := local_position_ned
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (28 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (28 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 local_position_ned.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits local_position_ned.x))) 8 (CString.ofUInt32 (Binary32.toBits local_position_ned.y))) 12 (CString.ofUInt32 (Binary32.toBits local_position_ned.z))) 16 (CString.ofUInt32 (Binary32.toBits local_position_ned.vx))) 20 (CString.ofUInt32 (Binary32.toBits local_position_ned.vy))) 24 (CString.ofUInt32 (Binary32.toBits local_position_ned.vz))  -- the bytes of `*local_position_ned` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (28 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (28 : Int32)))
   local_position_ned := ({ time_boot_ms := ((CString.toUInt32 t'1 (0 + 0))), x := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), y := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), z := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), vx := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), vy := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 20))), vz := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24))) } : __mavlink_local_position_ned_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 local_position_ned.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits local_position_ned.x))) 8 (CString.ofUInt32 (Binary32.toBits local_position_ned.y))) 12 (CString.ofUInt32 (Binary32.toBits local_position_ned.z))) 16 (CString.ofUInt32 (Binary32.toBits local_position_ned.vx))) 20 (CString.ofUInt32 (Binary32.toBits local_position_ned.vy))) 24 (CString.ofUInt32 (Binary32.toBits local_position_ned.vz))  -- the bytes of `*local_position_ned` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   local_position_ned := ({ time_boot_ms := ((CString.toUInt32 t'2 (0 + 0))), x := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), y := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), z := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), vx := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), vy := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 20))), vz := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24))) } : __mavlink_local_position_ned_t)
   return local_position_ned
 
@@ -16242,7 +16242,7 @@ def mavlink_msg_raw_imu_pack (system_id : UInt32) (component_id : UInt8) (msg : 
   packet := { packet with id := id }
   packet := { packet with temperature := temperature }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 29 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt16 (Int16.toUInt16 packet.xacc))) 10 (CString.ofUInt16 (Int16.toUInt16 packet.yacc))) 12 (CString.ofUInt16 (Int16.toUInt16 packet.zacc))) 14 (CString.ofUInt16 (Int16.toUInt16 packet.xgyro))) 16 (CString.ofUInt16 (Int16.toUInt16 packet.ygyro))) 18 (CString.ofUInt16 (Int16.toUInt16 packet.zgyro))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.xmag))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.ymag))) 24 (CString.ofUInt16 (Int16.toUInt16 packet.zmag))) 26 (#[packet.id])) 27 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (29 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (29 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (27 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (29 : Int32))) (Int8.toUInt8 (Int32.toInt8 (144 : Int32))) mav_chan_status
   msg := t'2
@@ -16267,7 +16267,7 @@ def mavlink_msg_raw_imu_pack_chan (system_id : UInt32) (component_id chan : UInt
   packet := { packet with id := id }
   packet := { packet with temperature := temperature }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 29 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt16 (Int16.toUInt16 packet.xacc))) 10 (CString.ofUInt16 (Int16.toUInt16 packet.yacc))) 12 (CString.ofUInt16 (Int16.toUInt16 packet.zacc))) 14 (CString.ofUInt16 (Int16.toUInt16 packet.xgyro))) 16 (CString.ofUInt16 (Int16.toUInt16 packet.ygyro))) 18 (CString.ofUInt16 (Int16.toUInt16 packet.zgyro))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.xmag))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.ymag))) 24 (CString.ofUInt16 (Int16.toUInt16 packet.zmag))) 26 (#[packet.id])) 27 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (29 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (29 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (27 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (29 : Int32))) (Int8.toUInt8 (Int32.toInt8 (144 : Int32))) mav_chan_status
   msg := t'2
@@ -16476,7 +16476,7 @@ def pk_raw_imu (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlin
       mav_chan_status := t'83
       n := t'84
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'85, t'86) := mavlink_msg_to_send_buffer buf msg
   buf := t'85
   let len : UInt16 := t'86
@@ -16758,10 +16758,10 @@ def mavlink_msg_raw_imu_decode (msg : __mavlink_message) (raw_imu : __mavlink_ra
   let mut raw_imu := raw_imu
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (29 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (29 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 29 (0 : UInt8))) 0 (CString.ofUInt64 raw_imu.time_usec)) 8 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xacc))) 10 (CString.ofUInt16 (Int16.toUInt16 raw_imu.yacc))) 12 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zacc))) 14 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xgyro))) 16 (CString.ofUInt16 (Int16.toUInt16 raw_imu.ygyro))) 18 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zgyro))) 20 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xmag))) 22 (CString.ofUInt16 (Int16.toUInt16 raw_imu.ymag))) 24 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zmag))) 26 (#[raw_imu.id])) 27 (CString.ofUInt16 (Int16.toUInt16 raw_imu.temperature))  -- the bytes of `*raw_imu` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (29 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (29 : Int32)))
   raw_imu := ({ time_usec := ((CString.toUInt64 t'1 (0 + 0))), xacc := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 8))), yacc := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 10))), zacc := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 12))), xgyro := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 14))), ygyro := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 16))), zgyro := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 18))), xmag := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 20))), ymag := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 22))), zmag := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 24))), id := ((CString.get t'1 (0 + 26))), temperature := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 27))) } : __mavlink_raw_imu_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 29 (0 : UInt8))) 0 (CString.ofUInt64 raw_imu.time_usec)) 8 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xacc))) 10 (CString.ofUInt16 (Int16.toUInt16 raw_imu.yacc))) 12 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zacc))) 14 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xgyro))) 16 (CString.ofUInt16 (Int16.toUInt16 raw_imu.ygyro))) 18 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zgyro))) 20 (CString.ofUInt16 (Int16.toUInt16 raw_imu.xmag))) 22 (CString.ofUInt16 (Int16.toUInt16 raw_imu.ymag))) 24 (CString.ofUInt16 (Int16.toUInt16 raw_imu.zmag))) 26 (#[raw_imu.id])) 27 (CString.ofUInt16 (Int16.toUInt16 raw_imu.temperature))  -- the bytes of `*raw_imu` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   raw_imu := ({ time_usec := ((CString.toUInt64 t'2 (0 + 0))), xacc := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 8))), yacc := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 10))), zacc := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 12))), xgyro := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 14))), ygyro := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 16))), zgyro := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 18))), xmag := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 20))), ymag := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 22))), zmag := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 24))), id := ((CString.get t'2 (0 + 26))), temperature := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 27))) } : __mavlink_raw_imu_t)
   return raw_imu
 
@@ -16843,7 +16843,7 @@ def mavlink_msg_scaled_pressure_pack (system_id : UInt32) (component_id : UInt8)
   packet := { packet with temperature := temperature }
   packet := { packet with temperature_press_diff := temperature_press_diff }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.press_abs))) 8 (CString.ofUInt32 (Binary32.toBits packet.press_diff))) 12 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))) 14 (CString.ofUInt16 (Int16.toUInt16 packet.temperature_press_diff))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (29 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (14 : Int32))) (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (115 : Int32))) mav_chan_status
   msg := t'2
@@ -16861,7 +16861,7 @@ def mavlink_msg_scaled_pressure_pack_chan (system_id : UInt32) (component_id cha
   packet := { packet with temperature := temperature }
   packet := { packet with temperature_press_diff := temperature_press_diff }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits packet.press_abs))) 8 (CString.ofUInt32 (Binary32.toBits packet.press_diff))) 12 (CString.ofUInt16 (Int16.toUInt16 packet.temperature))) 14 (CString.ofUInt16 (Int16.toUInt16 packet.temperature_press_diff))  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (29 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (14 : Int32))) (Int8.toUInt8 (Int32.toInt8 (16 : Int32))) (Int8.toUInt8 (Int32.toInt8 (115 : Int32))) mav_chan_status
   msg := t'2
@@ -16993,7 +16993,7 @@ def pk_scaled_pressure (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array 
       mav_chan_status := t'48
       n := t'49
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'50, t'51) := mavlink_msg_to_send_buffer buf msg
   buf := t'50
   let len : UInt16 := t'51
@@ -17163,10 +17163,10 @@ def mavlink_msg_scaled_pressure_decode (msg : __mavlink_message) (scaled_pressur
   let mut scaled_pressure := scaled_pressure
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (16 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (16 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 scaled_pressure.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits scaled_pressure.press_abs))) 8 (CString.ofUInt32 (Binary32.toBits scaled_pressure.press_diff))) 12 (CString.ofUInt16 (Int16.toUInt16 scaled_pressure.temperature))) 14 (CString.ofUInt16 (Int16.toUInt16 scaled_pressure.temperature_press_diff))  -- the bytes of `*scaled_pressure` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))
   scaled_pressure := ({ time_boot_ms := ((CString.toUInt32 t'1 (0 + 0))), press_abs := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), press_diff := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), temperature := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 12))), temperature_press_diff := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 14))) } : __mavlink_scaled_pressure_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 scaled_pressure.time_boot_ms)) 4 (CString.ofUInt32 (Binary32.toBits scaled_pressure.press_abs))) 8 (CString.ofUInt32 (Binary32.toBits scaled_pressure.press_diff))) 12 (CString.ofUInt16 (Int16.toUInt16 scaled_pressure.temperature))) 14 (CString.ofUInt16 (Int16.toUInt16 scaled_pressure.temperature_press_diff))  -- the bytes of `*scaled_pressure` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   scaled_pressure := ({ time_boot_ms := ((CString.toUInt32 t'2 (0 + 0))), press_abs := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), press_diff := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), temperature := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 12))), temperature_press_diff := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 14))) } : __mavlink_scaled_pressure_t)
   return scaled_pressure
 
@@ -17274,7 +17274,7 @@ def mavlink_msg_sys_status_pack (system_id : UInt32) (component_id : UInt8) (msg
   packet := { packet with onboard_control_sensors_enabled_extended := onboard_control_sensors_enabled_extended }
   packet := { packet with onboard_control_sensors_health_extended := onboard_control_sensors_health_extended }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 43 (0 : UInt8))) 0 (CString.ofUInt32 packet.onboard_control_sensors_present)) 4 (CString.ofUInt32 packet.onboard_control_sensors_enabled)) 8 (CString.ofUInt32 packet.onboard_control_sensors_health)) 12 (CString.ofUInt16 packet.load)) 14 (CString.ofUInt16 packet.voltage_battery)) 16 (CString.ofUInt16 (Int16.toUInt16 packet.current_battery))) 18 (CString.ofUInt16 packet.drop_rate_comm)) 20 (CString.ofUInt16 packet.errors_comm)) 22 (CString.ofUInt16 packet.errors_count1)) 24 (CString.ofUInt16 packet.errors_count2)) 26 (CString.ofUInt16 packet.errors_count3)) 28 (CString.ofUInt16 packet.errors_count4)) 30 (#[(Int8.toUInt8 packet.battery_remaining)])) 31 (CString.ofUInt32 packet.onboard_control_sensors_present_extended)) 35 (CString.ofUInt32 packet.onboard_control_sensors_enabled_extended)) 39 (CString.ofUInt32 packet.onboard_control_sensors_health_extended)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (43 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (43 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (1 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (31 : Int32))) (Int8.toUInt8 (Int32.toInt8 (43 : Int32))) (Int8.toUInt8 (Int32.toInt8 (124 : Int32))) mav_chan_status
   msg := t'2
@@ -17303,7 +17303,7 @@ def mavlink_msg_sys_status_pack_chan (system_id : UInt32) (component_id chan : U
   packet := { packet with onboard_control_sensors_enabled_extended := onboard_control_sensors_enabled_extended }
   packet := { packet with onboard_control_sensors_health_extended := onboard_control_sensors_health_extended }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 43 (0 : UInt8))) 0 (CString.ofUInt32 packet.onboard_control_sensors_present)) 4 (CString.ofUInt32 packet.onboard_control_sensors_enabled)) 8 (CString.ofUInt32 packet.onboard_control_sensors_health)) 12 (CString.ofUInt16 packet.load)) 14 (CString.ofUInt16 packet.voltage_battery)) 16 (CString.ofUInt16 (Int16.toUInt16 packet.current_battery))) 18 (CString.ofUInt16 packet.drop_rate_comm)) 20 (CString.ofUInt16 packet.errors_comm)) 22 (CString.ofUInt16 packet.errors_count1)) 24 (CString.ofUInt16 packet.errors_count2)) 26 (CString.ofUInt16 packet.errors_count3)) 28 (CString.ofUInt16 packet.errors_count4)) 30 (#[(Int8.toUInt8 packet.battery_remaining)])) 31 (CString.ofUInt32 packet.onboard_control_sensors_present_extended)) 35 (CString.ofUInt32 packet.onboard_control_sensors_enabled_extended)) 39 (CString.ofUInt32 packet.onboard_control_sensors_health_extended)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (43 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (43 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (1 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (31 : Int32))) (Int8.toUInt8 (Int32.toInt8 (43 : Int32))) (Int8.toUInt8 (Int32.toInt8 (124 : Int32))) mav_chan_status
   msg := t'2
@@ -17556,7 +17556,7 @@ def pk_sys_status (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mav
       mav_chan_status := t'103
       n := t'104
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'105, t'106) := mavlink_msg_to_send_buffer buf msg
   buf := t'105
   let len : UInt16 := t'106
@@ -17902,10 +17902,10 @@ def mavlink_msg_sys_status_decode (msg : __mavlink_message) (sys_status : __mavl
   let mut sys_status := sys_status
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (43 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (43 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 43 (0 : UInt8))) 0 (CString.ofUInt32 sys_status.onboard_control_sensors_present)) 4 (CString.ofUInt32 sys_status.onboard_control_sensors_enabled)) 8 (CString.ofUInt32 sys_status.onboard_control_sensors_health)) 12 (CString.ofUInt16 sys_status.load)) 14 (CString.ofUInt16 sys_status.voltage_battery)) 16 (CString.ofUInt16 (Int16.toUInt16 sys_status.current_battery))) 18 (CString.ofUInt16 sys_status.drop_rate_comm)) 20 (CString.ofUInt16 sys_status.errors_comm)) 22 (CString.ofUInt16 sys_status.errors_count1)) 24 (CString.ofUInt16 sys_status.errors_count2)) 26 (CString.ofUInt16 sys_status.errors_count3)) 28 (CString.ofUInt16 sys_status.errors_count4)) 30 (#[(Int8.toUInt8 sys_status.battery_remaining)])) 31 (CString.ofUInt32 sys_status.onboard_control_sensors_present_extended)) 35 (CString.ofUInt32 sys_status.onboard_control_sensors_enabled_extended)) 39 (CString.ofUInt32 sys_status.onboard_control_sensors_health_extended)  -- the bytes of `*sys_status` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (43 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (43 : Int32)))
   sys_status := ({ onboard_control_sensors_present := ((CString.toUInt32 t'1 (0 + 0))), onboard_control_sensors_enabled := ((CString.toUInt32 t'1 (0 + 4))), onboard_control_sensors_health := ((CString.toUInt32 t'1 (0 + 8))), load := ((CString.toUInt16 t'1 (0 + 12))), voltage_battery := ((CString.toUInt16 t'1 (0 + 14))), current_battery := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 16))), drop_rate_comm := ((CString.toUInt16 t'1 (0 + 18))), errors_comm := ((CString.toUInt16 t'1 (0 + 20))), errors_count1 := ((CString.toUInt16 t'1 (0 + 22))), errors_count2 := ((CString.toUInt16 t'1 (0 + 24))), errors_count3 := ((CString.toUInt16 t'1 (0 + 26))), errors_count4 := ((CString.toUInt16 t'1 (0 + 28))), battery_remaining := (UInt8.toInt8 (CString.get t'1 (0 + 30))), onboard_control_sensors_present_extended := ((CString.toUInt32 t'1 (0 + 31))), onboard_control_sensors_enabled_extended := ((CString.toUInt32 t'1 (0 + 35))), onboard_control_sensors_health_extended := ((CString.toUInt32 t'1 (0 + 39))) } : __mavlink_sys_status_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 43 (0 : UInt8))) 0 (CString.ofUInt32 sys_status.onboard_control_sensors_present)) 4 (CString.ofUInt32 sys_status.onboard_control_sensors_enabled)) 8 (CString.ofUInt32 sys_status.onboard_control_sensors_health)) 12 (CString.ofUInt16 sys_status.load)) 14 (CString.ofUInt16 sys_status.voltage_battery)) 16 (CString.ofUInt16 (Int16.toUInt16 sys_status.current_battery))) 18 (CString.ofUInt16 sys_status.drop_rate_comm)) 20 (CString.ofUInt16 sys_status.errors_comm)) 22 (CString.ofUInt16 sys_status.errors_count1)) 24 (CString.ofUInt16 sys_status.errors_count2)) 26 (CString.ofUInt16 sys_status.errors_count3)) 28 (CString.ofUInt16 sys_status.errors_count4)) 30 (#[(Int8.toUInt8 sys_status.battery_remaining)])) 31 (CString.ofUInt32 sys_status.onboard_control_sensors_present_extended)) 35 (CString.ofUInt32 sys_status.onboard_control_sensors_enabled_extended)) 39 (CString.ofUInt32 sys_status.onboard_control_sensors_health_extended)  -- the bytes of `*sys_status` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   sys_status := ({ onboard_control_sensors_present := ((CString.toUInt32 t'2 (0 + 0))), onboard_control_sensors_enabled := ((CString.toUInt32 t'2 (0 + 4))), onboard_control_sensors_health := ((CString.toUInt32 t'2 (0 + 8))), load := ((CString.toUInt16 t'2 (0 + 12))), voltage_battery := ((CString.toUInt16 t'2 (0 + 14))), current_battery := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 16))), drop_rate_comm := ((CString.toUInt16 t'2 (0 + 18))), errors_comm := ((CString.toUInt16 t'2 (0 + 20))), errors_count1 := ((CString.toUInt16 t'2 (0 + 22))), errors_count2 := ((CString.toUInt16 t'2 (0 + 24))), errors_count3 := ((CString.toUInt16 t'2 (0 + 26))), errors_count4 := ((CString.toUInt16 t'2 (0 + 28))), battery_remaining := (UInt8.toInt8 (CString.get t'2 (0 + 30))), onboard_control_sensors_present_extended := ((CString.toUInt32 t'2 (0 + 31))), onboard_control_sensors_enabled_extended := ((CString.toUInt32 t'2 (0 + 35))), onboard_control_sensors_health_extended := ((CString.toUInt32 t'2 (0 + 39))) } : __mavlink_sys_status_t)
   return sys_status
 
@@ -17985,7 +17985,7 @@ def mavlink_msg_power_status_pack (system_id : UInt32) (component_id : UInt8) (m
   packet := { packet with Vservo := Vservo }
   packet := { packet with flags := flags }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.Vcc)) 2 (CString.ofUInt16 packet.Vservo)) 4 (CString.ofUInt16 packet.flags)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (125 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (203 : Int32))) mav_chan_status
   msg := t'2
@@ -18001,7 +18001,7 @@ def mavlink_msg_power_status_pack_chan (system_id : UInt32) (component_id chan :
   packet := { packet with Vservo := Vservo }
   packet := { packet with flags := flags }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 packet.Vcc)) 2 (CString.ofUInt16 packet.Vservo)) 4 (CString.ofUInt16 packet.flags)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (6 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (125 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (6 : Int32))) (Int8.toUInt8 (Int32.toInt8 (203 : Int32))) mav_chan_status
   msg := t'2
@@ -18111,7 +18111,7 @@ def pk_power_status (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __m
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -18249,10 +18249,10 @@ def mavlink_msg_power_status_decode (msg : __mavlink_message) (power_status : __
   let mut power_status := power_status
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (6 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (6 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 power_status.Vcc)) 2 (CString.ofUInt16 power_status.Vservo)) 4 (CString.ofUInt16 power_status.flags)  -- the bytes of `*power_status` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (6 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (6 : Int32)))
   power_status := ({ Vcc := ((CString.toUInt16 t'1 (0 + 0))), Vservo := ((CString.toUInt16 t'1 (0 + 2))), flags := ((CString.toUInt16 t'1 (0 + 4))) } : __mavlink_power_status_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 6 (0 : UInt8))) 0 (CString.ofUInt16 power_status.Vcc)) 2 (CString.ofUInt16 power_status.Vservo)) 4 (CString.ofUInt16 power_status.flags)  -- the bytes of `*power_status` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   power_status := ({ Vcc := ((CString.toUInt16 t'2 (0 + 0))), Vservo := ((CString.toUInt16 t'2 (0 + 2))), flags := ((CString.toUInt16 t'2 (0 + 4))) } : __mavlink_power_status_t)
   return power_status
 
@@ -18319,7 +18319,7 @@ def mavlink_msg_meminfo_pack (system_id : UInt32) (component_id : UInt8) (msg : 
   packet := { packet with freemem := freemem }
   packet := { packet with freemem32 := freemem32 }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 packet.brkval)) 2 (CString.ofUInt16 packet.freemem)) 4 (CString.ofUInt32 packet.freemem32)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (152 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (8 : Int32))) (Int8.toUInt8 (Int32.toInt8 (208 : Int32))) mav_chan_status
   msg := t'2
@@ -18335,7 +18335,7 @@ def mavlink_msg_meminfo_pack_chan (system_id : UInt32) (component_id chan : UInt
   packet := { packet with freemem := freemem }
   packet := { packet with freemem32 := freemem32 }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 packet.brkval)) 2 (CString.ofUInt16 packet.freemem)) 4 (CString.ofUInt32 packet.freemem32)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (8 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (8 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (152 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (8 : Int32))) (Int8.toUInt8 (Int32.toInt8 (208 : Int32))) mav_chan_status
   msg := t'2
@@ -18445,7 +18445,7 @@ def pk_meminfo (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __mavlin
       mav_chan_status := t'38
       n := t'39
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'40, t'41) := mavlink_msg_to_send_buffer buf msg
   buf := t'40
   let len : UInt16 := t'41
@@ -18583,10 +18583,10 @@ def mavlink_msg_meminfo_decode (msg : __mavlink_message) (meminfo : __mavlink_me
   let mut meminfo := meminfo
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (8 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (8 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 meminfo.brkval)) 2 (CString.ofUInt16 meminfo.freemem)) 4 (CString.ofUInt32 meminfo.freemem32)  -- the bytes of `*meminfo` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (8 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (8 : Int32)))
   meminfo := ({ brkval := ((CString.toUInt16 t'1 (0 + 0))), freemem := ((CString.toUInt16 t'1 (0 + 2))), freemem32 := ((CString.toUInt32 t'1 (0 + 4))) } : __mavlink_meminfo_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 8 (0 : UInt8))) 0 (CString.ofUInt16 meminfo.brkval)) 2 (CString.ofUInt16 meminfo.freemem)) 4 (CString.ofUInt32 meminfo.freemem32)  -- the bytes of `*meminfo` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   meminfo := ({ brkval := ((CString.toUInt16 t'2 (0 + 0))), freemem := ((CString.toUInt16 t'2 (0 + 2))), freemem32 := ((CString.toUInt32 t'2 (0 + 4))) } : __mavlink_meminfo_t)
   return meminfo
 
@@ -18668,7 +18668,7 @@ def mavlink_msg_nav_controller_output_pack (system_id : UInt32) (component_id : 
   packet := { packet with target_bearing := target_bearing }
   packet := { packet with wp_dist := wp_dist }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.nav_roll))) 4 (CString.ofUInt32 (Binary32.toBits packet.nav_pitch))) 8 (CString.ofUInt32 (Binary32.toBits packet.alt_error))) 12 (CString.ofUInt32 (Binary32.toBits packet.aspd_error))) 16 (CString.ofUInt32 (Binary32.toBits packet.xtrack_error))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.nav_bearing))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.target_bearing))) 24 (CString.ofUInt16 packet.wp_dist)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (26 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (62 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (183 : Int32))) mav_chan_status
   msg := t'2
@@ -18689,7 +18689,7 @@ def mavlink_msg_nav_controller_output_pack_chan (system_id : UInt32) (component_
   packet := { packet with target_bearing := target_bearing }
   packet := { packet with wp_dist := wp_dist }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.nav_roll))) 4 (CString.ofUInt32 (Binary32.toBits packet.nav_pitch))) 8 (CString.ofUInt32 (Binary32.toBits packet.alt_error))) 12 (CString.ofUInt32 (Binary32.toBits packet.aspd_error))) 16 (CString.ofUInt32 (Binary32.toBits packet.xtrack_error))) 20 (CString.ofUInt16 (Int16.toUInt16 packet.nav_bearing))) 22 (CString.ofUInt16 (Int16.toUInt16 packet.target_bearing))) 24 (CString.ofUInt16 packet.wp_dist)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (26 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (62 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (26 : Int32))) (Int8.toUInt8 (Int32.toInt8 (183 : Int32))) mav_chan_status
   msg := t'2
@@ -18854,7 +18854,7 @@ def pk_nav_controller_output (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : 
       mav_chan_status := t'63
       n := t'64
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'65, t'66) := mavlink_msg_to_send_buffer buf msg
   buf := t'65
   let len : UInt16 := t'66
@@ -19072,10 +19072,10 @@ def mavlink_msg_nav_controller_output_decode (msg : __mavlink_message) (nav_cont
   let mut nav_controller_output := nav_controller_output
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (26 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (26 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits nav_controller_output.nav_roll))) 4 (CString.ofUInt32 (Binary32.toBits nav_controller_output.nav_pitch))) 8 (CString.ofUInt32 (Binary32.toBits nav_controller_output.alt_error))) 12 (CString.ofUInt32 (Binary32.toBits nav_controller_output.aspd_error))) 16 (CString.ofUInt32 (Binary32.toBits nav_controller_output.xtrack_error))) 20 (CString.ofUInt16 (Int16.toUInt16 nav_controller_output.nav_bearing))) 22 (CString.ofUInt16 (Int16.toUInt16 nav_controller_output.target_bearing))) 24 (CString.ofUInt16 nav_controller_output.wp_dist)  -- the bytes of `*nav_controller_output` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (26 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (26 : Int32)))
   nav_controller_output := ({ nav_roll := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), nav_pitch := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), alt_error := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), aspd_error := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), xtrack_error := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), nav_bearing := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 20))), target_bearing := (UInt16.toInt16 (CString.toUInt16 t'1 (0 + 22))), wp_dist := ((CString.toUInt16 t'1 (0 + 24))) } : __mavlink_nav_controller_output_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 28 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits nav_controller_output.nav_roll))) 4 (CString.ofUInt32 (Binary32.toBits nav_controller_output.nav_pitch))) 8 (CString.ofUInt32 (Binary32.toBits nav_controller_output.alt_error))) 12 (CString.ofUInt32 (Binary32.toBits nav_controller_output.aspd_error))) 16 (CString.ofUInt32 (Binary32.toBits nav_controller_output.xtrack_error))) 20 (CString.ofUInt16 (Int16.toUInt16 nav_controller_output.nav_bearing))) 22 (CString.ofUInt16 (Int16.toUInt16 nav_controller_output.target_bearing))) 24 (CString.ofUInt16 nav_controller_output.wp_dist)  -- the bytes of `*nav_controller_output` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   nav_controller_output := ({ nav_roll := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 0))), nav_pitch := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), alt_error := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 8))), aspd_error := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), xtrack_error := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), nav_bearing := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 20))), target_bearing := (UInt16.toInt16 (CString.toUInt16 t'2 (0 + 22))), wp_dist := ((CString.toUInt16 t'2 (0 + 24))) } : __mavlink_nav_controller_output_t)
   return nav_controller_output
 
@@ -19192,7 +19192,7 @@ def mavlink_msg_servo_output_raw_pack (system_id : UInt32) (component_id : UInt8
   packet := { packet with servo15_raw := servo15_raw }
   packet := { packet with servo16_raw := servo16_raw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 37 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_usec)) 4 (CString.ofUInt16 packet.servo1_raw)) 6 (CString.ofUInt16 packet.servo2_raw)) 8 (CString.ofUInt16 packet.servo3_raw)) 10 (CString.ofUInt16 packet.servo4_raw)) 12 (CString.ofUInt16 packet.servo5_raw)) 14 (CString.ofUInt16 packet.servo6_raw)) 16 (CString.ofUInt16 packet.servo7_raw)) 18 (CString.ofUInt16 packet.servo8_raw)) 20 (#[packet.port])) 21 (CString.ofUInt16 packet.servo9_raw)) 23 (CString.ofUInt16 packet.servo10_raw)) 25 (CString.ofUInt16 packet.servo11_raw)) 27 (CString.ofUInt16 packet.servo12_raw)) 29 (CString.ofUInt16 packet.servo13_raw)) 31 (CString.ofUInt16 packet.servo14_raw)) 33 (CString.ofUInt16 packet.servo15_raw)) 35 (CString.ofUInt16 packet.servo16_raw)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (37 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (37 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (36 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (21 : Int32))) (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (222 : Int32))) mav_chan_status
   msg := t'2
@@ -19223,7 +19223,7 @@ def mavlink_msg_servo_output_raw_pack_chan (system_id : UInt32) (component_id ch
   packet := { packet with servo15_raw := servo15_raw }
   packet := { packet with servo16_raw := servo16_raw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 37 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_usec)) 4 (CString.ofUInt16 packet.servo1_raw)) 6 (CString.ofUInt16 packet.servo2_raw)) 8 (CString.ofUInt16 packet.servo3_raw)) 10 (CString.ofUInt16 packet.servo4_raw)) 12 (CString.ofUInt16 packet.servo5_raw)) 14 (CString.ofUInt16 packet.servo6_raw)) 16 (CString.ofUInt16 packet.servo7_raw)) 18 (CString.ofUInt16 packet.servo8_raw)) 20 (#[packet.port])) 21 (CString.ofUInt16 packet.servo9_raw)) 23 (CString.ofUInt16 packet.servo10_raw)) 25 (CString.ofUInt16 packet.servo11_raw)) 27 (CString.ofUInt16 packet.servo12_raw)) 29 (CString.ofUInt16 packet.servo13_raw)) 31 (CString.ofUInt16 packet.servo14_raw)) 33 (CString.ofUInt16 packet.servo15_raw)) 35 (CString.ofUInt16 packet.servo16_raw)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (37 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (37 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (36 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (21 : Int32))) (Int8.toUInt8 (Int32.toInt8 (37 : Int32))) (Int8.toUInt8 (Int32.toInt8 (222 : Int32))) mav_chan_status
   msg := t'2
@@ -19498,7 +19498,7 @@ def pk_servo_output_raw (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array
       mav_chan_status := t'113
       n := t'114
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'115, t'116) := mavlink_msg_to_send_buffer buf msg
   buf := t'115
   let len : UInt16 := t'116
@@ -19876,10 +19876,10 @@ def mavlink_msg_servo_output_raw_decode (msg : __mavlink_message) (servo_output_
   let mut servo_output_raw := servo_output_raw
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (37 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (37 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 37 (0 : UInt8))) 0 (CString.ofUInt32 servo_output_raw.time_usec)) 4 (CString.ofUInt16 servo_output_raw.servo1_raw)) 6 (CString.ofUInt16 servo_output_raw.servo2_raw)) 8 (CString.ofUInt16 servo_output_raw.servo3_raw)) 10 (CString.ofUInt16 servo_output_raw.servo4_raw)) 12 (CString.ofUInt16 servo_output_raw.servo5_raw)) 14 (CString.ofUInt16 servo_output_raw.servo6_raw)) 16 (CString.ofUInt16 servo_output_raw.servo7_raw)) 18 (CString.ofUInt16 servo_output_raw.servo8_raw)) 20 (#[servo_output_raw.port])) 21 (CString.ofUInt16 servo_output_raw.servo9_raw)) 23 (CString.ofUInt16 servo_output_raw.servo10_raw)) 25 (CString.ofUInt16 servo_output_raw.servo11_raw)) 27 (CString.ofUInt16 servo_output_raw.servo12_raw)) 29 (CString.ofUInt16 servo_output_raw.servo13_raw)) 31 (CString.ofUInt16 servo_output_raw.servo14_raw)) 33 (CString.ofUInt16 servo_output_raw.servo15_raw)) 35 (CString.ofUInt16 servo_output_raw.servo16_raw)  -- the bytes of `*servo_output_raw` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (37 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (37 : Int32)))
   servo_output_raw := ({ time_usec := ((CString.toUInt32 t'1 (0 + 0))), servo1_raw := ((CString.toUInt16 t'1 (0 + 4))), servo2_raw := ((CString.toUInt16 t'1 (0 + 6))), servo3_raw := ((CString.toUInt16 t'1 (0 + 8))), servo4_raw := ((CString.toUInt16 t'1 (0 + 10))), servo5_raw := ((CString.toUInt16 t'1 (0 + 12))), servo6_raw := ((CString.toUInt16 t'1 (0 + 14))), servo7_raw := ((CString.toUInt16 t'1 (0 + 16))), servo8_raw := ((CString.toUInt16 t'1 (0 + 18))), port := ((CString.get t'1 (0 + 20))), servo9_raw := ((CString.toUInt16 t'1 (0 + 21))), servo10_raw := ((CString.toUInt16 t'1 (0 + 23))), servo11_raw := ((CString.toUInt16 t'1 (0 + 25))), servo12_raw := ((CString.toUInt16 t'1 (0 + 27))), servo13_raw := ((CString.toUInt16 t'1 (0 + 29))), servo14_raw := ((CString.toUInt16 t'1 (0 + 31))), servo15_raw := ((CString.toUInt16 t'1 (0 + 33))), servo16_raw := ((CString.toUInt16 t'1 (0 + 35))) } : __mavlink_servo_output_raw_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 37 (0 : UInt8))) 0 (CString.ofUInt32 servo_output_raw.time_usec)) 4 (CString.ofUInt16 servo_output_raw.servo1_raw)) 6 (CString.ofUInt16 servo_output_raw.servo2_raw)) 8 (CString.ofUInt16 servo_output_raw.servo3_raw)) 10 (CString.ofUInt16 servo_output_raw.servo4_raw)) 12 (CString.ofUInt16 servo_output_raw.servo5_raw)) 14 (CString.ofUInt16 servo_output_raw.servo6_raw)) 16 (CString.ofUInt16 servo_output_raw.servo7_raw)) 18 (CString.ofUInt16 servo_output_raw.servo8_raw)) 20 (#[servo_output_raw.port])) 21 (CString.ofUInt16 servo_output_raw.servo9_raw)) 23 (CString.ofUInt16 servo_output_raw.servo10_raw)) 25 (CString.ofUInt16 servo_output_raw.servo11_raw)) 27 (CString.ofUInt16 servo_output_raw.servo12_raw)) 29 (CString.ofUInt16 servo_output_raw.servo13_raw)) 31 (CString.ofUInt16 servo_output_raw.servo14_raw)) 33 (CString.ofUInt16 servo_output_raw.servo15_raw)) 35 (CString.ofUInt16 servo_output_raw.servo16_raw)  -- the bytes of `*servo_output_raw` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   servo_output_raw := ({ time_usec := ((CString.toUInt32 t'2 (0 + 0))), servo1_raw := ((CString.toUInt16 t'2 (0 + 4))), servo2_raw := ((CString.toUInt16 t'2 (0 + 6))), servo3_raw := ((CString.toUInt16 t'2 (0 + 8))), servo4_raw := ((CString.toUInt16 t'2 (0 + 10))), servo5_raw := ((CString.toUInt16 t'2 (0 + 12))), servo6_raw := ((CString.toUInt16 t'2 (0 + 14))), servo7_raw := ((CString.toUInt16 t'2 (0 + 16))), servo8_raw := ((CString.toUInt16 t'2 (0 + 18))), port := ((CString.get t'2 (0 + 20))), servo9_raw := ((CString.toUInt16 t'2 (0 + 21))), servo10_raw := ((CString.toUInt16 t'2 (0 + 23))), servo11_raw := ((CString.toUInt16 t'2 (0 + 25))), servo12_raw := ((CString.toUInt16 t'2 (0 + 27))), servo13_raw := ((CString.toUInt16 t'2 (0 + 29))), servo14_raw := ((CString.toUInt16 t'2 (0 + 31))), servo15_raw := ((CString.toUInt16 t'2 (0 + 33))), servo16_raw := ((CString.toUInt16 t'2 (0 + 35))) } : __mavlink_servo_output_raw_t)
   return servo_output_raw
 
@@ -20015,7 +20015,7 @@ def mavlink_msg_rc_channels_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with chancount := chancount }
   packet := { packet with rssi := rssi }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 44 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt16 packet.chan1_raw)) 6 (CString.ofUInt16 packet.chan2_raw)) 8 (CString.ofUInt16 packet.chan3_raw)) 10 (CString.ofUInt16 packet.chan4_raw)) 12 (CString.ofUInt16 packet.chan5_raw)) 14 (CString.ofUInt16 packet.chan6_raw)) 16 (CString.ofUInt16 packet.chan7_raw)) 18 (CString.ofUInt16 packet.chan8_raw)) 20 (CString.ofUInt16 packet.chan9_raw)) 22 (CString.ofUInt16 packet.chan10_raw)) 24 (CString.ofUInt16 packet.chan11_raw)) 26 (CString.ofUInt16 packet.chan12_raw)) 28 (CString.ofUInt16 packet.chan13_raw)) 30 (CString.ofUInt16 packet.chan14_raw)) 32 (CString.ofUInt16 packet.chan15_raw)) 34 (CString.ofUInt16 packet.chan16_raw)) 36 (CString.ofUInt16 packet.chan17_raw)) 38 (CString.ofUInt16 packet.chan18_raw)) 40 (#[packet.chancount])) 41 (#[packet.rssi])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (42 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (42 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (65 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (42 : Int32))) (Int8.toUInt8 (Int32.toInt8 (42 : Int32))) (Int8.toUInt8 (Int32.toInt8 (118 : Int32))) mav_chan_status
   msg := t'2
@@ -20049,7 +20049,7 @@ def mavlink_msg_rc_channels_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with chancount := chancount }
   packet := { packet with rssi := rssi }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 44 (0 : UInt8))) 0 (CString.ofUInt32 packet.time_boot_ms)) 4 (CString.ofUInt16 packet.chan1_raw)) 6 (CString.ofUInt16 packet.chan2_raw)) 8 (CString.ofUInt16 packet.chan3_raw)) 10 (CString.ofUInt16 packet.chan4_raw)) 12 (CString.ofUInt16 packet.chan5_raw)) 14 (CString.ofUInt16 packet.chan6_raw)) 16 (CString.ofUInt16 packet.chan7_raw)) 18 (CString.ofUInt16 packet.chan8_raw)) 20 (CString.ofUInt16 packet.chan9_raw)) 22 (CString.ofUInt16 packet.chan10_raw)) 24 (CString.ofUInt16 packet.chan11_raw)) 26 (CString.ofUInt16 packet.chan12_raw)) 28 (CString.ofUInt16 packet.chan13_raw)) 30 (CString.ofUInt16 packet.chan14_raw)) 32 (CString.ofUInt16 packet.chan15_raw)) 34 (CString.ofUInt16 packet.chan16_raw)) 36 (CString.ofUInt16 packet.chan17_raw)) 38 (CString.ofUInt16 packet.chan18_raw)) 40 (#[packet.chancount])) 41 (#[packet.rssi])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (42 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (42 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (65 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (42 : Int32))) (Int8.toUInt8 (Int32.toInt8 (42 : Int32))) (Int8.toUInt8 (Int32.toInt8 (118 : Int32))) mav_chan_status
   msg := t'2
@@ -20357,7 +20357,7 @@ def pk_rc_channels (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'128
       n := t'129
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'130, t'131) := mavlink_msg_to_send_buffer buf msg
   buf := t'130
   let len : UInt16 := t'131
@@ -20783,10 +20783,10 @@ def mavlink_msg_rc_channels_decode (msg : __mavlink_message) (rc_channels : __ma
   let mut rc_channels := rc_channels
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (42 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (42 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 44 (0 : UInt8))) 0 (CString.ofUInt32 rc_channels.time_boot_ms)) 4 (CString.ofUInt16 rc_channels.chan1_raw)) 6 (CString.ofUInt16 rc_channels.chan2_raw)) 8 (CString.ofUInt16 rc_channels.chan3_raw)) 10 (CString.ofUInt16 rc_channels.chan4_raw)) 12 (CString.ofUInt16 rc_channels.chan5_raw)) 14 (CString.ofUInt16 rc_channels.chan6_raw)) 16 (CString.ofUInt16 rc_channels.chan7_raw)) 18 (CString.ofUInt16 rc_channels.chan8_raw)) 20 (CString.ofUInt16 rc_channels.chan9_raw)) 22 (CString.ofUInt16 rc_channels.chan10_raw)) 24 (CString.ofUInt16 rc_channels.chan11_raw)) 26 (CString.ofUInt16 rc_channels.chan12_raw)) 28 (CString.ofUInt16 rc_channels.chan13_raw)) 30 (CString.ofUInt16 rc_channels.chan14_raw)) 32 (CString.ofUInt16 rc_channels.chan15_raw)) 34 (CString.ofUInt16 rc_channels.chan16_raw)) 36 (CString.ofUInt16 rc_channels.chan17_raw)) 38 (CString.ofUInt16 rc_channels.chan18_raw)) 40 (#[rc_channels.chancount])) 41 (#[rc_channels.rssi])  -- the bytes of `*rc_channels` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (42 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (42 : Int32)))
   rc_channels := ({ time_boot_ms := ((CString.toUInt32 t'1 (0 + 0))), chan1_raw := ((CString.toUInt16 t'1 (0 + 4))), chan2_raw := ((CString.toUInt16 t'1 (0 + 6))), chan3_raw := ((CString.toUInt16 t'1 (0 + 8))), chan4_raw := ((CString.toUInt16 t'1 (0 + 10))), chan5_raw := ((CString.toUInt16 t'1 (0 + 12))), chan6_raw := ((CString.toUInt16 t'1 (0 + 14))), chan7_raw := ((CString.toUInt16 t'1 (0 + 16))), chan8_raw := ((CString.toUInt16 t'1 (0 + 18))), chan9_raw := ((CString.toUInt16 t'1 (0 + 20))), chan10_raw := ((CString.toUInt16 t'1 (0 + 22))), chan11_raw := ((CString.toUInt16 t'1 (0 + 24))), chan12_raw := ((CString.toUInt16 t'1 (0 + 26))), chan13_raw := ((CString.toUInt16 t'1 (0 + 28))), chan14_raw := ((CString.toUInt16 t'1 (0 + 30))), chan15_raw := ((CString.toUInt16 t'1 (0 + 32))), chan16_raw := ((CString.toUInt16 t'1 (0 + 34))), chan17_raw := ((CString.toUInt16 t'1 (0 + 36))), chan18_raw := ((CString.toUInt16 t'1 (0 + 38))), chancount := ((CString.get t'1 (0 + 40))), rssi := ((CString.get t'1 (0 + 41))) } : __mavlink_rc_channels_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 44 (0 : UInt8))) 0 (CString.ofUInt32 rc_channels.time_boot_ms)) 4 (CString.ofUInt16 rc_channels.chan1_raw)) 6 (CString.ofUInt16 rc_channels.chan2_raw)) 8 (CString.ofUInt16 rc_channels.chan3_raw)) 10 (CString.ofUInt16 rc_channels.chan4_raw)) 12 (CString.ofUInt16 rc_channels.chan5_raw)) 14 (CString.ofUInt16 rc_channels.chan6_raw)) 16 (CString.ofUInt16 rc_channels.chan7_raw)) 18 (CString.ofUInt16 rc_channels.chan8_raw)) 20 (CString.ofUInt16 rc_channels.chan9_raw)) 22 (CString.ofUInt16 rc_channels.chan10_raw)) 24 (CString.ofUInt16 rc_channels.chan11_raw)) 26 (CString.ofUInt16 rc_channels.chan12_raw)) 28 (CString.ofUInt16 rc_channels.chan13_raw)) 30 (CString.ofUInt16 rc_channels.chan14_raw)) 32 (CString.ofUInt16 rc_channels.chan15_raw)) 34 (CString.ofUInt16 rc_channels.chan16_raw)) 36 (CString.ofUInt16 rc_channels.chan17_raw)) 38 (CString.ofUInt16 rc_channels.chan18_raw)) 40 (#[rc_channels.chancount])) 41 (#[rc_channels.rssi])  -- the bytes of `*rc_channels` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   rc_channels := ({ time_boot_ms := ((CString.toUInt32 t'2 (0 + 0))), chan1_raw := ((CString.toUInt16 t'2 (0 + 4))), chan2_raw := ((CString.toUInt16 t'2 (0 + 6))), chan3_raw := ((CString.toUInt16 t'2 (0 + 8))), chan4_raw := ((CString.toUInt16 t'2 (0 + 10))), chan5_raw := ((CString.toUInt16 t'2 (0 + 12))), chan6_raw := ((CString.toUInt16 t'2 (0 + 14))), chan7_raw := ((CString.toUInt16 t'2 (0 + 16))), chan8_raw := ((CString.toUInt16 t'2 (0 + 18))), chan9_raw := ((CString.toUInt16 t'2 (0 + 20))), chan10_raw := ((CString.toUInt16 t'2 (0 + 22))), chan11_raw := ((CString.toUInt16 t'2 (0 + 24))), chan12_raw := ((CString.toUInt16 t'2 (0 + 26))), chan13_raw := ((CString.toUInt16 t'2 (0 + 28))), chan14_raw := ((CString.toUInt16 t'2 (0 + 30))), chan15_raw := ((CString.toUInt16 t'2 (0 + 32))), chan16_raw := ((CString.toUInt16 t'2 (0 + 34))), chan17_raw := ((CString.toUInt16 t'2 (0 + 36))), chan18_raw := ((CString.toUInt16 t'2 (0 + 38))), chancount := ((CString.get t'2 (0 + 40))), rssi := ((CString.get t'2 (0 + 41))) } : __mavlink_rc_channels_t)
   return rc_channels
 
@@ -20910,7 +20910,7 @@ def mavlink_msg_gps_raw_int_pack (system_id : UInt32) (component_id : UInt8) (ms
   packet := { packet with hdg_acc := hdg_acc }
   packet := { packet with yaw := yaw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 52 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 12 (CString.ofUInt32 (Int32.toUInt32 packet.lon))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.alt))) 20 (CString.ofUInt16 packet.eph)) 22 (CString.ofUInt16 packet.epv)) 24 (CString.ofUInt16 packet.vel)) 26 (CString.ofUInt16 packet.cog)) 28 (#[packet.fix_type])) 29 (#[packet.satellites_visible])) 30 (CString.ofUInt32 (Int32.toUInt32 packet.alt_ellipsoid))) 34 (CString.ofUInt32 packet.h_acc)) 38 (CString.ofUInt32 packet.v_acc)) 42 (CString.ofUInt32 packet.vel_acc)) 46 (CString.ofUInt32 packet.hdg_acc)) 50 (CString.ofUInt16 packet.yaw)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (52 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (52 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (24 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (30 : Int32))) (Int8.toUInt8 (Int32.toInt8 (52 : Int32))) (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) mav_chan_status
   msg := t'2
@@ -20939,7 +20939,7 @@ def mavlink_msg_gps_raw_int_pack_chan (system_id : UInt32) (component_id chan : 
   packet := { packet with hdg_acc := hdg_acc }
   packet := { packet with yaw := yaw }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 52 (0 : UInt8))) 0 (CString.ofUInt64 packet.time_usec)) 8 (CString.ofUInt32 (Int32.toUInt32 packet.lat))) 12 (CString.ofUInt32 (Int32.toUInt32 packet.lon))) 16 (CString.ofUInt32 (Int32.toUInt32 packet.alt))) 20 (CString.ofUInt16 packet.eph)) 22 (CString.ofUInt16 packet.epv)) 24 (CString.ofUInt16 packet.vel)) 26 (CString.ofUInt16 packet.cog)) 28 (#[packet.fix_type])) 29 (#[packet.satellites_visible])) 30 (CString.ofUInt32 (Int32.toUInt32 packet.alt_ellipsoid))) 34 (CString.ofUInt32 packet.h_acc)) 38 (CString.ofUInt32 packet.v_acc)) 42 (CString.ofUInt32 packet.vel_acc)) 46 (CString.ofUInt32 packet.hdg_acc)) 50 (CString.ofUInt16 packet.yaw)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (52 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (52 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (24 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (30 : Int32))) (Int8.toUInt8 (Int32.toInt8 (52 : Int32))) (Int8.toUInt8 (Int32.toInt8 (24 : Int32))) mav_chan_status
   msg := t'2
@@ -21192,7 +21192,7 @@ def pk_gps_raw_int (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __ma
       mav_chan_status := t'103
       n := t'104
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'105, t'106) := mavlink_msg_to_send_buffer buf msg
   buf := t'105
   let len : UInt16 := t'106
@@ -21538,10 +21538,10 @@ def mavlink_msg_gps_raw_int_decode (msg : __mavlink_message) (gps_raw_int : __ma
   let mut gps_raw_int := gps_raw_int
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (52 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (52 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 52 (0 : UInt8))) 0 (CString.ofUInt64 gps_raw_int.time_usec)) 8 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.lat))) 12 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.lon))) 16 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.alt))) 20 (CString.ofUInt16 gps_raw_int.eph)) 22 (CString.ofUInt16 gps_raw_int.epv)) 24 (CString.ofUInt16 gps_raw_int.vel)) 26 (CString.ofUInt16 gps_raw_int.cog)) 28 (#[gps_raw_int.fix_type])) 29 (#[gps_raw_int.satellites_visible])) 30 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.alt_ellipsoid))) 34 (CString.ofUInt32 gps_raw_int.h_acc)) 38 (CString.ofUInt32 gps_raw_int.v_acc)) 42 (CString.ofUInt32 gps_raw_int.vel_acc)) 46 (CString.ofUInt32 gps_raw_int.hdg_acc)) 50 (CString.ofUInt16 gps_raw_int.yaw)  -- the bytes of `*gps_raw_int` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (52 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (52 : Int32)))
   gps_raw_int := ({ time_usec := ((CString.toUInt64 t'1 (0 + 0))), lat := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 8))), lon := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 12))), alt := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 16))), eph := ((CString.toUInt16 t'1 (0 + 20))), epv := ((CString.toUInt16 t'1 (0 + 22))), vel := ((CString.toUInt16 t'1 (0 + 24))), cog := ((CString.toUInt16 t'1 (0 + 26))), fix_type := ((CString.get t'1 (0 + 28))), satellites_visible := ((CString.get t'1 (0 + 29))), alt_ellipsoid := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 30))), h_acc := ((CString.toUInt32 t'1 (0 + 34))), v_acc := ((CString.toUInt32 t'1 (0 + 38))), vel_acc := ((CString.toUInt32 t'1 (0 + 42))), hdg_acc := ((CString.toUInt32 t'1 (0 + 46))), yaw := ((CString.toUInt16 t'1 (0 + 50))) } : __mavlink_gps_raw_int_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 52 (0 : UInt8))) 0 (CString.ofUInt64 gps_raw_int.time_usec)) 8 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.lat))) 12 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.lon))) 16 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.alt))) 20 (CString.ofUInt16 gps_raw_int.eph)) 22 (CString.ofUInt16 gps_raw_int.epv)) 24 (CString.ofUInt16 gps_raw_int.vel)) 26 (CString.ofUInt16 gps_raw_int.cog)) 28 (#[gps_raw_int.fix_type])) 29 (#[gps_raw_int.satellites_visible])) 30 (CString.ofUInt32 (Int32.toUInt32 gps_raw_int.alt_ellipsoid))) 34 (CString.ofUInt32 gps_raw_int.h_acc)) 38 (CString.ofUInt32 gps_raw_int.v_acc)) 42 (CString.ofUInt32 gps_raw_int.vel_acc)) 46 (CString.ofUInt32 gps_raw_int.hdg_acc)) 50 (CString.ofUInt16 gps_raw_int.yaw)  -- the bytes of `*gps_raw_int` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   gps_raw_int := ({ time_usec := ((CString.toUInt64 t'2 (0 + 0))), lat := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 8))), lon := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 12))), alt := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 16))), eph := ((CString.toUInt16 t'2 (0 + 20))), epv := ((CString.toUInt16 t'2 (0 + 22))), vel := ((CString.toUInt16 t'2 (0 + 24))), cog := ((CString.toUInt16 t'2 (0 + 26))), fix_type := ((CString.get t'2 (0 + 28))), satellites_visible := ((CString.get t'2 (0 + 29))), alt_ellipsoid := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 30))), h_acc := ((CString.toUInt32 t'2 (0 + 34))), v_acc := ((CString.toUInt32 t'2 (0 + 38))), vel_acc := ((CString.toUInt32 t'2 (0 + 42))), hdg_acc := ((CString.toUInt32 t'2 (0 + 46))), yaw := ((CString.toUInt16 t'2 (0 + 50))) } : __mavlink_gps_raw_int_t)
   return gps_raw_int
 
@@ -21618,7 +21618,7 @@ def mavlink_msg_extended_sys_state_pack (system_id : UInt32) (component_id : UIn
   packet := { packet with vtol_state := vtol_state }
   packet := { packet with landed_state := landed_state }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[packet.vtol_state])) 1 (#[packet.landed_state])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (245 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (130 : Int32))) mav_chan_status
   msg := t'2
@@ -21633,7 +21633,7 @@ def mavlink_msg_extended_sys_state_pack_chan (system_id : UInt32) (component_id 
   packet := { packet with vtol_state := vtol_state }
   packet := { packet with landed_state := landed_state }
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[packet.vtol_state])) 1 (#[packet.landed_state])  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (245 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (2 : Int32))) (Int8.toUInt8 (Int32.toInt8 (130 : Int32))) mav_chan_status
   msg := t'2
@@ -21732,7 +21732,7 @@ def pk_extended_sys_state (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arr
       mav_chan_status := t'33
       n := t'34
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'35, t'36) := mavlink_msg_to_send_buffer buf msg
   buf := t'35
   let len : UInt16 := t'36
@@ -21854,10 +21854,10 @@ def mavlink_msg_extended_sys_state_decode (msg : __mavlink_message) (extended_sy
   let mut extended_sys_state := extended_sys_state
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (2 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (2 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[extended_sys_state.vtol_state])) 1 (#[extended_sys_state.landed_state])  -- the bytes of `*extended_sys_state` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))
   extended_sys_state := ({ vtol_state := ((CString.get t'1 (0 + 0))), landed_state := ((CString.get t'1 (0 + 1))) } : __mavlink_extended_sys_state_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write ((Array.replicate 2 (0 : UInt8))) 0 (#[extended_sys_state.vtol_state])) 1 (#[extended_sys_state.landed_state])  -- the bytes of `*extended_sys_state` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   extended_sys_state := ({ vtol_state := ((CString.get t'2 (0 + 0))), landed_state := ((CString.get t'2 (0 + 1))) } : __mavlink_extended_sys_state_t)
   return extended_sys_state
 
@@ -21948,10 +21948,10 @@ def mavlink_msg_home_position_pack (system_id : UInt32) (component_id : UInt8) (
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.q[0]!))) 4 (CString.ofUInt32 (Binary32.toBits packet.q[1]!))) 8 (CString.ofUInt32 (Binary32.toBits packet.q[2]!))) 12 (CString.ofUInt32 (Binary32.toBits packet.q[3]!))  -- the bytes of the elements of `packet.q`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((q).foldl (fun a' x' => a' ++ CString.ofUInt32 (Binary32.toBits x')) (#[] : Array UInt8))  -- the bytes of the elements of `q`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with q := #[(Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12)))] }
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 60 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.altitude))) 12 (CString.ofUInt32 (Binary32.toBits packet.x))) 16 (CString.ofUInt32 (Binary32.toBits packet.y))) 20 (CString.ofUInt32 (Binary32.toBits packet.z))) 24 (CString.ofUInt32 (Binary32.toBits packet.q[0]!))) 28 (CString.ofUInt32 (Binary32.toBits packet.q[1]!))) 32 (CString.ofUInt32 (Binary32.toBits packet.q[2]!))) 36 (CString.ofUInt32 (Binary32.toBits packet.q[3]!))) 40 (CString.ofUInt32 (Binary32.toBits packet.approach_x))) 44 (CString.ofUInt32 (Binary32.toBits packet.approach_y))) 48 (CString.ofUInt32 (Binary32.toBits packet.approach_z))) 52 (CString.ofUInt64 packet.time_usec)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'4 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (60 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'4 0 (Int64.toUInt64 (Int32.toInt64 (60 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (242 : Int32) &&& (16777215 : UInt32) }
   let (t'5, t'6, t'7) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (52 : Int32))) (Int8.toUInt8 (Int32.toInt8 (60 : Int32))) (Int8.toUInt8 (Int32.toInt8 (104 : Int32))) mav_chan_status
   msg := t'5
@@ -21976,10 +21976,10 @@ def mavlink_msg_home_position_pack_chan (system_id : UInt32) (component_id chan 
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.q[0]!))) 4 (CString.ofUInt32 (Binary32.toBits packet.q[1]!))) 8 (CString.ofUInt32 (Binary32.toBits packet.q[2]!))) 12 (CString.ofUInt32 (Binary32.toBits packet.q[3]!))  -- the bytes of the elements of `packet.q`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((q).foldl (fun a' x' => a' ++ CString.ofUInt32 (Binary32.toBits x')) (#[] : Array UInt8))  -- the bytes of the elements of `q`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with q := #[(Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12)))] }
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 60 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.altitude))) 12 (CString.ofUInt32 (Binary32.toBits packet.x))) 16 (CString.ofUInt32 (Binary32.toBits packet.y))) 20 (CString.ofUInt32 (Binary32.toBits packet.z))) 24 (CString.ofUInt32 (Binary32.toBits packet.q[0]!))) 28 (CString.ofUInt32 (Binary32.toBits packet.q[1]!))) 32 (CString.ofUInt32 (Binary32.toBits packet.q[2]!))) 36 (CString.ofUInt32 (Binary32.toBits packet.q[3]!))) 40 (CString.ofUInt32 (Binary32.toBits packet.approach_x))) 44 (CString.ofUInt32 (Binary32.toBits packet.approach_y))) 48 (CString.ofUInt32 (Binary32.toBits packet.approach_z))) 52 (CString.ofUInt64 packet.time_usec)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'4 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (60 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'4 0 (Int64.toUInt64 (Int32.toInt64 (60 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (242 : Int32) &&& (16777215 : UInt32) }
   let (t'5, t'6, t'7) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (52 : Int32))) (Int8.toUInt8 (Int32.toInt8 (60 : Int32))) (Int8.toUInt8 (Int32.toInt8 (104 : Int32))) mav_chan_status
   msg := t'5
@@ -22183,7 +22183,7 @@ def pk_home_position (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array __
       mav_chan_status := t'78
       n := t'79
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'80, t'81) := mavlink_msg_to_send_buffer buf msg
   buf := t'80
   let len : UInt16 := t'81
@@ -22215,7 +22215,7 @@ def mavlink_msg_home_position_send (chan : mavlink_channel_t) (latitude longitud
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits packet.q[0]!))) 4 (CString.ofUInt32 (Binary32.toBits packet.q[1]!))) 8 (CString.ofUInt32 (Binary32.toBits packet.q[2]!))) 12 (CString.ofUInt32 (Binary32.toBits packet.q[3]!))  -- the bytes of the elements of `packet.q`
   let t'3 := t'1
   let mut t'2 : Array UInt8 := ((q).foldl (fun a' x' => a' ++ CString.ofUInt32 (Binary32.toBits x')) (#[] : Array UInt8))  -- the bytes of the elements of `q`
-  t'1 := mav_array_memcpy t'3 t'2 (UInt64.toUSize ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+  t'1 := mav_array_memcpy t'3 t'2 ((4 : UInt64) * Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
   packet := { packet with q := #[(Binary32.ofBits (CString.toUInt32 t'1 (0 + 0))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 4))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 8))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12)))] }
   let t'5 := chan
   let t'6 := Int32.toUInt32 (242 : Int32)
@@ -22438,7 +22438,7 @@ def mavlink_msg_home_position_get_z (msg : __mavlink_message) : Binary32 := Id.r
 def _MAV_RETURN_float_array (msg : __mavlink_message) (value : Array Binary32) (array_length wire_offset : UInt8) : (Array Binary32) × UInt16 := Id.run do
   let mut value := value
   let mut t'1 : Array UInt8 := ((value).foldl (fun a' x' => a' ++ CString.ofUInt32 (Binary32.toBits x')) (#[] : Array UInt8))  -- the bytes of the elements of `a`
-  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt64.toUSize (UInt8.toUInt64 array_length * (4 : UInt64)))
+  t'1 := CString.memcpy t'1 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat wire_offset) (UInt8.toUInt64 array_length * (4 : UInt64))
   value := (Array.ofFn (n := (t'1.size - 0) / 4) fun i' => (Binary32.ofBits (CString.toUInt32 t'1 (0 + i'.val * 4))))
   return (value, UInt64.toUInt16 (UInt8.toUInt64 array_length * (4 : UInt64)))
 
@@ -22470,10 +22470,10 @@ def mavlink_msg_home_position_decode (msg : __mavlink_message) (home_position : 
   let mut home_position := home_position
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (60 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (60 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 60 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 home_position.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 home_position.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 home_position.altitude))) 12 (CString.ofUInt32 (Binary32.toBits home_position.x))) 16 (CString.ofUInt32 (Binary32.toBits home_position.y))) 20 (CString.ofUInt32 (Binary32.toBits home_position.z))) 24 (CString.ofUInt32 (Binary32.toBits home_position.q[0]!))) 28 (CString.ofUInt32 (Binary32.toBits home_position.q[1]!))) 32 (CString.ofUInt32 (Binary32.toBits home_position.q[2]!))) 36 (CString.ofUInt32 (Binary32.toBits home_position.q[3]!))) 40 (CString.ofUInt32 (Binary32.toBits home_position.approach_x))) 44 (CString.ofUInt32 (Binary32.toBits home_position.approach_y))) 48 (CString.ofUInt32 (Binary32.toBits home_position.approach_z))) 52 (CString.ofUInt64 home_position.time_usec)  -- the bytes of `*home_position` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (60 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (60 : Int32)))
   home_position := ({ latitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 0))), longitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 4))), altitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 8))), x := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 12))), y := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 16))), z := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 20))), q := #[(Binary32.ofBits (CString.toUInt32 t'1 (0 + 24 + 0))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24 + 4))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24 + 8))), (Binary32.ofBits (CString.toUInt32 t'1 (0 + 24 + 12)))], approach_x := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 40))), approach_y := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 44))), approach_z := (Binary32.ofBits (CString.toUInt32 t'1 (0 + 48))), time_usec := ((CString.toUInt64 t'1 (0 + 52))) } : __mavlink_home_position_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 60 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 home_position.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 home_position.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 home_position.altitude))) 12 (CString.ofUInt32 (Binary32.toBits home_position.x))) 16 (CString.ofUInt32 (Binary32.toBits home_position.y))) 20 (CString.ofUInt32 (Binary32.toBits home_position.z))) 24 (CString.ofUInt32 (Binary32.toBits home_position.q[0]!))) 28 (CString.ofUInt32 (Binary32.toBits home_position.q[1]!))) 32 (CString.ofUInt32 (Binary32.toBits home_position.q[2]!))) 36 (CString.ofUInt32 (Binary32.toBits home_position.q[3]!))) 40 (CString.ofUInt32 (Binary32.toBits home_position.approach_x))) 44 (CString.ofUInt32 (Binary32.toBits home_position.approach_y))) 48 (CString.ofUInt32 (Binary32.toBits home_position.approach_z))) 52 (CString.ofUInt64 home_position.time_usec)  -- the bytes of `*home_position` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   home_position := ({ latitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 0))), longitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 4))), altitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 8))), x := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 12))), y := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 16))), z := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 20))), q := #[(Binary32.ofBits (CString.toUInt32 t'2 (0 + 24 + 0))), (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24 + 4))), (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24 + 8))), (Binary32.ofBits (CString.toUInt32 t'2 (0 + 24 + 12)))], approach_x := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 40))), approach_y := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 44))), approach_z := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 48))), time_usec := ((CString.toUInt64 t'2 (0 + 52))) } : __mavlink_home_position_t)
   return home_position
 
@@ -22524,7 +22524,7 @@ def dc_home_position (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Arra
   h := hash_f32 h (mavlink_msg_home_position_get_z msg)
   let mut a6 : Array Binary32 := Array.replicate 4 (Binary32.ofBits 0x00000000 /- 0.0 -/)  -- uninitialized in C; every element is written before it is read
   let mut t'14 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits a6[0]!))) 4 (CString.ofUInt32 (Binary32.toBits a6[1]!))) 8 (CString.ofUInt32 (Binary32.toBits a6[2]!))) 12 (CString.ofUInt32 (Binary32.toBits a6[3]!))  -- the bytes of the elements of `a6`
-  t'14 := CString.memset t'14 0 (0 : Int32) (UInt64.toUSize (16 : UInt64))
+  t'14 := CString.memset t'14 0 (0 : Int32) (16 : UInt64)
   a6 := #[(Binary32.ofBits (CString.toUInt32 t'14 (0 + 0))), (Binary32.ofBits (CString.toUInt32 t'14 (0 + 4))), (Binary32.ofBits (CString.toUInt32 t'14 (0 + 8))), (Binary32.ofBits (CString.toUInt32 t'14 (0 + 12)))]
   let t'17 := h
   let (t'15, t'16) := mavlink_msg_home_position_get_q msg a6
@@ -22561,7 +22561,7 @@ def mavlink_msg_gps_global_origin_pack (system_id : UInt32) (component_id : UInt
   packet := { packet with altitude := altitude }
   packet := { packet with time_usec := time_usec }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.altitude))) 12 (CString.ofUInt64 packet.time_usec)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (49 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (39 : Int32))) mav_chan_status
   msg := t'2
@@ -22578,7 +22578,7 @@ def mavlink_msg_gps_global_origin_pack_chan (system_id : UInt32) (component_id c
   packet := { packet with altitude := altitude }
   packet := { packet with time_usec := time_usec }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 packet.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 packet.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 packet.altitude))) 12 (CString.ofUInt64 packet.time_usec)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (20 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (49 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (12 : Int32))) (Int8.toUInt8 (Int32.toInt8 (20 : Int32))) (Int8.toUInt8 (Int32.toInt8 (39 : Int32))) mav_chan_status
   msg := t'2
@@ -22699,7 +22699,7 @@ def pk_gps_global_origin (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Arra
       mav_chan_status := t'43
       n := t'44
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'45, t'46) := mavlink_msg_to_send_buffer buf msg
   buf := t'45
   let len : UInt16 := t'46
@@ -22853,10 +22853,10 @@ def mavlink_msg_gps_global_origin_decode (msg : __mavlink_message) (gps_global_o
   let mut gps_global_origin := gps_global_origin
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (20 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (20 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.altitude))) 12 (CString.ofUInt64 gps_global_origin.time_usec)  -- the bytes of `*gps_global_origin` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (20 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (20 : Int32)))
   gps_global_origin := ({ latitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 0))), longitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 4))), altitude := (UInt32.toInt32 (CString.toUInt32 t'1 (0 + 8))), time_usec := ((CString.toUInt64 t'1 (0 + 12))) } : __mavlink_gps_global_origin_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write ((Array.replicate 20 (0 : UInt8))) 0 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.latitude))) 4 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.longitude))) 8 (CString.ofUInt32 (Int32.toUInt32 gps_global_origin.altitude))) 12 (CString.ofUInt64 gps_global_origin.time_usec)  -- the bytes of `*gps_global_origin` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   gps_global_origin := ({ latitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 0))), longitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 4))), altitude := (UInt32.toInt32 (CString.toUInt32 t'2 (0 + 8))), time_usec := ((CString.toUInt64 t'2 (0 + 12))) } : __mavlink_gps_global_origin_t)
   return gps_global_origin
 
@@ -22931,9 +22931,9 @@ def mavlink_msg_available_modes_pack (system_id : UInt32) (component_id : UInt8)
   packet := { packet with number_modes := number_modes }
   packet := { packet with mode_index := mode_index }
   packet := { packet with standard_mode := standard_mode }
-  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32)))) }
+  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 48 (0 : UInt8))) 0 (CString.ofUInt32 packet.custom_mode)) 4 (CString.ofUInt32 packet.properties)) 8 (#[packet.number_modes])) 9 (#[packet.mode_index])) 10 (#[packet.standard_mode])) 11 (packet.mode_name)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (46 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (46 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (435 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message msg system_id component_id (Int8.toUInt8 (Int32.toInt8 (46 : Int32))) (Int8.toUInt8 (Int32.toInt8 (46 : Int32))) (Int8.toUInt8 (Int32.toInt8 (134 : Int32))) mav_chan_status
   msg := t'2
@@ -22950,9 +22950,9 @@ def mavlink_msg_available_modes_pack_chan (system_id : UInt32) (component_id cha
   packet := { packet with number_modes := number_modes }
   packet := { packet with mode_index := mode_index }
   packet := { packet with standard_mode := standard_mode }
-  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32)))) }
+  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32))) }
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 48 (0 : UInt8))) 0 (CString.ofUInt32 packet.custom_mode)) 4 (CString.ofUInt32 packet.properties)) 8 (#[packet.number_modes])) 9 (#[packet.mode_index])) 10 (#[packet.standard_mode])) 11 (packet.mode_name)  -- the bytes of `packet` (its object representation)
-  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (46 : Int32)))) }
+  msg := { msg with payload64 := CString.memcpy msg.payload64 (Int32.toNatClampNeg (0 : Int32)) t'1 0 (Int64.toUInt64 (Int32.toInt64 (46 : Int32))) }
   msg := { msg with msgid := Int32.toUInt32 (435 : Int32) &&& (16777215 : UInt32) }
   let (t'2, t'3, t'4) := mavlink_finalize_message_chan msg system_id component_id chan (Int8.toUInt8 (Int32.toInt8 (46 : Int32))) (Int8.toUInt8 (Int32.toInt8 (46 : Int32))) (Int8.toUInt8 (Int32.toInt8 (134 : Int32))) mav_chan_status
   msg := t'2
@@ -23101,7 +23101,7 @@ def pk_available_modes (seed : UInt32) (mode_ : UInt8) (mav_chan_buffer : Array 
       mav_chan_status := t'53
       n := t'54
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let (t'55, t'56) := mavlink_msg_to_send_buffer buf msg
   buf := t'55
   let len : UInt16 := t'56
@@ -23125,7 +23125,7 @@ def mavlink_msg_available_modes_send (chan : mavlink_channel_t) (number_modes mo
   packet := { packet with number_modes := number_modes }
   packet := { packet with mode_index := mode_index }
   packet := { packet with standard_mode := standard_mode }
-  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name (UInt64.toUSize ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32)))) }
+  packet := { packet with mode_name := mav_array_memcpy packet.mode_name mode_name ((1 : UInt64) * Int64.toUInt64 (Int32.toInt64 (35 : Int32))) }
   let t'2 := chan
   let t'3 := Int32.toUInt32 (435 : Int32)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 48 (0 : UInt8))) 0 (CString.ofUInt32 packet.custom_mode)) 4 (CString.ofUInt32 packet.properties)) 8 (#[packet.number_modes])) 9 (#[packet.mode_index])) 10 (#[packet.standard_mode])) 11 (packet.mode_name)  -- the bytes of `packet` (its object representation)
@@ -23296,10 +23296,10 @@ def mavlink_msg_available_modes_decode (msg : __mavlink_message) (available_mode
   let mut available_modes := available_modes
   let len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 msg.len) < (46 : Int32) then UInt32.toInt32 (UInt8.toUInt32 msg.len) else (46 : Int32)))
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 48 (0 : UInt8))) 0 (CString.ofUInt32 available_modes.custom_mode)) 4 (CString.ofUInt32 available_modes.properties)) 8 (#[available_modes.number_modes])) 9 (#[available_modes.mode_index])) 10 (#[available_modes.standard_mode])) 11 (available_modes.mode_name)  -- the bytes of `*available_modes` (its object representation)
-  t'1 := CString.memset t'1 0 (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (46 : Int32))))
+  t'1 := CString.memset t'1 0 (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (46 : Int32)))
   available_modes := ({ custom_mode := ((CString.toUInt32 t'1 (0 + 0))), properties := ((CString.toUInt32 t'1 (0 + 4))), number_modes := ((CString.get t'1 (0 + 8))), mode_index := ((CString.get t'1 (0 + 9))), standard_mode := ((CString.get t'1 (0 + 10))), mode_name := (CString.slice t'1 (0 + 11) 35) } : __mavlink_available_modes_t)
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 48 (0 : UInt8))) 0 (CString.ofUInt32 available_modes.custom_mode)) 4 (CString.ofUInt32 available_modes.properties)) 8 (#[available_modes.number_modes])) 9 (#[available_modes.mode_index])) 10 (#[available_modes.standard_mode])) 11 (available_modes.mode_name)  -- the bytes of `*available_modes` (its object representation)
-  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt64.toUSize (UInt8.toUInt64 len))
+  t'2 := CString.memcpy t'2 0 msg.payload64 (Int32.toNatClampNeg (0 : Int32)) (UInt8.toUInt64 len)
   available_modes := ({ custom_mode := ((CString.toUInt32 t'2 (0 + 0))), properties := ((CString.toUInt32 t'2 (0 + 4))), number_modes := ((CString.get t'2 (0 + 8))), mode_index := ((CString.get t'2 (0 + 9))), standard_mode := ((CString.get t'2 (0 + 10))), mode_name := (CString.slice t'2 (0 + 11) 35) } : __mavlink_available_modes_t)
   return available_modes
 
@@ -23348,7 +23348,7 @@ def dc_available_modes (seed : UInt32) (len flags : UInt8) (mav_chan_buffer : Ar
   h := hash_u64 h (UInt32.toUInt64 (mavlink_msg_available_modes_get_custom_mode msg))
   h := hash_u64 h (UInt32.toUInt64 (mavlink_msg_available_modes_get_properties msg))
   let mut a5 : Array UInt8 := Array.replicate 35 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  a5 := CString.memset a5 0 (0 : Int32) (UInt64.toUSize (35 : UInt64))
+  a5 := CString.memset a5 0 (0 : Int32) (35 : UInt64)
   let t'16 := h
   let (t'14, t'15) := mavlink_msg_available_modes_get_mode_name msg a5
   a5 := t'14
@@ -24898,7 +24898,7 @@ def mavlink_frame_char_buffer (rxmsg : __mavlink_message) (status : __mavlink_st
       rxmsg := { rxmsg with ck := rxmsg.ck.set! (Int32.toNatClampNeg (0 : Int32)) c }
       let fill_len : UInt8 := Int8.toUInt8 (Int32.toInt8 (if UInt32.toInt32 (UInt8.toUInt32 (e.getD default).max_msg_len) < (255 : Int32) then UInt32.toInt32 (UInt8.toUInt32 (e.getD default).max_msg_len) else (255 : Int32)))
       if e.isSome && decide (UInt32.toInt32 (UInt8.toUInt32 status.packet_idx) < UInt32.toInt32 (UInt8.toUInt32 fill_len)) then
-        rxmsg := { rxmsg with payload64 := CString.memset rxmsg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat status.packet_idx) (0 : Int32) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 fill_len) - UInt32.toInt32 (UInt8.toUInt32 status.packet_idx))))) }
+        rxmsg := { rxmsg with payload64 := CString.memset rxmsg.payload64 (Int32.toNatClampNeg (0 : Int32) + UInt8.toNat status.packet_idx) (0 : Int32) (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 fill_len) - UInt32.toInt32 (UInt8.toUInt32 status.packet_idx)))) }
   | .MAVLINK_PARSE_STATE_GOT_CRC1 | .MAVLINK_PARSE_STATE_GOT_BAD_CRC1 =>
     if UInt32.toInt32 (mavlink_parse_state_t.toInt status.parse_state) == UInt32.toInt32 (mavlink_parse_state_t.toInt mavlink_parse_state_t.MAVLINK_PARSE_STATE_GOT_BAD_CRC1) || UInt32.toInt32 (UInt8.toUInt32 c) != (UInt32.toInt32 (UInt16.toUInt32 rxmsg.checksum) >>> (8 : Int32)) then
       status := { status with msg_received := UInt32.toUInt8 (mavlink_framing_t.toInt mavlink_framing_t.MAVLINK_FRAMING_BAD_CRC) }
@@ -25009,7 +25009,7 @@ def ps_stream (seed : UInt32) (nbytes : UInt16) (mode : UInt8) (mav_chan_buffer 
   rmsg := {}
   rst := {}
   let mut frame : Array UInt8 := Array.replicate 300 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  frame := CString.memset frame 0 (0 : Int32) (UInt64.toUSize (300 : UInt64))
+  frame := CString.memset frame 0 (0 : Int32) (300 : UInt64)
   let mut flen : UInt16 := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
   let mut fpos : UInt16 := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
   let mut h : UInt64 := (1469598103934665603 : UInt64)
@@ -25112,9 +25112,9 @@ def bench_parse (seed : UInt32) (nbytes : UInt16) (doparse : UInt8) (mav_chan_bu
   mavlink_system := t'3
   mav_uart_len := t'4
   let mut stream : Array UInt8 := Array.replicate 4096 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  stream := CString.memset stream 0 (0 : Int32) (UInt64.toUSize (4096 : UInt64))
+  stream := CString.memset stream 0 (0 : Int32) (4096 : UInt64)
   let mut frame : Array UInt8 := Array.replicate 300 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  frame := CString.memset frame 0 (0 : Int32) (UInt64.toUSize (300 : UInt64))
+  frame := CString.memset frame 0 (0 : Int32) (300 : UInt64)
   let mut flen : UInt16 := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
   let mut fpos : UInt16 := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
   let n : UInt16 := Int16.toUInt16 (Int32.toInt16 (if UInt32.toInt32 (UInt16.toUInt32 nbytes) > (4096 : Int32) then (4096 : Int32) else UInt32.toInt32 (UInt16.toUInt32 nbytes)))
@@ -25158,7 +25158,7 @@ def bench_pack (seed : UInt32) (count : UInt16) (dopack : UInt8) (mav_chan_buffe
   mavlink_system := t'3
   mav_uart_len := t'4
   let mut buf : Array UInt8 := Array.replicate 287 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (287 : UInt64))
+  buf := CString.memset buf 0 (0 : Int32) (287 : UInt64)
   let mut sum : UInt64 := Int64.toUInt64 (Int32.toInt64 (0 : Int32))
   for _ in [0:count.toNat] do
     let (t'5, t'6) := rnd st

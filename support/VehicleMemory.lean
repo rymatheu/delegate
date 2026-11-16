@@ -32,10 +32,12 @@ def findSerialProto (proto : Int32) (inst : UInt8) : M UInt64 :=
 
 /-- The vehicle's HAL (configuration key `hal_hook`): a call of a HAL member outside the boundary, with the object's
 address and the arguments as 64-bit words (floats as their bits, records by address), its result as a 64-bit word.
-lockstep.cpp's semantics (reference/hal/lockstep.cpp: the scheduler's delays consuming input lines, RCInput,
-RCOutput, AnalogIn, Util) are implemented by the replay driver, which can call the translated vehicle back (the IO
-processes, the delay callback, the timer failsafe); the driver defines the C symbol (`@[export]`), the forward
-declaration's usual pattern. -/
+Only the members that call back into the translated vehicle or step the World come here (configuration key
+`hal_callbacks`: lockstep.cpp's delays, which consume input lines and run the IO processes, the delay callback and the
+timer failsafe; the World's lock-step points): the replay driver implements them (lean/VehicleReplay.lean) and defines
+the C symbol (`@[export]`), the forward declaration's usual pattern, so this constant is opaque to the kernel. Every
+other member (RCInput, RCOutput, AnalogIn, Util, the UARTs, the console) is `PMem.halDev` (support/VehicleHal.lean), an
+ordinary definition. -/
 @[extern "cpp2lean_vehicle_hal"]
 opaque halImpl : String → UInt64 → Array UInt64 → Mem → UInt64 × Mem
 

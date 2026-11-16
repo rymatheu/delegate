@@ -184,7 +184,7 @@ end StorageManager
 namespace StorageAccess
 
 /-- C++ `bool StorageAccess::read_block(void * dst, uint16_t src, size_t n) const`, `StorageManager/StorageManager.cpp:139-186`. -/
-def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : USize) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
+def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : UInt64) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
   let mut data := data
   let mut addr := addr
   let mut n := n
@@ -199,19 +199,19 @@ def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : USize) (hal
     if UInt32.toInt32 (UInt16.toUInt32 addr) ≥ UInt32.toInt32 (UInt16.toUInt32 length) then
       addr := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) - UInt32.toInt32 (UInt16.toUInt32 length)))
       continue
-    let mut count : UInt16 := UInt64.toUInt16 (USize.toUInt64 n)
+    let mut count : UInt16 := UInt64.toUInt16 n
     if UInt32.toInt32 (UInt16.toUInt32 count) + UInt32.toInt32 (UInt16.toUInt32 addr) > UInt32.toInt32 (UInt16.toUInt32 length) then
       count := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 length) - UInt32.toInt32 (UInt16.toUInt32 addr)))
-    data := HalStorage.read_block hal'storage data b'o (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) (UInt64.toUSize (UInt16.toUInt64 count))
-    n := n - UInt64.toUSize (UInt16.toUInt64 count)
-    if n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
+    data := HalStorage.read_block hal'storage data b'o (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) (UInt16.toUInt64 count)
+    n := n - UInt16.toUInt64 count
+    if n == Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
       break
     b'o := b'o + Int32.toNatClampNeg (UInt32.toInt32 (UInt16.toUInt32 count))
     addr := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
-  return (data, (n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32)))))
+  return (data, (n == Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
 
 /-- C++ `bool StorageAccess::write_block(uint16_t dst, const void * src, size_t n) const`, `StorageManager/StorageManager.cpp:193-244`. -/
-def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : USize) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
+def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : UInt64) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
   let mut hal'storage := hal'storage
   let mut addr := addr
   let mut n := n
@@ -226,16 +226,16 @@ def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : USize) (ha
     if UInt32.toInt32 (UInt16.toUInt32 addr) ≥ UInt32.toInt32 (UInt16.toUInt32 length) then
       addr := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) - UInt32.toInt32 (UInt16.toUInt32 length)))
       continue
-    let mut count : UInt16 := UInt64.toUInt16 (USize.toUInt64 n)
+    let mut count : UInt16 := UInt64.toUInt16 n
     if UInt32.toInt32 (UInt16.toUInt32 count) + UInt32.toInt32 (UInt16.toUInt32 addr) > UInt32.toInt32 (UInt16.toUInt32 length) then
       count := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 length) - UInt32.toInt32 (UInt16.toUInt32 addr)))
-    hal'storage := HalStorage.write_block hal'storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) data b'o (UInt64.toUSize (UInt16.toUInt64 count))
-    n := n - UInt64.toUSize (UInt16.toUInt64 count)
-    if n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
+    hal'storage := HalStorage.write_block hal'storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) data b'o (UInt16.toUInt64 count)
+    n := n - UInt16.toUInt64 count
+    if n == Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
       break
     b'o := b'o + Int32.toNatClampNeg (UInt32.toInt32 (UInt16.toUInt32 count))
     addr := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
-  return (hal'storage, (n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32)))))
+  return (hal'storage, (n == Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
 
 /-- C++ `StorageAccess::StorageAccess(StorageManager::StorageType _type)`, `StorageManager/StorageManager.cpp:119-133`. -/
 def init (_type : StorageManager.StorageType) : State := Id.run do
@@ -705,7 +705,7 @@ def valid_bools (k : UInt16) (hal'storage : Array UInt8) : (Array UInt8) := Id.r
   let mut hal'storage := hal'storage
   let area : StorageAccess.State := StorageAccess.init StorageManager.StorageType.StorageMission
   let mut r : Array UInt8 := Array.replicate 15 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  let (t'1, _) := StorageAccess.read_block area r (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + UInt32.toInt32 (UInt16.toUInt32 k) * (15 : Int32)))) (UInt64.toUSize (15 : UInt64)) hal'storage
+  let (t'1, _) := StorageAccess.read_block area r (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + UInt32.toInt32 (UInt16.toUInt32 k) * (15 : Int32)))) (15 : UInt64) hal'storage
   r := t'1
   let mut id : UInt16 := UInt8.toUInt16 r[Int32.toNatClampNeg (0 : Int32)]!
   let mut c : UInt8 := Int8.toUInt8 (Int32.toInt8 (3 : Int32))
@@ -716,7 +716,7 @@ def valid_bools (k : UInt16) (hal'storage : Array UInt8) : (Array UInt8) := Id.r
     r := r.set! (UInt8.toNat c) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 r[UInt8.toNat c]!) &&& (1 : Int32))))
     r := r.set! (Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 c) + (1 : Int32))) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 r[Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 c) + (1 : Int32))]!) &&& (1 : Int32))))
     r := r.set! (Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 c) + (4 : Int32))) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 r[Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 c) + (4 : Int32))]!) &&& (1 : Int32))))
-    let (t'3, _) := StorageAccess.write_block area (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + UInt32.toInt32 (UInt16.toUInt32 k) * (15 : Int32)))) r (UInt64.toUSize (15 : UInt64)) hal'storage
+    let (t'3, _) := StorageAccess.write_block area (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + UInt32.toInt32 (UInt16.toUInt32 k) * (15 : Int32)))) r (15 : UInt64) hal'storage
     hal'storage := t'3
   return hal'storage
 
@@ -738,13 +738,13 @@ def random_float (s : State) : State × Binary32 := Id.run do
     let (t'3, t'4) := next s
     s := t'3
     let u : UInt32 := t'4
-    let t'5 := CString.memcpy (CString.ofUInt32 (Binary32.toBits f)) 0 (CString.ofUInt32 u) 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+    let t'5 := CString.memcpy (CString.ofUInt32 (Binary32.toBits f)) 0 (CString.ofUInt32 u) 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
     f := (Binary32.ofBits (CString.toUInt32 t'5 0))
   else if k == Int32.toUInt32 (1 : Int32) then
     let (t'6, t'7) := next s
     s := t'6
     let u'2 : UInt32 := Mission_lib.random_float'special[UInt32.toNat (t'7 % Int32.toUInt32 (12 : Int32))]!
-    let t'8 := CString.memcpy (CString.ofUInt32 (Binary32.toBits f)) 0 (CString.ofUInt32 u'2) 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (4 : Int32))))
+    let t'8 := CString.memcpy (CString.ofUInt32 (Binary32.toBits f)) 0 (CString.ofUInt32 u'2) 0 (Int64.toUInt64 (Int32.toInt64 (4 : Int32)))
     f := (Binary32.ofBits (CString.toUInt32 t'8 0))
   else if k ≤ Int32.toUInt32 (4 : Int32) then
     let (t'9, t'10) := next s
@@ -1416,7 +1416,7 @@ def random_command (s : State) (c : AP_Mission.Mission_Command.State) (kind : UI
     let (t'16, t'17) := next s
     s := t'16
     b := b.set! (UInt8.toNat i) (UInt32.toUInt8 t'17)
-  c := { c with content.bytes := CString.memcpy c.content.bytes 0 b 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+  c := { c with content.bytes := CString.memcpy c.content.bytes 0 b 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   let (t'18, t'19) := next s
   s := t'18
   c := { c with type_specific_bits := UInt32.toUInt8 t'19 }
@@ -1451,11 +1451,11 @@ def random_command (s : State) (c : AP_Mission.Mission_Command.State) (kind : UI
     c := { c with type_specific_bits := UInt32.toUInt8 (t'37 &&& Int32.toUInt32 (3 : Int32)) }
   if UInt32.toInt32 (UInt16.toUInt32 c.id) == UInt32.toInt32 (MAV_CMD.toInt MAV_CMD.MAV_CMD_DO_ENGINE_CONTROL) then
     let mut v : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-    v := CString.memcpy v 0 c.content.bytes 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32))))
+    v := CString.memcpy v 0 c.content.bytes 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))
     v := v.set! (Int32.toNatClampNeg (0 : Int32)) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 v[Int32.toNatClampNeg (0 : Int32)]!) &&& (1 : Int32))))
     v := v.set! (Int32.toNatClampNeg (1 : Int32)) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 v[Int32.toNatClampNeg (1 : Int32)]!) &&& (1 : Int32))))
     v := v.set! (Int32.toNatClampNeg (4 : Int32)) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 v[Int32.toNatClampNeg (4 : Int32)]!) &&& (1 : Int32))))
-    c := { c with content.bytes := CString.memcpy c.content.bytes 0 v 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))) }
+    c := { c with content.bytes := CString.memcpy c.content.bytes 0 v 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32))) }
   return (s, c)
 
 /-- C++ `void MissionTest::mix_bytes(const uint8_t * b, uint16_t n)`, `ardupilot/unity_mission.cpp:230-234`. -/
@@ -1482,7 +1482,7 @@ def hash_cmd (s : State) (c : AP_Mission.Mission_Command.State) (r : Bool) : Sta
   s := mix s (UInt16.toUInt64 c.id)
   s := mix s (UInt16.toUInt64 c.p1)
   let mut b : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  b := CString.memcpy b 0 c.content.bytes 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (16 : Int32))))
+  b := CString.memcpy b 0 c.content.bytes 0 (Int64.toUInt64 (Int32.toInt64 (16 : Int32)))
   s := mix_bytes s b (Int16.toUInt16 (Int32.toInt16 (16 : Int32)))
   s := mix s (UInt8.toUInt64 c.type_specific_bits)
   return (s, s.h)
@@ -1491,7 +1491,7 @@ def hash_cmd (s : State) (c : AP_Mission.Mission_Command.State) (r : Bool) : Sta
 def hash_item_int (s : State) (p' : __mavlink_mission_item_int_t) : State := Id.run do
   let mut s := s
   let mut b : Array UInt8 := Array.replicate 40 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  b := CString.memcpy b 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 p'.x))) 20 (CString.ofUInt32 (Int32.toUInt32 p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (UInt64.toUSize (40 : UInt64))
+  b := CString.memcpy b 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 p'.x))) 20 (CString.ofUInt32 (Int32.toUInt32 p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (40 : UInt64)
   s := mix_bytes s b (UInt64.toUInt16 (40 : UInt64))
   return s
 
@@ -1650,7 +1650,7 @@ namespace AP_Mission
 def format_conversion (tag_byte : UInt8) (cmd : AP_Mission.Mission_Command.State) (packed_content : PackedContent) : PackedContent := Id.run do
   let mut packed_content := packed_content
   if UInt32.toInt32 (UInt8.toUInt32 tag_byte) == (0 : Int32) && (UInt32.toInt32 (UInt16.toUInt32 cmd.id) == UInt32.toInt32 (MAV_CMD.toInt MAV_CMD.MAV_CMD_VIDEO_START_CAPTURE) || UInt32.toInt32 (UInt16.toUInt32 cmd.id) == UInt32.toInt32 (MAV_CMD.toInt MAV_CMD.MAV_CMD_VIDEO_STOP_CAPTURE)) then
-    packed_content := { packed_content with bytes := CString.memset packed_content.bytes (Int32.toNatClampNeg (1 : Int32)) (0 : Int32) (UInt64.toUSize ((12 : UInt64) - Int64.toUInt64 (Int32.toInt64 (1 : Int32)))) }
+    packed_content := { packed_content with bytes := CString.memset packed_content.bytes (Int32.toNatClampNeg (1 : Int32)) (0 : Int32) ((12 : UInt64) - Int64.toUInt64 (Int32.toInt64 (1 : Int32))) }
   return packed_content
 
 end AP_Mission
@@ -1669,7 +1669,7 @@ namespace StorageAccess
 def read_byte (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt8 := Id.run do
   let mut v : UInt8 := (0 : UInt8)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := #[v]  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (1 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (1 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.get t'1 0))
   return v
@@ -1678,7 +1678,7 @@ def read_byte (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt8 := 
 def read_uint16 (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt16 := Id.run do
   let mut v : UInt16 := (0 : UInt16)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt16 v  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (2 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (2 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.toUInt16 t'1 0))
   return v
@@ -1722,13 +1722,13 @@ def read_cmd_from_storage (s : State) (w : World) (inp : Inputs) (index : UInt16
   if UInt32.toInt32 (UInt8.toUInt32 b1) == (0 : Int32) || UInt32.toInt32 (UInt8.toUInt32 b1) == (1 : Int32) then
     cmd := { cmd with id := StorageAccess.read_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (1 : Int32)))) hal'storage }
     cmd := { cmd with p1 := StorageAccess.read_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) hal'storage }
-    let (t'1, _) := StorageAccess.read_block w._storage packed_content.bytes (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (5 : Int32)))) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (10 : Int32)))) hal'storage
+    let (t'1, _) := StorageAccess.read_block w._storage packed_content.bytes (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (5 : Int32)))) (Int64.toUInt64 (Int32.toInt64 (10 : Int32))) hal'storage
     packed_content := { packed_content with bytes := t'1 }
     packed_content := format_conversion b1 cmd packed_content
   else
     cmd := { cmd with id := UInt8.toUInt16 b1 }
     cmd := { cmd with p1 := StorageAccess.read_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (1 : Int32)))) hal'storage }
-    let (t'3, _) := StorageAccess.read_block w._storage packed_content.bytes (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) hal'storage
+    let (t'3, _) := StorageAccess.read_block w._storage packed_content.bytes (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) hal'storage
     packed_content := { packed_content with bytes := t'3 }
   if stored_in_location cmd.id then
     if UInt32.toInt32 (UInt8.toUInt32 b1) == (0 : Int32) then
@@ -1746,7 +1746,7 @@ def read_cmd_from_storage (s : State) (w : World) (inp : Inputs) (index : UInt16
     if (UInt64.toUInt8 ((CString.toUInt64 packed_content.bytes 0 >>> 7) &&& 1)) != (0 : UInt8) then
       cmd := { cmd with type_specific_bits := UInt32.toUInt8 (UInt8.toUInt32 cmd.type_specific_bits ||| (1 : UInt32) <<< Int32.toUInt32 (1 : Int32)) }
   else
-    cmd := { cmd with content.bytes := CString.memcpy cmd.content.bytes 0 packed_content.bytes 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+    cmd := { cmd with content.bytes := CString.memcpy cmd.content.bytes 0 packed_content.bytes 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   cmd := { cmd with index := index }
   return (cmd, true)
 
@@ -2082,7 +2082,7 @@ def finish (s : State) (w : World) (v : UInt64) (hal'storage : Array UInt8) : St
   let mut chunk : Array UInt8 := Array.replicate 64 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   for ofs' in [0:256] do
     let ofs : UInt16 := (0 : UInt16) + (64 : UInt16) * (Nat.toUInt16 ofs')
-    chunk := HalStorage.read_block hal'storage chunk 0 ofs (UInt64.toUSize (64 : UInt64))
+    chunk := HalStorage.read_block hal'storage chunk 0 ofs (64 : UInt64)
     s := mix_bytes s chunk (Int16.toUInt16 (Int32.toInt16 (64 : Int32)))
   s := { s with h_storage := s.h }
   s := { s with h := (1469598103934665603 : UInt64) }
@@ -2161,7 +2161,7 @@ namespace StorageAccess
 def read_uint32 (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt32 := Id.run do
   let mut v : UInt32 := (0 : UInt32)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 v  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (4 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.toUInt32 t'1 0))
   return v
@@ -2171,7 +2171,7 @@ def write_uint32 (s : State) (loc : UInt16) (value : UInt32) (hal'storage : Arra
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := CString.ofUInt32 value  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (4 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -2283,7 +2283,7 @@ def write_byte (s : State) (loc : UInt16) (value : UInt8) (hal'storage : Array U
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := #[value]  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (1 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (1 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -2292,7 +2292,7 @@ def write_uint16 (s : State) (loc : UInt16) (value : UInt16) (hal'storage : Arra
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := CString.ofUInt16 value  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (2 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (2 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -2320,12 +2320,12 @@ def write_cmd_to_storage (s : State) (w : World) (inp : Inputs) (index : UInt16)
     packed := { packed with bytes := CString.write packed.bytes 4 (CString.ofUInt32 (Int32.toUInt32 ((UInt32.toInt32 (CString.toUInt32 cmd.content.bytes 8))))) }
     packed := { packed with bytes := CString.write packed.bytes 8 (CString.ofUInt32 (Int32.toUInt32 ((UInt32.toInt32 (CString.toUInt32 cmd.content.bytes 12))))) }
   else
-    packed := { packed with bytes := CString.memcpy packed.bytes 0 cmd.content.bytes 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) }
+    packed := { packed with bytes := CString.memcpy packed.bytes 0 cmd.content.bytes 0 (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) }
   let pos_in_storage : UInt16 := Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + (UInt32.toInt32 (UInt16.toUInt32 index) * (15 : Int32))))
   if UInt32.toInt32 (UInt16.toUInt32 cmd.id) < (256 : Int32) then
     hal'storage := StorageAccess.write_byte w._storage pos_in_storage (UInt16.toUInt8 cmd.id) hal'storage
     hal'storage := StorageAccess.write_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (1 : Int32)))) cmd.p1 hal'storage
-    let (t'1, _) := StorageAccess.write_block w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) packed.bytes (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (12 : Int32)))) hal'storage
+    let (t'1, _) := StorageAccess.write_block w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) packed.bytes (Int64.toUInt64 (Int32.toInt64 (12 : Int32))) hal'storage
     hal'storage := t'1
   else
     let mut tag_byte : UInt8 := Int8.toUInt8 (Int32.toInt8 (0 : Int32))
@@ -2334,7 +2334,7 @@ def write_cmd_to_storage (s : State) (w : World) (inp : Inputs) (index : UInt16)
     hal'storage := StorageAccess.write_byte w._storage pos_in_storage tag_byte hal'storage
     hal'storage := StorageAccess.write_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (1 : Int32)))) cmd.id hal'storage
     hal'storage := StorageAccess.write_uint16 w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (3 : Int32)))) cmd.p1 hal'storage
-    let (t'3, _) := StorageAccess.write_block w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (5 : Int32)))) packed.bytes (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (10 : Int32)))) hal'storage
+    let (t'3, _) := StorageAccess.write_block w._storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 pos_in_storage) + (5 : Int32)))) packed.bytes (Int64.toUInt64 (Int32.toInt64 (10 : Int32))) hal'storage
     hal'storage := t'3
   if UInt32.toInt32 (UInt16.toUInt32 index) != (0 : Int32) then
     s := { s with _last_change_time_ms := inp.millis }
@@ -2368,7 +2368,7 @@ def t_boot (s : State) (w : World) (seed : UInt32) (total : Int16) (mode : UInt8
       let (t'1, t'2) := next s
       s := t'1
       chunk := chunk.set! (UInt8.toNat i) (UInt32.toUInt8 t'2)
-    hal'storage := HalStorage.write_block hal'storage ofs chunk 0 (UInt64.toUSize (64 : UInt64))
+    hal'storage := HalStorage.write_block hal'storage ofs chunk 0 (64 : UInt64)
   let area : StorageAccess.State := StorageAccess.init StorageManager.StorageType.StorageMission
   for k' in [0:700] do
     let k : UInt16 := Nat.toUInt16 k'
@@ -2519,7 +2519,7 @@ def t_raw (s : State) (w : World) (seed : UInt32) (index : UInt16) (tag : UInt8)
     let mut id : UInt16 := UInt32.toUInt16 (t'5 + t'4 % Int32.toUInt32 (4000 : Int32))
     if AP_Mission.stored_in_location id then
       id := Int16.toUInt16 (Int32.toInt16 (42600 : Int32))
-    rawrec := CString.memcpy rawrec (Int32.toNatClampNeg (1 : Int32)) (CString.ofUInt16 id) 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32))))
+    rawrec := CString.memcpy rawrec (Int32.toNatClampNeg (1 : Int32)) (CString.ofUInt16 id) 0 (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))
   else if UInt32.toInt32 (UInt8.toUInt32 tag) % (4 : Int32) == (1 : Int32) then
     rawrec := rawrec.set! (Int32.toNatClampNeg (0 : Int32)) (Int8.toUInt8 (Int32.toInt8 (1 : Int32)))
   else if UInt32.toInt32 (UInt8.toUInt32 tag) % (4 : Int32) == (3 : Int32) && UInt32.toInt32 (UInt8.toUInt32 rawrec[Int32.toNatClampNeg (0 : Int32)]!) == (0 : Int32) then
@@ -2531,7 +2531,7 @@ def t_raw (s : State) (w : World) (seed : UInt32) (index : UInt16) (tag : UInt8)
     if UInt32.toInt32 (UInt8.toUInt32 rawrec[Int32.toNatClampNeg (0 : Int32)]!) < (2 : Int32) then
       rawrec := rawrec.set! (Int32.toNatClampNeg (0 : Int32)) (Int8.toUInt8 (Int32.toInt8 (16 : Int32)))
   let n : UInt16 := AP_Mission.num_commands_max w.mission
-  let (t'8, _) := StorageAccess.write_block area (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + (UInt32.toInt32 (UInt16.toUInt32 index) % (UInt32.toInt32 (UInt16.toUInt32 n) + (1 : Int32))) * (15 : Int32)))) rawrec (UInt64.toUSize (15 : UInt64)) hal'storage
+  let (t'8, _) := StorageAccess.write_block area (Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + (UInt32.toInt32 (UInt16.toUInt32 index) % (UInt32.toInt32 (UInt16.toUInt32 n) + (1 : Int32))) * (15 : Int32)))) rawrec (15 : UInt64) hal'storage
   hal'storage := t'8
   hal'storage := valid_bools (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 index) % (UInt32.toInt32 (UInt16.toUInt32 n) + (1 : Int32))))) hal'storage
   let (t'10, t'11) := finish s w (UInt8.toUInt64 tag) hal'storage
@@ -2590,13 +2590,13 @@ namespace AP_Mission
 def get_command_id (w : World) (index : UInt16) (hal'storage : Array UInt8) : UInt16 := Id.run do
   let pos_in_storage : UInt16 := Int16.toUInt16 (Int32.toInt16 ((4 : Int32) + (UInt32.toInt32 (UInt16.toUInt32 index) * (15 : Int32))))
   let mut b : Array UInt8 := Array.replicate 3 (0 : UInt8)
-  let (t'1, t'2) := StorageAccess.read_block w._storage b pos_in_storage (UInt64.toUSize (3 : UInt64)) hal'storage
+  let (t'1, t'2) := StorageAccess.read_block w._storage b pos_in_storage (3 : UInt64) hal'storage
   b := t'1
   if !t'2 then
     return UInt32.toUInt16 (0 : UInt32)
   let mut id : UInt16 := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
   if UInt32.toInt32 (UInt8.toUInt32 b[Int32.toNatClampNeg (0 : Int32)]!) == (0 : Int32) || UInt32.toInt32 (UInt8.toUInt32 b[Int32.toNatClampNeg (0 : Int32)]!) == (1 : Int32) then
-    let t'3 := CString.memcpy (CString.ofUInt16 id) 0 b (Int32.toNatClampNeg (1 : Int32)) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (2 : Int32))))
+    let t'3 := CString.memcpy (CString.ofUInt16 id) 0 b (Int32.toNatClampNeg (1 : Int32)) (Int64.toUInt64 (Int32.toInt64 (2 : Int32)))
     id := ((CString.toUInt16 t'3 0))
   else
     id := UInt8.toUInt16 b[Int32.toNatClampNeg (0 : Int32)]!
@@ -2770,7 +2770,7 @@ def t_conv (s : State) (seed : UInt32) (kind : UInt8) : State × UInt64 := Id.ru
   s := t'5
   let mut back : __mavlink_mission_item_int_t := {}
   let mut t'7 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits back.param1))) 4 (CString.ofUInt32 (Binary32.toBits back.param2))) 8 (CString.ofUInt32 (Binary32.toBits back.param3))) 12 (CString.ofUInt32 (Binary32.toBits back.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 back.x))) 20 (CString.ofUInt32 (Int32.toUInt32 back.y))) 24 (CString.ofUInt32 (Binary32.toBits back.z))) 28 (CString.ofUInt16 back.seq)) 30 (CString.ofUInt16 back.command)) 32 (#[back.target_system])) 33 (#[back.target_component])) 34 (#[back.frame])) 35 (#[back.current])) 36 (#[back.autocontinue])) 37 (#[back.mission_type])  -- the bytes of `back` (its object representation)
-  t'7 := CString.memset t'7 0 (90 : Int32) (UInt64.toUSize (40 : UInt64))
+  t'7 := CString.memset t'7 0 (90 : Int32) (40 : UInt64)
   back := ({ param1 := (Binary32.ofBits (CString.toUInt32 t'7 (0 + 0))), param2 := (Binary32.ofBits (CString.toUInt32 t'7 (0 + 4))), param3 := (Binary32.ofBits (CString.toUInt32 t'7 (0 + 8))), param4 := (Binary32.ofBits (CString.toUInt32 t'7 (0 + 12))), x := (UInt32.toInt32 (CString.toUInt32 t'7 (0 + 16))), y := (UInt32.toInt32 (CString.toUInt32 t'7 (0 + 20))), z := (Binary32.ofBits (CString.toUInt32 t'7 (0 + 24))), seq := ((CString.toUInt16 t'7 (0 + 28))), command := ((CString.toUInt16 t'7 (0 + 30))), target_system := ((CString.get t'7 (0 + 32))), target_component := ((CString.get t'7 (0 + 33))), frame := ((CString.get t'7 (0 + 34))), current := ((CString.get t'7 (0 + 35))), autocontinue := ((CString.get t'7 (0 + 36))), mission_type := ((CString.get t'7 (0 + 37))) } : __mavlink_mission_item_int_t)
   let (t'8, t'9) := AP_Mission.mission_cmd_to_mavlink_int s.cmd back
   back := t'8
@@ -2821,7 +2821,7 @@ namespace MissionTest
 def hash_item (s : State) (p' : __mavlink_mission_item_t) : State := Id.run do
   let mut s := s
   let mut b : Array UInt8 := Array.replicate 40 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  b := CString.memcpy b 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Binary32.toBits p'.x))) 20 (CString.ofUInt32 (Binary32.toBits p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (UInt64.toUSize (40 : UInt64))
+  b := CString.memcpy b 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Binary32.toBits p'.x))) 20 (CString.ofUInt32 (Binary32.toBits p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (40 : UInt64)
   s := mix_bytes s b (UInt64.toUInt16 (40 : UInt64))
   return s
 
@@ -2948,7 +2948,7 @@ def t_get (s : State) (w : World) (index : UInt16) (hal'storage : Array UInt8) :
     p' := t'3
     t'5 := t'4
   let ok : Bool := t'5
-  s := { s with item := CString.memcpy s.item 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 p'.x))) 20 (CString.ofUInt32 (Int32.toUInt32 p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (UInt64.toUSize (40 : UInt64)) }
+  s := { s with item := CString.memcpy s.item 0 (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 40 (0 : UInt8))) 0 (CString.ofUInt32 (Binary32.toBits p'.param1))) 4 (CString.ofUInt32 (Binary32.toBits p'.param2))) 8 (CString.ofUInt32 (Binary32.toBits p'.param3))) 12 (CString.ofUInt32 (Binary32.toBits p'.param4))) 16 (CString.ofUInt32 (Int32.toUInt32 p'.x))) 20 (CString.ofUInt32 (Int32.toUInt32 p'.y))) 24 (CString.ofUInt32 (Binary32.toBits p'.z))) 28 (CString.ofUInt16 p'.seq)) 30 (CString.ofUInt16 p'.command)) 32 (#[p'.target_system])) 33 (#[p'.target_component])) 34 (#[p'.frame])) 35 (#[p'.current])) 36 (#[p'.autocontinue])) 37 (#[p'.mission_type])) 0 (40 : UInt64) }
   let (t'6, t'7) := finish s w (Int64.toUInt64 (Int32.toInt64 ((if r then (1 : Int32) else (0 : Int32)) + (2 : Int32) * (if ok then (1 : Int32) else (0 : Int32))))) hal'storage
   s := t'6
   return (s, t'7)

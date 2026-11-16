@@ -80,6 +80,14 @@ def main():
     for l in tl:
         if l.startswith("#"):
             print(l[:2000])
+    # (total definitions) the sticky flag of the translation's fuel loops (support/ParamMemory.lean `PMem.Fuel`)
+    fo = [l for l in tl if l.startswith("# fuel_out=")]
+    print("fuel: %s" % ("no loop ran out of fuel" if fo == ["# fuel_out=false"] else
+                        "A LOOP RAN OUT OF FUEL" if fo else "no fuel_out line (an older replay binary)"))
+    # (total definitions) the sticky flag of the recursive components' depth (support/ParamMemory.lean `PMem.depthOut`)
+    do_ = [l for l in tl if l.startswith("# depth_out=")]
+    print("depth: %s" % ("no recursive call ran out of depth" if do_ == ["# depth_out=false"] else
+                         "A RECURSIVE CALL RAN OUT OF DEPTH" if do_ else "no depth_out line (an older replay binary)"))
     n = len(outputs)
     pwm_eq = down_eq = both = 0
     first_pwm = first_down = None

@@ -1,0 +1,82 @@
+# cpp2lean --param-memory: the call graph of the emitted definitions (README.md "Phase 5: total definitions")
+definitions 135: 122 not recursive (`def`), 13 in 7 recursive components (each `f` a `def` calling `f'rec`, a `def` by structural recursion on a depth, or a `def` by structural recursion on an inductive argument); partial def 0
+loops 42: range 4, fuel 35, once 3
+pure functions (no memory; `f.pure'` in Id, `f` = pure (f.pure' ...)): 9
+
+component 1: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_by_header_group.body -> AP_Param.find_by_header_group
+  AP_Param.find_by_header_group -> AP_Param.find_by_header_group.body
+
+component 2: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_var_info_group.body -> AP_Param.find_var_info_group
+  AP_Param.find_var_info_group -> AP_Param.find_var_info_group.body
+
+component 3: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.next_group.body -> AP_Param.next_group
+  AP_Param.next_group -> AP_Param.next_group.body
+
+component 4: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_group.body -> AP_Param.find_group
+  AP_Param.find_group -> AP_Param.find_group.body
+
+component 5: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_key_by_pointer_group.body -> AP_Param.find_key_by_pointer_group
+  AP_Param.find_key_by_pointer_group -> AP_Param.find_key_by_pointer_group.body
+
+component 6: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.load_object_from_eeprom.body -> AP_Param.load_object_from_eeprom
+  AP_Param.load_object_from_eeprom -> AP_Param.load_object_from_eeprom.body
+
+component 7: 1 definitions, 1 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (1 call inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 4; depth max(4n, 64) = 64
+  AP_Param.check_group_info -> AP_Param.check_group_info
+
+# loops: function, line, C loop, form, detail
+AP_Param::setup_sketch_defaults	1572	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_var_info	325	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::setup_object_defaults	1528	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_all	1600	while	fuel	a `while` loop
+AP_Param::load	1374	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::next	1921	for	fuel	a `for` without an initialization, condition or increment
+AP_Param::next_scalar	1961	while	fuel	a `while` loop
+AP_Param::find_by_name	1006	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::find	941	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_by_index	994	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::count_parameters	2765	while	fuel	a `while` loop
+AP_Param::count_parameters	2773	for	fuel	a `for` whose counter is not an integer
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::find_key_by_pointer	1072	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::load_object_from_eeprom	None	do	once	`do ... while (0)`
+AP_Param::load_object_from_eeprom	1715	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_object_from_eeprom	1727	while	fuel	a `while` loop
+AP_Param::AP_Param	267	for	fuel	a `for` whose counter is not declared by the loop
+StorageAccess::StorageAccess	127	for	range	[0:15]
+AP_Param::find_by_header	515	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::scan	788	while	fuel	a `while` loop
+SRV_Channels::SRV_Channels	353	for	range	[0:32]
+AP_Param::get_default_value	2700	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_group_info	242	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::duplicate_key	288	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+AP_Param::get_default_value	2687	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+StorageAccess::read_block	155	for	range	[0:15]
+AP_Param::find_var_info	622	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_default	2968	for	fuel	a `for` whose counter is not an integer
+AP_Param::next_group	1803	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::copy_name_info	853	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_group	879	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::find_key_by_pointer_group	1034	for	fuel	a `for` whose condition is not `i < bound`
+AP_HAL::Storage::erase	12	for	fuel	a `for` whose increment is not `i++`
+AP_Param::add_default	3010	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::add_default	3018	for	fuel	a `for` whose counter is not an integer
+AP_Param::find_by_header_group	469	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::find_var_info_group	559	for	fuel	a `for` whose condition is not `i < bound`
+StorageAccess::write_block	206	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+StorageAccess::write_block	213	for	range	[0:15]
+AP_Param::configured_in_defaults_file	1446	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)

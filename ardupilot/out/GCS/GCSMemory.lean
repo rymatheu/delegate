@@ -73,10 +73,13 @@ def bframe (this : UInt64) (msgid : UInt32) : M Unit := do
     let stepOf (f : ByteArray) : Nat :=
       (f.get! 0).toNat ||| ((f.get! 1).toNat <<< 8) ||| ((f.get! 2).toNat <<< 16) ||| ((f.get! 3).toNat <<< 24)
     let mut pos := s.framePos[i]!
-    while h : pos < fs.size do
-      if stepOf fs[pos] < s.curStep then
-        modify fun s => { s with log := s.log.push s!"bframe {msgid}: recorded frame of step {stepOf fs[pos]} not asked for" }
-        pos := pos + 1
+    for _ in [0:fs.size] do     -- each iteration advances `pos` by one or ends the loop: at most fs.size iterations
+      if h : pos < fs.size then
+        if stepOf fs[pos] < s.curStep then
+          modify fun s => { s with log := s.log.push s!"bframe {msgid}: recorded frame of step {stepOf fs[pos]} not asked for" }
+          pos := pos + 1
+        else
+          break
       else
         break
     modify fun s => { s with framePos := s.framePos.set! i pos }
@@ -115,7 +118,8 @@ def ffs (x : Int32) : M Int32 := do
   let v := x.toUInt32
   if v == 0 then return 0
   let mut i : UInt32 := 0
-  while (v >>> i) &&& 1 == 0 do
+  for _ in [0:32] do     -- v ≠ 0: its lowest set bit is below 32
+    if !((v >>> i) &&& 1 == 0) then break
     i := i + 1
   return (i + 1).toInt32
 

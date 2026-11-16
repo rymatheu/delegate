@@ -1,0 +1,127 @@
+# cpp2lean --param-memory: the call graph of the emitted definitions (README.md "Phase 5: total definitions")
+definitions 570: 557 not recursive (`def`), 13 in 7 recursive components (each `f` a `def` calling `f'rec`, a `def` by structural recursion on a depth, or a `def` by structural recursion on an inductive argument); partial def 0
+loops 87: range 12, fuel 65, once 10
+pure functions (no memory; `f.pure'` in Id, `f` = pure (f.pure' ...)): 80
+
+component 1: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_by_header_group.body -> AP_Param.find_by_header_group
+  AP_Param.find_by_header_group -> AP_Param.find_by_header_group.body
+
+component 2: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_var_info_group.body -> AP_Param.find_var_info_group
+  AP_Param.find_var_info_group -> AP_Param.find_var_info_group.body
+
+component 3: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.next_group.body -> AP_Param.next_group
+  AP_Param.next_group -> AP_Param.next_group.body
+
+component 4: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_group.body -> AP_Param.find_group
+  AP_Param.find_group -> AP_Param.find_group.body
+
+component 5: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_key_by_pointer_group.body -> AP_Param.find_key_by_pointer_group
+  AP_Param.find_key_by_pointer_group -> AP_Param.find_key_by_pointer_group.body
+
+component 6: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.load_object_from_eeprom.body -> AP_Param.load_object_from_eeprom
+  AP_Param.load_object_from_eeprom -> AP_Param.load_object_from_eeprom.body
+
+component 7: 1 definitions, 1 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (1 call inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 4; depth max(4n, 64) = 64
+  AP_Param.check_group_info -> AP_Param.check_group_info
+
+# loops: function, line, C loop, form, detail
+AP_Param::setup_sketch_defaults	1572	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_var_info	325	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::setup_object_defaults	1528	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_all	1600	while	fuel	a `while` loop
+AP_Param::load	1374	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::next	1921	for	fuel	a `for` without an initialization, condition or increment
+AP_Param::next_scalar	1961	while	fuel	a `while` loop
+AP_Param::find_by_name	1006	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::find	941	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_by_index	994	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::count_parameters	2765	while	fuel	a `while` loop
+AP_Param::count_parameters	2773	for	fuel	a `for` whose counter is not an integer
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::find_key_by_pointer	1072	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::load_object_from_eeprom	None	do	once	`do ... while (0)`
+AP_Param::load_object_from_eeprom	1715	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_object_from_eeprom	1727	while	fuel	a `while` loop
+AP_Param::AP_Param	267	for	fuel	a `for` whose counter is not declared by the loop
+StorageAccess::StorageAccess	127	for	range	[0:15]
+AP_Param::find_by_header	515	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::scan	788	while	fuel	a `while` loop
+SRV_Channels::SRV_Channels	353	for	range	[0:32]
+GCS::update_receive	2797	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::update_send	2770	range-for	fuel	a range `for` (iterators)
+GCS::update_send	2780	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+GCS::update_send	2783	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::setup_uarts	2872	for	range	[1:255]
+GCS::send_message	2732	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::get_default_value	2700	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_group_info	242	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::duplicate_key	288	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+AP_Param::get_default_value	2687	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+StorageAccess::read_block	155	for	range	[0:15]
+AP_Param::find_var_info	622	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_default	2968	for	fuel	a `for` whose counter is not an integer
+AP_Param::next_group	1803	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::copy_name_info	853	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_group	879	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::find_key_by_pointer_group	1034	for	fuel	a `for` whose condition is not `i < bound`
+AP_HAL::Storage::erase	12	for	fuel	a `for` whose increment is not `i++`
+AP_Param::add_default	3010	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::add_default	3018	for	fuel	a `for` whose counter is not an integer
+AP_Param::find_by_header_group	469	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::update_receive	1944	for	range	[0:nbytes.toNat]
+GCS_MAVLINK::update_send	1591	while	fuel	a `while` loop
+AP_Mission::init_jump_tracking	2453	for	range	[0:100]
+AP_Param::find_var_info_group	559	for	fuel	a `for` whose condition is not `i < bound`
+StorageAccess::write_block	206	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+StorageAccess::write_block	213	for	range	[0:15]
+AP_Param::configured_in_defaults_file	1446	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+mavlink_frame_char_buffer	733	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::initialise_message_intervals_from_streamrates	7308	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::deferred_message_to_send_index	1404	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+Bitmask<102>::first_set	146	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+Bitmask<102>::count	138	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::find_next_bucket_to_send	1294	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+ByteBuffer::write	106	for	range	[0:n_vec.toNat]
+GCS_MAVLINK::init	214	for	range	[0:3]
+mavlink_get_msg_entry	590	while	fuel	a `while` loop
+GCS_MAVLINK::initialise_message_intervals_for_stream	7098	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::initialise_message_intervals_for_stream	7105	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK_Copter::try_send_message	295	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::requesting_mission_items	823	range-for	fuel	a range `for` (iterators)
+ByteBuffer::peekbytes	191	for	range	[0:n_vec.toNat]
+MAVLink_routing::forward	218	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+MAVLink_routing::learn_route	385	for	fuel	a `for` whose counter is not declared by the loop
+MAVLink_routing::handle_heartbeat	432	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+MAVLink_routing::handle_heartbeat	444	for	range	[0:16]
+GCS_MAVLINK::handle_message	4285	switch	once	a `switch` with a nested `break`
+_mav_trim_payload	117	while	fuel	a `while` loop
+crc_calculate	69	while	fuel	a `while` loop
+crc_accumulate_buffer	88	while	fuel	a `while` loop
+GCS_MAVLINK::mavlink_id_to_ap_message_id	1212	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::set_ap_message_interval	1754	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::handle_common_mission_message	4650	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::handle_request_data_stream	149	for	range	[0:10]
+GCS_MAVLINK::get_deferred_message_index	1391	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::queued_param_send	78	while	fuel	a `while` loop
+GCS_MAVLINK::try_send_mission_message	5934	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::send_parameter_async_replies	475	while	fuel	a `while` loop
+GCS_MAVLINK::mav_frame_for_command_long	5290	range-for	fuel	a range `for` (iterators)
+AP_Mission::read_cmd_from_storage	None	do	once	`do ... while (0)`
+AP_Mission::mission_cmd_to_mavlink_int	1712	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::get_default_interval_for_ap_message	7348	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::get_default_interval_for_ap_message	7350	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+DefaultIntervalsFromFiles::get_interval_for_ap_message_id	7155	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)

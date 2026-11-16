@@ -221,13 +221,13 @@ def b_struct (kind : UInt8) (value : Binary32) (id : UInt16) (d0 : Int8) : UInt6
   r := { r with delta := r.delta.set! (Int32.toNatClampNeg (1 : Int32)) (Int32.toInt8 (Int8.toInt32 d0 + (1 : Int32))) }
   r := { r with delta := r.delta.set! (Int32.toNatClampNeg (2 : Int32)) (Int32.toInt8 (Int8.toInt32 d0 * (2 : Int32))) }
   let mut raw : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  raw := CString.memset raw 0 (85 : Int32) (UInt64.toUSize (16 : UInt64))
+  raw := CString.memset raw 0 (85 : Int32) (16 : UInt64)
   let mut t'1 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (#[r.kind])) 4 (CString.ofUInt32 (Binary32.toBits r.value))) 8 (CString.ofUInt16 r.id)) 10 (#[(Int8.toUInt8 r.delta[0]!)])) 11 (#[(Int8.toUInt8 r.delta[1]!)])) 12 (#[(Int8.toUInt8 r.delta[2]!)])  -- the bytes of `r` (its object representation)
-  raw := CString.memcpy raw 0 t'1 0 (UInt64.toUSize (16 : UInt64))
+  raw := CString.memcpy raw 0 t'1 0 (16 : UInt64)
   raw := raw.set! (Int32.toNatClampNeg (4 : Int32)) (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 raw[Int32.toNatClampNeg (4 : Int32)]!) ^^^ (1 : Int32))))
   let mut back : Record := {}
   let mut t'2 : Array UInt8 := CString.write (CString.write (CString.write (CString.write (CString.write (CString.write ((Array.replicate 16 (0 : UInt8))) 0 (#[back.kind])) 4 (CString.ofUInt32 (Binary32.toBits back.value))) 8 (CString.ofUInt16 back.id)) 10 (#[(Int8.toUInt8 back.delta[0]!)])) 11 (#[(Int8.toUInt8 back.delta[1]!)])) 12 (#[(Int8.toUInt8 back.delta[2]!)])  -- the bytes of `back` (its object representation)
-  t'2 := CString.memcpy t'2 0 raw 0 (UInt64.toUSize (16 : UInt64))
+  t'2 := CString.memcpy t'2 0 raw 0 (16 : UInt64)
   back := ({ kind := ((CString.get t'2 (0 + 0))), value := (Binary32.ofBits (CString.toUInt32 t'2 (0 + 4))), id := ((CString.toUInt16 t'2 (0 + 8))), delta := #[(UInt8.toInt8 (CString.get t'2 (0 + 10 + 0))), (UInt8.toInt8 (CString.get t'2 (0 + 10 + 1))), (UInt8.toInt8 (CString.get t'2 (0 + 10 + 2)))] } : Record)
   let mut h : UInt64 := (16 : UInt64)
   for i' in [0:16] do
@@ -308,7 +308,7 @@ def emit (s : BufSink.State) (v : UInt32) : BufSink.State := Id.run do
 /-- C++ `uint64_t p_sink(uint32_t v, uint8_t size)`, `examples/bytes.cpp:260-272`. -/
 def p_sink (v : UInt32) (size : UInt8) : UInt64 := Id.run do
   let mut out : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  out := CString.memset out 0 (Int8.toInt32 (UInt8.toInt8 (46 : UInt8))) (UInt64.toUSize (8 : UInt64))
+  out := CString.memset out 0 (Int8.toInt32 (UInt8.toInt8 (46 : UInt8))) (8 : UInt64)
   let mut sink : BufSink.State := BufSink.init out (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 size) &&& (7 : Int32))))
   sink := emit sink v
   out := sink._buf

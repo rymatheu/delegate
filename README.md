@@ -348,7 +348,7 @@ Types:
 | `bool` | `Bool` |
 | `signed char`/`int8_t`, `short`/`int16_t`, `int`/`int32_t`, `long`, `long long`/`int64_t` | `Int8`, `Int16`, `Int32`, `Int64`, `Int64` |
 | `unsigned char`/`uint8_t`, `unsigned short`/`uint16_t`, `unsigned`/`uint32_t`, `unsigned long`, `unsigned long long`/`uint64_t` | `UInt8`, `UInt16`, `UInt32`, `UInt64`, `UInt64` |
-| `size_t`, `std::size_t` | `USize` |
+| `size_t`, `std::size_t` | `UInt64` (the reference target is LP64, arm64 and x86-64: `size_t` is `unsigned long`, 64 bits, as the byte-memory back end and the layouts also take it; not Lean's `USize`, whose width `System.Platform.numBits` is opaque to the kernel, so every statement about it would split on 32 or 64; since 2026-11-15). `ptrdiff_t`, `ssize_t`, `intptr_t` are `long` (`Int64`), `uintptr_t` is `unsigned long` (`UInt64`) through the rows above |
 | `T[N]` (constant at file scope; local or data member; full initializer list, or `= {}`/a zero filler) | `Array T` of N elements, read with `a[i.toNatClampNeg]!` (signed index) or `a[i.toNat]!` (unsigned), written with `a.set! i v`; a member without initializer is `Array.replicate N 0` |
 | plain struct `S` (no member functions, no base) | `structure S` (nested in class `C`: `C.S`) |
 | class `C` | `C.State`; with parameters also `C.Params`, with boundary reads `C.Inputs` |
@@ -380,9 +380,9 @@ explicit cast clang puts the conversion in an inner implicit cast):
 |---|---|
 | `LValueToRValue`, `NoOp` | nothing |
 | `FloatingCast` float -> double / double -> float | `Binary32.toBinary64` (exact) / `Binary64.toBinary32` (nearest even): FloatLib's `Model.cast` |
-| `IntegralToFloating` | `IntN.toBinary32`, `UIntN.toBinary32`, `USize.toBinary32` (to float); `.toBinary64` (to double): FloatLib's `ofRat`, nearest even; from `bool`: `if b then 1.0 else 0.0` |
-| `FloatingToIntegral` | `Binary32.toIntN`, `Binary32.toUIntN`, `Binary32.toUSize`, and the `Binary64.` ones: FloatLib's `toInt?` (toward zero), saturating outside the range |
-| `IntegralCast` | same width: `IntN.toUIntN` / `UIntN.toIntN`; wider or narrower: `IntN.toIntM` / `UIntN.toUIntM` (sign extension, zero extension, truncation), followed by the signedness change when both differ; `USize` through `USize.toUInt64` / `UInt64.toUSize`; from `bool`: `if b then 1 else 0` |
+| `IntegralToFloating` | `IntN.toBinary32`, `UIntN.toBinary32` (to float); `.toBinary64` (to double): FloatLib's `ofRat`, nearest even; from `bool`: `if b then 1.0 else 0.0` |
+| `FloatingToIntegral` | `Binary32.toIntN`, `Binary32.toUIntN`, and the `Binary64.` ones: FloatLib's `toInt?` (toward zero), saturating outside the range |
+| `IntegralCast` | same width: `IntN.toUIntN` / `UIntN.toIntN`; wider or narrower: `IntN.toIntM` / `UIntN.toUIntM` (sign extension, zero extension, truncation), followed by the signedness change when both differ; between `size_t` and `unsigned long`/`uint64_t` nothing (both `UInt64`); from `bool`: `if b then 1 else 0` |
 | `IntegralToBoolean`, `FloatingToBoolean` | `x != 0` |
 | `IntegralCast` from an enum / to an enum, `IntegralToFloating` from an enum | `E.toInt x`, then the integer conversion / the integer conversion, then `E.ofInt` |
 | `UserDefinedConversion` (a parameter class's `operator const float &`) | the parameter's value `p.f` |
@@ -4570,12 +4570,15 @@ objects (`_storage.read_block(ptr, ofs, size)`). The translation keeps all of th
   from clang" applied to the whole initializer (a deviation from reading the JSON AST of the initializers, which does not
   carry `offsetof` values). Each table appears in the generated file as its bytes, with its entries listed in a comment
   (`{"P", 8, def_value=0.135, flags=0, idx=0, type=4}`, `{"SERVO", 6840, group_info=SRV_Channels::var_info, ...}`).
-- **Functions** are `partial def`s in `PMem.M` (one `mutual` block: the group walks recurse), translated statement by
-  statement from clang's JSON AST: C's integer conversions as clang made them explicit (cpp2lean's `conv`), loops as
-  `repeat` with the `for` increment at the top of the next iteration (so `continue` runs it), `switch` as an `if` chain
-  with fallthrough, `&&`/`||`/`?:` with the right operand's effects only when evaluated. Calls follow the AST's
-  declarations, across units by qualified name (template specializations by their arguments' values,
-  `AP_ParamTBase<short, 2>::set_default`), constructors with their member initializers.
+- **Functions** are definitions in `PMem.M`: an ordinary `def` for a function in no cycle of the call graph; the
+  functions of a cycle (the group walks recurse) take a depth and recurse structurally on it (`f'rec`, in a `mutual`
+  block of their own, with `f` passing the component's constant), emitted callees first ("Phase 5: total
+  definitions"). Each is translated statement by statement from clang's JSON AST: C's integer
+  conversions as clang made them explicit (cpp2lean's `conv`), a counted `for` over a fixed range as `for i in [a:b]`,
+  every other loop as `for _ in PMem.loopFuel do` with the `for` increment at the top of the next iteration (so
+  `continue` runs it), `switch` as an `if` chain with fallthrough, `&&`/`||`/`?:` with the right operand's effects only
+  when evaluated. Calls follow the AST's declarations, across units by qualified name (template specializations by their
+  arguments' values, `AP_ParamTBase<short, 2>::set_default`), constructors with their member initializers.
 - **The boundary**: `hal.storage->read_block/write_block` (the HAL storage), `hal.storage->erase()` (AP_HAL::Storage's
   own `erase`, translated: lockstep.cpp does not override it), `hal.scheduler->register_io_process` (no effect: the
   save handler is not registered as a callback), `is_system_initialized`, `get_soft_armed`, `get_custom_defaults_file`
@@ -5031,6 +5034,273 @@ Speed: the GCS work per 400 Hz step was 18 µs (flight) before the parameter sna
 with them in the measured steps 99-122 µs (the snapshot application is harness work). C++: `update_receive` 0.13 +
 `update_send` 0.25 µs per step.
 
+## Phase 5: total definitions (the byte-memory back end, 2026-11-15)
+
+Goal: the translated vehicle's code as definitions Lean's kernel can unfold, so that theorems about its behavior can be
+stated; the behavior unchanged (the replays byte-identical). Before, `cpp2lean_mem.py` emitted every function as a
+`partial def` in one `mutual` block (3,124 of them in `Vehicle_lib`): opaque constants to the kernel. Loops were
+`repeat`, whose `Loop.forIn` is itself implemented by a `partial` function, so a definition containing one would have
+been opaque inside too. Now (two stages, both below): no `partial def` and no opaque constant in `Vehicle_lib`,
+`AP_Param_lib` or `GCS_lib`; what stays opaque on the vehicle path is the HAL hook of the members that call back into
+the vehicle (lockstep's waits, the World's lock-step points), below. (Lean's `System.Platform.getNumBits`, reached
+through the estimator's `USize` until `size_t` became `UInt64`, below, is no longer reached.)
+
+What the back end emits now:
+
+- **The call graph and its components.** `order_definitions` reads the call graph off the emitted text: an edge f -> g
+  when f's text names g (direct calls, a function's `.body`, the dispatchers of virtual calls and of function pointers
+  and the functions they call; comments and strings left out). Tarjan's algorithm gives its strongly connected
+  components, emitted callees first. A function in no cycle is an ordinary `def`; the functions of a cycle recurse on
+  a depth (second stage, below). `<ns>.callgraph.txt` lists the counts, every recursive component with the edges inside
+  it and its depth, the dispatcher of every Functor call site, and every loop with its form.
+- **Names.** Inside `def P.f`, Lean resolves a global name `g` as `P.g` first (and `f` as the definition's own
+  recursive reference); inside the old single `mutual` block every name resolved as written. A reference that the
+  declaration's namespaces could capture is written in full (`_root_.Vehicle_lib.g`); in `Vehicle_lib` that is the 13
+  calls of the free `is_zero(float)` from `Vector2/3<float>::is_zero` (the only captures: the build reported them as type
+  errors, so no reference was silently redirected). References inside a `mutual` block stay as written.
+- **Loops.** A counted `for (T i = s; i < b; i++)` (also `<=`, `!=`, `++i`, `i += 1`; or a counter declared before the
+  loop whose every use is in loops that set it in their initialization) whose counter is a Lean variable not assigned
+  in the body, s a constant or an unassigned unsigned local, and b a constant or an unassigned local whose values the
+  counter's type holds and compares as numbers: `for i' in [s:b] do let i : T := T.ofNat i'` (the value back end's
+  form; C runs i over exactly [s, b) without wrapping). `do { ... } while (0)` and the one-pass wrapper of a `switch`
+  with a nested `break`: `for _ in [0:1] do`. Every other loop: `for _ in PMem.loopFuel do` (`support/ParamMemory.lean`:
+  `PMem.Fuel`, a `ForIn` instance by structural recursion on a `Nat`, 2^32 iterations; `break`, `continue`, `return`
+  as in `repeat`; running out ends the loop and sets the sticky flag `Mem.fuelOut`).
+- **Drains.** A bridge call is followed by `worldOutputs'drain` only when the estimator function can append World output
+  events (`bridge_emits`: it writes the output log or has a text sink, from the World's signatures, configuration key
+  `bridge_signatures`); after any other call the log is empty and the drain did nothing. 30 drains instead of 399; this
+  removes the cycle drain -> `AP_Mission::write_home_to_storage` -> drain, which made every controller function that reads
+  the estimator reach an opaque drain. `gen_bridge.py` checks every adapter it generates: one that appends events where
+  the translation does not drain stops the generation.
+- **Pure functions.** A function that touches no memory (no `PMem.` operation, no `get`/`set`/`modify`, no frame, no
+  record result, no bridge call), is not recursive and calls only such functions is emitted twice: `f.pure'` in `Id`, a
+  function of its arguments (its calls of such functions go to their `.pure'`), and `f` in `PMem.M` as before,
+  `pure (f.pure' args)`, which every caller keeps calling. (Not `f.pure`: inside `def f.pure`, `pure` is the definition
+  itself.)
+- **Support code.** `support/ParamMemory.lean`: the `Fuel` loop and `Mem.fuelOut`; `strlen`/`strnlen` as fuel loops;
+  `support/gen_param_memory_v.py`'s `wrBlock` as a fuel loop over the bytes and a bounded inner loop;
+  `support/GCSMemory.lean`'s `bframe` and `ffs` as bounded `for` loops; `ardupilot/vehicle/gen_bridge.py`'s retry loop
+  of the World waits as a fuel loop. The harness (`lean/VehicleReplay.lean`) writes `# fuel_out=` and
+  `vehicle_replay.py` prints `fuel: ...`.
+
+Counts of the first stage (`Vehicle_lib`, `ardupilot/out/Vehicle/Vehicle_lib.callgraph.txt`):
+
+| | before | after |
+|---|---|---|
+| functions | 3,124 `partial def` in one `mutual` block | 2,913 `def`, 211 `partial def` in 10 recursive components (8 `mutual` blocks, 2 alone) |
+| pure versions | - | 381 `f.pure'` in `Id` (with `f = pure (f.pure' ...)`) |
+| loops | 299 `repeat` | 89 `for i in [s:b]`, 160 `for _ in PMem.loopFuel`, 50 `for _ in [0:1]` (20 `switch` wrappers, 30 `do ... while (0)`) |
+| drains after bridge calls | 399 | 30 |
+
+The first stage left 211 `partial def`s in 10 recursive components (one of 195 functions; six AP_Param group walks,
+each with its `.body`; `AP_Param::check_group_info`; `Copter::set_land_complete` with `AP_Arming_Copter::disarm`;
+`worldOutputs'ctext`) and the opaque HAL hook `PMem.halImpl`. The second stage (below) makes every function an ordinary
+definition, and the HAL members that do not call back into the vehicle a definition too.
+
+### Per-call-site dispatch of the Functors (`functor_flow`, `functor_dispatch`)
+
+The component of 195 came from one imprecise dispatcher: `Functor<void>::operator()` called `fnptr'0`, the dispatcher of
+every `void (void *)` function pointer the program takes (37: the scheduler's task wrappers, the FUNCTOR_BIND_MEMBER
+callbacks, `ModeAuto::exit_mission`), from both its call sites, `AP_Scheduler::run` and `AP_Mission::complete`. Now each
+call of a Functor's `operator()` gets an instance of the operator, `<op>'at'<site>`, whose dispatcher `fnptr'N'at'<site>`
+has only the functions the Functor objects read at that site can hold. The set comes from the translated program, not
+from a list: a field-based, flow-insensitive value flow whose locations are the Functor-typed fields (by record and
+name: every object's), parameters (by the function's unqualified name and position, so overloads and overriders merge),
+locals, statics and results. Sources: `Functor(obj, &f)` and FUNCTOR_BIND_MEMBER as the translation emitted them (their
+addresses recorded at translation, `Translator.fn_sites`), `Functor()`/`Functor(nullptr)` (none), and the function
+addresses in the statics' constant data, placed by clang's record layouts on the field that holds them (the
+scheduler's task tables: `AP_Scheduler::Task::function`). Flows: copy construction and assignment, constructor member
+initializers and in-class member initializers, aggregate initializers (fields in declaration order), call arguments,
+returns, variable initializers. Read: every translated function, every in-class member initializer, every static's
+initializer. Everything becomes unknown (the full dispatcher at every site) on a write the analysis cannot place
+(through a pointer or a non-const reference, an unknown callee, `memcpy`/`memset`/... into an object with a Functor
+member), on a translated function-address site the scan did not meet, or on a field name no declaration carries; a
+site whose set depends on a parameter no call was found for keeps the full dispatcher. Assumed: C++'s typed access (a
+Functor's bytes change only through these expressions; the HAL and the support code write no Functor).
+
+Result (`Vehicle_lib.callgraph.txt`, "calls of a Functor's operator()"): `AP_Mission::complete` reads
+`AP_Mission::_mission_complete_fn`, whose only value is `ModeAuto::exit_mission` (AP_Mission's constructor copies its
+parameter, which ModeAuto's member initializer `AP_Mission mission{..., FUNCTOR_BIND_MEMBER(&ModeAuto::exit_mission,
+void)}` passes): 1 of 37 targets. `AP_Scheduler::run` reads `AP_Scheduler::Task::function`: the 30 task wrappers of the
+two task tables and the 4 FUNCTOR_BIND_MEMBER entries of AP_Vehicle's table, 34 of 37. AP_Mission's `_cmd_start_fn`
+and `_cmd_verify_fn` (1 of 2 each) and AP_BattMonitor's failsafe handler (1 of 1) likewise. One site keeps the full
+dispatcher: `AP_MotorsMatrix::thrust_compensation`'s callback (its setter's parameter has no translated caller; the
+dispatcher has no target at all). The full `fnptr'0` stays for the replay driver's IO processes.
+
+### Recursion on a depth (`depth_component`, `depth_constant`)
+
+With those edges gone, the large component has 75 functions, all on cycles through `Copter::set_mode`: its `AUTO_RTL`
+case (mode.cpp:351, `return_path_or_jump_to_landing_sequence_auto_RTL -> enter_auto_rtl -> Mode::set_mode ->
+Copter::set_mode(AUTO)`, which cannot take that case again), and AP_Mission's execution (`set_mode(AUTO) -> ... ->
+AP_Mission::start/resume -> start_command -> ModeAuto::start_command -> ... -> complete -> exit_mission ->
+set_mode(LOITER or LAND)`), the failsafes (`ModeAuto::set_submode -> failsafe_ekf_recheck -> failsafe_ekf_event ->
+set_mode`) and the auxiliary functions (`RC_Channel_Copter::do_aux_function -> set_mode`). Every function of a recursive
+component now takes a depth:
+
+```
+def f'rec (rec'depth : Nat) (args...) : PMem.M R := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  ... g'rec rec'd ...          -- each call of a function of the component passes the rest
+def f (args...) : PMem.M R := f'rec D args   -- every caller outside the component (and the driver) calls f
+```
+
+The `'rec` functions of a component are one `mutual` block that Lean accepts by structural recursion on the `Nat` (no
+`termination_by`); a component of one function is a `mutual` block of one. `PMem.depthOut` (support/ParamMemory.lean)
+sets the sticky flag `Mem.depthOut` (a flag of its own, next to `Mem.fuelOut`) and returns the type's default; the
+harness writes `# depth_out=` and `vehicle_replay.py` prints `depth: ...`. The depth D of a component of n functions
+is max(4n, 64) (each call inside the component uses one unit):
+
+| component | functions | depth | why it suffices |
+|---|---|---|---|
+| `Copter::set_mode` and the modes, mission, failsafes, aux functions | 75 | 300 | no function of the component is active more than twice at once (the source arguments above: `set_mode` re-enters itself at most once), so a chain has at most 150 calls inside it |
+| `Copter::set_land_complete`, `AP_Arming_Copter::disarm` | 2 | 64 | `disarm` calls `set_land_complete(true)` again, which returns at once (`ap.land_complete` is set): 4 calls at most |
+| six AP_Param group walks (each with its `.body`), `check_group_info` | 2 (1) | 64 | one level of recursion per nesting level of the parameter tables; the tables nest 4 levels from `Copter::var_info` (computed from the image, `table_nesting`): 8 calls at most |
+
+Measured on both recorded flights (first stage, a scratch build counting activations): the only recursion that runs is
+AP_Param's group walks, 3 activations deep; no function of the other components is ever active twice at once. Both
+replays end with `depth_out=false`.
+
+`worldOutputs'ctext` (the World's `CText` written into a buffer) is a `def` by structural recursion on `CText` (its
+`.text` case recurses on the source text; `termination_by structural t`).
+
+### The HAL's devices as definitions (`support/VehicleHal.lean`)
+
+`PMem.hal` was one opaque constant (`@[extern] opaque halImpl`) for every HAL member outside the boundary, bound at link
+time to the driver's `halImplDef` (`@[export cpp2lean_vehicle_hal]` in lean/VehicleReplay.lean, which imports
+`Vehicle_lib`): the driver cannot be a definition `Vehicle_lib` sees, because its waits call back into the translation
+(the delay callback, the timer failsafe and the IO processes through `fnptr'0`, the World's drain) and its live mode
+reads standard input. Most members do not call back. Those (RCInput, RCOutput's write/cork/push/read with the safety
+state and BRD_SAFETY_MASK, AnalogIn, Util, the UARTs, Storage, the console's `printf`, the registrations of the
+scheduler's callbacks, `cpp2lean::world_more`, `cpp2lean::world_unexpected_wait`) moved, unchanged but for the
+console format's loops (now fuel loops), from the driver into `support/VehicleHal.lean`: `PMem.halDev`, an ordinary
+definition over the memory state, imported by the bridge and so by `Vehicle_lib`; the HAL's slots and accessors
+(`VehicleHal.gx`, ...) with it; the address of `AP_BoardConfig::_singleton` that RCOutput::write reads is a slot the
+driver sets before `setup()`. The translation calls `PMem.halDev` for every member except those of the configuration
+key `hal_callbacks` (`AP_HAL::Scheduler::delay`, `delay_microseconds`, `delay_microseconds_boost`, `cpp2lean::est_mark`,
+`cpp2lean::world_events`, `cpp2lean::world_next`), which stay `PMem.hal` (still `halImpl`, the driver's). So
+`AP_MotorsMatrix::output_to_motors` and the motors' output path now unfold down to `RCOutput::write`'s effect on the
+HAL's output slots.
+
+What making the remaining hook a definition would take (not done): the driver's waits as part of the translation's
+recursion: `delayMs`/`delayUs`/`readLine`/`worldStep`/`lineProcs`/`runProcs`/`callDelayCb` moved into a module that
+`Vehicle_lib` emits after (or with) its functions, in one recursive component with every translated function that can
+reach a wait (the scheduler, every function that drains the World: the drain's `est_mark` case runs the vehicle's part
+of a step), with a depth; the driver's `repeat` loops as fuel loops; and the live mode's standard-input read
+(`liveRead`, `unsafe`) taken out of the pure state (e.g. the next line as a field the IO driver fills between steps).
+Several days: it changes the translator's emission order and the driver, and every key function that reaches the drain
+would then be in that component. Cheaper partial step: split `worldOutputs'drain` by event kind, so that a function
+whose bridge calls can only append texts or saves (most of them) no longer names the `est_mark` case.
+
+`System.Platform.getNumBits` (opaque in Lean's core) was reached from `AP_Arming_Copter::arm` through
+`AP_Arming_Copter::mandatory_position_checks -> VehicleBridge.AP_AHRS.pre_arm_check'3 -> Estimator_lib.AP_AHRS.pre_arm_check
+-> USize.toUInt64 -> System.Platform.numBits`: the value back end (cpp2lean.py, `Estimator_lib`) translated C's `size_t`
+(snprintf's size: `CText.fmt (USize.toUInt64 (UInt64.toUSize n))`, and the EKF ring buffers' `Array.replicate (USize.toNat
+...)`) as Lean's `USize`, whose width is the platform's. Fixed (next section): `size_t` is `UInt64`.
+
+### `size_t` as `UInt64` (2026-11-15)
+
+The value back end (cpp2lean.py) translated `size_t`/`std::size_t` as Lean's `USize` (`CType.usize`), whose width is
+`System.Platform.numBits`, defined from the opaque `System.Platform.getNumBits`: the kernel cannot compute with it, and a
+statement about a `USize` value splits on 32 or 64 bits. The reference target is LP64 (arm64, x86-64): `size_t` is
+`unsigned long`, 64 bits, as the byte-memory back end (`cpp2lean_mem.py`: `size_t`, `uintptr_t` 64 bits unsigned,
+`ssize_t`, `ptrdiff_t`, `intptr_t` signed) and the record layouts (`byte_size_align`: 8 bytes) already took it. Now
+`size_t` is `UInt64`: `CType.lean` no longer returns `USize` (the flag `usize` stays, for the C spelling in `cname`
+and the rejections that name `size_t`), `int_conv` treats a `size_t` as `uint64_t` (so `USize.toUInt64` /
+`UInt64.toUSize` around it are gone, and a conversion between `size_t` and `unsigned long` is nothing), an integer to
+float conversion from a `size_t` is `UInt64.toBinary32`/`.toBinary64`, a float to `size_t` `Binary32.toUInt64`, a
+`size_t` variadic argument `CArg.ofUInt64` directly. The other C names of the size types (`ptrdiff_t`, `ssize_t`,
+`intptr_t`: `long`, `Int64`; `uintptr_t`: `unsigned long`, `UInt64`) already arrived desugared and were not `USize`.
+Hand-written support: `support/CString.lean`'s `strlen`, `strnlen`, `strncpy`, `memcpy`, `memset`, `memcmp`,
+`strncmp`, `strncasecmp` and `HalStorage.read_block`/`write_block` take and return `UInt64` (`Nat.toUInt64` for the
+lengths); `difftest.py` maps a driver's `size_t` to `UInt64`; `gen_bridge.py` passes the memory's `size_t` unchanged
+(it converted to the World's `USize`). `support/CFloat.lean` keeps its `USize` conversions (`USize.toBinary32` ..,
+`Binary32.toUSize`); no translation emits them now.
+
+Behavior: on the 64-bit host the compiled `USize` was a 64-bit word, so every value is the same: the conversions removed
+were the identity, `USize` arithmetic, comparisons and shifts are `UInt64`'s, an array index `USize.toNat i` is
+`UInt64.toNat i`, `Array.replicate (USize.toNat n)` is `Array.replicate (UInt64.toNat n)`. No translation indexed with
+a `USize` directly (`uget`, `a[i]` at `USize`) or converted `Array.size` to `USize`: every index goes through `.toNat`.
+On a 32-bit host the old text would have computed `size_t` modulo `2^32`; the new is C's on the reference target
+everywhere.
+
+Regenerated (each diff only the lines that named `USize`; line counts unchanged; two runs of
+`translate_estimator.sh` byte-identical; the libraries that never named `USize` regenerate byte-identically):
+`Estimator_lib` (37 lines), `EKF3_lib`, `EKF_Buffer_lib`, `Estimation_lib`, `AHRS_lib` (10 each: the ring buffers),
+`Mavlink_lib` (283), `Text_lib` (103), `Mission_lib` (43), `AP_InternalError_lib` (29), `StorageManager_lib` (27), the
+examples `BitFields` (7), `CStringDemo` (8), `Bytes` (4), `Mixed` (2), `EKFData` (1), `CString.lean` (support, and its
+copies), `VehicleBridge` (1 line: `arming_checks`'s `buflen`), goldens updated with them. `Vehicle_lib` (the
+byte-memory back end) is unchanged.
+
+Checks (`LEAN_NUM_THREADS=1`): `lake build vehicle_replay` 486 s wall (`Estimator_lib` 80 s, its C 122 s,
+`Vehicle_lib` 177 s; its C unchanged, not rebuilt); `vehicle_replay.py sim/out/lockstep-flight`: 36,013 of 36,013 lines
+identical, storage 0 bytes differ, fuel and depth flags unset, step mean 577.0 / 578.4 µs in two runs (p99 2,390 /
+2,388 µs; 546 µs before, not a paired measurement: a browser process held 1.5 cores during both runs, and none of the
+changed lines is on the 400 Hz path: ring-buffer allocation at init, pre-arm and GPS texts); the gorge flight 29,213 of
+29,213 (step mean 539 µs); the estimator alone
+(`estimation_replay.py sim/out/lockstep-flight`): 8,439,007 values compared, 0 different. `tests/TransparencyAudit.lean`
+now has a second pass over `Estimator_lib`: 8,839 `def`, 0 opaque (with 247 inductive types, their 717 constructors and
+247 recursors, 1,367 theorems all Lean's own: `mk.inj`, `sizeOf_spec`, `deriving` proofs); its 14 key functions
+(`AP_AHRS::update`, `AP_AHRS::pre_arm_check`, `AP_DAL::start_frame`, `NavEKF3::UpdateFilter`,
+`NavEKF3_core::UpdateFilter`, `UpdateStrapdownEquationsNED`, `CovariancePrediction`, `AP_Baro::arming_checks`,
+`wrap_PI`, `safe_sqrt`, `safe_asin`, `Vector3f::length`, `Matrix3f::from_euler`, `QuaternionT<double>::normalize`)
+reach no opaque constant, unsafe definition or axiom. The vehicle pass: 57 of 78 clean as before, and the other 21
+reach only `PMem.halImpl`; none reaches `System.Platform.getNumBits`.
+
+### Counts and checks (second stage, 2026-11-15)
+
+| | first stage | second stage |
+|---|---|---|
+| `Vehicle_lib` functions | 2,913 `def`, 211 `partial def` in 10 components | 3,134: 3,043 not recursive, 91 in 10 components (90 `f'rec` by structural recursion on a depth in 9 `mutual` blocks, each with its `def f` entry; `worldOutputs'ctext` structural on `CText`); 0 `partial def` |
+| `Vehicle_lib` constants (audit) | 3,686 `def`, 211 opaque | 4,089 `def`, 0 opaque |
+| Functor call sites (8) | every site the dispatcher of its type (`Functor<void>`: 37 targets) | 7 sites restricted (5 instances: 34, 1, 1, 1, 1 targets), 1 site with the full dispatcher of its type (0 targets) |
+| `AP_Param_lib`, `GCS_lib` | 122 / 557 `def`, 13 `partial def` each | 13 `f'rec` in 7 components each, 0 `partial def` (goldens updated: 121 lines of each changed) |
+
+Checks (2026-11-15, `LEAN_NUM_THREADS=1`, one build at a time):
+
+- `python3 cpp2lean.py --param-memory ardupilot/vehicle/Vehicle.json -o build/totaldefs2/check --namespace Vehicle_lib`:
+  byte-identical to `lean/Vehicle_lib.lean` (and to `ardupilot/out/Vehicle/Vehicle_lib.lean`).
+- `cd lean && lake build vehicle_replay`: `Vehicle_lib` elaborated and kernel-checked in 168 s (first stage 180 s), its C
+  497 s (490 s); the whole build after the change of `support/ParamMemory.lean` 715 s wall, peak resident memory 7.10 GB
+  (6.9 GB). The 48 dead-code warnings as before, no other. `lake build ParamLib GCSLib`: `AP_Param_lib` 6.7 s,
+  `GCS_lib` 32 s.
+- `vehicle_replay.py sim/out/lockstep-flight`: PWM, down bytes and tasks identical on 36,013 of 36,013 lines, storage 0
+  bytes differ, `fuel: no loop ran out of fuel`, `depth: no recursive call ran out of depth`; output lines, storage and
+  task lines byte-identical to the first stage's replay. The gorge flight (`sim/out/gorge-port-x500-scurve/flight`
+  with `--est build/totaldefs/scurve-ref/est.txt`): the same on 29,213 of 29,213 lines, byte-identical to the first
+  stage's.
+- Step time per 400 Hz step (one paired run of the binaries before and after, lockstep flight): mean 544.7 / 546.2 µs,
+  p99 2,333 / 2,321 µs.
+- `lake env lean ../tests/TransparencyAudit.lean` (78 key functions now: the flight modes' `run`, `update_flight_mode`,
+  `AP_Mission::update`, `set_mode` and `set_mode'rec`, `disarm` (both), `set_land_complete`, and what the driver calls:
+  `AP_Vehicle::loop`, `fnptr'0`, the delay callback, the timer failsafe, the drain, `worldOutputs'ctext`): every
+  constant of `Vehicle_lib` is a definition (4,089), none opaque; 57 of the 78 reach no opaque constant, unsafe
+  definition or axiom, among them the motors' output path (`AP_MotorsMatrix::output_to_motors`,
+  `AP_MotorsMulticopter::output`, down to `PMem.halDev`'s RCOutput), `AP_Arming::disarm` and `worldOutputs'ctext`. The
+  other 21 reach `PMem.halImpl` (the HAL members that call back), 14 of them also `System.Platform.getNumBits`
+  (above; no longer since `size_t` is `UInt64`): the scheduler and the main loop (the tasks' waits and the World's
+  lock-step points), the flight modes and `set_mode` (World calls that drain, waits), `AP_Arming_Copter::arm` (the AHRS
+  pre-arm text through the drain; `getNumBits`), and everything that can disarm (`Copter::motors_output`,
+  `set_land_complete`, `disarm`, `update_land_detector`, `ModeLoiter::run`, `failsafe_check_static`:
+  `AP_MotorsMulticopter::save_params_on_disarm ->
+  AP_Param::save`, which waits `hal.scheduler->delay_microseconds(500)` while the save queue is full).
+- `lake env lean ../tests/UnfoldSmoke.lean` (`tests/UnfoldSmoke.lean`, a smoke test of unfolding, not a theorem of the
+  corpus): six examples, all by `rfl` (one after `unfold`): `safe_sqrt'float.pure'` is its body; the per-site Functor
+  call of `AP_Mission::complete` is `'rec 300` of itself and its step `n + 1` is its body with the dispatcher at `n`;
+  `Copter.set_land_complete'rec 0 = PMem.depthOut`; `Mode.set_mode'rec (n + 1)` is its body calling
+  `Copter.set_mode'rec n`; `worldOutputs'ctext bp .none = pure ()`. 4 to 15 ms each (profiler), 6 s for the file with
+  loading `Vehicle_lib`.
+
+```
+ardupilot/vehicle/translate_vehicle.sh                    # also writes ardupilot/out/Vehicle/Vehicle_lib.callgraph.txt
+python3 support/gen_param_memory_v.py --memory            # ParamMemoryV (Fuel, Mem.fuelOut, Mem.depthOut), GCSMemoryV, VehicleMemoryV
+python3 ardupilot/vehicle/gen_bridge.py                   # VehicleBridge.lean (imports VehicleHal); checks the drains
+cp ardupilot/out/Vehicle/Vehicle_lib.lean support/*V.lean support/ParamMemory.lean support/GCSMemory.lean support/VehicleHal.lean lean/
+cd lean && LEAN_NUM_THREADS=1 lake build vehicle_replay && cd ..
+LEAN_NUM_THREADS=1 python3 ardupilot/vehicle/vehicle_replay.py sim/out/lockstep-flight
+(cd lean && LEAN_NUM_THREADS=1 lake env lean ../tests/TransparencyAudit.lean)
+(cd lean && LEAN_NUM_THREADS=1 lake env lean ../tests/UnfoldSmoke.lean)
+```
+
 ## Phase 5d summary (the QGroundControl session, the scenario suite, pre-arm checks, speed, the live launch path, 2026-11-13)
 
 PORT-PLAN.md section 6, "Phase 5", the Phase 5d brief: (1) the recorded QGroundControl session on the whole translated
@@ -5254,7 +5524,7 @@ text not written), are translated in the World; `AP_AHRS::get_filter_status_for_
   `AP_InertialSensor::get_output_banner`, `AP_RTC::get_time_utc`.
 - **gen_bridge.py**: `nav_filter_status &` (a union of the bit-field struct `flags` and `uint32_t value`, which the World
   holds as its word): the memory's `value` leaf (offset 0, the whole record) loaded and stored back; `size_t` to the World's
-  `USize`.
+  `USize` (until 2026-11-15; since, `size_t` is `UInt64` on both sides and passes unchanged).
 - **Still answered by default** (`not_in_world`): `Compass::configured` (it formats with the C library's `snprintf`, not
   ArduPilot's formatter: D10, the C library's formatter is not translated), `Compass::per_motor_calibration_update/end`
   (rejected: Compass_PerMotor.cpp:148 uses the back-reference `compass` other than reading a value),

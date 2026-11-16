@@ -56,10 +56,56 @@ structure Mem where
   bfAt : Array Nat := #[]
   curStep : Nat := 0
   chan0 : UInt64 := 0
+  /-- a loop of the translation ran out of fuel (`Fuel`, below): sticky; never set on a run whose loops all ended
+  within their fuel -/
+  fuelOut : Bool := false
+  /-- a call inside a recursive component of the translation ran out of depth (`depthOut`, below): sticky; never set
+  on a run whose recursion stayed within the components' depths -/
+  depthOut : Bool := false
 
 instance : Inhabited Mem := ⟨{ m := ByteArray.empty, sp := 0, hp := 0, st := ByteArray.empty }⟩
 
 abbrev M := StateM Mem
+
+/-! Loops. A C loop that is not a counted `for` over a fixed range (those are Lean's `for i in [a:b]`) is translated
+as `for _ in PMem.loopFuel do ...` (`break`, `continue` and `return` as in `repeat`): at most `n` iterations of the
+body, by structural recursion on `n`, so that the translated function is an ordinary definition the kernel can unfold
+(Lean's `repeat` and `while` are `Loop.forIn`, implemented by a `partial` function: an opaque constant). A loop that
+uses up its fuel ends there and sets the sticky flag `Mem.fuelOut`; a statement about a run states that the flag is
+not set, and the replays check it. -/
+
+/-- At most `n` iterations of a loop body. -/
+structure Fuel where
+  n : Nat
+
+/-- The iterations of `f` from `b`, at most `n`: on `n = 0` the flag `fuelOut` is set and the loop ends. -/
+def Fuel.loop {β : Type} (f : Unit → β → M (ForInStep β)) : Nat → β → M β
+  | 0, b => do
+    modify fun s => { s with fuelOut := true }
+    pure b
+  | n + 1, b => do
+    match ← f () b with
+    | .done b => pure b
+    | .yield b => Fuel.loop f n b
+
+instance : ForIn M Fuel Unit where
+  forIn x b f := Fuel.loop f x.n b
+
+/-- The fuel of a translated loop: 2^32 iterations (more than any loop of the translated code makes in a run: a
+replay checks `fuelOut`). -/
+def loopFuel : Fuel := ⟨4294967296⟩
+
+/-! Recursion. The functions of a recursive component of the call graph (README.md "Phase 5: total definitions") take
+a depth: `f'rec (rec'depth : Nat) ...` starts with `let rec'd + 1 := rec'depth | PMem.depthOut` and passes `rec'd` to
+the component's functions it calls, so that the component is a `mutual` block of ordinary definitions by structural
+recursion on the depth (the kernel can unfold them); `f` calls `f'rec` with the component's constant. A call that finds
+no depth left does nothing, returns the type's default and sets the sticky flag `Mem.depthOut`; a statement about a run
+states that the flag is not set, and the replays check it. -/
+
+/-- The depth of a recursive component used up: the sticky flag `depthOut`, the type's default. -/
+def depthOut {α : Type} [Inhabited α] : M α := do
+  modify fun s => { s with depthOut := true }
+  pure default
 
 @[inline] def rd (a : UInt64) : M UInt8 := do
   let s ← get
@@ -162,13 +208,15 @@ def memset (d : UInt64) (c : Int32) (n : UInt64) : M UInt64 := do
 
 def strlen (a : UInt64) : M UInt64 := do
   let mut n : UInt64 := 0
-  while (← rd (a + n)) != 0 do
+  for _ in loopFuel do
+    if !((← rd (a + n)) != 0) then break
     n := n + 1
   return n
 
 def strnlen (a : UInt64) (maxlen : UInt64) : M UInt64 := do
   let mut n : UInt64 := 0
-  while n < maxlen && (← rd (a + n)) != 0 do
+  for _ in loopFuel do
+    if !(n < maxlen && (← rd (a + n)) != 0) then break
     n := n + 1
   return n
 

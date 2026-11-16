@@ -48,28 +48,28 @@ namespace BufferPrinter
 /-- State of C++ `BufferPrinter` (`AP_HAL/Util.cpp:16-44`): its data members; base classes flattened, base first: `AP_HAL::BetterStream`. -/
 structure State where
   /-- `size_t _offs` of `BufferPrinter` (`AP_HAL/Util.cpp:36`). -/
-  _offs : USize := (0 : USize)
+  _offs : UInt64 := (0 : UInt64)
   /-- `char *const _str` of `BufferPrinter` (`AP_HAL/Util.cpp:37`). -/
   _str : Array UInt8 := Array.replicate 0 (0 : UInt8)
   /-- `const size_t _size` of `BufferPrinter` (`AP_HAL/Util.cpp:38`). -/
-  _size : USize := (0 : USize)
+  _size : UInt64 := (0 : UInt64)
 deriving Inhabited
 
 /-- C++ `BufferPrinter::BufferPrinter(char * str, size_t size)`, `AP_HAL/Util.cpp:18-19`. -/
-def init (str : Array UInt8) (size : USize) : State := Id.run do
+def init (str : Array UInt8) (size : UInt64) : State := Id.run do
   let mut s : State := {}
-  s := { s with _offs := UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) }
+  s := { s with _offs := Int64.toUInt64 (Int32.toInt64 (0 : Int32)) }
   s := { s with _str := str }
   s := { s with _size := size }
   return s
 
 /-- C++ `size_t BufferPrinter::write(uint8_t c)`, `AP_HAL/Util.cpp:21-27`. -/
-def write_uint8_t (s : State) (c : UInt8) : State × USize := Id.run do
+def write_uint8_t (s : State) (c : UInt8) : State × UInt64 := Id.run do
   let mut s := s
   if s._offs < s._size then
-    s := { s with _str := s._str.set! (USize.toNat s._offs) c }
-  s := { s with _offs := s._offs + (1 : USize) }
-  return (s, UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))))
+    s := { s with _str := s._str.set! (UInt64.toNat s._offs) c }
+  s := { s with _offs := s._offs + (1 : UInt64) }
+  return (s, Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
 
 end BufferPrinter
 
@@ -406,7 +406,7 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
               prec := Int8.toUInt8 (Int32.toInt8 (10 : Int32))
             vtype := prec
             ndigs := Int8.toUInt8 (Int32.toInt8 (0 : Int32))
-          buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (23 : UInt64))
+          buf := CString.memset buf 0 (0 : Int32) (23 : UInt64)
           let (t'8, t'9) := ftoa_engine value buf vtype ndigs
           buf := t'8
           exp := Int16.toInt32 t'9
@@ -546,7 +546,7 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
       for _ in [0:1] do
         let mut pnt : Array UInt8 := #[]  -- C `const char * pnt`: uninitialized; assigned before every use
         let mut pnt'o : Nat := 0
-        let mut size : USize := (0 : USize)  -- uninitialized in C++; assigned before every read
+        let mut size : UInt64 := (0 : UInt64)  -- uninitialized in C++; assigned before every read
         let t'45 := UInt32.toInt32 (UInt8.toUInt32 c)
         if t'45 == (99 : Int32) then
           let t'43 := VaList.argInt32 ap
@@ -554,32 +554,32 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
           buf := buf.set! (Int32.toNatClampNeg (0 : Int32)) (Int8.toUInt8 (Int32.toInt8 t'43))
           pnt := buf
           pnt'o := 0
-          size := UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
+          size := Int64.toUInt64 (Int32.toInt64 (1 : Int32))
         else if t'45 == (115 : Int32) then
           let t'44 := VaList.argPtr ap
           ap := VaList.next ap
           pnt := t'44.1
           pnt'o := t'44.2
-          size := CString.strnlen pnt pnt'o (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (if (UInt32.toInt32 (UInt16.toUInt32 flags) &&& (64 : Int32)) != (0 : Int32) then UInt32.toInt32 (UInt8.toUInt32 prec) else ~~~(0 : Int32)))))
+          size := CString.strnlen pnt pnt'o (Int64.toUInt64 (Int32.toInt64 (if (UInt32.toInt32 (UInt16.toUInt32 flags) &&& (64 : Int32)) != (0 : Int32) then UInt32.toInt32 (UInt8.toUInt32 prec) else ~~~(0 : Int32))))
         else
           goto'non_string := true
         if goto'non_string then
           break
         if !((UInt32.toInt32 (UInt16.toUInt32 flags) &&& (8 : Int32)) != (0 : Int32)) then
           for _ in [0:2^64] do  -- C loop without a constant trip count (--general-loops)
-            if !(decide (size < UInt64.toUSize (UInt8.toUInt64 width))) then break
+            if !(decide (size < UInt8.toUInt64 width)) then break
             let (t'46, _) := BufferPrinter.write_uint8_t s (32 : UInt8)
             s := t'46
             width := width - (1 : UInt8)
         for _ in [0:2^64] do  -- C loop without a constant trip count (--general-loops)
-          if !(size != (0 : USize)) then break
+          if !(size != (0 : UInt64)) then break
           let t'48 := pnt'o
           pnt'o := pnt'o + 1
           let (t'49, _) := BufferPrinter.write_uint8_t s pnt[t'48]!
           s := t'49
           if width != (0 : UInt8) then
             width := Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 width) - (1 : Int32)))
-          size := size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
+          size := size - Int64.toUInt64 (Int32.toInt64 (1 : Int32))
         goto'tail := true
         break
       if goto'tail then
@@ -733,22 +733,22 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
   return s
 
 /-- C++ `int vsnprintf(char * str, size_t size, const char * format, va_list ap)`, `AP_HAL/Util.cpp:55-71`. -/
-def Util_vsnprintf (str : Array UInt8) (size : USize) (format : Array UInt8) (ap : VaList) : (Array UInt8) × Int32 := Id.run do
+def Util_vsnprintf (str : Array UInt8) (size : UInt64) (format : Array UInt8) (ap : VaList) : (Array UInt8) × Int32 := Id.run do
   let mut str := str
-  let mut buf : BufferPrinter.State := BufferPrinter.init str (if size != (0 : USize) then size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))) else UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
+  let mut buf : BufferPrinter.State := BufferPrinter.init str (if size != (0 : UInt64) then size - Int64.toUInt64 (Int32.toInt64 (1 : Int32)) else Int64.toUInt64 (Int32.toInt64 (0 : Int32)))
   buf := print_vprintf buf format ap
   str := buf._str
-  let ret : USize := buf._offs
+  let ret : UInt64 := buf._offs
   if ret < size then
-    str := str.set! (USize.toNat ret) (0 : UInt8)
+    str := str.set! (UInt64.toNat ret) (0 : UInt8)
     buf := { buf with _str := str }
-  else if size > UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
-    str := str.set! (USize.toNat (size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))))) (Int8.toUInt8 (Int32.toInt8 (0 : Int32)))
+  else if size > Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
+    str := str.set! (UInt64.toNat (size - Int64.toUInt64 (Int32.toInt64 (1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 (0 : Int32)))
     buf := { buf with _str := str }
-  return (str, UInt32.toInt32 (UInt64.toUInt32 (USize.toUInt64 ret)))
+  return (str, UInt32.toInt32 (UInt64.toUInt32 ret))
 
 /-- C++ `int snprintf(char * str, size_t size, const char * format, ...)`, `AP_HAL/Util.cpp:46-53`. -/
-def Util_snprintf (str : Array UInt8) (size : USize) (format : Array UInt8) (va' : Array CArg) : (Array UInt8) × Int32 := Id.run do
+def Util_snprintf (str : Array UInt8) (size : UInt64) (format : Array UInt8) (va' : Array CArg) : (Array UInt8) × Int32 := Id.run do
   let mut str := str
   let mut ap : VaList := ({} : VaList)  -- uninitialized in C++; assigned before every read
   ap := VaList.start va'
@@ -777,7 +777,7 @@ def errors_as_string (s : State) (buffer : Array UInt8) (len : UInt16) : (Array 
       break
     if s.internal_errors &&& ((1 : UInt32) <<< Int32.toUInt32 (UInt32.toInt32 (UInt8.toUInt32 i))) != (0 : UInt32) then
       let t'2 := buffer.extract (UInt32.toNat buffer_used) buffer.size
-      let t'3 := UInt64.toUSize (UInt32.toUInt64 (UInt16.toUInt32 len - buffer_used))
+      let t'3 := UInt32.toUInt64 (UInt16.toUInt32 len - buffer_used)
       let t'4 := format.extract format'o format.size
       let t'1 : Array UInt8 := AP_InternalError_lib.error_bit_descriptions[UInt8.toNat i]!
       let (t'5, t'6) := AP_InternalError_lib.Util_snprintf t'2 t'3 t'4 #[CArg.ptr t'1 0]
@@ -810,15 +810,15 @@ def ie_string (buf : Array UInt8) («errors» count : UInt32) (line : UInt16) (l
   let mut buf := buf
   let mut e : AP_InternalError.State := {}
   let mut raw : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  raw := CString.memset raw 0 (0 : Int32) (UInt64.toUSize (12 : UInt64))
+  raw := CString.memset raw 0 (0 : Int32) (12 : UInt64)
   let mut t'1 : Array UInt8 := CString.ofUInt32 «errors»  -- the bytes of `errors` (its object representation)
-  raw := CString.memcpy raw 0 t'1 0 (UInt64.toUSize (4 : UInt64))
+  raw := CString.memcpy raw 0 t'1 0 (4 : UInt64)
   let mut t'2 : Array UInt8 := CString.ofUInt32 count  -- the bytes of `count` (its object representation)
-  raw := CString.memcpy raw (0 + Int32.toNatClampNeg (4 : Int32)) t'2 0 (UInt64.toUSize (4 : UInt64))
+  raw := CString.memcpy raw (0 + Int32.toNatClampNeg (4 : Int32)) t'2 0 (4 : UInt64)
   let mut t'3 : Array UInt8 := CString.ofUInt16 line  -- the bytes of `line` (its object representation)
-  raw := CString.memcpy raw (0 + Int32.toNatClampNeg (8 : Int32)) t'3 0 (UInt64.toUSize (2 : UInt64))
+  raw := CString.memcpy raw (0 + Int32.toNatClampNeg (8 : Int32)) t'3 0 (2 : UInt64)
   let mut t'4 : Array UInt8 := CString.write (CString.write (CString.write ((Array.replicate 12 (0 : UInt8))) 0 (CString.ofUInt32 e.internal_errors)) 4 (CString.ofUInt32 e.total_error_count)) 8 (CString.ofUInt16 e.last_line)  -- the bytes of `e` (its object representation)
-  t'4 := CString.memcpy t'4 0 raw 0 (UInt64.toUSize (12 : UInt64))
+  t'4 := CString.memcpy t'4 0 raw 0 (12 : UInt64)
   e := ({ internal_errors := ((CString.toUInt32 t'4 (0 + 0))), total_error_count := ((CString.toUInt32 t'4 (0 + 4))), last_line := ((CString.toUInt16 t'4 (0 + 8))) } : AP_InternalError.State)
   buf := AP_InternalError.errors_as_string e buf (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt8.toUInt32 len) % (65 : Int32))))
   return (buf, UInt32.toUInt64 (AP_InternalError.«errors» e) ^^^ (UInt32.toUInt64 (AP_InternalError.count e) <<< Int64.toUInt64 (Int32.toInt64 (32 : Int32))) ^^^ (UInt16.toUInt64 (AP_InternalError.last_error_line e) <<< Int64.toUInt64 (Int32.toInt64 (48 : Int32))) ^^^ (12 : UInt64))

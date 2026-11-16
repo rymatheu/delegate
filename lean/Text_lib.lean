@@ -33,28 +33,28 @@ namespace BufferPrinter
 /-- State of C++ `BufferPrinter` (`AP_HAL/Util.cpp:16-44`): its data members; base classes flattened, base first: `AP_HAL::BetterStream`. -/
 structure State where
   /-- `size_t _offs` of `BufferPrinter` (`AP_HAL/Util.cpp:36`). -/
-  _offs : USize := (0 : USize)
+  _offs : UInt64 := (0 : UInt64)
   /-- `char *const _str` of `BufferPrinter` (`AP_HAL/Util.cpp:37`). -/
   _str : Array UInt8 := Array.replicate 0 (0 : UInt8)
   /-- `const size_t _size` of `BufferPrinter` (`AP_HAL/Util.cpp:38`). -/
-  _size : USize := (0 : USize)
+  _size : UInt64 := (0 : UInt64)
 deriving Inhabited
 
 /-- C++ `BufferPrinter::BufferPrinter(char * str, size_t size)`, `AP_HAL/Util.cpp:18-19`. -/
-def init (str : Array UInt8) (size : USize) : State := Id.run do
+def init (str : Array UInt8) (size : UInt64) : State := Id.run do
   let mut s : State := {}
-  s := { s with _offs := UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) }
+  s := { s with _offs := Int64.toUInt64 (Int32.toInt64 (0 : Int32)) }
   s := { s with _str := str }
   s := { s with _size := size }
   return s
 
 /-- C++ `size_t BufferPrinter::write(uint8_t c)`, `AP_HAL/Util.cpp:21-27`. -/
-def write_uint8_t (s : State) (c : UInt8) : State × USize := Id.run do
+def write_uint8_t (s : State) (c : UInt8) : State × UInt64 := Id.run do
   let mut s := s
   if s._offs < s._size then
-    s := { s with _str := s._str.set! (USize.toNat s._offs) c }
-  s := { s with _offs := s._offs + (1 : USize) }
-  return (s, UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))))
+    s := { s with _str := s._str.set! (UInt64.toNat s._offs) c }
+  s := { s with _offs := s._offs + (1 : UInt64) }
+  return (s, Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
 
 end BufferPrinter
 
@@ -391,7 +391,7 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
               prec := Int8.toUInt8 (Int32.toInt8 (10 : Int32))
             vtype := prec
             ndigs := Int8.toUInt8 (Int32.toInt8 (0 : Int32))
-          buf := CString.memset buf 0 (0 : Int32) (UInt64.toUSize (23 : UInt64))
+          buf := CString.memset buf 0 (0 : Int32) (23 : UInt64)
           let (t'8, t'9) := ftoa_engine value buf vtype ndigs
           buf := t'8
           exp := Int16.toInt32 t'9
@@ -531,7 +531,7 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
       for _ in [0:1] do
         let mut pnt : Array UInt8 := #[]  -- C `const char * pnt`: uninitialized; assigned before every use
         let mut pnt'o : Nat := 0
-        let mut size : USize := (0 : USize)  -- uninitialized in C++; assigned before every read
+        let mut size : UInt64 := (0 : UInt64)  -- uninitialized in C++; assigned before every read
         let t'45 := UInt32.toInt32 (UInt8.toUInt32 c)
         if t'45 == (99 : Int32) then
           let t'43 := VaList.argInt32 ap
@@ -539,32 +539,32 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
           buf := buf.set! (Int32.toNatClampNeg (0 : Int32)) (Int8.toUInt8 (Int32.toInt8 t'43))
           pnt := buf
           pnt'o := 0
-          size := UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
+          size := Int64.toUInt64 (Int32.toInt64 (1 : Int32))
         else if t'45 == (115 : Int32) then
           let t'44 := VaList.argPtr ap
           ap := VaList.next ap
           pnt := t'44.1
           pnt'o := t'44.2
-          size := CString.strnlen pnt pnt'o (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (if (UInt32.toInt32 (UInt16.toUInt32 flags) &&& (64 : Int32)) != (0 : Int32) then UInt32.toInt32 (UInt8.toUInt32 prec) else ~~~(0 : Int32)))))
+          size := CString.strnlen pnt pnt'o (Int64.toUInt64 (Int32.toInt64 (if (UInt32.toInt32 (UInt16.toUInt32 flags) &&& (64 : Int32)) != (0 : Int32) then UInt32.toInt32 (UInt8.toUInt32 prec) else ~~~(0 : Int32))))
         else
           goto'non_string := true
         if goto'non_string then
           break
         if !((UInt32.toInt32 (UInt16.toUInt32 flags) &&& (8 : Int32)) != (0 : Int32)) then
           for _ in [0:2^64] do  -- C loop without a constant trip count (--general-loops)
-            if !(decide (size < UInt64.toUSize (UInt8.toUInt64 width))) then break
+            if !(decide (size < UInt8.toUInt64 width)) then break
             let (t'46, _) := BufferPrinter.write_uint8_t s (32 : UInt8)
             s := t'46
             width := width - (1 : UInt8)
         for _ in [0:2^64] do  -- C loop without a constant trip count (--general-loops)
-          if !(size != (0 : USize)) then break
+          if !(size != (0 : UInt64)) then break
           let t'48 := pnt'o
           pnt'o := pnt'o + 1
           let (t'49, _) := BufferPrinter.write_uint8_t s pnt[t'48]!
           s := t'49
           if width != (0 : UInt8) then
             width := Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 width) - (1 : Int32)))
-          size := size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32)))
+          size := size - Int64.toUInt64 (Int32.toInt64 (1 : Int32))
         goto'tail := true
         break
       if goto'tail then
@@ -718,22 +718,22 @@ def print_vprintf (s : BufferPrinter.State) (fmt : Array UInt8) (ap : VaList) : 
   return s
 
 /-- C++ `int vsnprintf(char * str, size_t size, const char * format, va_list ap)`, `AP_HAL/Util.cpp:55-71`. -/
-def Util_vsnprintf (str : Array UInt8) (size : USize) (format : Array UInt8) (ap : VaList) : (Array UInt8) × Int32 := Id.run do
+def Util_vsnprintf (str : Array UInt8) (size : UInt64) (format : Array UInt8) (ap : VaList) : (Array UInt8) × Int32 := Id.run do
   let mut str := str
-  let mut buf : BufferPrinter.State := BufferPrinter.init str (if size != (0 : USize) then size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))) else UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
+  let mut buf : BufferPrinter.State := BufferPrinter.init str (if size != (0 : UInt64) then size - Int64.toUInt64 (Int32.toInt64 (1 : Int32)) else Int64.toUInt64 (Int32.toInt64 (0 : Int32)))
   buf := print_vprintf buf format ap
   str := buf._str
-  let ret : USize := buf._offs
+  let ret : UInt64 := buf._offs
   if ret < size then
-    str := str.set! (USize.toNat ret) (0 : UInt8)
+    str := str.set! (UInt64.toNat ret) (0 : UInt8)
     buf := { buf with _str := str }
-  else if size > UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
-    str := str.set! (USize.toNat (size - UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (1 : Int32))))) (Int8.toUInt8 (Int32.toInt8 (0 : Int32)))
+  else if size > Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
+    str := str.set! (UInt64.toNat (size - Int64.toUInt64 (Int32.toInt64 (1 : Int32)))) (Int8.toUInt8 (Int32.toInt8 (0 : Int32)))
     buf := { buf with _str := str }
-  return (str, UInt32.toInt32 (UInt64.toUInt32 (USize.toUInt64 ret)))
+  return (str, UInt32.toInt32 (UInt64.toUInt32 ret))
 
 /-- C++ `int snprintf(char * str, size_t size, const char * format, ...)`, `AP_HAL/Util.cpp:46-53`. -/
-def AP_HAL_Util_snprintf (str : Array UInt8) (size : USize) (format : Array UInt8) (va' : Array CArg) : (Array UInt8) × Int32 := Id.run do
+def AP_HAL_Util_snprintf (str : Array UInt8) (size : UInt64) (format : Array UInt8) (va' : Array CArg) : (Array UInt8) × Int32 := Id.run do
   let mut str := str
   let mut ap : VaList := ({} : VaList)  -- uninitialized in C++; assigned before every read
   ap := VaList.start va'
@@ -748,217 +748,217 @@ def fmt_0 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : (
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_1(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:31-34`. -/
 def fmt_1 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_2(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:37-40`. -/
 def fmt_2 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_3(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:43-46`. -/
 def fmt_3 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_4(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:49-52`. -/
 def fmt_4 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_5(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:55-58`. -/
 def fmt_5 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_6(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:61-64`. -/
 def fmt_6 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 50, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 50, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_7(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:67-70`. -/
 def fmt_7 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_8(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:73-76`. -/
 def fmt_8 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 52, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 52, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_9(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:79-82`. -/
 def fmt_9 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 50, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 50, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_10(uint8_t * out, uint8_t size, uint8_t a0)`, `ardupilot/unity_text.cpp:85-88`. -/
 def fmt_10 (out : Array UInt8) (size a0 : UInt8) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 99, 62, 0] : Array UInt8) #[CArg.ofInt32 (UInt32.toInt32 (UInt8.toUInt32 a0))]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 99, 62, 0] : Array UInt8) #[CArg.ofInt32 (UInt32.toInt32 (UInt8.toUInt32 a0))]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_11(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:91-94`. -/
 def fmt_11 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 105, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 105, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_12(uint8_t * out, uint8_t size, uint64_t a0)`, `ardupilot/unity_text.cpp:97-100`. -/
 def fmt_12 (out : Array UInt8) (size : UInt8) (a0 : UInt64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 117, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 117, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_13(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:103-106`. -/
 def fmt_13 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 51, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 51, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_14(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:109-112`. -/
 def fmt_14 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_15(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:115-118`. -/
 def fmt_15 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 52, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 52, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_16(uint8_t * out, uint8_t size, int64_t a0)`, `ardupilot/unity_text.cpp:121-124`. -/
 def fmt_16 (out : Array UInt8) (size : UInt8) (a0 : Int64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 100, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 100, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_17(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:127-130`. -/
 def fmt_17 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 56, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 56, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_18(uint8_t * out, uint8_t size)`, `ardupilot/unity_text.cpp:133-136`. -/
 def fmt_18 (out : Array UInt8) (size : UInt8) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 37, 62, 0] : Array UInt8) #[]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 37, 62, 0] : Array UInt8) #[]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_19(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:139-142`. -/
 def fmt_19 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 51, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 51, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_20(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:145-148`. -/
 def fmt_20 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 50, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 50, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_21(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:151-154`. -/
 def fmt_21 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 52, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 52, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_22(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:157-160`. -/
 def fmt_22 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_23(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:163-166`. -/
 def fmt_23 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 52, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 52, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_24(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:169-172`. -/
 def fmt_24 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 50, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 50, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_25(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:175-178`. -/
 def fmt_25 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_26(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:181-184`. -/
 def fmt_26 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_27(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:187-190`. -/
 def fmt_27 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_28(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:193-196`. -/
 def fmt_28 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 52, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 52, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_29(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:199-202`. -/
 def fmt_29 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 50, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 50, 88, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_30(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:205-208`. -/
 def fmt_30 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
@@ -967,105 +967,105 @@ def fmt_31 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 45, 56, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 45, 56, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_32(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:219-222`. -/
 def fmt_32 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 49, 50, 46, 55, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 49, 50, 46, 55, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_33(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:225-228`. -/
 def fmt_33 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_34(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:231-234`. -/
 def fmt_34 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 51, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_35(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:237-240`. -/
 def fmt_35 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 49, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 49, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_36(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:243-246`. -/
 def fmt_36 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_37(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:249-252`. -/
 def fmt_37 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_38(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:255-258`. -/
 def fmt_38 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 51, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 51, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_39(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:261-264`. -/
 def fmt_39 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 53, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 53, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_40(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:267-270`. -/
 def fmt_40 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 52, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 52, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_41(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:273-276`. -/
 def fmt_41 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 52, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 52, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_42(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:279-282`. -/
 def fmt_42 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 55, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 55, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_43(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:285-288`. -/
 def fmt_43 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 52, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 52, 46, 48, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_44(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:291-294`. -/
 def fmt_44 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 54, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 54, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_45(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:297-300`. -/
 def fmt_45 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 49, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 49, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
@@ -1074,56 +1074,56 @@ def fmt_46 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 51, 50, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 51, 50, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_47(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:311-314`. -/
 def fmt_47 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 52, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 52, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_48(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:317-320`. -/
 def fmt_48 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 51, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 51, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_49(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:323-326`. -/
 def fmt_49 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 55, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 55, 46, 52, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_50(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:329-332`. -/
 def fmt_50 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 56, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 56, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_51(uint8_t * out, uint8_t size, uint64_t a0)`, `ardupilot/unity_text.cpp:335-338`. -/
 def fmt_51 (out : Array UInt8) (size : UInt8) (a0 : UInt64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 55, 108, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 55, 108, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_52(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:341-344`. -/
 def fmt_52 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 46, 53, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_53(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:347-350`. -/
 def fmt_53 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 32, 48, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 32, 48, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
@@ -1132,42 +1132,42 @@ def fmt_54 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 45, 55, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 45, 55, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_55(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:361-364`. -/
 def fmt_55 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 49, 55, 103, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 49, 55, 103, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_56(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:367-370`. -/
 def fmt_56 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 56, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 56, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_57(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:373-376`. -/
 def fmt_57 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 56, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 56, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_58(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:379-382`. -/
 def fmt_58 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 53, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 53, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_59(uint8_t * out, uint8_t size, float a0)`, `ardupilot/unity_text.cpp:385-388`. -/
 def fmt_59 (out : Array UInt8) (size : UInt8) (a0 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 53, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 53, 46, 50, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0)]
   out := t'1
   return (out, t'2)
 
@@ -1176,35 +1176,35 @@ def fmt_60 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 45, 53, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 45, 53, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_61(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:399-402`. -/
 def fmt_61 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 50, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 50, 117, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_62(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:405-408`. -/
 def fmt_62 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 50, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 50, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_63(uint8_t * out, uint8_t size, int64_t a0)`, `ardupilot/unity_text.cpp:411-414`. -/
 def fmt_63 (out : Array UInt8) (size : UInt8) (a0 : Int64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 105, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 105, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_64(uint8_t * out, uint8_t size, int32_t a0)`, `ardupilot/unity_text.cpp:417-420`. -/
 def fmt_64 (out : Array UInt8) (size : UInt8) (a0 : Int32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 43, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 43, 100, 62, 0] : Array UInt8) #[CArg.ofInt32 a0]
   out := t'1
   return (out, t'2)
 
@@ -1213,21 +1213,21 @@ def fmt_65 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 45, 57, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 45, 57, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_66(uint8_t * out, uint8_t size, uint64_t a0)`, `ardupilot/unity_text.cpp:431-434`. -/
 def fmt_66 (out : Array UInt8) (size : UInt8) (a0 : UInt64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 108, 117, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 108, 117, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_67(uint8_t * out, uint8_t size, uint64_t a0)`, `ardupilot/unity_text.cpp:437-440`. -/
 def fmt_67 (out : Array UInt8) (size : UInt8) (a0 : UInt64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 48, 56, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 48, 56, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
   out := t'1
   return (out, t'2)
 
@@ -1236,28 +1236,28 @@ def fmt_68 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) : 
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 46, 52, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 46, 52, 115, 62, 0] : Array UInt8) #[CArg.ptr s0 0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_69(uint8_t * out, uint8_t size, uint64_t a0)`, `ardupilot/unity_text.cpp:451-454`. -/
 def fmt_69 (out : Array UInt8) (size : UInt8) (a0 : UInt64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 120, 62, 0] : Array UInt8) #[CArg.ofUInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_70(uint8_t * out, uint8_t size, int64_t a0)`, `ardupilot/unity_text.cpp:457-460`. -/
 def fmt_70 (out : Array UInt8) (size : UInt8) (a0 : Int64) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 108, 108, 100, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 108, 108, 100, 62, 0] : Array UInt8) #[CArg.ofInt64 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_71(uint8_t * out, uint8_t size, int32_t a0, float a1)`, `ardupilot/unity_text.cpp:463-466`. -/
 def fmt_71 (out : Array UInt8) (size : UInt8) (a0 : Int32) (a1 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 80, 114, 101, 65, 114, 109, 58, 32, 66, 97, 116, 116, 101, 114, 121, 32, 37, 100, 32, 108, 111, 119, 32, 118, 111, 108, 116, 97, 103, 101, 32, 37, 46, 50, 102, 86, 62, 0] : Array UInt8) #[CArg.ofInt32 a0, CArg.dbl (Binary32.toBinary64 a1)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 80, 114, 101, 65, 114, 109, 58, 32, 66, 97, 116, 116, 101, 114, 121, 32, 37, 100, 32, 108, 111, 119, 32, 118, 111, 108, 116, 97, 103, 101, 32, 37, 46, 50, 102, 86, 62, 0] : Array UInt8) #[CArg.ofInt32 a0, CArg.dbl (Binary32.toBinary64 a1)]
   out := t'1
   return (out, t'2)
 
@@ -1266,7 +1266,7 @@ def fmt_72 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) (a
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 77, 111, 100, 101, 32, 37, 115, 32, 40, 37, 117, 41, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofUInt32 a1]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 77, 111, 100, 101, 32, 37, 115, 32, 40, 37, 117, 41, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofUInt32 a1]
   out := t'1
   return (out, t'2)
 
@@ -1275,21 +1275,21 @@ def fmt_73 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) (a
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 37, 115, 58, 32, 37, 117, 32, 40, 37, 53, 46, 49, 102, 37, 37, 41, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofUInt32 a1, CArg.dbl (Binary32.toBinary64 a2)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 37, 115, 58, 32, 37, 117, 32, 40, 37, 53, 46, 49, 102, 37, 37, 41, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofUInt32 a1, CArg.dbl (Binary32.toBinary64 a2)]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_74(uint8_t * out, uint8_t size, uint32_t a0)`, `ardupilot/unity_text.cpp:485-488`. -/
 def fmt_74 (out : Array UInt8) (size : UInt8) (a0 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 69, 75, 70, 51, 32, 73, 77, 85, 37, 117, 32, 105, 115, 32, 117, 115, 105, 110, 103, 32, 71, 80, 83, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 69, 75, 70, 51, 32, 73, 77, 85, 37, 117, 32, 105, 115, 32, 117, 115, 105, 110, 103, 32, 71, 80, 83, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_75(uint8_t * out, uint8_t size, float a0, float a1)`, `ardupilot/unity_text.cpp:491-494`. -/
 def fmt_75 (out : Array UInt8) (size : UInt8) (a0 a1 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 84, 104, 114, 111, 116, 116, 108, 101, 32, 40, 37, 46, 49, 102, 41, 32, 62, 32, 37, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0), CArg.dbl (Binary32.toBinary64 a1)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 84, 104, 114, 111, 116, 116, 108, 101, 32, 40, 37, 46, 49, 102, 41, 32, 62, 32, 37, 46, 49, 102, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0), CArg.dbl (Binary32.toBinary64 a1)]
   out := t'1
   return (out, t'2)
 
@@ -1298,7 +1298,7 @@ def fmt_76 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) (a
   let mut out := out
   let mut s0 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 80, 97, 114, 97, 109, 32, 37, 115, 32, 37, 108, 100, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofInt64 a1]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 80, 97, 114, 97, 109, 32, 37, 115, 32, 37, 108, 100, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ofInt64 a1]
   out := t'1
   return (out, t'2)
 
@@ -1309,21 +1309,21 @@ def fmt_77 (out : Array UInt8) (size : UInt8) (seed0 : UInt32) (len0 : UInt8) (s
   s0 := text_fill s0 seed0 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len0) % (12 : Int32))))
   let mut s1 : Array UInt8 := Array.replicate 12 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   s1 := text_fill s1 seed1 (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len1) % (12 : Int32))))
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 65, 114, 109, 58, 32, 37, 115, 32, 37, 45, 53, 115, 124, 37, 51, 117, 124, 37, 43, 100, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ptr s1 0, CArg.ofUInt32 a2, CArg.ofInt32 a3]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 65, 114, 109, 58, 32, 37, 115, 32, 37, 45, 53, 115, 124, 37, 51, 117, 124, 37, 43, 100, 62, 0] : Array UInt8) #[CArg.ptr s0 0, CArg.ptr s1 0, CArg.ofUInt32 a2, CArg.ofInt32 a3]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_78(uint8_t * out, uint8_t size, uint32_t a0, uint32_t a1, uint32_t a2, uint8_t a3, uint32_t a4)`, `ardupilot/unity_text.cpp:515-518`. -/
 def fmt_78 (out : Array UInt8) (size : UInt8) (a0 a1 a2 : UInt32) (a3 : UInt8) (a4 : UInt32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 86, 37, 117, 46, 37, 117, 46, 37, 117, 32, 37, 99, 37, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0, CArg.ofUInt32 a1, CArg.ofUInt32 a2, CArg.ofInt32 (UInt32.toInt32 (UInt8.toUInt32 a3)), CArg.ofUInt32 a4]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 86, 37, 117, 46, 37, 117, 46, 37, 117, 32, 37, 99, 37, 120, 62, 0] : Array UInt8) #[CArg.ofUInt32 a0, CArg.ofUInt32 a1, CArg.ofUInt32 a2, CArg.ofInt32 (UInt32.toInt32 (UInt8.toUInt32 a3)), CArg.ofUInt32 a4]
   out := t'1
   return (out, t'2)
 
 /-- C++ `int32_t fmt_79(uint8_t * out, uint8_t size, float a0, float a1, float a2, float a3)`, `ardupilot/unity_text.cpp:521-524`. -/
 def fmt_79 (out : Array UInt8) (size : UInt8) (a0 a1 a2 a3 : Binary32) : (Array UInt8) × Int32 := Id.run do
   let mut out := out
-  let (t'1, t'2) := AP_HAL_Util_snprintf out (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32))))) (#[60, 103, 121, 114, 111, 32, 37, 46, 51, 101, 32, 37, 69, 32, 37, 103, 32, 37, 71, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0), CArg.dbl (Binary32.toBinary64 a1), CArg.dbl (Binary32.toBinary64 a2), CArg.dbl (Binary32.toBinary64 a3)]
+  let (t'1, t'2) := AP_HAL_Util_snprintf out (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 size) % (41 : Int32)))) (#[60, 103, 121, 114, 111, 32, 37, 46, 51, 101, 32, 37, 69, 32, 37, 103, 32, 37, 71, 62, 0] : Array UInt8) #[CArg.dbl (Binary32.toBinary64 a0), CArg.dbl (Binary32.toBinary64 a1), CArg.dbl (Binary32.toBinary64 a2), CArg.dbl (Binary32.toBinary64 a3)]
   out := t'1
   return (out, t'2)
 

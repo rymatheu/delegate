@@ -9824,7 +9824,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), lat := (0 : Int32), lng := (0 : Int32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, sensor_idx := (0 : UInt8), corrected := false, have_vz := false } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), lat := (0 : Int32), lng := (0 : Int32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, sensor_idx := (0 : UInt8), corrected := false, have_vz := false } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -9855,7 +9855,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), mag := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), mag := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -9886,7 +9886,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), tas := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), tasVariance := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), allowFusion := false } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), tas := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), tasVariance := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), allowFusion := false } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -9917,7 +9917,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), flowRadXY := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, flowRadXYcomp := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, bodyRadXYZ := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, heightOverride := (Binary32.ofBits 0x00000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), flowRadXY := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, flowRadXYcomp := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, bodyRadXYZ := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, heightOverride := (Binary32.ofBits 0x00000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -9948,7 +9948,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, angRate := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, angRate := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -9979,7 +9979,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), delAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), radius := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), hub_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delTime := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), delAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), radius := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), hub_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delTime := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -10010,7 +10010,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), yawAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), yawAngErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), order := NavEKF3_core.rotationOrder.TAIT_BRYAN_321 } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), yawAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), yawAngErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), order := NavEKF3_core.rotationOrder.TAIT_BRYAN_321 } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -10034,7 +10034,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -10058,7 +10058,7 @@ def init_uint32_t (s : State) (size : UInt32) : State × Bool := Id.run do
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt32.toUInt64 size))) { delAng := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delVel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delAngDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), delVelDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), time_ms := (0 : UInt32), gyro_index := (0 : UInt8), accel_index := (0 : UInt8) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt32.toUInt64 size)) { delAng := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delVel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delAngDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), delVelDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), time_ms := (0 : UInt32), gyro_index := (0 : UInt8), accel_index := (0 : UInt8) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -10084,7 +10084,7 @@ def init_uint32_t (s : State) (size : UInt32) : State × Bool := Id.run do
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt32.toUInt64 size))) { quat := { q1 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q2 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q3 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q4 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velocity := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, position := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt32.toUInt64 size)) { quat := { q1 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q2 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q3 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q4 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velocity := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, position := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -23848,7 +23848,7 @@ def get_quat_body_to_ned (s : State) (quat : Quaternion.State) : Quaternion.Stat
 /-- C++ `void AP_AHRS::set_failure_inconsistent_message(const char * estimator, const char * axis, float diff_rad, char * failure_msg, const uint8_t failure_msg_len) const`, `AP_AHRS/AP_AHRS.cpp:1525-1528`. -/
 def set_failure_inconsistent_message (estimator : String) (axis : String) (diff_rad : Binary32) (failure_msg : CText) (failure_msg_len : UInt8) : CText := Id.run do
   let mut failure_msg := failure_msg
-  failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "%s %s inconsistent %d deg. Wait or reboot" #[Sum.inr estimator, Sum.inr axis, Sum.inl (Int64.toUInt64 (Int32.toInt64 (Binary32.toInt32 (Estimator_lib.degrees diff_rad))))])
+  failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "%s %s inconsistent %d deg. Wait or reboot" #[Sum.inr estimator, Sum.inr axis, Sum.inl (Int64.toUInt64 (Int32.toInt64 (Binary32.toInt32 (Estimator_lib.degrees diff_rad))))])
   return failure_msg
 
 /-- C++ `const Matrix3f & AP_AHRS::get_DCM_rotation_body_to_ned() const`, `AP_AHRS/AP_AHRS.h:673-675`. -/
@@ -24061,7 +24061,7 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
       | .EXTNAV =>
         visualodom_required := true
       | .OPTFLOW | .WHEEL_ENCODER =>
-        failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "Check EK3_SRC%d_POSXY" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
+        failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "Check EK3_SRC%d_POSXY" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
         return (w, failure_msg, false)
       match AP_NavEKF_Source.SourceXY.ofInt (Int8.toUInt8 (AP_Enum_AP_NavEKF_Source_SourceXY.get_void s._source_set[UInt8.toNat i]!.velxy)) with
       | .NONE =>
@@ -24075,7 +24075,7 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
       | .WHEEL_ENCODER =>
         wheelencoder_required := true
       | .BEACON =>
-        failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "Check EK3_SRC%d_VELXY" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
+        failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "Check EK3_SRC%d_VELXY" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
         return (w, failure_msg, false)
       match AP_NavEKF_Source.SourceZ.ofInt (Int8.toUInt8 (AP_Enum_AP_NavEKF_Source_SourceZ.get_void s._source_set[UInt8.toNat i]!.posz)) with
       | .BARO =>
@@ -24098,7 +24098,7 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
       | .EXTNAV =>
         visualodom_required := true
       | .BARO | .RANGEFINDER | .BEACON =>
-        failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "Check EK3_SRC%d_VELZ" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
+        failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "Check EK3_SRC%d_VELZ" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
         return (w, failure_msg, false)
     match AP_NavEKF_Source.SourceYaw.ofInt (Int8.toUInt8 (AP_Enum_AP_NavEKF_Source_SourceYaw.get_void s._source_set[UInt8.toNat i]!.yaw)) with
     | .NONE | .GPS =>
@@ -24113,34 +24113,34 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
       gps_required := true
   let ekf_requires_msg : String := "EK3 sources require %s"
   if baro_required && (UInt32.toInt32 (UInt8.toUInt32 (AP_DAL_Baro.num_instances w.heap'AP_DAL[t'3]!._baro)) == (0 : Int32)) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "Baro"])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "Baro"])
     return (w, failure_msg, false)
   if beacon_required then
     let beacon_available : Bool := false
     if !beacon_available then
-      failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "Beacon"])
+      failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "Beacon"])
       return (w, failure_msg, false)
   if compass_required && (UInt32.toInt32 (UInt8.toUInt32 (AP_DAL_Compass.get_num_enabled w.heap'AP_DAL[t'3]!._compass)) == (0 : Int32)) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "Compass"])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "Compass"])
     return (w, failure_msg, false)
   if gps_required && (UInt32.toInt32 (UInt8.toUInt32 (AP_DAL_GPS.num_sensors w.heap'AP_DAL[t'3]!._gps)) == (0 : Int32)) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "GPS"])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "GPS"])
     return (w, failure_msg, false)
   if optflow_required && !(AP_DAL.opticalflow_enabled w.heap'AP_DAL[t'3]!) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "OpticalFlow"])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "OpticalFlow"])
     return (w, failure_msg, false)
   if rangefinder_required then
     let have_rangefinder : Bool := false
     if !have_rangefinder then
-      failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "RangeFinder"])
+      failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "RangeFinder"])
       return (w, failure_msg, false)
   if visualodom_required then
     let visualodom_available : Bool := false
     if !visualodom_available then
-      failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "VisualOdom"])
+      failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "VisualOdom"])
       return (w, failure_msg, false)
   if wheelencoder_required && !(AP_DAL.wheelencoder_enabled w.heap'AP_DAL[t'3]!) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) ekf_requires_msg #[Sum.inr "WheelEncoder"])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) ekf_requires_msg #[Sum.inr "WheelEncoder"])
     return (w, failure_msg, false)
   return (w, failure_msg, true)
 
@@ -24161,7 +24161,7 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
     let max_vel_innovation : Binary32 := (Binary32.ofBits 0x40000000 /- 2.0 -/)
     let hvel_innovation : Binary32 := Binary32.sqrt (Binary64.toBinary32 (Estimator_lib.sq_double s.innovVelPos[0]! + Estimator_lib.sq_double s.innovVelPos[1]!))
     if s.onGround && UInt32.toInt32 (NavEKF3_core.AidingMode.toInt s.PV_AidingMode) == UInt32.toInt32 (NavEKF3_core.AidingMode.toInt NavEKF3_core.AidingMode.AID_ABSOLUTE) && AP_NavEKF_Source.useVelXYSource w.EKF3.sources AP_NavEKF_Source.SourceXY.GPS s.core_index && decide (hvel_innovation > max_vel_innovation) then
-      failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "EKF3[%u] vel error %.1f" #[Sum.inl (UInt32.toUInt64 (UInt8.toUInt32 s.core_index + Int32.toUInt32 (1 : Int32))), Sum.inl (Binary64.toBits (Binary32.toBinary64 hvel_innovation))])
+      failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "EKF3[%u] vel error %.1f" #[Sum.inl (UInt32.toUInt64 (UInt8.toUInt32 s.core_index + Int32.toUInt32 (1 : Int32))), Sum.inl (Binary64.toBits (Binary32.toBinary64 hvel_innovation))])
       return (failure_msg, false)
   return (failure_msg, true)
 
@@ -24185,19 +24185,19 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
     w := t'4
     let yaw_source : AP_NavEKF_Source.SourceYaw := t'5
     if ((Int8.toInt32 magCalParamVal == (5 : Int32)) || (Int8.toInt32 magCalParamVal == (6 : Int32))) && (yaw_source != AP_NavEKF_Source.SourceYaw.GPS) then
-      failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "EK3_MAG_CAL and EK3_SRC1_YAW inconsistent" #[])
+      failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "EK3_MAG_CAL and EK3_SRC1_YAW inconsistent" #[])
       return (w, failure_msg, false)
   if !(s.core != WPtr.null) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "no EKF3 cores" #[])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "no EKF3 cores" #[])
     return (w, failure_msg, false)
   for i'2' in [0:s.num_cores.toNat] do
     let i'2 : UInt8 := Nat.toUInt8 i'2'
     if !(NavEKF3_core.healthy w.heap'NavEKF3_core[((WPtr.index s.core) + (UInt8.toNat i'2))]!) then
       let failure : CText := (NavEKF3_core.prearm_failure_reason w.heap'NavEKF3_core[((WPtr.index s.core) + (UInt8.toNat i'2))]!)
       if !(CText.isNull failure) then
-        failure_msg := (CText.text (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) failure #[])
+        failure_msg := (CText.text (UInt8.toUInt64 failure_msg_len) failure #[])
       else
-        failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "EKF3 core %d unhealthy" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i'2))))])
+        failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "EKF3 core %d unhealthy" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i'2))))])
       return (w, failure_msg, false)
     w := { w with EKF3 := s }  -- this object's state into the World: the call reaches it
     let (t'6, t'7) := NavEKF3_core.pre_arm_check w.heap'NavEKF3_core[((WPtr.index s.core) + (UInt8.toNat i'2))]! w requires_position failure_msg failure_msg_len
@@ -24215,7 +24215,7 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
   let mut w := w
   let mut failure_msg := failure_msg
   if !s.started then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "EKF3 not started" #[])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "EKF3 not started" #[])
     return (w, failure_msg, false)
   let (t'1, t'2, t'3) := NavEKF3.pre_arm_check w.EKF3 w requires_position failure_msg failure_msg_len
   w := t'1
@@ -24240,14 +24240,14 @@ def pre_arm_check (s : State) (w : World) (requires_position : Bool) (failure_ms
   let mut failure_msg := failure_msg
   let mut ret : Bool := true
   if !(healthy s) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "Not healthy" #[])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "Not healthy" #[])
     ret := false
   let (t'1, t'2) := attitudes_consistent s w failure_msg failure_msg_len
   failure_msg := t'1
   if !t'2 then
     return (w, failure_msg, false)
   if Int8.toInt32 (AP_Enum_AP_AHRS_EKFType.op_to_signed_char s._ekf_type) != Int8.toInt32 (UInt8.toInt8 (AP_AHRS.EKFType.toInt (configured_ekf_type s))) || (configured_ekf_type s != active_EKF_type s && Compass.use_for_yaw_void w.compass) then
-    failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 failure_msg_len))) "not using configured AHRS type" #[])
+    failure_msg := (CText.fmt (UInt8.toUInt64 failure_msg_len) "not using configured AHRS type" #[])
     return (w, failure_msg, false)
   let t'3 := s.configured_backend
   let mut t'7 : Bool := false
@@ -25134,17 +25134,17 @@ def all_healthy (s : State) : Bool := Id.run do
   return decide (UInt32.toInt32 (UInt8.toUInt32 s._num_sensors) > (0 : Int32))
 
 /-- C++ `bool AP_Baro::arming_checks(size_t buflen, char * buffer) const`, `AP_Baro/AP_Baro.cpp:1138-1164`. -/
-def arming_checks (s : State) (w : World) (buflen : USize) (buffer : CText) : CText × Bool := Id.run do
+def arming_checks (s : State) (w : World) (buflen : UInt64) (buffer : CText) : CText × Bool := Id.run do
   let mut buffer := buffer
   if !(all_healthy s) then
-    buffer := (CText.fmt (USize.toUInt64 buflen) "not healthy" #[])
+    buffer := (CText.fmt buflen "not healthy" #[])
     return (buffer, false)
   if decide (AP_ParamT_float_4.op_to_float s._alt_error_max > (Binary32.ofBits 0x00000000 /- 0 -/)) && decide (AP_GPS_FixType.toInt (AP_GPS.status_void w.gps) ≥ AP_GPS_FixType.toInt AP_GPS_FixType.FIX_3D) then
     let alt_amsl : Binary32 := Int32.toBinary32 (AP_GPS.location_void w.gps).alt * (Binary32.ofBits 0x3c23d70a /- 0.01 -/)
     let alt_pressure : Binary32 := get_altitude_difference s (Binary32.ofBits 0x47c5e682 /- 101325.016 -/) (get_pressure_void s)
     let error : Binary32 := Binary32.abs (alt_amsl - alt_pressure)
     if error > AP_ParamT_float_4.op_to_float s._alt_error_max then
-      buffer := (CText.fmt (USize.toUInt64 buflen) "GPS alt error %.0fm (see BARO_ALTERR_MAX)" #[Sum.inl (Binary64.toBits (Binary32.toBinary64 error))])
+      buffer := (CText.fmt buflen "GPS alt error %.0fm (see BARO_ALTERR_MAX)" #[Sum.inl (Binary64.toBits (Binary32.toBinary64 error))])
       return (buffer, false)
   return (buffer, true)
 
@@ -26415,9 +26415,9 @@ def _detection_message (s : State) (w : World) (buffer : CText) (buflen : UInt8)
   let «instance» : UInt8 := w.gps.state[s.state'i]!.«instance»
   let dstate : AP_GPS.detect_state := w.gps.detect_state[UInt8.toNat «instance»]!
   if dstate.auto_detected_baud then
-    buffer := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 buflen))) "GPS %d: probing for %s at %d baud" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 «instance») + (1 : Int32)))), Sum.inr (name), Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 dstate.probe_baud)))])
+    buffer := (CText.fmt (UInt8.toUInt64 buflen) "GPS %d: probing for %s at %d baud" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 «instance») + (1 : Int32)))), Sum.inr (name), Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 dstate.probe_baud)))])
   else
-    buffer := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt8.toUInt64 buflen))) "GPS %d: specified as %s" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 «instance») + (1 : Int32)))), Sum.inr (name)])
+    buffer := (CText.fmt (UInt8.toUInt64 buflen) "GPS %d: specified as %s" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 «instance») + (1 : Int32)))), Sum.inr (name)])
   return buffer
 
 /-- C++ `void AP_GPS_Backend::broadcast_gps_type() const`, `AP_GPS/GPS_Backend.cpp:149-154` (a member of `AP_GPS_Backend`, translated for `AP_GPS_SITL`). -/
@@ -27094,7 +27094,7 @@ def pre_arm_checks (s : State) (w : World) (failure_msg : CText) (failure_msg_le
     let i : UInt8 := Nat.toUInt8 i'
     if is_rtk_rover s i then
       if Estimator_lib.millis w - s.state[UInt8.toNat i]!.gps_yaw_time_ms > Int32.toUInt32 (15000 : Int32) then
-        failure_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt16.toUInt64 failure_msg_len))) "GPS[%u] yaw not available" #[Sum.inl (UInt32.toUInt64 (Int32.toUInt32 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
+        failure_msg := (CText.fmt (UInt16.toUInt64 failure_msg_len) "GPS[%u] yaw not available" #[Sum.inl (UInt32.toUInt64 (Int32.toUInt32 (UInt32.toInt32 (UInt8.toUInt32 i) + (1 : Int32))))])
         return (failure_msg, false)
   return (failure_msg, true)
 
@@ -28045,7 +28045,7 @@ def pre_arm_check_gyro_backend_rate_hz (s : State) (w : World) (fail_msg : CText
       let t'5 := t'4
       t'6 := (UInt32.toInt32 (UInt8.toUInt32 (AP_HAL.Device.devid_get_devtype (AP_ParamT_unsigned_int_3.op_to_unsigned_int s._gyro_id_old_param[UInt8.toNat t'5]!))) != UInt32.toInt32 (AP_InertialSensor_Backend.DevTypes.toInt AP_InertialSensor_Backend.DevTypes.DEVTYPE_SERIAL))
     if t'6 then
-      fail_msg := (CText.fmt (USize.toUInt64 (UInt64.toUSize (UInt16.toUInt64 fail_msg_len))) "Gyro %d rate %dHz < loop rate*1.8 %dHz" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i)))), Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt16.toUInt32 rate_hz)))), Sum.inl (Int64.toUInt64 (Int32.toInt64 (Binary32.toInt32 threshold)))])
+      fail_msg := (CText.fmt (UInt16.toUInt64 fail_msg_len) "Gyro %d rate %dHz < loop rate*1.8 %dHz" #[Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 i)))), Sum.inl (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt16.toUInt32 rate_hz)))), Sum.inl (Int64.toUInt64 (Int32.toInt64 (Binary32.toInt32 threshold)))])
       return (w, fail_msg, false)
   return (w, fail_msg, true)
 

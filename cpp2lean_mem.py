@@ -9,10 +9,36 @@ holds the constant data (the `var_info` tables and their strings, as clang evalu
 heap and a stack. Every pointer, reference and `ptrdiff_t` is an address (`UInt64`); every struct or
 array object, and every scalar local whose address is taken (or that is bound to a reference), lives in
 memory, at the offsets of clang's record layouts (`-fdump-record-layouts-complete`); the other scalar
-locals are Lean variables. Each function is a `partial def` in `PMem.M` (a state monad over the memory)
+locals are Lean variables. Each function is a definition in `PMem.M` (a state monad over the memory)
 translated statement by statement from clang's JSON AST; calls follow the AST's declarations (methods
 of template specializations included). The value model of the rest of cpp2lean (values, paths, the
 World) does not apply here: a function translated by this back end sees only addresses.
+
+The definitions are emitted in the order of the call graph of the emitted text (`order_definitions`: direct
+calls, a function's `.body`, the dispatchers of virtual calls and function pointers and the functions they
+call), callees first, one strongly connected component at a time, and every one is an ordinary definition the
+kernel can unfold (no `partial def`): a function in no cycle is a `def`; the functions of a cycle take a depth
+(`f'rec (rec'depth : Nat) ...`, whose first statement takes one unit, `let rec'd + 1 := rec'depth |
+PMem.depthOut`, and whose calls inside the component pass the rest) in a `mutual` block that Lean accepts by
+structural recursion on the depth, and `f`, which every caller outside keeps calling, passes the component's
+constant (`depth_component`, `depth_constant`: max(4n, 64) for n functions); running out sets the sticky flag
+`Mem.depthOut` and gives the type's default. A function recursive on an argument of an inductive type
+(`worldOutputs'ctext` on the World's `CText`) is a `def` by structural recursion on it. A call of a Functor's
+`operator()` gets a dispatcher of its own (`functor_dispatch`): the function addresses the Functor objects read
+at that call site can hold, by a field-based value flow over the translated program and the statics' constant
+data (`functor_flow`; AP_Mission's `_mission_complete_fn` holds only `ModeAuto::exit_mission`, the scheduler's
+`Task::function` its task table's), or the type's full dispatcher where that set is not established. Loops are
+not `repeat`/`while` (Lean's `Loop.forIn`, a `partial` implementation, opaque to the kernel): a counted `for`
+over a fixed range is `for i in [a:b]`, every other loop `for _ in PMem.loopFuel do` (support/ParamMemory.lean:
+at most 2^32 iterations by structural recursion; running out sets the sticky flag `Mem.fuelOut`). A reference
+that the declaration's own namespaces could capture (inside `def P.f`, Lean reads `g` as `P.g` first) is written
+in full (`_root_.<ns>.g`). A function that touches no memory and calls only such functions is also emitted as
+`f.pure'` in `Id`, with `f = pure (f.pure' args)`. A bridge call is followed by the World's output drain only when
+the estimator function can append output events (`bridge_emits`). A HAL member outside the boundary is
+`PMem.halDev` (support/VehicleHal.lean, a definition) unless the configuration lists it in `hal_callbacks`
+(`PMem.hal`, the replay driver's, opaque). `<ns>.callgraph.txt` lists the recursive components with their edges and
+depths, the dispatcher of every Functor call site, and every loop with its form (README.md "Phase 5: total
+definitions").
 
 The configuration (JSON) names the units and AST filters to read, the root table, the entry functions,
 the boundary (HAL) members and the statics' dynamic initializers; see ardupilot/param/AP_Param.json.
@@ -448,6 +474,7 @@ class Translator:
     def __init__(self, cfg, units):
         self.cfg, self.U = cfg, units
         units.primary_base = bool(cfg.get("vehicle"))
+        self.loop_log = []   # (function, line, C loop kind, form: range/fuel/once, detail): written to <ns>.loops.txt
         self.layouts = {}
         self.layout_loaded = set(cfg["layout_units"])
         for u in cfg["layout_units"]:
@@ -472,6 +499,11 @@ class Translator:
         self._ensured = set()
         self.fn_addrs = {}       # mangled name -> address (functions whose address is taken)
         self.fnptr_sigs = {}     # function type -> {"targets": {address: Fn}}
+        self.field_owner = {}    # FieldDecl id -> qualified name of its record (the Functor value flow)
+        self.fn_sites = {}       # (Phase 5, per-site dispatch) id of a translated function designator / FUNCTOR_BIND_MEMBER
+                                 # call -> the function address it stores
+        self.functor_sites = []  # (Phase 5, per-site dispatch) calls of Functor<...>::operator(): (Fn, object expression,
+                                 # placeholder name, operator Fn)
         self.vdispatch = {}      # (class, name, signature) -> dispatcher (calls through Mode * on copter's members)
         self._irmods, self._irdem, self._scanned = {}, {}, set()
         dump = 0
@@ -640,6 +672,8 @@ class Translator:
                 dq = n.get("type", {}).get("desugaredQualType")
                 if dq:
                     self.enums[norm_rec(dq)] = self.enum_ids[eid]
+        if k == "FieldDecl" and "id" in n:
+            self.field_owner[n["id"]] = "::".join(scope)
         if k == "VarDecl" and n.get("storageClass") == "static" or (k == "VarDecl" and parent is not None and parent.get("kind") in ("CXXRecordDecl", "ClassTemplateSpecializationDecl")):
             self.statics[n["id"]] = "::".join(scope + [name])
             self.static_nodes.setdefault("::".join(scope + [name]), []).append(n)
@@ -1292,6 +1326,25 @@ class Translator:
             raise Reject("survey: %d functions rejected" % self.survey_rejects)
         return out
 
+    def bridge_emits(self, q, nparams):
+        """(total definitions) whether the estimator function q's adapter can append World output events (`Mem.eo`): a
+        method of the World's translation (configuration `bridge_signatures`: its signatures) that writes the output log
+        (`o`) or has a text sink parameter (`char *`, pushed as `Output.text_sink`). Accessors, hand-written adapters and
+        functions the World does not translate append none. Without the signatures: every call. gen_bridge.py checks
+        each adapter it generates against this (`drain` in <ns>.bridge.json)."""
+        path = self.cfg.get("bridge_signatures")
+        if not path:
+            return True
+        if getattr(self, "_bsig", None) is None:
+            sig = json.load(open(os.path.join(HERE, path)))
+            self._bsig = {}
+            for c in sig["classes"]:
+                for m in c.get("methods", []):
+                    self._bsig.setdefault((c["cxx"], m["cxx"]), []).append(m)
+        cls, _, mname = q.rpartition("::")
+        cands = [m for m in self._bsig.get((cls, mname), []) if len(m["params"]) == nparams]
+        return any("o" in m.get("writes", []) or any(p.get("ref") == "tbuf" for p in m["params"]) for m in cands)
+
     def ir_mod(self, u):
         if u not in self._irmods:
             self._irmods[u] = self.U.ir(u)
@@ -1810,8 +1863,12 @@ class FnTranslator:
             tr.bridge_adapters.setdefault(key, desc)
             text = name + "".join(" " + par(a) for a in pre + avs + [i for _, _, i in inputs])
             # (Phase 5b, `world_outputs`) the World's output events of the call (AP_Param saves, GCS sends, the mission's
-            # home record), replayed on the memory right after it: `worldOutputs'drain`
-            drain = "worldOutputs'drain" if tr.cfg.get("world_outputs") else None
+            # home record), replayed on the memory right after it: `worldOutputs'drain`; (total definitions) only after a
+            # call that can append events (`bridge_emits`): after any other the log is empty and the drain does nothing,
+            # and leaving it out keeps the call graph free of the cycle drain -> handler -> getter -> drain
+            emits = tr.bridge_emits(q, len(pdesc))
+            tr.bridge_adapters[key]["drain"] = tr.bridge_adapters[key].get("drain", False) or emits
+            drain = "worldOutputs'drain" if tr.cfg.get("world_outputs") and emits else None
             if rdesc["pass"] == "void":
                 self.emit(text)
                 if drain:
@@ -2052,7 +2109,7 @@ class FnTranslator:
                 self.block(ks[2])
             return
         if k == "WhileStmt":
-            self.emit("repeat")
+            self.loop_head(n, "while", "a `while` loop")
             self.ind += 1
             c = self.cond(kids(n)[0])
             self.emit("if !(%s) then break" % c)
@@ -2060,9 +2117,22 @@ class FnTranslator:
             self.ind -= 1
             return
         if k == "DoStmt":
+            cb = self._bare(kids(n)[1])
+            if (cb.get("kind") == "CXXBoolLiteralExpr" and cb.get("value") is False) or \
+                    (cb.get("kind") != "CXXBoolLiteralExpr" and self._const_or_none(kids(n)[1]) == 0):
+                # `do { ... } while (0)` (a macro's statement block): its body once (`break` and `continue` leave it)
+                self.emit("for _ in [0:1] do")
+                self.tr.loop_log.append((self.f.qual, self.line_of(n), "do", "once", "`do ... while (0)`"))
+                self.ind += 1
+                start_ln = len(self.lines)
+                self.stmt(kids(n)[0])
+                if len(self.lines) == start_ln:
+                    self.emit("pure ()")
+                self.ind -= 1
+                return
             first = self.fresh("first")
             self.emit("let mut %s := true" % first)
-            self.emit("repeat")
+            self.loop_head(n, "do", "a `do ... while` loop")
             self.ind += 1
             self.emit("if !%s then" % first)
             self.ind += 1
@@ -2076,11 +2146,15 @@ class FnTranslator:
         if k == "ForStmt":
             ks = kids(n)
             init, _, cond, inc, body = ks[0], ks[1], ks[2], ks[3], ks[4]
+            counted = self.counted_for(n)
+            if isinstance(counted, tuple):
+                self.emit_counted_for(n, *counted)
+                return
             if init:
                 self.stmt(init) if init.get("kind") == "DeclStmt" else self.expr_stmt(init)
             first = self.fresh("first")
             self.emit("let mut %s := true" % first)
-            self.emit("repeat")
+            self.loop_head(n, "for", counted)
             self.ind += 1
             if inc:
                 self.emit("if !%s then" % first)
@@ -2105,7 +2179,7 @@ class FnTranslator:
             cond, inc, var, body = ks[4], ks[5], ks[6], ks[7]
             first = self.fresh("first")
             self.emit("let mut %s := true" % first)
-            self.emit("repeat")
+            self.loop_head(n, "range-for", "a range `for` (iterators)")
             self.ind += 1
             self.emit("if !%s then" % first)
             self.ind += 1
@@ -2138,6 +2212,161 @@ class FnTranslator:
             return
         # an expression statement
         self.expr_stmt(n)
+
+    # -- loops (README.md "Phase 5: total definitions"): a counted `for` over a fixed range is Lean's `for i in [a:b]`;
+    # every other loop is `for _ in PMem.loopFuel do` (support/ParamMemory.lean: at most 2^32 iterations by structural
+    # recursion, then the sticky flag `Mem.fuelOut`). Both are ordinary definitions the kernel can unfold; Lean's
+    # `repeat`/`while` (Loop.forIn, a `partial` implementation) are not used.
+    def line_of(self, n):
+        return (n.get("range", {}).get("begin", {}) or {}).get("line") or (n.get("loc", {}) or {}).get("line")
+
+    def loop_head(self, n, kind, why):
+        self.emit("for _ in PMem.loopFuel do")
+        self.tr.loop_log.append((self.f.qual, self.line_of(n), kind, "fuel", why))
+
+    @staticmethod
+    def _bare(n):
+        while n.get("kind") in ("ImplicitCastExpr", "ParenExpr") and kids(n):
+            n = kids(n)[0]
+        return n
+
+    def _refers(self, n, rid):
+        n = self._bare(n)
+        return n.get("kind") == "DeclRefExpr" and (n.get("referencedDecl") or {}).get("id") == rid
+
+    def _assigns(self, n, rid):
+        """an assignment, compound assignment, increment or decrement of the local rid in the tree n"""
+        for m in _walk(n):
+            k = m.get("kind")
+            if k in ("BinaryOperator", "CompoundAssignOperator") and (k == "CompoundAssignOperator" or m.get("opcode") == "=") \
+                    and kids(m) and self._refers(kids(m)[0], rid):
+                return True
+            if k == "UnaryOperator" and m.get("opcode") in ("++", "--") and kids(m) and self._refers(kids(m)[0], rid):
+                return True
+        return False
+
+    def counted_for(self, n):
+        """A canonical counted `for (T i = s; i < b; i++)` (or `<=`, `!=`, `++i`, `i += 1`): the counter an integer local
+        held in a Lean variable, declared by the loop, not assigned in the body; s a constant >= 0; b a constant, or a
+        local held in a Lean variable (a parameter included) not assigned in the body whose every value below which the
+        counter runs fits the counter's type and compares as a number. Then the loop runs i over [s, b) exactly as C
+        does, without wrapping: (counter declaration, s, bound text). Otherwise the reason (a string)."""
+        ks = kids(n)
+        init, cvar, cond, inc, body = ks[0], ks[1], ks[2], ks[3], ks[4]
+        if cvar or not init or not cond or not inc:
+            return "a `for` without an initialization, condition or increment"
+        ib = self._bare(init) if init.get("kind") != "DeclStmt" else init
+        if init.get("kind") == "DeclStmt" and len(kids(init)) == 1 and kids(init)[0].get("kind") == "VarDecl":
+            d = kids(init)[0]
+            kd = [x for x in kids(d) if not x.get("kind", "").endswith("Attr")]
+            if len(kd) != 1:
+                return "a `for` whose counter is not initialized"
+            start_n = kd[0]
+        elif ib.get("kind") == "BinaryOperator" and ib.get("opcode") == "=" and self._bare(kids(ib)[0]).get("kind") == "DeclRefExpr" \
+                and self._loop_only(self._bare(kids(ib)[0])["referencedDecl"]["id"]):
+            # `int8_t i; ... for (i = 0; ...)`: a counter declared before the loop whose every use is in loops that set it
+            # in their initialization (its value after a loop is never read): each loop binds it afresh
+            d = self.tr.idx.get(self._bare(kids(ib)[0])["referencedDecl"]["id"]) or self._bare(kids(ib)[0])["referencedDecl"]
+            start_n = kids(ib)[1]
+        else:
+            return "a `for` whose counter is not declared by the loop"
+        rid = d["id"]
+        if d.get("storageClass") or rid in self.addr_taken or "type" not in d:
+            return "a `for` whose counter lives in memory"
+        try:
+            t = self.tr.ty(d["type"])
+        except Reject:
+            return "a `for` whose counter is not an integer"
+        if t.kind != "int":
+            return "a `for` whose counter is not an integer"
+        lo, hi = (-(1 << (t.bits - 1)), (1 << (t.bits - 1)) - 1) if t.signed else (0, (1 << t.bits) - 1)
+        start = self._const_or_none(start_n)
+        start_text = None
+        if start is None:
+            # `for (uint8_t i = first; ...)`: first a local held in a Lean variable (a parameter included), unsigned and
+            # no wider than the counter, not assigned in the body: the counter starts there
+            s = self._bare(start_n)
+            sd = (s.get("referencedDecl") or {}) if s.get("kind") == "DeclRefExpr" else {}
+            sl = self.locals.get(sd.get("id"))
+            if sl and sl[0] == "reg" and sl[2].kind == "int" and not sl[2].signed and \
+                    (sl[2].bits <= t.bits if not t.signed else sl[2].bits < t.bits) and not self._assigns(body, sd["id"]):
+                start, start_text = 0, "%s.toNat" % sl[1]
+        if start is None or not 0 <= start <= hi:
+            return "a `for` whose counter does not start at a constant or an unassigned local"
+        inc = self._bare(inc)
+        ik = inc.get("kind")
+        if not ((ik == "UnaryOperator" and inc.get("opcode") == "++" and self._refers(kids(inc)[0], rid)) or
+                (ik == "CompoundAssignOperator" and inc.get("opcode") == "+=" and self._refers(kids(inc)[0], rid) and
+                 self._const_or_none(kids(inc)[1]) == 1)):
+            return "a `for` whose increment is not `i++`"
+        if self._assigns(body, rid):
+            return "a `for` whose body assigns the counter"
+        c = self._bare(cond)
+        if c.get("kind") != "BinaryOperator" or c.get("opcode") not in ("<", "<=", "!=") or not self._refers(kids(c)[0], rid):
+            return "a `for` whose condition is not `i < bound`"
+        op, rhs = c["opcode"], kids(c)[1]
+        b = self._const_or_none(rhs)
+        if b is not None:
+            # the counter runs to the bound (one past it for `<=`) without leaving its type
+            end = b + 1 if op == "<=" else b
+            if b < 0 or end > hi or (op == "!=" and (b < start or start_text is not None)):
+                return "a `for` whose constant bound leaves the counter's type"
+            return (d, t, start_text or start, str(max(end, start)))
+        r = self._bare(rhs)
+        rd = (r.get("referencedDecl") or {}) if r.get("kind") == "DeclRefExpr" else {}
+        loc = self.locals.get(rd.get("id"))
+        if op != "<" or not loc or loc[0] != "reg" or self._assigns(body, rd["id"]):
+            return "a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)"
+        bt = loc[2]
+        if bt.kind != "int":
+            return "a `for` whose bound is not an integer"
+        # every value of the bound's type below which the counter runs is a value of the counter's type, and the C
+        # comparison (after the usual conversions) is the comparison of the numbers: an unsigned bound no wider than an
+        # unsigned counter (narrower than a signed one), or a signed bound no wider than a signed counter
+        if not ((not bt.signed and ((not t.signed and bt.bits <= t.bits) or (t.signed and bt.bits < t.bits))) or
+                (bt.signed and t.signed and bt.bits <= t.bits)):
+            return "a `for` whose bound's type does not fit the counter's"
+        bound = "%s.toNat" % loc[1] if not bt.signed else "%s.toInt.toNat" % loc[1]
+        return (d, t, start_text or start, bound)
+
+    def _loop_only(self, rid):
+        """a local held in a Lean variable whose every reference is inside a `for` that assigns it in its initialization"""
+        loc = self.locals.get(rid)
+        if not loc or loc[0] != "reg" or rid in self.addr_taken:
+            return False
+        def ok(m, inside):
+            k = m.get("kind")
+            if k == "ForStmt" and kids(m) and kids(m)[0]:
+                i0 = self._bare(kids(m)[0])
+                if i0.get("kind") == "BinaryOperator" and i0.get("opcode") == "=" and self._refers(kids(i0)[0], rid):
+                    inside = True
+            if k == "DeclRefExpr" and (m.get("referencedDecl") or {}).get("id") == rid and not inside:
+                return False
+            return all(ok(c, inside) for c in kids(m) if isinstance(c, dict))
+        return ok(self.f.body, False)
+
+    def _const_or_none(self, n):
+        try:
+            return self.tr.const_int(n)
+        except (Reject, KeyError, TypeError):
+            return None
+
+    def emit_counted_for(self, n, d, t, start, bound):
+        nm = self.var_name(d["name"])
+        iv = self.fresh(nm)
+        self.emit("for %s in [%s:%s] do" % (iv, start, bound))
+        self.tr.loop_log.append((self.f.qual, self.line_of(n), "for", "range", "[%s:%s]" % (start, bound)))
+        self.ind += 1
+        self.emit("let %s : %s := %s.ofNat %s" % (nm, t.lean, t.lean, iv))
+        saved = self.locals.get(d["id"])
+        self.locals[d["id"]] = ("reg", nm, t)
+        start_ln = len(self.lines)
+        self.stmt(kids(n)[4])
+        if len(self.lines) == start_ln:
+            self.emit("pure ()")
+        self.ind -= 1
+        if saved is not None:
+            self.locals[d["id"]] = saved     # a counter declared before the loop: its own variable again
 
     def block(self, n):
         self.ind += 1
@@ -2173,10 +2402,11 @@ class FnTranslator:
             if any(nested(b, True) for b in flat):
                 if cont(kids(n)[1]):
                     raise Reject("continue inside a switch with a nested break")
-                self.emit("repeat")
+                # one iteration: a `break` of the switch leaves it (a bounded loop, not `repeat`)
+                self.emit("for _ in [0:1] do")
+                self.tr.loop_log.append((self.f.qual, self.line_of(n), "switch", "once", "a `switch` with a nested `break`"))
                 self.ind += 1
                 self._switch(n, True)
-                self.emit("break")
                 self.ind -= 1
                 return
         self._switch(n, False)
@@ -2621,6 +2851,7 @@ class FnTranslator:
             if rd.get("kind") in ("FunctionDecl", "CXXMethodDecl") and tr.cfg.get("vehicle"):
                 # (vehicle configuration) a function designator (decayed to its address): the function's address
                 g = tr.use(rd["id"], tr.qual.get(rd["id"]) or rd.get("name"), (rd.get("type") or {}).get("qualType"))
+                tr.fn_sites[n.get("id")] = tr.fn_address(g)
                 return "(0x%x : UInt64)" % tr.fn_address(g)
             if t.kind in ("rec", "arr"):
                 return self.addr_of(n)
@@ -3514,6 +3745,8 @@ class FnTranslator:
             # is `{ obj, method_wrapper<T, method> }` (functor.h:75): the object and the bound member function's address
             # (a dispatcher target of the functor's pointer type: `bound_methods`)
             meth = self.bound_method(n, dref)
+            if meth is not None:
+                tr.fn_sites[n.get("id")] = tr.bound_address(meth)
             off = self.slot(16)
             self.emit("PMem.stU64 (fp + %d) %s" % (off, par(self.rv(args[0]))))
             self.emit("PMem.stU64 (fp + %d) %s" % (off + 8, "(0x%x : UInt64)" % tr.bound_address(meth) if meth is not None else "(0 : UInt64)"))
@@ -3573,7 +3806,7 @@ class FnTranslator:
             if f.node["kind"] == "CXXMethodDecl" and not f.is_static:
                 obj = self.addr_of(args[0])
                 avs = self.call_args(f, args[1:])
-                return self.call_text(f, [obj] + avs, t)
+                return self.call_text(f, [obj] + avs, t, self.functor_site(f, args[0]))
             return self.call_text(f, self.call_args(f, args), t)
         self._cur_call = n
         f = self.dynamic_callee(dref, member, q)
@@ -3624,7 +3857,7 @@ class FnTranslator:
         elif member is not None:
             # a static member called through an object: evaluate nothing of it
             pass
-        return self.call_text(f, avs, t)
+        return self.call_text(f, avs, t, self.functor_site(f, kids(member)[0] if member is not None and is_method else None))
 
     def dynamic_callee(self, dref, member, q):
         """(configuration `dynamic`, GCS) a member function call on an object of a class whose objects all have one
@@ -3676,16 +3909,27 @@ class FnTranslator:
                 return self.tr.use(cands[0].node["id"])
         return None
 
-    def call_text(self, f, avs, t):
+    def functor_site(self, f, obj):
+        """(vehicle configuration, Phase 5: per-site dispatch) a call of `Functor<R, Args...>::operator()` on the object
+        expression `obj`: a placeholder name for the call, replaced after the translation (`functor_dispatch`) by an
+        instance of the operator whose function-pointer dispatcher has only the functions the Functor objects read at
+        this site can hold, or by the operator itself when that set cannot be established."""
+        if obj is None or not self.tr.cfg.get("vehicle") or not re.match(r"^Functor<.*>::operator\(\)$", f.qname or ""):
+            return None
+        name = "%s'site'%d" % (f.lean, len(self.tr.functor_sites))
+        self.tr.functor_sites.append((self.f, obj, name, f))
+        return name
+
+    def call_text(self, f, avs, t, name=None):
         if self.tr.cfg.get("vehicle") and self.tr.ret_rec(f) is not None:
             # a record returned by value: into a temporary of the caller's frame, whose address is the value
             rt = self.tr.ret_rec(f)
             off = self.slot(self.tr.size_of(rt))
             k = 1 if f.node["kind"] in ("CXXMethodDecl", "CXXConversionDecl") and not f.is_static else 0
             avs = list(avs[:k]) + ["(fp + %d)" % off] + list(avs[k:])
-            self.emit(f.lean + "".join(" " + par(a) for a in avs))
+            self.emit((name or f.lean) + "".join(" " + par(a) for a in avs))
             return "(fp + %d)" % off
-        text = f.lean + "".join(" " + par(a) for a in avs)
+        text = (name or f.lean) + "".join(" " + par(a) for a in avs)
         rt = t
         if rt.kind == "void":
             self.emit(text)
@@ -3807,7 +4051,7 @@ class FnTranslator:
                             vals.append("(if %s then (1 : UInt64) else 0)" % par(self.rv(a)))
                         else:
                             vals.append(par(self.convert(self.rv(a), at, U64)))
-                    text = "PMem.hal %s %s #[%s]" % (json.dumps(key), thisv, ", ".join(vals))
+                    text = "%s %s %s #[%s]" % (hal_hook(tr, key), json.dumps(key), thisv, ", ".join(vals))
                     if t.kind == "void":
                         self.emit("discard <| " + text)
                         return "()"
@@ -4243,6 +4487,7 @@ def world_outputs_def(tr, wo):
                "    discard <| %s u bp n sb iv" % g.lean,
                "    PMem.leave ip",
                "    PMem.leave sb",
+               "termination_by structural t",
                "",
                ""]
         k0 = next(i for i, l in enumerate(out) if l.startswith("partial def worldOutputs'drain"))
@@ -4260,7 +4505,7 @@ def world_outputs_def(tr, wo):
             out.append("      let mut av : Array UInt64 := #[fc]")
             out.append("      for k in [0:x1.size] do")
             out.append("        av := av.push (← PMem.ldU64 (vac + (8 * k).toUInt64))")
-            out.append("      discard <| PMem.hal %s 0 av" % json.dumps(spec[0][len("%console "):]))
+            out.append("      discard <| %s %s 0 av" % (hal_hook(tr, spec[0][len("%console "):]), json.dumps(spec[0][len("%console "):])))
             out.append("      PMem.leave fpc")
             continue
         if spec[0].startswith("%textsink "):
@@ -4276,7 +4521,7 @@ def world_outputs_def(tr, wo):
             # points `est_mark`, reference/hal/est_scheduler.cpp: the vehicle's part of the step runs there)
             nf = max([int(x) for a in spec[1:] for x in re.findall(r"\{(\d+)\}", a)] + [-1]) + 1
             out.append("    | .%s%s =>" % (ctor, "".join(" x%d" % i for i in range(nf))))
-            out.append("      discard <| PMem.hal %s 0 #[%s]" % (json.dumps(spec[0][5:]), ", ".join(
+            out.append("      discard <| %s %s 0 #[%s]" % (hal_hook(tr, spec[0][5:]), json.dumps(spec[0][5:]), ", ".join(
                 "(%s).toUInt64" % re.sub(r"\{(\d+)\}", lambda m: "x" + m.group(1), a) for a in spec[1:])))
             continue
         f = tr.fn_by_qname(spec[0])
@@ -4356,47 +4601,78 @@ def world_outputs_def(tr, wo):
     return "\n".join(out)
 
 
+def hal_hook(tr, name):
+    """(vehicle configuration, `hal_hook`) the hook of a HAL member outside the translated boundary: `PMem.hal` (the
+    replay driver's, opaque to the kernel: `@[extern]`) for the members of the configuration key `hal_callbacks`, which
+    call back into the translation or step the World; `PMem.halDev` (support/VehicleHal.lean, a definition) for every
+    other member when the key is given."""
+    cb = tr.cfg.get("hal_callbacks")
+    return "PMem.hal" if cb is None or name in cb else "PMem.halDev"
+
+
+def lean_word_t(t):
+    return "UInt64" if t.kind in ("rec", "ref", "ptr", "arr") else t.lean
+
+
+def fnptr_arms(tr, sig, d):
+    """The targets of the dispatcher of function-pointer type `sig`: [(address, Fn, FUNCTOR_BIND_MEMBER?)], the functions
+    whose address the program takes with this type, then the member functions bound by FUNCTOR_BIND_MEMBER whose
+    signature fits (called on the bound object)."""
+    ret, ps = parse_fn_type(sig)
+    rt = tr.ty_str(ret)
+    arms = [(a, g, False) for a, g in sorted(d["targets"].items())]
+    if ps and re.sub(r"\s+", "", ps[0]) == "void*":
+        # (static construction) member functions bound by FUNCTOR_BIND_MEMBER: called on the bound object
+        for a, g in sorted(getattr(tr, "bound_methods", {}).items()):
+            grt = FnTranslator(tr, g).ret_type()
+            if len(g.params) != len(ps) - 1 or (lean_word_t(grt) if grt.kind != "void" else "Unit") != ("Unit" if rt.kind == "void" else lean_word_t(rt)):
+                continue
+            try:
+                if [lean_word_t(tr.ty(p["type"])) for p in g.params] != [lean_word_t(tr.ty_str(p)) for p in ps[1:]]:
+                    continue
+            except Reject:
+                continue
+            arms.append((a, g, True))
+    return arms
+
+
+def fnptr_dispatcher(tr, sig, d, name=None, keep=None, why=None):
+    """The dispatcher of calls through a function pointer of type `sig` (`fnptr'N`): over every target (`fnptr_arms`),
+    or (`keep`, per-site dispatch) over the targets whose address is in `keep`, named `name`."""
+    ret, ps = parse_fn_type(sig)
+    rt = tr.ty_str(ret)
+    names = ["a%d" % i for i in range(len(ps))]
+    arms = [x for x in fnptr_arms(tr, sig, d) if keep is None or x[0] in keep]
+    if keep is None:
+        doc = ("/-- Calls through a function pointer of type `%s`: the functions whose address the program takes with this "
+               "type (%d). -/" % (sig, len(d["targets"])))
+    else:
+        doc = ("/-- Calls through a function pointer of type `%s` at one call site of the Functor's operator: the functions "
+               "the Functor objects read there can hold (%d of %d; %s). -/" % (sig, len(arms), len(fnptr_arms(tr, sig, d)), why))
+    L = [doc, "partial def %s (f : UInt64)%s : PMem.M %s := do" % (name or d["name"], "".join(" (%s : %s)" % (nm, lean_word_t(tr.ty_str(p))) for nm, p in zip(names, ps)), "Unit" if rt.kind == "void" else lean_word_t(rt))]
+    first = True
+    for a, g, bound in arms:
+        L.append("  %s f == 0x%x then  -- %s%s" % ("if" if first else "else if", a, g.qual, " (FUNCTOR_BIND_MEMBER)" if bound else ""))
+        L.append("    %s%s" % (g.lean, "".join(" " + nm for nm in names)))
+        first = False
+    if not first:
+        L.append("  else")
+    ind = "    " if not first else "  "
+    L.append(ind + "PMem.unreached %s" % json.dumps("function pointer " + sig))
+    L.append(ind + ("return ()" if rt.kind == "void" else "return default"))
+    return "\n".join(L)
+
+
 def dispatchers(tr):
     """(vehicle configuration) the dispatchers of calls through function pointers (per function type, over the
     functions whose address is taken with it) and of virtual calls through `Mode *` (per member function, over the
     member objects of `copter`)."""
     out = []
-    def lean_t(t):
-        return "UInt64" if t.kind in ("rec", "ref", "ptr", "arr") else t.lean
+    lean_t = lean_word_t
     for sig, d in sorted(tr.fnptr_sigs.items(), key=lambda x: x[1].get("name", "~")):
         if "name" not in d:
             continue
-        ret, ps = parse_fn_type(sig)
-        rt = tr.ty_str(ret)
-        names = ["a%d" % i for i in range(len(ps))]
-        L = ["/-- Calls through a function pointer of type `%s`: the functions whose address the program takes with this "
-             "type (%d). -/" % (sig, len(d["targets"])),
-             "partial def %s (f : UInt64)%s : PMem.M %s := do" % (d["name"], "".join(" (%s : %s)" % (nm, lean_t(tr.ty_str(p))) for nm, p in zip(names, ps)), "Unit" if rt.kind == "void" else lean_t(rt))]
-        first = True
-        for a, g in sorted(d["targets"].items()):
-            L.append("  %s f == 0x%x then  -- %s" % ("if" if first else "else if", a, g.qual))
-            L.append("    %s%s" % (g.lean, "".join(" " + nm for nm in names)))
-            first = False
-        if ps and re.sub(r"\s+", "", ps[0]) == "void*":
-            # (static construction) member functions bound by FUNCTOR_BIND_MEMBER: called on the bound object
-            for a, g in sorted(getattr(tr, "bound_methods", {}).items()):
-                grt = FnTranslator(tr, g).ret_type()
-                if len(g.params) != len(ps) - 1 or (lean_t(grt) if grt.kind != "void" else "Unit") != ("Unit" if rt.kind == "void" else lean_t(rt)):
-                    continue
-                try:
-                    if [lean_t(tr.ty(p["type"])) for p in g.params] != [lean_t(tr.ty_str(p)) for p in ps[1:]]:
-                        continue
-                except Reject:
-                    continue
-                L.append("  %s f == 0x%x then  -- %s (FUNCTOR_BIND_MEMBER)" % ("if" if first else "else if", a, g.qual))
-                L.append("    %s%s" % (g.lean, "".join(" " + nm for nm in names)))
-                first = False
-        if not first:
-            L.append("  else")
-        ind = "    " if not first else "  "
-        L.append(ind + "PMem.unreached %s" % json.dumps("function pointer " + sig))
-        L.append(ind + ("return ()" if rt.kind == "void" else "return default"))
-        out.append("\n".join(L))
+        out.append(fnptr_dispatcher(tr, sig, d))
     for (cls, name, sig), d in sorted(tr.vdispatch.items(), key=lambda x: x[1]["fn"].lean):
         dp = d["fn"]
         ft = FnTranslator(tr, dp)
@@ -4422,6 +4698,424 @@ def dispatchers(tr):
         L.append(ind + ("return ()" if rl == "Unit" else "return default"))
         out.append("\n".join(L))
     return out
+
+
+FUNCTOR_WRAPPERS = ("ImplicitCastExpr", "ParenExpr", "MaterializeTemporaryExpr", "CXXBindTemporaryExpr", "ExprWithCleanups",
+                    "ConstantExpr", "CXXFunctionalCastExpr", "CXXStaticCastExpr", "CStyleCastExpr")
+RAW_WRITERS = ("memcpy", "memmove", "memset", "bzero", "strncpy", "strcpy", "strlcpy", "strncpy_noterm")
+
+
+def functor_flow(tr, img):
+    """(vehicle configuration, Phase 5: per-site dispatch) the function addresses each `Functor<R, Args...>` object can
+    hold, by a field-based, flow-insensitive value flow over the translated program (README.md "Phase 5: total
+    definitions"). The abstract locations: a field of Functor type (by its record and name: every object's), a
+    parameter (by the function's unqualified name and position: overloads and overriders merged), a local variable, a
+    static, a function's result. The sources: `Functor(obj, &f)` and FUNCTOR_BIND_MEMBER as translated (their addresses
+    recorded at translation, `fn_sites`), `Functor()`/`Functor(nullptr)` (none), and the function addresses in the
+    statics' constant data (the scheduler's task tables), placed by clang's record layouts on the field that holds
+    them. The flows: copy construction and assignment, constructor member initializers and default member
+    initializers, call arguments to parameters, returns, variable initializers. Read: every function the translation
+    has, every in-class member initializer, every static's initializer. A write the analysis cannot place (through a
+    pointer or a non-const reference, an unknown callee, a raw byte write into an object with a Functor member) makes
+    every location unknown, as does a function address recorded at translation that the scan did not meet (code the
+    scan does not cover). Assumes C++'s typed access otherwise: a Functor member's bytes change only through these
+    expressions (the HAL and the support code write no Functor). Returns (value of an expression, the unplaced
+    addresses of the constant data, a reason when everything is unknown, else None)."""
+    TOP = "top"
+    flows, consts, top = {}, {}, set()
+    params = {}           # ParmVarDecl id -> ("param", function name, index)
+    seen_sites = set()
+    state = {"global": None}
+
+    def tq(tj):
+        if not isinstance(tj, dict):
+            return ""
+        q = tj.get("desugaredQualType") or tj.get("qualType") or ""
+        return q
+
+    def functor_t(tj):
+        q = re.sub(r"\b(const|volatile|struct|class)\b", "", tq(tj)).replace("&", "").strip()
+        return q.startswith("Functor<")
+
+    def strip(e):
+        while e.get("kind") in FUNCTOR_WRAPPERS and kids(e):
+            e = kids(e)[0]
+        return e
+
+    def give_up(why):
+        if os.environ.get("CPP2LEAN_FUNCTOR_DEBUG"):
+            print("functor_flow: %s" % why, file=sys.stderr)
+        if state["global"] is None:
+            state["global"] = why
+
+    def flow(dst, vals):
+        if vals == TOP:
+            top.add(dst)
+            return
+        for v in vals:
+            if v[0] == "addr":
+                consts.setdefault(dst, set()).add(v[1])
+            else:
+                flows.setdefault(dst, set()).add(v)
+
+    def callee_name(c):
+        c = strip(c)
+        if c.get("kind") == "DeclRefExpr":
+            return (c.get("referencedDecl") or {}).get("name"), (c.get("referencedDecl") or {}).get("kind")
+        if c.get("kind") == "MemberExpr":
+            return c.get("name"), "CXXMethodDecl"
+        return None, None
+
+    def value(e):
+        e0 = e
+        e = strip(e)
+        k = e.get("kind")
+        if k in ("CXXNullPtrLiteralExpr", "GNUNullExpr"):
+            return []
+        if k == "IntegerLiteral" and e.get("value") == "0":
+            return []
+        if k in ("CXXConstructExpr", "CXXTemporaryObjectExpr") and functor_t(e.get("type")):
+            a = [x for x in kids(e) if x.get("kind") != "CXXDefaultArgExpr"]
+            if not a:
+                return []
+            if len(a) == 1:
+                if functor_t(a[0].get("type")):
+                    return value(a[0])
+                return value_fn(a[0])
+            if len(a) == 2:
+                return value_fn(a[1])
+            return TOP
+        if k in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and functor_t(e.get("type")):
+            nm, _ = callee_name(kids(e)[0]) if kids(e) else (None, None)
+            if nm == "bind":
+                seen_sites.add(e.get("id"))
+                a = tr.fn_sites.get(e.get("id"))
+                return [("addr", a)] if a is not None else []
+            if nm is None:
+                return TOP
+            return [("ret", nm)]
+        if k == "DeclRefExpr":
+            rd = e.get("referencedDecl") or {}
+            if rd.get("kind") == "ParmVarDecl":
+                return [params[rd["id"]]] if rd.get("id") in params else TOP
+            if rd.get("kind") == "VarDecl":
+                if rd.get("id") in tr.statics:
+                    return [("static", tr.statics[rd["id"]])]
+                return [("var", rd.get("id"))]
+            return TOP
+        if k == "MemberExpr":
+            ow = tr.field_owner.get(e.get("referencedMemberDecl"))
+            return [("field", ow, e.get("name"))] if ow is not None else TOP
+        if k == "ArraySubscriptExpr":
+            b = strip(kids(e)[0])
+            if b.get("kind") in ("MemberExpr", "DeclRefExpr") and "[" in tq(b.get("type")):
+                return value(b)
+            return TOP
+        if k == "ConditionalOperator":
+            v1, v2 = value(kids(e)[1]), value(kids(e)[2])
+            return TOP if TOP in (v1, v2) else v1 + v2
+        return TOP
+
+    def value_fn(e):
+        """the function-pointer argument of `Functor(obj, method)`"""
+        e = e
+        while e.get("kind") in ("ImplicitCastExpr", "ParenExpr", "UnaryOperator", "ConstantExpr") and kids(e) and \
+                (e.get("kind") != "UnaryOperator" or e.get("opcode") == "&"):
+            e = kids(e)[0]
+        if e.get("kind") in ("CXXNullPtrLiteralExpr", "GNUNullExpr") or (e.get("kind") == "IntegerLiteral" and e.get("value") == "0"):
+            return []
+        if e.get("kind") == "DeclRefExpr" and (e.get("referencedDecl") or {}).get("kind") in ("FunctionDecl", "CXXMethodDecl"):
+            seen_sites.add(e.get("id"))
+            a = tr.fn_sites.get(e.get("id"))
+            return [("addr", a)] if a is not None else []
+        return TOP
+
+    def write(lhs, vals):
+        l = strip(lhs)
+        k = l.get("kind")
+        if k == "MemberExpr" or (k == "ArraySubscriptExpr" and value(l) != TOP):
+            loc = value(l)
+            if loc != TOP:
+                for x in loc:
+                    flow(x, vals)
+                return
+        if k == "DeclRefExpr" and (l.get("referencedDecl") or {}).get("kind") == "VarDecl" and \
+                "&" not in tq(l.get("referencedDecl", {}).get("type")):
+            for x in value(l):
+                flow(x, vals)
+            return
+        give_up("an assignment of a Functor to an object the analysis cannot place (%s)" % k)
+
+    def contains_functor(rn, depth=0):
+        try:
+            rec = tr.rec_layout(rn)
+        except Exception:
+            return True
+        def walk(node, d):
+            for f in node["fields"]:
+                if f["type"].startswith("Functor<") or (f["fields"] and d < 8 and walk(f, d + 1)):
+                    return True
+            return False
+        return walk(rec, 0)
+
+    def visit(n, fn):
+        k = n.get("kind")
+        if k in ("CXXConstructExpr", "CXXTemporaryObjectExpr") and not functor_t(n.get("type")):
+            nm = (n.get("ctorDecl") or {}).get("name")
+            if nm is None and tq(n.get("type")):
+                # (clang's JSON has the constructor's type only) the class's unqualified name, without arguments
+                nm = re.sub(r"<.*$", "", split_scope(norm_rec(re.sub(r"\b(const|volatile|struct|class)\b", "", tq(n.get("type"))).strip()))[-1])
+            for i, a in enumerate(x for x in kids(n) if x.get("kind") != "CXXDefaultArgExpr"):
+                if functor_t(a.get("type")):
+                    if nm is None:
+                        give_up("a constructor call with a Functor argument and no declaration (%s, %s)" % (tq(n.get("type")), json.dumps(n)[:600]))
+                    flow(("param", nm, i), value(a))
+        elif k in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and kids(n):
+            nm, dk = callee_name(kids(n)[0])
+            args = kids(n)[1:]
+            if k == "CXXOperatorCallExpr" and dk == "CXXMethodDecl":
+                obj, args = (args[0] if args else None), args[1:]
+                if nm == "operator=" and obj is not None and functor_t(obj.get("type")):
+                    write(obj, value(args[0]) if args else TOP)
+                    args = []
+            if nm in RAW_WRITERS and args:
+                d0 = args[0]
+                while d0.get("kind") in ("ImplicitCastExpr", "ParenExpr", "CStyleCastExpr", "CXXStaticCastExpr", "CXXReinterpretCastExpr") and kids(d0):
+                    d0 = kids(d0)[0]
+                pt = re.sub(r"\b(const|volatile|struct|class)\b", "", tq(d0.get("type"))).strip()
+                if pt.endswith("*"):
+                    pt = pt[:-1].strip()
+                if pt.startswith("Functor<") or (pt not in ("void", "char", "unsigned char", "uint8_t", "int8_t", "signed char") and
+                                                 re.match(r"^[A-Za-z_][\w:<>, ]*$", pt) and pt in tr.layouts and contains_functor(pt)):
+                    give_up("%s into an object with a Functor member (%s)" % (nm, pt))
+            if nm != "bind":
+                for i, a in enumerate(args):
+                    if functor_t(a.get("type")):
+                        if nm is None:
+                            give_up("a call with a Functor argument through an unknown callee")
+                        elif "&" in tq(a.get("type")) and "const" not in tq(a.get("type")):
+                            give_up("a Functor passed by non-const reference to %s" % nm)
+                        flow(("param", nm, i), value(a))
+        elif k == "VarDecl" and functor_t(n.get("type")) and [x for x in kids(n) if "Comment" not in x.get("kind", "")]:
+            init = [x for x in kids(n) if "Comment" not in x.get("kind", "")][0]
+            loc = ("static", tr.statics[n["id"]]) if n.get("id") in tr.statics else ("var", n.get("id"))
+            flow(loc, value(init))
+        elif k == "CXXCtorInitializer" and fn is not None and isinstance(n.get("anyInit"), dict) and functor_t(n["anyInit"].get("type")):
+            init = kids(n)[0] if kids(n) else None
+            owner = tr.field_owner.get(n["anyInit"].get("id"))
+            if owner is None:
+                owner = fn.qname.rsplit("::", 1)[0] if fn.qname and "::" in fn.qname else None
+            if init is not None and strip(init).get("kind") != "CXXDefaultInitExpr":
+                if owner is None or (owner, n["anyInit"].get("name")) not in known_fields:
+                    give_up("a member initializer of a Functor member of an unknown class")
+                else:
+                    flow(("field", owner, n["anyInit"].get("name")), value(init))
+        elif k == "FieldDecl" and functor_t(n.get("type")):
+            init = [x for x in kids(n) if "Comment" not in x.get("kind", "")]
+            if init:
+                flow(("field", tr.field_owner.get(n.get("id")), n.get("name")), value(init[0]))
+        elif k == "ReturnStmt" and fn is not None and kids(n) and functor_t(kids(n)[0].get("type")):
+            flow(("ret", fn.node.get("name")), value(kids(n)[0]))
+        elif k == "InitListExpr" and not functor_t(n.get("type")) and any(functor_t(x.get("type")) for x in kids(n)):
+            # an aggregate's initializer: its elements are its fields in declaration order (no bases)
+            rn = norm_rec(re.sub(r"\b(const|volatile|struct|class)\b", "", tq(n.get("type"))).strip())
+            try:
+                fl = [f for f in tr.rec_layout(rn)["fields"]]
+            except Exception:
+                fl = None
+            if fl is None or any(f["base"] for f in fl) or len(kids(n)) > len(fl):
+                give_up("an aggregate initializer with a Functor member of %s" % rn)
+            else:
+                for f, el in zip(fl, kids(n)):
+                    if functor_t(el.get("type")):
+                        if (rn, f["name"]) not in known_fields:
+                            give_up("an aggregate initializer of %s.%s, a field no declaration carries" % (rn, f["name"]))
+                        flow(("field", rn, f["name"]), value(el))
+        elif k == "DeclRefExpr" and (n.get("referencedDecl") or {}).get("kind") in ("FunctionDecl", "CXXMethodDecl"):
+            seen_sites.add(n.get("id"))
+        for c in kids(n):
+            if isinstance(c, dict):
+                visit(c, fn)
+        if k in ("CallExpr",) and kids(n):
+            # a FUNCTOR_BIND_MEMBER whose Functor is not used as a value above (seen by `value` otherwise)
+            nm, _ = callee_name(kids(n)[0])
+            if nm == "bind":
+                seen_sites.add(n.get("id"))
+
+    known_fields = {(o, (tr.idx.get(i) or {}).get("name")) for i, o in tr.field_owner.items()}
+    fns = []
+    for f in tr.order:
+        if f.node is None:
+            continue
+        for i, p in enumerate(f.params):
+            params[p["id"]] = ("param", f.node.get("name"), i)
+        fns.append(f)
+    for f in fns:
+        visit(f.node, f)
+    for nid, n in list(tr.idx.items()):
+        if n.get("kind") == "FieldDecl":
+            visit(n, None)
+    for q, ns_ in list(tr.static_nodes.items()):
+        for n in ns_:
+            if n.get("kind") == "VarDecl":
+                visit(n, None)
+    for nodes in list(tr.recnodes.values()):
+        for n in (nodes if isinstance(nodes, list) else [nodes]):
+            for fd in kids(n):
+                if fd.get("kind") == "FieldDecl":
+                    visit(fd, None)
+    missed = [x for x in tr.fn_sites if x not in seen_sites]
+    if missed:
+        give_up("%d translated function-address sites outside the scanned code" % len(missed))
+    # the constant data: each function address of a static, placed on the field that holds it
+    unplaced = set()
+
+    def place(rn, off, depth=0):
+        """the Functor field of record rn holding the method pointer at byte off, or None"""
+        if depth > 12:
+            return None
+        rec = tr.rec_layout(rn)
+        best = None
+        for f in rec["fields"]:
+            if f["off"] <= off:
+                best = f if best is None or f["off"] >= best["off"] else best
+        if best is None:
+            return None
+        ft = best["type"]
+        rel = off - best["off"]
+        m = re.match(r"^(.*?)\s*\[(\d+)\]$", ft)
+        if m:
+            et = m.group(1)
+            esz = tr.size_of(tr.ty_str(et))
+            ft, rel = et, rel % esz
+        if ft.startswith("Functor<"):
+            return ("field", rn if not best["base"] else None, best["name"]) if rel == 8 and not best["base"] else None
+        if best["base"] or best["fields"] or ft in tr.layouts:
+            return place(norm_rec(re.sub(r"^(const|struct|class)\s+", "", ft)), rel, depth + 1)
+        return None
+
+    for sg in img.segs:
+        for off, sym, add in sg["relocs"]:
+            if sym not in getattr(img, "fn_syms", {}):
+                continue
+            a = img.fn_syms[sym] + add
+            loc = None
+            vt = [tq(n.get("type")) for n in tr.static_nodes.get(sg["name"], []) if n.get("kind") == "VarDecl"]
+            if vt:
+                t0 = re.sub(r"\b(const|volatile|struct|class)\b", "", vt[0]).strip()
+                m = re.match(r"^(.*?)\s*\[\d*\]$", t0)
+                try:
+                    if m:
+                        et = norm_rec(m.group(1).strip())
+                        loc = place(et, off % tr.size_of(tr.ty_str(et)))
+                        if loc is not None and loc[1] is None:
+                            loc = None
+                    elif t0.startswith("Functor<"):
+                        loc = ("static", sg["name"]) if off == 8 else None
+                    else:
+                        loc = place(norm_rec(t0), off)
+                except Reject:
+                    loc = None
+            if loc is not None and loc[0] == "field" and (loc[1], loc[2]) not in known_fields:
+                loc = None      # a record name that no field declaration of the dumps carries: not placed
+            if loc is None:
+                unplaced.add(a)
+            else:
+                consts.setdefault(loc, set()).add(a)
+    # the least fixpoint
+    val = {}
+    nodes = set(flows) | set(consts) | top | {x for v in flows.values() for x in v}
+    for x in nodes:
+        val[x] = TOP if x in top else set(consts.get(x, ()))
+    changed = True
+    while changed:
+        changed = False
+        for dst, srcs in flows.items():
+            if val[dst] == TOP:
+                continue
+            for sx in srcs:
+                if val[sx] == TOP:
+                    val[dst] = TOP
+                    changed = True
+                    break
+                if not val[sx] <= val[dst]:
+                    val[dst] = val[dst] | val[sx]
+                    changed = True
+
+    def site_value(fn, e):
+        if state["global"] is not None:
+            return TOP
+        for i, p in enumerate(fn.params):
+            params[p["id"]] = ("param", fn.node.get("name"), i)
+        v = value(e)
+        if v == TOP:
+            return TOP
+        out = set(unplaced)
+        for x in v:
+            if x[0] == "addr":
+                out.add(x[1])
+                continue
+            if x[0] == "param" and x not in flows and x not in consts and x not in top:
+                return TOP      # a parameter no call site was found for
+            if x not in val:
+                val[x] = set()
+            if val[x] == TOP:
+                return TOP
+            out |= val[x]
+        return out, v
+
+    return site_value, unplaced, state["global"]
+
+
+def functor_dispatch(tr, img, defs):
+    """(vehicle configuration, Phase 5: per-site dispatch) each call of `Functor<...>::operator()` (`functor_site`'s
+    placeholder) gets an instance of the operator, `<op>'at'<site>`, whose function-pointer dispatcher
+    (`fnptr'N'at'<site>`) has only the targets `functor_flow` finds for the Functor objects read at that site; where
+    that set is not established, the call keeps the operator and its full dispatcher. Returns the new definitions and
+    the report lines."""
+    site_value, unplaced, why = functor_flow(tr, img)
+    decls = {}
+    for chunk in defs:
+        for nm, text in split_declarations(chunk):
+            decls[nm] = text
+    sig_of = {d["name"]: (sig, d) for sig, d in tr.fnptr_sigs.items() if "name" in d}
+    out, report, made, ren = [], [], {}, {}
+    for fn, obj, ph, op in tr.functor_sites:
+        r = site_value(fn, obj)
+        text = decls.get(op.lean)
+        fps = sorted(set(re.findall(r"\bfnptr'\d+\b", text or "")))
+        if r == "top" or text is None or len(fps) != 1:
+            ren[ph] = op.lean
+            report.append("%s in %s: the full dispatcher (%s)" % (op.qual, fn.qual, why or ("no single dispatcher" if r != "top" else "the Functor's values are not established")))
+            continue
+        targets, locs = r
+        sig, d = sig_of[fps[0]]
+        full = {a for a, _, _ in fnptr_arms(tr, sig, d)}
+        keep = frozenset(targets & full)
+        lo = sorted({"%s::%s" % (x[1], x[2]) if x[0] == "field" else "%s %s" % (x[0], x[1]) for x in locs})
+        if len(locs) == 1 and locs[0][0] == "field":
+            tag = re.sub(r"[^A-Za-z0-9_]", "_", locs[0][1].replace("::", "'")) + "'" + locs[0][2]
+        else:
+            tag = re.sub(r"[^A-Za-z0-9_']", "_", fn.lean.replace(".", "'"))
+        key = (op.lean, keep)
+        if key not in made:
+            base = "%s'at'%s" % (op.lean, tag)
+            nm = base
+            k = 2
+            while nm in made.values():
+                nm = "%s'%d" % (base, k)
+                k += 1
+            made[key] = nm
+            dn = "%s'at'%s" % (fps[0], nm[len(op.lean) + 4:])
+            why_t = "the Functor values of %s" % ", ".join(lo)
+            out.append(fnptr_dispatcher(tr, sig, d, name=dn, keep=keep, why=why_t))
+            body = re.sub(r"^partial def %s " % re.escape(op.lean), "partial def %s " % nm, text, count=1, flags=re.M)
+            body = re.sub(r"\b%s\b" % re.escape(fps[0]), dn, body)
+            body = body.replace("/-- C++ `", "/-- (at the call sites reading %s) C++ `" % ", ".join(lo), 1)
+            out.append(body)
+        ren[ph] = made[key]
+        report.append("%s in %s: %s, %d of %d targets (%s)" % (op.qual, fn.qual, made[key], len(keep), len(full), ", ".join(lo)))
+    return out, ren, report, unplaced, why
 
 
 def always_returns(n):
@@ -4845,6 +5539,274 @@ def write_vehicle_reports(tr, cfg, out, ns, root):
         fh.write("\n".join(tr.vehicle_log) + "\n")
 
 
+LEAN_TOKEN = re.compile(r'"(?:[^"\\\n]|\\.)*"|/-.*?-/|--[^\n]*|[A-Za-z_][A-Za-z0-9_.\']*', re.S)
+
+
+def split_declarations(chunk):
+    """The declarations of one emitted text: [(name, text)], each `partial def` with the doc comment before it."""
+    lines = chunk.split("\n")
+    starts, doc = [], None
+    for i, ln in enumerate(lines):
+        if ln.startswith("/--") and doc is None:
+            doc = i
+        elif ln.startswith("partial def "):
+            starts.append((doc if doc is not None else i, i))
+            doc = None
+    if not starts:
+        raise Reject("emitted text without a definition: %r" % chunk[:200])
+    if any(ln.strip() for ln in lines[:starts[0][0]]):
+        raise Reject("emitted text before the first definition: %r" % chunk[:200])
+    out = []
+    for k, (s, h) in enumerate(starts):
+        e = starts[k + 1][0] if k + 1 < len(starts) else len(lines)
+        out.append((lines[h].split()[2], "\n".join(lines[s:e]).rstrip()))
+    return out
+
+
+def order_definitions(defs):
+    """The call graph of the emitted definitions (README.md "Phase 5: total definitions"): an edge f -> g when the text of
+    f names g (direct calls, the `.body` of a function with a frame, the dispatchers of virtual calls and function pointers
+    and the targets they call; comments and strings left out), its strongly connected components (Tarjan), and their
+    order callees first. Returns ({name: text}, [component: [names]], {name: set of names})."""
+    decls, order = {}, []
+    for chunk in defs:
+        for name, text in split_declarations(chunk):
+            if name in decls:
+                raise Reject("definition %s emitted twice" % name)
+            decls[name] = text
+            order.append(name)
+    edges, pos = {}, {x: i for i, x in enumerate(order)}
+    for name in order:
+        # the text after the name in the header (the doc comment, comments and string literals are skipped)
+        hdr = re.search(r"^partial def (\S+)", decls[name], re.M)
+        edges[name] = {m.group(0) for m in LEAN_TOKEN.finditer(decls[name], hdr.end()) if m.group(0) in decls}
+    # Tarjan's algorithm, iterative; components come out callees first
+    index, low, on, stack, sccs, counter = {}, {}, set(), [], [], [0]
+    for root in order:
+        if root in index:
+            continue
+        work = [(root, iter(sorted(edges[root], key=pos.get)))]
+        index[root] = low[root] = counter[0]
+        counter[0] += 1
+        stack.append(root)
+        on.add(root)
+        while work:
+            v, it = work[-1]
+            w = next(it, None)
+            if w is not None:
+                if w not in index:
+                    index[w] = low[w] = counter[0]
+                    counter[0] += 1
+                    stack.append(w)
+                    on.add(w)
+                    work.append((w, iter(sorted(edges[w], key=pos.get))))
+                elif w in on:
+                    low[v] = min(low[v], index[w])
+                continue
+            work.pop()
+            if work:
+                low[work[-1][0]] = min(low[work[-1][0]], low[v])
+            if low[v] == index[v]:
+                comp = []
+                while True:
+                    x = stack.pop()
+                    on.discard(x)
+                    comp.append(x)
+                    if x == v:
+                        break
+                sccs.append(sorted(comp, key=pos.get))
+    return decls, sccs, edges
+
+
+def qualify_references(decls, ns, sccs):
+    """(total definitions) Inside `def P.Q.f`, Lean resolves a global name `g` as `P.Q.g`, then `P.g`, then `g` (the
+    declaration's namespaces shadow the outer ones), and a definition's own name `f` is its recursive reference. In one
+    `mutual` block every reference was to a function of the block, which Lean resolves as written; with ordinary
+    definitions a call of `g` from `P.f` would silently go to `P.g` where one exists (or to `P.f` itself). Each reference
+    to a function outside the declaration's own component that a declaration's namespaces could capture is therefore
+    written in full (`_root_.<ns>.g`); references inside a `mutual` block stay as written (Lean resolves them to the
+    block's functions, as before; `_root_` does not reach them)."""
+    comp_of = {x: i for i, c in enumerate(sccs) for x in c}
+    out = {}
+    for name, text in decls.items():
+        hdr = re.search(r"^partial def (\S+)", text, re.M)
+        parts = name.split(".")
+        prefixes = [".".join(parts[:j]) for j in range(1, len(parts))]
+        pieces, last = [], 0
+        for m in LEAN_TOKEN.finditer(text, hdr.end()):
+            x = m.group(0)
+            if x in decls and comp_of[x] != comp_of[name] and any((pf + "." + x) in decls for pf in prefixes):
+                pieces.append(text[last:m.start()])
+                pieces.append("_root_.%s.%s" % (ns, x))
+                last = m.end()
+        out[name] = "".join(pieces) + text[last:] if pieces else text
+    return out
+
+
+PURE_HEADER = re.compile(r"^partial def (\S+)((?: \([^()]*\))*) : PMem\.M (.+) := do$", re.M)
+STATE_TOKENS = {"get", "set", "modify", "modifyGet", "getModify", "fp", "sret"}
+
+
+def pure_helpers(decls, edges, ns, sccs, monadic):
+    """(total definitions) The functions that never touch the memory state: no operation of the memory or of the bridge
+    (the prefixes `monadic`: `PMem.`, the estimator bridge's adapters), no `get`/`set`/`modify`, no stack frame (`fp`),
+    no record result (`sret`), not recursive, and calling only such functions. Each is emitted twice: `f.pure'` in `Id`
+    (the body as translated, its calls of such functions to their `.pure'`), a pure function of its arguments, and `f` in
+    `PMem.M` as before, `pure (f.pure' args)`, which every caller keeps calling. (Not `f.pure`: inside `def f.pure` the
+    name `pure` would be the definition itself.) Returns (declarations, the names of such functions)."""
+    info = {}
+    alone = {c[0] for c in sccs if len(c) == 1}
+    for name, text in decls.items():
+        h = PURE_HEADER.search(text)
+        if not h or h.group(1) != name or "PMem." in h.group(2) or name not in alone or (name + ".pure'") in decls:
+            continue
+        toks = [m.group(0) for m in LEAN_TOKEN.finditer(text, h.end()) if m.group(0)[0] not in "\"/-"]
+        if any(x.startswith(tuple(monadic)) or x in STATE_TOKENS for x in toks) or name in edges[name]:
+            continue
+        info[name] = h
+    pure = set(info)
+    changed = True
+    while changed:
+        changed = False
+        for name in sorted(pure):
+            if any(g not in pure for g in edges[name]):
+                pure.discard(name)
+                changed = True
+    out = dict(decls)
+    root = "_root_.%s." % ns
+    for name in pure:
+        text, h = decls[name], info[name]
+        body = text[h.end():]
+        pieces, last = [], 0
+        for m in LEAN_TOKEN.finditer(body):
+            x = m.group(0)
+            bare = x[len(root):] if x.startswith(root) else x
+            if bare in pure:
+                pieces.append(body[last:m.start()])
+                pieces.append(root + bare + ".pure'")
+                last = m.end()
+        body = "".join(pieces) + body[last:]
+        args = " ".join(re.findall(r"\((\S+) :", h.group(2)))
+        out[name] = ("/-- `%s` as a pure function of its arguments (it reads and writes no memory). -/\n"
+                     "partial def %s.pure'%s : Id %s := do%s\n\n" % (name, name, h.group(2), h.group(3), body) +
+                     text[:h.start()] +
+                     "partial def %s%s : PMem.M %s :=\n  pure (%s%s.pure'%s)" % (name, h.group(2), h.group(3), root, name,
+                                                                          " " + args if args else ""))
+    return out, pure
+
+
+def table_nesting(img, tables, cfg):
+    """The nesting of the parameter tables: the longest chain of `var_info`/`group_info` tables, from the root table,
+    each pointing to the next (an `AP_GROUPINFO` entry of a nested group holds its table's address): AP_Param's group
+    walks recurse once per level. (root table, levels)."""
+    root = cfg["root_table"][1]
+    succ = {}
+    for sym, unit in tables.items():
+        g = img.mod(unit).get(sym)
+        succ[sym] = sorted({t for _, t, _ in g["relocs"] if t in tables and t != sym})
+    memo = {}
+
+    def longest(x, stack):
+        if x in memo:
+            return memo[x]
+        if x in stack:
+            raise Reject("the parameter tables nest in a cycle at %s" % x)
+        r = 1 + max([longest(y, stack | {x}) for y in succ.get(x, [])] or [0])
+        memo[x] = r
+        return r
+    return img.demangle([root])[0], max([longest(t, frozenset()) for t in tables] or [0])
+
+
+DEPTH_MIN = 64
+
+
+def depth_constant(comp, nest):
+    """The depth a call from outside a recursive component passes (README.md "Phase 5: total definitions"), and why it
+    suffices. Every call between functions of the component uses one unit. The constant is max(4n, 64) for n functions:
+    twice the 2n calls of a chain in which no function of the component is active more than twice at once (the bound
+    the source gives for the vehicle's components, README.md), and for AP_Param's walks of the parameter tables, which
+    recurse once per nesting level of the tables (n calls per level), at least 64, several times the nesting of the
+    tables (`table_nesting`)."""
+    n = len(comp)
+    d = max(4 * n, DEPTH_MIN)
+    if any(x.startswith("AP_Param.") for x in comp):
+        why = ("a walk of the parameter tables: one level of recursion (%d call%s inside the component) per nesting level "
+               "of the tables, which nest %d levels from %s (computed from the image); %d levels need %d; depth "
+               "max(4n, %d) = %d" % (n, "s" if n > 1 else "", nest[1], nest[0], nest[1], n * nest[1], DEPTH_MIN, d))
+    else:
+        why = ("%d functions: a chain of calls in which no function of the component is active more than twice at once "
+               "has at most %d calls inside it (the source's bound, README.md); depth max(4n, %d) = %d" % (n, 2 * n, DEPTH_MIN, d))
+    return d, why
+
+
+REC_HEADER = re.compile(r"^partial def (\S+)((?: \([^()]*\))*) : PMem\.M (.+) := do$", re.M)
+
+
+def depth_component(decls, comp, depth):
+    """The functions of one recursive component as structural recursion on a depth (README.md "Phase 5: total
+    definitions"): each `f` becomes `f'rec (rec'depth : Nat) ...`, whose first statement takes one unit
+    (`let rec'd + 1 := rec'depth | PMem.depthOut`: on 0 the sticky flag `Mem.depthOut` is set and the type's default
+    returned) and whose calls of the component's functions pass the rest (`g'rec rec'd ...`), all in one `mutual` block
+    (Lean's structural recursion on the `Nat`); then each `f` as before, an ordinary definition calling `f'rec` with the
+    component's constant (`depth_constant`), which every caller outside the component keeps calling."""
+    members = set(comp)
+    rec_block, wrappers = [], []
+    for x in comp:
+        text = decls[x]
+        h = REC_HEADER.search(text)
+        if not h or h.group(1) != x:
+            raise Reject("recursive definition %s: header not of the form `partial def f (a : T)... : PMem.M R := do`" % x)
+        doc = text[:h.start()]
+        body = text[h.end():]
+        pieces, last = [], 0
+        for m in LEAN_TOKEN.finditer(body):
+            if m.group(0) in members:
+                pieces.append(body[last:m.start()])
+                pieces.append("%s'rec rec'd" % m.group(0))
+                last = m.end()
+        body = "".join(pieces) + body[last:]
+        rec_block.append("%sdef %s'rec (rec'depth : Nat)%s : PMem.M %s := do\n  let rec'd + 1 := rec'depth | PMem.depthOut%s" % (
+            doc, x, h.group(2), h.group(3), body))
+        args = " ".join(re.findall(r"\((\S+) :", h.group(2)))
+        wrappers.append("/-- `%s'rec` with the depth of its recursive component (%d). -/\ndef %s%s : PMem.M %s :=\n  %s'rec %d%s" % (
+            x, depth, x, h.group(2), h.group(3), x, depth, " " + args if args else ""))
+    return "mutual\n\n" + "\n\n".join(rec_block) + "\n\nend\n\n" + "\n\n".join(wrappers) + "\n"
+
+
+def write_order_report(path, decls, sccs, edges, loops, pure=(), functor_report=(), depths=None, nest=None):
+    """<ns>.callgraph.txt: the counts, every recursive component with its members and the edges inside it, and every
+    loop with the form it was given."""
+    rec = [c for c in sccs if len(c) > 1 or c[0] in edges[c[0]]]
+    nrec = sum(len(c) for c in rec)
+    L = ["# cpp2lean --param-memory: the call graph of the emitted definitions (README.md \"Phase 5: total definitions\")",
+         "definitions %d: %d not recursive (`def`), %d in %d recursive components (each `f` a `def` calling `f'rec`, a `def` by "
+         "structural recursion on a depth, or a `def` by structural recursion on an inductive argument); partial def 0" % (
+             len(decls), len(decls) - nrec, nrec, len(rec)),
+         "loops %d: %s" % (len(loops), ", ".join("%s %d" % (f, sum(1 for x in loops if x[3] == f)) for f in ("range", "fuel", "once"))),
+         "pure functions (no memory; `f.pure'` in Id, `f` = pure (f.pure' ...)): %d" % len(pure),
+         ""]
+    for i, c in enumerate(sorted(rec, key=len, reverse=True)):
+        inner = sum(len(edges[x] & set(c)) for x in c)
+        L.append("component %d: %d definitions, %d edges inside" % (i + 1, len(c), inner))
+        if depths is not None and tuple(c) in depths:
+            L.append("  depth %d (`f'rec`, structural recursion on the depth; entry `f` passes %d): %s" % (
+                depths[tuple(c)][0], depths[tuple(c)][0], depths[tuple(c)][1]))
+        elif "\ntermination_by structural " in decls[c[0]]:
+            L.append("  structural recursion on its argument of an inductive type (a `def`)")
+        for x in c:
+            L.append("  %s -> %s" % (x, " ".join(sorted(edges[x] & set(c)))))
+        L.append("")
+    if functor_report:
+        L.append("# calls of a Functor's operator(): the dispatcher of each call site (per-site dispatch)")
+        L += list(functor_report)
+        L.append("")
+    L.append("# loops: function, line, C loop, form, detail")
+    for q, ln, kind, form, why in loops:
+        L.append("%s\t%s\t%s\t%s\t%s" % (q, ln, kind, form, why))
+    with open(path, "w") as f:
+        f.write("\n".join(L) + "\n")
+
+
 def main(argv):
     import argparse
     ap = argparse.ArgumentParser(prog="cpp2lean.py --param-memory")
@@ -4910,6 +5872,14 @@ def main(argv):
     for q in tr.static_addr:
         tr.static_addr[q] = img.by_name[q]
     img.resolve()
+    functor_report = []
+    if cfg.get("vehicle"):
+        # (Phase 5: per-site dispatch) each call of a Functor's operator(): its own dispatcher where the targets are known
+        extra, ren, functor_report, unplaced, why = functor_dispatch(tr, img, defs)
+        defs = [re.sub(r"[A-Za-z_][A-Za-z0-9_.']*'site'\d+\b", lambda m: ren[m.group(0)], d) for d in defs] + extra
+        if unplaced:
+            functor_report.append("function addresses of the constant data on no Functor field (added to every site): %s" %
+                                  " ".join("0x%x" % a for a in sorted(unplaced)))
     heap = (img.next + 0xffff) // 0x10000 * 0x10000
     stack = heap + cfg.get("heap_size", 0x10000)
     size = stack + cfg.get("stack_size", 0x10000)
@@ -4966,11 +5936,28 @@ def main(argv):
     L.append("/-- A fresh memory with the constant data placed, over the HAL storage `st`. -/")
     L.append("def initMem (st : ByteArray) : PMem.Mem := Id.run do\n  let s0 := PMem.fresh memSize stackBase heapBase st\n"
              "  let ((), s) := (do for (a, h) in image do PMem.place a h : PMem.M Unit).run s0\n  return s\n")
-    L.append("mutual\n")
-    L.append("\n\n".join(defs))
-    L.append("\nend\n\nend %s\n" % ns)
+    decls, sccs, edges = order_definitions(defs)
+    decls = qualify_references(decls, ns, sccs)
+    decls, pure = pure_helpers(decls, edges, ns, sccs, ["PMem."] + ([cfg["bridge_module"] + "."] if cfg.get("bridge_module") else []))
+    nest = table_nesting(img, tables, cfg)
+    depths = {}
+    for comp in sccs:
+        if len(comp) == 1 and comp[0] not in edges[comp[0]]:
+            # not recursive: an ordinary definition (the kernel can unfold it; with its pure version, two)
+            L.append(re.sub(r"^partial def ", "def ", decls[comp[0]], flags=re.M) + "\n")
+        elif len(comp) == 1 and "\ntermination_by structural " in decls[comp[0]]:
+            # structural recursion on an argument of an inductive type (worldOutputs'ctext on CText): a `def`
+            L.append(re.sub(r"^partial def ", "def ", decls[comp[0]], flags=re.M) + "\n")
+        else:
+            # a cycle of the call graph (recursion, possibly through a dispatcher): every function takes a depth and
+            # recurses structurally on it (`f'rec`), in a `mutual` block; `f` calls `f'rec` with the component's constant
+            d, why = depth_constant(comp, nest)
+            depths[tuple(comp)] = (d, why)
+            L.append(depth_component(decls, comp, d))
+    L.append("end %s\n" % ns)
     with open(os.path.join(a.out, ns + ".lean"), "w") as f:
         f.write("\n".join(L))
+    write_order_report(os.path.join(a.out, ns + ".callgraph.txt"), decls, sccs, edges, tr.loop_log, pure, functor_report, depths, nest)
     with open(os.path.join(a.out, ns + ".addresses.json"), "w") as f:
         json.dump({"heapBase": heap, "stackBase": stack, "memSize": size, "objects": amap,
                    "functions": [{"cxx": fn.qual, "lean": ns + "." + fn.lean, "loc": FnTranslator(tr, fn).loc()} for fn in tr.order]},

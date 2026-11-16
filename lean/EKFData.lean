@@ -54,7 +54,7 @@ def erased_ring.init (s : State) (_size : UInt8) : State × Bool := Id.run do
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), value := (Binary32.ofBits 0x00000000 /- 0.0 -/), good := false } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), value := (Binary32.ofBits 0x00000000 /- 0.0 -/), good := false } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)

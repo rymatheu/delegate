@@ -213,8 +213,8 @@ class CType:
         if self.kind == "bool":
             return "Bool"
         if self.kind == "int":
-            if self.usize:
-                return "USize"
+            # (`size_t` is `UInt64`, as `unsigned long` on the reference target, LP64: the `usize` flag only keeps the
+            # C spelling for `cname`; Lean's `USize` would leave the width to `System.Platform.numBits`, opaque to the kernel)
             if self.name == "char":
                 return "UInt8"          # --c-strings: a `char` is stored as its byte (README.md, "Phase 2b")
             return ("Int" if self.signed else "UInt") + str(self.bits)
@@ -1068,10 +1068,9 @@ def int_conv(v, s, d):
         if d.name == "char":
             return app("Int8.toUInt8", int_conv(v, s, INT8) if s != INT8 else v)
     if s.usize:
-        v, s = app("USize.toUInt64", v), CType("int", 64, False)
+        s = CType("int", 64, False)     # `size_t` is `UInt64` (CType.lean): the same Lean value as `uint64_t`
     if d.usize:
-        v = int_conv(v, s, CType("int", 64, False)) if s != CType("int", 64, False) else v
-        return app("UInt64.toUSize", v)
+        d = CType("int", 64, False)
     if s == d:
         return v
     pre = "Int" if s.signed else "UInt"
@@ -1109,7 +1108,7 @@ def conv(v, s, d, node):
     if s.kind == "double" and d.kind == "float":
         return app("Binary64.toBinary32", v)
     if s.is_int() and d.is_float():
-        src = "USize" if s.usize else ("Int" if s.signed else "UInt") + str(s.bits)
+        src = ("Int" if s.signed else "UInt") + str(s.bits)      # (`size_t`: `UInt64`)
         return app("%s.to%s" % (src, d.lean), v)
     if MISSION[0] and s.is_float() and d.is_int() and not d.usize and d.bits < 32:
         # --mission: to an 8- or 16-bit integer, what clang emits for the reference target (arm64): `fcvtzs w`, the
@@ -6278,8 +6277,6 @@ class Body:
             if t.kind == "double":
                 items.append("CArg.dbl %s" % v.at(ATOM))
             elif t.is_int() and t.name is None and t.bits in (32, 64):
-                if t.usize:
-                    v = app("USize.toUInt64", v)
                 items.append("CArg.of%s%d %s" % ("Int" if t.signed and not t.usize else "UInt", t.bits, v.at(ATOM)))
             else:
                 raise Reject(a, "variadic argument of type `%s`" % t.cname)

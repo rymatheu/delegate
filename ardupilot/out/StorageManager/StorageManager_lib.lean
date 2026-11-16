@@ -25,7 +25,7 @@ def storage_reset (seed : UInt32) (hal'storage : Array UInt8) : (Array UInt8) :=
     for i' in [0:256] do
       let i : UInt16 := Nat.toUInt16 i'
       chunk := chunk.set! (UInt16.toNat i) (UInt32.toUInt8 ((((seed ^^^ UInt16.toUInt32 ofs) + UInt16.toUInt32 i) * (2654435761 : UInt32)) >>> Int32.toUInt32 (24 : Int32)))
-    hal'storage := HalStorage.write_block hal'storage ofs chunk 0 (UInt64.toUSize (256 : UInt64))
+    hal'storage := HalStorage.write_block hal'storage ofs chunk 0 (256 : UInt64)
   return hal'storage
 
 /-- C++ `uint64_t storage_hash(AP_HAL::Storage & hal'storage)`, `ardupilot/unity_storage.cpp:28-39`. -/
@@ -34,7 +34,7 @@ def storage_hash (hal'storage : Array UInt8) : UInt64 := Id.run do
   let mut h : UInt64 := (1469598103934665603 : UInt64)
   for ofs' in [0:64] do
     let ofs : UInt16 := (0 : UInt16) + (256 : UInt16) * (Nat.toUInt16 ofs')
-    chunk := HalStorage.read_block hal'storage chunk 0 ofs (UInt64.toUSize (256 : UInt64))
+    chunk := HalStorage.read_block hal'storage chunk 0 ofs (256 : UInt64)
     for i' in [0:256] do
       let i : UInt16 := Nat.toUInt16 i'
       h := (h ^^^ UInt8.toUInt64 chunk[UInt16.toNat i]!) * (1099511628211 : UInt64)
@@ -137,7 +137,7 @@ def sm_size (type : UInt8) : UInt64 := Id.run do
 namespace StorageAccess
 
 /-- C++ `bool StorageAccess::write_block(uint16_t dst, const void * src, size_t n) const`, `StorageManager/StorageManager.cpp:193-244`. -/
-def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : USize) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
+def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : UInt64) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
   let mut hal'storage := hal'storage
   let mut addr := addr
   let mut n := n
@@ -152,23 +152,23 @@ def write_block (s : State) (addr : UInt16) (data : Array UInt8) (n : USize) (ha
     if UInt32.toInt32 (UInt16.toUInt32 addr) ≥ UInt32.toInt32 (UInt16.toUInt32 length) then
       addr := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) - UInt32.toInt32 (UInt16.toUInt32 length)))
       continue
-    let mut count : UInt16 := UInt64.toUInt16 (USize.toUInt64 n)
+    let mut count : UInt16 := UInt64.toUInt16 n
     if UInt32.toInt32 (UInt16.toUInt32 count) + UInt32.toInt32 (UInt16.toUInt32 addr) > UInt32.toInt32 (UInt16.toUInt32 length) then
       count := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 length) - UInt32.toInt32 (UInt16.toUInt32 addr)))
-    hal'storage := HalStorage.write_block hal'storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) data b'o (UInt64.toUSize (UInt16.toUInt64 count))
-    n := n - UInt64.toUSize (UInt16.toUInt64 count)
-    if n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
+    hal'storage := HalStorage.write_block hal'storage (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) data b'o (UInt16.toUInt64 count)
+    n := n - UInt16.toUInt64 count
+    if n == Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
       break
     b'o := b'o + Int32.toNatClampNeg (UInt32.toInt32 (UInt16.toUInt32 count))
     addr := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
-  return (hal'storage, (n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32)))))
+  return (hal'storage, (n == Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
 
 /-- C++ `void StorageAccess::write_byte(uint16_t loc, uint8_t value) const`, `StorageManager/StorageManager.cpp:289-292`. -/
 def write_byte (s : State) (loc : UInt16) (value : UInt8) (hal'storage : Array UInt8) : (Array UInt8) := Id.run do
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := #[value]  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (1 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (1 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -179,7 +179,7 @@ def write_uint8 (s : State) (loc : UInt16) (value : UInt8) (hal'storage : Array 
   return hal'storage
 
 /-- C++ `bool StorageAccess::read_block(void * dst, uint16_t src, size_t n) const`, `StorageManager/StorageManager.cpp:139-186`. -/
-def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : USize) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
+def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : UInt64) (hal'storage : Array UInt8) : (Array UInt8) × Bool := Id.run do
   let mut data := data
   let mut addr := addr
   let mut n := n
@@ -194,22 +194,22 @@ def read_block (s : State) (data : Array UInt8) (addr : UInt16) (n : USize) (hal
     if UInt32.toInt32 (UInt16.toUInt32 addr) ≥ UInt32.toInt32 (UInt16.toUInt32 length) then
       addr := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) - UInt32.toInt32 (UInt16.toUInt32 length)))
       continue
-    let mut count : UInt16 := UInt64.toUInt16 (USize.toUInt64 n)
+    let mut count : UInt16 := UInt64.toUInt16 n
     if UInt32.toInt32 (UInt16.toUInt32 count) + UInt32.toInt32 (UInt16.toUInt32 addr) > UInt32.toInt32 (UInt16.toUInt32 length) then
       count := Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 length) - UInt32.toInt32 (UInt16.toUInt32 addr)))
-    data := HalStorage.read_block hal'storage data b'o (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) (UInt64.toUSize (UInt16.toUInt64 count))
-    n := n - UInt64.toUSize (UInt16.toUInt64 count)
-    if n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32))) then
+    data := HalStorage.read_block hal'storage data b'o (Int16.toUInt16 (Int32.toInt16 (UInt32.toInt32 (UInt16.toUInt32 addr) + UInt32.toInt32 (UInt16.toUInt32 offset)))) (UInt16.toUInt64 count)
+    n := n - UInt16.toUInt64 count
+    if n == Int64.toUInt64 (Int32.toInt64 (0 : Int32)) then
       break
     b'o := b'o + Int32.toNatClampNeg (UInt32.toInt32 (UInt16.toUInt32 count))
     addr := Int16.toUInt16 (Int32.toInt16 (0 : Int32))
-  return (data, (n == UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (0 : Int32)))))
+  return (data, (n == Int64.toUInt64 (Int32.toInt64 (0 : Int32))))
 
 /-- C++ `uint8_t StorageAccess::read_byte(uint16_t loc) const`, `StorageManager/StorageManager.cpp:249-254`. -/
 def read_byte (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt8 := Id.run do
   let mut v : UInt8 := (0 : UInt8)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := #[v]  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (1 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (1 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.get t'1 0))
   return v
@@ -243,7 +243,7 @@ def write_uint16 (s : State) (loc : UInt16) (value : UInt16) (hal'storage : Arra
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := CString.ofUInt16 value  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (2 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (2 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -251,7 +251,7 @@ def write_uint16 (s : State) (loc : UInt16) (value : UInt16) (hal'storage : Arra
 def read_uint16 (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt16 := Id.run do
   let mut v : UInt16 := (0 : UInt16)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt16 v  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (2 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (2 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.toUInt16 t'1 0))
   return v
@@ -280,7 +280,7 @@ def write_uint32 (s : State) (loc : UInt16) (value : UInt32) (hal'storage : Arra
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := CString.ofUInt32 value  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (4 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -288,7 +288,7 @@ def write_uint32 (s : State) (loc : UInt16) (value : UInt32) (hal'storage : Arra
 def read_uint32 (s : State) (loc : UInt16) (hal'storage : Array UInt8) : UInt32 := Id.run do
   let mut v : UInt32 := (0 : UInt32)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 v  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (4 : UInt64) hal'storage
   t'1 := t'2
   v := ((CString.toUInt32 t'1 0))
   return v
@@ -317,7 +317,7 @@ def write_float (s : State) (loc : UInt16) (value : Binary32) (hal'storage : Arr
   let mut hal'storage := hal'storage
   let t'2 := loc
   let mut t'1 : Array UInt8 := CString.ofUInt32 (Binary32.toBits value)  -- the bytes of `value` (its object representation)
-  let (t'3, _) := write_block s t'2 t'1 (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'3, _) := write_block s t'2 t'1 (4 : UInt64) hal'storage
   hal'storage := t'3
   return hal'storage
 
@@ -325,7 +325,7 @@ def write_float (s : State) (loc : UInt16) (value : Binary32) (hal'storage : Arr
 def read_float (s : State) (loc : UInt16) (hal'storage : Array UInt8) : Binary32 := Id.run do
   let mut v : Binary32 := (Binary32.ofBits 0x00000000 /- 0.0 -/)  -- uninitialized in C++; assigned before every read
   let mut t'1 : Array UInt8 := CString.ofUInt32 (Binary32.toBits v)  -- the bytes of `v` (its object representation)
-  let (t'2, _) := read_block s t'1 loc (UInt64.toUSize (4 : UInt64)) hal'storage
+  let (t'2, _) := read_block s t'1 loc (4 : UInt64) hal'storage
   t'1 := t'2
   v := (Binary32.ofBits (CString.toUInt32 t'1 0))
   return v
@@ -352,11 +352,11 @@ def sm_block (seed : UInt32) (type : UInt8) (src dst : UInt16) (n : UInt8) (hal'
   hal'storage := storage_reset seed hal'storage
   let a : StorageAccess.State := StorageAccess.init (StorageManager.StorageType.ofInt (Int32.toUInt32 (UInt32.toInt32 (UInt8.toUInt32 type) % (8 : Int32))))
   let mut buf : Array UInt8 := Array.replicate 64 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
-  buf := CString.memset buf 0 (238 : Int32) (UInt64.toUSize (64 : UInt64))
-  let (t'1, t'2) := StorageAccess.read_block a buf src (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (65 : Int32))))) hal'storage
+  buf := CString.memset buf 0 (238 : Int32) (64 : UInt64)
+  let (t'1, t'2) := StorageAccess.read_block a buf src (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (65 : Int32)))) hal'storage
   buf := t'1
   let ok1 : Bool := t'2
-  let (t'3, t'4) := StorageAccess.write_block a dst buf (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (65 : Int32))))) hal'storage
+  let (t'3, t'4) := StorageAccess.write_block a dst buf (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (65 : Int32)))) hal'storage
   hal'storage := t'3
   let ok2 : Bool := t'4
   let mut h : UInt64 := storage_hash hal'storage
@@ -384,11 +384,11 @@ def copy_area (s : State) (source : StorageAccess.State) (hal'storage : Array UI
     if !(decide (UInt32.toInt32 (UInt16.toUInt32 total) > (0 : Int32))) then break
     let mut block : Array UInt8 := Array.replicate 32 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
     let n : UInt16 := UInt64.toUInt16 (StorageManager_lib.MIN_uint64_t_uint16_t (32 : UInt64) total)
-    let (t'1, t'2) := StorageAccess.read_block source block ofs (UInt64.toUSize (UInt16.toUInt64 n)) hal'storage
+    let (t'1, t'2) := StorageAccess.read_block source block ofs (UInt16.toUInt64 n) hal'storage
     block := t'1
     let mut t'5 := !t'2
     if !t'5 then
-      let (t'3, t'4) := write_block s ofs block (UInt64.toUSize (UInt16.toUInt64 n)) hal'storage
+      let (t'3, t'4) := write_block s ofs block (UInt16.toUInt64 n) hal'storage
       hal'storage := t'3
       t'5 := !t'4
     if t'5 then

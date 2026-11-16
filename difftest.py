@@ -63,7 +63,7 @@ CORNER_CAP = 20000
 INTS = {"int8_t": (8, True), "int16_t": (16, True), "int32_t": (32, True), "int64_t": (64, True),
         "uint8_t": (8, False), "uint16_t": (16, False), "uint32_t": (32, False), "uint64_t": (64, False),
         "size_t": (64, False)}
-LEAN_INT = {"size_t": "USize"}
+LEAN_INT = {"size_t": "UInt64"}     # the reference target is LP64
 TYPE_ORDER = ["float", "double", "bool"] + sorted(INTS)
 
 

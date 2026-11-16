@@ -1,0 +1,440 @@
+# cpp2lean --param-memory: the call graph of the emitted definitions (README.md "Phase 5: total definitions")
+definitions 3134: 3043 not recursive (`def`), 91 in 10 recursive components (each `f` a `def` calling `f'rec`, a `def` by structural recursion on a depth, or a `def` by structural recursion on an inductive argument); partial def 0
+loops 303: range 91, fuel 162, once 50
+pure functions (no memory; `f.pure'` in Id, `f` = pure (f.pure' ...)): 381
+
+component 1: 75 definitions, 107 edges inside
+  depth 300 (`f'rec`, structural recursion on the depth; entry `f` passes 300): 75 functions: a chain of calls in which no function of the component is active more than twice at once has at most 150 calls inside it (the source's bound, README.md); depth max(4n, 64) = 300
+  Copter.set_mode.body -> ModeAuto.return_path_or_jump_to_landing_sequence_auto_RTL
+  Copter.set_mode -> Copter.set_mode.body
+  ModeAuto.return_path_or_jump_to_landing_sequence_auto_RTL.body -> AP_Mission.jump_to_closest_mission_leg AP_Mission.jump_to_landing_sequence ModeAuto.enter_auto_rtl
+  ModeAuto.return_path_or_jump_to_landing_sequence_auto_RTL -> ModeAuto.return_path_or_jump_to_landing_sequence_auto_RTL.body
+  RC_Channels.reset_mode_switch -> RC_Channel.reset_mode_switch
+  AP_Mission.jump_to_closest_mission_leg.body -> AP_Mission.resume AP_Mission.set_current_cmd
+  AP_Mission.jump_to_closest_mission_leg -> AP_Mission.jump_to_closest_mission_leg.body
+  AP_Mission.jump_to_landing_sequence.body -> AP_Mission.resume AP_Mission.set_current_cmd
+  AP_Mission.jump_to_landing_sequence -> AP_Mission.jump_to_landing_sequence.body
+  ModeAuto.enter_auto_rtl -> Mode.set_mode
+  RC_Channel.reset_mode_switch -> RC_Channel.read_mode_switch
+  AP_Mission.set_current_cmd.body -> AP_Mission.advance_current_nav_cmd AP_Mission.complete
+  AP_Mission.set_current_cmd -> AP_Mission.set_current_cmd.body
+  AP_Mission.resume.body -> AP_Mission.set_current_cmd AP_Mission.start AP_Mission.start_command
+  AP_Mission.resume -> AP_Mission.resume.body
+  Mode.set_mode -> Copter.set_mode
+  RC_Channel.read_mode_switch.body -> RC_Channel_Copter.mode_switch_changed
+  RC_Channel.read_mode_switch -> RC_Channel.read_mode_switch.body
+  AP_Mission.advance_current_nav_cmd.body -> AP_Mission.start_command
+  AP_Mission.advance_current_nav_cmd -> AP_Mission.advance_current_nav_cmd.body
+  AP_Mission.complete -> Functor'void.operator__'at'AP_Mission'_mission_complete_fn
+  AP_Mission.start -> AP_Mission.advance_current_nav_cmd AP_Mission.complete
+  AP_Mission.start_command.body -> AP_Mission.start_command_do_aux_function Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_start_fn
+  AP_Mission.start_command -> AP_Mission.start_command.body
+  RC_Channel.run_aux_function.body -> RC_Channel_Copter.do_aux_function
+  RC_Channel.run_aux_function -> RC_Channel.run_aux_function.body
+  RC_Channel_Copter.mode_switch_changed.body -> Copter.set_mode
+  RC_Channel_Copter.mode_switch_changed -> RC_Channel_Copter.mode_switch_changed.body
+  Copter.set_mode_land_with_pause -> Copter.set_mode
+  Copter.set_mode_RTL_or_land_with_pause -> Copter.set_mode Copter.set_mode_land_with_pause
+  AP_Mission.start_command_do_aux_function -> RC_Channels.run_aux_function
+  RC_Channel_Copter.do_aux_function.body -> Copter.set_mode RC_Channel_Copter.do_aux_function_change_mode
+  RC_Channel_Copter.do_aux_function -> RC_Channel_Copter.do_aux_function.body
+  RC_Channels.run_aux_function -> RC_Channel.run_aux_function
+  RC_Channel_Copter.do_aux_function_change_mode -> Copter.set_mode RC_Channels.reset_mode_switch
+  Copter.failsafe_ekf_event.body -> Copter.set_mode Copter.set_mode_land_with_pause
+  Copter.failsafe_ekf_event -> Copter.failsafe_ekf_event.body
+  Copter.failsafe_terrain_on_event.body -> Copter.set_mode_RTL_or_land_with_pause
+  Copter.failsafe_terrain_on_event -> Copter.failsafe_terrain_on_event.body
+  ModeAuto.start_command -> ModeAuto.do_RTL ModeAuto.do_circle ModeAuto.do_land ModeAuto.do_loiter_time ModeAuto.do_loiter_to_alt ModeAuto.do_loiter_unlimited ModeAuto.do_nav_attitude_time ModeAuto.do_nav_guided_enable ModeAuto.do_nav_wp ModeAuto.do_spline_wp ModeAuto.do_takeoff
+  ModeAuto.exit_mission -> Mode.set_mode ModeAuto.loiter_start
+  ModeAuto.do_takeoff -> ModeAuto.takeoff_start
+  ModeAuto.do_nav_wp.body -> Copter.failsafe_terrain_on_event ModeAuto.wp_start
+  ModeAuto.do_nav_wp -> ModeAuto.do_nav_wp.body
+  ModeAuto.do_land.body -> Copter.failsafe_terrain_on_event ModeAuto.land_start ModeAuto.wp_start
+  ModeAuto.do_land -> ModeAuto.do_land.body
+  ModeAuto.do_loiter_unlimited.body -> Copter.failsafe_terrain_on_event ModeAuto.wp_start
+  ModeAuto.do_loiter_unlimited -> ModeAuto.do_loiter_unlimited.body
+  ModeAuto.do_circle.body -> Copter.failsafe_terrain_on_event ModeAuto.circle_movetoedge_start
+  ModeAuto.do_circle -> ModeAuto.do_circle.body
+  ModeAuto.do_loiter_time -> ModeAuto.do_loiter_unlimited
+  ModeAuto.do_loiter_to_alt.body -> ModeAuto.do_loiter_unlimited ModeAuto.set_submode
+  ModeAuto.do_loiter_to_alt -> ModeAuto.do_loiter_to_alt.body
+  ModeAuto.do_RTL -> ModeAuto.rtl_start
+  ModeAuto.do_spline_wp.body -> Copter.failsafe_terrain_on_event ModeAuto.set_submode
+  ModeAuto.do_spline_wp -> ModeAuto.do_spline_wp.body
+  ModeAuto.do_nav_guided_enable -> ModeAuto.nav_guided_start
+  ModeAuto.do_nav_attitude_time -> ModeAuto.set_submode
+  ModeAuto.loiter_start.body -> ModeAuto.set_submode
+  ModeAuto.loiter_start -> ModeAuto.loiter_start.body
+  ModeAuto.takeoff_start.body -> ModeAuto.set_submode
+  ModeAuto.takeoff_start -> ModeAuto.takeoff_start.body
+  ModeAuto.wp_start.body -> ModeAuto.set_submode
+  ModeAuto.wp_start -> ModeAuto.wp_start.body
+  ModeAuto.land_start -> ModeAuto.set_submode
+  ModeAuto.circle_movetoedge_start.body -> Copter.failsafe_terrain_on_event ModeAuto.set_submode
+  ModeAuto.circle_movetoedge_start -> ModeAuto.circle_movetoedge_start.body
+  ModeAuto.set_submode -> Copter.failsafe_ekf_recheck
+  ModeAuto.rtl_start -> ModeAuto.set_submode
+  ModeAuto.nav_guided_start -> ModeAuto.set_submode
+  Copter.failsafe_ekf_recheck -> Copter.failsafe_ekf_event
+  fnptr'0'at'AP_Mission'_mission_complete_fn -> ModeAuto.exit_mission
+  Functor'void.operator__'at'AP_Mission'_mission_complete_fn -> fnptr'0'at'AP_Mission'_mission_complete_fn
+  fnptr'3'at'AP_Mission'_cmd_start_fn -> ModeAuto.start_command
+  Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_start_fn -> fnptr'3'at'AP_Mission'_cmd_start_fn
+
+component 2: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_by_header_group.body -> AP_Param.find_by_header_group
+  AP_Param.find_by_header_group -> AP_Param.find_by_header_group.body
+
+component 3: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_var_info_group.body -> AP_Param.find_var_info_group
+  AP_Param.find_var_info_group -> AP_Param.find_var_info_group.body
+
+component 4: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.next_group.body -> AP_Param.next_group
+  AP_Param.next_group -> AP_Param.next_group.body
+
+component 5: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_group.body -> AP_Param.find_group
+  AP_Param.find_group -> AP_Param.find_group.body
+
+component 6: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.find_key_by_pointer_group.body -> AP_Param.find_key_by_pointer_group
+  AP_Param.find_key_by_pointer_group -> AP_Param.find_key_by_pointer_group.body
+
+component 7: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (2 calls inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 8; depth max(4n, 64) = 64
+  AP_Param.load_object_from_eeprom.body -> AP_Param.load_object_from_eeprom
+  AP_Param.load_object_from_eeprom -> AP_Param.load_object_from_eeprom.body
+
+component 8: 2 definitions, 2 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): 2 functions: a chain of calls in which no function of the component is active more than twice at once has at most 4 calls inside it (the source's bound, README.md); depth max(4n, 64) = 64
+  Copter.set_land_complete -> AP_Arming_Copter.disarm
+  AP_Arming_Copter.disarm -> Copter.set_land_complete
+
+component 9: 1 definitions, 1 edges inside
+  depth 64 (`f'rec`, structural recursion on the depth; entry `f` passes 64): a walk of the parameter tables: one level of recursion (1 call inside the component) per nesting level of the tables, which nest 4 levels from Copter::var_info (computed from the image); 4 levels need 4; depth max(4n, 64) = 64
+  AP_Param.check_group_info -> AP_Param.check_group_info
+
+component 10: 1 definitions, 1 edges inside
+  structural recursion on its argument of an inductive type (a `def`)
+  worldOutputs'ctext -> worldOutputs'ctext
+
+# calls of a Functor's operator(): the dispatcher of each call site (per-site dispatch)
+Functor<void>::operator() in AP_Scheduler::run: Functor'void.operator__'at'AP_Scheduler_Task'function, 34 of 37 targets (AP_Scheduler::Task::function)
+Functor<void, float *, unsigned char>::operator() in AP_MotorsMatrix::thrust_compensation: the full dispatcher (the Functor's values are not established)
+Functor<void>::operator() in AP_Mission::complete: Functor'void.operator__'at'AP_Mission'_mission_complete_fn, 1 of 37 targets (AP_Mission::_mission_complete_fn)
+Functor<bool, const AP_Mission::Mission_Command &>::operator() in AP_Mission::start_command: Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_start_fn, 1 of 2 targets (AP_Mission::_cmd_start_fn)
+Functor<bool, const AP_Mission::Mission_Command &>::operator() in AP_Mission::start_command: Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_start_fn, 1 of 2 targets (AP_Mission::_cmd_start_fn)
+Functor<bool, const AP_Mission::Mission_Command &>::operator() in AP_Mission::start_command: Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_start_fn, 1 of 2 targets (AP_Mission::_cmd_start_fn)
+Functor<void, const char *, const signed char>::operator() in AP_BattMonitor::check_failsafes: Functor'void_const_char_const_signed_char.operator__'at'AP_BattMonitor'_battery_failsafe_handler_fn, 1 of 1 targets (AP_BattMonitor::_battery_failsafe_handler_fn)
+Functor<bool, const AP_Mission::Mission_Command &>::operator() in AP_Mission::verify_command: Functor'bool_const_AP_Mission_Mission_Command.operator__'at'AP_Mission'_cmd_verify_fn, 1 of 2 targets (AP_Mission::_cmd_verify_fn)
+
+# loops: function, line, C loop, form, detail
+AP_Param::setup_sketch_defaults	1572	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_var_info	325	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::setup_object_defaults	1528	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_all	1600	while	fuel	a `while` loop
+AP_Param::load	1374	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::next	1921	for	fuel	a `for` without an initialization, condition or increment
+AP_Param::next_scalar	1961	while	fuel	a `while` loop
+AP_Param::find_by_name	1006	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::find	941	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_by_index	994	for	fuel	a `for` whose counter is not declared by the loop
+AP_Param::count_parameters	2765	while	fuel	a `while` loop
+AP_Param::count_parameters	2773	for	fuel	a `for` whose counter is not an integer
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::save_sync	None	do	once	`do ... while (0)`
+AP_Param::find_key_by_pointer	1072	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::load_object_from_eeprom	None	do	once	`do ... while (0)`
+AP_Param::load_object_from_eeprom	1715	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::load_object_from_eeprom	1727	while	fuel	a `while` loop
+AP_Param::AP_Param	267	for	fuel	a `for` whose counter is not declared by the loop
+StorageAccess::StorageAccess	127	for	range	[0:15]
+AP_Param::find_by_header	515	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::scan	788	while	fuel	a `while` loop
+SRV_Channels::SRV_Channels	353	for	range	[0:32]
+GCS::update_receive	2797	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::update_send	2770	range-for	fuel	a range `for` (iterators)
+GCS::update_send	2780	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+GCS::update_send	2783	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::setup_uarts	2872	for	range	[1:255]
+GCS::send_message	2732	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Vehicle::setup	None	do	once	`do ... while (0)`
+AP_Param::save	1283	while	fuel	a `while` loop
+AP_Param::get_default_value	2700	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_group_info	242	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::duplicate_key	288	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+AP_Param::get_default_value	2687	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::save_io_handler	1306	while	fuel	a `while` loop
+StorageAccess::read_block	155	for	range	[0:15]
+AP_Param::find_var_info	622	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::check_default	2968	for	fuel	a `for` whose counter is not an integer
+AP_Param::next_group	1803	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::copy_name_info	853	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_group	879	for	fuel	a `for` whose condition is not `i < bound`
+AP_Param::find_key_by_pointer_group	1034	for	fuel	a `for` whose condition is not `i < bound`
+AP_HAL::Storage::erase	12	for	fuel	a `for` whose increment is not `i++`
+AP_Param::add_default	3010	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::add_default	3018	for	fuel	a `for` whose counter is not an integer
+AP_Param::find_by_header_group	469	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::update_receive	1944	for	range	[0:nbytes.toNat]
+GCS_MAVLINK::update_send	1591	while	fuel	a `while` loop
+GCS::service_statustext	2641	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+GCS::service_statustext	2644	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission::init_jump_tracking	2453	for	range	[0:100]
+AP_Scheduler::init	151	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Scheduler::init	159	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_SerialManager::init	451	for	range	[1:8]
+AP_Param::find_var_info_group	559	for	fuel	a `for` whose condition is not `i < bound`
+StorageAccess::write_block	206	for	fuel	a `for` whose counter does not start at a constant or an unassigned local
+StorageAccess::write_block	213	for	range	[0:15]
+GCS::send_to_active_channels	327	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::configured_in_defaults_file	1446	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+mavlink_frame_char_buffer	733	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::initialise_message_intervals_from_streamrates	7308	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::deferred_message_to_send_index	1404	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+Bitmask<102>::first_set	146	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+Bitmask<102>::count	138	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::find_next_bucket_to_send	1294	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::service_statustext	2694	for	fuel	a `for` without an initialization, condition or increment
+GCS::StatusTextQueue::prune	2661	for	fuel	a `for` without an initialization, condition or increment
+ByteBuffer::write	106	for	range	[0:n_vec.toNat]
+AP_Param::flush	1326	while	fuel	a `while` loop
+GCS_MAVLINK::init	214	for	range	[0:3]
+AP_Param::convert_g2_objects	2186	for	range	[0:num_conversions.toNat]
+AP_Param::convert_toplevel_objects	2194	for	range	[0:num_conversions.toNat]
+AP_Param::convert_old_parameters_scaled	2086	for	range	[0:table_size.toNat]
+AP::PerfInfo::allocate_task_info	None	do	once	`do ... while (0)`
+AP_SerialManager::convert_parameters	596	range-for	fuel	a range `for` (iterators)
+AP_SerialManager::set_options	None	do	once	`do ... while (0)`
+AP_BattMonitor::init	608	for	range	[0:9]
+RC_Channels::init	58	for	range	[0:16]
+Copter::esc_calibration_startup_check	20	while	fuel	a `while` loop
+Copter::esc_calibration_startup_check	46	while	fuel	a `while` loop
+AP_Scheduler::run	199	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Scheduler::run	None	do	once	`do ... while (0)`
+AP_BoardConfig::board_init_safety	46	while	fuel	a `while` loop
+ByteBuffer::peekbytes	191	for	range	[0:n_vec.toNat]
+mavlink_get_msg_entry	590	while	fuel	a `while` loop
+GCS_MAVLINK::initialise_message_intervals_for_stream	7098	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::initialise_message_intervals_for_stream	7105	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK_Copter::try_send_message	295	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::requesting_mission_items	823	range-for	fuel	a range `for` (iterators)
+ObjectArray<GCS::statustext_t>::remove	569	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::statustext_send_channel_mask	290	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::send_textv	2528	do	once	`do ... while (0)`
+GCS::send_textv	2564	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::find_top_level_key_by_pointer	1099	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Param::convert_old_parameter	None	do	once	`do ... while (0)`
+AP_Param::convert_old_parameter	None	do	once	`do ... while (0)`
+RC_Channels::find_channel_for_option	2111	for	range	[0:16]
+RC_Channels::init_aux_all	244	for	range	[0:16]
+SRV_Channels::enable_aux_servos	259	for	range	[0:32]
+AP_MotorsMatrix::set_update_rate	122	for	range	[0:12]
+SRV_Channels::update_aux_servo_function	229	for	range	[0:190]
+SRV_Channels::update_aux_servo_function	235	for	range	[0:32]
+AP_MotorsMatrix::get_motor_mask	191	for	range	[0:12]
+Copter::esc_calibration_passthrough	86	while	fuel	a `while` loop
+Copter::esc_calibration_auto	123	while	fuel	a `while` loop
+Copter::esc_calibration_auto	132	while	fuel	a `while` loop
+ModeAuto::init	None	do	once	`do ... while (0)`
+_mav_trim_payload	117	while	fuel	a `while` loop
+crc_calculate	69	while	fuel	a `while` loop
+crc_accumulate_buffer	88	while	fuel	a `while` loop
+MAVLink_routing::forward	218	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+MAVLink_routing::learn_route	385	for	fuel	a `for` whose counter is not declared by the loop
+MAVLink_routing::handle_heartbeat	432	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+MAVLink_routing::handle_heartbeat	444	for	range	[0:16]
+GCS_MAVLINK::handle_message	4285	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::mavlink_id_to_ap_message_id	1212	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::set_ap_message_interval	1754	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK_Copter::send_wind	None	do	once	`do ... while (0)`
+ObjectArray<GCS::statustext_t>::push_force	None	do	once	`do ... while (0)`
+AP_BoardConfig::throw_error	560	while	fuel	a `while` loop
+AP_Param::convert_old_parameters_scaled	2105	for	range	[0:table_size.toNat]
+AP_MotorsMatrix::setup_motors	1294	for	range	[0:12]
+AP_Motors::rc_set_freq	179	for	range	[0:16]
+AP_Motors::motor_mask_to_srv_channel_mask	205	for	range	[0:32]
+RC_Channels::read_input	105	for	range	[0:16]
+AP_Arming::rc_checks_copter_sub	2078	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Arming::rc_calibration_checks	899	for	range	[0:16]
+Copter::esc_calibration_setup	171	while	fuel	a `while` loop
+AP_MotorsMulticopter::set_throttle_passthrough_for_esc_calibration	897	for	range	[0:12]
+AP_MotorsMulticopter::output_logic	636	switch	once	a `switch` with a nested `break`
+AP_MotorsMulticopter::output_logic	692	switch	once	a `switch` with a nested `break`
+AP_MotorsMatrix::output_armed_stabilizing	278	for	range	[0:12]
+AP_MotorsMatrix::output_armed_stabilizing	337	for	range	[0:12]
+AP_MotorsMatrix::output_armed_stabilizing	393	for	range	[0:12]
+AP_MotorsMatrix::output_to_motors	148	switch	once	a `switch` with a nested `break`
+AP_MotorsMatrix::output_to_motors	151	for	range	[0:12]
+AP_MotorsMatrix::output_to_motors	160	for	range	[0:12]
+AP_MotorsMatrix::output_to_motors	160	for	range	[0:12]
+AP_MotorsMatrix::output_to_motors	170	for	range	[0:12]
+AP_MotorsMatrix::output_to_motors	179	for	range	[0:12]
+AP_Vehicle::block_GCS_mode_change	1237	for	range	[0:mode_list_length.toNat]
+AP_Mission::jump_to_closest_mission_leg	2615	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission_ChangeDetector::check_for_mission_change	36	while	fuel	a `while` loop
+fill_nanf	446	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK_Copter::sane_vel_or_acc_vector	857	for	range	[0:3]
+Location::Location	None	do	once	`do ... while (0)`
+GCS_MAVLINK::handle_common_mission_message	4650	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::handle_request_data_stream	149	for	range	[0:10]
+GCS_MAVLINK::get_deferred_message_index	1391	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::queued_param_send	78	while	fuel	a `while` loop
+GCS_MAVLINK::send_global_position_int	None	do	once	`do ... while (0)`
+GCS_MAVLINK::try_send_mission_message	5934	switch	once	a `switch` with a nested `break`
+GCS_MAVLINK::send_battery_status	434	for	range	[0:9]
+GCS_MAVLINK::send_servo_output_raw	3417	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK_Copter::send_pid_tuning	237	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::send_vfr_hud	None	do	once	`do ... while (0)`
+print_vprintf	82	for	fuel	a `for` without an initialization, condition or increment
+print_vprintf	86	for	fuel	a `for` without an initialization, condition or increment
+print_vprintf	107	do	fuel	a `do ... while` loop
+print_vprintf	107	do	once	`do ... while (0)`
+print_vprintf	533	do	once	`do ... while (0)`
+print_vprintf	178	do	once	`do ... while (0)`
+print_vprintf	224	do	fuel	a `do ... while` loop
+print_vprintf	238	while	fuel	a `while` loop
+print_vprintf	262	while	fuel	a `while` loop
+print_vprintf	287	while	fuel	a `while` loop
+print_vprintf	296	while	fuel	a `while` loop
+print_vprintf	306	do	fuel	a `do ... while` loop
+print_vprintf	333	do	fuel	a `do ... while` loop
+print_vprintf	346	for	fuel	a `for` whose counter is not declared by the loop
+print_vprintf	393	do	once	`do ... while (0)`
+print_vprintf	362	switch	once	a `switch` with a nested `break`
+print_vprintf	379	while	fuel	a `while` loop
+print_vprintf	385	while	fuel	a `while` loop
+print_vprintf	444	do	once	`do ... while (0)`
+print_vprintf	499	while	fuel	a `while` loop
+print_vprintf	523	while	fuel	a `while` loop
+print_vprintf	528	do	fuel	a `do ... while` loop
+print_vprintf	535	while	fuel	a `while` loop
+AP_MotorsMatrix::setup_quad_matrix	581	switch	once	a `switch` with a nested `break`
+AP_MotorsMatrix::normalise_rpy_factors	1362	for	range	[0:12]
+AP_MotorsMatrix::normalise_rpy_factors	1372	for	range	[0:12]
+SRV_Channels::set_range	877	for	range	[0:32]
+SRV_Channels::set_angle	867	for	range	[0:32]
+SRV_Channels::enable_by_mask	342	for	range	[0:32]
+SRV_Channels::set_output_pwm	358	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission::reset_wp_history	3138	for	range	[0:7]
+AP_MotorsMatrix::check_for_failed_motor	419	for	range	[0:12]
+AP_MotorsMatrix::check_for_failed_motor	428	for	range	[0:12]
+AP_Mission::distance_to_mission_leg	2807	for	range	[0:100]
+AP_Mission::distance_to_mission_leg	2871	do	once	`do ... while (0)`
+AP_Mission::distance_to_mission_leg	2813	for	fuel	a `for` without an initialization, condition or increment
+AP_Mission::distance_to_mission_leg	2815	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission::distance_to_mission_leg	2872	for	range	[0:100]
+AP_Mission::set_current_cmd	664	while	fuel	a `while` loop
+AP_Mission::get_landing_sequence_start	2543	for	range	[1:count.toNat]
+AP_Mission::is_takeoff_next	199	for	fuel	a `for` whose increment is not `i++`
+AP_Mission::get_next_nav_cmd	566	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::send_parameter_async_replies	475	while	fuel	a `while` loop
+GCS_MAVLINK::send_battery_status	331	for	range	[0:4]
+GCS_MAVLINK::send_battery_status	346	for	range	[0:10]
+GCS_MAVLINK::send_battery_status	352	for	range	[0:4]
+GCS_MAVLINK::send_battery_status	361	for	range	[0:10]
+GCS_MAVLINK::send_battery_status	366	for	range	[0:4]
+GCS_MAVLINK::send_battery_status	377	for	range	[0:10]
+GCS_MAVLINK::send_battery_status	386	for	range	[0:4]
+RC_Channels::get_radio_in	81	for	range	[0:read_channels.toNat]
+AP_BattMonitor::healthy	1262	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+ftoa_engine	113	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+ftoa_engine	219	do	once	`do ... while (0)`
+ftoa_engine	149	do	fuel	a `do ... while` loop
+ftoa_engine	157	while	fuel	a `while` loop
+ftoa_engine	158	while	fuel	a `while` loop
+ftoa_engine	208	for	fuel	a `for` whose counter is not declared by the loop
+ftoa_engine	221	while	fuel	a `while` loop
+ulltoa_invert	81	do	fuel	a `do ... while` loop
+ulltoa_invert	89	do	fuel	a `do ... while` loop
+ulltoa_invert	109	do	fuel	a `do ... while` loop
+ultoa_invert	36	do	fuel	a `do ... while` loop
+ultoa_invert	44	do	fuel	a `do ... while` loop
+ultoa_invert	63	do	fuel	a `do ... while` loop
+AP_MotorsMatrix::add_motors	564	for	range	[0:num_motors.toNat]
+AP_MotorsMatrix::add_motors_raw	571	for	range	[0:num_motors.toNat]
+AP_Arming_Copter::arm	707	for	range	[0:11]
+AP_Arming_Copter::arm	None	do	once	`do ... while (0)`
+RC_Channels::has_active_overrides	207	for	range	[0:16]
+RC_Channels::clear_overrides	176	for	range	[0:16]
+Copter::do_failsafe_action	488	switch	once	a `switch` with a nested `break`
+AP_Mission::get_next_cmd	2300	while	fuel	a `while` loop
+AP_Mission::get_next_cmd	2355	for	range	[0:100]
+AP_Mission::read_cmd_from_storage	None	do	once	`do ... while (0)`
+AP_Mission::advance_current_nav_cmd	2188	while	fuel	a `while` loop
+AP_Mission::advance_current_nav_cmd	2217	for	range	[0:6]
+AP_Mission::calc_rewind_pos	3174	for	fuel	a `for` whose increment is not `i++`
+SCurve::set_origin_speed_max	477	for	range	[0:8]
+GCS_MAVLINK::mav_frame_for_command_long	5290	range-for	fuel	a range `for` (iterators)
+FilterWithBuffer<float, 7>::reset	94	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission::get_index_of_jump_tag	2423	for	range	[1:count.toNat]
+AP_Mission::get_jump_times_run	2469	for	range	[0:100]
+AP_Mission::increment_jump_times_run	2495	for	range	[0:100]
+SCurve::fill_empty_segments	1186	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+SCurve::extend_const_vel_to	1177	for	range	[15:23]
+SCurve::valid	1218	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+SCurve::debug	1254	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS_MAVLINK::send_banner	4755	for	range	[0:6]
+RC_Channel_Copter::do_aux_function	187	switch	once	a `switch` with a nested `break`
+SCurve::add_segments	917	for	range	[8:15]
+AP_Mission::mission_cmd_to_mavlink_int	1712	switch	once	a `switch` with a nested `break`
+RC_Channel_Copter::do_aux_function_change_mode	166	switch	once	a `switch` with a nested `break`
+RC_Channel::do_aux_function	1508	switch	once	a `switch` with a nested `break`
+RC_Channel::do_aux_function	1675	switch	once	a `switch` with a nested `break`
+AP_Arming_Copter::mandatory_position_checks	505	range-for	fuel	a range `for` (iterators)
+GCS_MAVLINK::get_default_interval_for_ap_message	7348	for	fuel	a `for` whose condition is not `i < bound`
+GCS_MAVLINK::get_default_interval_for_ap_message	7350	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+RC_Channel::do_aux_function_rc_override_enable	1385	switch	once	a `switch` with a nested `break`
+AP_BattMonitor::set_powered_state_to_all	1242	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_MotorsMulticopter::arming_checks	973	for	range	[0:12]
+AP_Arming::rc_arm_checks	844	range-for	fuel	a range `for` (iterators)
+SCurve::set_speed_max	302	for	range	[1:8]
+SCurve::set_speed_max	324	for	range	[1:15]
+DefaultIntervalsFromFiles::get_interval_for_ap_message_id	7155	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_SerialManager::pre_arm_checks	851	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+RC_Channel::get_aux_switch_pos	None	do	once	`do ... while (0)`
+AC_AttitudeControl::pre_arm_checks	1482	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AC_AttitudeControl::pre_arm_checks	1499	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Arming_Copter::barometer_checks	None	do	once	`do ... while (0)`
+AP_Arming::mission_checks	965	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Arming::mission_checks	1001	for	range	[1:num_commands.toNat]
+AP_Arming::servo_checks	1062	for	range	[0:32]
+AP_Arming::can_checks	1339	for	range	[0:num_drivers.toNat]
+AP_Arming::can_checks	1340	switch	once	a `switch` with a nested `break`
+AP_Arming::can_checks	1372	for	fuel	a `for` whose increment is not `i++`
+AP_Arming::can_checks	1372	for	fuel	a `for` whose increment is not `i++`
+AP_Arming::can_checks	1372	for	fuel	a `for` whose increment is not `i++`
+SCurve::get_jerk_accel_vel_pos_at_time	800	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Arming::gps_checks	716	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_BattMonitor::arming_checks	1104	for	range	[0:9]
+RC_Channels::duplicate_options_exist	2128	for	range	[0:16]
+AP_Mission::contains_item	3080	for	range	[1:count.toNat]
+AP_InternalError::errors_as_string	89	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Mission::calculate_contains_terrain_alt_items	3120	for	range	[1:count.toNat]
+Copter::read_inertia	None	do	once	`do ... while (0)`
+RC_Channels::read_aux_all	227	for	range	[0:16]
+ModeAuto::run	None	do	once	`do ... while (0)`
+Copter::update_land_detector	None	do	once	`do ... while (0)`
+AP_BattMonitor::read	787	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+SRV_Channels::calc_pwm	404	for	fuel	a `for` whose counter is not an integer
+SRV_Channels::calc_pwm	414	for	range	[0:32]
+SRV_Channels::output_ch_all	115	for	range	[0:max_chan.toNat]
+GCS::send_mission_item_reached_message	2806	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_BattMonitor::check_failsafes	936	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_BattMonitor::check_failsafes	977	while	fuel	a `while` loop
+AP_BattMonitor::checkPoweringOff	1138	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+RC_Channel::string_for_aux_function	970	range-for	fuel	a range `for` (iterators)
+Mode::AutoYaw::yaw_rad	236	switch	once	a `switch` with a nested `break`
+SlewLimiter::modifier	114	for	range	[0:2]
+AP_MotorsMatrix::_output_test_seq	470	for	range	[0:12]
+ModeAuto::get_alt_above_ground_m	2467	switch	once	a `switch` with a nested `break`
+MAVLink_routing::send_to_components	286	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+AP_Notify::update	420	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+Copter::get_available_mode_enabled_mask	299	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)
+GCS::available_modes_changed	757	for	fuel	a `for` whose bound is not a constant or an unassigned local (e.g. a member read from memory)

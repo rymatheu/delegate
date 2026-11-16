@@ -141,8 +141,8 @@ def effects (x : Binary32) (n : Int32) : Binary32 := Id.run do
     let m : Int32 := (10 : Int32) - (3 : Int32) * (Nat.toInt32 m')
     acc := acc + Int32.toBinary32 m * (Binary32.ofBits 0x3e800000 /- 0.25f -/)
   for s' in [0:3] do
-    let s : USize := Nat.toUSize s'
-    acc := acc + kWeights[USize.toNat s]!
+    let s : UInt64 := Nat.toUInt64 s'
+    acc := acc + kWeights[UInt64.toNat s]!
   for w' in [0:4] do
     let w : UInt32 := (0 : UInt32) + (2 : UInt32) * (Nat.toUInt32 w')
     if w == (4 : UInt32) then

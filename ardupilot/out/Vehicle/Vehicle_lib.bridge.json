@@ -15,7 +15,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::add_trim",
@@ -57,7 +58,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::airspeed_vector_TAS",
@@ -108,7 +110,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::body_to_earth2D",
@@ -167,7 +170,8 @@
    },
    "ref": false
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::body_to_earth2D_p",
@@ -226,7 +230,8 @@
    },
    "ref": false
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::check_lane_switch",
@@ -237,7 +242,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::configured_backend_has_status",
@@ -266,7 +272,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::configured_ekf_type",
@@ -284,7 +291,8 @@
     "name": "AP_AHRS::EKFType"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::cos_pitch",
@@ -302,7 +310,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::cos_roll",
@@ -320,7 +329,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::cos_yaw",
@@ -338,7 +348,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::create_view",
@@ -377,7 +388,8 @@
     "name": "AP_AHRS_View"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_accel_ef",
@@ -417,7 +429,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_air_density_ratio",
@@ -435,7 +448,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_control_gain_scaler_XY",
@@ -453,7 +467,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_control_gain_scaler_Z",
@@ -471,7 +486,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_control_ground_speed_limit_ms",
@@ -489,7 +505,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_error_rp",
@@ -507,7 +524,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_error_yaw",
@@ -525,7 +543,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_filter_status_for_configured_backend",
@@ -695,7 +714,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_gyro",
@@ -735,7 +755,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_gyro_drift",
@@ -775,7 +796,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_home",
@@ -850,7 +872,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_innovations",
@@ -987,7 +1010,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_last_attitude_reset_count",
@@ -1005,7 +1029,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_location",
@@ -1091,7 +1116,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_origin",
@@ -1177,7 +1203,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_pitch_rad",
@@ -1195,7 +1222,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_pos_vel_uncertainty",
@@ -1247,7 +1275,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_quaternion",
@@ -1305,7 +1334,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_relative_position_D_home",
@@ -1328,7 +1358,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_relative_position_D_origin_float",
@@ -1358,7 +1389,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_relative_position_NED_origin",
@@ -1409,7 +1441,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_relative_position_NED_origin_float",
@@ -1460,7 +1493,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_relative_position_NE_origin_float",
@@ -1504,7 +1538,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_roll_rad",
@@ -1522,7 +1557,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_rotation_body_to_ned",
@@ -1604,7 +1640,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_secondary_estimates",
@@ -2420,7 +2457,8 @@
     ]
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_variances_for_configured_backend",
@@ -2515,7 +2553,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_velocity_D",
@@ -2555,7 +2594,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_velocity_NED",
@@ -2606,7 +2646,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_vert_pos_rate_D",
@@ -2636,7 +2677,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_wind",
@@ -2687,7 +2729,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_yaw_deg",
@@ -2705,7 +2748,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_yaw_rad",
@@ -2723,7 +2767,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::get_yaw_reset_count",
@@ -2741,7 +2786,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::groundspeed",
@@ -2759,7 +2805,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::have_inertial_nav",
@@ -2777,7 +2824,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::healthy",
@@ -2795,7 +2843,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::home_is_locked",
@@ -2813,7 +2862,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::home_is_set",
@@ -2831,7 +2881,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::init",
@@ -2842,7 +2893,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::initialised",
@@ -2860,7 +2912,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::is_vibration_affected",
@@ -2878,7 +2931,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::lock_home",
@@ -2889,7 +2943,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::pre_arm_check",
@@ -2938,7 +2993,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::request_yaw_reset",
@@ -2949,7 +3005,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::reset",
@@ -2960,7 +3017,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::resetHeightDatum",
@@ -2971,7 +3029,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::reset_configured_backend",
@@ -2989,7 +3048,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::send_ekf_status_report",
@@ -3703,7 +3763,8 @@
     "link_chan",
     "GCS_MAVLINK::get_chan"
    ]
-  ]
+  ],
+  "drain": true
  },
  {
   "q": "AP_AHRS::set_home",
@@ -3789,7 +3850,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_AHRS::set_posvelyaw_source_set",
@@ -3811,7 +3873,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::set_terrain_hgt_stable",
@@ -3833,7 +3896,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::set_vehicle_class",
@@ -3855,7 +3919,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::sin_yaw",
@@ -3873,7 +3938,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::update",
@@ -3900,7 +3966,8 @@
     "time_flying_ms",
     "AP_Vehicle::get_time_flying_ms"
    ]
-  ]
+  ],
+  "drain": true
  },
  {
   "q": "AP_AHRS::use_compass",
@@ -3918,7 +3985,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS::using_noncompass_for_yaw",
@@ -3936,7 +4004,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::cos_pitch",
@@ -3954,7 +4023,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::cos_roll",
@@ -3972,7 +4042,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::cos_yaw",
@@ -3990,7 +4061,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::get_accel_ef",
@@ -4030,7 +4102,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::get_gyro_latest",
@@ -4070,7 +4143,8 @@
    },
    "ref": false
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::get_position_D_reset_count",
@@ -4088,7 +4162,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::get_position_NE_reset_count",
@@ -4106,7 +4181,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::get_quat_body_to_ned",
@@ -4157,7 +4233,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_AHRS_View::sin_yaw",
@@ -4175,7 +4252,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::all_healthy",
@@ -4193,7 +4271,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::arming_checks",
@@ -4232,7 +4311,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_Baro::calibrate",
@@ -4254,7 +4334,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_Baro::get_altitude",
@@ -4272,7 +4353,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_altitude_AMSL",
@@ -4290,7 +4372,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_ground_pressure",
@@ -4308,7 +4391,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_pressure",
@@ -4326,7 +4410,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_pressure",
@@ -4355,7 +4440,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_temperature",
@@ -4373,7 +4459,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::get_temperature",
@@ -4402,7 +4489,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::init",
@@ -4413,7 +4501,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_Baro::num_instances",
@@ -4431,7 +4520,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::set_log_baro_bit",
@@ -4453,7 +4543,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_Baro::update",
@@ -4464,7 +4555,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_Declination::get_earth_field_ga",
@@ -4572,7 +4664,8 @@
    },
    "ref": false
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::all_consistent",
@@ -4602,7 +4695,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::broadcast_first_configuration_failure_reason",
@@ -4613,7 +4707,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_GPS::first_unconfigured_gps",
@@ -4643,7 +4738,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::force_disable",
@@ -4665,7 +4761,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::get_auto_switch_type",
@@ -4683,7 +4780,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::get_hdop",
@@ -4701,7 +4799,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::get_type",
@@ -4730,7 +4829,8 @@
     "name": "AP_GPS::GPS_Type"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::get_undulation",
@@ -4760,7 +4860,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::ground_speed",
@@ -4778,7 +4879,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::handle_msg",
@@ -4902,7 +5004,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::init",
@@ -4918,7 +5021,8 @@
     "pre_convert_parameters",
     "AP_GPS::convert_parameters"
    ]
-  ]
+  ],
+  "drain": false
  },
  {
   "q": "AP_GPS::is_healthy",
@@ -4936,7 +5040,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::is_healthy",
@@ -4965,7 +5070,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::location",
@@ -5040,7 +5146,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::num_sensors",
@@ -5058,7 +5165,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::pre_arm_checks",
@@ -5097,7 +5205,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_GPS::prepare_for_arming",
@@ -5115,7 +5224,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::primary_sensor",
@@ -5133,7 +5243,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::send_mavlink_gps2_raw",
@@ -5155,7 +5266,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_GPS::send_mavlink_gps_raw",
@@ -5177,7 +5289,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_GPS::set_force_disable_yaw",
@@ -5199,7 +5312,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::set_log_gps_bit",
@@ -5221,7 +5335,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::status",
@@ -5239,7 +5354,8 @@
     "name": "AP_GPS_FixType"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::status",
@@ -5268,7 +5384,8 @@
     "name": "AP_GPS_FixType"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_GPS::update",
@@ -5279,7 +5396,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_InertialSensor::accel_cal_requires_reboot",
@@ -5297,7 +5415,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::accel_calibrated_ok_all",
@@ -5315,7 +5434,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::accels_consistent",
@@ -5344,7 +5464,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::calibrating",
@@ -5362,7 +5483,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_accel",
@@ -5402,7 +5524,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_accel",
@@ -5453,7 +5576,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_accel_clip_count",
@@ -5482,7 +5606,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_accel_count",
@@ -5500,7 +5625,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_accel_health_all",
@@ -5518,7 +5644,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_first_usable_accel",
@@ -5536,7 +5663,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_gyro",
@@ -5576,7 +5704,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_gyro",
@@ -5627,7 +5756,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_gyro_count",
@@ -5645,7 +5775,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_gyro_health_all",
@@ -5663,7 +5794,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_output_banner",
@@ -5712,7 +5844,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_InertialSensor::get_temperature",
@@ -5741,7 +5874,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::get_vibration_levels",
@@ -5781,7 +5915,8 @@
    },
    "ref": false
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::gyro_calibrated_ok_all",
@@ -5799,7 +5934,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::gyros_consistent",
@@ -5828,7 +5964,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::init",
@@ -5850,7 +5987,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_InertialSensor::periodic",
@@ -5861,7 +5999,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::pre_arm_check_gyro_backend_rate_hz",
@@ -5900,7 +6039,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_InertialSensor::set_imu_out_uart",
@@ -5922,7 +6062,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::set_log_raw_bit",
@@ -5944,7 +6085,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::temperature_cal_running",
@@ -5962,7 +6104,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_InertialSensor::update",
@@ -5973,7 +6116,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_InertialSensor::wait_for_sample",
@@ -5984,7 +6128,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "AP_RTC::get_time_utc",
@@ -6043,7 +6188,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_RTC::get_utc_usec",
@@ -6073,7 +6219,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "AP_RTC::set_utc_usec",
@@ -6105,7 +6252,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "Compass::available",
@@ -6123,7 +6271,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::configured",
@@ -6162,7 +6311,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::consistent",
@@ -6180,7 +6330,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_count",
@@ -6198,7 +6349,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_field",
@@ -6238,7 +6390,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_field",
@@ -6289,7 +6442,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_first_usable",
@@ -6307,7 +6461,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_offsets",
@@ -6347,7 +6502,8 @@
    },
    "ref": true
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::get_offsets_max",
@@ -6365,7 +6521,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::healthy",
@@ -6383,7 +6540,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::init",
@@ -6394,7 +6552,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "Compass::per_motor_calibration_end",
@@ -6405,7 +6564,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::per_motor_calibration_update",
@@ -6416,7 +6576,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::read",
@@ -6434,7 +6595,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::set_learn_type",
@@ -6466,7 +6628,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": true
  },
  {
   "q": "Compass::set_log_bit",
@@ -6488,7 +6651,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::set_throttle",
@@ -6510,7 +6674,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::set_voltage",
@@ -6532,7 +6697,8 @@
   "ret": {
    "pass": "void"
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "Compass::use_for_yaw",
@@ -6561,7 +6727,8 @@
     "name": null
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "ahrs",
@@ -6576,7 +6743,8 @@
     "name": "AP_AHRS"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "baro",
@@ -6591,7 +6759,8 @@
     "name": "AP_Baro"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "compass",
@@ -6606,7 +6775,8 @@
     "name": "Compass"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "gps",
@@ -6621,7 +6791,8 @@
     "name": "AP_GPS"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "ins",
@@ -6636,7 +6807,8 @@
     "name": "AP_InertialSensor"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "rtc",
@@ -6651,7 +6823,8 @@
     "name": "AP_RTC"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  },
  {
   "q": "sitl",
@@ -6669,6 +6842,7 @@
     "name": "SITL::SIM"
    }
   },
-  "inputs": []
+  "inputs": [],
+  "drain": false
  }
 ]

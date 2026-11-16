@@ -311,7 +311,7 @@
   "AP_SerialManager::UARTState::get_device_id": "PMem.serialDevId {this}",
   "AP_SerialManager::disable_option": "()",
   "AP_HAL::UARTDriver::option_is_set": "false",
-  "AP_HAL::UARTDriver::begin": "(discard <| PMem.hal \"AP_HAL::UARTDriver::begin\" {this} #[({0}).toUInt64])",
+  "AP_HAL::UARTDriver::begin": "(discard <| PMem.halDev \"AP_HAL::UARTDriver::begin\" {this} #[({0}).toUInt64])",
   "AP_HAL::UARTDriver::get_flow_control": "(0 : UInt32)",
   "AP_HAL::UARTDriver::set_flow_control": "()",
   "AP_Notify::update": "()",
@@ -478,7 +478,8 @@
  },
  "imports": [
   "GCSMemoryV",
-  "VehicleMemoryV"
+  "VehicleMemoryV",
+  "VehicleHal"
  ],
  "unreached": [
   "GCS_MAVLINK::handle_set_gps_global_origin",
@@ -591,6 +592,8 @@
  "_bridge_doc": "the estimator (stays in the value World ardupilot/out/Estimator/Estimator_lib.lean, reached through the bridge): every member function of these classes and these accessors is a boundary call that records its name (PMem.bridge) and gives the type's default; ardupilot/vehicle/bridge_calls.txt lists them (the API the bridge provides)",
  "memory_module": "ParamMemoryV",
  "bridge_module": "VehicleBridge",
+ "bridge_signatures": "ardupilot/out/Estimator/Estimator_lib.signatures.json",
+ "_bridge_signatures_doc": "(total definitions) the estimator World's signatures (as gen_bridge.py reads them): a bridge call is followed by worldOutputs'drain only when its World function can append output events (writes the log `o`, or has a text sink); gen_bridge.py checks every adapter against it",
  "bridge_inputs": {
   "AP_AHRS::update": [
    [
@@ -817,6 +820,15 @@
  ],
  "static_construction": true,
  "hal_hook": true,
+ "hal_callbacks": [
+  "AP_HAL::Scheduler::delay",
+  "AP_HAL::Scheduler::delay_microseconds",
+  "AP_HAL::Scheduler::delay_microseconds_boost",
+  "cpp2lean::est_mark",
+  "cpp2lean::world_events",
+  "cpp2lean::world_next"
+ ],
+ "_hal_callbacks_doc": "(total definitions, README.md \"Phase 5: total definitions\") the HAL members whose implementation calls back into the translated vehicle or steps the estimator World (lockstep.cpp's waits consume input lines, step the World and run the delay callback, the timer failsafe and the IO processes; the World's lock-step points run the vehicle's part of a step): `PMem.hal`, the replay driver's (lean/VehicleReplay.lean, `@[extern]`, opaque to the kernel). Every other HAL member is `PMem.halDev`, the devices of support/VehicleHal.lean (imported: an ordinary definition).",
  "_static_construction_doc": "Phase 5a slice 2: `static_construction` translates the C++ static construction (staticConstruct: the dynamic initializers of the statics the translation uses, in the order of copter_ref's __init_offsets (`init_order`, ardupilot/vehicle/init_order.json) and of each unit's global constructor; member objects' default constructors translated; estimator classes constructed by the World; FUNCTOR_BIND_MEMBER bound). `hal_hook`: every HAL member outside `boundary` is `PMem.hal name this #[args]`, lockstep.cpp's semantics implemented by the replay driver (lean/VehicleReplay.lean).",
  "static_refs": {
   "_doc": "(static construction) a static member named through a derived class: function:name:type -> the static",

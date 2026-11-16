@@ -13742,7 +13742,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), lat := (0 : Int32), lng := (0 : Int32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, sensor_idx := (0 : UInt8), corrected := false, have_vz := false } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), lat := (0 : Int32), lng := (0 : Int32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, sensor_idx := (0 : UInt8), corrected := false, have_vz := false } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13759,7 +13759,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), mag := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), mag := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13776,7 +13776,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), hgt := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13793,7 +13793,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), tas := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), tasVariance := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), allowFusion := false } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), tas := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), tasVariance := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), allowFusion := false } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13810,7 +13810,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), flowRadXY := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, flowRadXYcomp := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, bodyRadXYZ := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, heightOverride := (Binary32.ofBits 0x00000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), flowRadXY := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, flowRadXYcomp := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, bodyRadXYZ := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, heightOverride := (Binary32.ofBits 0x00000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13827,7 +13827,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, angRate := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), vel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), body_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, angRate := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13844,7 +13844,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), delAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), radius := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), hub_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delTime := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), delAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), radius := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), hub_offset := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delTime := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -13861,7 +13861,7 @@ def ekf_ring_buffer.init (s : State) (_size : UInt8) : State × Bool := Id.run d
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt8.toUInt64 _size))) { time_ms := (0 : UInt32), yawAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), yawAngErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), order := NavEKF3_core.rotationOrder.TAIT_BRYAN_321 } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt8.toUInt64 _size)) { time_ms := (0 : UInt32), yawAng := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), yawAngErr := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), order := NavEKF3_core.rotationOrder.TAIT_BRYAN_321 } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -14507,7 +14507,7 @@ def init_uint32_t (s : State) (size : UInt32) : State × Bool := Id.run do
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt32.toUInt64 size))) { delAng := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delVel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delAngDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), delVelDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), time_ms := (0 : UInt32), gyro_index := (0 : UInt8), accel_index := (0 : UInt8) } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt32.toUInt64 size)) { delAng := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delVel := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, delAngDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), delVelDT := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), time_ms := (0 : UInt32), gyro_index := (0 : UInt8), accel_index := (0 : UInt8) } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)
@@ -14526,7 +14526,7 @@ def init_uint32_t (s : State) (size : UInt32) : State × Bool := Id.run do
   let mut s := s
   if s.buffer'alloc then
     pure ()  -- C++ `free(buffer)`: the storage is allocated again below (--ring-buffers)
-  s := { s with buffer := Array.replicate (USize.toNat (UInt64.toUSize (UInt32.toUInt64 size))) { quat := { q1 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q2 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q3 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q4 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velocity := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, position := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
+  s := { s with buffer := Array.replicate (UInt64.toNat (UInt32.toUInt64 size)) { quat := { q1 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q2 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q3 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), q4 := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, velocity := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) }, position := { x := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), y := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/), z := (Binary64.ofBits 0x0000000000000000 /- 0.0 -/) } } }
   s := { s with buffer'alloc := true }
   if !s.buffer'alloc then
     return (s, false)

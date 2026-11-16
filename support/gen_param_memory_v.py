@@ -96,7 +96,9 @@ def wrBlock (d : UInt64) (bs : ByteArray) : M Unit := do
       wrRaw (d + k.toUInt64) (bs.get! k)
     return
   let mut k := 0
-  while k < n do
+  -- (a loop over the bytes: each iteration stores at least one; `loopFuel` keeps the definition total)
+  for _ in loopFuel do
+    if !(k < n) then break
     let a := d + k.toUInt64
     match (if inBridge a then Bridge.find a else none) with
     | some (base, i) =>
@@ -104,7 +106,8 @@ def wrBlock (d : UInt64) (bs : ByteArray) : M Unit := do
       let s ← get
       let mut bits := Bridge.get s.w i
       let mut j := k
-      while j < n && d + j.toUInt64 < fend do
+      for _ in [0:n] do     -- j < n on every iteration and grows by one: at most n iterations
+        if !(j < n && d + j.toUInt64 < fend) then break
         let sh := 8 * (d + j.toUInt64 - base)
         bits := (bits &&& ~~~((0xff : UInt64) <<< sh)) ||| ((bs.get! j).toUInt64 <<< sh)
         j := j + 1

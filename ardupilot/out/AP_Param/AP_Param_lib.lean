@@ -1483,15 +1483,364 @@ def initMem (st : ByteArray) : PMem.Mem := Id.run do
   let ((), s) := (do for (a, h) in image do PMem.place a h : PMem.M Unit).run s0
   return s
 
-mutual
+/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'signed_char_1.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI8 v
+  PMem.stI8 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<short, 2>::set : void (const short &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI16 v
+  PMem.stI16 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI32 v
+  PMem.stI32 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'float_4.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 v
+  PMem.stF32 this t'1
+  return ()
+
+/-- C++ `AP_Param::set_value : void (enum ap_var_type, void *, float)`, `AP_Param.cpp:1501-1519`. -/
+def AP_Param.set_value.body (fp : UInt64) (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
+  let mut type' := type'
+  let mut ptr' := ptr'
+  PMem.stF32 (fp + 0) value
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (1 : Int32) then
+    let t'2 ← PMem.ldF32 (fp + 0)
+    PMem.stI8 (fp + 4) (Binary32.toInt8 (t'2))
+    AP_ParamTBase'signed_char_1.set ptr' (fp + 4)
+  else if sw'1 == (2 : Int32) then
+    let t'3 ← PMem.ldF32 (fp + 0)
+    PMem.stI16 (fp + 6) (Binary32.toInt16 (t'3))
+    AP_ParamTBase'short_2.set ptr' (fp + 6)
+  else if sw'1 == (3 : Int32) then
+    let t'4 ← PMem.ldF32 (fp + 0)
+    PMem.stI32 (fp + 8) (Binary32.toInt32 (t'4))
+    AP_ParamTBase'int_3.set ptr' (fp + 8)
+  else if sw'1 == (4 : Int32) then
+    AP_ParamTBase'float_4.set ptr' (fp + 0)
+  else
+    pure ()
+  return ()
+
+def AP_Param.set_value (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
+  let fp ← PMem.enter 12
+  let r ← AP_Param.set_value.body fp type' ptr' value
+  PMem.leave fp
+  return r
+
+/-- `AP_Param.EEPROM_header.EEPROM_header` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.EEPROM_header.EEPROM_header.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param::EEPROM_header::EEPROM_header : void () noexcept`, `AP_Param.h:648-?`. -/
+def AP_Param.EEPROM_header.EEPROM_header (this : UInt64) : PMem.M Unit :=
+  pure (_root_.AP_Param_lib.AP_Param.EEPROM_header.EEPROM_header.pure' this)
+
+/-- C++ `MIN : auto (const unsigned long &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
+def MIN (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU64 one
+  let t'2 ← PMem.ldU32 two
+  let mut c'3 : UInt64 := default
+  if (decide (t'1 < (UInt32.toUInt64 (t'2)))) then
+    let t'4 ← PMem.ldU64 one
+    c'3 := t'4
+  else
+    let t'5 ← PMem.ldU32 two
+    c'3 := UInt32.toUInt64 (t'5)
+  return c'3
+
+/-- C++ `StorageAccess::write_block : bool (uint16_t, const void *, size_t) const`, `StorageManager.cpp:193-244`. -/
+def StorageAccess.write_block.body (fp : UInt64) (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
+  let mut addr := addr
+  let mut data := data
+  PMem.stU64 (fp + 0) n
+  let mut b : UInt64 := data
+  let t'1 ← PMem.ldU64 (this + 8)
+  if (t'1 != (0 : UInt64)) then
+    let t'2 ← PMem.ldU64 (this + 8)
+    let t'3 ← PMem.ldU32 (t'2 + 24)
+    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
+      return false
+    let t'4 ← PMem.ldU64 (this + 8)
+    let t'5 ← PMem.ldU32 (t'4 + 24)
+    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
+    let t'6 ← MIN (fp + 0) (fp + 8)
+    let mut n2 : UInt64 := t'6
+    let t'7 ← PMem.ldU64 (this + 8)
+    let t'8 ← PMem.ldU64 (t'7 + 16)
+    let t'9 ← PMem.memcpy (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) b n2
+    discard <| pure (t'9)
+    let mut i : UInt8 := UInt32.toUInt8 (((UInt16.toUInt32 (addr)) / (1024 : UInt32)))
+    let mut first'10 := true
+    for _ in PMem.loopFuel do
+      if !first'10 then
+        let t'11 := (i + 1)
+        i := t'11
+        pure ()
+      first'10 := false
+      if !((decide ((UInt8.toUInt64 (i)) < ((((UInt16.toUInt64 (addr)) + n2) + (UInt32.toUInt64 ((1023 : UInt32)))) / (UInt32.toUInt64 ((1024 : UInt32))))))) then break
+      let t'12 ← PMem.ldU64 (this + 8)
+      let t'13 := (t'12 + 40)
+      let t'14 ← PMem.ldU64 t'13
+      let t'15 := (t'14 ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (i))))))))
+      PMem.stU64 t'13 t'15
+    let t'16 ← PMem.ldU64 (fp + 0)
+    return (t'16 == n2)
+  for i'2'17 in [0:15] do
+    let i'2 : UInt8 := UInt8.ofNat i'2'17
+    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i'2))) * 8).toUInt64)
+    let t'18 ← PMem.ldU16 (area + 6)
+    let mut length : UInt16 := t'18
+    let t'19 ← PMem.ldU16 (area + 4)
+    let mut offset : UInt16 := t'19
+    let t'20 ← PMem.ldU32 area
+    let t'21 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'20)) != (UInt32.toInt32 (t'21))) then
+      continue
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'22 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
+      addr := t'22
+      continue
+    let t'23 ← PMem.ldU64 (fp + 0)
+    let mut count : UInt16 := UInt64.toUInt16 (t'23)
+    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'24 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
+      count := t'24
+    PMem.halWrite (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) b (UInt16.toUInt64 (count))
+    let t'25 ← PMem.ldU64 (fp + 0)
+    let t'26 := (t'25 - (UInt16.toUInt64 (count)))
+    PMem.stU64 (fp + 0) t'26
+    let t'27 ← PMem.ldU64 (fp + 0)
+    if (t'27 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
+      break
+    let t'28 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
+    b := t'28
+    let t'29 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    addr := t'29
+  let t'30 ← PMem.ldU64 (fp + 0)
+  return (t'30 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
+
+def StorageAccess.write_block (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 12
+  let r ← StorageAccess.write_block.body fp this addr data n
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::eeprom_write_check : void (const void *, uint16_t, uint8_t)`, `AP_Param.cpp:156-162`. -/
+def AP_Param.eeprom_write_check (ptr' : UInt64) (ofs : UInt16) (size : UInt8) : PMem.M Unit := do
+  let mut ptr' := ptr'
+  let mut ofs := ofs
+  let mut size := size
+  let t'1 ← StorageAccess.write_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ ofs ptr' (UInt8.toUInt64 (size))
+  discard <| pure (t'1)
+  return ()
+
+/-- `AP_Param.Param_header.Param_header` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.Param_header.Param_header.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param::Param_header::Param_header : void () noexcept`, `AP_Param.h:669-?`. -/
+def AP_Param.Param_header.Param_header (this : UInt64) : PMem.M Unit :=
+  pure (_root_.AP_Param_lib.AP_Param.Param_header.Param_header.pure' this)
+
+/-- C++ `AP_Param::set_key : void (Param_header &, uint16_t)`, `AP_Param.cpp:751-755`. -/
+def AP_Param.set_key (phdr : UInt64) (key : UInt16) : PMem.M Unit := do
+  let mut key := key
+  let t'1 := Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (key))) &&& (255 : Int32)))
+  PMem.stBits phdr 0 8 (UInt32.toUInt64 (t'1))
+  let t'2 := Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (key))) >>> (8 : Int32)))
+  PMem.stBits phdr 13 1 (UInt32.toUInt64 (t'2))
+  return ()
+
+/-- C++ `AP_Param::write_sentinel : void (uint16_t)`, `AP_Param.cpp:167-175`. -/
+def AP_Param.write_sentinel.body (fp : UInt64) (ofs : UInt16) : PMem.M Unit := do
+  let mut ofs := ofs
+  AP_Param.Param_header.Param_header (fp + 0)
+  let t'1 := UInt8.toUInt32 ((31 : UInt8))
+  PMem.stBits (fp + 0) 8 5 (UInt32.toUInt64 (t'1))
+  AP_Param.set_key (fp + 0) (511 : UInt16)
+  let t'2 := UInt8.toUInt32 ((255 : UInt8))
+  PMem.stBits (fp + 0) 14 18 (UInt32.toUInt64 (t'2))
+  AP_Param.eeprom_write_check (fp + 0) ofs (UInt64.toUInt8 ((4 : UInt64)))
+  PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
+  return ()
+
+def AP_Param.write_sentinel (ofs : UInt16) : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.write_sentinel.body fp ofs
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::erase_all : void ()`, `AP_Param.cpp:179-192`. -/
+def AP_Param.erase_all.body (fp : UInt64)  : PMem.M Unit := do
+  AP_Param.EEPROM_header.EEPROM_header (fp + 0)
+  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) (80 : UInt8)
+  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (65 : UInt8)
+  PMem.stU8 ((fp + 0) + 2) (6 : UInt8)
+  let t'1 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  PMem.stU8 ((fp + 0) + 3) t'1
+  AP_Param.eeprom_write_check (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (UInt64.toUInt8 ((4 : UInt64)))
+  AP_Param.write_sentinel (UInt64.toUInt16 ((4 : UInt64)))
+  return ()
+
+def AP_Param.erase_all  : PMem.M Unit := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.erase_all.body fp 
+  PMem.leave fp
+  return r
+
+/-- C++ `StorageAccess::read_block : bool (void *, uint16_t, size_t) const`, `StorageManager.cpp:139-186`. -/
+def StorageAccess.read_block.body (fp : UInt64) (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
+  let mut data := data
+  let mut addr := addr
+  PMem.stU64 (fp + 0) n
+  let mut b : UInt64 := data
+  let t'1 ← PMem.ldU64 (this + 8)
+  if (t'1 != (0 : UInt64)) then
+    let t'2 ← PMem.ldU64 (this + 8)
+    let t'3 ← PMem.ldU32 (t'2 + 24)
+    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
+      return false
+    let t'4 ← PMem.ldU64 (this + 8)
+    let t'5 ← PMem.ldU32 (t'4 + 24)
+    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
+    let t'6 ← MIN (fp + 0) (fp + 8)
+    let mut n2 : UInt64 := t'6
+    let t'7 ← PMem.ldU64 (this + 8)
+    let t'8 ← PMem.ldU64 (t'7 + 16)
+    let t'9 ← PMem.memcpy b (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) n2
+    discard <| pure (t'9)
+    let t'10 ← PMem.ldU64 (fp + 0)
+    return (t'10 == n2)
+  for i'11 in [0:15] do
+    let i : UInt8 := UInt8.ofNat i'11
+    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+    let t'12 ← PMem.ldU16 (area + 6)
+    let mut length : UInt16 := t'12
+    let t'13 ← PMem.ldU16 (area + 4)
+    let mut offset : UInt16 := t'13
+    let t'14 ← PMem.ldU32 area
+    let t'15 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'14)) != (UInt32.toInt32 (t'15))) then
+      continue
+    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'16 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
+      addr := t'16
+      continue
+    let t'17 ← PMem.ldU64 (fp + 0)
+    let mut count : UInt16 := UInt64.toUInt16 (t'17)
+    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
+      let t'18 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
+      count := t'18
+    PMem.halRead b (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) (UInt16.toUInt64 (count))
+    let t'19 ← PMem.ldU64 (fp + 0)
+    let t'20 := (t'19 - (UInt16.toUInt64 (count)))
+    PMem.stU64 (fp + 0) t'20
+    let t'21 ← PMem.ldU64 (fp + 0)
+    if (t'21 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
+      break
+    let t'22 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
+    b := t'22
+    let t'23 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    addr := t'23
+  let t'24 ← PMem.ldU64 (fp + 0)
+  return (t'24 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
+
+def StorageAccess.read_block (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 12
+  let r ← StorageAccess.read_block.body fp this data addr n
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::setup : bool ()`, `AP_Param.cpp:362-399`. -/
+def AP_Param.setup.body (fp : UInt64)  : PMem.M Bool := do
+  discard <| PMem.memset ((fp + 0) + 0) 0 2
+  discard <| PMem.memset ((fp + 0) + 2) 0 1
+  discard <| PMem.memset ((fp + 0) + 3) 0 1
+  let t'1 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (4 : UInt64)
+  discard <| pure (t'1)
+  let t'2 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64)
+  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) != (UInt32.toInt32 (UInt8.toUInt32 ((80 : UInt8)))))
+  if !sc'4 then
+    let t'3 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64)
+    sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((65 : UInt8)))))
+  let mut sc'6 := sc'4
+  if !sc'6 then
+    let t'5 ← PMem.ldU8 ((fp + 0) + 2)
+    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))
+  if sc'6 then
+    AP_Param.erase_all
+  return true
+
+def AP_Param.setup  : PMem.M Bool := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.setup.body fp 
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::var_info : const struct Info &(uint16_t)`, `AP_Param.h:846-848`. -/
+def AP_Param.var_info (i : UInt16) : PMem.M UInt64 := do
+  let mut i := i
+  let t'1 ← PMem.ldU64 (0xaf60 : UInt64) /- &AP_Param::_var_info -/
+  return (t'1 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64)
+
+/-- C++ `AP_Param::get_base : bool (const struct Info &, ptrdiff_t &)`, `AP_Param.cpp:440-448`. -/
+def AP_Param.get_base (info' : UInt64) (base : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldU16 (info' + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (info' + 8)
+    let t'3 ← PMem.ldI64 t'2
+    PMem.stI64 base t'3
+    let t'4 ← PMem.ldI64 base
+    return (t'4 != (Int32.toInt64 ((0 : Int32))))
+  let t'5 ← PMem.ldU64 (info' + 8)
+  let t'6 := UInt64.toInt64 (t'5)
+  PMem.stI64 base t'6
+  return true
+
+/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct Info &)`, `AP_Param.cpp:2698-2709`. -/
+def AP_Param.get_default_value (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
+  let mut vp := vp
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU16 (0xaff8 : UInt64) /- &AP_Param::num_param_overrides -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
+    let t'4 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
+    let t'5 ← PMem.ldU64 (t'4 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
+    if (vp == t'5) then
+      let t'6 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
+      let t'7 ← PMem.ldF32 ((t'6 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
+      return t'7
+  let t'8 ← PMem.ldU16 (info' + 24)
+  if (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
+    let t'9 ← PMem.ldI64 (info' + 16)
+    let t'10 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'9)))
+    return t'10
+  let t'11 ← PMem.ldF32 (info' + 16)
+  return t'11
 
 /-- C++ `AP_Param::setup_sketch_defaults : void ()`, `AP_Param.cpp:1569-1583`. -/
-partial def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := do
+def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := do
   let t'1 ← AP_Param.setup
   discard <| pure (t'1)
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'2 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'2 then
       let t'3 := (i + 1)
       i := t'3
@@ -1512,18 +1861,150 @@ partial def AP_Param.setup_sketch_defaults.body (fp : UInt64)  : PMem.M Unit := 
         AP_Param.set_value (UInt8.toUInt32 (type')) (Int64.toUInt64 (t'8)) t'10
   return ()
 
-partial def AP_Param.setup_sketch_defaults  : PMem.M Unit := do
+def AP_Param.setup_sketch_defaults  : PMem.M Unit := do
   let fp ← PMem.enter 8
   let r ← AP_Param.setup_sketch_defaults.body fp 
   PMem.leave fp
   return r
 
+/-- `AP_Param.type_size` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.type_size.pure' (type' : UInt32) : Id UInt8 := do
+  let mut type' := type'
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (0 : Int32) || sw'1 == (6 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  else if sw'1 == (1 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
+  else if sw'1 == (2 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
+  else if sw'1 == (3 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  else if sw'1 == (4 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  else if sw'1 == (5 : Int32) then
+    return Int8.toUInt8 (Int32.toInt8 (((3 : Int32) * (4 : Int32))))
+  else
+    pure ()
+  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+
+/-- C++ `AP_Param::type_size : uint8_t (enum ap_var_type)`, `AP_Param.cpp:702-721`. -/
+def AP_Param.type_size (type' : UInt32) : PMem.M UInt8 :=
+  pure (_root_.AP_Param_lib.AP_Param.type_size.pure' type')
+
+/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct Info &)`, `AP_Param.cpp:312-318`. -/
+def AP_Param.get_group_info (info' : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU16 (info' + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (info' + 16)
+    let t'3 ← PMem.ldU64 t'2
+    return t'3
+  let t'4 ← PMem.ldU64 (info' + 16)
+  return t'4
+
+/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct GroupInfo &)`, `AP_Param.cpp:301-307`. -/
+def AP_Param.get_group_info'2 (ginfo : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldU16 (ginfo + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldU64 (ginfo + 16)
+    let t'3 ← PMem.ldU64 t'2
+    return t'3
+  let t'4 ← PMem.ldU64 (ginfo + 16)
+  return t'4
+
+mutual
+
+/-- C++ `AP_Param::check_group_info : void (const struct AP_Param::GroupInfo *, uint16_t *, uint8_t, uint8_t)`, `AP_Param.cpp:235-283`. -/
+def AP_Param.check_group_info'rec (rec'depth : Nat) (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let mut group_info := group_info
+  let mut total_size := total_size
+  let mut group_shift := group_shift
+  let mut prefix_length := prefix_length
+  let mut type' : UInt8 := default  -- uninitialized in C
+  let mut used_mask : UInt64 := Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'3
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+    let mut idx : UInt8 := t'4
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (idx))) ≥ ((1 : Int32) <<< (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))))) then
+      pure ()
+    if (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) != (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (idx))) == (0 : Int32))) then
+      let t'5 := Int8.toUInt8 (Int32.toInt8 ((63 : Int32)))
+      idx := t'5
+    if (used_mask &&& ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx)))))))) != (0 : UInt64) then
+      pure ()
+    let t'6 := (used_mask ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx))))))))
+    used_mask := t'6
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        pure ()
+      let t'7 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'7
+      if (ginfo == (0 : UInt64)) then
+        continue
+      let t'8 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let t'9 ← PMem.strlen t'8
+      AP_Param.check_group_info'rec rec'd ginfo total_size (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) (UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'9)))
+      continue
+    let t'10 ← AP_Param.type_size (UInt8.toUInt32 (type'))
+    let mut size : UInt8 := t'10
+    if ((UInt32.toInt32 (UInt8.toUInt32 (size))) == (0 : Int32)) then
+      pure ()
+    let t'11 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+    let t'12 ← PMem.strlen t'11
+    let mut param_name_length : UInt8 := UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'12))
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32)))) then
+      let t'13 := (param_name_length + (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
+      param_name_length := t'13
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (param_name_length))) > (16 : Int32))) then
+      pure ()
+    let t'14 ← PMem.ldU16 total_size
+    let t'15 := (t'14 + (UInt64.toUInt16 (((UInt8.toUInt64 (size)) + (4 : UInt64)))))
+    PMem.stU16 total_size t'15
+  return ()
+
+end
+
+/-- `AP_Param.check_group_info'rec` with the depth of its recursive component (64). -/
+def AP_Param.check_group_info (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit :=
+  AP_Param.check_group_info'rec 64 group_info total_size group_shift prefix_length
+
+/-- C++ `AP_Param::duplicate_key : bool (uint16_t, uint16_t)`, `AP_Param.cpp:286-296`. -/
+def AP_Param.duplicate_key (vindex : UInt16) (key : UInt16) : PMem.M Bool := do
+  let mut vindex := vindex
+  let mut key := key
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (vindex))) + (1 : Int32))))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
+    let t'4 ← AP_Param.var_info i
+    let t'5 ← PMem.ldU16 (t'4 + 26)
+    let mut key2 : UInt16 := t'5
+    if ((UInt32.toInt32 (UInt16.toUInt32 (key2))) == (UInt32.toInt32 (UInt16.toUInt32 (key)))) then
+      return true
+  return false
+
 /-- C++ `AP_Param::check_var_info : void ()`, `AP_Param.cpp:321-358`. -/
-partial def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
+def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
   PMem.stU16 (fp + 0) (UInt64.toUInt16 ((4 : UInt64)))
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -1566,21 +2047,74 @@ partial def AP_Param.check_var_info.body (fp : UInt64)  : PMem.M Unit := do
       pure ()
   return ()
 
-partial def AP_Param.check_var_info  : PMem.M Unit := do
+def AP_Param.check_var_info  : PMem.M Unit := do
   let fp ← PMem.enter 2
   let r ← AP_Param.check_var_info.body fp 
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct GroupInfo &)`, `AP_Param.cpp:2685-2696`. -/
+def AP_Param.get_default_value'2 (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
+  let mut vp := vp
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU16 (0xaff8 : UInt64) /- &AP_Param::num_param_overrides -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
+    let t'4 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
+    let t'5 ← PMem.ldU64 (t'4 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
+    if (vp == t'5) then
+      let t'6 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
+      let t'7 ← PMem.ldF32 ((t'6 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
+      return t'7
+  let t'8 ← PMem.ldU16 (info' + 24)
+  if (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
+    let t'9 ← PMem.ldI64 (info' + 16)
+    let t'10 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'9)))
+    return t'10
+  let t'11 ← PMem.ldF32 (info' + 16)
+  return t'11
+
+/-- C++ `Vector3<float>::operator= : Vector3<float> &(const Vector3<float> &) noexcept`, `AP_Common.h:?-?`. -/
+def Vector3'float.operator_ (this : UInt64) (arg : UInt64) : PMem.M UInt64 := do
+  let t'1 ← PMem.ldF32 arg
+  PMem.stF32 this t'1
+  let t'2 ← PMem.ldF32 (arg + 4)
+  PMem.stF32 (this + 4) t'2
+  let t'3 ← PMem.ldF32 (arg + 8)
+  PMem.stF32 (this + 8) t'3
+  return this
+
+/-- C++ `AP_ParamV<Vector3<float>, 5>::set : void (const Vector3<float> &)`, `AP_Param.h:1065-1067`. -/
+def AP_ParamV'Vector3_float_5.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← Vector3'float.operator_ this v
+  discard <| pure (t'1)
+  return ()
+
+/-- C++ `Vector3<float>::Vector3 : void (const float, const float, const float)`, `AP_Common.h:85-88`. -/
+def Vector3'float.Vector3 (this : UInt64) (x0 : Binary32) (y0 : Binary32) (z0 : Binary32) : PMem.M Unit := do
+  let mut x0 := x0
+  let mut y0 := y0
+  let mut z0 := z0
+  PMem.stF32 (this + 0) x0
+  PMem.stF32 (this + 4) y0
+  PMem.stF32 (this + 8) z0
+  return ()
+
 /-- C++ `AP_Param::setup_object_defaults : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1524-1542`. -/
-partial def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
   let mut object_pointer := object_pointer
   let mut group_info := group_info
   let mut base : Int64 := UInt64.toInt64 (object_pointer)
   let mut type' : UInt8 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -1604,1051 +2138,165 @@ partial def AP_Param.setup_object_defaults.body (fp : UInt64) (object_pointer : 
         AP_ParamV'Vector3_float_5.set ptr''2 (fp + 0)
   return ()
 
-partial def AP_Param.setup_object_defaults (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+def AP_Param.setup_object_defaults (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
   let fp ← PMem.enter 12
   let r ← AP_Param.setup_object_defaults.body fp object_pointer group_info
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::load_all : bool ()`, `AP_Param.cpp:1588-1622`. -/
-partial def AP_Param.load_all.body (fp : UInt64)  : PMem.M Bool := do
-  AP_Param.Param_header.Param_header (fp + 0)
-  let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-  AP_Param.reload_defaults_file false
-  let t'1 ← PMem.ldB (0xaf10 : UInt64) /- &AP_Param::registered_save_handler -/
-  if !t'1 then
-    PMem.stB (0xaf10 : UInt64) /- &AP_Param::registered_save_handler -/ true
-  repeat
-    let t'2 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))) then break
-    let t'3 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
-    discard <| pure (t'3)
-    let t'4 ← AP_Param.is_sentinel (fp + 0)
-    if t'4 then
-      PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
-      return true
-    let mut info' : UInt64 := default  -- uninitialized in C
-    AP_Param.Param_header.Param_header'2 (fp + 16) (fp + 0)
-    let t'5 ← AP_Param.find_by_header (fp + 16) (fp + 8)
-    info' := t'5
-    if (info' != (0 : UInt64)) then
-      let t'6 ← PMem.ldU64 (fp + 8)
-      let t'7 ← PMem.ldBits (fp + 0) 8 5
-      let t'8 ← AP_Param.type_size (UInt64.toUInt32 (t'7))
-      let t'9 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ t'6 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'8))
-      discard <| pure (t'9)
-    let t'10 ← PMem.ldBits (fp + 0) 8 5
-    let t'11 ← AP_Param.type_size (UInt64.toUInt32 (t'10))
-    let t'12 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'11)) + (4 : UInt64)))))
-    ofs := t'12
-  return false
+/-- C++ `AP_Param::Param_header::Param_header : void (const Param_header &) noexcept`, `AP_Param.h:?-?`. -/
+def AP_Param.Param_header.Param_header'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldBits arg 0 8
+  PMem.stBits this 0 8 (UInt32.toUInt64 ((UInt64.toUInt32 (t'1))))
+  let t'2 ← PMem.ldBits arg 8 5
+  PMem.stBits this 8 5 (UInt32.toUInt64 ((UInt64.toUInt32 (t'2))))
+  let t'3 ← PMem.ldBits arg 13 1
+  PMem.stBits this 13 1 (UInt32.toUInt64 ((UInt64.toUInt32 (t'3))))
+  let t'4 ← PMem.ldBits arg 14 18
+  PMem.stBits this 14 18 (UInt32.toUInt64 ((UInt64.toUInt32 (t'4))))
+  return ()
 
-partial def AP_Param.load_all  : PMem.M Bool := do
-  let fp ← PMem.enter 20
-  let r ← AP_Param.load_all.body fp 
-  PMem.leave fp
-  return r
+/-- C++ `AP_Param::get_key : uint16_t (const Param_header &)`, `AP_Param.cpp:743-746`. -/
+def AP_Param.get_key (phdr : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldBits phdr 13 1
+  let t'2 ← PMem.ldBits phdr 0 8
+  return Int16.toUInt16 (Int32.toInt16 ((((UInt32.toInt32 (UInt16.toUInt32 ((UInt32.toUInt16 ((UInt64.toUInt32 (t'1))))))) <<< (8 : Int32)) ||| (UInt32.toInt32 ((UInt64.toUInt32 (t'2)))))))
 
-/-- C++ `AP_Param::load : bool ()`, `AP_Param.cpp:1339-1399`. -/
-partial def AP_Param.load.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
-  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  if (info' == (0 : UInt64)) then
-    return false
-  AP_Param.Param_header.Param_header (fp + 48)
-  let t'2 ← PMem.ldU64 (fp + 8)
-  if (t'2 != (0 : UInt64)) then
-    let t'3 ← PMem.ldU64 (fp + 8)
-    let t'4 ← PMem.ldU8 (t'3 + 27)
-    let t'5 := UInt8.toUInt32 (t'4)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
-  else
-    let t'6 ← PMem.ldU8 (info' + 28)
-    let t'7 := UInt8.toUInt32 (t'6)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'7))
-  let t'8 ← PMem.ldU16 (info' + 26)
-  AP_Param.set_key (fp + 48) t'8
-  let t'9 ← PMem.ldU32 (fp + 0)
-  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'9))
-  let t'10 ← AP_Param.scan (fp + 48) (fp + 56)
-  if !t'10 then
-    let t'11 ← AP_Param.get_base info' (fp + 64)
-    if !t'11 then
+/-- C++ `AP_Param::adjust_group_offset : bool (uint16_t, const struct GroupInfo &, ptrdiff_t &)`, `AP_Param.cpp:413-435`. -/
+def AP_Param.adjust_group_offset.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
+  let mut vindex := vindex
+  let t'1 ← PMem.ldU16 (group_info + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32) then
+    let t'2 ← PMem.ldI64 new_offset
+    let t'3 ← PMem.ldI64 (group_info + 8)
+    let t'4 := (t'2 + t'3)
+    PMem.stI64 new_offset t'4
+    return true
+  let t'5 ← PMem.ldU16 (group_info + 24)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
+    let t'6 ← AP_Param.var_info vindex
+    let t'7 ← AP_Param.get_base t'6 (fp + 0)
+    if !t'7 then
       return false
-    let t'12 ← PMem.ldU64 (fp + 8)
-    if (t'12 != (0 : UInt64)) then
-      let mut group_offset : Int64 := Int32.toInt64 ((0 : Int32))
-      let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-      let mut first'13 := true
-      repeat
-        if !first'13 then
-          let t'14 := (i + 1)
-          i := t'14
-          pure ()
-        first'13 := false
-        let t'15 ← PMem.ldU8 (fp + 16)
-        if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'15)))))) then break
-        let t'16 ← PMem.ldU64 (((fp + 16) + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-        let t'17 ← PMem.ldI64 (t'16 + 8)
-        let t'18 := (group_offset + t'17)
-        group_offset := t'18
-      let t'19 ← PMem.ldBits (fp + 48) 8 5
-      let t'20 ← PMem.ldI64 (fp + 64)
-      let t'21 ← PMem.ldU64 (fp + 8)
-      let t'22 ← PMem.ldI64 (t'21 + 8)
-      let t'23 ← PMem.ldU64 (fp + 8)
-      let t'24 ← AP_Param.get_default_value'2 this t'23
-      AP_Param.set_value (UInt64.toUInt32 (t'19)) (Int64.toUInt64 (((t'20 + t'22) + group_offset))) t'24
-    else
-      let t'25 ← PMem.ldBits (fp + 48) 8 5
-      let t'26 ← PMem.ldI64 (fp + 64)
-      let t'27 ← AP_Param.get_default_value this info'
-      AP_Param.set_value (UInt64.toUInt32 (t'25)) (Int64.toUInt64 (t'26)) t'27
-    return false
-  let t'28 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'30 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'28)))) != (UInt32.toInt32 ((5 : UInt32))))
-  if sc'30 then
-    let t'29 ← PMem.ldU8 (fp + 40)
-    sc'30 := ((UInt32.toInt32 (UInt8.toUInt32 (t'29))) != (0 : Int32))
-  if sc'30 then
-    return false
-  let mut ap : UInt64 := this
-  let t'31 ← PMem.ldU8 (fp + 40)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'31))) != (0 : Int32)) then
-    let t'32 ← PMem.ldU8 (fp + 40)
-    let t'33 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'32)) * (4 : UInt64)))) * 1).toUInt64)
-    ap := t'33
-  let t'34 ← PMem.ldU16 (fp + 56)
-  let t'35 ← PMem.ldBits (fp + 48) 8 5
-  let t'36 ← AP_Param.type_size (UInt64.toUInt32 (t'35))
-  let t'37 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'34)) + (4 : UInt64)))) (UInt8.toUInt64 (t'36))
-  discard <| pure (t'37)
+    let t'8 ← PMem.ldI64 (fp + 0)
+    let t'9 ← PMem.ldI64 new_offset
+    let t'10 ← PMem.ldI64 (group_info + 8)
+    let mut p : UInt64 := Int64.toUInt64 (((t'8 + t'9) + t'10))
+    let t'11 ← PMem.ldU64 p
+    if (t'11 == (0 : UInt64)) then
+      return false
+    let t'12 ← PMem.ldU64 p
+    let t'13 ← PMem.ldI64 (fp + 0)
+    let t'14 := ((UInt64.toInt64 (t'12)) - t'13)
+    PMem.stI64 new_offset t'14
   return true
 
-partial def AP_Param.load (this : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 72
-  let r ← AP_Param.load.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::erase_all : void ()`, `AP_Param.cpp:179-192`. -/
-partial def AP_Param.erase_all.body (fp : UInt64)  : PMem.M Unit := do
-  AP_Param.EEPROM_header.EEPROM_header (fp + 0)
-  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64) (80 : UInt8)
-  PMem.stU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64) (65 : UInt8)
-  PMem.stU8 ((fp + 0) + 2) (6 : UInt8)
-  let t'1 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  PMem.stU8 ((fp + 0) + 3) t'1
-  AP_Param.eeprom_write_check (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (UInt64.toUInt8 ((4 : UInt64)))
-  AP_Param.write_sentinel (UInt64.toUInt16 ((4 : UInt64)))
-  return ()
-
-partial def AP_Param.erase_all  : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.erase_all.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::first : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1765-1788`. -/
-partial def AP_Param.first.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut default_val := default_val
-  let t'1 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 0 9 (UInt32.toUInt64 (t'1))
-  let t'2 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 13 18 (UInt32.toUInt64 (t'2))
-  let t'3 := Int32.toUInt32 ((0 : Int32))
-  PMem.stBits token 9 4 (UInt32.toUInt64 (t'3))
-  let t'4 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
-    return (0 : UInt64)
-  let t'5 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-  let t'6 ← AP_Param.get_base t'5 (fp + 0)
-  if !t'6 then
-    return (0 : UInt64)
-  if (ptype != (0 : UInt64)) then
-    let t'7 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-    let t'8 ← PMem.ldU8 (t'7 + 28)
-    let t'9 := UInt8.toUInt32 (t'8)
-    PMem.stU32 ptype t'9
-  if (default_val != (0 : UInt64)) then
-    let t'10 ← PMem.ldI64 (fp + 0)
-    let t'11 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
-    let t'12 ← AP_Param.get_default_value (Int64.toUInt64 (t'10)) t'11
-    PMem.stF32 default_val t'12
-  let t'13 ← PMem.ldI64 (fp + 0)
-  AP_Param.check_default (Int64.toUInt64 (t'13)) default_val
-  let t'14 ← PMem.ldI64 (fp + 0)
-  return Int64.toUInt64 (t'14)
-
-partial def AP_Param.first (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.adjust_group_offset (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 8
-  let r ← AP_Param.first.body fp token ptype default_val
+  let r ← AP_Param.adjust_group_offset.body fp vindex group_info new_offset
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *)`, `AP_Param.h:561-?`. -/
-partial def AP_Param.next (token : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let t'1 ← AP_Param.next'2 token ptype false (0 : UInt64)
-  return t'1
-
-/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1891-1953`. -/
-partial def AP_Param.next'2.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut skip_disabled := skip_disabled
-  let mut default_val := default_val
-  let t'1 ← PMem.ldBits token 0 9
-  let mut i : UInt16 := UInt32.toUInt16 ((UInt64.toUInt32 (t'1)))
-  PMem.stB (fp + 0) false
-  let t'2 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2))))) then
-    return (0 : UInt64)
-  let t'3 ← AP_Param.var_info i
-  let t'4 ← PMem.ldU8 (t'3 + 28)
-  let mut type' : UInt32 := UInt8.toUInt32 (t'4)
-  let mut sc'6 := ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((5 : UInt32))))
-  if sc'6 then
-    let t'5 ← PMem.ldBits token 9 4
-    sc'6 := (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'5)))) < (3 : Int32)))
-  if sc'6 then
-    let t'7 ← PMem.ldBits token 9 4
-    let t'8 := UInt64.toUInt32 (t'7)
-    let t'9 := (t'8 + 1)
-    PMem.stBits token 9 4 (UInt32.toUInt64 (t'9))
-    if (ptype != (0 : UInt64)) then
-      PMem.stU32 ptype (4 : UInt32)
-    let t'10 ← PMem.ldBits token 9 4
-    let t'11 ← AP_Param.var_info i
-    let t'12 ← PMem.ldU64 (t'11 + 8)
-    let mut ret : UInt64 := (((UInt32.toUInt64 (((UInt64.toUInt32 (t'10)) - (1 : UInt32)))) * (4 : UInt64)) + (Int64.toUInt64 ((UInt64.toInt64 (t'12)))))
-    if (default_val != (0 : UInt64)) then
-      let t'13 ← AP_Param.var_info i
-      let t'14 ← AP_Param.get_default_value ret t'13
-      PMem.stF32 default_val t'14
-    return ret
-  if ((UInt32.toInt32 (type')) != (UInt32.toInt32 ((6 : UInt32)))) then
-    let t'15 := (i + 1)
-    i := t'15
-    PMem.stB (fp + 0) true
-  let mut first'16 := true
-  repeat
-    if !first'16 then
-      let t'17 := (i + 1)
-      i := t'17
-      pure ()
-    first'16 := false
-    let t'18 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'18)))))) then break
-    let t'19 ← AP_Param.var_info i
-    let info' : UInt64 := t'19
-    let t'20 ← PMem.ldU16 (info' + 24)
-    let t'21 ← AP_Param.check_frame_type t'20
-    if !t'21 then
-      continue
-    let t'22 ← PMem.ldU8 (info' + 28)
-    let t'23 := UInt8.toUInt32 (t'22)
-    type' := t'23
-    if ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'24 ← AP_Param.get_group_info info'
-      let mut group_info : UInt64 := t'24
-      if (group_info == (0 : UInt64)) then
-        continue
-      let t'25 ← AP_Param.next_group i group_info (fp + 0) (Int32.toUInt32 ((0 : Int32))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (Int32.toInt64 ((0 : Int32))) token ptype skip_disabled default_val
-      let mut ap : UInt64 := t'25
-      if (ap != (0 : UInt64)) then
-        return ap
-    else
-      let t'26 := UInt16.toUInt32 (i)
-      PMem.stBits token 0 9 (UInt32.toUInt64 (t'26))
-      let t'27 := Int32.toUInt32 ((0 : Int32))
-      PMem.stBits token 13 18 (UInt32.toUInt64 (t'27))
-      let t'28 := Int32.toUInt32 ((0 : Int32))
-      PMem.stBits token 9 4 (UInt32.toUInt64 (t'28))
-      if (ptype != (0 : UInt64)) then
-        PMem.stU32 ptype type'
-      if (default_val != (0 : UInt64)) then
-        let t'29 ← PMem.ldU64 (info' + 8)
-        let t'30 ← AP_Param.get_default_value t'29 info'
-        PMem.stF32 default_val t'30
-      let t'31 ← PMem.ldU64 (info' + 8)
-      return t'31
-  return (0 : UInt64)
-
-partial def AP_Param.next'2 (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 1
-  let r ← AP_Param.next'2.body fp token ptype skip_disabled default_val
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::next_scalar : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1957-1972`. -/
-partial def AP_Param.next_scalar.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let mut token := token
-  let mut ptype := ptype
-  let mut default_val := default_val
-  let mut ap : UInt64 := default  -- uninitialized in C
-  repeat
-    let t'1 ← AP_Param.next'2 token (fp + 0) true default_val
-    ap := t'1
-    let mut sc'3 := (ap != (0 : UInt64))
-    if sc'3 then
-      let t'2 ← PMem.ldU32 (fp + 0)
-      sc'3 := (decide ((UInt32.toInt32 (t'2)) > (UInt32.toInt32 ((4 : UInt32)))))
-    if !(sc'3) then break
-  if (ap != (0 : UInt64)) then
-    if (ptype != (0 : UInt64)) then
-      let t'4 ← PMem.ldU32 (fp + 0)
-      PMem.stU32 ptype t'4
-  AP_Param.check_default ap default_val
-  return ap
-
-partial def AP_Param.next_scalar (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.next_scalar.body fp token ptype default_val
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::copy_name_token : void (const ParamToken &, char *, size_t, bool) const`, `AP_Param.cpp:832-845`. -/
-partial def AP_Param.copy_name_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
-  let mut buffer := buffer
-  let mut buffer_size := buffer_size
-  let mut force_scalar := force_scalar
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info_token this token (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  if (info' == (0 : UInt64)) then
-    let t'2 := Int32.toInt8 ((0 : Int32))
-    PMem.stI8 buffer t'2
-    return ()
-  let t'3 ← PMem.ldU64 (fp + 8)
-  let t'4 ← PMem.ldU8 (fp + 40)
-  AP_Param.copy_name_info this info' t'3 (fp + 16) t'4 buffer buffer_size force_scalar
-  return ()
-
-partial def AP_Param.copy_name_token (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
-  let fp ← PMem.enter 41
-  let r ← AP_Param.copy_name_token.body fp this token buffer buffer_size force_scalar
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_by_name : AP_Param *(const char *, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:1003-1025`. -/
-partial def AP_Param.find_by_name.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let mut name := name
-  let mut ptype := ptype
-  let mut token := token
-  let mut ap : UInt64 := default  -- uninitialized in C
-  let t'1 ← AP_Param.first token ptype (0 : UInt64)
-  ap := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
-      ap := t'3
-      pure ()
-    first'2 := false
-    let mut sc'5 := (ap != 0)
-    if sc'5 then
-      let t'4 ← PMem.ldU32 ptype
-      sc'5 := ((UInt32.toInt32 (t'4)) != (UInt32.toInt32 ((6 : UInt32))))
-    let mut sc'7 := sc'5
-    if sc'7 then
-      let t'6 ← PMem.ldU32 ptype
-      sc'7 := ((UInt32.toInt32 (t'6)) != (UInt32.toInt32 ((0 : UInt32))))
-    if !(sc'7) then break
-    let t'8 ← PMem.ldBits token 0 9
-    let t'9 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'8))))
-    let t'10 ← PMem.ldU64 t'9
-    let t'11 ← PMem.strlen t'10
-    let mut nlen : UInt64 := t'11
-    let t'12 ← PMem.ldBits token 0 9
-    let t'13 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'12))))
-    let t'14 ← PMem.ldU64 t'13
-    let t'15 ← PMem.strncasecmp name t'14 nlen
-    let mut ret : Int32 := t'15
-    if (ret == (0 : Int32)) then
-      AP_Param.copy_name_token ap token (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) false
-      let t'16 ← PMem.strncasecmp name (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
-      if (t'16 == (0 : Int32)) then
-        break
-  return ap
-
-partial def AP_Param.find_by_name (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 16
-  let r ← AP_Param.find_by_name.body fp name ptype token
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find : AP_Param *(const char *, enum ap_var_type *, uint16_t *)`, `AP_Param.cpp:938-985`. -/
-partial def AP_Param.find.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
-  let mut name := name
-  let mut ptype := ptype
-  let mut flags := flags
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
-      pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
-    let t'4 ← AP_Param.var_info i
-    let info' : UInt64 := t'4
-    let t'5 ← PMem.ldU8 (info' + 28)
-    let mut type' : UInt8 := t'5
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'6 ← PMem.ldU64 info'
-      let t'7 ← PMem.strnlen t'6 (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
-      let mut len : UInt8 := UInt64.toUInt8 (t'7)
-      let t'8 ← PMem.ldU64 info'
-      let t'9 ← PMem.strncmp name t'8 (UInt8.toUInt64 (len))
-      if (t'9 != (0 : Int32)) then
-        continue
-      let t'10 ← AP_Param.get_group_info info'
-      let mut group_info : UInt64 := t'10
-      if (group_info == (0 : UInt64)) then
-        continue
-      let t'11 ← AP_Param.find_group (name + ((Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (len))))) * 1).toUInt64) i (Int32.toInt64 ((0 : Int32))) group_info ptype
-      let mut ap : UInt64 := t'11
-      if (ap != (0 : UInt64)) then
-        if (flags != (0 : UInt64)) then
-          PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-          discard <| PMem.memset ((fp + 16) + 0) 0 1
-          discard <| PMem.memset ((fp + 16) + 8) 0 16
-          let t'12 ← AP_Param.find_var_info ap (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-          discard <| pure (t'12)
-          let t'13 ← PMem.ldU64 (fp + 8)
-          if (t'13 != (0 : UInt64)) then
-            let t'14 ← PMem.ldU64 (fp + 8)
-            let t'15 ← PMem.ldU16 (t'14 + 24)
-            PMem.stU16 flags t'15
-          else
-            let t'16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-            PMem.stU16 flags t'16
-        return ap
-    else
-      let t'17 ← PMem.ldU64 info'
-      let t'18 ← PMem.strcasecmp name t'17
-      if (t'18 == (0 : Int32)) then
-        let t'19 := UInt8.toUInt32 (type')
-        PMem.stU32 ptype t'19
-        let t'20 ← AP_Param.get_base info' (fp + 48)
-        if !t'20 then
-          return (0 : UInt64)
-        if (flags != (0 : UInt64)) then
-          let t'21 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-          PMem.stU16 flags t'21
-        let t'22 ← PMem.ldI64 (fp + 48)
-        return Int64.toUInt64 (t'22)
-  return (0 : UInt64)
-
-partial def AP_Param.find (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 56
-  let r ← AP_Param.find.body fp name ptype flags
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_by_index : AP_Param *(uint16_t, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:989-1000`. -/
-partial def AP_Param.find_by_index (idx : UInt16) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
-  let mut idx := idx
-  let mut ptype := ptype
-  let mut token := token
-  let mut ap : UInt64 := default  -- uninitialized in C
-  let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let t'1 ← AP_Param.first token ptype (0 : UInt64)
-  ap := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
-      ap := t'3
-      pure ()
-    first'2 := false
-    if !(((ap != 0) && (decide ((UInt32.toInt32 (UInt16.toUInt32 (count))) < (UInt32.toInt32 (UInt16.toUInt32 (idx))))))) then break
-    let t'4 := (count + 1)
-    count := t'4
-  return ap
-
-/-- C++ `AP_Param::count_parameters : uint16_t ()`, `AP_Param.cpp:2752-2782`. -/
-partial def AP_Param.count_parameters.body (fp : UInt64)  : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
-  let mut sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) != (0 : Int32))
-  if sc'4 then
-    let t'2 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
-    let t'3 ← PMem.ldU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/
-    sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 (t'3))))
-  if sc'4 then
-    let t'5 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
-    return t'5
-  let mut limit : UInt8 := Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  repeat
-    let t'6 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
-    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
-    if !sc'9 then
-      let t'7 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
-      let t'8 ← PMem.ldU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/
-      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) != (UInt32.toInt32 (UInt16.toUInt32 (t'8))))
-    let mut sc'11 := sc'9
-    if sc'11 then
-      let t'10 := (limit - 1)
-      limit := t'10
-      sc'11 := limit != (0 : UInt8)
-    if !(sc'11) then break
-    let mut vp : UInt64 := default  -- uninitialized in C
-    PMem.stBits (fp + 0) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
-    PMem.stBits (fp + 0) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
-    let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    let t'12 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
-    let mut marker : UInt16 := t'12
-    let t'13 ← AP_Param.first (fp + 0) (0 : UInt64) (0 : UInt64)
-    vp := t'13
-    let mut first'14 := true
-    repeat
-      if !first'14 then
-        let t'15 ← AP_Param.next_scalar (fp + 0) (0 : UInt64) (0 : UInt64)
-        vp := t'15
-        pure ()
-      first'14 := false
-      if !((vp != (0 : UInt64))) then break
-      let t'16 := (count + 1)
-      count := t'16
-    PMem.stU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/ count
-    PMem.stU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/ marker
-  let t'17 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
-  return t'17
-
-partial def AP_Param.count_parameters  : PMem.M UInt16 := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.count_parameters.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::cast_to_float : float (enum ap_var_type) const`, `AP_Param.cpp:1976-1990`. -/
-partial def AP_Param.cast_to_float (this : UInt64) (type' : UInt32) : PMem.M Binary32 := do
-  let mut type' := type'
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (1 : Int32) then
-    let t'2 ← AP_ParamTBase'signed_char_1.cast_to_float this
-    return t'2
-  else if sw'1 == (2 : Int32) then
-    let t'3 ← AP_ParamTBase'short_2.cast_to_float this
-    return t'3
-  else if sw'1 == (3 : Int32) then
-    let t'4 ← AP_ParamTBase'int_3.cast_to_float this
-    return t'4
-  else if sw'1 == (4 : Int32) then
-    let t'5 ← AP_ParamTBase'float_4.cast_to_float this
-    return t'5
-  else
-    return (Binary32.ofBits 0x7fc00000)
-
-/-- C++ `AP_Param::set_value : void (enum ap_var_type, void *, float)`, `AP_Param.cpp:1501-1519`. -/
-partial def AP_Param.set_value.body (fp : UInt64) (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
-  let mut type' := type'
-  let mut ptr' := ptr'
-  PMem.stF32 (fp + 0) value
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (1 : Int32) then
-    let t'2 ← PMem.ldF32 (fp + 0)
-    PMem.stI8 (fp + 4) (Binary32.toInt8 (t'2))
-    AP_ParamTBase'signed_char_1.set ptr' (fp + 4)
-  else if sw'1 == (2 : Int32) then
-    let t'3 ← PMem.ldF32 (fp + 0)
-    PMem.stI16 (fp + 6) (Binary32.toInt16 (t'3))
-    AP_ParamTBase'short_2.set ptr' (fp + 6)
-  else if sw'1 == (3 : Int32) then
-    let t'4 ← PMem.ldF32 (fp + 0)
-    PMem.stI32 (fp + 8) (Binary32.toInt32 (t'4))
-    AP_ParamTBase'int_3.set ptr' (fp + 8)
-  else if sw'1 == (4 : Int32) then
-    AP_ParamTBase'float_4.set ptr' (fp + 0)
-  else
-    pure ()
-  return ()
-
-partial def AP_Param.set_value (type' : UInt32) (ptr' : UInt64) (value : Binary32) : PMem.M Unit := do
-  let fp ← PMem.enter 12
-  let r ← AP_Param.set_value.body fp type' ptr' value
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::set_float : void (float, enum ap_var_type)`, `AP_Param.cpp:2299-2329`. -/
-partial def AP_Param.set_float.body (fp : UInt64) (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
-  PMem.stF32 (fp + 0) value
-  let mut var_type := var_type
-  let t'1 ← PMem.ldF32 (fp + 0)
-  let mut sc'3 := (Binary32.isNaN t'1)
-  if !sc'3 then
-    let t'2 ← PMem.ldF32 (fp + 0)
-    sc'3 := (Binary32.isInf t'2)
+/-- C++ `AP_Param::group_id : uint32_t (const struct GroupInfo *, uint32_t, uint8_t, uint8_t)`, `AP_Param.cpp:201-213`. -/
+def AP_Param.group_id (grpinfo : UInt64) (base : UInt32) (i : UInt8) (shift : UInt8) : PMem.M UInt32 := do
+  let mut grpinfo := grpinfo
+  let mut base := base
+  let mut i := i
+  let mut shift := shift
+  let t'1 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+  let mut sc'3 := (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (shift))) != (0 : Int32)))
   if sc'3 then
-    return ()
-  let mut rounding_addition : Binary32 := (Binary32.ofBits 0x3c23d70a /- 999999977/100000000000 -/)
-  if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((4 : UInt32)))) then
-    AP_ParamTBase'float_4.set this (fp + 0)
-  else
-    if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((3 : UInt32)))) then
-      let t'4 ← PMem.ldF32 (fp + 0)
-      if (decide (t'4 < (Int32.toBinary32 ((0 : Int32))))) then
-        let t'5 := -rounding_addition
-        rounding_addition := t'5
-      let t'6 ← PMem.ldF32 (fp + 0)
-      let mut v : Binary32 := (t'6 + rounding_addition)
-      let t'7 ← constrain_value_line v (Int32.toBinary32 (((-(2147483647 : Int32)) - (1 : Int32)))) (Int32.toBinary32 ((2147483647 : Int32))) (Int32.toUInt32 ((2316 : Int32)))
-      v := t'7
-      PMem.stI32 (fp + 4) (Binary32.toInt32 (v))
-      AP_ParamTBase'int_3.set this (fp + 4)
-    else
-      if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((2 : UInt32)))) then
-        let t'8 ← PMem.ldF32 (fp + 0)
-        if (decide (t'8 < (Int32.toBinary32 ((0 : Int32))))) then
-          let t'9 := -rounding_addition
-          rounding_addition := t'9
-        let t'10 ← PMem.ldF32 (fp + 0)
-        let mut v'2 : Binary32 := (t'10 + rounding_addition)
-        let t'11 ← constrain_value_line v'2 (Int32.toBinary32 ((-(32768 : Int32)))) (Int32.toBinary32 ((32767 : Int32))) (Int32.toUInt32 ((2321 : Int32)))
-        v'2 := t'11
-        PMem.stI16 (fp + 8) (Binary32.toInt16 (v'2))
-        AP_ParamTBase'short_2.set this (fp + 8)
-      else
-        if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((1 : UInt32)))) then
-          let t'12 ← PMem.ldF32 (fp + 0)
-          if (decide (t'12 < (Int32.toBinary32 ((0 : Int32))))) then
-            let t'13 := -rounding_addition
-            rounding_addition := t'13
-          let t'14 ← PMem.ldF32 (fp + 0)
-          let mut v'3 : Binary32 := (t'14 + rounding_addition)
-          let t'15 ← constrain_value_line v'3 (Int32.toBinary32 ((-(128 : Int32)))) (Int32.toBinary32 ((127 : Int32))) (Int32.toUInt32 ((2326 : Int32)))
-          v'3 := t'15
-          PMem.stI8 (fp + 10) (Binary32.toInt8 (v'3))
-          AP_ParamTBase'signed_char_1.set this (fp + 10)
-  return ()
+    let t'2 ← PMem.ldU16 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 24)
+    sc'3 := !(((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32))
+  if sc'3 then
+    return (base + ((63 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
+  let t'4 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
+  return (base + (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) <<< (UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
 
-partial def AP_Param.set_float (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
-  let fp ← PMem.enter 11
-  let r ← AP_Param.set_float.body fp this value var_type
-  PMem.leave fp
-  return r
+mutual
 
-/-- C++ `AP_Param::save_sync : void (bool, bool)`, `AP_Param.cpp:1158-1264`. -/
-partial def AP_Param.save_sync.body (fp : UInt64) (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
-  let mut force_save := force_save
-  let mut send_to_gcs := send_to_gcs
-  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
-  discard <| PMem.memset ((fp + 16) + 0) 0 1
-  discard <| PMem.memset ((fp + 16) + 8) 0 16
-  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
-  let mut info' : UInt64 := t'1
-  let mut ap : UInt64 := default  -- uninitialized in C
-  if (info' == (0 : UInt64)) then
-    return ()
-  AP_Param.Param_header.Param_header (fp + 48)
-  let t'2 ← PMem.ldU64 (fp + 8)
-  if (t'2 != (0 : UInt64)) then
-    let t'3 ← PMem.ldU64 (fp + 8)
-    let t'4 ← PMem.ldU8 (t'3 + 27)
-    let t'5 := UInt8.toUInt32 (t'4)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
-    let t'6 ← PMem.ldU64 (fp + 8)
-    let t'7 ← PMem.ldU16 (t'6 + 24)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
-      send_to_gcs := false
-  else
-    let t'8 ← PMem.ldU8 (info' + 28)
-    let t'9 := UInt8.toUInt32 (t'8)
-    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'9))
-    let t'10 ← PMem.ldU16 (info' + 24)
-    if ((UInt32.toInt32 (UInt16.toUInt32 (t'10))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
-      send_to_gcs := false
-  let t'11 ← PMem.ldU16 (info' + 26)
-  AP_Param.set_key (fp + 48) t'11
-  let t'12 ← PMem.ldU32 (fp + 0)
-  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'12))
-  ap := this
-  let t'13 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'15 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'13)))) != (UInt32.toInt32 ((5 : UInt32))))
-  if sc'15 then
-    let t'14 ← PMem.ldU8 (fp + 40)
-    sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'14))) != (0 : Int32))
-  if sc'15 then
-    return ()
-  let t'16 ← PMem.ldU8 (fp + 40)
-  if ((UInt32.toInt32 (UInt8.toUInt32 (t'16))) != (0 : Int32)) then
-    let t'17 ← PMem.ldU8 (fp + 40)
-    let t'18 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'17)) * (4 : UInt64)))) * 1).toUInt64)
-    ap := t'18
-  let t'19 ← PMem.ldBits (fp + 48) 8 5
-  let mut sc'21 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (UInt32.toInt32 ((1 : UInt32))))
-  if sc'21 then
-    let t'20 ← PMem.ldU64 (fp + 8)
-    sc'21 := (t'20 != (0 : UInt64))
-  let mut sc'24 := sc'21
-  if sc'24 then
-    let t'22 ← PMem.ldU64 (fp + 8)
-    let t'23 ← PMem.ldU16 (t'22 + 24)
-    sc'24 := ((UInt32.toInt32 (UInt16.toUInt32 (t'23))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
-  if sc'24 then
-    AP_Param.invalidate_count
-  let t'25 ← PMem.ldU64 (fp + 8)
-  let t'26 ← PMem.ldU8 (fp + 40)
-  AP_Param.copy_name_info this info' t'25 (fp + 16) t'26 (fp + 56) (17 : UInt64) true
-  let t'27 ← AP_Param.scan (fp + 48) (fp + 80)
-  if t'27 then
-    let t'28 ← PMem.ldU16 (fp + 80)
-    let t'29 ← PMem.ldBits (fp + 48) 8 5
-    let t'30 ← AP_Param.type_size (UInt64.toUInt32 (t'29))
-    AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'28)) + (4 : UInt64)))) t'30
-    if send_to_gcs then
-      let t'31 ← PMem.ldBits (fp + 48) 8 5
-      let t'32 ← PMem.ldU8 (fp + 40)
-      AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'31)) t'32
-    return ()
-  let t'33 ← PMem.ldU16 (fp + 80)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'33))) == (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 ((~~~(0 : Int32))))))))) then
-    PMem.stB (0xaf48 : UInt64) /- &AP_Param::eeprom_full -/ true
-    let mut first'34 := true
-    repeat
-      if !first'34 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'34 := false
-    return ()
-  let t'35 ← PMem.ldBits (fp + 48) 8 5
-  if (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'35)))) ≤ (UInt32.toInt32 ((4 : UInt32))))) then
-    let t'36 ← PMem.ldBits (fp + 48) 8 5
-    let t'37 ← AP_Param.cast_to_float this (UInt64.toUInt32 (t'36))
-    let mut v1 : Binary32 := t'37
-    let mut v2 : Binary32 := default  -- uninitialized in C
-    let t'38 ← PMem.ldU64 (fp + 8)
-    if (t'38 != (0 : UInt64)) then
-      let t'39 ← PMem.ldU64 (fp + 8)
-      let t'40 ← AP_Param.get_default_value'2 this t'39
-      v2 := t'40
-    else
-      let t'41 ← AP_Param.get_default_value this info'
-      v2 := t'41
-    let t'42 ← is_equal v1 v2
-    if (t'42 && (!force_save)) then
-      if send_to_gcs then
-        pure ()
-      return ()
-    let mut sc'44 := !force_save
-    if sc'44 then
-      let t'43 ← PMem.ldBits (fp + 48) 8 5
-      sc'44 := (((UInt32.toInt32 ((UInt64.toUInt32 (t'43)))) != (UInt32.toInt32 ((3 : UInt32)))) && (decide ((Binary32.abs (v1 - v2)) < ((Binary32.ofBits 0x38d1b717 /- 499999987/5000000000000 -/) * (Binary32.abs v1)))))
-    if sc'44 then
-      if send_to_gcs then
-        pure ()
-      return ()
-  let t'45 ← PMem.ldU16 (fp + 80)
-  let t'46 ← PMem.ldBits (fp + 48) 8 5
-  let t'47 ← AP_Param.type_size (UInt64.toUInt32 (t'46))
-  let t'48 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
-  if (decide (((Int64.toUInt64 (Int32.toInt64 (((UInt32.toInt32 (UInt16.toUInt32 (t'45))) + (UInt32.toInt32 (UInt8.toUInt32 (t'47))))))) + ((Int64.toUInt64 (Int32.toInt64 ((2 : Int32)))) * (4 : UInt64))) ≥ (UInt16.toUInt64 (t'48)))) then
-    PMem.stB (0xaf48 : UInt64) /- &AP_Param::eeprom_full -/ true
-    let mut first'49 := true
-    repeat
-      if !first'49 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'49 := false
-    return ()
-  let t'50 ← PMem.ldU16 (fp + 80)
-  let t'51 ← PMem.ldBits (fp + 48) 8 5
-  let t'52 ← AP_Param.type_size (UInt64.toUInt32 (t'51))
-  AP_Param.write_sentinel (UInt64.toUInt16 ((((UInt16.toUInt64 (t'50)) + (4 : UInt64)) + (UInt8.toUInt64 (t'52)))))
-  let t'53 ← PMem.ldU16 (fp + 80)
-  let t'54 ← PMem.ldBits (fp + 48) 8 5
-  let t'55 ← AP_Param.type_size (UInt64.toUInt32 (t'54))
-  AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'53)) + (4 : UInt64)))) t'55
-  let t'56 ← PMem.ldU16 (fp + 80)
-  AP_Param.eeprom_write_check (fp + 48) t'56 (UInt64.toUInt8 ((4 : UInt64)))
-  if send_to_gcs then
-    let t'57 ← PMem.ldBits (fp + 48) 8 5
-    let t'58 ← PMem.ldU8 (fp + 40)
-    AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'57)) t'58
-  return ()
-
-partial def AP_Param.save_sync (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
-  let fp ← PMem.enter 82
-  let r ← AP_Param.save_sync.body fp this force_save send_to_gcs
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::find_key_by_pointer : bool (const void *, uint16_t &)`, `AP_Param.cpp:1070-1092`. -/
-partial def AP_Param.find_key_by_pointer (ptr' : UInt64) (key : UInt64) : PMem.M Bool := do
+/-- C++ `AP_Param::find_by_header_group : const struct AP_Param::Info *(struct Param_header, void **, uint16_t, const struct GroupInfo *, uint32_t, uint8_t, ptrdiff_t)`, `AP_Param.cpp:461-508`. -/
+def AP_Param.find_by_header_group.body'rec (rec'depth : Nat) (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut ptr' := ptr'
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut vindex := vindex
+  let mut group_info := group_info
+  let mut group_base := group_base
+  let mut group_shift := group_shift
+  let mut group_offset := group_offset
+  let mut type' : UInt8 := default  -- uninitialized in C
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
       pure ()
     first'1 := false
-    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
-    let t'4 ← AP_Param.var_info i
-    let info' : UInt64 := t'4
-    let t'5 ← PMem.ldU8 (info' + 28)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((6 : UInt32)))) then
-      continue
-    let t'6 ← PMem.ldU16 (info' + 24)
-    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
-    if sc'9 then
-      let t'7 ← PMem.ldU64 (info' + 8)
-      let t'8 ← PMem.ldU64 t'7
-      sc'9 := (ptr' == t'8)
-    if sc'9 then
-      let t'10 ← PMem.ldU16 (info' + 26)
-      PMem.stU16 key t'10
-      return true
-    let mut offset : Int64 := Int32.toInt64 ((0 : Int32))
-    let t'11 ← AP_Param.get_group_info info'
-    let mut ginfo : UInt64 := t'11
-    if (ginfo == (0 : UInt64)) then
-      continue
-    let t'12 ← AP_Param.find_key_by_pointer_group ptr' i ginfo offset key
-    if t'12 then
-      return true
-  return false
-
-/-- C++ `AP_Param::load_object_from_eeprom : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1705-1761`. -/
-partial def AP_Param.load_object_from_eeprom.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
-  let mut object_pointer := object_pointer
-  let mut group_info := group_info
-  AP_Param.Param_header.Param_header (fp + 0)
-  let t'1 ← AP_Param.find_key_by_pointer object_pointer (fp + 8)
-  if !t'1 then
-    let mut first'2 := true
-    repeat
-      if !first'2 then
-        if !((0 : Int32) != (0 : Int32)) then break
-      first'2 := false
-    return ()
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'3 := true
-  repeat
-    if !first'3 then
-      let t'4 := (i + 1)
-      i := t'4
-      pure ()
-    first'3 := false
-    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'6 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (t'6))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      PMem.stI64 (fp + 16) (Int32.toInt64 ((0 : Int32)))
-      let t'7 ← PMem.ldU16 (fp + 8)
-      let t'8 ← AP_Param.adjust_group_offset t'7 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 16)
-      if !t'8 then
+    let t'3 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'3
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        return (0 : UInt64)
+      let t'4 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'4
+      if (ginfo == (0 : UInt64)) then
         continue
-      let t'9 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'9
-      if (ginfo != (0 : UInt64)) then
-        let t'10 ← PMem.ldI64 (fp + 16)
-        AP_Param.load_object_from_eeprom (Int64.toUInt64 (((UInt64.toInt64 (object_pointer)) + t'10))) ginfo
-    let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-    repeat
-      let t'11 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
-      if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'11)))))) then break
-      let t'12 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
-      discard <| pure (t'12)
-      let t'13 ← AP_Param.is_sentinel (fp + 0)
-      if t'13 then
-        PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
-        break
-      let t'14 ← AP_Param.get_key (fp + 0)
-      let t'15 ← PMem.ldU16 (fp + 8)
-      if ((UInt32.toInt32 (UInt16.toUInt32 (t'14))) == (UInt32.toInt32 (UInt16.toUInt32 (t'15)))) then
-        let mut info' : UInt64 := default  -- uninitialized in C
-        AP_Param.Param_header.Param_header'2 (fp + 32) (fp + 0)
-        let t'16 ← AP_Param.find_by_header (fp + 32) (fp + 24)
-        info' := t'16
-        if (info' != (0 : UInt64)) then
-          let t'17 ← PMem.ldU64 (fp + 24)
-          let t'18 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-          if ((UInt64.toInt64 (t'17)) == ((UInt64.toInt64 (object_pointer)) + t'18)) then
-            let t'19 ← PMem.ldU64 (fp + 24)
-            let t'20 ← PMem.ldBits (fp + 0) 8 5
-            let t'21 ← AP_Param.type_size (UInt64.toUInt32 (t'20))
-            let t'22 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ t'19 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'21))
-            discard <| pure (t'22)
-            break
-      let t'23 ← PMem.ldBits (fp + 0) 8 5
-      let t'24 ← AP_Param.type_size (UInt64.toUInt32 (t'23))
-      let t'25 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'24)) + (4 : UInt64)))))
-      ofs := t'25
-  let t'26 ← PMem.ldB (0xaf50 : UInt64) /- &AP_Param::done_all_default_params -/
-  if !t'26 then
-    AP_Param.reload_defaults_file false
-  AP_Param.invalidate_count
-  return ()
+      PMem.stI64 (fp + 0) group_offset
+      let t'5 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 0)
+      if !t'5 then
+        continue
+      AP_Param.Param_header.Param_header'2 (fp + 8) phdr
+      let t'6 ← AP_Param.group_id group_info group_base i group_shift
+      let t'7 ← PMem.ldI64 (fp + 0)
+      let t'8 ← AP_Param.find_by_header_group'rec rec'd (fp + 8) ptr' vindex ginfo t'6 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'7
+      let mut ret : UInt64 := t'8
+      if (ret != (0 : UInt64)) then
+        return ret
+      continue
+    let t'9 ← AP_Param.group_id group_info group_base i group_shift
+    let t'10 ← PMem.ldBits phdr 14 18
+    let mut sc'12 := (t'9 == (UInt64.toUInt32 (t'10)))
+    if sc'12 then
+      let t'11 ← PMem.ldBits phdr 8 5
+      sc'12 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((UInt64.toUInt32 (t'11)))))
+    if sc'12 then
+      let t'13 ← AP_Param.var_info vindex
+      let t'14 ← AP_Param.get_base t'13 (fp + 16)
+      if !t'14 then
+        continue
+      let t'15 ← PMem.ldI64 (fp + 16)
+      let t'16 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+      let t'17 := Int64.toUInt64 (((t'15 + t'16) + group_offset))
+      PMem.stU64 ptr' t'17
+      let t'18 ← AP_Param.var_info vindex
+      return t'18
+  return (0 : UInt64)
 
-partial def AP_Param.load_object_from_eeprom (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 36
-  let r ← AP_Param.load_object_from_eeprom.body fp object_pointer group_info
+def AP_Param.find_by_header_group'rec (rec'depth : Nat) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 24
+  let r ← AP_Param.find_by_header_group.body'rec rec'd fp phdr ptr' vindex group_info group_base group_shift group_offset
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::set_frame_type_flags : void (uint16_t)`, `AP_Param.h:599-602`. -/
-partial def AP_Param.set_frame_type_flags (flags_to_set : UInt16) : PMem.M Unit := do
-  let mut flags_to_set := flags_to_set
-  AP_Param.invalidate_count
-  let t'1 := (0xaf58 : UInt64) /- &AP_Param::_frame_type_flags -/
-  let t'2 ← PMem.ldU16 t'1
-  let t'3 := (t'2 ||| (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (flags_to_set)))))))
-  PMem.stU16 t'1 t'3
-  return ()
+end
 
-/-- C++ `AP_Param::type_size : uint8_t (enum ap_var_type)`, `AP_Param.cpp:702-721`. -/
-partial def AP_Param.type_size (type' : UInt32) : PMem.M UInt8 := do
-  let mut type' := type'
-  let sw'1 := UInt32.toInt32 (type')
-  if sw'1 == (0 : Int32) || sw'1 == (6 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  else if sw'1 == (1 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((1 : Int32)))
-  else if sw'1 == (2 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))
-  else if sw'1 == (3 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  else if sw'1 == (4 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
-  else if sw'1 == (5 : Int32) then
-    return Int8.toUInt8 (Int32.toInt8 (((3 : Int32) * (4 : Int32))))
-  else
-    pure ()
-  return Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+/-- `AP_Param.find_by_header_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_by_header_group.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 :=
+  AP_Param.find_by_header_group.body'rec 64 fp phdr ptr' vindex group_info group_base group_shift group_offset
 
-/-- C++ `AP_Param::AP_Param : void (const struct Info *)`, `AP_Param.h:263-276`. -/
-partial def AP_Param.AP_Param (this : UInt64) (info' : UInt64) : PMem.M Unit := do
-  let mut info' := info'
-  PMem.stU64 (0xaf60 : UInt64) /- &AP_Param::_var_info -/ info'
-  let mut i : UInt16 := default  -- uninitialized in C
-  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  i := t'1
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := (i + 1)
-      i := t'3
-      pure ()
-    first'2 := false
-    let t'4 ← PMem.ldU8 ((info' + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64) + 28)
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'4))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-  PMem.stU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/ i
-  let t'5 ← PMem.ldU64 (0xaf68 : UInt64) /- &AP_Param::_singleton -/
-  if (t'5 != (0 : UInt64)) then
-    pure ()
-  PMem.stU64 (0xaf68 : UInt64) /- &AP_Param::_singleton -/ this
-  return ()
-
-/-- C++ `AP_Param::AP_Param : void ()`, `AP_Param.h:279-?`. -/
-partial def AP_Param.AP_Param'2 (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `StorageAccess::StorageAccess : void (StorageManager::StorageType)`, `StorageManager.cpp:119-133`. -/
-partial def StorageAccess.StorageAccess (this : UInt64) (_type : UInt32) : PMem.M Unit := do
-  let mut _type := _type
-  PMem.stU32 (this + 0) _type
-  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  PMem.stU16 (this + 4) t'1
-  PMem.stU64 (this + 8) (0 : UInt64)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := (i + 1)
-      i := t'3
-      pure ()
-    first'2 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-    let t'4 ← PMem.ldU32 area
-    let t'5 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'4)) == (UInt32.toInt32 (t'5))) then
-      let t'6 := (this + 4)
-      let t'7 ← PMem.ldU16 t'6
-      let t'8 ← PMem.ldU16 (area + 6)
-      let t'9 := (t'7 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (t'8)))))))
-      PMem.stU16 t'6 t'9
-  return ()
-
-/-- C++ `StorageManager::erase : void ()`, `StorageManager.cpp:109-114`. -/
-partial def StorageManager.erase  : PMem.M Unit := do
-  let t'1 ← AP_HAL.Storage.erase (0 : UInt64)
-  if !t'1 then
-    pure ()
-  return ()
-
-/-- C++ `AP_Param::invalidate_count : void ()`, `AP_Param.cpp:2787-2793`. -/
-partial def AP_Param.invalidate_count  : PMem.M Unit := do
-  let t'1 := (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
-  let t'2 ← PMem.ldU16 t'1
-  let t'3 := (t'2 + 1)
-  PMem.stU16 t'1 t'3
-  return ()
-
-/-- C++ `AP_ParamTBase<short, 2>::set_and_save : void (const short &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI16 this
-  let t'2 ← PMem.ldI16 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int16.toInt32 (t'1)) - (Int16.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'short_2.set'2 this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<short, 2>::set_default : void (const short &)`, `AP_ParamT.cpp:45-52`. -/
-partial def AP_ParamTBase'short_2.set_default (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← default_as_float v
-  AP_Param.add_default this t'1
-  let t'2 ← AP_Param.configured this
-  if !t'2 then
-    AP_ParamTBase'short_2.set'2 this v
-  return ()
-
-/-- C++ `AP_ParamTBase<float, 4>::set_and_save : void (const float &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'float_4.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 this
-  let t'2 ← PMem.ldF32 v
-  let mut force : Bool := (decide ((Binary32.abs (t'1 - t'2)) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'float_4.set'2 this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<signed char, 1>::set_and_save : void (const signed char &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'signed_char_1.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI8 this
-  let t'2 ← PMem.ldI8 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int8.toInt32 (t'1)) - (Int8.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'signed_char_1.set'2 this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
-
-/-- C++ `AP_ParamTBase<int, 3>::set_and_save : void (const int &)`, `AP_ParamT.cpp:79-83`. -/
-partial def AP_ParamTBase'int_3.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI32 this
-  let t'2 ← PMem.ldI32 v
-  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 ((t'1 - t'2)))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
-  AP_ParamTBase'int_3.set'2 this v
-  -- AP_Param::save: dropped (configuration)
-  return ()
+/-- `AP_Param.find_by_header_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_by_header_group (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 :=
+  AP_Param.find_by_header_group'rec 64 phdr ptr' vindex group_info group_base group_shift group_offset
 
 /-- C++ `AP_Param::find_by_header : const struct AP_Param::Info *(struct Param_header, void **)`, `AP_Param.cpp:512-541`. -/
-partial def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
   let mut ptr' := ptr'
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -2684,19 +2332,90 @@ partial def AP_Param.find_by_header.body (fp : UInt64) (phdr : UInt64) (ptr' : U
       return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_by_header (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_by_header (phdr : UInt64) (ptr' : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 16
   let r ← AP_Param.find_by_header.body fp phdr ptr'
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::is_sentinel : bool (const Param_header &)`, `AP_Param.cpp:760-777`. -/
+def AP_Param.is_sentinel (phdr : UInt64) : PMem.M Bool := do
+  let t'1 ← PMem.ldBits phdr 8 5
+  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8)))))
+  if !sc'3 then
+    let t'2 ← AP_Param.get_key phdr
+    sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 ((511 : UInt16)))))
+  if sc'3 then
+    return true
+  let t'4 ← PMem.ldU32 phdr
+  let mut v : UInt32 := t'4
+  if ((v == (Int32.toUInt32 ((0 : Int32)))) || (v == (4294967295 : UInt32))) then
+    return true
+  return false
+
+/-- `AP_Param.reload_defaults_file` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.reload_defaults_file.pure' (last_pass : Bool) : Id Unit := do
+  let mut last_pass := last_pass
+  let mut default_file : UInt64 := (0 : UInt64)
+  if (default_file != 0) then
+    -- AP_Param::load_defaults_file_from_filesystem: dropped (configuration)
+  return ()
+
+/-- C++ `AP_Param::reload_defaults_file : void (bool)`, `AP_Param.cpp:1629-1657`. -/
+def AP_Param.reload_defaults_file (last_pass : Bool) : PMem.M Unit :=
+  pure (_root_.AP_Param_lib.AP_Param.reload_defaults_file.pure' last_pass)
+
+/-- C++ `StorageAccess::size : uint16_t () const`, `StorageManager.h:97-?`. -/
+def StorageAccess.size (this : UInt64) : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (this + 4)
+  return t'1
+
+/-- C++ `AP_Param::load_all : bool ()`, `AP_Param.cpp:1588-1622`. -/
+def AP_Param.load_all.body (fp : UInt64)  : PMem.M Bool := do
+  AP_Param.Param_header.Param_header (fp + 0)
+  let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
+  AP_Param.reload_defaults_file false
+  let t'1 ← PMem.ldB (0xaf10 : UInt64) /- &AP_Param::registered_save_handler -/
+  if !t'1 then
+    PMem.stB (0xaf10 : UInt64) /- &AP_Param::registered_save_handler -/ true
+  for _ in PMem.loopFuel do
+    let t'2 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'2)))))) then break
+    let t'3 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
+    discard <| pure (t'3)
+    let t'4 ← AP_Param.is_sentinel (fp + 0)
+    if t'4 then
+      PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
+      return true
+    let mut info' : UInt64 := default  -- uninitialized in C
+    AP_Param.Param_header.Param_header'2 (fp + 16) (fp + 0)
+    let t'5 ← AP_Param.find_by_header (fp + 16) (fp + 8)
+    info' := t'5
+    if (info' != (0 : UInt64)) then
+      let t'6 ← PMem.ldU64 (fp + 8)
+      let t'7 ← PMem.ldBits (fp + 0) 8 5
+      let t'8 ← AP_Param.type_size (UInt64.toUInt32 (t'7))
+      let t'9 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ t'6 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'8))
+      discard <| pure (t'9)
+    let t'10 ← PMem.ldBits (fp + 0) 8 5
+    let t'11 ← AP_Param.type_size (UInt64.toUInt32 (t'10))
+    let t'12 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'11)) + (4 : UInt64)))))
+    ofs := t'12
+  return false
+
+def AP_Param.load_all  : PMem.M Bool := do
+  let fp ← PMem.enter 20
+  let r ← AP_Param.load_all.body fp 
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::scan : bool (const AP_Param::Param_header *, uint16_t *)`, `AP_Param.cpp:784-808`. -/
-partial def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
+def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
   let mut target := target
   let mut pofs := pofs
   AP_Param.Param_header.Param_header (fp + 0)
   let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
-  repeat
+  for _ in PMem.loopFuel do
     let t'1 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
     if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'1)))))) then break
     let t'2 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
@@ -2729,379 +2448,128 @@ partial def AP_Param.scan.body (fp : UInt64) (target : UInt64) (pofs : UInt64) :
   PMem.stU16 pofs t'15
   return false
 
-partial def AP_Param.scan (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
+def AP_Param.scan (target : UInt64) (pofs : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 4
   let r ← AP_Param.scan.body fp target pofs
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::is_sentinel : bool (const Param_header &)`, `AP_Param.cpp:760-777`. -/
-partial def AP_Param.is_sentinel (phdr : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldBits phdr 8 5
-  let mut sc'3 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'1)))) == (UInt32.toInt32 (UInt8.toUInt32 ((31 : UInt8)))))
-  if !sc'3 then
-    let t'2 ← AP_Param.get_key phdr
-    sc'3 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 ((511 : UInt16)))))
-  if sc'3 then
-    return true
-  let t'4 ← PMem.ldU32 phdr
-  let mut v : UInt32 := t'4
-  if ((v == (Int32.toUInt32 ((0 : Int32)))) || (v == (4294967295 : UInt32))) then
-    return true
-  return false
+mutual
 
-/-- C++ `AC_CommandModel::AC_CommandModel : void (float, float, float)`, `AC_CommandModel.cpp:42-48`. -/
-partial def AC_CommandModel.AC_CommandModel (this : UInt64) (initial_rate : Binary32) (initial_expo : Binary32) (initial_tc : Binary32) : PMem.M Unit := do
-  let mut initial_rate := initial_rate
-  let mut initial_expo := initial_expo
-  let mut initial_tc := initial_tc
-  PMem.stF32 (this + 12) initial_tc
-  PMem.stF32 (this + 16) initial_rate
-  PMem.stF32 (this + 20) initial_expo
-  AP_Param.setup_object_defaults this (0x6b48 : UInt64) /- &AC_CommandModel::var_info -/
-  return ()
-
-/-- C++ `SRV_Channels::SRV_Channels : void ()`, `SRV_Channels.cpp:344-362`. -/
-partial def SRV_Channels.SRV_Channels.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
-  PMem.stU64 (0xafe8 : UInt64) /- &SRV_Channels::_singleton -/ this
-  let t'1 := (this + 4)
-  PMem.stU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/ t'1
-  AP_Param.setup_object_defaults this (0x6170 : UInt64) /- &SRV_Channels::var_info -/
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'2 := true
-  repeat
-    if !first'2 then
-      let t'3 := (i + 1)
-      i := t'3
-      pure ()
-    first'2 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (32 : Int32)))) then break
-    let t'4 ← PMem.ldU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/
-    PMem.stU8 ((t'4 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 13) i
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) ≥ (16 : Int32))) then
-      PMem.stI16 (fp + 0) (Int32.toInt16 ((-1 : Int32)))
-      let t'5 ← PMem.ldU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/
-      AP_ParamTBase'short_2.set_default ((t'5 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 8) (fp + 0)
-  return ()
-
-partial def SRV_Channels.SRV_Channels (this : UInt64) : PMem.M Unit := do
-  let fp ← PMem.enter 2
-  let r ← SRV_Channels.SRV_Channels.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::setup : bool ()`, `AP_Param.cpp:362-399`. -/
-partial def AP_Param.setup.body (fp : UInt64)  : PMem.M Bool := do
-  discard <| PMem.memset ((fp + 0) + 0) 0 2
-  discard <| PMem.memset ((fp + 0) + 2) 0 1
-  discard <| PMem.memset ((fp + 0) + 3) 0 1
-  let t'1 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) (Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))) (4 : UInt64)
-  discard <| pure (t'1)
-  let t'2 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((0 : Int32))) * 1).toUInt64)
-  let mut sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'2))) != (UInt32.toInt32 (UInt8.toUInt32 ((80 : UInt8)))))
-  if !sc'4 then
-    let t'3 ← PMem.ldU8 ((fp + 0) + ((Int32.toInt64 ((1 : Int32))) * 1).toUInt64)
-    sc'4 := ((UInt32.toInt32 (UInt8.toUInt32 (t'3))) != (UInt32.toInt32 (UInt8.toUInt32 ((65 : UInt8)))))
-  let mut sc'6 := sc'4
-  if !sc'6 then
-    let t'5 ← PMem.ldU8 ((fp + 0) + 2)
-    sc'6 := ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))
-  if sc'6 then
-    AP_Param.erase_all
-  return true
-
-partial def AP_Param.setup  : PMem.M Bool := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.setup.body fp 
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::var_info : const struct Info &(uint16_t)`, `AP_Param.h:846-848`. -/
-partial def AP_Param.var_info (i : UInt16) : PMem.M UInt64 := do
-  let mut i := i
-  let t'1 ← PMem.ldU64 (0xaf60 : UInt64) /- &AP_Param::_var_info -/
-  return (t'1 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64)
-
-/-- C++ `AP_Param::get_base : bool (const struct Info &, ptrdiff_t &)`, `AP_Param.cpp:440-448`. -/
-partial def AP_Param.get_base (info' : UInt64) (base : UInt64) : PMem.M Bool := do
-  let t'1 ← PMem.ldU16 (info' + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (info' + 8)
-    let t'3 ← PMem.ldI64 t'2
-    PMem.stI64 base t'3
-    let t'4 ← PMem.ldI64 base
-    return (t'4 != (Int32.toInt64 ((0 : Int32))))
-  let t'5 ← PMem.ldU64 (info' + 8)
-  let t'6 := UInt64.toInt64 (t'5)
-  PMem.stI64 base t'6
-  return true
-
-/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct Info &)`, `AP_Param.cpp:2698-2709`. -/
-partial def AP_Param.get_default_value (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
-  let mut vp := vp
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
-      pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU16 (0xaff8 : UInt64) /- &AP_Param::num_param_overrides -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
-    let t'4 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
-    let t'5 ← PMem.ldU64 (t'4 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
-    if (vp == t'5) then
-      let t'6 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
-      let t'7 ← PMem.ldF32 ((t'6 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
-      return t'7
-  let t'8 ← PMem.ldU16 (info' + 24)
-  if (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
-    let t'9 ← PMem.ldI64 (info' + 16)
-    let t'10 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'9)))
-    return t'10
-  let t'11 ← PMem.ldF32 (info' + 16)
-  return t'11
-
-/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct Info &)`, `AP_Param.cpp:312-318`. -/
-partial def AP_Param.get_group_info (info' : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU16 (info' + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (info' + 16)
-    let t'3 ← PMem.ldU64 t'2
-    return t'3
-  let t'4 ← PMem.ldU64 (info' + 16)
-  return t'4
-
-/-- C++ `AP_Param::check_group_info : void (const struct AP_Param::GroupInfo *, uint16_t *, uint8_t, uint8_t)`, `AP_Param.cpp:235-283`. -/
-partial def AP_Param.check_group_info (group_info : UInt64) (total_size : UInt64) (group_shift : UInt8) (prefix_length : UInt8) : PMem.M Unit := do
+/-- C++ `AP_Param::find_var_info_group : const struct AP_Param::Info *(const struct GroupInfo *, uint16_t, uint32_t, uint8_t, ptrdiff_t, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:544-612`. -/
+def AP_Param.find_var_info_group.body'rec (rec'depth : Nat) (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut group_info := group_info
-  let mut total_size := total_size
+  let mut vindex := vindex
+  let mut group_base := group_base
   let mut group_shift := group_shift
-  let mut prefix_length := prefix_length
+  let mut group_offset := group_offset
+  let mut group_element := group_element
+  let mut idx := idx
+  let t'1 ← AP_Param.var_info vindex
+  let t'2 ← AP_Param.get_base t'1 (fp + 0)
+  if !t'2 then
+    return (0 : UInt64)
   let mut type' : UInt8 := default  -- uninitialized in C
-  let mut used_mask : UInt64 := Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
+  let mut first'3 := true
+  for _ in PMem.loopFuel do
+    if !first'3 then
+      let t'4 := (i + 1)
+      i := t'4
       pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'3
+    first'3 := false
+    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    type' := t'5
     if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-    let mut idx : UInt8 := t'4
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (idx))) ≥ ((1 : Int32) <<< (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))))) then
-      pure ()
-    if (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) != (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (idx))) == (0 : Int32))) then
-      let t'5 := Int8.toUInt8 (Int32.toInt8 ((63 : Int32)))
-      idx := t'5
-    if (used_mask &&& ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx)))))))) != (0 : UInt64) then
-      pure ()
-    let t'6 := (used_mask ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (idx))))))))
-    used_mask := t'6
+    let t'6 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+    let mut ofs : Int64 := (t'6 + group_offset)
     if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        pure ()
       let t'7 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
       let mut ginfo : UInt64 := t'7
       if (ginfo == (0 : UInt64)) then
         continue
-      let t'8 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let t'9 ← PMem.strlen t'8
-      AP_Param.check_group_info ginfo total_size (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) (UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'9)))
-      continue
-    let t'10 ← AP_Param.type_size (UInt8.toUInt32 (type'))
-    let mut size : UInt8 := t'10
-    if ((UInt32.toInt32 (UInt8.toUInt32 (size))) == (0 : Int32)) then
-      pure ()
-    let t'11 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-    let t'12 ← PMem.strlen t'11
-    let mut param_name_length : UInt8 := UInt64.toUInt8 (((UInt8.toUInt64 (prefix_length)) + t'12))
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32)))) then
-      let t'13 := (param_name_length + (Int8.toUInt8 (Int32.toInt8 ((2 : Int32)))))
-      param_name_length := t'13
-    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (param_name_length))) > (16 : Int32))) then
-      pure ()
-    let t'14 ← PMem.ldU16 total_size
-    let t'15 := (t'14 + (UInt64.toUInt16 (((UInt8.toUInt64 (size)) + (4 : UInt64)))))
-    PMem.stU16 total_size t'15
-  return ()
+      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
+        return (0 : UInt64)
+      let mut info' : UInt64 := default  -- uninitialized in C
+      PMem.stI64 (fp + 8) group_offset
+      let t'8 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 8)
+      if !t'8 then
+        continue
+      let t'9 ← PMem.ldU8 group_nesting
+      if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((2 : UInt8)))))) then
+        return (0 : UInt64)
+      let t'10 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let t'11 ← PMem.ldU8 group_nesting
+      let t'12 := (t'11 + 1)
+      PMem.stU8 group_nesting t'12
+      PMem.stU64 ((group_nesting + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (t'11))) * 8).toUInt64) t'10
+      let t'13 ← AP_Param.group_id group_info group_base i group_shift
+      let t'14 ← PMem.ldI64 (fp + 8)
+      let t'15 ← AP_Param.find_var_info_group'rec rec'd this ginfo vindex t'13 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'14 group_element group_ret group_nesting idx
+      info' := t'15
+      if (info' != (0 : UInt64)) then
+        return info'
+      let t'16 ← PMem.ldU8 group_nesting
+      let t'17 := (t'16 - 1)
+      PMem.stU8 group_nesting t'17
+    else
+      let t'18 ← PMem.ldI64 (fp + 0)
+      if ((UInt64.toInt64 (this)) == (t'18 + ofs)) then
+        let t'19 ← AP_Param.group_id group_info group_base i group_shift
+        PMem.stU32 group_element t'19
+        let t'20 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+        PMem.stU64 group_ret t'20
+        let t'21 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+        PMem.stU8 idx t'21
+        let t'22 ← AP_Param.var_info vindex
+        return t'22
+      else
+        let mut sc'26 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32))))
+        if sc'26 then
+          let t'23 ← PMem.ldI64 (fp + 0)
+          let mut sc'25 := (((t'23 + ofs) + (UInt64.toInt64 ((4 : UInt64)))) == (UInt64.toInt64 (this)))
+          if !sc'25 then
+            let t'24 ← PMem.ldI64 (fp + 0)
+            sc'25 := (((t'24 + ofs) + ((Int32.toInt64 ((2 : Int32))) * (UInt64.toInt64 ((4 : UInt64))))) == (UInt64.toInt64 (this)))
+          sc'26 := sc'25
+        if sc'26 then
+          let t'27 ← PMem.ldI64 (fp + 0)
+          let t'28 := UInt64.toUInt8 (((Int64.toUInt64 (((UInt64.toInt64 (this)) - (t'27 + ofs)))) / (4 : UInt64)))
+          PMem.stU8 idx t'28
+          let t'29 ← AP_Param.group_id group_info group_base i group_shift
+          PMem.stU32 group_element t'29
+          let t'30 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+          PMem.stU64 group_ret t'30
+          let t'31 ← AP_Param.var_info vindex
+          return t'31
+  return (0 : UInt64)
 
-/-- C++ `AP_Param::duplicate_key : bool (uint16_t, uint16_t)`, `AP_Param.cpp:286-296`. -/
-partial def AP_Param.duplicate_key (vindex : UInt16) (key : UInt16) : PMem.M Bool := do
-  let mut vindex := vindex
-  let mut key := key
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (vindex))) + (1 : Int32))))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
-      pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
-    let t'4 ← AP_Param.var_info i
-    let t'5 ← PMem.ldU16 (t'4 + 26)
-    let mut key2 : UInt16 := t'5
-    if ((UInt32.toInt32 (UInt16.toUInt32 (key2))) == (UInt32.toInt32 (UInt16.toUInt32 (key)))) then
-      return true
-  return false
-
-/-- C++ `AP_Param::get_default_value : float (const AP_Param *, const struct GroupInfo &)`, `AP_Param.cpp:2685-2696`. -/
-partial def AP_Param.get_default_value'2 (vp : UInt64) (info' : UInt64) : PMem.M Binary32 := do
-  let mut vp := vp
-  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
-      pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU16 (0xaff8 : UInt64) /- &AP_Param::num_param_overrides -/
-    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
-    let t'4 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
-    let t'5 ← PMem.ldU64 (t'4 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64)
-    if (vp == t'5) then
-      let t'6 ← PMem.ldU64 (0xb000 : UInt64) /- &AP_Param::param_overrides -/
-      let t'7 ← PMem.ldF32 ((t'6 + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 16).toUInt64) + 8)
-      return t'7
-  let t'8 ← PMem.ldU16 (info' + 24)
-  if (((UInt32.toInt32 (UInt16.toUInt32 (t'8))) &&& ((1 : Int32) <<< (7 : Int32))) != (0 : Int32)) then
-    let t'9 ← PMem.ldI64 (info' + 16)
-    let t'10 ← PMem.ldF32 (Int64.toUInt64 (((UInt64.toInt64 (vp)) - t'9)))
-    return t'10
-  let t'11 ← PMem.ldF32 (info' + 16)
-  return t'11
-
-/-- C++ `AP_ParamV<Vector3<float>, 5>::set : void (const Vector3<float> &)`, `AP_Param.h:1065-1067`. -/
-partial def AP_ParamV'Vector3_float_5.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← Vector3'float.operator_ this v
-  discard <| pure (t'1)
-  return ()
-
-/-- C++ `Vector3<float>::Vector3 : void (const float, const float, const float)`, `AP_Common.h:85-88`. -/
-partial def Vector3'float.Vector3 (this : UInt64) (x0 : Binary32) (y0 : Binary32) (z0 : Binary32) : PMem.M Unit := do
-  let mut x0 := x0
-  let mut y0 := y0
-  let mut z0 := z0
-  PMem.stF32 (this + 0) x0
-  PMem.stF32 (this + 4) y0
-  PMem.stF32 (this + 8) z0
-  return ()
-
-/-- C++ `AP_Param::Param_header::Param_header : void () noexcept`, `AP_Param.h:669-?`. -/
-partial def AP_Param.Param_header.Param_header (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `AP_Param::reload_defaults_file : void (bool)`, `AP_Param.cpp:1629-1657`. -/
-partial def AP_Param.reload_defaults_file (last_pass : Bool) : PMem.M Unit := do
-  let mut last_pass := last_pass
-  let mut default_file : UInt64 := (0 : UInt64)
-  if (default_file != 0) then
-    -- AP_Param::load_defaults_file_from_filesystem: dropped (configuration)
-  return ()
-
-/-- C++ `StorageAccess::size : uint16_t () const`, `StorageManager.h:97-?`. -/
-partial def StorageAccess.size (this : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldU16 (this + 4)
-  return t'1
-
-/-- C++ `StorageAccess::read_block : bool (void *, uint16_t, size_t) const`, `StorageManager.cpp:139-186`. -/
-partial def StorageAccess.read_block.body (fp : UInt64) (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
-  let mut data := data
-  let mut addr := addr
-  PMem.stU64 (fp + 0) n
-  let mut b : UInt64 := data
-  let t'1 ← PMem.ldU64 (this + 8)
-  if (t'1 != (0 : UInt64)) then
-    let t'2 ← PMem.ldU64 (this + 8)
-    let t'3 ← PMem.ldU32 (t'2 + 24)
-    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
-      return false
-    let t'4 ← PMem.ldU64 (this + 8)
-    let t'5 ← PMem.ldU32 (t'4 + 24)
-    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
-    let t'6 ← MIN (fp + 0) (fp + 8)
-    let mut n2 : UInt64 := t'6
-    let t'7 ← PMem.ldU64 (this + 8)
-    let t'8 ← PMem.ldU64 (t'7 + 16)
-    let t'9 ← PMem.memcpy b (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) n2
-    discard <| pure (t'9)
-    let t'10 ← PMem.ldU64 (fp + 0)
-    return (t'10 == n2)
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'11 := true
-  repeat
-    if !first'11 then
-      let t'12 := (i + 1)
-      i := t'12
-      pure ()
-    first'11 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
-    let t'13 ← PMem.ldU16 (area + 6)
-    let mut length : UInt16 := t'13
-    let t'14 ← PMem.ldU16 (area + 4)
-    let mut offset : UInt16 := t'14
-    let t'15 ← PMem.ldU32 area
-    let t'16 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'15)) != (UInt32.toInt32 (t'16))) then
-      continue
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'17 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
-      addr := t'17
-      continue
-    let t'18 ← PMem.ldU64 (fp + 0)
-    let mut count : UInt16 := UInt64.toUInt16 (t'18)
-    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'19 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
-      count := t'19
-    PMem.halRead b (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) (UInt16.toUInt64 (count))
-    let t'20 ← PMem.ldU64 (fp + 0)
-    let t'21 := (t'20 - (UInt16.toUInt64 (count)))
-    PMem.stU64 (fp + 0) t'21
-    let t'22 ← PMem.ldU64 (fp + 0)
-    if (t'22 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
-      break
-    let t'23 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
-    b := t'23
-    let t'24 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    addr := t'24
-  let t'25 ← PMem.ldU64 (fp + 0)
-  return (t'25 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
-
-partial def StorageAccess.read_block (this : UInt64) (data : UInt64) (addr : UInt16) (n : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 12
-  let r ← StorageAccess.read_block.body fp this data addr n
+def AP_Param.find_var_info_group'rec (rec'depth : Nat) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 16
+  let r ← AP_Param.find_var_info_group.body'rec rec'd fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::Param_header::Param_header : void (const Param_header &) noexcept`, `AP_Param.h:?-?`. -/
-partial def AP_Param.Param_header.Param_header'2 (this : UInt64) (arg : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldBits arg 0 8
-  PMem.stBits this 0 8 (UInt32.toUInt64 ((UInt64.toUInt32 (t'1))))
-  let t'2 ← PMem.ldBits arg 8 5
-  PMem.stBits this 8 5 (UInt32.toUInt64 ((UInt64.toUInt32 (t'2))))
-  let t'3 ← PMem.ldBits arg 13 1
-  PMem.stBits this 13 1 (UInt32.toUInt64 ((UInt64.toUInt32 (t'3))))
-  let t'4 ← PMem.ldBits arg 14 18
-  PMem.stBits this 14 18 (UInt32.toUInt64 ((UInt64.toUInt32 (t'4))))
-  return ()
+end
+
+/-- `AP_Param.find_var_info_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_var_info_group.body (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_var_info_group.body'rec 64 fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
+
+/-- `AP_Param.find_var_info_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_var_info_group (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_var_info_group'rec 64 this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
 
 /-- C++ `AP_Param::find_var_info : const struct AP_Param::Info *(uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:615-654`. -/
-partial def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let mut group_element := group_element
   let mut idx := idx
   PMem.stU64 group_ret (0 : UInt64)
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -3152,55 +2620,99 @@ partial def AP_Param.find_var_info.body (fp : UInt64) (this : UInt64) (group_ele
           return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_var_info (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info (this : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 8
   let r ← AP_Param.find_var_info.body fp this group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::set_key : void (Param_header &, uint16_t)`, `AP_Param.cpp:751-755`. -/
-partial def AP_Param.set_key (phdr : UInt64) (key : UInt16) : PMem.M Unit := do
-  let mut key := key
-  let t'1 := Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (key))) &&& (255 : Int32)))
-  PMem.stBits phdr 0 8 (UInt32.toUInt64 (t'1))
-  let t'2 := Int32.toUInt32 (((UInt32.toInt32 (UInt16.toUInt32 (key))) >>> (8 : Int32)))
-  PMem.stBits phdr 13 1 (UInt32.toUInt64 (t'2))
-  return ()
+/-- C++ `AP_Param::load : bool ()`, `AP_Param.cpp:1339-1399`. -/
+def AP_Param.load.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  if (info' == (0 : UInt64)) then
+    return false
+  AP_Param.Param_header.Param_header (fp + 48)
+  let t'2 ← PMem.ldU64 (fp + 8)
+  if (t'2 != (0 : UInt64)) then
+    let t'3 ← PMem.ldU64 (fp + 8)
+    let t'4 ← PMem.ldU8 (t'3 + 27)
+    let t'5 := UInt8.toUInt32 (t'4)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
+  else
+    let t'6 ← PMem.ldU8 (info' + 28)
+    let t'7 := UInt8.toUInt32 (t'6)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'7))
+  let t'8 ← PMem.ldU16 (info' + 26)
+  AP_Param.set_key (fp + 48) t'8
+  let t'9 ← PMem.ldU32 (fp + 0)
+  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'9))
+  let t'10 ← AP_Param.scan (fp + 48) (fp + 56)
+  if !t'10 then
+    let t'11 ← AP_Param.get_base info' (fp + 64)
+    if !t'11 then
+      return false
+    let t'12 ← PMem.ldU64 (fp + 8)
+    if (t'12 != (0 : UInt64)) then
+      let mut group_offset : Int64 := Int32.toInt64 ((0 : Int32))
+      let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+      let mut first'13 := true
+      for _ in PMem.loopFuel do
+        if !first'13 then
+          let t'14 := (i + 1)
+          i := t'14
+          pure ()
+        first'13 := false
+        let t'15 ← PMem.ldU8 (fp + 16)
+        if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) < (UInt32.toInt32 (UInt8.toUInt32 (t'15)))))) then break
+        let t'16 ← PMem.ldU64 (((fp + 16) + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+        let t'17 ← PMem.ldI64 (t'16 + 8)
+        let t'18 := (group_offset + t'17)
+        group_offset := t'18
+      let t'19 ← PMem.ldBits (fp + 48) 8 5
+      let t'20 ← PMem.ldI64 (fp + 64)
+      let t'21 ← PMem.ldU64 (fp + 8)
+      let t'22 ← PMem.ldI64 (t'21 + 8)
+      let t'23 ← PMem.ldU64 (fp + 8)
+      let t'24 ← AP_Param.get_default_value'2 this t'23
+      AP_Param.set_value (UInt64.toUInt32 (t'19)) (Int64.toUInt64 (((t'20 + t'22) + group_offset))) t'24
+    else
+      let t'25 ← PMem.ldBits (fp + 48) 8 5
+      let t'26 ← PMem.ldI64 (fp + 64)
+      let t'27 ← AP_Param.get_default_value this info'
+      AP_Param.set_value (UInt64.toUInt32 (t'25)) (Int64.toUInt64 (t'26)) t'27
+    return false
+  let t'28 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'30 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'28)))) != (UInt32.toInt32 ((5 : UInt32))))
+  if sc'30 then
+    let t'29 ← PMem.ldU8 (fp + 40)
+    sc'30 := ((UInt32.toInt32 (UInt8.toUInt32 (t'29))) != (0 : Int32))
+  if sc'30 then
+    return false
+  let mut ap : UInt64 := this
+  let t'31 ← PMem.ldU8 (fp + 40)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'31))) != (0 : Int32)) then
+    let t'32 ← PMem.ldU8 (fp + 40)
+    let t'33 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'32)) * (4 : UInt64)))) * 1).toUInt64)
+    ap := t'33
+  let t'34 ← PMem.ldU16 (fp + 56)
+  let t'35 ← PMem.ldBits (fp + 48) 8 5
+  let t'36 ← AP_Param.type_size (UInt64.toUInt32 (t'35))
+  let t'37 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'34)) + (4 : UInt64)))) (UInt8.toUInt64 (t'36))
+  discard <| pure (t'37)
+  return true
 
-/-- C++ `AP_Param::EEPROM_header::EEPROM_header : void () noexcept`, `AP_Param.h:648-?`. -/
-partial def AP_Param.EEPROM_header.EEPROM_header (this : UInt64) : PMem.M Unit := do
-  return ()
-
-/-- C++ `AP_Param::eeprom_write_check : void (const void *, uint16_t, uint8_t)`, `AP_Param.cpp:156-162`. -/
-partial def AP_Param.eeprom_write_check (ptr' : UInt64) (ofs : UInt16) (size : UInt8) : PMem.M Unit := do
-  let mut ptr' := ptr'
-  let mut ofs := ofs
-  let mut size := size
-  let t'1 ← StorageAccess.write_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ ofs ptr' (UInt8.toUInt64 (size))
-  discard <| pure (t'1)
-  return ()
-
-/-- C++ `AP_Param::write_sentinel : void (uint16_t)`, `AP_Param.cpp:167-175`. -/
-partial def AP_Param.write_sentinel.body (fp : UInt64) (ofs : UInt16) : PMem.M Unit := do
-  let mut ofs := ofs
-  AP_Param.Param_header.Param_header (fp + 0)
-  let t'1 := UInt8.toUInt32 ((31 : UInt8))
-  PMem.stBits (fp + 0) 8 5 (UInt32.toUInt64 (t'1))
-  AP_Param.set_key (fp + 0) (511 : UInt16)
-  let t'2 := UInt8.toUInt32 ((255 : UInt8))
-  PMem.stBits (fp + 0) 14 18 (UInt32.toUInt64 (t'2))
-  AP_Param.eeprom_write_check (fp + 0) ofs (UInt64.toUInt8 ((4 : UInt64)))
-  PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
-  return ()
-
-partial def AP_Param.write_sentinel (ofs : UInt16) : PMem.M Unit := do
-  let fp ← PMem.enter 4
-  let r ← AP_Param.write_sentinel.body fp ofs
+def AP_Param.load (this : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 72
+  let r ← AP_Param.load.body fp this
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::check_default : void (AP_Param *, float *)`, `AP_Param.cpp:2962-2975`. -/
-partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem.M Unit := do
+def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem.M Unit := do
   let mut ap := ap
   let mut default_value := default_value
   if ((default_value == (0 : UInt64)) || (ap == (0 : UInt64))) then
@@ -3210,7 +2722,7 @@ partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem
     let t'2 ← PMem.ldU64 (0xb008 : UInt64) /- &AP_Param::default_list -/
     let mut item : UInt64 := t'2
     let mut first'3 := true
-    repeat
+    for _ in PMem.loopFuel do
       if !first'3 then
         let t'4 ← PMem.ldU64 (item + 16)
         item := t'4
@@ -3224,8 +2736,47 @@ partial def AP_Param.check_default (ap : UInt64) (default_value : UInt64) : PMem
         return ()
   return ()
 
+/-- C++ `AP_Param::first : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1765-1788`. -/
+def AP_Param.first.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut default_val := default_val
+  let t'1 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 0 9 (UInt32.toUInt64 (t'1))
+  let t'2 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 13 18 (UInt32.toUInt64 (t'2))
+  let t'3 := Int32.toUInt32 ((0 : Int32))
+  PMem.stBits token 9 4 (UInt32.toUInt64 (t'3))
+  let t'4 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'4))) == (0 : Int32)) then
+    return (0 : UInt64)
+  let t'5 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+  let t'6 ← AP_Param.get_base t'5 (fp + 0)
+  if !t'6 then
+    return (0 : UInt64)
+  if (ptype != (0 : UInt64)) then
+    let t'7 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+    let t'8 ← PMem.ldU8 (t'7 + 28)
+    let t'9 := UInt8.toUInt32 (t'8)
+    PMem.stU32 ptype t'9
+  if (default_val != (0 : UInt64)) then
+    let t'10 ← PMem.ldI64 (fp + 0)
+    let t'11 ← AP_Param.var_info (Int16.toUInt16 (Int32.toInt16 ((0 : Int32))))
+    let t'12 ← AP_Param.get_default_value (Int64.toUInt64 (t'10)) t'11
+    PMem.stF32 default_val t'12
+  let t'13 ← PMem.ldI64 (fp + 0)
+  AP_Param.check_default (Int64.toUInt64 (t'13)) default_val
+  let t'14 ← PMem.ldI64 (fp + 0)
+  return Int64.toUInt64 (t'14)
+
+def AP_Param.first (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 8
+  let r ← AP_Param.first.body fp token ptype default_val
+  PMem.leave fp
+  return r
+
 /-- C++ `AP_Param::check_frame_type : bool (uint16_t)`, `AP_Param.cpp:221-232`. -/
-partial def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
+def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
   let mut flags := flags
   if ((UInt32.toInt32 (UInt16.toUInt32 (flags))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
     return false
@@ -3235,8 +2786,19 @@ partial def AP_Param.check_frame_type (flags : UInt16) : PMem.M Bool := do
   let t'1 ← PMem.ldU16 (0xaf58 : UInt64) /- &AP_Param::_frame_type_flags -/
   return (((UInt32.toInt32 (UInt16.toUInt32 (frame_flags))) &&& (UInt32.toInt32 (UInt16.toUInt32 (t'1)))) != (0 : Int32))
 
+/-- `AP_ParamTBase'signed_char_1.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamTBase'signed_char_1.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamTBase<signed char, 1>::get : const signed char &() const`, `AP_Param.h:917-919`. -/
+def AP_ParamTBase'signed_char_1.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.AP_Param_lib.AP_ParamTBase'signed_char_1.get.pure' this)
+
+mutual
+
 /-- C++ `AP_Param::next_group : AP_Param *(const uint16_t, const struct GroupInfo *, bool *, const uint32_t, const uint8_t, const ptrdiff_t, ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1792-1887`. -/
-partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.next_group.body'rec (rec'depth : Nat) (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut vindex := vindex
   let mut group_info := group_info
   let mut found_current := found_current
@@ -3250,7 +2812,7 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
   let mut type' : UInt32 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -3276,7 +2838,7 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
         continue
       let t'9 ← AP_Param.group_id group_info group_base i group_shift
       let t'10 ← PMem.ldI64 (fp + 0)
-      let t'11 ← AP_Param.next_group vindex ginfo found_current t'9 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'10 token ptype skip_disabled default_val
+      let t'11 ← AP_Param.next_group'rec rec'd vindex ginfo found_current t'9 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'10 token ptype skip_disabled default_val
       ap := t'11
       if (ap != (0 : UInt64)) then
         return ap
@@ -3358,14 +2920,148 @@ partial def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info
           return Int64.toUInt64 (ofs)
   return (0 : UInt64)
 
-partial def AP_Param.next_group (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+def AP_Param.next_group'rec (rec'depth : Nat) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 24
-  let r ← AP_Param.next_group.body fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+  let r ← AP_Param.next_group.body'rec rec'd fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+  PMem.leave fp
+  return r
+
+end
+
+/-- `AP_Param.next_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.next_group.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 :=
+  AP_Param.next_group.body'rec 64 fp vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+
+/-- `AP_Param.next_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.next_group (vindex : UInt16) (group_info : UInt64) (found_current : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 :=
+  AP_Param.next_group'rec 64 vindex group_info found_current group_base group_shift group_offset token ptype skip_disabled default_val
+
+/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *, bool, float *)`, `AP_Param.cpp:1891-1953`. -/
+def AP_Param.next'2.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut skip_disabled := skip_disabled
+  let mut default_val := default_val
+  let t'1 ← PMem.ldBits token 0 9
+  let mut i : UInt16 := UInt32.toUInt16 ((UInt64.toUInt32 (t'1)))
+  PMem.stB (fp + 0) false
+  let t'2 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+  if (decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (t'2))))) then
+    return (0 : UInt64)
+  let t'3 ← AP_Param.var_info i
+  let t'4 ← PMem.ldU8 (t'3 + 28)
+  let mut type' : UInt32 := UInt8.toUInt32 (t'4)
+  let mut sc'6 := ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((5 : UInt32))))
+  if sc'6 then
+    let t'5 ← PMem.ldBits token 9 4
+    sc'6 := (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'5)))) < (3 : Int32)))
+  if sc'6 then
+    let t'7 ← PMem.ldBits token 9 4
+    let t'8 := UInt64.toUInt32 (t'7)
+    let t'9 := (t'8 + 1)
+    PMem.stBits token 9 4 (UInt32.toUInt64 (t'9))
+    if (ptype != (0 : UInt64)) then
+      PMem.stU32 ptype (4 : UInt32)
+    let t'10 ← PMem.ldBits token 9 4
+    let t'11 ← AP_Param.var_info i
+    let t'12 ← PMem.ldU64 (t'11 + 8)
+    let mut ret : UInt64 := (((UInt32.toUInt64 (((UInt64.toUInt32 (t'10)) - (1 : UInt32)))) * (4 : UInt64)) + (Int64.toUInt64 ((UInt64.toInt64 (t'12)))))
+    if (default_val != (0 : UInt64)) then
+      let t'13 ← AP_Param.var_info i
+      let t'14 ← AP_Param.get_default_value ret t'13
+      PMem.stF32 default_val t'14
+    return ret
+  if ((UInt32.toInt32 (type')) != (UInt32.toInt32 ((6 : UInt32)))) then
+    let t'15 := (i + 1)
+    i := t'15
+    PMem.stB (fp + 0) true
+  let mut first'16 := true
+  for _ in PMem.loopFuel do
+    if !first'16 then
+      let t'17 := (i + 1)
+      i := t'17
+      pure ()
+    first'16 := false
+    let t'18 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'18)))))) then break
+    let t'19 ← AP_Param.var_info i
+    let info' : UInt64 := t'19
+    let t'20 ← PMem.ldU16 (info' + 24)
+    let t'21 ← AP_Param.check_frame_type t'20
+    if !t'21 then
+      continue
+    let t'22 ← PMem.ldU8 (info' + 28)
+    let t'23 := UInt8.toUInt32 (t'22)
+    type' := t'23
+    if ((UInt32.toInt32 (type')) == (UInt32.toInt32 ((6 : UInt32)))) then
+      let t'24 ← AP_Param.get_group_info info'
+      let mut group_info : UInt64 := t'24
+      if (group_info == (0 : UInt64)) then
+        continue
+      let t'25 ← AP_Param.next_group i group_info (fp + 0) (Int32.toUInt32 ((0 : Int32))) (Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))) (Int32.toInt64 ((0 : Int32))) token ptype skip_disabled default_val
+      let mut ap : UInt64 := t'25
+      if (ap != (0 : UInt64)) then
+        return ap
+    else
+      let t'26 := UInt16.toUInt32 (i)
+      PMem.stBits token 0 9 (UInt32.toUInt64 (t'26))
+      let t'27 := Int32.toUInt32 ((0 : Int32))
+      PMem.stBits token 13 18 (UInt32.toUInt64 (t'27))
+      let t'28 := Int32.toUInt32 ((0 : Int32))
+      PMem.stBits token 9 4 (UInt32.toUInt64 (t'28))
+      if (ptype != (0 : UInt64)) then
+        PMem.stU32 ptype type'
+      if (default_val != (0 : UInt64)) then
+        let t'29 ← PMem.ldU64 (info' + 8)
+        let t'30 ← AP_Param.get_default_value t'29 info'
+        PMem.stF32 default_val t'30
+      let t'31 ← PMem.ldU64 (info' + 8)
+      return t'31
+  return (0 : UInt64)
+
+def AP_Param.next'2 (token : UInt64) (ptype : UInt64) (skip_disabled : Bool) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 1
+  let r ← AP_Param.next'2.body fp token ptype skip_disabled default_val
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::next : AP_Param *(ParamToken *, enum ap_var_type *)`, `AP_Param.h:561-?`. -/
+def AP_Param.next (token : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let t'1 ← AP_Param.next'2 token ptype false (0 : UInt64)
+  return t'1
+
+/-- C++ `AP_Param::next_scalar : AP_Param *(ParamToken *, enum ap_var_type *, float *)`, `AP_Param.cpp:1957-1972`. -/
+def AP_Param.next_scalar.body (fp : UInt64) (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let mut token := token
+  let mut ptype := ptype
+  let mut default_val := default_val
+  let mut ap : UInt64 := default  -- uninitialized in C
+  for _ in PMem.loopFuel do
+    let t'1 ← AP_Param.next'2 token (fp + 0) true default_val
+    ap := t'1
+    let mut sc'3 := (ap != (0 : UInt64))
+    if sc'3 then
+      let t'2 ← PMem.ldU32 (fp + 0)
+      sc'3 := (decide ((UInt32.toInt32 (t'2)) > (UInt32.toInt32 ((4 : UInt32)))))
+    if !(sc'3) then break
+  if (ap != (0 : UInt64)) then
+    if (ptype != (0 : UInt64)) then
+      let t'4 ← PMem.ldU32 (fp + 0)
+      PMem.stU32 ptype t'4
+  AP_Param.check_default ap default_val
+  return ap
+
+def AP_Param.next_scalar (token : UInt64) (ptype : UInt64) (default_val : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.next_scalar.body fp token ptype default_val
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::find_var_info_token : const struct AP_Param::Info *(const ParamToken &, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:658-697`. -/
-partial def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let mut group_element := group_element
   let mut idx := idx
   let t'1 ← PMem.ldBits token 0 9
@@ -3414,14 +3110,30 @@ partial def AP_Param.find_var_info_token.body (fp : UInt64) (this : UInt64) (tok
         return info'
   return (0 : UInt64)
 
-partial def AP_Param.find_var_info_token (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_var_info_token (this : UInt64) (token : UInt64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
   let fp ← PMem.enter 8
   let r ← AP_Param.find_var_info_token.body fp this token group_element group_ret group_nesting idx
   PMem.leave fp
   return r
 
+/-- C++ `AP_Param::add_vector3f_suffix : void (char *, size_t, uint8_t) const`, `AP_Param.cpp:816-826`. -/
+def AP_Param.add_vector3f_suffix (this : UInt64) (buffer : UInt64) (buffer_size : UInt64) (idx : UInt8) : PMem.M Unit := do
+  let mut buffer := buffer
+  let mut buffer_size := buffer_size
+  let mut idx := idx
+  let t'1 ← PMem.strnlen buffer buffer_size
+  let mut len : UInt64 := t'1
+  if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))) ≤ buffer_size)) then
+    PMem.stI8 (buffer + ((UInt64.toInt64 (len)) * 1).toUInt64) (95 : Int8)
+    let t'2 := Int32.toInt8 (((Int8.toInt32 ((88 : Int8))) + (UInt32.toInt32 (UInt8.toUInt32 (idx)))))
+    PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))) * 1).toUInt64) t'2
+    if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((3 : Int32))))) ≤ buffer_size)) then
+      let t'3 := Int32.toInt8 ((0 : Int32))
+      PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))))) * 1).toUInt64) t'3
+  return ()
+
 /-- C++ `AP_Param::copy_name_info : void (const struct AP_Param::Info *, const struct GroupInfo *, const struct GroupNesting &, uint8_t, char *, size_t, bool) const`, `AP_Param.cpp:847-871`. -/
-partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UInt64) (group_nesting : UInt64) (idx : UInt8) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UInt64) (group_nesting : UInt64) (idx : UInt8) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
   let mut info' := info'
   let mut ginfo := ginfo
   let mut idx := idx
@@ -3433,7 +3145,7 @@ partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UI
   discard <| pure (t'2)
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'3 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'3 then
       let t'4 := (i + 1)
       i := t'4
@@ -3470,8 +3182,82 @@ partial def AP_Param.copy_name_info (this : UInt64) (info' : UInt64) (ginfo : UI
       AP_Param.add_vector3f_suffix this buffer buffer_size idx
   return ()
 
+/-- C++ `AP_Param::copy_name_token : void (const ParamToken &, char *, size_t, bool) const`, `AP_Param.cpp:832-845`. -/
+def AP_Param.copy_name_token.body (fp : UInt64) (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+  let mut buffer := buffer
+  let mut buffer_size := buffer_size
+  let mut force_scalar := force_scalar
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info_token this token (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  if (info' == (0 : UInt64)) then
+    let t'2 := Int32.toInt8 ((0 : Int32))
+    PMem.stI8 buffer t'2
+    return ()
+  let t'3 ← PMem.ldU64 (fp + 8)
+  let t'4 ← PMem.ldU8 (fp + 40)
+  AP_Param.copy_name_info this info' t'3 (fp + 16) t'4 buffer buffer_size force_scalar
+  return ()
+
+def AP_Param.copy_name_token (this : UInt64) (token : UInt64) (buffer : UInt64) (buffer_size : UInt64) (force_scalar : Bool) : PMem.M Unit := do
+  let fp ← PMem.enter 41
+  let r ← AP_Param.copy_name_token.body fp this token buffer buffer_size force_scalar
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::find_by_name : AP_Param *(const char *, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:1003-1025`. -/
+def AP_Param.find_by_name.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let mut name := name
+  let mut ptype := ptype
+  let mut token := token
+  let mut ap : UInt64 := default  -- uninitialized in C
+  let t'1 ← AP_Param.first token ptype (0 : UInt64)
+  ap := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
+      ap := t'3
+      pure ()
+    first'2 := false
+    let mut sc'5 := (ap != 0)
+    if sc'5 then
+      let t'4 ← PMem.ldU32 ptype
+      sc'5 := ((UInt32.toInt32 (t'4)) != (UInt32.toInt32 ((6 : UInt32))))
+    let mut sc'7 := sc'5
+    if sc'7 then
+      let t'6 ← PMem.ldU32 ptype
+      sc'7 := ((UInt32.toInt32 (t'6)) != (UInt32.toInt32 ((0 : UInt32))))
+    if !(sc'7) then break
+    let t'8 ← PMem.ldBits token 0 9
+    let t'9 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'8))))
+    let t'10 ← PMem.ldU64 t'9
+    let t'11 ← PMem.strlen t'10
+    let mut nlen : UInt64 := t'11
+    let t'12 ← PMem.ldBits token 0 9
+    let t'13 ← AP_Param.var_info (UInt32.toUInt16 ((UInt64.toUInt32 (t'12))))
+    let t'14 ← PMem.ldU64 t'13
+    let t'15 ← PMem.strncasecmp name t'14 nlen
+    let mut ret : Int32 := t'15
+    if (ret == (0 : Int32)) then
+      AP_Param.copy_name_token ap token (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32)))) false
+      let t'16 ← PMem.strncasecmp name (fp + 0) (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
+      if (t'16 == (0 : Int32)) then
+        break
+  return ap
+
+def AP_Param.find_by_name (name : UInt64) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 16
+  let r ← AP_Param.find_by_name.body fp name ptype token
+  PMem.leave fp
+  return r
+
+mutual
+
 /-- C++ `AP_Param::find_group : AP_Param *(const char *, uint16_t, ptrdiff_t, const struct GroupInfo *, enum ap_var_type *)`, `AP_Param.cpp:874-933`. -/
-partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_group.body'rec (rec'depth : Nat) (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut name := name
   let mut vindex := vindex
   let mut group_offset := group_offset
@@ -3480,7 +3266,7 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
   let mut type' : UInt8 := default  -- uninitialized in C
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -3507,7 +3293,7 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
       let t'10 ← PMem.ldU64 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
       let t'11 ← PMem.strlen t'10
       let t'12 ← PMem.ldI64 (fp + 0)
-      let t'13 ← AP_Param.find_group (name + ((UInt64.toInt64 (t'11)) * 1).toUInt64) vindex t'12 ginfo ptype
+      let t'13 ← AP_Param.find_group'rec rec'd (name + ((UInt64.toInt64 (t'11)) * 1).toUInt64) vindex t'12 ginfo ptype
       let mut ap : UInt64 := t'13
       if (ap != (0 : UInt64)) then
         return ap
@@ -3568,58 +3354,212 @@ partial def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UIn
               pure ()
   return (0 : UInt64)
 
-partial def AP_Param.find_group (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+def AP_Param.find_group'rec (rec'depth : Nat) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 24
-  let r ← AP_Param.find_group.body fp name vindex group_offset group_info ptype
+  let r ← AP_Param.find_group.body'rec rec'd fp name vindex group_offset group_info ptype
+  PMem.leave fp
+  return r
+
+end
+
+/-- `AP_Param.find_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_group.body (fp : UInt64) (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_group.body'rec 64 fp name vindex group_offset group_info ptype
+
+/-- `AP_Param.find_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_group (name : UInt64) (vindex : UInt16) (group_offset : Int64) (group_info : UInt64) (ptype : UInt64) : PMem.M UInt64 :=
+  AP_Param.find_group'rec 64 name vindex group_offset group_info ptype
+
+/-- C++ `AP_Param::find : AP_Param *(const char *, enum ap_var_type *, uint16_t *)`, `AP_Param.cpp:938-985`. -/
+def AP_Param.find.body (fp : UInt64) (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
+  let mut name := name
+  let mut ptype := ptype
+  let mut flags := flags
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
+    let t'4 ← AP_Param.var_info i
+    let info' : UInt64 := t'4
+    let t'5 ← PMem.ldU8 (info' + 28)
+    let mut type' : UInt8 := t'5
+    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      let t'6 ← PMem.ldU64 info'
+      let t'7 ← PMem.strnlen t'6 (Int64.toUInt64 (Int32.toInt64 ((16 : Int32))))
+      let mut len : UInt8 := UInt64.toUInt8 (t'7)
+      let t'8 ← PMem.ldU64 info'
+      let t'9 ← PMem.strncmp name t'8 (UInt8.toUInt64 (len))
+      if (t'9 != (0 : Int32)) then
+        continue
+      let t'10 ← AP_Param.get_group_info info'
+      let mut group_info : UInt64 := t'10
+      if (group_info == (0 : UInt64)) then
+        continue
+      let t'11 ← AP_Param.find_group (name + ((Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (len))))) * 1).toUInt64) i (Int32.toInt64 ((0 : Int32))) group_info ptype
+      let mut ap : UInt64 := t'11
+      if (ap != (0 : UInt64)) then
+        if (flags != (0 : UInt64)) then
+          PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+          discard <| PMem.memset ((fp + 16) + 0) 0 1
+          discard <| PMem.memset ((fp + 16) + 8) 0 16
+          let t'12 ← AP_Param.find_var_info ap (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+          discard <| pure (t'12)
+          let t'13 ← PMem.ldU64 (fp + 8)
+          if (t'13 != (0 : UInt64)) then
+            let t'14 ← PMem.ldU64 (fp + 8)
+            let t'15 ← PMem.ldU16 (t'14 + 24)
+            PMem.stU16 flags t'15
+          else
+            let t'16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+            PMem.stU16 flags t'16
+        return ap
+    else
+      let t'17 ← PMem.ldU64 info'
+      let t'18 ← PMem.strcasecmp name t'17
+      if (t'18 == (0 : Int32)) then
+        let t'19 := UInt8.toUInt32 (type')
+        PMem.stU32 ptype t'19
+        let t'20 ← AP_Param.get_base info' (fp + 48)
+        if !t'20 then
+          return (0 : UInt64)
+        if (flags != (0 : UInt64)) then
+          let t'21 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+          PMem.stU16 flags t'21
+        let t'22 ← PMem.ldI64 (fp + 48)
+        return Int64.toUInt64 (t'22)
+  return (0 : UInt64)
+
+def AP_Param.find (name : UInt64) (ptype : UInt64) (flags : UInt64) : PMem.M UInt64 := do
+  let fp ← PMem.enter 56
+  let r ← AP_Param.find.body fp name ptype flags
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::find_by_index : AP_Param *(uint16_t, enum ap_var_type *, ParamToken *)`, `AP_Param.cpp:989-1000`. -/
+def AP_Param.find_by_index (idx : UInt16) (ptype : UInt64) (token : UInt64) : PMem.M UInt64 := do
+  let mut idx := idx
+  let mut ptype := ptype
+  let mut token := token
+  let mut ap : UInt64 := default  -- uninitialized in C
+  let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let t'1 ← AP_Param.first token ptype (0 : UInt64)
+  ap := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 ← AP_Param.next_scalar token ptype (0 : UInt64)
+      ap := t'3
+      pure ()
+    first'2 := false
+    if !(((ap != 0) && (decide ((UInt32.toInt32 (UInt16.toUInt32 (count))) < (UInt32.toInt32 (UInt16.toUInt32 (idx))))))) then break
+    let t'4 := (count + 1)
+    count := t'4
+  return ap
+
+/-- C++ `AP_Param::count_parameters : uint16_t ()`, `AP_Param.cpp:2752-2782`. -/
+def AP_Param.count_parameters.body (fp : UInt64)  : PMem.M UInt16 := do
+  let t'1 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
+  let mut sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) != (0 : Int32))
+  if sc'4 then
+    let t'2 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
+    let t'3 ← PMem.ldU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/
+    sc'4 := ((UInt32.toInt32 (UInt16.toUInt32 (t'2))) == (UInt32.toInt32 (UInt16.toUInt32 (t'3))))
+  if sc'4 then
+    let t'5 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
+    return t'5
+  let mut limit : UInt8 := Int8.toUInt8 (Int32.toInt8 ((4 : Int32)))
+  for _ in PMem.loopFuel do
+    let t'6 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
+    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) == (0 : Int32))
+    if !sc'9 then
+      let t'7 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
+      let t'8 ← PMem.ldU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/
+      sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) != (UInt32.toInt32 (UInt16.toUInt32 (t'8))))
+    let mut sc'11 := sc'9
+    if sc'11 then
+      let t'10 := (limit - 1)
+      limit := t'10
+      sc'11 := limit != (0 : UInt8)
+    if !(sc'11) then break
+    let mut vp : UInt64 := default  -- uninitialized in C
+    PMem.stBits (fp + 0) 0 9 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 9 4 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 13 18 (UInt32.toUInt64 ((0 : UInt32)))
+    PMem.stBits (fp + 0) 31 1 (UInt32.toUInt64 ((0 : UInt32)))
+    let mut count : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+    let t'12 ← PMem.ldU16 (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
+    let mut marker : UInt16 := t'12
+    let t'13 ← AP_Param.first (fp + 0) (0 : UInt64) (0 : UInt64)
+    vp := t'13
+    let mut first'14 := true
+    for _ in PMem.loopFuel do
+      if !first'14 then
+        let t'15 ← AP_Param.next_scalar (fp + 0) (0 : UInt64) (0 : UInt64)
+        vp := t'15
+        pure ()
+      first'14 := false
+      if !((vp != (0 : UInt64))) then break
+      let t'16 := (count + 1)
+      count := t'16
+    PMem.stU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/ count
+    PMem.stU16 (0xaf40 : UInt64) /- &AP_Param::_count_marker_done -/ marker
+  let t'17 ← PMem.ldU16 (0xaf30 : UInt64) /- &AP_Param::_parameter_count -/
+  return t'17
+
+def AP_Param.count_parameters  : PMem.M UInt16 := do
+  let fp ← PMem.enter 4
+  let r ← AP_Param.count_parameters.body fp 
   PMem.leave fp
   return r
 
 /-- C++ `AP_ParamTBase<signed char, 1>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'signed_char_1.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'signed_char_1.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI8 this
   return Int8.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<short, 2>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'short_2.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'short_2.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI16 this
   return Int16.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<int, 3>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'int_3.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'int_3.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI32 this
   return Int32.toBinary32 (t'1)
 
 /-- C++ `AP_ParamTBase<float, 4>::cast_to_float : float () const`, `AP_ParamT.cpp:104-106`. -/
-partial def AP_ParamTBase'float_4.cast_to_float (this : UInt64) : PMem.M Binary32 := do
+def AP_ParamTBase'float_4.cast_to_float (this : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldF32 this
   return t'1
 
-/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'signed_char_1.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI8 v
-  PMem.stI8 this t'1
-  return ()
+/-- C++ `AP_Param::cast_to_float : float (enum ap_var_type) const`, `AP_Param.cpp:1976-1990`. -/
+def AP_Param.cast_to_float (this : UInt64) (type' : UInt32) : PMem.M Binary32 := do
+  let mut type' := type'
+  let sw'1 := UInt32.toInt32 (type')
+  if sw'1 == (1 : Int32) then
+    let t'2 ← AP_ParamTBase'signed_char_1.cast_to_float this
+    return t'2
+  else if sw'1 == (2 : Int32) then
+    let t'3 ← AP_ParamTBase'short_2.cast_to_float this
+    return t'3
+  else if sw'1 == (3 : Int32) then
+    let t'4 ← AP_ParamTBase'int_3.cast_to_float this
+    return t'4
+  else if sw'1 == (4 : Int32) then
+    let t'5 ← AP_ParamTBase'float_4.cast_to_float this
+    return t'5
+  else
+    return (Binary32.ofBits 0x7fc00000)
 
-/-- C++ `AP_ParamTBase<short, 2>::set : void (const short &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'short_2.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI16 v
-  PMem.stI16 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'int_3.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI32 v
-  PMem.stI32 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'float_4.set (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 v
-  PMem.stF32 this t'1
-  return ()
-
-/-- C++ `constrain_value_line : float (const float, const float, const float, uint32_t)`, `AP_Math.cpp:283-304`. -/
-partial def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : PMem.M Binary32 := do
+/-- `constrain_value_line` as a pure function of its arguments (it reads and writes no memory). -/
+def constrain_value_line.pure' (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : Id Binary32 := do
   let mut amt := amt
   let mut low := low
   let mut high := high
@@ -3632,8 +3572,86 @@ partial def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binar
     return high
   return amt
 
+/-- C++ `constrain_value_line : float (const float, const float, const float, uint32_t)`, `AP_Math.cpp:283-304`. -/
+def constrain_value_line (amt : Binary32) (low : Binary32) (high : Binary32) (line : UInt32) : PMem.M Binary32 :=
+  pure (_root_.AP_Param_lib.constrain_value_line.pure' amt low high line)
+
+/-- C++ `AP_Param::set_float : void (float, enum ap_var_type)`, `AP_Param.cpp:2299-2329`. -/
+def AP_Param.set_float.body (fp : UInt64) (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
+  PMem.stF32 (fp + 0) value
+  let mut var_type := var_type
+  let t'1 ← PMem.ldF32 (fp + 0)
+  let mut sc'3 := (Binary32.isNaN t'1)
+  if !sc'3 then
+    let t'2 ← PMem.ldF32 (fp + 0)
+    sc'3 := (Binary32.isInf t'2)
+  if sc'3 then
+    return ()
+  let mut rounding_addition : Binary32 := (Binary32.ofBits 0x3c23d70a /- 999999977/100000000000 -/)
+  if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((4 : UInt32)))) then
+    AP_ParamTBase'float_4.set this (fp + 0)
+  else
+    if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((3 : UInt32)))) then
+      let t'4 ← PMem.ldF32 (fp + 0)
+      if (decide (t'4 < (Int32.toBinary32 ((0 : Int32))))) then
+        let t'5 := -rounding_addition
+        rounding_addition := t'5
+      let t'6 ← PMem.ldF32 (fp + 0)
+      let mut v : Binary32 := (t'6 + rounding_addition)
+      let t'7 ← constrain_value_line v (Int32.toBinary32 (((-(2147483647 : Int32)) - (1 : Int32)))) (Int32.toBinary32 ((2147483647 : Int32))) (Int32.toUInt32 ((2316 : Int32)))
+      v := t'7
+      PMem.stI32 (fp + 4) (Binary32.toInt32 (v))
+      AP_ParamTBase'int_3.set this (fp + 4)
+    else
+      if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((2 : UInt32)))) then
+        let t'8 ← PMem.ldF32 (fp + 0)
+        if (decide (t'8 < (Int32.toBinary32 ((0 : Int32))))) then
+          let t'9 := -rounding_addition
+          rounding_addition := t'9
+        let t'10 ← PMem.ldF32 (fp + 0)
+        let mut v'2 : Binary32 := (t'10 + rounding_addition)
+        let t'11 ← constrain_value_line v'2 (Int32.toBinary32 ((-(32768 : Int32)))) (Int32.toBinary32 ((32767 : Int32))) (Int32.toUInt32 ((2321 : Int32)))
+        v'2 := t'11
+        PMem.stI16 (fp + 8) (Binary32.toInt16 (v'2))
+        AP_ParamTBase'short_2.set this (fp + 8)
+      else
+        if ((UInt32.toInt32 (var_type)) == (UInt32.toInt32 ((1 : UInt32)))) then
+          let t'12 ← PMem.ldF32 (fp + 0)
+          if (decide (t'12 < (Int32.toBinary32 ((0 : Int32))))) then
+            let t'13 := -rounding_addition
+            rounding_addition := t'13
+          let t'14 ← PMem.ldF32 (fp + 0)
+          let mut v'3 : Binary32 := (t'14 + rounding_addition)
+          let t'15 ← constrain_value_line v'3 (Int32.toBinary32 ((-(128 : Int32)))) (Int32.toBinary32 ((127 : Int32))) (Int32.toUInt32 ((2326 : Int32)))
+          v'3 := t'15
+          PMem.stI8 (fp + 10) (Binary32.toInt8 (v'3))
+          AP_ParamTBase'signed_char_1.set this (fp + 10)
+  return ()
+
+def AP_Param.set_float (this : UInt64) (value : Binary32) (var_type : UInt32) : PMem.M Unit := do
+  let fp ← PMem.enter 11
+  let r ← AP_Param.set_float.body fp this value var_type
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_Param::invalidate_count : void ()`, `AP_Param.cpp:2787-2793`. -/
+def AP_Param.invalidate_count  : PMem.M Unit := do
+  let t'1 := (0xaf38 : UInt64) /- &AP_Param::_count_marker -/
+  let t'2 ← PMem.ldU16 t'1
+  let t'3 := (t'2 + 1)
+  PMem.stU16 t'1 t'3
+  return ()
+
+/-- `AP_ParamV'Vector3_float_5.get` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_ParamV'Vector3_float_5.get.pure' (this : UInt64) : Id UInt64 := do
+  return this
+
+/-- C++ `AP_ParamV<Vector3<float>, 5>::get : const Vector3<float> &() const`, `AP_Param.h:1059-1061`. -/
+def AP_ParamV'Vector3_float_5.get (this : UInt64) : PMem.M UInt64 :=
+  pure (_root_.AP_Param_lib.AP_ParamV'Vector3_float_5.get.pure' this)
+
 /-- C++ `AP_Param::send_parameter : void (const char *, enum ap_var_type, uint8_t) const`, `AP_Param.cpp:2712-2745`. -/
-partial def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
+def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
   let mut name := name
   let mut var_type := var_type
   let mut idx := idx
@@ -3656,29 +3674,173 @@ partial def AP_Param.send_parameter.body (fp : UInt64) (this : UInt64) (name : U
   PMem.stI8 name_axis (90 : Int8)
   return ()
 
-partial def AP_Param.send_parameter (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
+def AP_Param.send_parameter (this : UInt64) (name : UInt64) (var_type : UInt32) (idx : UInt8) : PMem.M Unit := do
   let fp ← PMem.enter 17
   let r ← AP_Param.send_parameter.body fp this name var_type idx
   PMem.leave fp
   return r
 
-/-- C++ `is_equal : typename std::enable_if<std::is_floating_point<typename std::common_type<float, float>::type>::value, bool>::type (const float, const float)`, `AP_Math.cpp:25-41`. -/
-partial def is_equal (v_1 : Binary32) (v_2 : Binary32) : PMem.M Bool := do
+/-- `is_equal` as a pure function of its arguments (it reads and writes no memory). -/
+def is_equal.pure' (v_1 : Binary32) (v_2 : Binary32) : Id Bool := do
   let mut v_1 := v_1
   let mut v_2 := v_2
   if false then
     return (decide ((Binary32.toBinary64 ((Binary32.abs (v_1 - v_2)))) < (Binary64.ofBits 0x3cb0000000000000)))
   return (decide ((Binary32.abs (v_1 - v_2)) < (Binary32.ofBits 0x34000000)))
 
+/-- C++ `is_equal : typename std::enable_if<std::is_floating_point<typename std::common_type<float, float>::type>::value, bool>::type (const float, const float)`, `AP_Math.cpp:25-41`. -/
+def is_equal (v_1 : Binary32) (v_2 : Binary32) : PMem.M Bool :=
+  pure (_root_.AP_Param_lib.is_equal.pure' v_1 v_2)
+
+/-- C++ `AP_Param::save_sync : void (bool, bool)`, `AP_Param.cpp:1158-1264`. -/
+def AP_Param.save_sync.body (fp : UInt64) (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
+  let mut force_save := force_save
+  let mut send_to_gcs := send_to_gcs
+  PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
+  discard <| PMem.memset ((fp + 16) + 0) 0 1
+  discard <| PMem.memset ((fp + 16) + 8) 0 16
+  let t'1 ← AP_Param.find_var_info this (fp + 0) (fp + 8) (fp + 16) (fp + 40)
+  let mut info' : UInt64 := t'1
+  let mut ap : UInt64 := default  -- uninitialized in C
+  if (info' == (0 : UInt64)) then
+    return ()
+  AP_Param.Param_header.Param_header (fp + 48)
+  let t'2 ← PMem.ldU64 (fp + 8)
+  if (t'2 != (0 : UInt64)) then
+    let t'3 ← PMem.ldU64 (fp + 8)
+    let t'4 ← PMem.ldU8 (t'3 + 27)
+    let t'5 := UInt8.toUInt32 (t'4)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'5))
+    let t'6 ← PMem.ldU64 (fp + 8)
+    let t'7 ← PMem.ldU16 (t'6 + 24)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'7))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
+      send_to_gcs := false
+  else
+    let t'8 ← PMem.ldU8 (info' + 28)
+    let t'9 := UInt8.toUInt32 (t'8)
+    PMem.stBits (fp + 48) 8 5 (UInt32.toUInt64 (t'9))
+    let t'10 ← PMem.ldU16 (info' + 24)
+    if ((UInt32.toInt32 (UInt16.toUInt32 (t'10))) &&& ((1 : Int32) <<< (6 : Int32))) != (0 : Int32) then
+      send_to_gcs := false
+  let t'11 ← PMem.ldU16 (info' + 26)
+  AP_Param.set_key (fp + 48) t'11
+  let t'12 ← PMem.ldU32 (fp + 0)
+  PMem.stBits (fp + 48) 14 18 (UInt32.toUInt64 (t'12))
+  ap := this
+  let t'13 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'15 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'13)))) != (UInt32.toInt32 ((5 : UInt32))))
+  if sc'15 then
+    let t'14 ← PMem.ldU8 (fp + 40)
+    sc'15 := ((UInt32.toInt32 (UInt8.toUInt32 (t'14))) != (0 : Int32))
+  if sc'15 then
+    return ()
+  let t'16 ← PMem.ldU8 (fp + 40)
+  if ((UInt32.toInt32 (UInt8.toUInt32 (t'16))) != (0 : Int32)) then
+    let t'17 ← PMem.ldU8 (fp + 40)
+    let t'18 := ((Int64.toUInt64 ((UInt64.toInt64 (ap)))) - ((UInt64.toInt64 (((UInt8.toUInt64 (t'17)) * (4 : UInt64)))) * 1).toUInt64)
+    ap := t'18
+  let t'19 ← PMem.ldBits (fp + 48) 8 5
+  let mut sc'21 := ((UInt32.toInt32 ((UInt64.toUInt32 (t'19)))) == (UInt32.toInt32 ((1 : UInt32))))
+  if sc'21 then
+    let t'20 ← PMem.ldU64 (fp + 8)
+    sc'21 := (t'20 != (0 : UInt64))
+  let mut sc'24 := sc'21
+  if sc'24 then
+    let t'22 ← PMem.ldU64 (fp + 8)
+    let t'23 ← PMem.ldU16 (t'22 + 24)
+    sc'24 := ((UInt32.toInt32 (UInt16.toUInt32 (t'23))) &&& ((1 : Int32) <<< (2 : Int32))) != (0 : Int32)
+  if sc'24 then
+    AP_Param.invalidate_count
+  let t'25 ← PMem.ldU64 (fp + 8)
+  let t'26 ← PMem.ldU8 (fp + 40)
+  AP_Param.copy_name_info this info' t'25 (fp + 16) t'26 (fp + 56) (17 : UInt64) true
+  let t'27 ← AP_Param.scan (fp + 48) (fp + 80)
+  if t'27 then
+    let t'28 ← PMem.ldU16 (fp + 80)
+    let t'29 ← PMem.ldBits (fp + 48) 8 5
+    let t'30 ← AP_Param.type_size (UInt64.toUInt32 (t'29))
+    AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'28)) + (4 : UInt64)))) t'30
+    if send_to_gcs then
+      let t'31 ← PMem.ldBits (fp + 48) 8 5
+      let t'32 ← PMem.ldU8 (fp + 40)
+      AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'31)) t'32
+    return ()
+  let t'33 ← PMem.ldU16 (fp + 80)
+  if ((UInt32.toInt32 (UInt16.toUInt32 (t'33))) == (UInt32.toInt32 (UInt16.toUInt32 ((Int16.toUInt16 (Int32.toInt16 ((~~~(0 : Int32))))))))) then
+    PMem.stB (0xaf48 : UInt64) /- &AP_Param::eeprom_full -/ true
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let t'34 ← PMem.ldBits (fp + 48) 8 5
+  if (decide ((UInt32.toInt32 ((UInt64.toUInt32 (t'34)))) ≤ (UInt32.toInt32 ((4 : UInt32))))) then
+    let t'35 ← PMem.ldBits (fp + 48) 8 5
+    let t'36 ← AP_Param.cast_to_float this (UInt64.toUInt32 (t'35))
+    let mut v1 : Binary32 := t'36
+    let mut v2 : Binary32 := default  -- uninitialized in C
+    let t'37 ← PMem.ldU64 (fp + 8)
+    if (t'37 != (0 : UInt64)) then
+      let t'38 ← PMem.ldU64 (fp + 8)
+      let t'39 ← AP_Param.get_default_value'2 this t'38
+      v2 := t'39
+    else
+      let t'40 ← AP_Param.get_default_value this info'
+      v2 := t'40
+    let t'41 ← is_equal v1 v2
+    if (t'41 && (!force_save)) then
+      if send_to_gcs then
+        pure ()
+      return ()
+    let mut sc'43 := !force_save
+    if sc'43 then
+      let t'42 ← PMem.ldBits (fp + 48) 8 5
+      sc'43 := (((UInt32.toInt32 ((UInt64.toUInt32 (t'42)))) != (UInt32.toInt32 ((3 : UInt32)))) && (decide ((Binary32.abs (v1 - v2)) < ((Binary32.ofBits 0x38d1b717 /- 499999987/5000000000000 -/) * (Binary32.abs v1)))))
+    if sc'43 then
+      if send_to_gcs then
+        pure ()
+      return ()
+  let t'44 ← PMem.ldU16 (fp + 80)
+  let t'45 ← PMem.ldBits (fp + 48) 8 5
+  let t'46 ← AP_Param.type_size (UInt64.toUInt32 (t'45))
+  let t'47 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
+  if (decide (((Int64.toUInt64 (Int32.toInt64 (((UInt32.toInt32 (UInt16.toUInt32 (t'44))) + (UInt32.toInt32 (UInt8.toUInt32 (t'46))))))) + ((Int64.toUInt64 (Int32.toInt64 ((2 : Int32)))) * (4 : UInt64))) ≥ (UInt16.toUInt64 (t'47)))) then
+    PMem.stB (0xaf48 : UInt64) /- &AP_Param::eeprom_full -/ true
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let t'48 ← PMem.ldU16 (fp + 80)
+  let t'49 ← PMem.ldBits (fp + 48) 8 5
+  let t'50 ← AP_Param.type_size (UInt64.toUInt32 (t'49))
+  AP_Param.write_sentinel (UInt64.toUInt16 ((((UInt16.toUInt64 (t'48)) + (4 : UInt64)) + (UInt8.toUInt64 (t'50)))))
+  let t'51 ← PMem.ldU16 (fp + 80)
+  let t'52 ← PMem.ldBits (fp + 48) 8 5
+  let t'53 ← AP_Param.type_size (UInt64.toUInt32 (t'52))
+  AP_Param.eeprom_write_check ap (UInt64.toUInt16 (((UInt16.toUInt64 (t'51)) + (4 : UInt64)))) t'53
+  let t'54 ← PMem.ldU16 (fp + 80)
+  AP_Param.eeprom_write_check (fp + 48) t'54 (UInt64.toUInt8 ((4 : UInt64)))
+  if send_to_gcs then
+    let t'55 ← PMem.ldBits (fp + 48) 8 5
+    let t'56 ← PMem.ldU8 (fp + 40)
+    AP_Param.send_parameter this (fp + 56) (UInt64.toUInt32 (t'55)) t'56
+  return ()
+
+def AP_Param.save_sync (this : UInt64) (force_save : Bool) (send_to_gcs : Bool) : PMem.M Unit := do
+  let fp ← PMem.enter 82
+  let r ← AP_Param.save_sync.body fp this force_save send_to_gcs
+  PMem.leave fp
+  return r
+
+mutual
+
 /-- C++ `AP_Param::find_key_by_pointer_group : bool (const void *, uint16_t, const struct GroupInfo *, ptrdiff_t, uint16_t &)`, `AP_Param.cpp:1030-1064`. -/
-partial def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+def AP_Param.find_key_by_pointer_group.body'rec (rec'depth : Nat) (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let mut ptr' := ptr'
   let mut vindex := vindex
   let mut group_info := group_info
   let mut offset := offset
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -3720,75 +3882,223 @@ partial def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64
     if (ginfo == (0 : UInt64)) then
       continue
     let t'19 ← PMem.ldI64 (fp + 8)
-    let t'20 ← AP_Param.find_key_by_pointer_group ptr' vindex ginfo t'19 key
+    let t'20 ← AP_Param.find_key_by_pointer_group'rec rec'd ptr' vindex ginfo t'19 key
     if t'20 then
       return true
   return false
 
-partial def AP_Param.find_key_by_pointer_group (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+def AP_Param.find_key_by_pointer_group'rec (rec'depth : Nat) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
   let fp ← PMem.enter 16
-  let r ← AP_Param.find_key_by_pointer_group.body fp ptr' vindex group_info offset key
+  let r ← AP_Param.find_key_by_pointer_group.body'rec rec'd fp ptr' vindex group_info offset key
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::adjust_group_offset : bool (uint16_t, const struct GroupInfo &, ptrdiff_t &)`, `AP_Param.cpp:413-435`. -/
-partial def AP_Param.adjust_group_offset.body (fp : UInt64) (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
-  let mut vindex := vindex
-  let t'1 ← PMem.ldU16 (group_info + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (0 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldI64 new_offset
-    let t'3 ← PMem.ldI64 (group_info + 8)
-    let t'4 := (t'2 + t'3)
-    PMem.stI64 new_offset t'4
-    return true
-  let t'5 ← PMem.ldU16 (group_info + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'5))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32) then
-    let t'6 ← AP_Param.var_info vindex
-    let t'7 ← AP_Param.get_base t'6 (fp + 0)
-    if !t'7 then
-      return false
-    let t'8 ← PMem.ldI64 (fp + 0)
-    let t'9 ← PMem.ldI64 new_offset
-    let t'10 ← PMem.ldI64 (group_info + 8)
-    let mut p : UInt64 := Int64.toUInt64 (((t'8 + t'9) + t'10))
-    let t'11 ← PMem.ldU64 p
-    if (t'11 == (0 : UInt64)) then
-      return false
-    let t'12 ← PMem.ldU64 p
-    let t'13 ← PMem.ldI64 (fp + 0)
-    let t'14 := ((UInt64.toInt64 (t'12)) - t'13)
-    PMem.stI64 new_offset t'14
-  return true
+end
 
-partial def AP_Param.adjust_group_offset (vindex : UInt16) (group_info : UInt64) (new_offset : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 8
-  let r ← AP_Param.adjust_group_offset.body fp vindex group_info new_offset
+/-- `AP_Param.find_key_by_pointer_group.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_key_by_pointer_group.body (fp : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool :=
+  AP_Param.find_key_by_pointer_group.body'rec 64 fp ptr' vindex group_info offset key
+
+/-- `AP_Param.find_key_by_pointer_group'rec` with the depth of its recursive component (64). -/
+def AP_Param.find_key_by_pointer_group (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (offset : Int64) (key : UInt64) : PMem.M Bool :=
+  AP_Param.find_key_by_pointer_group'rec 64 ptr' vindex group_info offset key
+
+/-- C++ `AP_Param::find_key_by_pointer : bool (const void *, uint16_t &)`, `AP_Param.cpp:1070-1092`. -/
+def AP_Param.find_key_by_pointer (ptr' : UInt64) (key : UInt64) : PMem.M Bool := do
+  let mut ptr' := ptr'
+  let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  let mut first'1 := true
+  for _ in PMem.loopFuel do
+    if !first'1 then
+      let t'2 := (i + 1)
+      i := t'2
+      pure ()
+    first'1 := false
+    let t'3 ← PMem.ldU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/
+    if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (i))) < (UInt32.toInt32 (UInt16.toUInt32 (t'3)))))) then break
+    let t'4 ← AP_Param.var_info i
+    let info' : UInt64 := t'4
+    let t'5 ← PMem.ldU8 (info' + 28)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) != (UInt32.toInt32 ((6 : UInt32)))) then
+      continue
+    let t'6 ← PMem.ldU16 (info' + 24)
+    let mut sc'9 := ((UInt32.toInt32 (UInt16.toUInt32 (t'6))) &&& ((1 : Int32) <<< (1 : Int32))) != (0 : Int32)
+    if sc'9 then
+      let t'7 ← PMem.ldU64 (info' + 8)
+      let t'8 ← PMem.ldU64 t'7
+      sc'9 := (ptr' == t'8)
+    if sc'9 then
+      let t'10 ← PMem.ldU16 (info' + 26)
+      PMem.stU16 key t'10
+      return true
+    let mut offset : Int64 := Int32.toInt64 ((0 : Int32))
+    let t'11 ← AP_Param.get_group_info info'
+    let mut ginfo : UInt64 := t'11
+    if (ginfo == (0 : UInt64)) then
+      continue
+    let t'12 ← AP_Param.find_key_by_pointer_group ptr' i ginfo offset key
+    if t'12 then
+      return true
+  return false
+
+mutual
+
+/-- C++ `AP_Param::load_object_from_eeprom : void (const void *, const struct GroupInfo *)`, `AP_Param.cpp:1705-1761`. -/
+def AP_Param.load_object_from_eeprom.body'rec (rec'depth : Nat) (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let mut object_pointer := object_pointer
+  let mut group_info := group_info
+  AP_Param.Param_header.Param_header (fp + 0)
+  let t'1 ← AP_Param.find_key_by_pointer object_pointer (fp + 8)
+  if !t'1 then
+    for _ in [0:1] do
+      pure ()
+    return ()
+  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 := (i + 1)
+      i := t'3
+      pure ()
+    first'2 := false
+    let t'4 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'4))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
+    if ((UInt32.toInt32 (UInt8.toUInt32 (t'5))) == (UInt32.toInt32 ((6 : UInt32)))) then
+      PMem.stI64 (fp + 16) (Int32.toInt64 ((0 : Int32)))
+      let t'6 ← PMem.ldU16 (fp + 8)
+      let t'7 ← AP_Param.adjust_group_offset t'6 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 16)
+      if !t'7 then
+        continue
+      let t'8 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
+      let mut ginfo : UInt64 := t'8
+      if (ginfo != (0 : UInt64)) then
+        let t'9 ← PMem.ldI64 (fp + 16)
+        AP_Param.load_object_from_eeprom'rec rec'd (Int64.toUInt64 (((UInt64.toInt64 (object_pointer)) + t'9))) ginfo
+    let mut ofs : UInt16 := UInt64.toUInt16 ((4 : UInt64))
+    for _ in PMem.loopFuel do
+      let t'10 ← StorageAccess.size (0xaf18 : UInt64) /- &AP_Param::_storage -/
+      if !((decide ((UInt32.toInt32 (UInt16.toUInt32 (ofs))) < (UInt32.toInt32 (UInt16.toUInt32 (t'10)))))) then break
+      let t'11 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ (fp + 0) ofs (4 : UInt64)
+      discard <| pure (t'11)
+      let t'12 ← AP_Param.is_sentinel (fp + 0)
+      if t'12 then
+        PMem.stU16 (0xaf28 : UInt64) /- &AP_Param::sentinel_offset -/ ofs
+        break
+      let t'13 ← AP_Param.get_key (fp + 0)
+      let t'14 ← PMem.ldU16 (fp + 8)
+      if ((UInt32.toInt32 (UInt16.toUInt32 (t'13))) == (UInt32.toInt32 (UInt16.toUInt32 (t'14)))) then
+        let mut info' : UInt64 := default  -- uninitialized in C
+        AP_Param.Param_header.Param_header'2 (fp + 32) (fp + 0)
+        let t'15 ← AP_Param.find_by_header (fp + 32) (fp + 24)
+        info' := t'15
+        if (info' != (0 : UInt64)) then
+          let t'16 ← PMem.ldU64 (fp + 24)
+          let t'17 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
+          if ((UInt64.toInt64 (t'16)) == ((UInt64.toInt64 (object_pointer)) + t'17)) then
+            let t'18 ← PMem.ldU64 (fp + 24)
+            let t'19 ← PMem.ldBits (fp + 0) 8 5
+            let t'20 ← AP_Param.type_size (UInt64.toUInt32 (t'19))
+            let t'21 ← StorageAccess.read_block (0xaf18 : UInt64) /- &AP_Param::_storage -/ t'18 (UInt64.toUInt16 (((UInt16.toUInt64 (ofs)) + (4 : UInt64)))) (UInt8.toUInt64 (t'20))
+            discard <| pure (t'21)
+            break
+      let t'22 ← PMem.ldBits (fp + 0) 8 5
+      let t'23 ← AP_Param.type_size (UInt64.toUInt32 (t'22))
+      let t'24 := (ofs + (UInt64.toUInt16 (((UInt8.toUInt64 (t'23)) + (4 : UInt64)))))
+      ofs := t'24
+  let t'25 ← PMem.ldB (0xaf50 : UInt64) /- &AP_Param::done_all_default_params -/
+  if !t'25 then
+    AP_Param.reload_defaults_file false
+  AP_Param.invalidate_count
+  return ()
+
+def AP_Param.load_object_from_eeprom'rec (rec'depth : Nat) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit := do
+  let rec'd + 1 := rec'depth | PMem.depthOut
+  let fp ← PMem.enter 36
+  let r ← AP_Param.load_object_from_eeprom.body'rec rec'd fp object_pointer group_info
   PMem.leave fp
   return r
 
-/-- C++ `AP_Param::get_group_info : const struct AP_Param::GroupInfo *(const struct GroupInfo &)`, `AP_Param.cpp:301-307`. -/
-partial def AP_Param.get_group_info'2 (ginfo : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU16 (ginfo + 24)
-  if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) &&& ((1 : Int32) <<< (4 : Int32))) != (0 : Int32) then
-    let t'2 ← PMem.ldU64 (ginfo + 16)
-    let t'3 ← PMem.ldU64 t'2
-    return t'3
-  let t'4 ← PMem.ldU64 (ginfo + 16)
-  return t'4
+end
 
-/-- C++ `AP_Param::get_key : uint16_t (const Param_header &)`, `AP_Param.cpp:743-746`. -/
-partial def AP_Param.get_key (phdr : UInt64) : PMem.M UInt16 := do
-  let t'1 ← PMem.ldBits phdr 13 1
-  let t'2 ← PMem.ldBits phdr 0 8
-  return Int16.toUInt16 (Int32.toInt16 ((((UInt32.toInt32 (UInt16.toUInt32 ((UInt32.toUInt16 ((UInt64.toUInt32 (t'1))))))) <<< (8 : Int32)) ||| (UInt32.toInt32 ((UInt64.toUInt32 (t'2)))))))
+/-- `AP_Param.load_object_from_eeprom.body'rec` with the depth of its recursive component (64). -/
+def AP_Param.load_object_from_eeprom.body (fp : UInt64) (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit :=
+  AP_Param.load_object_from_eeprom.body'rec 64 fp object_pointer group_info
+
+/-- `AP_Param.load_object_from_eeprom'rec` with the depth of its recursive component (64). -/
+def AP_Param.load_object_from_eeprom (object_pointer : UInt64) (group_info : UInt64) : PMem.M Unit :=
+  AP_Param.load_object_from_eeprom'rec 64 object_pointer group_info
+
+/-- C++ `AP_Param::set_frame_type_flags : void (uint16_t)`, `AP_Param.h:599-602`. -/
+def AP_Param.set_frame_type_flags (flags_to_set : UInt16) : PMem.M Unit := do
+  let mut flags_to_set := flags_to_set
+  AP_Param.invalidate_count
+  let t'1 := (0xaf58 : UInt64) /- &AP_Param::_frame_type_flags -/
+  let t'2 ← PMem.ldU16 t'1
+  let t'3 := (t'2 ||| (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (flags_to_set)))))))
+  PMem.stU16 t'1 t'3
+  return ()
+
+/-- C++ `AP_Param::AP_Param : void (const struct Info *)`, `AP_Param.h:263-276`. -/
+def AP_Param.AP_Param (this : UInt64) (info' : UInt64) : PMem.M Unit := do
+  let mut info' := info'
+  PMem.stU64 (0xaf60 : UInt64) /- &AP_Param::_var_info -/ info'
+  let mut i : UInt16 := default  -- uninitialized in C
+  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  i := t'1
+  let mut first'2 := true
+  for _ in PMem.loopFuel do
+    if !first'2 then
+      let t'3 := (i + 1)
+      i := t'3
+      pure ()
+    first'2 := false
+    let t'4 ← PMem.ldU8 ((info' + ((UInt64.toInt64 (UInt16.toUInt64 (i))) * 32).toUInt64) + 28)
+    if !(((UInt32.toInt32 (UInt8.toUInt32 (t'4))) != (UInt32.toInt32 ((0 : UInt32))))) then break
+  PMem.stU16 (0xaf08 : UInt64) /- &AP_Param::_num_vars -/ i
+  let t'5 ← PMem.ldU64 (0xaf68 : UInt64) /- &AP_Param::_singleton -/
+  if (t'5 != (0 : UInt64)) then
+    pure ()
+  PMem.stU64 (0xaf68 : UInt64) /- &AP_Param::_singleton -/ this
+  return ()
+
+/-- `AP_Param.AP_Param'2` as a pure function of its arguments (it reads and writes no memory). -/
+def AP_Param.AP_Param'2.pure' (this : UInt64) : Id Unit := do
+  return ()
+
+/-- C++ `AP_Param::AP_Param : void ()`, `AP_Param.h:279-?`. -/
+def AP_Param.AP_Param'2 (this : UInt64) : PMem.M Unit :=
+  pure (_root_.AP_Param_lib.AP_Param.AP_Param'2.pure' this)
+
+/-- C++ `StorageAccess::StorageAccess : void (StorageManager::StorageType)`, `StorageManager.cpp:119-133`. -/
+def StorageAccess.StorageAccess (this : UInt64) (_type : UInt32) : PMem.M Unit := do
+  let mut _type := _type
+  PMem.stU32 (this + 0) _type
+  let t'1 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
+  PMem.stU16 (this + 4) t'1
+  PMem.stU64 (this + 8) (0 : UInt64)
+  for i'2 in [0:15] do
+    let i : UInt8 := UInt8.ofNat i'2
+    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 8).toUInt64)
+    let t'3 ← PMem.ldU32 area
+    let t'4 ← PMem.ldU32 this
+    if ((UInt32.toInt32 (t'3)) == (UInt32.toInt32 (t'4))) then
+      let t'5 := (this + 4)
+      let t'6 ← PMem.ldU16 t'5
+      let t'7 ← PMem.ldU16 (area + 6)
+      let t'8 := (t'6 + (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (t'7)))))))
+      PMem.stU16 t'5 t'8
+  return ()
 
 /-- C++ `AP_HAL::Storage::erase : bool ()`, `Storage.cpp:8-17`. -/
-partial def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
   let mut ofs : UInt32 := default  -- uninitialized in C
   let t'1 := Int32.toUInt32 ((0 : Int32))
   ofs := t'1
   let mut first'2 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'2 then
       let t'3 := (ofs + (UInt64.toUInt32 ((16 : UInt64))))
       ofs := t'3
@@ -3802,25 +4112,41 @@ partial def AP_HAL.Storage.erase.body (fp : UInt64) (this : UInt64) : PMem.M Boo
     PMem.halWrite (UInt32.toUInt16 (ofs)) (fp + 0) (UInt32.toUInt64 (n))
   return true
 
-partial def AP_HAL.Storage.erase (this : UInt64) : PMem.M Bool := do
+def AP_HAL.Storage.erase (this : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 28
   let r ← AP_HAL.Storage.erase.body fp this
   PMem.leave fp
   return r
 
+/-- C++ `StorageManager::erase : void ()`, `StorageManager.cpp:109-114`. -/
+def StorageManager.erase  : PMem.M Unit := do
+  let t'1 ← AP_HAL.Storage.erase (0 : UInt64)
+  if !t'1 then
+    pure ()
+  return ()
+
 /-- C++ `AP_ParamTBase<short, 2>::set : void (const short &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'short_2.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
+def AP_ParamTBase'short_2.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
   let t'1 ← PMem.ldI16 v
   PMem.stI16 this t'1
   return ()
 
+/-- C++ `AP_ParamTBase<short, 2>::set_and_save : void (const short &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'short_2.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI16 this
+  let t'2 ← PMem.ldI16 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int16.toInt32 (t'1)) - (Int16.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'short_2.set'2 this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
 /-- C++ `AP_Param::add_default : void (AP_Param *, float)`, `AP_Param.cpp:3007-3036`. -/
-partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := do
+def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := do
   let mut ap := ap
   let mut v := v
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'1 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'1 then
       let t'2 := (i + 1)
       i := t'2
@@ -3837,7 +4163,7 @@ partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := d
     let t'7 ← PMem.ldU64 (0xb008 : UInt64) /- &AP_Param::default_list -/
     let mut item : UInt64 := t'7
     let mut first'8 := true
-    repeat
+    for _ in PMem.loopFuel do
       if !first'8 then
         let t'9 ← PMem.ldU64 (item + 16)
         item := t'9
@@ -3860,350 +4186,12 @@ partial def AP_Param.add_default (ap : UInt64) (v : Binary32) : PMem.M Unit := d
   return ()
 
 /-- C++ `default_as_float : float (const short &)`, `AP_ParamT.cpp:?-?`. -/
-partial def default_as_float (v : UInt64) : PMem.M Binary32 := do
+def default_as_float (v : UInt64) : PMem.M Binary32 := do
   let t'1 ← PMem.ldI16 v
   return Int16.toBinary32 (t'1)
 
-/-- C++ `AP_Param::configured : bool () const`, `AP_Param.cpp:1456-1460`. -/
-partial def AP_Param.configured.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
-  let t'1 ← AP_Param.configured_in_defaults_file this (fp + 0)
-  let mut sc'3 := t'1
-  if !sc'3 then
-    let t'2 ← AP_Param.configured_in_storage this
-    sc'3 := t'2
-  return sc'3
-
-partial def AP_Param.configured (this : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 1
-  let r ← AP_Param.configured.body fp this
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'float_4.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldF32 v
-  PMem.stF32 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'signed_char_1.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI8 v
-  PMem.stI8 this t'1
-  return ()
-
-/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
-partial def AP_ParamTBase'int_3.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
-  let t'1 ← PMem.ldI32 v
-  PMem.stI32 this t'1
-  return ()
-
-/-- C++ `AP_Param::find_by_header_group : const struct AP_Param::Info *(struct Param_header, void **, uint16_t, const struct GroupInfo *, uint32_t, uint8_t, ptrdiff_t)`, `AP_Param.cpp:461-508`. -/
-partial def AP_Param.find_by_header_group.body (fp : UInt64) (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
-  let mut ptr' := ptr'
-  let mut vindex := vindex
-  let mut group_info := group_info
-  let mut group_base := group_base
-  let mut group_shift := group_shift
-  let mut group_offset := group_offset
-  let mut type' : UInt8 := default  -- uninitialized in C
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'1 := true
-  repeat
-    if !first'1 then
-      let t'2 := (i + 1)
-      i := t'2
-      pure ()
-    first'1 := false
-    let t'3 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'3
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        return (0 : UInt64)
-      let t'4 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'4
-      if (ginfo == (0 : UInt64)) then
-        continue
-      PMem.stI64 (fp + 0) group_offset
-      let t'5 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 0)
-      if !t'5 then
-        continue
-      AP_Param.Param_header.Param_header'2 (fp + 8) phdr
-      let t'6 ← AP_Param.group_id group_info group_base i group_shift
-      let t'7 ← PMem.ldI64 (fp + 0)
-      let t'8 ← AP_Param.find_by_header_group (fp + 8) ptr' vindex ginfo t'6 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'7
-      let mut ret : UInt64 := t'8
-      if (ret != (0 : UInt64)) then
-        return ret
-      continue
-    let t'9 ← AP_Param.group_id group_info group_base i group_shift
-    let t'10 ← PMem.ldBits phdr 14 18
-    let mut sc'12 := (t'9 == (UInt64.toUInt32 (t'10)))
-    if sc'12 then
-      let t'11 ← PMem.ldBits phdr 8 5
-      sc'12 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((UInt64.toUInt32 (t'11)))))
-    if sc'12 then
-      let t'13 ← AP_Param.var_info vindex
-      let t'14 ← AP_Param.get_base t'13 (fp + 16)
-      if !t'14 then
-        continue
-      let t'15 ← PMem.ldI64 (fp + 16)
-      let t'16 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-      let t'17 := Int64.toUInt64 (((t'15 + t'16) + group_offset))
-      PMem.stU64 ptr' t'17
-      let t'18 ← AP_Param.var_info vindex
-      return t'18
-  return (0 : UInt64)
-
-partial def AP_Param.find_by_header_group (phdr : UInt64) (ptr' : UInt64) (vindex : UInt16) (group_info : UInt64) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 24
-  let r ← AP_Param.find_by_header_group.body fp phdr ptr' vindex group_info group_base group_shift group_offset
-  PMem.leave fp
-  return r
-
-/-- C++ `Vector3<float>::operator= : Vector3<float> &(const Vector3<float> &) noexcept`, `AP_Common.h:?-?`. -/
-partial def Vector3'float.operator_ (this : UInt64) (arg : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldF32 arg
-  PMem.stF32 this t'1
-  let t'2 ← PMem.ldF32 (arg + 4)
-  PMem.stF32 (this + 4) t'2
-  let t'3 ← PMem.ldF32 (arg + 8)
-  PMem.stF32 (this + 8) t'3
-  return this
-
-/-- C++ `MIN : auto (const unsigned long &, const unsigned int &) -> decltype(one < two ? one : two)`, `AP_Math.h:300-303`. -/
-partial def MIN (one : UInt64) (two : UInt64) : PMem.M UInt64 := do
-  let t'1 ← PMem.ldU64 one
-  let t'2 ← PMem.ldU32 two
-  let mut c'3 : UInt64 := default
-  if (decide (t'1 < (UInt32.toUInt64 (t'2)))) then
-    let t'4 ← PMem.ldU64 one
-    c'3 := t'4
-  else
-    let t'5 ← PMem.ldU32 two
-    c'3 := UInt32.toUInt64 (t'5)
-  return c'3
-
-/-- C++ `AP_Param::find_var_info_group : const struct AP_Param::Info *(const struct GroupInfo *, uint16_t, uint32_t, uint8_t, ptrdiff_t, uint32_t *, const struct GroupInfo *&, struct GroupNesting &, uint8_t *) const`, `AP_Param.cpp:544-612`. -/
-partial def AP_Param.find_var_info_group.body (fp : UInt64) (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
-  let mut group_info := group_info
-  let mut vindex := vindex
-  let mut group_base := group_base
-  let mut group_shift := group_shift
-  let mut group_offset := group_offset
-  let mut group_element := group_element
-  let mut idx := idx
-  let t'1 ← AP_Param.var_info vindex
-  let t'2 ← AP_Param.get_base t'1 (fp + 0)
-  if !t'2 then
-    return (0 : UInt64)
-  let mut type' : UInt8 := default  -- uninitialized in C
-  let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'3 := true
-  repeat
-    if !first'3 then
-      let t'4 := (i + 1)
-      i := t'4
-      pure ()
-    first'3 := false
-    let t'5 ← PMem.ldU8 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 27)
-    type' := t'5
-    if !(((UInt32.toInt32 (UInt8.toUInt32 (type'))) != (UInt32.toInt32 ((0 : UInt32))))) then break
-    let t'6 ← PMem.ldI64 ((group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 8)
-    let mut ofs : Int64 := (t'6 + group_offset)
-    if ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((6 : UInt32)))) then
-      let t'7 ← AP_Param.get_group_info'2 (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let mut ginfo : UInt64 := t'7
-      if (ginfo == (0 : UInt64)) then
-        continue
-      if (decide (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8))))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((18 : UInt8)))))) then
-        return (0 : UInt64)
-      let mut info' : UInt64 := default  -- uninitialized in C
-      PMem.stI64 (fp + 8) group_offset
-      let t'8 ← AP_Param.adjust_group_offset vindex (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) (fp + 8)
-      if !t'8 then
-        continue
-      let t'9 ← PMem.ldU8 group_nesting
-      if (decide ((UInt32.toInt32 (UInt8.toUInt32 (t'9))) ≥ (UInt32.toInt32 (UInt8.toUInt32 ((2 : UInt8)))))) then
-        return (0 : UInt64)
-      let t'10 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-      let t'11 ← PMem.ldU8 group_nesting
-      let t'12 := (t'11 + 1)
-      PMem.stU8 group_nesting t'12
-      PMem.stU64 ((group_nesting + 8) + ((UInt64.toInt64 (UInt8.toUInt64 (t'11))) * 8).toUInt64) t'10
-      let t'13 ← AP_Param.group_id group_info group_base i group_shift
-      let t'14 ← PMem.ldI64 (fp + 8)
-      let t'15 ← AP_Param.find_var_info_group this ginfo vindex t'13 (Int8.toUInt8 (Int32.toInt8 (((UInt32.toInt32 (UInt8.toUInt32 (group_shift))) + (UInt32.toInt32 (UInt8.toUInt32 ((6 : UInt8)))))))) t'14 group_element group_ret group_nesting idx
-      info' := t'15
-      if (info' != (0 : UInt64)) then
-        return info'
-      let t'16 ← PMem.ldU8 group_nesting
-      let t'17 := (t'16 - 1)
-      PMem.stU8 group_nesting t'17
-    else
-      let t'18 ← PMem.ldI64 (fp + 0)
-      if ((UInt64.toInt64 (this)) == (t'18 + ofs)) then
-        let t'19 ← AP_Param.group_id group_info group_base i group_shift
-        PMem.stU32 group_element t'19
-        let t'20 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-        PMem.stU64 group_ret t'20
-        let t'21 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-        PMem.stU8 idx t'21
-        let t'22 ← AP_Param.var_info vindex
-        return t'22
-      else
-        let mut sc'26 := ((UInt32.toInt32 (UInt8.toUInt32 (type'))) == (UInt32.toInt32 ((5 : UInt32))))
-        if sc'26 then
-          let t'23 ← PMem.ldI64 (fp + 0)
-          let mut sc'25 := (((t'23 + ofs) + (UInt64.toInt64 ((4 : UInt64)))) == (UInt64.toInt64 (this)))
-          if !sc'25 then
-            let t'24 ← PMem.ldI64 (fp + 0)
-            sc'25 := (((t'24 + ofs) + ((Int32.toInt64 ((2 : Int32))) * (UInt64.toInt64 ((4 : UInt64))))) == (UInt64.toInt64 (this)))
-          sc'26 := sc'25
-        if sc'26 then
-          let t'27 ← PMem.ldI64 (fp + 0)
-          let t'28 := UInt64.toUInt8 (((Int64.toUInt64 (((UInt64.toInt64 (this)) - (t'27 + ofs)))) / (4 : UInt64)))
-          PMem.stU8 idx t'28
-          let t'29 ← AP_Param.group_id group_info group_base i group_shift
-          PMem.stU32 group_element t'29
-          let t'30 := (group_info + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64)
-          PMem.stU64 group_ret t'30
-          let t'31 ← AP_Param.var_info vindex
-          return t'31
-  return (0 : UInt64)
-
-partial def AP_Param.find_var_info_group (this : UInt64) (group_info : UInt64) (vindex : UInt16) (group_base : UInt32) (group_shift : UInt8) (group_offset : Int64) (group_element : UInt64) (group_ret : UInt64) (group_nesting : UInt64) (idx : UInt64) : PMem.M UInt64 := do
-  let fp ← PMem.enter 16
-  let r ← AP_Param.find_var_info_group.body fp this group_info vindex group_base group_shift group_offset group_element group_ret group_nesting idx
-  PMem.leave fp
-  return r
-
-/-- C++ `StorageAccess::write_block : bool (uint16_t, const void *, size_t) const`, `StorageManager.cpp:193-244`. -/
-partial def StorageAccess.write_block.body (fp : UInt64) (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
-  let mut addr := addr
-  let mut data := data
-  PMem.stU64 (fp + 0) n
-  let mut b : UInt64 := data
-  let t'1 ← PMem.ldU64 (this + 8)
-  if (t'1 != (0 : UInt64)) then
-    let t'2 ← PMem.ldU64 (this + 8)
-    let t'3 ← PMem.ldU32 (t'2 + 24)
-    if (decide ((UInt16.toUInt32 (addr)) > t'3)) then
-      return false
-    let t'4 ← PMem.ldU64 (this + 8)
-    let t'5 ← PMem.ldU32 (t'4 + 24)
-    PMem.stU32 (fp + 8) (t'5 - (UInt16.toUInt32 (addr)))
-    let t'6 ← MIN (fp + 0) (fp + 8)
-    let mut n2 : UInt64 := t'6
-    let t'7 ← PMem.ldU64 (this + 8)
-    let t'8 ← PMem.ldU64 (t'7 + 16)
-    let t'9 ← PMem.memcpy (t'8 + ((UInt64.toInt64 (UInt16.toUInt64 (addr))) * 1).toUInt64) b n2
-    discard <| pure (t'9)
-    let mut i : UInt8 := UInt32.toUInt8 (((UInt16.toUInt32 (addr)) / (1024 : UInt32)))
-    let mut first'10 := true
-    repeat
-      if !first'10 then
-        let t'11 := (i + 1)
-        i := t'11
-        pure ()
-      first'10 := false
-      if !((decide ((UInt8.toUInt64 (i)) < ((((UInt16.toUInt64 (addr)) + n2) + (UInt32.toUInt64 ((1023 : UInt32)))) / (UInt32.toUInt64 ((1024 : UInt32))))))) then break
-      let t'12 ← PMem.ldU64 (this + 8)
-      let t'13 := (t'12 + 40)
-      let t'14 ← PMem.ldU64 t'13
-      let t'15 := (t'14 ||| ((1 : UInt64) <<< (Int64.toUInt64 (Int32.toInt64 ((UInt32.toInt32 (UInt8.toUInt32 (i))))))))
-      PMem.stU64 t'13 t'15
-    let t'16 ← PMem.ldU64 (fp + 0)
-    return (t'16 == n2)
-  let mut i'2 : UInt8 := Int8.toUInt8 (Int32.toInt8 ((0 : Int32)))
-  let mut first'17 := true
-  repeat
-    if !first'17 then
-      let t'18 := (i'2 + 1)
-      i'2 := t'18
-      pure ()
-    first'17 := false
-    if !((decide ((UInt32.toInt32 (UInt8.toUInt32 (i'2))) < (15 : Int32)))) then break
-    let area : UInt64 := ((0xaf70 : UInt64) /- &StorageManager::layout -/ + ((UInt64.toInt64 (UInt8.toUInt64 (i'2))) * 8).toUInt64)
-    let t'19 ← PMem.ldU16 (area + 6)
-    let mut length : UInt16 := t'19
-    let t'20 ← PMem.ldU16 (area + 4)
-    let mut offset : UInt16 := t'20
-    let t'21 ← PMem.ldU32 area
-    let t'22 ← PMem.ldU32 this
-    if ((UInt32.toInt32 (t'21)) != (UInt32.toInt32 (t'22))) then
-      continue
-    if (decide ((UInt32.toInt32 (UInt16.toUInt32 (addr))) ≥ (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'23 := (addr - (Int16.toUInt16 (Int32.toInt16 ((UInt32.toInt32 (UInt16.toUInt32 (length)))))))
-      addr := t'23
-      continue
-    let t'24 ← PMem.ldU64 (fp + 0)
-    let mut count : UInt16 := UInt64.toUInt16 (t'24)
-    if (decide (((UInt32.toInt32 (UInt16.toUInt32 (count))) + (UInt32.toInt32 (UInt16.toUInt32 (addr)))) > (UInt32.toInt32 (UInt16.toUInt32 (length))))) then
-      let t'25 := Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (length))) - (UInt32.toInt32 (UInt16.toUInt32 (addr))))))
-      count := t'25
-    PMem.halWrite (Int16.toUInt16 (Int32.toInt16 (((UInt32.toInt32 (UInt16.toUInt32 (addr))) + (UInt32.toInt32 (UInt16.toUInt32 (offset))))))) b (UInt16.toUInt64 (count))
-    let t'26 ← PMem.ldU64 (fp + 0)
-    let t'27 := (t'26 - (UInt16.toUInt64 (count)))
-    PMem.stU64 (fp + 0) t'27
-    let t'28 ← PMem.ldU64 (fp + 0)
-    if (t'28 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32))))) then
-      break
-    let t'29 := (b + ((Int32.toInt64 ((UInt32.toInt32 (UInt16.toUInt32 (count))))) * 1).toUInt64)
-    b := t'29
-    let t'30 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
-    addr := t'30
-  let t'31 ← PMem.ldU64 (fp + 0)
-  return (t'31 == (Int64.toUInt64 (Int32.toInt64 ((0 : Int32)))))
-
-partial def StorageAccess.write_block (this : UInt64) (addr : UInt16) (data : UInt64) (n : UInt64) : PMem.M Bool := do
-  let fp ← PMem.enter 12
-  let r ← StorageAccess.write_block.body fp this addr data n
-  PMem.leave fp
-  return r
-
-/-- C++ `AP_Param::group_id : uint32_t (const struct GroupInfo *, uint32_t, uint8_t, uint8_t)`, `AP_Param.cpp:201-213`. -/
-partial def AP_Param.group_id (grpinfo : UInt64) (base : UInt32) (i : UInt8) (shift : UInt8) : PMem.M UInt32 := do
-  let mut grpinfo := grpinfo
-  let mut base := base
-  let mut i := i
-  let mut shift := shift
-  let t'1 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-  let mut sc'3 := (((UInt32.toInt32 (UInt8.toUInt32 (t'1))) == (0 : Int32)) && ((UInt32.toInt32 (UInt8.toUInt32 (shift))) != (0 : Int32)))
-  if sc'3 then
-    let t'2 ← PMem.ldU16 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 24)
-    sc'3 := !(((UInt32.toInt32 (UInt16.toUInt32 (t'2))) &&& ((1 : Int32) <<< (3 : Int32))) != (0 : Int32))
-  if sc'3 then
-    return (base + ((63 : UInt32) <<< (Int32.toUInt32 ((UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
-  let t'4 ← PMem.ldU8 ((grpinfo + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 32).toUInt64) + 26)
-  return (base + (Int32.toUInt32 (((UInt32.toInt32 (UInt8.toUInt32 (t'4))) <<< (UInt32.toInt32 (UInt8.toUInt32 (shift)))))))
-
-/-- C++ `AP_ParamTBase<signed char, 1>::get : const signed char &() const`, `AP_Param.h:917-919`. -/
-partial def AP_ParamTBase'signed_char_1.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
-/-- C++ `AP_Param::add_vector3f_suffix : void (char *, size_t, uint8_t) const`, `AP_Param.cpp:816-826`. -/
-partial def AP_Param.add_vector3f_suffix (this : UInt64) (buffer : UInt64) (buffer_size : UInt64) (idx : UInt8) : PMem.M Unit := do
-  let mut buffer := buffer
-  let mut buffer_size := buffer_size
-  let mut idx := idx
-  let t'1 ← PMem.strnlen buffer buffer_size
-  let mut len : UInt64 := t'1
-  if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))) ≤ buffer_size)) then
-    PMem.stI8 (buffer + ((UInt64.toInt64 (len)) * 1).toUInt64) (95 : Int8)
-    let t'2 := Int32.toInt8 (((Int8.toInt32 ((88 : Int8))) + (UInt32.toInt32 (UInt8.toUInt32 (idx)))))
-    PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((1 : Int32))))))) * 1).toUInt64) t'2
-    if (decide ((len + (Int64.toUInt64 (Int32.toInt64 ((3 : Int32))))) ≤ buffer_size)) then
-      let t'3 := Int32.toInt8 ((0 : Int32))
-      PMem.stI8 (buffer + ((UInt64.toInt64 ((len + (Int64.toUInt64 (Int32.toInt64 ((2 : Int32))))))) * 1).toUInt64) t'3
-  return ()
-
-/-- C++ `AP_ParamV<Vector3<float>, 5>::get : const Vector3<float> &() const`, `AP_Param.h:1059-1061`. -/
-partial def AP_ParamV'Vector3_float_5.get (this : UInt64) : PMem.M UInt64 := do
-  return this
-
 /-- C++ `AP_Param::configured_in_defaults_file : bool (bool &) const`, `AP_Param.cpp:1431-1454`. -/
-partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
   let t'1 ← PMem.ldU16 (0xaff8 : UInt64) /- &AP_Param::num_param_overrides -/
   if ((UInt32.toInt32 (UInt16.toUInt32 (t'1))) == (0 : Int32)) then
     return false
@@ -4216,7 +4204,7 @@ partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt
     return false
   let mut i : UInt16 := Int16.toUInt16 (Int32.toInt16 ((0 : Int32)))
   let mut first'3 := true
-  repeat
+  for _ in PMem.loopFuel do
     if !first'3 then
       let t'4 := (i + 1)
       i := t'4
@@ -4233,14 +4221,14 @@ partial def AP_Param.configured_in_defaults_file.body (fp : UInt64) (this : UInt
       return true
   return false
 
-partial def AP_Param.configured_in_defaults_file (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_defaults_file (this : UInt64) (read_only : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 41
   let r ← AP_Param.configured_in_defaults_file.body fp this read_only
   PMem.leave fp
   return r
 
 /-- C++ `AP_Param::configured_in_storage : bool () const`, `AP_Param.cpp:1401-1429`. -/
-partial def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
   PMem.stU32 (fp + 0) (Int32.toUInt32 ((0 : Int32)))
   discard <| PMem.memset ((fp + 16) + 0) 0 1
   discard <| PMem.memset ((fp + 16) + 8) 0 16
@@ -4274,12 +4262,112 @@ partial def AP_Param.configured_in_storage.body (fp : UInt64) (this : UInt64) : 
     sc'14 := sc'13
   return sc'14
 
-partial def AP_Param.configured_in_storage (this : UInt64) : PMem.M Bool := do
+def AP_Param.configured_in_storage (this : UInt64) : PMem.M Bool := do
   let fp ← PMem.enter 58
   let r ← AP_Param.configured_in_storage.body fp this
   PMem.leave fp
   return r
 
-end
+/-- C++ `AP_Param::configured : bool () const`, `AP_Param.cpp:1456-1460`. -/
+def AP_Param.configured.body (fp : UInt64) (this : UInt64) : PMem.M Bool := do
+  let t'1 ← AP_Param.configured_in_defaults_file this (fp + 0)
+  let mut sc'3 := t'1
+  if !sc'3 then
+    let t'2 ← AP_Param.configured_in_storage this
+    sc'3 := t'2
+  return sc'3
+
+def AP_Param.configured (this : UInt64) : PMem.M Bool := do
+  let fp ← PMem.enter 1
+  let r ← AP_Param.configured.body fp this
+  PMem.leave fp
+  return r
+
+/-- C++ `AP_ParamTBase<short, 2>::set_default : void (const short &)`, `AP_ParamT.cpp:45-52`. -/
+def AP_ParamTBase'short_2.set_default (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← default_as_float v
+  AP_Param.add_default this t'1
+  let t'2 ← AP_Param.configured this
+  if !t'2 then
+    AP_ParamTBase'short_2.set'2 this v
+  return ()
+
+/-- C++ `AP_ParamTBase<float, 4>::set : void (const float &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'float_4.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 v
+  PMem.stF32 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<float, 4>::set_and_save : void (const float &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'float_4.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldF32 this
+  let t'2 ← PMem.ldF32 v
+  let mut force : Bool := (decide ((Binary32.abs (t'1 - t'2)) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'float_4.set'2 this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AP_ParamTBase<signed char, 1>::set : void (const signed char &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'signed_char_1.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI8 v
+  PMem.stI8 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<signed char, 1>::set_and_save : void (const signed char &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'signed_char_1.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI8 this
+  let t'2 ← PMem.ldI8 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 (((Int8.toInt32 (t'1)) - (Int8.toInt32 (t'2)))))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'signed_char_1.set'2 this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AP_ParamTBase<int, 3>::set : void (const int &)`, `AP_Param.h:923-925`. -/
+def AP_ParamTBase'int_3.set'2 (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI32 v
+  PMem.stI32 this t'1
+  return ()
+
+/-- C++ `AP_ParamTBase<int, 3>::set_and_save : void (const int &)`, `AP_ParamT.cpp:79-83`. -/
+def AP_ParamTBase'int_3.set_and_save (this : UInt64) (v : UInt64) : PMem.M Unit := do
+  let t'1 ← PMem.ldI32 this
+  let t'2 ← PMem.ldI32 v
+  let mut force : Bool := (decide ((Binary32.abs (Int32.toBinary32 ((t'1 - t'2)))) < (Binary32.ofBits 0x34000000 /- 11920929/100000000000000 -/)))
+  AP_ParamTBase'int_3.set'2 this v
+  -- AP_Param::save: dropped (configuration)
+  return ()
+
+/-- C++ `AC_CommandModel::AC_CommandModel : void (float, float, float)`, `AC_CommandModel.cpp:42-48`. -/
+def AC_CommandModel.AC_CommandModel (this : UInt64) (initial_rate : Binary32) (initial_expo : Binary32) (initial_tc : Binary32) : PMem.M Unit := do
+  let mut initial_rate := initial_rate
+  let mut initial_expo := initial_expo
+  let mut initial_tc := initial_tc
+  PMem.stF32 (this + 12) initial_tc
+  PMem.stF32 (this + 16) initial_rate
+  PMem.stF32 (this + 20) initial_expo
+  AP_Param.setup_object_defaults this (0x6b48 : UInt64) /- &AC_CommandModel::var_info -/
+  return ()
+
+/-- C++ `SRV_Channels::SRV_Channels : void ()`, `SRV_Channels.cpp:344-362`. -/
+def SRV_Channels.SRV_Channels.body (fp : UInt64) (this : UInt64) : PMem.M Unit := do
+  PMem.stU64 (0xafe8 : UInt64) /- &SRV_Channels::_singleton -/ this
+  let t'1 := (this + 4)
+  PMem.stU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/ t'1
+  AP_Param.setup_object_defaults this (0x6170 : UInt64) /- &SRV_Channels::var_info -/
+  for i'2 in [0:32] do
+    let i : UInt8 := UInt8.ofNat i'2
+    let t'3 ← PMem.ldU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/
+    PMem.stU8 ((t'3 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 13) i
+    if (decide ((UInt32.toInt32 (UInt8.toUInt32 (i))) ≥ (16 : Int32))) then
+      PMem.stI16 (fp + 0) (Int32.toInt16 ((-1 : Int32)))
+      let t'4 ← PMem.ldU64 (0xaff0 : UInt64) /- &SRV_Channels::channels -/
+      AP_ParamTBase'short_2.set_default ((t'4 + ((UInt64.toInt64 (UInt8.toUInt64 (i))) * 20).toUInt64) + 8) (fp + 0)
+  return ()
+
+def SRV_Channels.SRV_Channels (this : UInt64) : PMem.M Unit := do
+  let fp ← PMem.enter 2
+  let r ← SRV_Channels.SRV_Channels.body fp this
+  PMem.leave fp
+  return r
 
 end AP_Param_lib

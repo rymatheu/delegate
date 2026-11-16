@@ -35,7 +35,7 @@ def fill (s : Array UInt8) (seed : UInt32) (len : UInt8) : (Array UInt8) := Id.r
 def t_strlen (seed : UInt32) (len max : UInt8) : UInt32 := Id.run do
   let mut buf : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   buf := fill buf seed (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len) &&& (7 : Int32))))
-  return UInt64.toUInt32 (USize.toUInt64 (CString.strlen buf 0 + UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (100 : Int32))) * CString.strnlen buf 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 max) &&& (15 : Int32)))))))
+  return UInt64.toUInt32 (CString.strlen buf 0 + Int64.toUInt64 (Int32.toInt64 (100 : Int32)) * CString.strnlen buf 0 (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 max) &&& (15 : Int32)))))
 
 /-- C++ `int32_t t_strcmp(uint32_t sa, uint32_t sb, uint8_t la, uint8_t lb)`, `examples/cstring.cpp:32-39`. -/
 def t_strcmp (sa sb : UInt32) (la lb : UInt8) : Int32 := Id.run do
@@ -51,7 +51,7 @@ def t_strncmp (sa sb : UInt32) (la n : UInt8) : Int32 := Id.run do
   let mut b : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   a := fill a sa (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 la) &&& (7 : Int32))))
   b := fill b (if sb % Int32.toUInt32 (3 : Int32) == Int32.toUInt32 (0 : Int32) then sa else sb) (UInt32.toUInt8 ((UInt8.toUInt32 la + sb) &&& Int32.toUInt32 (7 : Int32)))
-  return CString.strncmp a 0 b 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (15 : Int32))))) + (1000 : Int32) * CString.strncasecmp a 0 b 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (15 : Int32))))) + (1000000 : Int32) * CString.strcasecmp a 0 b 0
+  return CString.strncmp a 0 b 0 (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (15 : Int32)))) + (1000 : Int32) * CString.strncasecmp a 0 b 0 (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (15 : Int32)))) + (1000000 : Int32) * CString.strcasecmp a 0 b 0
 
 /-- C++ `int32_t t_memcmp(uint32_t sa, uint32_t sb, uint8_t n)`, `examples/cstring.cpp:50-57`. -/
 def t_memcmp (sa sb : UInt32) (n : UInt8) : Int32 := Id.run do
@@ -59,7 +59,7 @@ def t_memcmp (sa sb : UInt32) (n : UInt8) : Int32 := Id.run do
   let mut b : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   a := fill a sa (Int8.toUInt8 (Int32.toInt8 (7 : Int32)))
   b := fill b (if sb % Int32.toUInt32 (2 : Int32) == Int32.toUInt32 (0 : Int32) then sa ^^^ Int32.toUInt32 (1 : Int32) else sb) (Int8.toUInt8 (Int32.toInt8 (7 : Int32)))
-  return CString.memcmp a 0 b 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (7 : Int32)))))
+  return CString.memcmp a 0 b 0 (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) &&& (7 : Int32))))
 
 /-- C++ `uint64_t fold(const char * p, uint8_t n)`, `examples/cstring.cpp:60-67`. -/
 def fold (p : Array UInt8) (n : UInt8) : UInt64 := Id.run do
@@ -74,9 +74,9 @@ def t_strncpy (seed : UInt32) (len n «at» : UInt8) : UInt64 := Id.run do
   let mut src : Array UInt8 := Array.replicate 8 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   let mut dst : Array UInt8 := Array.replicate 16 (0 : UInt8)  -- uninitialized in C; every element is written before it is read
   src := fill src seed (Int8.toUInt8 (Int32.toInt8 (UInt32.toInt32 (UInt8.toUInt32 len) &&& (7 : Int32))))
-  dst := CString.memset dst 0 (Int8.toInt32 (UInt8.toInt8 (120 : UInt8))) (UInt64.toUSize (16 : UInt64))
-  dst := CString.strncpy dst (Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 «at») &&& (3 : Int32))) src 0 (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (12 : Int32)))))
-  dst := CString.memcpy dst (0 + Int32.toNatClampNeg (12 : Int32)) src (0 + Int32.toNatClampNeg (1 : Int32)) (UInt64.toUSize (Int64.toUInt64 (Int32.toInt64 (3 : Int32))))
+  dst := CString.memset dst 0 (Int8.toInt32 (UInt8.toInt8 (120 : UInt8))) (16 : UInt64)
+  dst := CString.strncpy dst (Int32.toNatClampNeg (UInt32.toInt32 (UInt8.toUInt32 «at») &&& (3 : Int32))) src 0 (Int64.toUInt64 (Int32.toInt64 (UInt32.toInt32 (UInt8.toUInt32 n) % (12 : Int32))))
+  dst := CString.memcpy dst (0 + Int32.toNatClampNeg (12 : Int32)) src (0 + Int32.toNatClampNeg (1 : Int32)) (Int64.toUInt64 (Int32.toInt64 (3 : Int32)))
   return fold dst (Int8.toUInt8 (Int32.toInt8 (16 : Int32)))
 
 /-- C++ `int32_t t_char(uint8_t v, uint8_t w)`, `examples/cstring.cpp:81-90`. -/
@@ -99,7 +99,7 @@ def t_literals (which skip : UInt8) : UInt32 := Id.run do
     let t'1 : Array UInt8 := names[Int32.toNatClampNeg ((UInt32.toInt32 (UInt8.toUInt32 which) >>> (2 : Int32)) % (5 : Int32))]!
     p := t'1
     p'o := 0
-  let mut h : UInt32 := UInt64.toUInt32 (USize.toUInt64 (CString.strlen p p'o))
+  let mut h : UInt32 := UInt64.toUInt32 (CString.strlen p p'o)
   let mut i : UInt8 := Int8.toUInt8 (Int32.toInt8 (0 : Int32))
   for _ in [0:2^64] do  -- C loop without a constant trip count (--general-loops)
     if !(decide (UInt32.toInt32 (UInt8.toUInt32 i) < (UInt32.toInt32 (UInt8.toUInt32 skip) &&& (3 : Int32))) && Int8.toInt32 (UInt8.toInt8 p[p'o]!) != (0 : Int32)) then break
@@ -144,7 +144,7 @@ def mix (kinds : Array UInt8) (va' : Array CArg) : Int64 := Id.run do
       ap := VaList.next ap
       let s : Array UInt8 := t'8.1  -- C `s`: a copy of the array it points into
       let s'o : Nat := t'8.2
-      r := UInt64.toInt64 (Int64.toUInt64 (r * Int32.toInt64 (11 : Int32)) + USize.toUInt64 (CString.strlen s s'o))
+      r := UInt64.toInt64 (Int64.toUInt64 (r * Int32.toInt64 (11 : Int32)) + CString.strlen s s'o)
     else
       let t'9 := VaList.argBinary64 ap
       ap := VaList.next ap

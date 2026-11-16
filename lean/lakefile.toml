@@ -150,10 +150,11 @@ roots = ["VehicleMemoryV", "Vehicle_lib"]
 
 # Phase 5a slice 1: the memory with the estimator World inside (support/gen_param_memory_v.py: ParamMemoryV,
 # VehicleBridgeMap) and the estimator bridge's adapters (ardupilot/vehicle/gen_bridge.py: VehicleBridge); the combined
-# replay of the estimator and the GCS over one state (ardupilot/onestate_replay.py; README.md "Phase 5: the estimator bridge")
+# replay of the estimator and the GCS over one state (ardupilot/onestate_replay.py; README.md "Phase 5: the estimator bridge");
+# the HAL's devices as definitions (support/VehicleHal.lean, README.md "Phase 5: total definitions")
 [[lean_lib]]
 name = "VehicleBridgeLib"
-roots = ["VehicleBridgeMap", "ParamMemoryV", "GCSMemoryV", "VehicleMemoryV", "VehicleBridge"]
+roots = ["VehicleBridgeMap", "ParamMemoryV", "GCSMemoryV", "VehicleMemoryV", "VehicleHal", "VehicleBridge"]
 
 [[lean_lib]]
 name = "OneStateLib"
@@ -168,3 +169,8 @@ root = "OneStateReplay"
 [[lean_exe]]
 name = "vehicle_replay"
 root = "VehicleReplay"
+
+# the proof corpus over the frozen code (lean/Corpus/PLAN.md): imports Vehicle_lib and Estimator_lib, never changes them
+[[lean_lib]]
+name = "Corpus"
+roots = ["Corpus"]

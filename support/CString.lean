@@ -8,7 +8,8 @@ the copies.
 C's bytes, strings and variadic arguments (README.md, "Phase 2b"). Memory of the model is bytes: a
 `char[N]`, `unsigned char[N]` or `uint8_t[N]` object, a string literal (with its terminating zero),
 and the object representation of a byte-level object are an `Array UInt8`; a pointer into one is
-the array and an offset (`Nat`). C's `char` (signed on the reference target, `-fsigned-char`) is
+the array and an offset (`Nat`); a `size_t` (a count, a length) is a `UInt64`, as on the
+reference target (LP64). C's `char` (signed on the reference target, `-fsigned-char`) is
 stored as its byte; the translator converts a `char` value to a wider type through `UInt8.toInt8`
 (sign extension), as C's integer promotion does.
 
@@ -32,25 +33,25 @@ namespace CString
   if h : i < a.size then a.set i v h else a
 
 /-- C `strlen(a + o)`. -/
-def strlen (a : Array UInt8) (o : Nat) : USize := Id.run do
+def strlen (a : Array UInt8) (o : Nat) : UInt64 := Id.run do
   let mut n : Nat := 0
   for i in [o:a.size] do
-    if a[i]! == 0 then return n.toUSize
+    if a[i]! == 0 then return n.toUInt64
     n := n + 1
-  return n.toUSize
+  return n.toUInt64
 
 /-- C `strnlen(a + o, maxlen)`. -/
-def strnlen (a : Array UInt8) (o : Nat) (maxlen : USize) : USize := Id.run do
+def strnlen (a : Array UInt8) (o : Nat) (maxlen : UInt64) : UInt64 := Id.run do
   let m := maxlen.toNat
   let mut n : Nat := 0
   for i in [o:a.size] do
-    if n ≥ m || a[i]! == 0 then return n.toUSize
+    if n ≥ m || a[i]! == 0 then return n.toUInt64
     n := n + 1
-  return (min n m).toUSize
+  return (min n m).toUInt64
 
 /-- C `strncpy(d + dO, s + sO, n)`: the bytes of s up to its terminator, then zeros, n bytes in
 all; returns d's array. -/
-def strncpy (d : Array UInt8) (dO : Nat) (s : Array UInt8) (sO : Nat) (n : USize) : Array UInt8 := Id.run do
+def strncpy (d : Array UInt8) (dO : Nat) (s : Array UInt8) (sO : Nat) (n : UInt64) : Array UInt8 := Id.run do
   let mut d := d
   let mut ended := false
   for i in [0:n.toNat] do
@@ -60,14 +61,14 @@ def strncpy (d : Array UInt8) (dO : Nat) (s : Array UInt8) (sO : Nat) (n : USize
   return d
 
 /-- C `memcpy(d + dO, s + sO, n)` (the arrays are distinct Lean values: overlap does not arise). -/
-def memcpy (d : Array UInt8) (dO : Nat) (s : Array UInt8) (sO : Nat) (n : USize) : Array UInt8 := Id.run do
+def memcpy (d : Array UInt8) (dO : Nat) (s : Array UInt8) (sO : Nat) (n : UInt64) : Array UInt8 := Id.run do
   let mut d := d
   for i in [0:n.toNat] do
     d := put d (dO + i) (get s (sO + i))
   return d
 
 /-- C `memset(d + dO, c, n)`: c converted to `unsigned char`. -/
-def memset (d : Array UInt8) (dO : Nat) (c : Int32) (n : USize) : Array UInt8 := Id.run do
+def memset (d : Array UInt8) (dO : Nat) (c : Int32) (n : UInt64) : Array UInt8 := Id.run do
   let mut d := d
   for i in [0:n.toNat] do
     d := put d (dO + i) c.toUInt32.toUInt8
@@ -77,7 +78,7 @@ def memset (d : Array UInt8) (dO : Nat) (c : Int32) (n : USize) : Array UInt8 :=
 @[inline] def diff (x y : UInt8) : Int32 := x.toUInt32.toInt32 - y.toUInt32.toInt32
 
 /-- C `memcmp(a + aO, b + bO, n)`. -/
-def memcmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : USize) : Int32 := Id.run do
+def memcmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : UInt64) : Int32 := Id.run do
   for i in [0:n.toNat] do
     let x := get a (aO + i)
     let y := get b (bO + i)
@@ -85,7 +86,7 @@ def memcmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : USize)
   return 0
 
 /-- C `strncmp(a + aO, b + bO, n)`. -/
-def strncmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : USize) : Int32 := Id.run do
+def strncmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : UInt64) : Int32 := Id.run do
   for i in [0:n.toNat] do
     let x := get a (aO + i)
     let y := get b (bO + i)
@@ -95,13 +96,13 @@ def strncmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : USize
 
 /-- C `strcmp(a + aO, b + bO)` (at most the bytes of a and one more). -/
 def strcmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) : Int32 :=
-  strncmp a aO b bO (a.size + 1 - aO).toUSize
+  strncmp a aO b bO (a.size + 1 - aO).toUInt64
 
 /-- ASCII `tolower` (the C locale). -/
 @[inline] def lower (c : UInt8) : UInt8 := if 65 ≤ c && c ≤ 90 then c + 32 else c
 
 /-- C `strncasecmp(a + aO, b + bO, n)` in the C locale. -/
-def strncasecmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : USize) : Int32 := Id.run do
+def strncasecmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : UInt64) : Int32 := Id.run do
   for i in [0:n.toNat] do
     let x := lower (get a (aO + i))
     let y := lower (get b (bO + i))
@@ -111,7 +112,7 @@ def strncasecmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) (n : U
 
 /-- C `strcasecmp`. -/
 def strcasecmp (a : Array UInt8) (aO : Nat) (b : Array UInt8) (bO : Nat) : Int32 :=
-  strncasecmp a aO b bO (a.size + 1 - aO).toUSize
+  strncasecmp a aO b bO (a.size + 1 - aO).toUInt64
 
 /-! Object representations (byte-level objects, README.md "Phase 2b"): little-endian, as on the
 reference target (arm64 and x86-64); a float's bytes are those of its bit pattern. -/
@@ -213,9 +214,9 @@ transferred (the destination is unchanged), else the bytes are copied. -/
 
 namespace HalStorage
 /-- `hal.storage->read_block(dst + dO, src, n)`: dst after the read. -/
-def read_block (st : Array UInt8) (dst : Array UInt8) (dO : Nat) (src : UInt16) (n : USize) : Array UInt8 :=
+def read_block (st : Array UInt8) (dst : Array UInt8) (dO : Nat) (src : UInt16) (n : UInt64) : Array UInt8 :=
   if src.toNat + n.toNat > st.size then dst else CString.memcpy dst dO st src.toNat n
 /-- `hal.storage->write_block(dst, src + sO, n)`: the storage after the write. -/
-def write_block (st : Array UInt8) (dst : UInt16) (src : Array UInt8) (sO : Nat) (n : USize) : Array UInt8 :=
+def write_block (st : Array UInt8) (dst : UInt16) (src : Array UInt8) (sO : Nat) (n : UInt64) : Array UInt8 :=
   if dst.toNat + n.toNat > st.size then st else CString.memcpy st dst.toNat src sO n
 end HalStorage
