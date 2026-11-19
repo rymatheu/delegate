@@ -25,5 +25,8 @@ make_env .venv-video requirements-video.txt
     && echo "sim/.venv ready"
 .venv-video/bin/python -c "import av, numpy" && echo "sim/.venv-video ready"
 echo "Building the gorge world (seed 7; about 3 minutes the first time, then cached) ..."
-.venv/bin/python -B world/gorge.py > /dev/null
+# Built through an import, not by running world/gorge.py as a script: the cache stores the world's objects by
+# module name, and every program that loads it imports the module `gorge`. A cache written by the script itself
+# (objects stored under `__main__`) is unreadable to them; the import below detects that and rebuilds it.
+.venv/bin/python -B -c "import sys; sys.path.insert(0, 'world'); import gorge; gorge.Gorge(7).summary()" > /dev/null
 echo "Gorge world ready (sim/build/world-cache/)."
