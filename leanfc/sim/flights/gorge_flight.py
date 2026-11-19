@@ -3,7 +3,7 @@
 scripted ground station in QGroundControl's place, from the ground to the disarm after landing.
 
     ../sim/.venv/bin/python sim/flights/gorge_flight.py [--port 14591] [--speed 0] [--seed 0] [--noise field]
-        [--wind MEAN GUST] [--upload] [--video --video-port V --pose-port P] [--out out/gorge-single]
+        [--wind MEAN GUST] [--upload] [--video --video-port V --pose-port P] [--record [DIR] | --out DIR]
 
 Starts `./fly_qgc.sh single --udp-port PORT --out OUT` (with `--no-video` unless --video; SPEED=--speed: 0 runs the
 simulation as fast as it goes, 1 real time) and is the ground station on 127.0.0.1:PORT with test_services.py's Link
@@ -18,7 +18,8 @@ from the ground (GUIDED, arm, MISSION_START); AUTO; MISSION_CURRENT and MISSION_
 items; landed states ON_GROUND, TAKEOFF, IN_AIR, LANDING, ON_GROUND; landed and disarmed; no contact with the gorge in
 the air. Then, from the session's CSV and records: time from arm to disarm, tracking error, distance to the planned
 route, clearance, the landing point against the land item, the real-time factor, and with --video the frames.
-The last line is `RESULT PASS` or `RESULT FAIL`; report.txt in OUT.
+The last line is `RESULT PASS` or `RESULT FAIL`. Nothing is kept on disk unless --record [DIR] (or --out DIR):
+then DIR holds flight.csv, session.csv/json, gorge.params, gorge.plan, vehicle.log, launcher.out, report.txt.
 """
 import argparse
 import json
@@ -44,6 +45,34 @@ shared.use_world()
 import test_services as TS  # noqa: E402
 import geo  # noqa: E402            (shared)
 
+
+
+TMP = []           # the run's temporary directory when nothing is recorded (removed at exit)
+
+
+def out_dir(a, default):
+    """--record [DIR] / --out DIR: the records' folder; neither: a temporary folder, removed at exit."""
+    rec = a.out or a.record
+    if rec:
+        out = Path(rec).resolve()
+        out.mkdir(parents=True, exist_ok=True)
+        return out, True
+    import tempfile
+    TMP.append(tempfile.mkdtemp(prefix="leanfc-flight."))
+    return Path(TMP[0]), False
+
+
+def run_main(main):
+    """main() with the temporary folder removed on every exit (also Ctrl-C and SIGTERM)."""
+    import shutil
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
+    try:
+        return main()
+    except KeyboardInterrupt:
+        return 130
+    finally:
+        for d in TMP:
+            shutil.rmtree(d, ignore_errors=True)
 
 
 def report(name, ok, detail=""):
@@ -162,11 +191,12 @@ def main():
     ap.add_argument("--pose-port", type=int, default=14611)
     ap.add_argument("--upload", action="store_true",
                     help="upload gorge.plan before the start (default: download the onboard mission, compare, start it)")
-    ap.add_argument("--out", default=str(ROOT / "out" / "gorge-single"))
+    ap.add_argument("--record", nargs="?", const=str(ROOT / "out" / "gorge-single"), default=None, metavar="DIR",
+                    help="keep the records in DIR (default out/gorge-single); without it nothing is kept")
+    ap.add_argument("--out", default=None, help="the same as --record DIR")
     a = ap.parse_args()
     a.no_upload = not a.upload
-    out = Path(a.out).resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    out, keep = out_dir(a, "gorge-single")
     for f in ("flight.csv", "session.json", "session.csv", "camera1.json", "report.txt"):
         (out / f).unlink(missing_ok=True)
     stop, vres = threading.Event(), {}
@@ -325,13 +355,14 @@ def main():
                      f"{s['slots_dropped']} slots dropped, render {s['render_ms_mean']:.1f} ms mean; received on "
                      f"{s['port']}: {rx.get('frames')} frames, {rx.get('fps', 0):.2f} fps")
     n_ok = sum(ok for _, ok in TS.RESULTS)
-    lines.append(f"      wall time {time.time() - t_wall0:.1f} s; records in {out}")
+    lines.append(f"      wall time {time.time() - t_wall0:.1f} s; records " + (f"in {out}" if keep else "not kept (--record DIR keeps them)"))
     lines.append(f"{n_ok}/{len(TS.RESULTS)} passed")
     lines.append("RESULT " + ("PASS" if n_ok == len(TS.RESULTS) else "FAIL"))
     print("\n".join(lines[-9:]))
-    (out / "report.txt").write_text("\n".join(lines) + "\n")
+    if keep:
+        (out / "report.txt").write_text("\n".join(lines) + "\n")
     return 0 if n_ok == len(TS.RESULTS) else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run_main(main))

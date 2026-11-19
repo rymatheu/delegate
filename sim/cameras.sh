@@ -16,7 +16,8 @@
 #                     thermal of vehicle 1 to N + 2, of vehicle 2 to N + 6
 #   --pose-port N     where vehicle 1's camera receives its poses (vehicle 2: N + 2); the flight program sends them
 #                     with gorgesim.udp_bridge.PoseSender, every 4th 400 Hz tick (100 Hz)
-#   --out DIR         camera.out, cameraN.log, cameraN.json go here (default sim/build/cameras)
+#   --out DIR         optional: write camera.out (console), cameraN.log (MAVLink) and cameraN.json (statistics) there;
+#                     without it nothing is written to disk (console to /dev/null, no logs, no statistics)
 #   --noses-forward   staggered: vehicle 2's camera is labeled "V2 forward" instead of "V2 rear-view"
 # Exit status: 0 cameras started; 2 no video environment (sim/setup.sh) or a pose port is in use (the launcher then
 # runs the session without video, or stops). GORGE_VIDEO_PY overrides the video environment's python.
@@ -26,7 +27,7 @@ VPY="${GORGE_VIDEO_PY:-$SIM/.venv-video/bin/python}"
 PY="${SIM_PYTHON:-$SIM/.venv/bin/python}"
 scenario="${1:-}"; shift || true
 case "$scenario" in single|abreast|staggered) ;; *) echo "cameras.sh: SCENARIO must be single, abreast or staggered" >&2; exit 1 ;; esac
-parent=""; udp_port=14550; video_port=5600; pose_port=14601; out="$SIM/build/cameras"; label2="V2 forward"
+parent=""; udp_port=14550; video_port=5600; pose_port=14601; out=""; label2="V2 forward"
 [[ "$scenario" == staggered ]] && label2="V2 rear-view"
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -60,19 +61,24 @@ PYEOF
 then
   exit 2
 fi
-mkdir -p "$out"
+if [[ -n "$out" ]]; then
+  mkdir -p "$out"; console="$out/camera.out"
+  rec1=(--stats "$out/camera1.json" --log "$out/camera1.log")
+  rec2=(--stats "$out/camera1.json" "$out/camera2.json" --log "$out/camera1.log" "$out/camera2.log")
+else
+  console=/dev/null; rec1=(); rec2=()
+fi
 # utility QoS (macOS taskpolicy; elsewhere nice): the flight program and the vehicles keep the performance cores
 if command -v taskpolicy >/dev/null 2>&1; then LOW=(taskpolicy -c utility); else LOW=(nice -n 10); fi
 if [[ "$scenario" == single ]]; then
   "${LOW[@]}" "$VPY" "$SIM/world/camera_component.py" --gcs "127.0.0.1:$udp_port" --parent "$parent" \
     --sysid 1 --label Forward --rgb-port "$video_port" --thermal-port "$((video_port + 2))" --pose-port "$pose_port" \
-    --seed 0 --rgb-workers 3 --stats "$out/camera1.json" --log "$out/camera1.log" > "$out/camera.out" 2>&1 &
-  echo "Video: forward RGB on UDP $video_port, thermal on $((video_port + 2)) (the camera starts in a few seconds; log $out/camera.out)."
+    --seed 0 --rgb-workers 3 ${rec1[@]+"${rec1[@]}"} > "$console" 2>&1 &
+  echo "Video: forward RGB on UDP $video_port, thermal on $((video_port + 2)) (the camera starts in a few seconds)."
 else
   "${LOW[@]}" "$VPY" "$SIM/world/camera_component.py" --gcs "127.0.0.1:$udp_port" --parent "$parent" \
     --sysid 1 2 --label "V1 forward" "$label2" --rgb-port "$video_port" "$video_port" \
     --thermal-port "$((video_port + 2))" "$((video_port + 6))" --pose-port $pose_ports --seed 0 100 --rgb-gated on off \
-    --rgb-workers 2 --stats "$out/camera1.json" "$out/camera2.json" --log "$out/camera1.log" "$out/camera2.log" \
-    > "$out/camera.out" 2>&1 &
-  echo "Video: the active vehicle's forward RGB on UDP $video_port; thermal of vehicle 1 on $((video_port + 2)), of vehicle 2 on $((video_port + 6)) (the cameras start in a few seconds; log $out/camera.out)."
+    --rgb-workers 2 ${rec2[@]+"${rec2[@]}"} > "$console" 2>&1 &
+  echo "Video: the active vehicle's forward RGB on UDP $video_port; thermal of vehicle 1 on $((video_port + 2)), of vehicle 2 on $((video_port + 6)) (the cameras start in a few seconds)."
 fi

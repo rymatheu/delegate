@@ -274,15 +274,17 @@ def run(a):
             cvv = len(p.getContactPoints(bodyA=drones[0], bodyB=drones[1], physicsClientId=c))
             cw = [len([q for q in p.getContactPoints(bodyA=drones[v], physicsClientId=c) if q[2] in world]) for v in range(2)]
             pe = [np.array(obs[v][0:3]) for v in range(2)]
-            frows.append([tk, float(np.linalg.norm(pe[1] - pe[0])), gap, cvv, cw[0], cw[1], clear[0], clear[1]])
+            if not a.no_record:
+                frows.append([tk, float(np.linalg.norm(pe[1] - pe[0])), gap, cvv, cw[0], cw[1], clear[0], clear[1]])
             for v in active:
                 r = replies[v]
                 p1, v1, _, _ = enu_state_to_ned(obs[v][0:3], obs[v][3:7], obs[v][10:13], obs[v][13:16])
                 q1 = quat_ned_frd(obs[v][3:7])
                 veh = r[len(r) - n_veh:] if n_veh else []
                 hsp = r[18:len(r) - n_veh]
-                rows[v].append([tk - 1 / R.CTRL_HZ, *p1, *v1, *q1, *r[4:17], legs[v], *r[:4], *hsp, *veh,
-                                *enu_to_ned(env.wind_v[v]), *enu_to_ned(env.force_v[v]), clear[v]])
+                if not a.no_record:
+                    rows[v].append([tk - 1 / R.CTRL_HZ, *p1, *v1, *q1, *r[4:17], legs[v], *r[:4], *hsp, *veh,
+                                    *enu_to_ned(env.wind_v[v]), *enu_to_ned(env.force_v[v]), clear[v]])
                 legs[v] = r[17]
             if pose_socks is not None and (k + 1) % 4 == 0:
                 for v in range(2):
@@ -319,6 +321,12 @@ def run(a):
         env.close()
     wall_s = time.time() - t0
 
+    if a.no_record:
+        w = [x for x in wall if x[0] >= 2 * R.CTRL_HZ]
+        rtf = (w[-1][0] - w[0][0]) / R.CTRL_HZ / (w[-1][1] - w[0][1]) if len(w) > 2 else float("nan")
+        print(f"formation session {a.plan}: {outcome} after {len(wall) * 40 / R.CTRL_HZ:.1f} s simulated, wall {wall_s:.1f} s, "
+              f"real-time factor {rtf:.4f}; no record (--no-record)", flush=True)
+        return {}
     base = R.COLS + R.HSP_COLS + (R.VEH_COLS if a.session else []) + "w_n w_e w_d f_n f_e f_d clearance".split()
     for v in range(2):
         with open(out / f"v{v + 1}.csv", "w") as f:
@@ -454,6 +462,7 @@ def main():
     ap.add_argument("--pose-ports", type=int, nargs=2, default=None, metavar=("PORT1", "PORT2"))
     ap.add_argument("--realtime", type=float, default=None)
     ap.add_argument("--origin", nargs=3, default=None, metavar=("LAT", "LON", "ALT"))
+    ap.add_argument("--no-record", action="store_true", help="session: keep and write no record (CSV, JSON)")
     ap.add_argument("--clear-every", type=int, default=None,
                     help="clearance every N ticks (default 1 in batch, 4 = 100 Hz in the session; NaN in between)")
     a = ap.parse_args()

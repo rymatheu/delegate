@@ -24,17 +24,21 @@ plays the ground station on the MAVLink port with pymavlink:
 AUTO past the first spline waypoint) with the video running. Last, the session is ended with SIGTERM and every
 process it started (harness, vehicles, cameras, render workers) must be gone; the harness's real-time line is
 printed. --no-video runs the session without cameras (for comparing the real-time margin; (a) to (c) are skipped).
-Prints `RESULT PASS` (exit 0) or `RESULT FAIL` (exit 1); report.txt in --out.
+Prints `RESULT PASS` (exit 0) or `RESULT FAIL` (exit 1). Work files (the session's record, decoded frames, logs) go to
+a temporary directory that is removed at exit; --keep DIR (or --out DIR) keeps them there instead, with report.txt.
 """
 import argparse
+import atexit
 import json
 import os
 import re
+import shutil
 import signal
 import socket
 import struct
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import zlib
@@ -308,7 +312,8 @@ def main():
     ap.add_argument("--video-port", type=int, default=5700)
     ap.add_argument("--pose-port", type=int, default=14701)
     ap.add_argument("--seconds", type=float, default=8.0, help="decoding time per stream")
-    ap.add_argument("--out", default=None, help="default build/video-check/PLAN (PLAN-novideo with --no-video)")
+    ap.add_argument("--keep", "--out", dest="keep", default=None,
+                    help="keep the frames, logs and the session's record in DIR (default: a temporary directory, removed)")
     ap.add_argument("--mission", action="store_true", help="also run sim/checks/qgc_session_check.py with the video running")
     ap.add_argument("--no-video", action="store_true")
     a = ap.parse_args()
@@ -316,7 +321,13 @@ def main():
         a.plan = "single"
     if bool(a.launcher) == a.attach:
         ap.error("give exactly one of --launcher PATH and --attach")
-    out = Path(a.out or SIM_DIR / "build" / "video-check" / (a.plan + ("-novideo" if a.no_video else ""))).resolve()
+    if a.keep:
+        out = Path(a.keep).resolve()
+    else:
+        out = Path(tempfile.mkdtemp(prefix="video_check-")).resolve()
+        atexit.register(shutil.rmtree, out, True)
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            signal.signal(sig, lambda *_: sys.exit(130))     # unwinds: the session is ended, atexit removes the folder
     out.mkdir(parents=True, exist_ok=True)
     vpy = os.environ.get("GORGE_VIDEO_PY", str(SIM_DIR / ".venv-video" / "bin" / "python"))
     two = a.plan != "single"
@@ -377,7 +388,7 @@ def main():
             (out / "mission.log").write_text(mp.stdout + mp.stderr)
             last = (mp.stdout.strip().splitlines() or [""])[-1]
             report(lines, "sim/checks/qgc_session_check.py on the session" + ("" if a.no_video else " with the video running"),
-                   mp.returncode == 0 and "RESULT PASS" in last, last.strip() + f"; log {out / 'mission.log'}")
+                   mp.returncode == 0 and "RESULT PASS" in last, last.strip())
     finally:
         g.close()
         if sess is not None:
@@ -423,7 +434,8 @@ def main():
     ok = all(RESULTS)
     lines.append("RESULT " + ("PASS" if ok else "FAIL") + f" ({sum(RESULTS)}/{len(RESULTS)})")
     print(lines[-1], flush=True)
-    (out / "report.txt").write_text("\n".join(lines) + "\n")
+    if a.keep:
+        (out / "report.txt").write_text("\n".join(lines) + "\n")
     return 0 if ok else 1
 
 

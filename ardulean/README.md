@@ -38,17 +38,19 @@ From this directory:
 ./fly_qgc.sh staggered
 ```
 
-`fly_gorge.sh` ends by itself (about 2 minutes for one X500, 3 to 4 for two) and writes its record to
-`out/gorge/<scenario>/` (`track.csv` at 100 Hz, `flight.json`, `summary.txt`; two vehicles: `v1/`, `v2/`,
-`formation.csv`).
+`fly_gorge.sh` ends by itself (about 2 minutes for one X500, 3 to 4 for two) and prints PASS or FAIL. By default
+nothing is kept on disk (the run works in a temporary directory, removed on every exit); `--record [DIR]` (or
+`--out DIR`) keeps the record in `DIR`, default `out/<scenario>/` (`track.csv` at 100 Hz, `flight.json`,
+`summary.txt`, the lock-step `inputs.txt`, `outputs.txt`; two vehicles: `v1/`, `v2/`, `formation.csv`).
 
-`fly_qgc.sh` runs in real time until Ctrl-C; its record goes to `out/qgc/`. Open QGroundControl (unmodified, default
+`fly_qgc.sh` runs in real time until Ctrl-C and keeps nothing on disk unless `--record [DIR]` is given (default
+`out/qgc-<scenario>/`). Open QGroundControl (unmodified, default
 settings); it finds the vehicle(s) on UDP 14550. Wait about 45 seconds until a vehicle shows ready to fly (the position
 estimator needs that time). The mission is not onboard: in the Plan view open `../sim/plans/gorge.plan` (two X500s:
 `formation-<scenario>-v1.plan` for vehicle 1, `-v2.plan` for vehicle 2, chosen with the vehicle selector) and press
 Upload; then arm and start the mission in the Fly view. The video panel shows the active vehicle's forward camera with
 the thermal camera blended over it (QGroundControl's video UDP port must stay at its default 5600). Options:
-`--udp-port N`, `--video-port N` (or `MAVLINK_PORT`, `VIDEO_PORT`), `--no-video`, `--out DIR`.
+`--udp-port N`, `--video-port N` (or `MAVLINK_PORT`, `VIDEO_PORT`), `--no-video`, `--record [DIR]`.
 
 Real time: the loop is paced to the wall clock and never drops a step; when the machine cannot keep up it runs slower
 than real time, and the session prints its real-time line when it ends. Measured with video on a busy 10-core machine

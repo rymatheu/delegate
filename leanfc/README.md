@@ -34,15 +34,17 @@ From `leanfc/`:
 - `fly_qgc.sh` runs in real time: MAVLink to UDP 14550, live video from each vehicle's camera (MAVLink camera
   component N/100; RTP/H.264 on UDP 5600 and up). Open QGroundControl with its default settings.
 - The missions are onboard at boot: press Start Mission (one vehicle), or Select All, Arm and Start in the Multi-Vehicle
-  panel (two). Uploading is optional: use the plan files the launcher writes into the session folder
-  (`out/qgc-single/gorge.plan`, `out/qgc-PLAN/plans/formation-PLAN-v1.plan` and `-v2.plan`), not
-  `sim/plans/formation-staggered-v2.plan` (leanfc has no CONDITION_YAW; it turns vehicle 2 with `nav.yawReverse`).
-- Options: `--udp-port N`, `--video-port N`, `--pose-port N`, `--out DIR`, `--no-video`, `--tiles-port N` (a map tile
+  panel (two). Uploading is optional: use leanfc's plan files in `plans/` (`gorge.plan`, `formation-PLAN-v1.plan`,
+  `-v2.plan`), not `sim/plans/formation-staggered-v2.plan` (leanfc has no CONDITION_YAW; it turns vehicle 2 with
+  `nav.yawReverse`). `../sim/.venv/bin/python -B sim/flights/leanfc_plans.py --plans` regenerates them, `--check-plans`
+  checks them against what a session uses.
+- Options: `--udp-port N`, `--video-port N`, `--pose-port N`, `--record [DIR]`, `--no-video`, `--tiles-port N` (a map tile
   server of the gorge); environment `NOISE=field|none`, `SEED=N`, `WIND="MEAN GUST"`, `SPEED=S` (1 = real time).
 - `fly_gorge.sh` ends by itself, runs as fast as the simulation goes (`--speed 1` for real time), and uses MAVLink port
   14591 (one vehicle) or 14593 (two); `--port N` changes it.
-- Output: `out/qgc-SCENARIO/` (QGroundControl sessions) and `out/gorge-SCENARIO/` (scripted flights): `flight.csv` or
-  `formation.csv`, `v1.csv`, `v2.csv` (one row per 400 Hz tick), `report.txt`, the vehicle MAVLink logs.
+- Output: none by default (a run leaves nothing on disk). `--record [DIR]` (or `--out DIR`) keeps the records in DIR,
+  default `out/qgc-SCENARIO/` (sessions) or `out/gorge-SCENARIO/` (scripted flights): `flight.csv` or `formation.csv`,
+  `v1.csv`, `v2.csv` (one row per 400 Hz tick), the MAVLink logs, the camera statistics, `report.txt`.
 - Real-time factor (measured on the development machine, video on): one X500 1.000 (worst second 0.998), two X500s
   1.000 (worst second 0.93 to 0.95, a few seconds below 0.98, at most 0.09 s behind the wall clock). Without pacing
   the simulation runs at about 2.1x real time with one vehicle and 1.5x with two.

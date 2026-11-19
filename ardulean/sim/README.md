@@ -15,6 +15,9 @@ Python: `../sim/.venv/bin/python` from `ardulean/` (the commands below run from 
 | `params/gorge-{fast,smooth,scurve}-x500.txt` | parameter changes of the fast, smooth and S-curve flights (`--params FILE`) |
 | `checks/replay_check.py RUN_DIR` | replays a recorded flight through the executable in file mode and compares the output with `outputs.txt` byte for byte |
 
+The launchers `../fly_gorge.sh` and `../fly_qgc.sh` give the flight programs a temporary `--out` directory and remove
+it at exit unless `--record [DIR]` is given; run directly, the programs write to `--out` (default `out/runs/...`).
+
 Per 400 Hz tick the flight program takes the shared plant's sample (`gorgesim.plant.Plant` / `FormationPlant`),
 encodes it as one protocol line for the vehicle, reads the vehicle's output line, and gives its PWM back to the plant;
 the vehicle's downlink goes to the scripted ground station (`gorgesim.ground_station`) or, with `--udp`, to
@@ -27,6 +30,6 @@ the programs' docstrings have the details. Examples:
 ```
 ../sim/.venv/bin/python sim/fly_gorge.py --params sim/params/gorge-fast-x500.txt --out out/runs/fast
 ../sim/.venv/bin/python sim/fly_gorge.py --straight-north 26.34,47.3,72.0 --params sim/params/gorge-scurve-x500.txt --out out/runs/scurve
-../sim/.venv/bin/python sim/checks/replay_check.py out/gorge/single
-../sim/.venv/bin/python ../sim/render_gorge.py --run out/gorge/single --out out/render/single
+../sim/.venv/bin/python sim/checks/replay_check.py out/single
+../sim/.venv/bin/python ../sim/render_gorge.py --run out/single --out out/render/single
 ```

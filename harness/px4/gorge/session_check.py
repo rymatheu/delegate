@@ -4,8 +4,9 @@
   python3 -I px4/gorge/session_check.py [single|abreast|staggered] --udp-port P --video-port V
           --pose-port X [--out DIR] [--seconds 8]
 
-Starts px4/fly_qgc.sh SCENARIO --udp-port P --video-port V --pose-port X --out DIR/session exactly as a
-person would (vehicles send to P, cameras announced on P, video to V...), then on the same port
+Starts px4/fly_qgc.sh SCENARIO --udp-port P --video-port V --pose-port X exactly as a person would (it records
+nothing; --record passes --record DIR/session, which keeps the session and its ledger record), with the monitors' log
+in DIR/serve.log (HARNESS_SERVE_LOG) (vehicles send to P, cameras announced on P, video to V...), then on the same port
 plays QGroundControl with px4/gorge/gcs.py --camera (parameters, the plans of px4/plans uploaded
 with the mission protocol, each camera's heartbeat, CAMERA_INFORMATION and VIDEO_STREAM_INFORMATION,
 arm, mission start, the flight to PX4's own disarm). Meanwhile, once the vehicles are up, every video
@@ -62,14 +63,15 @@ def main():
     ap.add_argument('--udp-port', type=int, required=True)
     ap.add_argument('--video-port', type=int, required=True)
     ap.add_argument('--pose-port', type=int, required=True)
-    ap.add_argument('--out', default=None)
+    ap.add_argument('--out', default=None, help='the check\'s report (default: a new temporary directory)')
+    ap.add_argument('--record', action='store_true', help='the launcher keeps the session (--record DIR/session)')
     ap.add_argument('--seconds', type=float, default=8.0)
     ap.add_argument('--timeout', type=float, default=600.0)
     a = ap.parse_args()
     if a.udp_port in (14550, 14560) or 5600 <= a.video_port <= 5607 + 6:
         raise SystemExit('session_check: not on 14550 / 5600-5607')
     two = a.scenario != 'single'
-    out = Path(a.out or PX4_DIR / 'out' / f'session-{a.scenario}').resolve()
+    out = Path(a.out or TEMP.make()).resolve()
     out.mkdir(parents=True, exist_ok=True)
     V = a.video_port
     ports = {'rgb-v1': (V, RGB), 'thermal-v1': (V + 2, THERMAL)}
@@ -79,12 +81,13 @@ def main():
     t_start = time.time()
     sess = subprocess.Popen([str(PX4_DIR / 'fly_qgc.sh')] + ([a.scenario] if two else []) +
                             ['--udp-port', str(a.udp_port), '--video-port', str(V), '--pose-port', str(a.pose_port),
-                             '--out', str(out / 'session')], stdout=slog, stderr=subprocess.STDOUT,
-                            start_new_session=True, cwd=str(PX4_DIR))
+                             ] + (['--record', str(out / 'session')] if a.record else []),
+                            stdout=slog, stderr=subprocess.STDOUT, start_new_session=True, cwd=str(PX4_DIR),
+                            env=dict(os.environ, HARNESS_SERVE_LOG=str(out / 'serve.log')))
     plans = ([f'1={PX4_DIR}/plans/formation-{a.scenario}-v1.plan', f'2={PX4_DIR}/plans/formation-{a.scenario}-v2.plan']
              if two else [f'1={PX4_DIR}/plans/gorge.plan'])
     gl = open(out / 'gcs.log', 'w')
-    gcs = subprocess.Popen([str(HARNESS / 'build/px4venv/bin/python'), '-I', str(HERE / 'gcs.py'), '--port',
+    gcs = subprocess.Popen([str(HARNESS / 'build/px4venv/bin/python'), '-I', '-B', str(HERE / 'gcs.py'), '--port',
                             str(a.udp_port), '--camera', '--log', str(out), '--timeout', str(a.timeout)] +
                            sum((['--vehicle', p] for p in plans), []), stdout=gl, stderr=subprocess.STDOUT)
     # decode the video while the vehicles fly (from the mission start; the cameras are up long before)
@@ -121,7 +124,7 @@ def main():
            next((l for l in reversed(gtxt) if l.startswith('gcs: PASS') or l.startswith('gcs: FAIL')), ''))
     procs_before, cmds = tree(sess.pid)
     for p, c in cmds.items():
-        if str(out / 'session') in c and p not in procs_before and p != sess.pid:
+        if (str(out / 'session') in c or 'px4_fly_qgc.' in c) and p not in procs_before and p != sess.pid:
             procs_before[p] = c
             procs_before.update(tree(p)[0])
     os.kill(sess.pid, signal.SIGTERM)
@@ -140,9 +143,8 @@ def main():
             pass
     slog.close()
     import glob, re, shutil
-    for f in glob.glob(str(HARNESS / 'build' / 'serve' / '*.log')):
+    for f in glob.glob(str(out / 'serve.log')):
         if os.path.getmtime(f) >= t_start:
-            shutil.copy(f, out / ('serve-' + os.path.basename(f)))
             txt = open(f).read().splitlines()
             inst = [l.strip() for l in txt if re.match(r'\s+\S+: assumption failed in', l)]
             bad = [l for l in inst if 'assumption failed in 0 cases; guarantee violations: none' not in l]
@@ -157,4 +159,28 @@ def main():
     return 0 if ok else 1
 
 
-sys.exit(main())
+class _Temp:
+    """The report's temporary directory when --out is not given, removed on every exit path."""
+    path = None
+
+    def make(self):
+        import tempfile
+        self.path = tempfile.mkdtemp(prefix='px4_session_check.')
+        return self.path
+
+
+TEMP = _Temp()
+
+
+def _term(signum, frame):
+    raise SystemExit(128 + signum)
+
+
+signal.signal(signal.SIGTERM, _term)
+try:
+    rc = main()
+finally:
+    if TEMP.path:
+        import shutil
+        shutil.rmtree(TEMP.path, ignore_errors=True)
+sys.exit(rc)

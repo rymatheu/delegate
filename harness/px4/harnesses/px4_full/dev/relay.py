@@ -5,7 +5,7 @@
           [--seconds S] [--fast] [--truth FILE.csv] [--every N] (--port P | --gcs HOST:PORT)
 
 Starts `.lake/build/bin/harness serve px4_full` (the monitors run inside; their verdicts go to
-build/serve/px4_full.log) and initializes it with the regime's parameters (py/regime_case.py:
+$HARNESS_SERVE_LOG, default build/serve/NODE.log; a ledger record only with HARNESS_RECORD=1) and initializes it with the regime's parameters (py/regime_case.py:
 PX4's defaults with the SITL and X500 values; `--set noise_seed=S` picks the simulator's noise).
 A parameter the regime leaves free (a range only) gets PX4's default. Every input other than the
 link is the regime's: the healthy constants of the topics nothing in

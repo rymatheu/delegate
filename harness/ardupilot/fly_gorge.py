@@ -6,9 +6,11 @@ as fast as it goes, in lock-step with one scripted MAVLink ground station per ve
 gorgesim.ground_station.GCS, system 255): wait for the heartbeat and for EKF3 using GPS, upload the vehicle's plan
 file of sim/plans through the mission protocol and download it back, GUIDED, arm, take off to the first item's
 altitude, AUTO through the spline waypoints, land, disarm. With two vehicles every phase waits for both, so they
-take off and switch to AUTO at the same tick. It ends by itself and prints a PASS/FAIL summary; the record (every
-4th tick: time, per vehicle true position, yaw, mode, armed, wall clearance; the separation) goes to
-ardupilot/out/gorge-SCENARIO.csv, the summary to ardupilot/out/gorge-SCENARIO.json.
+take off and switch to AUTO at the same tick. It ends by itself and prints a PASS/FAIL summary. Nothing is kept by
+default (the run writes into a temporary directory, --tmp, which fly_gorge.sh removes). With --record [DIR] (default
+ardupilot/out/SCENARIO): the record gorge-SCENARIO.csv (every 4th tick: time, per vehicle true position, yaw, mode,
+armed, wall clearance; the separation), the summary gorge-SCENARIO.json, the ground stations' log gorge-SCENARIO.log,
+the monitors' verdicts serve.log, and the served session's ledger record.
 
 PASS: every vehicle reached every mission item and disarmed on the ground; the session's monitors saw no guarantee
 violation and no discharge failure; with two vehicles, the separation stayed at least SEP_MIN and every vehicle's
@@ -16,6 +18,9 @@ wall clearance at least CLEAR_MIN (also clauses of the formation's contract, mon
 """
 import argparse
 import json
+import sys
+sys.dont_write_bytecode = True     # no __pycache__ in the tree
+
 import math
 import os
 import re
@@ -95,8 +100,8 @@ def script(g, m, items, rec, sync, i):
 
 
 def serve_summary(node):
-    """The served session's verdicts from build/serve/NODE.log: guarantee violations and discharge failures."""
-    log = open(os.path.join(S.HARNESS, 'build', 'serve', node + '.log')).read()
+    """The served session's verdicts from its log ($HARNESS_SERVE_LOG): guarantee violations and discharge failures."""
+    log = open(os.environ['HARNESS_SERVE_LOG']).read()
     tail = log[log.rfind('summary:'):]
     viol, disch = [], []
     for line in tail.splitlines():
@@ -116,8 +121,23 @@ def main():
     ap.add_argument('--seed', type=int, default=1, help='sensor noise seed (vehicle 2: seed + 100)')
     ap.add_argument('--no-noise', action='store_true')
     ap.add_argument('--minutes', type=float, default=8.0, help='simulated time limit')
-    ap.add_argument('--out', default=os.path.join(HERE, 'out'))
+    ap.add_argument('--record', nargs='?', const='', default=None, metavar='DIR',
+                    help='keep the record, the summary and the session (default DIR: ardupilot/out/SCENARIO)')
+    ap.add_argument('--out', default=None, help='the same as --record DIR')
+    ap.add_argument('--tmp', default=None, help='where a run that records nothing writes while it runs')
     a = ap.parse_args()
+    if a.out is not None:
+        a.record = a.out
+    recording = a.record is not None
+    if recording:
+        a.out = a.record or os.path.join(HERE, 'out', a.scenario)
+        os.environ['HARNESS_RECORD'] = '1'
+        os.environ['HARNESS_SERVE_LOG'] = os.path.join(a.out, 'serve.log')
+    else:
+        import tempfile
+        a.out = a.tmp or tempfile.mkdtemp(prefix='fly_gorge.')
+        os.environ.pop('HARNESS_RECORD', None)
+        os.environ['HARNESS_SERVE_LOG'] = os.path.join(a.out, 'serve.log')
     sc = S.SCENARIOS[a.scenario]
     nv = sc['vehicles']
     os.makedirs(a.out, exist_ok=True)
@@ -241,7 +261,11 @@ def main():
         print('  min separation %.2f m at %.1f s' % (sep_min, sep_at or 0))
     print('  monitors: %d guarantee violations, %d discharge failures%s' %
           (len(viol), len(disch), (': ' + '; '.join(viol + disch)) if viol or disch else ''))
-    print('  record: %s' % os.path.relpath(os.path.join(a.out, 'gorge-%s.csv' % a.scenario), S.HARNESS))
+    if recording:
+        print('  recorded: %s (gorge-%s.csv, .json, .log, serve.log) and the session\'s ledger record %s' %
+              (a.out, a.scenario, ledger))
+    else:
+        print('  nothing recorded (--record keeps the record and the session)')
     print('RESULT %s' % res['result'])
     return 0 if ok else 1
 

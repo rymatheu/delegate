@@ -13,6 +13,18 @@ Commands, from `ardupilot/`: `./fly_qgc.sh [abreast|staggered]` (QGroundControl)
 [single|abreast|staggered]` (no ground station). The shared pieces are `ardupilot/scenario.py` (node, parameters per
 vehicle, plan files as mission items), `ardupilot/fly_gorge.py` (headless) and `ardupilot/qgc_bridge.py` (real time).
 
+## What a run leaves behind
+
+Nothing, by default: `fly_gorge.sh` and `fly_qgc.sh` work in one temporary directory (`mktemp -d`; the monitors' log
+the summary reads, the cameras' work files), removed on every exit including Ctrl-C and SIGTERM; `harness serve`
+appends no ledger record and no Python bytecode is written. `--record [DIR]` (or `--out DIR`; default
+`ardupilot/out/SCENARIO`) keeps them: from `fly_gorge.sh` the record `gorge-SCENARIO.csv` (every 4th tick: per vehicle
+true position, yaw, mode, armed, wall clearance; the separation), the summary `.json`, the ground stations' `.log` and
+the monitors' `serve.log`; from `fly_qgc.sh` the monitors' `serve.log` and the cameras' `camera.out`, `cameraN.log`,
+`cameraN.json`; from both the served session in the node's ledger (`evidence/served/`). The mechanism is generic:
+`harness serve NAME [--log FILE] [--record]` (or `HARNESS_SERVE_LOG`, `HARNESS_RECORD=1`); not recording is the
+default because a flight becomes evidence only when someone asks for it, while `harness test` campaigns always record.
+
 ## How the mission reaches the vehicle
 
 Through the real mission protocol, never onboard at boot: in a QGroundControl session the person uploads each
@@ -44,7 +56,7 @@ Headless (`fly_gorge.sh`, stepped as fast as it goes, scripted ground stations i
 | result | PASS | PASS | PASS |
 | simulated / wall | 81.0 s / 22.6 s | 82.0 s / 49.2 s | 81.0 s / 47.4 s |
 | mission | 11 spline items reached, LAND, disarmed | both: 11, LAND, disarmed | both: all spline items, LAND, disarmed |
-| landing error | (see out/gorge-single.json) | 0.16 m, 0.07 m | 0.11 m, 0.08 m |
+| landing error | 0.22 m | 0.16 m, 0.07 m | 0.11 m, 0.08 m |
 | min wall clearance in the air | 1.15 m | 1.33 m, 1.31 m | 1.25 m, 2.0 m (capped) |
 | min separation | | 1.68 m | 2.83 m |
 | guarantee violations, discharge failures | 0, 0 | 0, 0 | 0, 0 |

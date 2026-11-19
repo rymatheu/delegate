@@ -37,14 +37,18 @@ cd ardupilot
 ./fly_qgc.sh                   # one X500 through the gorge, flown from QGroundControl
 ./fly_qgc.sh abreast           # two X500s side by side (MAVLink systems 1 and 2)
 ./fly_qgc.sh staggered         # two X500s staggered, the rear one flying nose-backward
-./fly_gorge.sh [single|abreast|staggered]   # the same with no ground station: PASS/FAIL, CSV in ardupilot/out/
+./fly_gorge.sh [single|abreast|staggered]   # the same with no ground station: prints PASS/FAIL
 ```
 
 QGroundControl is unmodified with default settings: the vehicles send MAVLink to UDP 14550, the cameras (live video)
 stream from UDP 5600 (`--udp-port`, `--video-port`, `--pose-port`, `--no-video` change that). The mission is uploaded
 from QGroundControl (Plan view): `../sim/plans/gorge.plan`, or `formation-abreast-v1.plan` and `-v2.plan`, or
-`formation-staggered-v1.plan` and `-v2.plan`, one per vehicle. Each session's monitor verdicts are in
-`build/serve/NODE.log` and, when it ends, in the node's ledger.
+`formation-staggered-v1.plan` and `-v2.plan`, one per vehicle.
+
+By default a flight or session leaves nothing on disk (it works in a temporary directory, removed on exit). Add
+`--record [DIR]` to any of the four launchers to keep its files in DIR (default `out/SCENARIO` in the stack's
+directory: record CSVs, monitor verdicts `serve.log`, logs) and append the session to the node's ledger. With
+`fly_qgc.sh`, `--out DIR` keeps the files without the ledger record.
 
 The same three on the PX4 stack, from `px4/` (`px4_full`; two vehicles: `px4_formation`, two `px4_full` stacks and
 `plant_formation`):
@@ -54,7 +58,7 @@ cd px4
 ./fly_qgc.sh                   # one X500 through the gorge, flown from QGroundControl
 ./fly_qgc.sh abreast           # two X500s side by side (MAVLink systems 1 and 2)
 ./fly_qgc.sh staggered         # two X500s staggered, the rear one flying nose-backward
-./fly_gorge.sh [single|abreast|staggered]   # the same with no ground station: PASS/FAIL, CSV in px4/out/
+./fly_gorge.sh [single|abreast|staggered]   # the same with no ground station: prints PASS/FAIL
 ```
 
 The same options and defaults (`--udp-port 14550`, `--video-port 5600`, `--pose-port`, `--no-video`). PX4 does not

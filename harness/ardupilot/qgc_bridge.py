@@ -5,7 +5,8 @@
                                        [--seed 1] [--seconds S]
 
 The scenario's node is served (`harness serve`: every clause of every instance monitored at every tick, verdicts in
-build/serve/NODE.log, a ledger record when the session ends) and stepped one 400 Hz tick per 2.5 ms of wall clock
+$HARNESS_SERVE_LOG, which ardupilot/fly_qgc.sh sets to its temporary directory, or to DIR with --record, which also
+sets HARNESS_RECORD=1 for the session's ledger record) and stepped one 400 Hz tick per 2.5 ms of wall clock
 (the shared simulator's gorgesim.udp_bridge.Pacer: a late tick is never dropped, the next ones run without waiting
 until the loop has caught up). Each vehicle has its own UDP socket on 127.0.0.1 (gorgesim.udp_bridge.UdpBridge) and
 sends its MAVLink stream, as system 1 or 2, to the ground station at 127.0.0.1:--udp-port from the first tick, as

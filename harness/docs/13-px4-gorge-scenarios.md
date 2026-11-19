@@ -16,6 +16,17 @@ session, one UDP socket per vehicle toward the ground station's port, the camera
 `px4/gorge/make_plans.py` (the plans), `px4/gorge/metrics.py` and `summary.py` (clearance, heading, separation,
 PASS/FAIL), `px4/gorge/session_check.py` (the stand-in QGroundControl session with the video check).
 
+## What a run leaves behind
+
+Nothing, by default: `fly_gorge.sh` and `fly_qgc.sh` work in one temporary directory (`mktemp -d`), removed on every
+exit including Ctrl-C and SIGTERM, and the served session appends no ledger record. `--record [DIR]` (or `--out DIR`;
+default `px4/out/SCENARIO`) keeps them: from `fly_gorge.sh` `truth.csv` (or `truth-v1.csv`, `truth-v2.csv`),
+`vN.gpi.csv`, `vN.events.txt`, `gcs.log`, `relay.log`, `serve.log` (the monitors' verdicts), `metrics.json`,
+`metrics.log`, `summary.txt`; from `fly_qgc.sh` `truth.csv`, `serve.log` and the cameras' files; from both the served
+session in the node's ledger. `px4/gorge/session_check.py` records nothing either (its report goes to a temporary
+directory unless `--out`; `--record` makes the launcher record), and the dev flight
+`px4/harnesses/px4_full/dev/fly_headless.sh` keeps its logs in `build/logs/` only with `RECORD=1`.
+
 ## The plans
 
 PX4 flies neither NAV_SPLINE_WAYPOINT nor CONDITION_YAW in a mission, so the simulator's ArduCopter plans

@@ -495,17 +495,32 @@ private def schemaJsonOf (s : Schema) : Json :=
 cpp/module_protocol.h on stdin and stdout (`D`, `I`, `S`, `Q`), so a compiled harness can be a
 child of another harness. The manifest's code hash is the node's code hash. The monitors run
 inside: every node's assumption (history form) and guarantee clauses at every step; their
-verdicts go to build/serve/NAME.log (stdout carries the protocol). At the end of a session with
-at least one step, its monitored counts are written to the node's ledger (`recordServeSession`:
-evidence/served/ID.json and the session log next to it). -/
-def cmdServe (env : Env) (name : String) : IO UInt32 := do
+verdicts go to the session log (stdout carries the protocol): `--log FILE`, else the environment's
+`HARNESS_SERVE_LOG`, else build/serve/NAME.log. Only with `--record` (or `HARNESS_RECORD=1`), at the
+end of a session with at least one step, its monitored counts are written to the node's ledger
+(`recordServeSession`: evidence/served/ID.json and the session log next to it). Not recording is
+the default: a flight is evidence only when someone asks for it to be kept, and every flight
+launcher, test session and child process serves without leaving files in the tree; campaigns
+(`harness test`) always record, that being their purpose. -/
+def cmdServe (env : Env) (name : String) (args : List String := []) : IO UInt32 := do
+  let rec opt : List String → Option String × Bool → Except String (Option String × Bool)
+    | [], acc => .ok acc
+    | "--log" :: f :: r, (_, rec) => opt r (some f, rec)
+    | "--record" :: r, (l, _) => opt r (l, true)
+    | a :: _, _ => .error s!"serve: unknown option {a}"
+  let (logOpt, recOpt) ← IO.ofExcept (opt args (none, false))
+  let record? := recOpt || (← IO.getEnv "HARNESS_RECORD").getD "" == "1"
   let n ← env.getNode name
   let run ← n.start
   let codeHash := n.codeHash run.moduleHash
   let m := n.view.m
   let insts := n.instances name
-  IO.FS.createDirAll ("build" / "serve")
-  let logPath : System.FilePath := "build" / "serve" / s!"{name}.log"
+  let logPath : System.FilePath ← match logOpt, (← IO.getEnv "HARNESS_SERVE_LOG") with
+    | some f, _ => pure f
+    | none, some f => if f.isEmpty then pure ("build" / "serve" / s!"{name}.log") else pure f
+    | none, none => pure ("build" / "serve" / s!"{name}.log")
+  if let some d := logPath.parent then
+    if !d.toString.isEmpty then IO.FS.createDirAll d
   let lg ← IO.FS.Handle.mk logPath .write
   let say (l : String) : IO Unit := do lg.putStrLn l; lg.flush
   say s!"serve {name}, code hash {codeHash}"
@@ -527,7 +542,7 @@ def cmdServe (env : Env) (name : String) : IO UInt32 := do
   let mut afailLogged : Array Nat := insts.map fun _ => 0
   -- the session's ledger records (a session with no step records nothing)
   let record (st : ServedStats) : IO Unit := do
-    if st.steps == 0 then return
+    if st.steps == 0 || !record? then return
     let f ← recordServeSession n codeHash s!"{env.prog} serve {name}" logPath st
     say s!"ledger: session recorded, {f}"
   let summary (afail : Array Nat) (gviol : Array (Array Nat)) (cases steps : Nat) : IO Unit := do
@@ -628,7 +643,10 @@ def usage (prog : String) (named : Bool) : String :=
                                    is a hypothesis (docs/10-formal-link.md)
   {prog} equiv A B [--seed N] [--cases N] [--steps K] [--regime R]
                                    same records into A and B, outputs compared bit for bit
-  {prog} serve{N}               speak the module protocol on stdin/stdout"
+  {prog} serve{N} [--log FILE] [--record]
+                                   speak the module protocol on stdin/stdout; monitor verdicts in
+                                   FILE (default build/serve/NAME.log); --record: the session's
+                                   ledger record (default: none)"
 
 /-- Run one command line against the nodes of `env`. -/
 def dispatch (env : Env) (args : List String) : IO UInt32 := do
@@ -684,7 +702,7 @@ def dispatch (env : Env) (args : List String) : IO UInt32 := do
         (match cfg.regime with | some r => ["--regime", r] | none => [])))
     | "run" :: n :: rest => cmdRun env n (← IO.ofExcept (parseFlags rest))
     | "equiv" :: a :: b :: rest => cmdEquiv env a b (← IO.ofExcept (parseFlags rest))
-    | ["serve", n] => cmdServe env n
+    | "serve" :: n :: rest => cmdServe env n rest
     | ["replay", f] =>
       let o ← replayFile env.findNode f
       return if o.identical then 0 else 1

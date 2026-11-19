@@ -13,6 +13,9 @@ fields prefixed `v{i}_` (`inst` in ardupilot/harnesses/ap_formation); the clock 
 """
 import json
 import os
+import sys
+sys.dont_write_bytecode = True     # no __pycache__ in the tree
+
 import re
 import struct
 import subprocess
@@ -44,8 +47,9 @@ def prefix(sc, i):
 
 
 class Served:
-    """`harness serve NODE`: the composite behind the module protocol, its monitors inside (verdicts in
-    build/serve/NODE.log, a ledger record at the end of the session)."""
+    """`harness serve NODE`: the composite behind the module protocol, its monitors inside (verdicts in the log
+    $HARNESS_SERVE_LOG names, default build/serve/NODE.log; a ledger record at the end of the session only with
+    HARNESS_RECORD=1)."""
 
     def __init__(self, node):
         self.node = node

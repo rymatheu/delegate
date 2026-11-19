@@ -4,7 +4,7 @@
 
     ../sim/.venv/bin/python sim/flights/formation_flight.py --plan abreast|staggered [--port 14593] [--speed 0]
         [--seed 0] [--noise field] [--wind MEAN GUST] [--skew S] [--start single|mv] [--upload]
-        [--video --video-port V --pose-port P] [--out out/gorge-PLAN]
+        [--video --video-port V --pose-port P] [--record [DIR] | --out DIR]
 
 Starts `./fly_qgc.sh PLAN --udp-port PORT --out OUT` (with `--no-video` unless --video; SPEED=--speed: 0 as fast as
 the simulation goes, 1 real time). It is the ground station on 127.0.0.1:PORT as QGroundControl 5.1.5 is on one UDP
@@ -21,7 +21,8 @@ per vehicle the landed states ON_GROUND, TAKEOFF, IN_AIR, LANDING, ON_GROUND and
 the air; the separation (centre to centre, simulator truth, every tick) never below 1.0 m while either is in the air;
 each vehicle's clearance in the air at least 0.8 m; with --video, frames received equal frames sent. Then the numbers:
 separation, start skew, tracking, the rear vehicle's heading against its direction of travel, touchdown, real-time
-factor. The last line is `RESULT PASS` or `RESULT FAIL`; report.txt and report.json in OUT.
+factor. The last line is `RESULT PASS` or `RESULT FAIL`. Nothing is kept on disk unless --record [DIR] (or --out DIR):
+then DIR holds formation.csv/json, v1.csv, v2.csv, plans/, vehicle logs, launcher.out, report.txt, report.json.
 """
 import argparse
 import json
@@ -47,7 +48,7 @@ import shared  # noqa: E402
 shared.use_world()
 import test_services as TS  # noqa: E402
 import geo  # noqa: E402            (shared)
-from gorge_flight import count_frames, report, download, compare_mission  # noqa: E402
+from gorge_flight import count_frames, report, download, compare_mission, out_dir, run_main  # noqa: E402
 M = TS.M                                  # pymavlink's generated dialect (sim/mavlink/.gen/apm2.py)
 
 HB_PERIOD = 0.2                           # s of wall time between GCS HEARTBEATs
@@ -365,11 +366,14 @@ def main():
                          "vehicle 1's; mv: the Multi-Vehicle panel's Arm (both), 2 s, then its Start (both, in order)")
     ap.add_argument("--upload", action="store_true",
                     help="upload each plan before the start (default: download each onboard mission, compare, start it)")
-    ap.add_argument("--out", default=None)
+    ap.add_argument("--record", nargs="?", const="", default=None, metavar="DIR",
+                    help="keep the records in DIR (default out/gorge-PLAN); without it nothing is kept")
+    ap.add_argument("--out", default=None, help="the same as --record DIR")
     a = ap.parse_args()
     a.no_upload = not a.upload
-    out = Path(a.out or ROOT / "out" / f"gorge-{a.plan}").resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    if a.record == "":
+        a.record = str(ROOT / "out" / f"gorge-{a.plan}")
+    out, keep = out_dir(a, None)
     for f in ("formation.csv", "formation.json", "v1.csv", "v2.csv", "camera1.json", "camera2.json", "report.txt", "report.json"):
         (out / f).unlink(missing_ok=True)
     bad = ports_free([a.port] + ([a.pose_port, a.pose_port + 2] if a.video else []))
@@ -465,13 +469,14 @@ def main():
     n_ok = sum(ok for _, ok in TS.RESULTS)
     lines.append(f"{n_ok}/{len(TS.RESULTS)} passed")
     res["passed"], res["checks"] = n_ok, len(TS.RESULTS)
-    lines.append(f"      wall time {time.time() - t_wall0:.1f} s; records in {out}")
+    lines.append(f"      wall time {time.time() - t_wall0:.1f} s; records " + (f"in {out}" if keep else "not kept (--record DIR keeps them)"))
     lines.append("RESULT " + ("PASS" if n_ok == len(TS.RESULTS) else "FAIL"))
     print("\n".join(lines))
-    (out / "report.txt").write_text("\n".join(lines) + "\n")
-    (out / "report.json").write_text(json.dumps(res, indent=1) + "\n")
+    if keep:
+        (out / "report.txt").write_text("\n".join(lines) + "\n")
+        (out / "report.json").write_text(json.dumps(res, indent=1) + "\n")
     return 0 if n_ok == len(TS.RESULTS) else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run_main(main))

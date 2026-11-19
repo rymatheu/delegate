@@ -5,11 +5,13 @@
 #   px4/fly_qgc.sh abreast         two X500s side by side (px4_formation: MAVLink systems 1 and 2)
 #   px4/fly_qgc.sh staggered       two X500s staggered, vehicle 2 flying nose-backward
 #   options: --udp-port N (default 14550; a bare number as the first argument works too)
-#            --video-port N (default 5600) --pose-port N (default 14601) --no-video --seed N --out DIR
+#            --video-port N (default 5600) --pose-port N (default 14601) --no-video --seed N
+#            --record [DIR]: keep the session's files and its ledger record (default DIR px4/out/SCENARIO);
+#            --out DIR: keep the files only; default: nothing kept
 #
 # The stack: PX4 v1.17.0, unmodified, one harness per module (sensors, EKF2, rate, attitude and
 # position control, flight mode manager, land detector, control allocator, commander, navigator,
-# MAVLink), served by `harness serve` (monitors on every clause; verdicts in build/serve/), stepped
+# MAVLink), served by `harness serve` (monitors on every clause), stepped
 # one 400 Hz tick per 2.5 ms of wall clock (slower if the stack cannot keep up: the relay prints the
 # ticks behind every simulated second). Simulator sensor noise on (seed N, default 1). The vehicle
 # sends its MAVLink stream from the first tick to UDP 127.0.0.1:PORT, where QGroundControl's
@@ -28,6 +30,10 @@
 # simulator's plans by px4/gorge/make_plans.py). Then arm and start the mission (Fly view, "Start
 # Mission"); PX4 lands and disarms by itself. Stop with Ctrl-C or SIGTERM (vehicles and cameras end).
 #
+# Nothing is kept by default: the monitors' log, the truth file and the cameras' work files go to a temporary
+# directory (mktemp -d), removed on every exit. With --record [DIR] they stay in DIR (serve.log, truth.csv, the
+# cameras' files) and the session's `monitored` record is appended to the node's ledger.
+#
 # Environment: SIM_DIR, the shared simulator (default: sim/ at the repository root).
 set -euo pipefail
 PX4_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -38,10 +44,10 @@ SCEN=single
 case "${1:-}" in
   abreast|staggered|single) SCEN="$1"; shift ;;
   ''|-*) ;;
-  *[!0-9]*) echo "usage: px4/fly_qgc.sh [abreast|staggered] [--udp-port N] [--video-port N] [--pose-port N] [--no-video] [--seed N] [--out DIR]" >&2; exit 2 ;;
+  *[!0-9]*) echo "usage: px4/fly_qgc.sh [abreast|staggered] [--udp-port N] [--video-port N] [--pose-port N] [--no-video] [--seed N] [--record [DIR]] [--out DIR]" >&2; exit 2 ;;
   *) set -- --udp-port "$@" ;;
 esac
-PORT=14550; VIDEO=5600; POSE=14601; NOVIDEO=0; SEED=1; OUT=""
+PORT=14550; VIDEO=5600; POSE=14601; NOVIDEO=0; SEED=1; OUT=""; RECORD=0; KEEP=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --udp-port) PORT="$2"; shift ;;
@@ -49,12 +55,12 @@ while [ $# -gt 0 ]; do
     --pose-port) POSE="$2"; shift ;;
     --no-video) NOVIDEO=1 ;;
     --seed) SEED="$2"; shift ;;
-    --out) OUT="$2"; shift ;;
+    --out) OUT="$2"; KEEP=1; shift ;;
+    --record) RECORD=1; case "${2:-}" in ''|-*) ;; *) OUT="$2"; shift ;; esac ;;
     *) echo "fly_qgc.sh: unknown option $1" >&2; exit 2 ;;
   esac
   shift
 done
-OUT="${OUT:-$PX4_DIR/out/qgc-$SCEN-$(date +%Y%m%d-%H%M%S)}"
 missing=0
 for f in .lake/build/bin/harness build/modules/plant_sim/plant_sim build/modules/px4_sim_in/px4_sim_in \
          build/modules/px4_sensors/px4_sensors build/modules/px4_rate/px4_rate \
@@ -69,7 +75,23 @@ if [ "$missing" = 1 ]; then
   echo "fly_qgc.sh: build first (README.md, Build); nothing was started" >&2
   exit 1
 fi
+TMP="$(mktemp -d "${TMPDIR:-/tmp}/px4_fly_qgc.XXXXXX")"
+PID=""
+cleanup() { [ -n "$PID" ] && kill -TERM "$PID" 2>/dev/null && wait "$PID" 2>/dev/null; rm -rf "$TMP"; }
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+if [ "$RECORD" = 1 ]; then
+  OUT="${OUT:-$PX4_DIR/out/$SCEN}"
+  export HARNESS_RECORD=1
+elif [ "$KEEP" = 1 ]; then
+  unset HARNESS_RECORD     # --out DIR alone (as sim/checks/video_check.py passes it): files in DIR, no ledger record
+else
+  OUT="$TMP"
+  unset HARNESS_RECORD
+fi
 mkdir -p "$OUT"
+export HARNESS_SERVE_LOG="${HARNESS_SERVE_LOG:-$OUT/serve.log}"   # a check may name its own
 cd "$HARNESS"
 if [ "$SCEN" = single ]; then
   PLANS="px4/plans/gorge.plan"
@@ -88,7 +110,7 @@ if [ "$NOVIDEO" = 0 ]; then
 fi
 cat <<MSG
 PX4 harness stack through the gorge: $WHAT, PX4 v1.17.0 unmodified, one harness per module,
-simulator sensor noise on; MAVLink to UDP 127.0.0.1:$PORT. Output (truth, relay log) in $OUT.
+simulator sensor noise on; MAVLink to UDP 127.0.0.1:$PORT. $( [ "$RECORD" = 1 ] && echo "Recording in $OUT (and the session's ledger record)." || { [ "$KEEP" = 1 ] && echo "Session files in $OUT; no ledger record." || echo "Nothing is recorded (--record keeps the session)."; })
 What to do:
   1. Have QGroundControl running (its default UDP link listens on 14550; for another port, give
      --udp-port N). The stack takes about 20 s to boot; each vehicle then appears at its first
@@ -96,13 +118,16 @@ What to do:
   2. Plan view: open $PLANS, upload (with two vehicles: select each vehicle, open its plan, upload).
   3. Fly view: arm and start the mission ("Start Mission"). PX4 flies the gorge, lands and disarms.
   4. Ctrl-C here (or SIGTERM) stops the vehicles and the cameras.
-Verdicts of the monitors: build/serve/; afterwards harness status px4_full.
 MSG
 if [ "$SCEN" = single ]; then
-  exec python3 -I px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" \
-    --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"}
+  python3 -I -B px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" \
+    --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"} &
 else
   F=1; [ "$SCEN" = staggered ] && F=2
-  exec python3 -I px4/harnesses/px4_full/dev/relay.py --node px4_formation --gcs "127.0.0.1:$PORT" \
-    --set formation=$F --set noise_seed="$SEED" --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"}
+  python3 -I -B px4/harnesses/px4_full/dev/relay.py --node px4_formation --gcs "127.0.0.1:$PORT" \
+    --set formation=$F --set noise_seed="$SEED" --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"} &
 fi
+PID=$!
+RC=0; wait "$PID" || RC=$?
+PID=""
+exit $RC

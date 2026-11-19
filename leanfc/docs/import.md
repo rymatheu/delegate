@@ -31,6 +31,7 @@ The world, the airframe and the video are the repository's `sim/` (shared by eve
 | `sim/flights/leanfc_plans.py` | leanfc's parameter overlays (start, onboard mission as TAKEOFF / SPLINE / LAND lines, `nav.yawReverse`), plan files, the formation-offset study |
 | `sim/flights/gorge_flight.py`, `formation_flight.py` | the scripted flights of `fly_gorge.sh` (a scripted ground station in QGroundControl's place) |
 | `sim/flights/formation_study.py` | batch formation flights over seeds, wind and skew |
+| `plans/` | leanfc's plan files (the gorge; abreast and staggered, vehicles 1 and 2), the ones every session uses; `sim/flights/leanfc_plans.py --plans` writes them, `--check-plans` compares |
 | `sim/flights/tile_server.py` | an optional map tile server of the gorge (`fly_qgc.sh --tiles-port N`) |
 | `sim/mavlink/` | the MAVLink message generator, the codec test, the scripted services test, flight metrics |
 | `sim/analyze.py`, `ekf_*`, `nav_*`, `mixer_inverse.py`, `render_flight.py`, `render_gif.py`, `missions/` | the flat-ground analyses and renderers of docs/reference.md |
@@ -66,6 +67,8 @@ The world, the airframe and the video are the repository's `sim/` (shared by eve
 - The cameras are the shared ones: one process for both vehicles, RGB 640 x 480 at 10 fps, thermal 640 x 512 at
   8.7 fps; with two vehicles both RGB streams share the video port (only the active vehicle's is sent; QGroundControl
   switches them). The original single-vehicle launcher used its own camera settings.
+- Nothing is written to disk by default (`--record [DIR]` keeps the records); a run's overlays live in a temporary
+  directory removed at exit.
 - The map tile server is off by default (QGroundControl needs a non-default map setting to use it).
 - Removed: the original QGroundControl drivers (`run_qgc.py`, `run_qgc_gorge.py`, which started the application), the
   frozen controller snapshots (`sim/world/snapshot*/`), the air-start camera flight `fly_gorge.py` and the wind study

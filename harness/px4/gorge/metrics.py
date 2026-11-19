@@ -54,8 +54,13 @@ def main():
     sys.path.insert(0, str(sim))
     import pybullet as pb                              # noqa: E402
     from gorgesim.plant import Plant, FormationPlant   # noqa: E402  (puts sim/world on sys.path)
+    from gorgesim import simulator                     # noqa: E402
+    # the gorge loaded from its cache without writing (gorge.Gorge opens a lock file for writing)
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'sim' / 'modules' / 'plant_sim'))
+    from adapter import load_gorge_readonly            # noqa: E402
+    g = load_gorge_readonly(simulator.GORGE_SEED)
     n = len(a.truth)
-    p = Plant() if n == 1 else FormationPlant([[0.0, 3.0 * k] for k in range(n)])
+    p = Plant(gorge=g) if n == 1 else FormationPlant([[0.0, 3.0 * k] for k in range(n)], gorge=g)
     p.reset()
     client, drones = p.env.CLIENT, list(p.env.DRONE_IDS)
     data = [list(csv.DictReader(open(f))) for f in a.truth]

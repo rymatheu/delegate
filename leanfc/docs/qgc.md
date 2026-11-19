@@ -1,6 +1,6 @@
 # Flying the real leanfc controller from QGroundControl 5.1.5
 
-> Historical notes from the original leanfc project, kept as written (paths such as `sim/world/...`, `sim/fly_qgc.sh` and `fly_gorge_qgc.sh` are the original layout). In this repository the world, airframe, camera and plan geometry are the shared simulator `../../sim/`; leanfc's own session code is in `../sim/flights/`; the commands are in [../README.md](../README.md).
+> Historical notes from the original leanfc project, kept as written (paths such as `sim/world/...`, `sim/fly_qgc.sh` and `fly_gorge_qgc.sh` are the original layout). In this repository the world, airframe, camera and plan geometry are the shared simulator `../../sim/`; leanfc's own session code is in `../sim/flights/`; the commands are in [../README.md](../README.md). Output paths: a session now writes nothing by default; `./fly_qgc.sh SCENARIO --record [DIR]` keeps the files named below in DIR (default `out/qgc-SCENARIO/`; the formation's plan files in `DIR/plans/`). The plan files to upload are committed in `../plans/` (`gorge.plan`, `formation-PLAN-v1.plan`, `formation-PLAN-v2.plan`).
 
 `sh sim/fly_qgc.sh` starts the PyBullet simulation in real time with the X500 resting on the ground,
 disarmed, and the real controller (`leanfc`: MAVLink services, vehicle layer, flight law) sending to
@@ -33,7 +33,7 @@ What this checklist rests on:
    ```
 
    It prints `leanfc: MAVLink system 1, 127.0.0.1:<port> -> 127.0.0.1:14550` and runs in real time
-   until Ctrl-C (at most 2 hours), then writes `sim/out/qgc/flight.csv` (the simulation, one row per
+   until Ctrl-C (at most 2 hours), then writes (with `--record`) `sim/out/qgc/flight.csv` (the simulation, one row per
    tick, with the mode, armed, landed state and mission item) and `sim/out/qgc/vehicle.log` (every
    MAVLink frame). Options: `VEHICLE=cf2x`, `NOISE=none` (100 Hz noiseless fixes instead of the
    GPS-like 10 Hz field noise), and any `sim/run_leanfc.py` option after the command, such as
@@ -174,7 +174,7 @@ instead of on Pikes Peak's flat ground, with a simulated camera payload and the 
   storage (the overlay's `TAKEOFF`, `SPLINE` and `LAND` lines, `Leanfc/ParamFile.lean`): takeoff at the
   start, the gorge waypoints as spline waypoints 3.5 m above the floor, land at the last one; altitudes
   relative to home. QGroundControl downloads it at connect, and shows it on the map;
-- the same mission as a plan file, `sim/world/out/qgc/gorge.plan` (for the default origin also
+- the same mission as a plan file, `plans/gorge.plan` (for the default origin also
   `sim/world/gorge.plan`): the same items in the same order; uploading it is optional (it replaces the
   onboard mission with the same items).
 
@@ -207,7 +207,7 @@ camera.json with the frame statistics, tiles.log).
   map and **Start Mission** (slide to confirm) works from the ground with no upload: QGroundControl sets
   Guided, arms and sends MISSION_START; the vehicle takes off, flies the gorge on spline legs, lands on the
   floor at the end and disarms. The mission has no flight speed (WP_SPD, 2 m/s, applies). Uploading the
-  plan is optional: Plan view > the file menu (Open) > `sim/world/out/qgc/gorge.plan`, open it while the
+  plan is optional: Plan view > the file menu (Open) > `plans/gorge.plan`, open it while the
   vehicle is connected (QGroundControl changes its offline-editing settings when a plan is opened without a
   vehicle), Upload; it replaces the onboard mission (with the same items, unless the plan was edited).
 
@@ -283,7 +283,7 @@ and 2/100, vehicle 1's RGB and thermal streams to UDP 5600 and 5602, vehicle 2's
 8765. Each vehicle boots with its own route onboard (takeoff, its spline waypoints, land at its land site:
 the `TAKEOFF`, `SPLINE` and `LAND` lines of its overlay), so QGroundControl downloads each vehicle's
 mission at connect and Start Mission works without an upload. The same missions are written as plan files,
-`sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` (for vehicle 1) and `formation-PLAN-v2.plan`
+`plans/formation-PLAN-v1.plan` (for vehicle 1) and `formation-PLAN-v2.plan`
 (for vehicle 2), with the same items; uploading them is optional. Same options as the gorge session (`NOISE`, `SEED`,
 `WIND`, `VIDEO=off`, `RGB`, `RGB_WORKERS`, `ORIGIN`), and the ports (`GCS_PORT`, `TILES_PORT`, `POSE_PORT1`,
 `POSE_PORT2`, `RGB_PORT1`, `THERMAL_PORT1`, `RGB_PORT2`, `THERMAL_PORT2`); it refuses to start when the tile or
@@ -344,7 +344,7 @@ Paths relative to `sim/mavlink/qgc-5.1.5/src`.
 3. Nothing to upload: each vehicle already has its own mission onboard (takeoff, its route, land), which
    QGroundControl has downloaded; the map shows both.
 4. Optional, only to replace the onboard missions: vehicle 1 is active, Plan view > Open >
-   `sim/world/out/formation/qgc/plans/formation-PLAN-v1.plan` > **Upload**; then toolbar vehicle indicator >
+   `plans/formation-PLAN-v1.plan` > **Upload**; then toolbar vehicle indicator >
    **Vehicle 2**, and (in this order) Plan view > Open > `formation-PLAN-v2.plan` > **Upload**. Each plan
    holds one vehicle's route; uploading a plan to the wrong vehicle would put both on the same route.
 5. Fly view, Multi-Vehicle panel (top right): **Select All**, then **Arm** (slide to confirm), then within
@@ -354,7 +354,7 @@ Paths relative to `sim/mavlink/qgc-5.1.5/src`.
    first: the second then starts a few seconds later. In the abreast plan a late start only moves the
    vehicles apart along the gorge; in the staggered plan vehicle 2 starting first brings it toward vehicle
    1's side (closest 1.26 m in the batch flights, when it starts 1.25 s early; `sim/world/README.md`).
-6. Ctrl-C in the terminal ends the session and writes `sim/world/out/formation/qgc/` (formation.csv with the
+6. Ctrl-C in the terminal ends the session and writes (with `--record`) `sim/world/out/formation/qgc/` (formation.csv with the
    separation, contacts and clearances, v1.csv, v2.csv, formation.json with the real-time factor,
    camera1.json, camera2.json).
 

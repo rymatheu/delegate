@@ -355,7 +355,7 @@ def main():
                     help="first-order motor lag (default: on if the airframe has time constants)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--seconds", type=float, default=None, help="default: 20 (cf2x), 30 (x500)")
-    ap.add_argument("--out", default="out/run.csv")
+    ap.add_argument("--out", default="out/run.csv", help="the CSV (and its JSON sidecar); none: write nothing")
     ap.add_argument("--bin", default=str(ROOT / ".lake/build/bin/leanfc"))
     ap.add_argument("--motor-test", action="store_true", help="run the motor-sign test and exit")
     ap.add_argument("--estimator", choices=("fixed", "ekf"), default=None,
@@ -445,7 +445,8 @@ def main():
         raise KeyboardInterrupt
     signal.signal(signal.SIGTERM, stop)
     n = int(round(seconds * CTRL_HZ))
-    rows, leg = [], 0
+    rows, leg, ticks = [], 0, 0
+    keep = a.out != "none"                    # --out none: no record kept or written
     t_pace = time.monotonic()
     try:
         for k in range(n):
@@ -466,12 +467,14 @@ def main():
             # state after the tick's physics, as pyfc mission.py logs it; leg at the start of the tick
             veh = r[len(r) - n_veh:] if n_veh else []
             hsp = r[18 + n_ekf:len(r) - n_veh]       # [] from a binary without the heading setpoint
-            rows.append([k / CTRL_HZ, *p1, *v1, *q1, *r[4:17], leg, *r[:4]] +
-                        ([*r[18:18 + n_ekf], *pos, *vel, *quat] if a.trace_ekf else []) + hsp + veh)
+            if keep:
+                rows.append([k / CTRL_HZ, *p1, *v1, *q1, *r[4:17], leg, *r[:4]] +
+                            ([*r[18:18 + n_ekf], *pos, *vel, *quat] if a.trace_ekf else []) + hsp + veh)
+            ticks += 1
             leg = r[17]
     except KeyboardInterrupt:
-        print(f"stopped after {len(rows)} ticks", file=sys.stderr)
-    n = len(rows)
+        print(f"stopped after {ticks} ticks", file=sys.stderr)
+    n = ticks
     proc.stdin.close()
     proc.wait()
     if record:
@@ -479,6 +482,10 @@ def main():
     env.close()
     wall = time.time() - t0
 
+    if not keep:
+        print(f"no record (--out none): {airframe}, noise {a.noise}, seed {a.seed}, {n} ticks, {n / CTRL_HZ:.2f} s "
+              f"simulated, wall {wall:.1f} s", file=sys.stderr)
+        return
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     with open(out, "w") as f:

@@ -16,6 +16,8 @@ LAND at the level land site) and the batch overlay `formation-PLAN-vN-air.params
 point, the route only). `--sweep` prints the offsets study (clearance probe, re-centering, skew tolerance).
 
     ../sim/.venv/bin/python sim/flights/leanfc_plans.py [--gorge-seed 7] [--out DIR] [--sweep]     (from leanfc/)
+    ../sim/.venv/bin/python -B sim/flights/leanfc_plans.py --plans          # rewrite leanfc/plans/*.plan
+    ../sim/.venv/bin/python -B sim/flights/leanfc_plans.py --check-plans    # committed plans == what a session writes
 """
 import argparse
 import json
@@ -295,8 +297,41 @@ def sweep(g):
     return rows
 
 
+PLAN_FILES = ["gorge.plan"] + [f"formation-{n}-v{v}.plan" for n in PLANS for v in (1, 2)]
+
+
+def write_plan_files(g, origin, out):
+    """The five plan files a person may upload (the ones every session writes): the gorge and both formations."""
+    import shutil
+    import tempfile
+    out = Path(out)
+    out.mkdir(parents=True, exist_ok=True)
+    write_gorge_plan(g, origin, out / "gorge.plan")
+    with tempfile.TemporaryDirectory(prefix="leanfc-plans.") as t:
+        write_all(g, origin, t)
+        for f in PLAN_FILES[1:]:
+            shutil.copyfile(Path(t) / f, out / f)
+
+
+def check_plan_files(g, origin, committed):
+    """True when the committed plan files are byte for byte what a session writes now."""
+    import filecmp
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix="leanfc-plans.") as t:
+        write_plan_files(g, origin, t)
+        bad = [f for f in PLAN_FILES if not (Path(committed) / f).exists()
+               or not filecmp.cmp(Path(t) / f, Path(committed) / f, shallow=False)]
+    for f in PLAN_FILES:
+        print(f"{'DIFFERS' if f in bad else 'same   '}  {Path(committed) / f}")
+    return not bad
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--plans", nargs="?", const=str(ROOT / "plans"), default=None, metavar="DIR",
+                    help="write only the five plan files into DIR (default leanfc/plans)")
+    ap.add_argument("--check-plans", nargs="?", const=str(ROOT / "plans"), default=None, metavar="DIR",
+                    help="check that the plan files in DIR (default leanfc/plans) are what a session writes")
     ap.add_argument("--gorge-seed", type=int, default=7)
     ap.add_argument("--params", action="append", default=None, help="parameter files with the ORIGIN line")
     ap.add_argument("--origin", nargs=3, default=None, metavar=("LAT", "LON", "ALT"))
@@ -309,6 +344,14 @@ def main():
         sweep(g)
         return
     origin = geo.Origin.from_params(a.params or [ROOT / "params/x500.params", ROOT / "params/ground.params"], a.origin)
+    if a.plans:
+        write_plan_files(g, origin, a.plans)
+        print("wrote " + ", ".join(PLAN_FILES) + f" in {a.plans}")
+        return
+    if a.check_plans:
+        ok = check_plan_files(g, origin, a.check_plans)
+        print("RESULT " + ("PASS" if ok else "FAIL"))
+        sys.exit(0 if ok else 1)
     info = write_all(g, origin, a.out)
     probe = Probe(g)
     for name in PLANS:

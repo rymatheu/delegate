@@ -5,7 +5,7 @@
   python3 -I ardupilot/modules/supervisor/dev/fly.py auto   [--steps N] [--log FILE]
 
 The composite is served by `.lake/build/bin/harness serve ap_full` (monitors inside, verdicts in
-build/serve/ap_full.log). This client is the ground station and the clock: each step it sends
+build/serve/ap_full.log; with --record also a ledger record of the session, none by default). This client is the ground station and the clock: each step it sends
 now_us/now_ms/dt for one 400 Hz tick, no RC (all channels 0, FS_THR_ENABLE 0), and up to 256 bytes
 of MAVLink from a script:
   guided  GUIDED, arm, takeoff to 2 m, at 2 m a position target 10 m north (SET_POSITION_TARGET_
@@ -69,7 +69,9 @@ def stock_params():
 
 class Served:
     def __init__(self, node='ap_full'):
-        self.p = subprocess.Popen([HB, 'serve', node], cwd=HARNESS, stdin=subprocess.PIPE,
+        # the session's ledger record only when asked (--record); its log in build/serve/NODE.log
+        self.p = subprocess.Popen([HB, 'serve', node] + (['--record'] if '--record' in sys.argv else []),
+                                  cwd=HARNESS, stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE)
         self.p.stdin.write(b'D')
         self.p.stdin.flush()

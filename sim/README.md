@@ -75,10 +75,11 @@ holds a loop to the wall clock; `UdpBridge(port)` gives each vehicle its own UDP
 **Video.** Start the cameras, then feed each vehicle's true pose:
 
 ```
-sim/cameras.sh single|abreast|staggered --parent $$ --udp-port 14550 --video-port 5600 --pose-port 14601 --out DIR
+sim/cameras.sh single|abreast|staggered --parent $$ --udp-port 14550 --video-port 5600 --pose-port 14601 [--out DIR]
 ```
 
-It returns at once; the camera process announces vehicle N's camera as MAVLink component 100 of system N on the
+It returns at once and writes nothing to disk unless `--out DIR` is given (then console, MAVLink log and statistics
+per camera go there). The camera process announces vehicle N's camera as MAVLink component 100 of system N on the
 `--udp-port` link and ends with process `--parent`. Poses go to UDP `--pose-port` + 2 (N - 1): construct the plant with
 `pose_ports=[14601]` (two vehicles: `[14601, 14603]`), or send `udp_bridge.PoseSender(port).send(t_s, pos_enu,
 quat_xyzw)` every 4th tick yourself. Streams (RTP/H.264 to 127.0.0.1): one vehicle RGB on the video port V, thermal on
@@ -100,7 +101,8 @@ waypoints are the same): keep using it to reproduce its flights.
 PATH/fly_qgc.sh` starts the launcher as `fly_qgc.sh [abreast|staggered] --udp-port P --video-port V --pose-port X
 --out DIR` (every stack's launcher takes these, plus `--no-video`), checks each camera's HEARTBEAT,
 CAMERA_INFORMATION and VIDEO_STREAM_INFORMATION, decodes every stream for 8 s (size, rate, not blank), with two
-vehicles the RGB switch, then ends the session with SIGTERM and checks no process is left. `--mission` adds
+vehicles the RGB switch, then ends the session with SIGTERM and checks no process is left. Its work files (the
+session's record, frames, logs) live in a temporary directory removed at exit; `--keep DIR` keeps them. `--mission` adds
 `qgc_session_check.py` with the plans above; `--attach` checks a session already running. `qgc_session_check.py PORT
 TIMEOUT SYSID=PLAN ...` plays QGroundControl (parameter download, mission upload and download, GUIDED, arm, takeoff,
 AUTO, past the first spline waypoint) with ArduCopter mode numbers. Both print `RESULT PASS` or `RESULT FAIL`.
