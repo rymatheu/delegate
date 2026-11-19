@@ -101,6 +101,7 @@ INCLUDES=(-I"$OUT/cfg" -I"$GEN" -I"$HARNESS/cpp" -I"$HERE/stand_ins" -I"$HERE/ge
 LINK_FLAGS=(-Wl,-dead_strip,-ld_classic)
 printf '%s\n' "${FLAGS[@]}" "${INCLUDES[@]}" -w > "$OUT/flags.rsp"
 # the generated stand-ins, from the real headers under these flags (files rewritten only if changed)
+mkdir -p "$HERE/gen/out"   # generated sources; the folder is git-ignored, so a fresh clone does not have it
 RSP="$OUT/flags.rsp" "$HERE/gen/run.sh" > "$OUT/gen.log"
 
 SOURCES=()
