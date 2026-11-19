@@ -2,7 +2,7 @@
  "system": "ap_full_ekf",
  "steps_run": 32401,
  "session_log":
- "ardupilot/harnesses/ap_full_ekf/evidence/served/20261119T212951Z-served.log",
+ "ardupilot/harnesses/ap_full_ekf/evidence/served/20261119T220832Z-served.log",
  "kind": "served",
  "instances":
  [{"path": "ap_full_ekf",
@@ -951,8 +951,8 @@
    "discharge_failure": null,
    "assumption_held": 32401}],
  "inits": 1,
- "id": "20261119T212951Z-served",
+ "id": "20261119T220832Z-served",
  "discharge_failures": [],
  "command": "harness serve ap_full_ekf",
  "code_hash":
- "ef709f694cdcaa425b23639e857aa38cae19ba125dd6e3afb465f9707b8281d1"}
+ "ba765d9aea1f6e28f232c414855f9ee7b47309e1310f64c886a985fb7694ddb5"}

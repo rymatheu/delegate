@@ -2,7 +2,7 @@
  "steps_run": 2000,
  "steps_per_case": 200,
  "seed": 2,
- "seconds": 0.3615253,
+ "seconds": 0.3581828,
  "regime_text":
  "est_flags_good: est_healthy = true ∧ est_initialised = true ∧ est_pos_ok = true ∧ est_vel_ok = true ∧ est_pos_rate_d_ok = true ∧ est_origin_ok = true ∧ est_variances_ok = true ∧ est_filter_status = 107327 ∧ est_gps_status = 3; loop_dt: 0.0024 ≤ dt ∧ dt ≤ 0.0026; level: est_q1 = 1 ∧ est_q2 = 0 ∧ est_q3 = 0 ∧ est_q4 = 0 ∧ ac_att_target_q1 = 1 ∧ ac_att_target_q2 = 0 ∧ ac_att_target_q3 = 0 ∧ ac_att_target_q4 = 0; near: |est_pos_n| ≤ 50 ∧ |est_pos_e| ≤ 50 ∧ |est_pos_d| ≤ 50 ∧ |est_vel_n| ≤ 5 ∧ |est_vel_e| ≤ 5 ∧ |est_vel_d| ≤ 5; now_ms starts at 1000 and increases by 2 to 3 at every step; now_us starts at 1000000 and increases by 2400 to 2600 at every step",
  "regime": "noisy_link",
@@ -579,7 +579,7 @@
   "armed": {"true_steps": 0}},
  "module": "supervisor",
  "kind": "tested",
- "id": "20261119T174024Z-seed2",
+ "id": "20261119T220808Z-seed2",
  "guarantee":
  [{"violations": 0,
    "verdict": "passed",
@@ -587,9 +587,9 @@
    "smallest_margin_case":
    {"step": 0,
     "sha256":
-    "18094a53bb29873bcea49e7fb36157240ece26347211f616ebc61215001996d0",
+    "ce5bf66905745d608e8878253672c4a6986b933a37bbe706672c02437ae2222f",
     "file":
-    "ardupilot/modules/supervisor/evidence/tested/20261119T174024Z-seed2/case0-step0.json",
+    "ardupilot/modules/supervisor/evidence/tested/20261119T220808Z-seed2/case0-step0.json",
     "case": 0},
    "smallest_margin": 2,
    "contract_hash":
@@ -610,9 +610,9 @@
    "smallest_margin_case":
    {"step": 0,
     "sha256":
-    "18094a53bb29873bcea49e7fb36157240ece26347211f616ebc61215001996d0",
+    "ce5bf66905745d608e8878253672c4a6986b933a37bbe706672c02437ae2222f",
     "file":
-    "ardupilot/modules/supervisor/evidence/tested/20261119T174024Z-seed2/case0-step0.json",
+    "ardupilot/modules/supervisor/evidence/tested/20261119T220808Z-seed2/case0-step0.json",
     "case": 0},
    "smallest_margin": 0,
    "contract_hash":
@@ -658,9 +658,9 @@
    "smallest_margin_case":
    {"step": 0,
     "sha256":
-    "18094a53bb29873bcea49e7fb36157240ece26347211f616ebc61215001996d0",
+    "ce5bf66905745d608e8878253672c4a6986b933a37bbe706672c02437ae2222f",
     "file":
-    "ardupilot/modules/supervisor/evidence/tested/20261119T174024Z-seed2/case0-step0.json",
+    "ardupilot/modules/supervisor/evidence/tested/20261119T220808Z-seed2/case0-step0.json",
     "case": 0},
    "smallest_margin": 2,
    "contract_hash":
@@ -674,9 +674,9 @@
    "smallest_margin_case":
    {"step": 0,
     "sha256":
-    "18094a53bb29873bcea49e7fb36157240ece26347211f616ebc61215001996d0",
+    "ce5bf66905745d608e8878253672c4a6986b933a37bbe706672c02437ae2222f",
     "file":
-    "ardupilot/modules/supervisor/evidence/tested/20261119T174024Z-seed2/case0-step0.json",
+    "ardupilot/modules/supervisor/evidence/tested/20261119T220808Z-seed2/case0-step0.json",
     "case": 0},
    "smallest_margin": 0,
    "contract_hash":
@@ -689,7 +689,7 @@
  "command":
  "harness test supervisor --seed 2 --cases 10 --steps 200 --regime noisy_link",
  "code_hash":
- "7a0e6d964b8021f3f83b8b44ea43fa1572ce3f2e7728d666ac1f49338955ac7b",
+ "9613d6212e2cdff984dee772e8efb8df76735d34b80bc659acc9121d629dfea0",
  "cases_skipped": 0,
  "cases": 10,
  "assume":

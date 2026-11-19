@@ -20,6 +20,12 @@ ardupilot() {
   ardupilot/modules/supervisor/build.sh
   ardupilot/modules/truth_est/build.sh
   ardupilot/modules/supervisor/dev/gen_pymavlink.sh
+  # the module `top`: the compiled top-level harness (ardupilot/Top.lean, built by lake build) behind its launcher
+  mkdir -p build/top
+  printf '%s\n' '#!/bin/sh' \
+    '# launcher: the compiled top-level harness (Top.lean) in serve mode, as a module executable' \
+    'exec "$(cd "$(dirname "$0")/../.." && pwd)/.lake/build/bin/top" serve "$@"' > build/top/top_serve
+  chmod +x build/top/top_serve
 }
 px4() {
   px4/gen.sh

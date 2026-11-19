@@ -2,7 +2,7 @@
  "system": "ap_full",
  "steps_run": 6890,
  "session_log":
- "ardupilot/harnesses/ap_full/evidence/served/20261119T213152Z-served.log",
+ "ardupilot/harnesses/ap_full/evidence/served/20261119T221025Z-served.log",
  "kind": "served",
  "instances":
  [{"path": "ap_full",
@@ -839,8 +839,8 @@
    "discharge_failure": null,
    "assumption_held": 6890}],
  "inits": 1,
- "id": "20261119T213152Z-served",
+ "id": "20261119T221025Z-served",
  "discharge_failures": [],
  "command": "harness serve ap_full",
  "code_hash":
- "a580757741e5fdb7420636a5b82218c4218b97f240f72c7f81c03c632f8f8a51"}
+ "b8091d78805c6b8506561c195b1c73a1c3333d304fb77199dd1df1f802189e9a"}

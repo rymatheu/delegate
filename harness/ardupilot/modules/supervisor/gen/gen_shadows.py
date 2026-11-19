@@ -227,11 +227,12 @@ def extract(cls, path, policy):
         pre_end = prev_start
     pieces.append('// ---- preamble of %s (includes, parameter-default defines)\n' % path)
     libdir = os.path.dirname(path)[len(L):]
-    # quoted includes resolve against the real file's directory: name it
+    # quoted includes resolve against the real file's directory: name it, relative to libraries/ (both sides
+    # resolved, so the name does not depend on where the checkout is or on a symbolic link to it)
     def inc(mm):
         here = os.path.join(ROOT, os.path.dirname(path), mm.group(1))
-        return '#include <%s>' % (os.path.relpath(os.path.realpath(here), os.path.join(ROOT, 'libraries'))
-                                  if os.path.exists(here) else mm.group(1))
+        lib = os.path.realpath(os.path.join(ROOT, 'libraries'))
+        return '#include <%s>' % (os.path.relpath(os.path.realpath(here), lib) if os.path.exists(here) else mm.group(1))
     pre = re.sub(r'#include\s+"([^"]+)"', inc, txt[:pre_end])
     pieces.append(pre)
     # #if blocks the preamble opens and the end of the real file closes
