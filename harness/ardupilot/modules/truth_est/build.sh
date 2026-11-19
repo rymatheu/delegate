@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build the truth_est fixture: records from Lean, a launcher, the code hash of adapter + protocol
-# + schema (ardupilot/modules/truth_est/build.sh).
+# + schema (ardupilot/modules/truth_est/build.sh). The launcher writes no bytecode (no __pycache__ in py/).
 set -euo pipefail
 HARNESS="$(cd "$(dirname "$0")/../../.." && pwd -P)"
 OUT="$HARNESS/build/modules/truth_est"
@@ -14,7 +14,7 @@ mkdir -p "$OUT"
   echo "interpreter: $(python3 --version)"
 } > "$OUT/code_inputs.txt"
 H="$(shasum -a 256 "$OUT/code_inputs.txt" | cut -d' ' -f1)"
-printf '#!/bin/sh\nexec /usr/bin/env TRUTH_EST_HASH=%s python3 -I %q "$@"\n' "$H" \
+printf '#!/bin/sh\nexec /usr/bin/env TRUTH_EST_HASH=%s python3 -I -B %q "$@"\n' "$H" \
   "$HARNESS/ardupilot/modules/truth_est/adapter.py" > "$OUT/truth_est"
 chmod +x "$OUT/truth_est"
 echo "built $OUT/truth_est (code hash $H)"

@@ -16,7 +16,11 @@
 #      protocol, schema JSON, the simulator's files; labels relative to $HARNESS and $SIM, so the hash does not depend
 #      on where the repository is), then the launcher's command and the versions of Python, pybullet,
 #      gym-pybullet-drones, numpy, scipy, gymnasium and pillow. It goes into build/modules/NAME/manifest.json, which
-#      the adapter reports on `describe`.
+#      the adapter reports on `describe`. One exception to "sha256 of the bytes": the world cache
+#      ($SIM/build/world-cache/gorge_s7.pkl, a pickle written by sim/setup.sh) holds build timings and absolute paths,
+#      so its line carries the adapter's content digest of it (`world_digest` in adapter.py: every value but
+#      `build_s`, `bake_times` and `asset_dir`, with `files` reduced to file names), labelled "(content)". The mesh
+#      files it names are hashed by their bytes. So a fresh clone built anywhere, at any time, gets the same hash.
 set -euo pipefail
 
 NAME="${1:-plant_sim}"
@@ -75,6 +79,7 @@ label() {
     *) echo "$p" ;;
   esac
 }
+DIGESTS="$("$PY" -c 'import json,sys; print("\n".join(f"{k}\t{v}" for k, v in json.load(open(sys.argv[1]))["digests"].items()))' "$OUT/code_inputs.json")"
 VERSIONS="$("$PY" -c 'import json,sys; v=json.load(open(sys.argv[1]))["versions"]; print(", ".join(f"{k} {x}" for k, x in v.items()))' "$OUT/code_inputs.json")"
 FLAGS="env -i ${ENV[*]} python ${PYFLAGS[*]} adapter.py --vehicles $VEHICLES; physics 1200 Hz, 3 substeps per step, wind off"
 {
@@ -82,7 +87,12 @@ FLAGS="env -i ${ENV[*]} python ${PYFLAGS[*]} adapter.py --vehicles $VEHICLES; ph
     for f in "$MOD/adapter.py" "$HARNESS/py/module_protocol.py" "$GEN/module_schema.json"; do echo "$f"; done
     "$PY" -c 'import json,sys; print("\n".join(json.load(open(sys.argv[1]))["files"]))' "$OUT/code_inputs.json"
   } | while IFS= read -r f; do
-    printf '%s  %s\n' "$(shasum -a 256 "$f" | cut -d' ' -f1)" "$(label "$f")"
+    d="$(printf '%s\n' "$DIGESTS" | awk -F'\t' -v f="$f" '$1 == f { print $2 }')"
+    if [ -n "$d" ]; then
+      printf '%s  %s (content)\n' "$d" "$(label "$f")"
+    else
+      printf '%s  %s\n' "$(shasum -a 256 "$f" | cut -d' ' -f1)" "$(label "$f")"
+    fi
   done | LC_ALL=C sort -k2
   echo "flags: $FLAGS"
   echo "interpreter: \$SIM/.venv (sim/setup.sh)"

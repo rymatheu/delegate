@@ -3,8 +3,8 @@
 #
 # Needs `lake build` first (each build asks the `harness` CLI for the module's records) and the sources in deps/
 # (tools/fetch_deps.sh); the simulator modules need the repository's sim/ set up (sim/setup.sh). Every executable
-# goes to build/modules/NAME/NAME with its code hash (build/modules/NAME/code_inputs.txt). About 15 min for
-# ArduPilot, 8 min for PX4, 1 min for the simulator.
+# goes to build/modules/NAME/NAME with its code hash (build/modules/NAME/code_inputs.txt). About 2.5 min for
+# ArduPilot, 4 min for PX4, under a minute for the simulator (measured in a fresh clone).
 set -euo pipefail
 HARNESS="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$HARNESS"

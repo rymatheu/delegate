@@ -1,6 +1,6 @@
 # 0. Status and layout
 
-**2026-11-19:** imported into this repository (subproject `harness/`); the simulator module runs the repository's shared `sim/`; the ArduPilot stack flies the three gorge scenarios (doc 12) with the two-vehicle system `ap_formation` (doc 11). New files: `ardupilot/scenario.py`, `fly_gorge.sh`/`.py`, `qgc_bridge.py`, `fly_qgc.sh [abreast|staggered]`; `ardupilot/harnesses/ap_formation/`; `sim/modules/plant_formation/`; `tools/fetch_deps.sh`, `tools/build_modules.sh`, `tools/case_add_fields.py`. The text below is the state at the import (2026-11-18); where it names `ardupilot/fly_qgc.sh [PORT]` that form still works (one vehicle).
+**2026-11-19:** imported into this repository (subproject `harness/`); the simulator module runs the repository's shared `sim/`; the ArduPilot stack flies the three gorge scenarios (doc 12) with the two-vehicle system `ap_formation` (doc 11). New files: `ardupilot/scenario.py`, `fly_gorge.sh`/`.py`, `qgc_bridge.py`, `fly_qgc.sh [abreast|staggered]`; `ardupilot/harnesses/ap_formation/`; `sim/modules/plant_formation/`; `tools/fetch_deps.sh`, `tools/build_modules.sh`, `tools/case_add_fields.py`. Later on 2026-11-19: the simulator modules' code hash no longer depends on where or when the world was built (the world cache is hashed by content, doc 3), so a fresh clone matches the committed evidence; `tools/check_fresh_clone.sh` checks that. This changed the code hash of `plant_sim`, `plant_formation` and the 16 systems that contain them once; their campaigns and served sessions were re-recorded with the commands their ledgers name and the superseded records removed. The text below is the state at the import (2026-11-18); where it names `ardupilot/fly_qgc.sh [PORT]` that form still works (one vehicle).
 
 The state of the two stacks as of the import into this repository (2026-11-18), moved here from the README, and the full list of development commands. The README has the short Build and Run sections; doc 11 has the two-vehicle formation.
 
@@ -66,7 +66,7 @@ px4/gen.sh                                 # once, for the PX4 modules; reads de
 px4/fetch_mavlink.sh                       # once, for px4_mavlink: PX4's pinned MAVLink into build/src/mavlink
 for m in px4_rate px4_alloc px4_sensors px4_ekf2 px4_att px4_pos px4_fmm px4_land px4_commander \
          px4_navigator px4_mavlink px4_merge_ack px4_sim_in px4_sim_out px4_drive_att px4_drive_pos \
-         px4_drive_auto px4_drive_cmd px4_drive_nav; do px4/build.sh $m; done   # about 8 min
+         px4_drive_auto px4_drive_cmd px4_drive_nav; do px4/build.sh $m; done   # about 4 min
 sim/modules/plant_sim/build.sh             # the simulator module; reads the ArduLean repository, writes nothing there
 for m in position attitude guidance loiter script; do ardupilot/build.sh $m; done
 ardupilot/modules/estimator/build.sh       # EKF3 and the sensor front ends (4 compiles at a time)

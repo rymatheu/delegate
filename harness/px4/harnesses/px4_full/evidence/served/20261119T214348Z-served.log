@@ -1,0 +1,19 @@
+serve px4_full, code hash efab0f029a15e74f7fb3834ff52becb33bb4b96c646f35740d74e6f9af4c1ca7
+summary: 1 inits, 27664 steps
+  px4_full: assumption failed in 0 cases; guarantee violations: none
+  px4_full/plant_sim: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_sim_in: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_sensors: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_rate: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_alloc: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_ekf2: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_att: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_mavlink: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_cmd_window: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_navigator: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_fmm: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_pos: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_land: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_commander: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_merge_ack: assumption failed in 0 cases; guarantee violations: none
+  px4_full/px4_sim_out: assumption failed in 0 cases; guarantee violations: none

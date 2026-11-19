@@ -1,0 +1,3519 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "system": "px4_est",
+ "steps_run": 4000,
+ "steps_per_case": 4000,
+ "seed": 1,
+ "seconds": 6.659597,
+ "regime_text":
+ "default_CAL_ACC0_PRIO: CAL_ACC0_PRIO = -1; default_CAL_ACC0_ROT: CAL_ACC0_ROT = -1; default_CAL_ACC0_XOFF: CAL_ACC0_XOFF = 0; default_CAL_ACC0_XSCALE: CAL_ACC0_XSCALE = 1; default_CAL_ACC0_YOFF: CAL_ACC0_YOFF = 0; default_CAL_ACC0_YSCALE: CAL_ACC0_YSCALE = 1; default_CAL_ACC0_ZOFF: CAL_ACC0_ZOFF = 0; default_CAL_ACC0_ZSCALE: CAL_ACC0_ZSCALE = 1; default_CAL_ACC1_ID: CAL_ACC1_ID = 0; default_CAL_ACC1_PRIO: CAL_ACC1_PRIO = -1; default_CAL_ACC1_ROT: CAL_ACC1_ROT = -1; default_CAL_ACC1_XOFF: CAL_ACC1_XOFF = 0; default_CAL_ACC1_XSCALE: CAL_ACC1_XSCALE = 1; default_CAL_ACC1_YOFF: CAL_ACC1_YOFF = 0; default_CAL_ACC1_YSCALE: CAL_ACC1_YSCALE = 1; default_CAL_ACC1_ZOFF: CAL_ACC1_ZOFF = 0; default_CAL_ACC1_ZSCALE: CAL_ACC1_ZSCALE = 1; default_CAL_ACC2_ID: CAL_ACC2_ID = 0; default_CAL_ACC2_PRIO: CAL_ACC2_PRIO = -1; default_CAL_ACC2_ROT: CAL_ACC2_ROT = -1; default_CAL_ACC2_XOFF: CAL_ACC2_XOFF = 0; default_CAL_ACC2_XSCALE: CAL_ACC2_XSCALE = 1; default_CAL_ACC2_YOFF: CAL_ACC2_YOFF = 0; default_CAL_ACC2_YSCALE: CAL_ACC2_YSCALE = 1; default_CAL_ACC2_ZOFF: CAL_ACC2_ZOFF = 0; default_CAL_ACC2_ZSCALE: CAL_ACC2_ZSCALE = 1; default_CAL_ACC3_ID: CAL_ACC3_ID = 0; default_CAL_ACC3_PRIO: CAL_ACC3_PRIO = -1; default_CAL_ACC3_ROT: CAL_ACC3_ROT = -1; default_CAL_ACC3_XOFF: CAL_ACC3_XOFF = 0; default_CAL_ACC3_XSCALE: CAL_ACC3_XSCALE = 1; default_CAL_ACC3_YOFF: CAL_ACC3_YOFF = 0; default_CAL_ACC3_YSCALE: CAL_ACC3_YSCALE = 1; default_CAL_ACC3_ZOFF: CAL_ACC3_ZOFF = 0; default_CAL_ACC3_ZSCALE: CAL_ACC3_ZSCALE = 1; default_CAL_AIR_CMODEL: CAL_AIR_CMODEL = 0; default_CAL_AIR_TUBED_MM: CAL_AIR_TUBED_MM = 1.5; default_CAL_AIR_TUBELEN: CAL_AIR_TUBELEN = 0.2; default_CAL_BARO0_ID: CAL_BARO0_ID = 0; default_CAL_BARO0_OFF: CAL_BARO0_OFF = 0; default_CAL_BARO0_PRIO: CAL_BARO0_PRIO = -1; default_CAL_BARO1_ID: CAL_BARO1_ID = 0; default_CAL_BARO1_OFF: CAL_BARO1_OFF = 0; default_CAL_BARO1_PRIO: CAL_BARO1_PRIO = -1; default_CAL_BARO2_ID: CAL_BARO2_ID = 0; default_CAL_BARO2_OFF: CAL_BARO2_OFF = 0; default_CAL_BARO2_PRIO: CAL_BARO2_PRIO = -1; default_CAL_BARO3_ID: CAL_BARO3_ID = 0; default_CAL_BARO3_OFF: CAL_BARO3_OFF = 0; default_CAL_BARO3_PRIO: CAL_BARO3_PRIO = -1; default_CAL_GYRO0_PRIO: CAL_GYRO0_PRIO = -1; default_CAL_GYRO0_ROT: CAL_GYRO0_ROT = -1; default_CAL_GYRO0_XOFF: CAL_GYRO0_XOFF = 0; default_CAL_GYRO0_YOFF: CAL_GYRO0_YOFF = 0; default_CAL_GYRO0_ZOFF: CAL_GYRO0_ZOFF = 0; default_CAL_GYRO1_ID: CAL_GYRO1_ID = 0; default_CAL_GYRO1_PRIO: CAL_GYRO1_PRIO = -1; default_CAL_GYRO1_ROT: CAL_GYRO1_ROT = -1; default_CAL_GYRO1_XOFF: CAL_GYRO1_XOFF = 0; default_CAL_GYRO1_YOFF: CAL_GYRO1_YOFF = 0; default_CAL_GYRO1_ZOFF: CAL_GYRO1_ZOFF = 0; default_CAL_GYRO2_ID: CAL_GYRO2_ID = 0; default_CAL_GYRO2_PRIO: CAL_GYRO2_PRIO = -1; default_CAL_GYRO2_ROT: CAL_GYRO2_ROT = -1; default_CAL_GYRO2_XOFF: CAL_GYRO2_XOFF = 0; default_CAL_GYRO2_YOFF: CAL_GYRO2_YOFF = 0; default_CAL_GYRO2_ZOFF: CAL_GYRO2_ZOFF = 0; default_CAL_GYRO3_ID: CAL_GYRO3_ID = 0; default_CAL_GYRO3_PRIO: CAL_GYRO3_PRIO = -1; default_CAL_GYRO3_ROT: CAL_GYRO3_ROT = -1; default_CAL_GYRO3_XOFF: CAL_GYRO3_XOFF = 0; default_CAL_GYRO3_YOFF: CAL_GYRO3_YOFF = 0; default_CAL_GYRO3_ZOFF: CAL_GYRO3_ZOFF = 0; default_CAL_MAG0_PITCH: CAL_MAG0_PITCH = 0; default_CAL_MAG0_ROLL: CAL_MAG0_ROLL = 0; default_CAL_MAG0_ROT: CAL_MAG0_ROT = -1; default_CAL_MAG0_XCOMP: CAL_MAG0_XCOMP = 0; default_CAL_MAG0_XODIAG: CAL_MAG0_XODIAG = 0; default_CAL_MAG0_XOFF: CAL_MAG0_XOFF = 0; default_CAL_MAG0_XSCALE: CAL_MAG0_XSCALE = 1; default_CAL_MAG0_YAW: CAL_MAG0_YAW = 0; default_CAL_MAG0_YCOMP: CAL_MAG0_YCOMP = 0; default_CAL_MAG0_YODIAG: CAL_MAG0_YODIAG = 0; default_CAL_MAG0_YOFF: CAL_MAG0_YOFF = 0; default_CAL_MAG0_YSCALE: CAL_MAG0_YSCALE = 1; default_CAL_MAG0_ZCOMP: CAL_MAG0_ZCOMP = 0; default_CAL_MAG0_ZODIAG: CAL_MAG0_ZODIAG = 0; default_CAL_MAG0_ZOFF: CAL_MAG0_ZOFF = 0; default_CAL_MAG0_ZSCALE: CAL_MAG0_ZSCALE = 1; default_CAL_MAG1_ID: CAL_MAG1_ID = 0; default_CAL_MAG1_PITCH: CAL_MAG1_PITCH = 0; default_CAL_MAG1_PRIO: CAL_MAG1_PRIO = -1; default_CAL_MAG1_ROLL: CAL_MAG1_ROLL = 0; default_CAL_MAG1_ROT: CAL_MAG1_ROT = -1; default_CAL_MAG1_XCOMP: CAL_MAG1_XCOMP = 0; default_CAL_MAG1_XODIAG: CAL_MAG1_XODIAG = 0; default_CAL_MAG1_XOFF: CAL_MAG1_XOFF = 0; default_CAL_MAG1_XSCALE: CAL_MAG1_XSCALE = 1; default_CAL_MAG1_YAW: CAL_MAG1_YAW = 0; default_CAL_MAG1_YCOMP: CAL_MAG1_YCOMP = 0; default_CAL_MAG1_YODIAG: CAL_MAG1_YODIAG = 0; default_CAL_MAG1_YOFF: CAL_MAG1_YOFF = 0; default_CAL_MAG1_YSCALE: CAL_MAG1_YSCALE = 1; default_CAL_MAG1_ZCOMP: CAL_MAG1_ZCOMP = 0; default_CAL_MAG1_ZODIAG: CAL_MAG1_ZODIAG = 0; default_CAL_MAG1_ZOFF: CAL_MAG1_ZOFF = 0; default_CAL_MAG1_ZSCALE: CAL_MAG1_ZSCALE = 1; default_CAL_MAG2_ID: CAL_MAG2_ID = 0; default_CAL_MAG2_PITCH: CAL_MAG2_PITCH = 0; default_CAL_MAG2_PRIO: CAL_MAG2_PRIO = -1; default_CAL_MAG2_ROLL: CAL_MAG2_ROLL = 0; default_CAL_MAG2_ROT: CAL_MAG2_ROT = -1; default_CAL_MAG2_XCOMP: CAL_MAG2_XCOMP = 0; default_CAL_MAG2_XODIAG: CAL_MAG2_XODIAG = 0; default_CAL_MAG2_XOFF: CAL_MAG2_XOFF = 0; default_CAL_MAG2_XSCALE: CAL_MAG2_XSCALE = 1; default_CAL_MAG2_YAW: CAL_MAG2_YAW = 0; default_CAL_MAG2_YCOMP: CAL_MAG2_YCOMP = 0; default_CAL_MAG2_YODIAG: CAL_MAG2_YODIAG = 0; default_CAL_MAG2_YOFF: CAL_MAG2_YOFF = 0; default_CAL_MAG2_YSCALE: CAL_MAG2_YSCALE = 1; default_CAL_MAG2_ZCOMP: CAL_MAG2_ZCOMP = 0; default_CAL_MAG2_ZODIAG: CAL_MAG2_ZODIAG = 0; default_CAL_MAG2_ZOFF: CAL_MAG2_ZOFF = 0; default_CAL_MAG2_ZSCALE: CAL_MAG2_ZSCALE = 1; default_CAL_MAG3_ID: CAL_MAG3_ID = 0; default_CAL_MAG3_PITCH: CAL_MAG3_PITCH = 0; default_CAL_MAG3_PRIO: CAL_MAG3_PRIO = -1; default_CAL_MAG3_ROLL: CAL_MAG3_ROLL = 0; default_CAL_MAG3_ROT: CAL_MAG3_ROT = -1; default_CAL_MAG3_XCOMP: CAL_MAG3_XCOMP = 0; default_CAL_MAG3_XODIAG: CAL_MAG3_XODIAG = 0; default_CAL_MAG3_XOFF: CAL_MAG3_XOFF = 0; default_CAL_MAG3_XSCALE: CAL_MAG3_XSCALE = 1; default_CAL_MAG3_YAW: CAL_MAG3_YAW = 0; default_CAL_MAG3_YCOMP: CAL_MAG3_YCOMP = 0; default_CAL_MAG3_YODIAG: CAL_MAG3_YODIAG = 0; default_CAL_MAG3_YOFF: CAL_MAG3_YOFF = 0; default_CAL_MAG3_YSCALE: CAL_MAG3_YSCALE = 1; default_CAL_MAG3_ZCOMP: CAL_MAG3_ZCOMP = 0; default_CAL_MAG3_ZODIAG: CAL_MAG3_ZODIAG = 0; default_CAL_MAG3_ZOFF: CAL_MAG3_ZOFF = 0; default_CAL_MAG3_ZSCALE: CAL_MAG3_ZSCALE = 1; default_CAL_MAG_COMP_TYP: CAL_MAG_COMP_TYP = 0; default_CAL_MAG_SIDES: CAL_MAG_SIDES = 63; default_IMU_ACCEL_CUTOFF: IMU_ACCEL_CUTOFF = 30; default_IMU_DGYRO_CUTOFF: IMU_DGYRO_CUTOFF = 20; default_IMU_GYRO_CUTOFF: IMU_GYRO_CUTOFF = 40; default_IMU_GYRO_DNF_BW: IMU_GYRO_DNF_BW = 15; default_IMU_GYRO_DNF_EN: IMU_GYRO_DNF_EN = 0; default_IMU_GYRO_DNF_HMC: IMU_GYRO_DNF_HMC = 3; default_IMU_GYRO_DNF_MIN: IMU_GYRO_DNF_MIN = 25; default_IMU_GYRO_NF0_BW: IMU_GYRO_NF0_BW = 20; default_IMU_GYRO_NF0_FRQ: IMU_GYRO_NF0_FRQ = 0; default_IMU_GYRO_NF1_BW: IMU_GYRO_NF1_BW = 20; default_IMU_GYRO_NF1_FRQ: IMU_GYRO_NF1_FRQ = 0; default_IMU_INTEG_RATE: IMU_INTEG_RATE = 200; default_SENS_BARO_QNH: SENS_BARO_QNH = 1013.25; default_SENS_BARO_RATE: SENS_BARO_RATE = 20; default_SENS_BAR_AUTOCAL: SENS_BAR_AUTOCAL = 1; default_SENS_BOARD_ROT: SENS_BOARD_ROT = 0; default_SENS_BOARD_X_OFF: SENS_BOARD_X_OFF = 0; default_SENS_BOARD_Y_OFF: SENS_BOARD_Y_OFF = 0; default_SENS_BOARD_Z_OFF: SENS_BOARD_Z_OFF = 0; default_SENS_DPRES_ANSC: SENS_DPRES_ANSC = 0; default_SENS_DPRES_OFF: SENS_DPRES_OFF = 0; default_SENS_DPRES_REV: SENS_DPRES_REV = 0; default_SENS_EN_THERMAL: SENS_EN_THERMAL = -1; default_SENS_EXT_I2C_PRB: SENS_EXT_I2C_PRB = 1; default_SENS_FLOW_MAXHGT: SENS_FLOW_MAXHGT = 100; default_SENS_FLOW_MAXR: SENS_FLOW_MAXR = 8; default_SENS_FLOW_MINHGT: SENS_FLOW_MINHGT = 0.08; default_SENS_FLOW_RATE: SENS_FLOW_RATE = 70; default_SENS_FLOW_ROT: SENS_FLOW_ROT = 0; default_SENS_FLOW_SCALE: SENS_FLOW_SCALE = 1; default_SENS_GPS_MASK: SENS_GPS_MASK = 7; default_SENS_GPS_PRIME: SENS_GPS_PRIME = 0; default_SENS_GPS_TAU: SENS_GPS_TAU = 10; default_SENS_IMU_AUTOCAL: SENS_IMU_AUTOCAL = 1; default_SENS_IMU_CLPNOTI: SENS_IMU_CLPNOTI = 1; default_SENS_IMU_MODE: SENS_IMU_MODE = 1; default_SENS_INT_BARO_EN: SENS_INT_BARO_EN = 1; default_SENS_MAG_AUTOCAL: SENS_MAG_AUTOCAL = 1; default_SENS_MAG_AUTOROT: SENS_MAG_AUTOROT = 1; default_SENS_MAG_MODE: SENS_MAG_MODE = 1; default_SENS_MAG_RATE: SENS_MAG_RATE = 15; default_SENS_MAG_SIDES: SENS_MAG_SIDES = 63; default_SYS_CAL_TDEL: SYS_CAL_TDEL = 24; default_SYS_CAL_TMAX: SYS_CAL_TMAX = 10; default_SYS_CAL_TMIN: SYS_CAL_TMIN = 5; default_SYS_FAC_CAL_MODE: SYS_FAC_CAL_MODE = 0; default_SYS_HAS_BARO: SYS_HAS_BARO = 1; default_SYS_HAS_GPS: SYS_HAS_GPS = 1; default_SYS_HAS_MAG: SYS_HAS_MAG = 1; sitl_imu_ids: CAL_ACC0_ID = 1310988 ∧ CAL_GYRO0_ID = 1310988; sitl_mag: CAL_MAG0_ID = 197388 ∧ CAL_MAG0_PRIO = 50; mc_gyro_rate: IMU_GYRO_RATEMAX = 800; default_EKF2_ABIAS_INIT: EKF2_ABIAS_INIT = 0.2; default_EKF2_ABL_ACCLIM: EKF2_ABL_ACCLIM = 25; default_EKF2_ABL_GYRLIM: EKF2_ABL_GYRLIM = 3; default_EKF2_ABL_LIM: EKF2_ABL_LIM = 0.4; default_EKF2_ABL_TAU: EKF2_ABL_TAU = 0.5; default_EKF2_ACC_B_NOISE: EKF2_ACC_B_NOISE = 0.003; default_EKF2_ACC_NOISE: EKF2_ACC_NOISE = 0.35; default_EKF2_AGP_CTRL: EKF2_AGP_CTRL = 0; default_EKF2_AGP_DELAY: EKF2_AGP_DELAY = 0; default_EKF2_AGP_GATE: EKF2_AGP_GATE = 3; default_EKF2_AGP_MODE: EKF2_AGP_MODE = 0; default_EKF2_AGP_NOISE: EKF2_AGP_NOISE = 0.9; default_EKF2_ANGERR_INIT: EKF2_ANGERR_INIT = 0.1; default_EKF2_ARSP_THR: EKF2_ARSP_THR = 0; default_EKF2_ASPD_MAX: EKF2_ASPD_MAX = 20; default_EKF2_ASP_DELAY: EKF2_ASP_DELAY = 100; default_EKF2_AVEL_DELAY: EKF2_AVEL_DELAY = 5; default_EKF2_BARO_CTRL: EKF2_BARO_CTRL = 1; default_EKF2_BARO_DELAY: EKF2_BARO_DELAY = 0; default_EKF2_BARO_GATE: EKF2_BARO_GATE = 5; default_EKF2_BARO_NOISE: EKF2_BARO_NOISE = 3.5; default_EKF2_BCOEF_X: EKF2_BCOEF_X = 100; default_EKF2_BCOEF_Y: EKF2_BCOEF_Y = 100; default_EKF2_BETA_GATE: EKF2_BETA_GATE = 5; default_EKF2_BETA_NOISE: EKF2_BETA_NOISE = 0.3; default_EKF2_DECL_TYPE: EKF2_DECL_TYPE = 3; default_EKF2_DELAY_MAX: EKF2_DELAY_MAX = 200; default_EKF2_DRAG_CTRL: EKF2_DRAG_CTRL = 0; default_EKF2_DRAG_NOISE: EKF2_DRAG_NOISE = 2.5; default_EKF2_EAS_NOISE: EKF2_EAS_NOISE = 1.4; default_EKF2_EN: EKF2_EN = 1; default_EKF2_EVA_NOISE: EKF2_EVA_NOISE = 0.1; default_EKF2_EVP_GATE: EKF2_EVP_GATE = 5; default_EKF2_EVP_NOISE: EKF2_EVP_NOISE = 0.1; default_EKF2_EVV_GATE: EKF2_EVV_GATE = 3; default_EKF2_EVV_NOISE: EKF2_EVV_NOISE = 0.1; default_EKF2_EV_CTRL: EKF2_EV_CTRL = 0; default_EKF2_EV_DELAY: EKF2_EV_DELAY = 0; default_EKF2_EV_NOISE_MD: EKF2_EV_NOISE_MD = 0; default_EKF2_EV_POS_X: EKF2_EV_POS_X = 0; default_EKF2_EV_POS_Y: EKF2_EV_POS_Y = 0; default_EKF2_EV_POS_Z: EKF2_EV_POS_Z = 0; default_EKF2_EV_QMIN: EKF2_EV_QMIN = 0; default_EKF2_FUSE_BETA: EKF2_FUSE_BETA = 0; default_EKF2_GBIAS_INIT: EKF2_GBIAS_INIT = 0.1; default_EKF2_GND_EFF_DZ: EKF2_GND_EFF_DZ = 4; default_EKF2_GND_MAX_HGT: EKF2_GND_MAX_HGT = 0.5; default_EKF2_GPS_CHECK: EKF2_GPS_CHECK = 2047; default_EKF2_GPS_CTRL: EKF2_GPS_CTRL = 7; default_EKF2_GPS_DELAY: EKF2_GPS_DELAY = 110; default_EKF2_GPS_MODE: EKF2_GPS_MODE = 0; default_EKF2_GPS_POS_X: EKF2_GPS_POS_X = 0; default_EKF2_GPS_POS_Y: EKF2_GPS_POS_Y = 0; default_EKF2_GPS_POS_Z: EKF2_GPS_POS_Z = 0; default_EKF2_GPS_P_GATE: EKF2_GPS_P_GATE = 5; default_EKF2_GPS_P_NOISE: EKF2_GPS_P_NOISE = 0.5; default_EKF2_GPS_V_GATE: EKF2_GPS_V_GATE = 5; default_EKF2_GPS_V_NOISE: EKF2_GPS_V_NOISE = 0.3; default_EKF2_GPS_YAW_OFF: EKF2_GPS_YAW_OFF = 0; default_EKF2_GRAV_NOISE: EKF2_GRAV_NOISE = 1; default_EKF2_GSF_TAS: EKF2_GSF_TAS = 15; default_EKF2_GYR_B_LIM: EKF2_GYR_B_LIM = 0.15; default_EKF2_GYR_B_NOISE: EKF2_GYR_B_NOISE = 0.001; default_EKF2_GYR_NOISE: EKF2_GYR_NOISE = 0.015; default_EKF2_HDG_GATE: EKF2_HDG_GATE = 2.6; default_EKF2_HEAD_NOISE: EKF2_HEAD_NOISE = 0.3; default_EKF2_HGT_REF: EKF2_HGT_REF = 1; default_EKF2_IMU_CTRL: EKF2_IMU_CTRL = 7; default_EKF2_IMU_POS_X: EKF2_IMU_POS_X = 0; default_EKF2_IMU_POS_Y: EKF2_IMU_POS_Y = 0; default_EKF2_IMU_POS_Z: EKF2_IMU_POS_Z = 0; default_EKF2_LOG_VERBOSE: EKF2_LOG_VERBOSE = 1; default_EKF2_MAG_ACCLIM: EKF2_MAG_ACCLIM = 0.5; default_EKF2_MAG_B_NOISE: EKF2_MAG_B_NOISE = 0.0001; default_EKF2_MAG_CHECK: EKF2_MAG_CHECK = 1; default_EKF2_MAG_CHK_INC: EKF2_MAG_CHK_INC = 20; default_EKF2_MAG_CHK_STR: EKF2_MAG_CHK_STR = 0.2; default_EKF2_MAG_DECL: EKF2_MAG_DECL = 0; default_EKF2_MAG_DELAY: EKF2_MAG_DELAY = 0; default_EKF2_MAG_E_NOISE: EKF2_MAG_E_NOISE = 0.001; default_EKF2_MAG_GATE: EKF2_MAG_GATE = 3; default_EKF2_MAG_NOISE: EKF2_MAG_NOISE = 0.05; default_EKF2_MAG_TYPE: EKF2_MAG_TYPE = 0; default_EKF2_MCOEF: EKF2_MCOEF = 0.15; default_EKF2_MIN_RNG: EKF2_MIN_RNG = 0.01; default_EKF2_MULTI_IMU: EKF2_MULTI_IMU = 0; default_EKF2_MULTI_MAG: EKF2_MULTI_MAG = 0; default_EKF2_NOAID_NOISE: EKF2_NOAID_NOISE = 10; default_EKF2_NOAID_TOUT: EKF2_NOAID_TOUT = 5000000; default_EKF2_OF_CTRL: EKF2_OF_CTRL = 1; default_EKF2_OF_DELAY: EKF2_OF_DELAY = 20; default_EKF2_OF_GATE: EKF2_OF_GATE = 3; default_EKF2_OF_GYR_SRC: EKF2_OF_GYR_SRC = 0; default_EKF2_OF_N_MAX: EKF2_OF_N_MAX = 0.5; default_EKF2_OF_N_MIN: EKF2_OF_N_MIN = 0.15; default_EKF2_OF_POS_X: EKF2_OF_POS_X = 0; default_EKF2_OF_POS_Y: EKF2_OF_POS_Y = 0; default_EKF2_OF_POS_Z: EKF2_OF_POS_Z = 0; default_EKF2_OF_QMIN: EKF2_OF_QMIN = 1; default_EKF2_OF_QMIN_GND: EKF2_OF_QMIN_GND = 0; default_EKF2_PCOEF_XN: EKF2_PCOEF_XN = 0; default_EKF2_PCOEF_XP: EKF2_PCOEF_XP = 0; default_EKF2_PCOEF_YN: EKF2_PCOEF_YN = 0; default_EKF2_PCOEF_YP: EKF2_PCOEF_YP = 0; default_EKF2_PCOEF_Z: EKF2_PCOEF_Z = 0; default_EKF2_PREDICT_US: EKF2_PREDICT_US = 10000; default_EKF2_REQ_EPH: EKF2_REQ_EPH = 3; default_EKF2_REQ_EPV: EKF2_REQ_EPV = 5; default_EKF2_REQ_FIX: EKF2_REQ_FIX = 3; default_EKF2_REQ_GPS_H: EKF2_REQ_GPS_H = 10; default_EKF2_REQ_HDRIFT: EKF2_REQ_HDRIFT = 0.1; default_EKF2_REQ_NSATS: EKF2_REQ_NSATS = 6; default_EKF2_REQ_PDOP: EKF2_REQ_PDOP = 2.5; default_EKF2_REQ_SACC: EKF2_REQ_SACC = 0.5; default_EKF2_REQ_VDRIFT: EKF2_REQ_VDRIFT = 0.2; default_EKF2_RNG_A_HMAX: EKF2_RNG_A_HMAX = 5; default_EKF2_RNG_A_VMAX: EKF2_RNG_A_VMAX = 1; default_EKF2_RNG_CTRL: EKF2_RNG_CTRL = 1; default_EKF2_RNG_DELAY: EKF2_RNG_DELAY = 5; default_EKF2_RNG_FOG: EKF2_RNG_FOG = 3; default_EKF2_RNG_GATE: EKF2_RNG_GATE = 5; default_EKF2_RNG_K_GATE: EKF2_RNG_K_GATE = 1; default_EKF2_RNG_NOISE: EKF2_RNG_NOISE = 0.1; default_EKF2_RNG_PITCH: EKF2_RNG_PITCH = 0; default_EKF2_RNG_POS_X: EKF2_RNG_POS_X = 0; default_EKF2_RNG_POS_Y: EKF2_RNG_POS_Y = 0; default_EKF2_RNG_POS_Z: EKF2_RNG_POS_Z = 0; default_EKF2_RNG_QLTY_T: EKF2_RNG_QLTY_T = 1; default_EKF2_RNG_SFE: EKF2_RNG_SFE = 0.05; default_EKF2_SEL_ERR_RED: EKF2_SEL_ERR_RED = 0.2; default_EKF2_SEL_IMU_ACC: EKF2_SEL_IMU_ACC = 1; default_EKF2_SEL_IMU_ANG: EKF2_SEL_IMU_ANG = 15; default_EKF2_SEL_IMU_RAT: EKF2_SEL_IMU_RAT = 7; default_EKF2_SEL_IMU_VEL: EKF2_SEL_IMU_VEL = 2; default_EKF2_SYNT_MAG_Z: EKF2_SYNT_MAG_Z = 0; default_EKF2_TAS_GATE: EKF2_TAS_GATE = 5; default_EKF2_TAU_POS: EKF2_TAU_POS = 0.25; default_EKF2_TAU_VEL: EKF2_TAU_VEL = 0.25; default_EKF2_TERR_GRAD: EKF2_TERR_GRAD = 0.5; default_EKF2_TERR_NOISE: EKF2_TERR_NOISE = 5; default_EKF2_VEL_LIM: EKF2_VEL_LIM = 100; default_EKF2_WIND_NSD: EKF2_WIND_NSD = 0.05; default_SENS_IMU_MODE: SENS_IMU_MODE = 1; default_SENS_MAG_MODE: SENS_MAG_MODE = 1; noise: noise_on = true; status: vehicle_status_updated ∧ vehicle_status_vehicle_type = 1 ∧ vehicle_status_arming_state = 1 ∧ ¬vehicle_status_is_vtol; no_land_detector: ¬vehicle_land_detected_updated; motors_off: pwm0 = 1000 ∧ pwm1 = 1000 ∧ pwm2 = 1000 ∧ pwm3 = 1000; imu_full_scale_default: imu_acc_fs_g = 0 ∧ imu_gyro_fs_dps = 0",
+ "regime": "rest_noise",
+ "outputs_seen":
+ {"wind_windspeed_north":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_windspeed_east":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_variance_north":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_variance_east":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_updated": {"true_steps": 0},
+  "wind_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_timestamp": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_tas_innov_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_tas_innov": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_beta_innov_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_beta_innov": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wall_clear": {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "vel_n":
+  {"non_finite_steps": 0, "min_finite": -0.01118944, "max_finite": 0.01330601},
+  "vel_e":
+  {"non_finite_steps": 0,
+   "min_finite": -0.006374072,
+   "max_finite": 0.004301853},
+  "vel_d":
+  {"non_finite_steps": 0, "min_finite": -0.008346164, "max_finite": 0.01492515},
+  "vehicle_odometry_velocity_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10.00198},
+  "vehicle_odometry_velocity_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 25.0381},
+  "vehicle_odometry_velocity_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 25.0381},
+  "vehicle_odometry_velocity_frame":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_odometry_velocity_2":
+  {"non_finite_steps": 0, "min_finite": -0.3501455, "max_finite": 0.267374},
+  "vehicle_odometry_velocity_1":
+  {"non_finite_steps": 0, "min_finite": -0.3254741, "max_finite": 0.3587313},
+  "vehicle_odometry_velocity_0":
+  {"non_finite_steps": 0, "min_finite": -0.4154686, "max_finite": 0.5188745},
+  "vehicle_odometry_updated": {"true_steps": 977},
+  "vehicle_odometry_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_odometry_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_odometry_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5},
+  "vehicle_odometry_quality":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_q_3":
+  {"non_finite_steps": 0,
+   "min_finite": -0.03757137,
+   "max_finite": 0.0003031475},
+  "vehicle_odometry_q_2":
+  {"non_finite_steps": 0, "min_finite": -0.03507901, "max_finite": 0.01640757},
+  "vehicle_odometry_q_1":
+  {"non_finite_steps": 0, "min_finite": -0.01469576, "max_finite": 0.01788927},
+  "vehicle_odometry_q_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9999995},
+  "vehicle_odometry_position_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 100.4},
+  "vehicle_odometry_position_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 101.0003},
+  "vehicle_odometry_position_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 101.0003},
+  "vehicle_odometry_position_2":
+  {"non_finite_steps": 0, "min_finite": -0.4609717, "max_finite": 0.1474574},
+  "vehicle_odometry_position_1":
+  {"non_finite_steps": 0, "min_finite": -0.190434, "max_finite": 0.1720066},
+  "vehicle_odometry_position_0":
+  {"non_finite_steps": 0, "min_finite": -0.370199, "max_finite": 0.263335},
+  "vehicle_odometry_pose_frame":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_odometry_orientation_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.08999924},
+  "vehicle_odometry_orientation_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.03062457},
+  "vehicle_odometry_orientation_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.03056076},
+  "vehicle_odometry_angular_velocity_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003125812,
+   "max_finite": 0.003464172},
+  "vehicle_odometry_angular_velocity_1":
+  {"non_finite_steps": 0, "min_finite": -0.04510514, "max_finite": 0.06804797},
+  "vehicle_odometry_angular_velocity_0":
+  {"non_finite_steps": 0, "min_finite": -0.04079009, "max_finite": 0.01943931},
+  "vehicle_magnetometer_updated": {"true_steps": 142},
+  "vehicle_magnetometer_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9940000},
+  "vehicle_magnetometer_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9950000},
+  "vehicle_magnetometer_magnetometer_ga_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.481539},
+  "vehicle_magnetometer_magnetometer_ga_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0164976},
+  "vehicle_magnetometer_magnetometer_ga_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2127044},
+  "vehicle_magnetometer_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "vehicle_magnetometer_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_z_valid": {"true_steps": 3514},
+  "vehicle_local_position_z_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_z_global": {"true_steps": 0},
+  "vehicle_local_position_z_deriv":
+  {"non_finite_steps": 0, "min_finite": -0.4062133, "max_finite": 0.2429325},
+  "vehicle_local_position_z":
+  {"non_finite_steps": 0, "min_finite": -0.4609717, "max_finite": 0.1474574},
+  "vehicle_local_position_y":
+  {"non_finite_steps": 0, "min_finite": -0.190434, "max_finite": 0.1720066},
+  "vehicle_local_position_xy_valid": {"true_steps": 0},
+  "vehicle_local_position_xy_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_xy_global": {"true_steps": 0},
+  "vehicle_local_position_x":
+  {"non_finite_steps": 0, "min_finite": -0.370199, "max_finite": 0.263335},
+  "vehicle_local_position_vz_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_vz_max":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vz":
+  {"non_finite_steps": 0, "min_finite": -0.3501455, "max_finite": 0.267374},
+  "vehicle_local_position_vy":
+  {"non_finite_steps": 0, "min_finite": -0.3254741, "max_finite": 0.3587313},
+  "vehicle_local_position_vxy_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_vxy_max":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vx":
+  {"non_finite_steps": 0, "min_finite": -0.4154686, "max_finite": 0.5188745},
+  "vehicle_local_position_v_z_valid": {"true_steps": 3514},
+  "vehicle_local_position_v_xy_valid": {"true_steps": 0},
+  "vehicle_local_position_updated": {"true_steps": 977},
+  "vehicle_local_position_unaided_heading":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0007858212,
+   "max_finite": 0.000506636},
+  "vehicle_local_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_local_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_local_position_tilt_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.06128857},
+  "vehicle_local_position_ref_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lon":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lat":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_alt":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_heading_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.09000018},
+  "vehicle_local_position_heading_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_heading_good_for_control": {"true_steps": 28},
+  "vehicle_local_position_heading":
+  {"non_finite_steps": 0, "min_finite": -0.075158, "max_finite": 0.0003513195},
+  "vehicle_local_position_hagl_min":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_hagl_max_z":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_hagl_max_xy":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_evv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3.162591},
+  "vehicle_local_position_evh":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 7.076454},
+  "vehicle_local_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10.01998},
+  "vehicle_local_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 14.21269},
+  "vehicle_local_position_dist_bottom_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.01260001},
+  "vehicle_local_position_dist_bottom_valid": {"true_steps": 0},
+  "vehicle_local_position_dist_bottom_sensor_bitfield":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_dist_bottom_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_local_position_dist_bottom":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.02471337},
+  "vehicle_local_position_delta_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_xy_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_xy_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_vz":
+  {"non_finite_steps": 0, "min_finite": -0.005112775, "max_finite": 0},
+  "vehicle_local_position_delta_vxy_1":
+  {"non_finite_steps": 0, "min_finite": -0.004690969, "max_finite": 0},
+  "vehicle_local_position_delta_vxy_0":
+  {"non_finite_steps": 0, "min_finite": -0.006858569, "max_finite": 0},
+  "vehicle_local_position_delta_heading":
+  {"non_finite_steps": 0, "min_finite": -0.07508527, "max_finite": 0},
+  "vehicle_local_position_delta_dist_bottom":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_dead_reckoning": {"true_steps": 3906},
+  "vehicle_local_position_az":
+  {"non_finite_steps": 0, "min_finite": -6.597701, "max_finite": 5.248123},
+  "vehicle_local_position_ay":
+  {"non_finite_steps": 0, "min_finite": -1.843653, "max_finite": 1.98969},
+  "vehicle_local_position_ax":
+  {"non_finite_steps": 0, "min_finite": -1.578046, "max_finite": 2.273575},
+  "vehicle_imu_updated": {"true_steps": 1997},
+  "vehicle_imu_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_imu_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_imu_status_var_gyro_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.000007321731},
+  "vehicle_imu_status_var_gyro_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.001039834},
+  "vehicle_imu_status_var_gyro_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0005709774},
+  "vehicle_imu_status_var_accel_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 37.55144},
+  "vehicle_imu_status_var_accel_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3.008746},
+  "vehicle_imu_status_var_accel_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.799597},
+  "vehicle_imu_status_updated": {"true_steps": 100},
+  "vehicle_imu_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9917500},
+  "vehicle_imu_status_temperature_gyro":
+  {"non_finite_steps": 3994, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_temperature_accel":
+  {"non_finite_steps": 3994, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_mean_gyro_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.001142582,
+   "max_finite": 0.0008837109},
+  "vehicle_imu_status_mean_gyro_1":
+  {"non_finite_steps": 0, "min_finite": -0.005690557, "max_finite": 0.01703401},
+  "vehicle_imu_status_mean_gyro_0":
+  {"non_finite_steps": 0, "min_finite": -0.0088535, "max_finite": 0.005934972},
+  "vehicle_imu_status_mean_accel_2":
+  {"non_finite_steps": 0, "min_finite": -11.60888, "max_finite": 0},
+  "vehicle_imu_status_mean_accel_1":
+  {"non_finite_steps": 0, "min_finite": -0.8434333, "max_finite": 0.3136635},
+  "vehicle_imu_status_mean_accel_0":
+  {"non_finite_steps": 0, "min_finite": -1.010191, "max_finite": 0.1384669},
+  "vehicle_imu_status_gyro_vibration_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.01868784},
+  "vehicle_imu_status_gyro_raw_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_gyro_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_gyro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_status_gyro_clipping_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_clipping_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_clipping_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_delta_angle_coning_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.000000001314966},
+  "vehicle_imu_status_accel_vibration_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2.781895},
+  "vehicle_imu_status_accel_raw_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_accel_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_accel_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_status_accel_clipping_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_clipping_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_clipping_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_gyro_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_imu_delta_velocity_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "vehicle_imu_delta_velocity_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_delta_velocity_2":
+  {"non_finite_steps": 0, "min_finite": -0.1276971, "max_finite": 0},
+  "vehicle_imu_delta_velocity_1":
+  {"non_finite_steps": 0, "min_finite": -0.01275349, "max_finite": 0.01360303},
+  "vehicle_imu_delta_velocity_0":
+  {"non_finite_steps": 0, "min_finite": -0.01269591, "max_finite": 0.01346628},
+  "vehicle_imu_delta_angle_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "vehicle_imu_delta_angle_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_delta_angle_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0000249382,
+   "max_finite": 0.00002213857},
+  "vehicle_imu_delta_angle_1":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0002748758,
+   "max_finite": 0.0002604199},
+  "vehicle_imu_delta_angle_0":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0002037923,
+   "max_finite": 0.0001557675},
+  "vehicle_imu_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_accel_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_vel_ned_valid": {"true_steps": 3921},
+  "vehicle_gps_position_vel_n_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.1218196, "max_finite": 0.1514884},
+  "vehicle_gps_position_vel_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.1540071},
+  "vehicle_gps_position_vel_e_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.08922857, "max_finite": 0.1244635},
+  "vehicle_gps_position_vel_d_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.07393388, "max_finite": 0.1371587},
+  "vehicle_gps_position_vdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.1},
+  "vehicle_gps_position_updated": {"true_steps": 50},
+  "vehicle_gps_position_timestamp_time_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "vehicle_gps_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "vehicle_gps_position_time_utc_usec":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_system_error":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_spoofing_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_selected_rtcm_instance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_satellites_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "vehicle_gps_position_s_variance_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.25},
+  "vehicle_gps_position_rtcm_msg_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_rtcm_injection_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_rtcm_crc_failed": {"true_steps": 0},
+  "vehicle_gps_position_noise_per_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_longitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000003435058,
+   "max_finite": 0.000002064941},
+  "vehicle_gps_position_longitude_deg":
+  {"non_finite_steps": 0, "min_finite": -105.0442, "max_finite": 0},
+  "vehicle_gps_position_latitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000001898389,
+   "max_finite": 0.000001816309},
+  "vehicle_gps_position_latitude_deg":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 38.84056},
+  "vehicle_gps_position_jamming_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_jamming_indicator":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading_offset":
+  {"non_finite_steps": 3921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading_accuracy":
+  {"non_finite_steps": 3921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading":
+  {"non_finite_steps": 3921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_hdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7},
+  "vehicle_gps_position_fix_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "vehicle_gps_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8},
+  "vehicle_gps_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "vehicle_gps_position_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_cog_rad":
+  {"non_finite_steps": 0, "min_finite": -2.926546, "max_finite": 3.113249},
+  "vehicle_gps_position_c_variance_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_automatic_gain_control":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_authentication_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_msl_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_msl_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.431},
+  "vehicle_gps_position_altitude_ellipsoid_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_ellipsoid_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.431},
+  "vehicle_global_position_updated": {"true_steps": 0},
+  "vehicle_global_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_terrain_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_terrain_alt_valid": {"true_steps": 0},
+  "vehicle_global_position_terrain_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat_lon_valid": {"true_steps": 0},
+  "vehicle_global_position_lat_lon_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_delta_terrain":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_delta_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_dead_reckoning": {"true_steps": 0},
+  "vehicle_global_position_alt_valid": {"true_steps": 0},
+  "vehicle_global_position_alt_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_alt_ellipsoid":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_updated": {"true_steps": 564},
+  "vehicle_attitude_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_attitude_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_attitude_quat_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_attitude_q_3":
+  {"non_finite_steps": 0,
+   "min_finite": -0.03757197,
+   "max_finite": 0.00009791316},
+  "vehicle_attitude_q_2":
+  {"non_finite_steps": 0, "min_finite": -0.001238831, "max_finite": 0},
+  "vehicle_attitude_q_1":
+  {"non_finite_steps": 0, "min_finite": -0.001703765, "max_finite": 0},
+  "vehicle_attitude_q_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9999994},
+  "vehicle_attitude_delta_q_reset_3":
+  {"non_finite_steps": 0, "min_finite": -0.03753381, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0000000001021761e-1},
+  "vehicle_attitude_delta_q_reset_1":
+  {"non_finite_steps": 0, "min_finite": -0.0000000001867093, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_angular_velocity_xyz_derivative_2":
+  {"non_finite_steps": 0, "min_finite": -0.2842755, "max_finite": 0.3316153},
+  "vehicle_angular_velocity_xyz_derivative_1":
+  {"non_finite_steps": 0, "min_finite": -4.910089, "max_finite": 4.213342},
+  "vehicle_angular_velocity_xyz_derivative_0":
+  {"non_finite_steps": 0, "min_finite": -2.555105, "max_finite": 2.515648},
+  "vehicle_angular_velocity_xyz_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003579431,
+   "max_finite": 0.003284129},
+  "vehicle_angular_velocity_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -0.05375959, "max_finite": 0.0472926},
+  "vehicle_angular_velocity_xyz_0":
+  {"non_finite_steps": 0, "min_finite": -0.0305354, "max_finite": 0.02328207},
+  "vehicle_angular_velocity_updated": {"true_steps": 3994},
+  "vehicle_angular_velocity_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "vehicle_angular_velocity_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "vehicle_air_data_updated": {"true_steps": 200},
+  "vehicle_air_data_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9980000},
+  "vehicle_air_data_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "vehicle_air_data_temperature_source":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_air_data_rho":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7165114},
+  "vehicle_air_data_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_air_data_baro_pressure_pa":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59275.46},
+  "vehicle_air_data_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "vehicle_air_data_baro_alt_meter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.208},
+  "vehicle_air_data_ambient_temperature":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 15},
+  "vehicle_acceleration_xyz_2":
+  {"non_finite_steps": 0, "min_finite": -16.16973, "max_finite": 0},
+  "vehicle_acceleration_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -1.252305, "max_finite": 1.860698},
+  "vehicle_acceleration_xyz_0":
+  {"non_finite_steps": 0, "min_finite": -1.469511, "max_finite": 1.749419},
+  "vehicle_acceleration_updated": {"true_steps": 1997},
+  "vehicle_acceleration_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "vehicle_acceleration_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "thrust3": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "thrust2": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "thrust1": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "thrust0": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "t_us": {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 10000000},
+  "sensors_status_imu_updated": {"true_steps": 1999},
+  "sensors_status_imu_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "sensors_status_imu_gyro_priority_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "sensors_status_imu_gyro_inconsistency_rad_s_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_healthy_3": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_2": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_1": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_0": {"true_steps": 3994},
+  "sensors_status_imu_gyro_device_ids_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_gyro_device_id_primary":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_accel_priority_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "sensors_status_imu_accel_inconsistency_m_s_s_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_healthy_3": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_2": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_1": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_0": {"true_steps": 3994},
+  "sensors_status_imu_accel_device_ids_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_accel_device_id_primary":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_selection_updated": {"true_steps": 1},
+  "sensor_selection_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_selection_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_selection_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_mag_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.4843477},
+  "sensor_mag_y":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.02125049},
+  "sensor_mag_x":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2165974},
+  "sensor_mag_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_mag_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_mag_temperature":
+  {"non_finite_steps": 1000, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "sensor_mag_count": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_gyro_z":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008238539,
+   "max_finite": 0.009532621},
+  "sensor_gyro_y":
+  {"non_finite_steps": 0, "min_finite": -0.08478215, "max_finite": 0.06297183},
+  "sensor_gyro_x":
+  {"non_finite_steps": 0, "min_finite": -0.07284615, "max_finite": 0.09054252},
+  "sensor_gyro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 10000000},
+  "sensor_gyro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 10000000},
+  "sensor_gyro_temperature":
+  {"non_finite_steps": 4000, "min_finite": null, "max_finite": null},
+  "sensor_gyro_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_gyro_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_vel_ned_valid": {"true_steps": 50},
+  "sensor_gps_vel_n_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.1218196, "max_finite": 0.1514884},
+  "sensor_gps_vel_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.1540071},
+  "sensor_gps_vel_e_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.08922857, "max_finite": 0.1244635},
+  "sensor_gps_vel_d_m_s":
+  {"non_finite_steps": 0, "min_finite": -0.07393388, "max_finite": 0.1371587},
+  "sensor_gps_vdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.1},
+  "sensor_gps_updated": {"true_steps": 50},
+  "sensor_gps_timestamp_time_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_gps_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_gps_time_utc_usec":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_system_error":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_spoofing_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_selected_rtcm_instance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_satellites_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "sensor_gps_s_variance_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.25},
+  "sensor_gps_rtcm_msg_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_injection_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_crc_failed": {"true_steps": 0},
+  "sensor_gps_noise_per_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_longitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000003435058,
+   "max_finite": 0.000002064941},
+  "sensor_gps_longitude_deg":
+  {"non_finite_steps": 0, "min_finite": -105.0442, "max_finite": 0},
+  "sensor_gps_latitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000001898389,
+   "max_finite": 0.000001816309},
+  "sensor_gps_latitude_deg":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 38.84056},
+  "sensor_gps_jamming_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_jamming_indicator":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_offset":
+  {"non_finite_steps": 50, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_accuracy":
+  {"non_finite_steps": 50, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading":
+  {"non_finite_steps": 50, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_hdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7},
+  "sensor_gps_fix_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "sensor_gps_epv": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8},
+  "sensor_gps_eph": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "sensor_gps_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_cog_rad":
+  {"non_finite_steps": 0, "min_finite": -2.926546, "max_finite": 3.113249},
+  "sensor_gps_c_variance_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_automatic_gain_control":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_authentication_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.431},
+  "sensor_gps_altitude_ellipsoid_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_ellipsoid_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.431},
+  "sensor_combined_updated": {"true_steps": 1997},
+  "sensor_combined_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "sensor_combined_gyro_rad_2":
+  {"non_finite_steps": 0, "min_finite": -0.00498764, "max_finite": 0.004427714},
+  "sensor_combined_gyro_rad_1":
+  {"non_finite_steps": 0, "min_finite": -0.05497517, "max_finite": 0.05208398},
+  "sensor_combined_gyro_rad_0":
+  {"non_finite_steps": 0, "min_finite": -0.04075846, "max_finite": 0.0311535},
+  "sensor_combined_gyro_integral_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_combined_gyro_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_gyro_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_combined_accelerometer_timestamp_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_accelerometer_m_s2_2":
+  {"non_finite_steps": 0, "min_finite": -20.07246, "max_finite": 0},
+  "sensor_combined_accelerometer_m_s2_1":
+  {"non_finite_steps": 0, "min_finite": -2.550698, "max_finite": 2.720606},
+  "sensor_combined_accelerometer_m_s2_0":
+  {"non_finite_steps": 0, "min_finite": -1.918534, "max_finite": 2.693256},
+  "sensor_combined_accelerometer_integral_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_combined_accelerometer_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_accel_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_baro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_baro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10000000},
+  "sensor_baro_temperature":
+  {"non_finite_steps": 0, "min_finite": -12.94491, "max_finite": 0},
+  "sensor_baro_pressure":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59278.39},
+  "sensor_baro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "sensor_baro_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_accel_z":
+  {"non_finite_steps": 0, "min_finite": -33.05169, "max_finite": -1.480458},
+  "sensor_accel_y":
+  {"non_finite_steps": 0, "min_finite": -4.482028, "max_finite": 6.132937},
+  "sensor_accel_x":
+  {"non_finite_steps": 0, "min_finite": -3.43447, "max_finite": 4.406135},
+  "sensor_accel_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 10000000},
+  "sensor_accel_timestamp":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 10000000},
+  "sensor_accel_temperature":
+  {"non_finite_steps": 4000, "min_finite": null, "max_finite": null},
+  "sensor_accel_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_accel_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_r":
+  {"non_finite_steps": 0,
+   "min_finite": -0.009349622,
+   "max_finite": 0.007870831},
+  "rate_q":
+  {"non_finite_steps": 0, "min_finite": -0.08525991, "max_finite": 0.06214597},
+  "rate_p":
+  {"non_finite_steps": 0, "min_finite": -0.07317905, "max_finite": 0.09068503},
+  "q4":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0001021417,
+   "max_finite": 0.0001353577},
+  "q3":
+  {"non_finite_steps": 0,
+   "min_finite": -0.004140423,
+   "max_finite": -0.003758956},
+  "q2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.00005547187,
+   "max_finite": 0.00004657753},
+  "q1":
+  {"non_finite_steps": 0, "min_finite": 0.9999914, "max_finite": 0.9999929},
+  "px4_sensors_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_ekf2_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pos_n":
+  {"non_finite_steps": 0,
+   "min_finite": -0.001626023,
+   "max_finite": 0.001316896},
+  "pos_e":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003448248,
+   "max_finite": 0.0001602155},
+  "pos_d":
+  {"non_finite_steps": 0, "min_finite": -0.1264675, "max_finite": -0.1263616},
+  "mag_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 484.3477},
+  "mag_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 21.25049},
+  "mag_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 216.5974},
+  "mag_fresh": {"true_steps": 1000},
+  "imu2_gz":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008238539,
+   "max_finite": 0.009532621},
+  "imu2_gy":
+  {"non_finite_steps": 0, "min_finite": -0.08478215, "max_finite": 0.06297183},
+  "imu2_gx":
+  {"non_finite_steps": 0, "min_finite": -0.07284615, "max_finite": 0.09054252},
+  "imu2_az":
+  {"non_finite_steps": 0, "min_finite": -33.05169, "max_finite": -1.480458},
+  "imu2_ay":
+  {"non_finite_steps": 0, "min_finite": -4.482028, "max_finite": 6.132937},
+  "imu2_ax":
+  {"non_finite_steps": 0, "min_finite": -3.43447, "max_finite": 4.406135},
+  "imu1_gz":
+  {"non_finite_steps": 0, "min_finite": -0.01155089, "max_finite": 0.01041666},
+  "imu1_gy":
+  {"non_finite_steps": 0, "min_finite": -0.07608195, "max_finite": 0.06626393},
+  "imu1_gx":
+  {"non_finite_steps": 0, "min_finite": -0.0761155, "max_finite": 0.08811473},
+  "imu1_az":
+  {"non_finite_steps": 0, "min_finite": -35.60972, "max_finite": -1.583586},
+  "imu1_ay":
+  {"non_finite_steps": 0, "min_finite": -4.505909, "max_finite": 6.254426},
+  "imu1_ax":
+  {"non_finite_steps": 0, "min_finite": -4.096776, "max_finite": 4.404726},
+  "imu0_gz":
+  {"non_finite_steps": 0, "min_finite": -0.01101009, "max_finite": 0.009162299},
+  "imu0_gy":
+  {"non_finite_steps": 0, "min_finite": -0.084638, "max_finite": 0.05974843},
+  "imu0_gx":
+  {"non_finite_steps": 0, "min_finite": -0.07708407, "max_finite": 0.09438387},
+  "imu0_az":
+  {"non_finite_steps": 0, "min_finite": -34.99934, "max_finite": -1.467627},
+  "imu0_ay":
+  {"non_finite_steps": 0, "min_finite": -4.589808, "max_finite": 6.188766},
+  "imu0_ax":
+  {"non_finite_steps": 0, "min_finite": -4.133523, "max_finite": 4.665572},
+  "gps_vn":
+  {"non_finite_steps": 0, "min_finite": -0.1218196, "max_finite": 0.1514884},
+  "gps_ve":
+  {"non_finite_steps": 0, "min_finite": -0.08922857, "max_finite": 0.1244635},
+  "gps_vd":
+  {"non_finite_steps": 0, "min_finite": -0.07393388, "max_finite": 0.1371587},
+  "gps_lon_e7":
+  {"non_finite_steps": 0, "min_finite": -1050442000, "max_finite": 0},
+  "gps_lat_e7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 388405600},
+  "gps_fresh": {"true_steps": 50},
+  "gps_alt": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.431},
+  "estimator_status_vel_test_ratio":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_updated": {"true_steps": 977},
+  "estimator_status_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9807500},
+  "estimator_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9997500},
+  "estimator_status_timeout_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_time_slip":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_tas_test_ratio":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_solution_status_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1189},
+  "estimator_status_reset_count_vel_ne":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_status_reset_count_vel_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_status_reset_count_quat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_status_reset_count_pos_ne":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_status_reset_count_pod_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_status_pre_flt_fail_mag_field_disturbed": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_vel_vert": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_vel_horiz": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_pos_horiz": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_height": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_heading": {"true_steps": 0},
+  "estimator_status_pos_vert_accuracy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10.01998},
+  "estimator_status_pos_test_ratio":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_pos_horiz_accuracy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 14.21269},
+  "estimator_status_output_tracking_error_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.1676762},
+  "estimator_status_output_tracking_error_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2394064},
+  "estimator_status_output_tracking_error_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.03456759},
+  "estimator_status_mag_strength_ref_gs":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_strength_gs":
+  {"non_finite_steps": 2780, "min_finite": 0, "max_finite": 0.525434},
+  "estimator_status_mag_inclination_ref_deg":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_inclination_deg":
+  {"non_finite_steps": 2780, "min_finite": 0, "max_finite": 66.52534},
+  "estimator_status_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "estimator_status_hgt_test_ratio":
+  {"non_finite_steps": 792, "min_finite": 0, "max_finite": 0.008186134},
+  "estimator_status_health_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_hdg_test_ratio":
+  {"non_finite_steps": 3228, "min_finite": 0, "max_finite": 0.007354342},
+  "estimator_status_hagl_test_ratio":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "estimator_status_gps_check_fail_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_flags_updated": {"true_steps": 184},
+  "estimator_status_flags_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9787500},
+  "estimator_status_flags_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9977500},
+  "estimator_status_flags_reject_yaw": {"true_steps": 0},
+  "estimator_status_flags_reject_ver_vel": {"true_steps": 0},
+  "estimator_status_flags_reject_ver_pos": {"true_steps": 0},
+  "estimator_status_flags_reject_sideslip": {"true_steps": 0},
+  "estimator_status_flags_reject_optflow_y": {"true_steps": 0},
+  "estimator_status_flags_reject_optflow_x": {"true_steps": 0},
+  "estimator_status_flags_reject_hor_vel": {"true_steps": 0},
+  "estimator_status_flags_reject_hor_pos": {"true_steps": 0},
+  "estimator_status_flags_reject_hagl": {"true_steps": 0},
+  "estimator_status_flags_reject_airspeed": {"true_steps": 0},
+  "estimator_status_flags_innovation_fault_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "estimator_status_flags_fs_bad_sideslip": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_optflow_y": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_optflow_x": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_z": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_y": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_x": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_decl": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_hdg": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_airspeed": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_acc_vertical": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_acc_clipping": {"true_steps": 0},
+  "estimator_status_flags_fault_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_flags_cs_yaw_manual": {"true_steps": 0},
+  "estimator_status_flags_cs_yaw_align": {"true_steps": 706},
+  "estimator_status_flags_cs_wind_dead_reckoning": {"true_steps": 0},
+  "estimator_status_flags_cs_wind": {"true_steps": 0},
+  "estimator_status_flags_cs_vehicle_at_rest": {"true_steps": 0},
+  "estimator_status_flags_cs_valid_fake_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_tilt_align": {"true_steps": 1130},
+  "estimator_status_flags_cs_synthetic_mag_z": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_terrain": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_stuck": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_kin_consistent": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_opt_flow_terrain": {"true_steps": 0},
+  "estimator_status_flags_cs_opt_flow": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_heading_consistent": {"true_steps": 706},
+  "estimator_status_flags_cs_mag_hdg": {"true_steps": 678},
+  "estimator_status_flags_cs_mag_field_disturbed": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_dec": {"true_steps": 678},
+  "estimator_status_flags_cs_mag_aligned_in_flight": {"true_steps": 20},
+  "estimator_status_flags_cs_mag_3d": {"true_steps": 0},
+  "estimator_status_flags_cs_mag": {"true_steps": 706},
+  "estimator_status_flags_cs_inertial_dead_reckoning": {"true_steps": 3906},
+  "estimator_status_flags_cs_in_air": {"true_steps": 440},
+  "estimator_status_flags_cs_gravity_vector": {"true_steps": 1130},
+  "estimator_status_flags_cs_gps_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_yaw_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_yaw": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_vel": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_hgt_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnd_effect": {"true_steps": 0},
+  "estimator_status_flags_cs_fuse_beta": {"true_steps": 0},
+  "estimator_status_flags_cs_fuse_aspd": {"true_steps": 0},
+  "estimator_status_flags_cs_fixed_wing": {"true_steps": 0},
+  "estimator_status_flags_cs_fake_pos": {"true_steps": 2856},
+  "estimator_status_flags_cs_fake_hgt": {"true_steps": 392},
+  "estimator_status_flags_cs_ev_yaw_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_yaw": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_vel": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_constant_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_baro_hgt": {"true_steps": 3114},
+  "estimator_status_flags_cs_baro_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_aux_gpos": {"true_steps": 0},
+  "estimator_status_flags_control_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 182},
+  "estimator_status_filter_fault_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_control_mode_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 545260200},
+  "estimator_status_beta_test_ratio":
+  {"non_finite_steps": 3906, "min_finite": 0, "max_finite": 0},
+  "estimator_status_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "estimator_status_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "estimator_sensor_bias_updated": {"true_steps": 43},
+  "estimator_sensor_bias_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9727500},
+  "estimator_sensor_bias_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9917500},
+  "estimator_sensor_bias_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "estimator_sensor_bias_mag_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0025},
+  "estimator_sensor_bias_mag_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0025},
+  "estimator_sensor_bias_mag_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0025},
+  "estimator_sensor_bias_mag_bias_valid": {"true_steps": 3598},
+  "estimator_sensor_bias_mag_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_mag_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "estimator_sensor_bias_mag_bias_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000002649991,
+   "max_finite": 0.0001405287},
+  "estimator_sensor_bias_mag_bias_1":
+  {"non_finite_steps": 0, "min_finite": -0.0002894884, "max_finite": 0},
+  "estimator_sensor_bias_mag_bias_0":
+  {"non_finite_steps": 0, "min_finite": -0.0002219142, "max_finite": 0},
+  "estimator_sensor_bias_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "estimator_sensor_bias_gyro_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.00140199},
+  "estimator_sensor_bias_gyro_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.009983778},
+  "estimator_sensor_bias_gyro_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.009952569},
+  "estimator_sensor_bias_gyro_bias_valid": {"true_steps": 3598},
+  "estimator_sensor_bias_gyro_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_gyro_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.15},
+  "estimator_sensor_bias_gyro_bias_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0002625207,
+   "max_finite": 0.00007236593},
+  "estimator_sensor_bias_gyro_bias_1":
+  {"non_finite_steps": 0, "min_finite": -0.02302732, "max_finite": 0},
+  "estimator_sensor_bias_gyro_bias_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.01558651},
+  "estimator_sensor_bias_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "estimator_sensor_bias_accel_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.04},
+  "estimator_sensor_bias_accel_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.04},
+  "estimator_sensor_bias_accel_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.04},
+  "estimator_sensor_bias_accel_bias_valid": {"true_steps": 3598},
+  "estimator_sensor_bias_accel_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_accel_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.4},
+  "estimator_sensor_bias_accel_bias_2":
+  {"non_finite_steps": 0, "min_finite": -0.02504916, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "baro_pa": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59278.39},
+  "baro_fresh": {"true_steps": 1000},
+  "baro_degc":
+  {"non_finite_steps": 0, "min_finite": -12.94491, "max_finite": 0}},
+ "monitored":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 - 1| ≤ 4e-7",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.0000003403954,
+   "path": "px4_est/plant_sim",
+   "contract_hash":
+   "fa26cf0366147b3c89b8727752e8f6df780dc6276dbabc15233afa489f3c89a2",
+   "clause": "quat_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ thrust0 ∧ thrust0 ≤ 1 ∧ 0 ≤ thrust1 ∧ thrust1 ≤ 1 ∧ 0 ≤ thrust2 ∧ thrust2 ≤ 1 ∧ 0 ≤ thrust3 ∧ thrust3 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/plant_sim",
+   "contract_hash":
+   "67bbeeb93163fca8a5fe36ba3c7bfcc466072d88213e976767aab97d565622c4",
+   "clause": "thrust_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4) ∧ finite(rate_p) ∧ finite(rate_q) ∧ finite(rate_r) ∧ finite(thrust0) ∧ finite(thrust1) ∧ finite(thrust2) ∧ finite(thrust3) ∧ finite(imu0_ax) ∧ finite(imu0_ay) ∧ finite(imu0_az) ∧ finite(imu0_gx) ∧ finite(imu0_gy) ∧ finite(imu0_gz) ∧ finite(imu1_ax) ∧ finite(imu1_ay) ∧ finite(imu1_az) ∧ finite(imu1_gx) ∧ finite(imu1_gy) ∧ finite(imu1_gz) ∧ finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz) ∧ finite(baro_pa) ∧ finite(baro_degc) ∧ finite(mag_x) ∧ finite(mag_y) ∧ finite(mag_z) ∧ finite(gps_alt) ∧ finite(gps_vn) ∧ finite(gps_ve) ∧ finite(gps_vd) ∧ finite(wall_clear)",
+   "smallest_margin": null,
+   "path": "px4_est/plant_sim",
+   "contract_hash":
+   "1a546c0aaa0a4bb95b3c8c7c3bfb06dd3450c04c682a7fe43526460636b07cf5",
+   "clause": "outputs_finite",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ wall_clear ∧ wall_clear ≤ 2",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/plant_sim",
+   "contract_hash":
+   "25051b597d3602ac10d806cdb489e9374978c3eab34e59551c6cc3447ad07083",
+   "clause": "wall_clear_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ imu_gyro_fs_dps * 0.017453292)",
+   "smallest_margin_case":
+   {"step": 1300,
+    "sha256":
+    "3256260b2f7ae44b4c3b58615f2b85f2fae436c4b0ff6d6d625ef4c7f413068f",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step1300.json",
+    "case": 0},
+   "smallest_margin": 34.8122,
+   "path": "px4_est/plant_sim",
+   "contract_hash":
+   "017aae13e7042e7ccb6645aa647da68da78ba31300dd21e9c3849854532752f2",
+   "clause": "imu_full_scale",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "sensor_accel_count = 1 ∧ sensor_gyro_count = 1",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "301028e66fdf5a1cff006bd6257e480f31d178cf7f33a7135f6c6e2b0f150d57",
+   "clause": "imu_every_tick",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_x = imu2_gx ∧ sensor_gyro_y = imu2_gy ∧ sensor_gyro_z = imu2_gz",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "093e3e1066d4f045b4632e1d668fbdc2be6ee298e854016c192ec03c4af5822e",
+   "clause": "gyro_is_sample",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_accel_x = imu2_ax ∧ sensor_accel_y = imu2_ay ∧ sensor_accel_z = imu2_az",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "e34a039971997107a2d13c312b4e75bdac69f9fa5d111943a39ced2eea544c02",
+   "clause": "accel_is_sample",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_timestamp_sample = t_us ∧ sensor_accel_timestamp_sample = t_us",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "d62b39b6c19a84dec999b869f7b99f4b666424b1670a64588b08e6873a3f78f3",
+   "clause": "stamped",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(sensor_baro_count = 1) = baro_fresh ∧ (sensor_mag_count = 1) = mag_fresh ∧ sensor_gps_updated = gps_fresh",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "71e6fa1f4266374e9b3a745f8e2a573b5f4c0d1390aa88095b7a90ed4b6a1d3f",
+   "clause": "slow_when_fresh",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬mag_fresh ∨ |sensor_mag_x * 1000 - mag_x| ≤ 0.02 ∧ |sensor_mag_y * 1000 - mag_y| ≤ 0.02 ∧ |sensor_mag_z * 1000 - mag_z| ≤ 0.02",
+   "smallest_margin_case":
+   {"step": 363,
+    "sha256":
+    "0079ec123094ccc534f37f346760c3071778d9ee77dc28531ab0dded494c3897",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step363.json",
+    "case": 0},
+   "smallest_margin": 0.01999905,
+   "path": "px4_est/px4_sim_in",
+   "contract_hash":
+   "242dcd03355dabc5e677717a0a4f75ed36b508814d39c6cdcb739f1966c394a1",
+   "clause": "mag_gauss",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_angular_velocity_updated ∨ finite(vehicle_angular_velocity_xyz_0) ∧ finite(vehicle_angular_velocity_xyz_1) ∧ finite(vehicle_angular_velocity_xyz_2)",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "6b91d56f951100b4273f3861f41148f78d0e4d19c4266950e93e1bb57faf0aec",
+   "clause": "rates_finite",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_angular_velocity_updated ∨ 1 ≤ sensor_gyro_count",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "ee6855a29b72dbc2e1ae5376b852f7c0e76a9ee42e25a0e9e833120e9825aa17",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "498043d57e5069d3b7ef298c80995a831da438b81fcc65811a253fc69e4132ff",
+   "clause": "rates_answer_gyro",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_sensors_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "9806bc3bbf16a5cca08903a39548474e7114fe06a43a782525f7c8e93117b538",
+   "clause": "no_px4_error",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_angle_clipping ∧ vehicle_imu_delta_angle_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "8edc63368444b0f0d5b1d5dcd7570e5df7c1dc56d76262dcbcc38b312b63f0e3",
+   "clause": "width_vehicle_imu_delta_angle_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_velocity_clipping ∧ vehicle_imu_delta_velocity_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "b08d4e785b532c04e49f77b008a81f7da02366f040407660247f99bfa7a7d205",
+   "clause": "width_vehicle_imu_delta_velocity_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_accel_calibration_count ∧ vehicle_imu_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "c64d8279edb0d1ee05b26f0855aab0642a80a9d8cc987c668d68097997ac08ab",
+   "clause": "width_vehicle_imu_accel_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_gyro_calibration_count ∧ vehicle_imu_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "3c8d6506a7f1887fceb3edc7ead9d03b7f176d2d840d3069f2a2edaadcfb49df",
+   "clause": "width_vehicle_imu_gyro_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accelerometer_clipping ∧ sensor_combined_accelerometer_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "907529ea9a205a94230a72be3d4301a45790ecf24730789df7b117287f7ad3fe",
+   "clause": "width_sensor_combined_accelerometer_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_clipping ∧ sensor_combined_gyro_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "582c3e0ffc7c76e1a4d0f2e0affb1571e3d163abbfc16e4f1475675fda35458f",
+   "clause": "width_sensor_combined_gyro_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accel_calibration_count ∧ sensor_combined_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "5c4b248eb234d614c23fe579f28dfaf245e8a3300e1b78cfadae3321c4f97e87",
+   "clause": "width_sensor_combined_accel_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_calibration_count ∧ sensor_combined_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "0174ac510507ce69a55d6e068361e716c56c9c3683d0fb719a15792ad1c64f95",
+   "clause": "width_sensor_combined_gyro_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_temperature_source ∧ vehicle_air_data_temperature_source ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "eb40fa73dfb57a6041ffe9ce823507644f49ffe7db1a3c5b47111a56f2a9502b",
+   "clause": "width_vehicle_air_data_temperature_source",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_calibration_count ∧ vehicle_air_data_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "40b62055604639009f895cb7e99c7d3b4ad7e375c344aab1782c37b73fa29405",
+   "clause": "width_vehicle_air_data_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_magnetometer_calibration_count ∧ vehicle_magnetometer_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "41d03b44adb9200cba7ccbe590ad9c6b85e2cc110b8f3fddb684857e63e21897",
+   "clause": "width_vehicle_magnetometer_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_fix_type ∧ vehicle_gps_position_fix_type ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "3d73e4d6fc18e689a65fb2ad0755f7931dd0c4c7c11d5b3e014c07e8ebbf422b",
+   "clause": "width_vehicle_gps_position_fix_type",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_automatic_gain_control ∧ vehicle_gps_position_automatic_gain_control ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "454914d65f10bdf21d09cbd408d5aabaac0455fc5faa6b424e0b0a477a30ab6a",
+   "clause": "width_vehicle_gps_position_automatic_gain_control",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_jamming_state ∧ vehicle_gps_position_jamming_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "3db61437b8c389f220c631b01b87218a40eacd38134d66c7643d692196f91cfd",
+   "clause": "width_vehicle_gps_position_jamming_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_spoofing_state ∧ vehicle_gps_position_spoofing_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "6ac18a2d5156a7902b00fdd5e37b9763dfadf9b417be2c8b5c26d0726ce57d62",
+   "clause": "width_vehicle_gps_position_spoofing_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_authentication_state ∧ vehicle_gps_position_authentication_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "7be354d351cbf53d5f1a7ea23a19f66359ac72d58a065e01fd2746ea6fecab6c",
+   "clause": "width_vehicle_gps_position_authentication_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_satellites_used ∧ vehicle_gps_position_satellites_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "8d6acbba1e65ab37258f5b2992f5f954b81bedacc51ebe3e28a5a0f682a87449",
+   "clause": "width_vehicle_gps_position_satellites_used",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_selected_rtcm_instance ∧ vehicle_gps_position_selected_rtcm_instance ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "506954b5d12cf6182a1e329aa89c915fc44e298b4ae85a8129d2f9d55fbcabe3",
+   "clause": "width_vehicle_gps_position_selected_rtcm_instance",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_rtcm_msg_used ∧ vehicle_gps_position_rtcm_msg_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "aa02cc3b1869cfc44d729829a4df5631fe1d1148e61294c3306f6a8cf7ef769d",
+   "clause": "width_vehicle_gps_position_rtcm_msg_used",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_0 ∧ sensors_status_imu_accel_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "2655709a0c1e5ad8dce5855449f0f7315a41f71133923bde461e794c0e38ad63",
+   "clause": "width_sensors_status_imu_accel_priority_0",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_1 ∧ sensors_status_imu_accel_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "7e729c53733698379859a0f19b57ac2b5f37f066073c14482272ec5f4b7e3ee8",
+   "clause": "width_sensors_status_imu_accel_priority_1",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_2 ∧ sensors_status_imu_accel_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "836cace3327b3f96db5be768865d769b15068937591e1172150e2c4b76f8575a",
+   "clause": "width_sensors_status_imu_accel_priority_2",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_3 ∧ sensors_status_imu_accel_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "14d9171e24c8412653be16252d8b05253fce1884d3426ee0ff3f6d1cac803207",
+   "clause": "width_sensors_status_imu_accel_priority_3",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_0 ∧ sensors_status_imu_gyro_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "4f2cc9c3ee60c358a2c4286372161a5fcc613823a3869e5bbd24f3b12ea1ac1f",
+   "clause": "width_sensors_status_imu_gyro_priority_0",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_1 ∧ sensors_status_imu_gyro_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "c5c24b88afff5ce9c0fe79b35e898dd78f73d346754e15fa252b08762cbcc9ff",
+   "clause": "width_sensors_status_imu_gyro_priority_1",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_2 ∧ sensors_status_imu_gyro_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "ed4e3bffefa900b11ce2f9a5585677790e840a7c8edc3074d1783c969a9e2921",
+   "clause": "width_sensors_status_imu_gyro_priority_2",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_3 ∧ sensors_status_imu_gyro_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_sensors",
+   "contract_hash":
+   "5d2634c6153c9f365e0f46cefdd269bcb99af2b0f3f9e4e32a393f85d318e484",
+   "clause": "width_sensors_status_imu_gyro_priority_3",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_attitude_updated ∨ |vehicle_attitude_q_0 * vehicle_attitude_q_0 + vehicle_attitude_q_1 * vehicle_attitude_q_1 + vehicle_attitude_q_2 * vehicle_attitude_q_2 + vehicle_attitude_q_3 * vehicle_attitude_q_3 - 1| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 2892,
+    "sha256":
+    "3d45e51988baa997ac1dcd2b062d1d7a656c247e7cf2386b19a061802722d56d",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step2892.json",
+    "case": 0},
+   "smallest_margin": 0.000009761581,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "8c5e87bb4146c454500e1b64dbf392e4dd6f5e43e621fe4460477e9dd7b29bad",
+   "clause": "attitude_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_attitude_updated ∨ sensor_combined_updated",
+   "smallest_margin": null,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "1b3e133994309710d18b6c1a6276729aaad3957a04109fa87f62077cddd26530",
+   "clause": "attitude_answers_imu",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_ekf2_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "1b13b52ba1db571ff2efe95caecf536dede4c009733688856f1fb60ed50e4587",
+   "clause": "no_px4_error",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_attitude_quat_reset_counter ∧ vehicle_attitude_quat_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "e4154be090645cbcc60a38e02c8cc71da83a7ae8d33084dcc07f641851faa1b4",
+   "clause": "width_vehicle_attitude_quat_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_xy_reset_counter ∧ vehicle_local_position_xy_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "0cfa5e752d08f41a45d7b14b2f5f68e471d9da83cec167ff0ea9e2f5bdf0d0c2",
+   "clause": "width_vehicle_local_position_xy_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_z_reset_counter ∧ vehicle_local_position_z_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "db00d940be0145154601240021c916edcf645f986a5a750734ec9875b49b1be5",
+   "clause": "width_vehicle_local_position_z_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_vxy_reset_counter ∧ vehicle_local_position_vxy_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "a5bdc7fb325828cd0d9b8a057a8b68a5ce73a0f1c97c307a5ecded4d2bc6e2a5",
+   "clause": "width_vehicle_local_position_vxy_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_vz_reset_counter ∧ vehicle_local_position_vz_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "c0bd7f5fcd625c82620bbfa524268f82b10c296308eb43db4d56a888c805abe2",
+   "clause": "width_vehicle_local_position_vz_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_heading_reset_counter ∧ vehicle_local_position_heading_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "ca2aacfa40a15d3df1b8110631ab0e35bb576619477fc696cb4b2d32423695e0",
+   "clause": "width_vehicle_local_position_heading_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_dist_bottom_reset_counter ∧ vehicle_local_position_dist_bottom_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "270c8fcaecf6061e77023da0c1f15593430a1b46f53bc463036037ac354d9bc0",
+   "clause": "width_vehicle_local_position_dist_bottom_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_dist_bottom_sensor_bitfield ∧ vehicle_local_position_dist_bottom_sensor_bitfield ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "2f138fe2318af531c513d3ccbefda509025684abf66153466d3532ca0ba69ba6",
+   "clause": "width_vehicle_local_position_dist_bottom_sensor_bitfield",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_lat_lon_reset_counter ∧ vehicle_global_position_lat_lon_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "8f92508694f0d309f82403eddfc12ecc2e4007a1de6199b65fe87a2b1e65f32f",
+   "clause": "width_vehicle_global_position_lat_lon_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_alt_reset_counter ∧ vehicle_global_position_alt_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "960ca77af47692e1cd7c6e382dec29a945f4a35072f5c48462afaf7209471e7d",
+   "clause": "width_vehicle_global_position_alt_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_terrain_reset_counter ∧ vehicle_global_position_terrain_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "e9c642bfee3574a3449e958079e564134960fbb2e216c7e35cfb12fcf8a7b9a8",
+   "clause": "width_vehicle_global_position_terrain_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_pose_frame ∧ vehicle_odometry_pose_frame ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "8d1b9d72af27becd8965ef4a395cba3356f662550570118f6c6a02d9830129ee",
+   "clause": "width_vehicle_odometry_pose_frame",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_velocity_frame ∧ vehicle_odometry_velocity_frame ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "76c9142759ca0b39076609a5b651d84452265f97391cf7077f5ce1ed89b14426",
+   "clause": "width_vehicle_odometry_velocity_frame",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_reset_counter ∧ vehicle_odometry_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "8ef3f7789f9be46698df5e469dc6079616e6239b84abd89572b42a0b2416e923",
+   "clause": "width_vehicle_odometry_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "-128 ≤ vehicle_odometry_quality ∧ vehicle_odometry_quality ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "3b8f8fc264cafd4bbf093bd7a18a41d7d86677cce84ed5e5283186aa1f79628d",
+   "clause": "width_vehicle_odometry_quality",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_gps_check_fail_flags ∧ estimator_status_gps_check_fail_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "24f3d3dbe9166fb2a2a114758f3c8437e3f31385d00a7a80715a22fdcb827e2c",
+   "clause": "width_estimator_status_gps_check_fail_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_solution_status_flags ∧ estimator_status_solution_status_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "631f36aed73ad2c7504bd6c6863348906c1cd323bb3809cfa0de78bf48b2aa97",
+   "clause": "width_estimator_status_solution_status_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_vel_ne ∧ estimator_status_reset_count_vel_ne ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "4dc116f9e6daac398822d6df5fd777716344b31b3e3853550daba92863c343a2",
+   "clause": "width_estimator_status_reset_count_vel_ne",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_vel_d ∧ estimator_status_reset_count_vel_d ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "800935bc26d6fd72168128d00128f6ff5db03293543ae2c9633fb30fb0ca00e3",
+   "clause": "width_estimator_status_reset_count_vel_d",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_pos_ne ∧ estimator_status_reset_count_pos_ne ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "a3375dcac377949b9cb01c81ffe2df214ae7c15b9b0c61688cabc45631ce61a5",
+   "clause": "width_estimator_status_reset_count_pos_ne",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_pod_d ∧ estimator_status_reset_count_pod_d ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "66e97f6302416ae82ae2f884fb370a2b05ee4ccbe73f45b3d8455328f52c876b",
+   "clause": "width_estimator_status_reset_count_pod_d",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_quat ∧ estimator_status_reset_count_quat ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "3cb2c3e293af2be50fdb607a428976484794e0b30849ca9279b78f8f4a1aef81",
+   "clause": "width_estimator_status_reset_count_quat",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_health_flags ∧ estimator_status_health_flags ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "0a4a0042f915bde19ce4fc8e555196a1aef5683f77606d168cc91bdba2a31589",
+   "clause": "width_estimator_status_health_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_timeout_flags ∧ estimator_status_timeout_flags ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_est/px4_ekf2",
+   "contract_hash":
+   "8cf64337d615fb0e1f4932ba32ae14b1a687343a2fba4656a037fae0bc59a1a8",
+   "clause": "width_estimator_status_timeout_flags",
+   "checked": 4000}],
+ "kind": "tested",
+ "id": "20261119T212747Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 - 1| ≤ 4e-7",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.0000003403954,
+   "contract_hash":
+   "7567f658910b736f64202f4ff5744b7ef5cf9da85c4b84a056f59e7fb99ef52e",
+   "clause": "quat_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ thrust0 ∧ thrust0 ≤ 1 ∧ 0 ≤ thrust1 ∧ thrust1 ≤ 1 ∧ 0 ≤ thrust2 ∧ thrust2 ≤ 1 ∧ 0 ≤ thrust3 ∧ thrust3 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "68dd4c79faf4002163990cb080e36dbe883c7911849185ed71c15c5128181043",
+   "clause": "thrust_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4) ∧ finite(rate_p) ∧ finite(rate_q) ∧ finite(rate_r) ∧ finite(thrust0) ∧ finite(thrust1) ∧ finite(thrust2) ∧ finite(thrust3) ∧ finite(imu0_ax) ∧ finite(imu0_ay) ∧ finite(imu0_az) ∧ finite(imu0_gx) ∧ finite(imu0_gy) ∧ finite(imu0_gz) ∧ finite(imu1_ax) ∧ finite(imu1_ay) ∧ finite(imu1_az) ∧ finite(imu1_gx) ∧ finite(imu1_gy) ∧ finite(imu1_gz) ∧ finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz) ∧ finite(baro_pa) ∧ finite(baro_degc) ∧ finite(mag_x) ∧ finite(mag_y) ∧ finite(mag_z) ∧ finite(gps_alt) ∧ finite(gps_vn) ∧ finite(gps_ve) ∧ finite(gps_vd) ∧ finite(wall_clear)",
+   "smallest_margin": null,
+   "contract_hash":
+   "0b096cc51893b766a1ebc5866202d389ef2c02eca46f8f834b7d9d6b76829728",
+   "clause": "outputs_finite",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ wall_clear ∧ wall_clear ≤ 2",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "281ffeb411b3f68fae1283426a8894a1d90127889555393ee3d9286b26e448ec",
+   "clause": "wall_clear_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ imu_gyro_fs_dps * 0.017453292)",
+   "smallest_margin_case":
+   {"step": 1300,
+    "sha256":
+    "3256260b2f7ae44b4c3b58615f2b85f2fae436c4b0ff6d6d625ef4c7f413068f",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step1300.json",
+    "case": 0},
+   "smallest_margin": 34.8122,
+   "contract_hash":
+   "f437a8822e2a416f9ee0823e6e73648f7f9cb7e8b02c63e63b032c536ce59753",
+   "clause": "imu_full_scale",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "sensor_accel_count = 1 ∧ sensor_gyro_count = 1",
+   "smallest_margin": null,
+   "contract_hash":
+   "193e020aa22cd1aa3df43229e2bdfd567136d0609c333d4bc50ce2736e6b57cc",
+   "clause": "imu_every_tick",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_x = imu2_gx ∧ sensor_gyro_y = imu2_gy ∧ sensor_gyro_z = imu2_gz",
+   "smallest_margin": null,
+   "contract_hash":
+   "0d6f78aeba8e6f9a53a8615df21d52d1cc2e274bcbe56cd72cec49d40d2ebf55",
+   "clause": "gyro_is_sample",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_accel_x = imu2_ax ∧ sensor_accel_y = imu2_ay ∧ sensor_accel_z = imu2_az",
+   "smallest_margin": null,
+   "contract_hash":
+   "828a22b00fe193f3ba08715ba8e8e56724b1794e0ef25564910fd30f514519b6",
+   "clause": "accel_is_sample",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_timestamp_sample = t_us ∧ sensor_accel_timestamp_sample = t_us",
+   "smallest_margin": null,
+   "contract_hash":
+   "747b26b0e2a3ab0f9d7f508636be3699a2a32ec46c72f06588bebccbdfa61206",
+   "clause": "stamped",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(sensor_baro_count = 1) = baro_fresh ∧ (sensor_mag_count = 1) = mag_fresh ∧ sensor_gps_updated = gps_fresh",
+   "smallest_margin": null,
+   "contract_hash":
+   "6faa9c949130c3e18931dd7d0c301f0baa38dc62ca71da17fd377b7b7143439d",
+   "clause": "slow_when_fresh",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬mag_fresh ∨ |sensor_mag_x * 1000 - mag_x| ≤ 0.02 ∧ |sensor_mag_y * 1000 - mag_y| ≤ 0.02 ∧ |sensor_mag_z * 1000 - mag_z| ≤ 0.02",
+   "smallest_margin_case":
+   {"step": 363,
+    "sha256":
+    "0079ec123094ccc534f37f346760c3071778d9ee77dc28531ab0dded494c3897",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step363.json",
+    "case": 0},
+   "smallest_margin": 0.01999905,
+   "contract_hash":
+   "aefe31224be506b6cbebe0a443d0ef603180ca0d07d98dc9c8315e04b126613f",
+   "clause": "mag_gauss",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_angular_velocity_updated ∨ finite(vehicle_angular_velocity_xyz_0) ∧ finite(vehicle_angular_velocity_xyz_1) ∧ finite(vehicle_angular_velocity_xyz_2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "3a562b4a2166fc8e18a24d866da5fed23ab4d9d4903b845f08abe601fce62b08",
+   "clause": "rates_finite",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_angular_velocity_updated ∨ 1 ≤ sensor_gyro_count",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "ee6855a29b72dbc2e1ae5376b852f7c0e76a9ee42e25a0e9e833120e9825aa17",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2a05882319750b3bc92d0d6569678edc282e1e268999fb0a5f448ed98b4cca66",
+   "clause": "rates_answer_gyro",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_sensors_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "5cf141a5f89b939742a2df3df74f660642d386c1e5b1372239345d7ac53e7998",
+   "clause": "px4_sensors_no_px4_error",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_angle_clipping ∧ vehicle_imu_delta_angle_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2491a4f3fbbb695f41265fe52a8275e81cb45b0ef9a83afc7c3ccad725b18157",
+   "clause": "width_vehicle_imu_delta_angle_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_velocity_clipping ∧ vehicle_imu_delta_velocity_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "3ccdedb024a0099f86eaf93883e43dda79e46bd4b5d04da45afeee90720692ec",
+   "clause": "width_vehicle_imu_delta_velocity_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_accel_calibration_count ∧ vehicle_imu_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b20b599b6743cc98111edd3cb60c49d29186ba324416875c342ea13402243568",
+   "clause": "width_vehicle_imu_accel_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_gyro_calibration_count ∧ vehicle_imu_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "9ab1a3021b125e8c5156caaf94d4cb5282a905f0389dc6da7d199381ce1571f9",
+   "clause": "width_vehicle_imu_gyro_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accelerometer_clipping ∧ sensor_combined_accelerometer_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "8604bf6fb1c2e7e90fe968ca5dbd3d8d99bbb6476be0ec9be03eae5f4a573c3c",
+   "clause": "width_sensor_combined_accelerometer_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_clipping ∧ sensor_combined_gyro_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "d18e7c65104736c90fd224c8d3e84e9098da9b5236ac9dcf6dd9d3e5611c6cc9",
+   "clause": "width_sensor_combined_gyro_clipping",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accel_calibration_count ∧ sensor_combined_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c06e9845819c9146ace9d43756d8415028c82d6aca18839e1d868334afa11fe5",
+   "clause": "width_sensor_combined_accel_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_calibration_count ∧ sensor_combined_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c9a24594648cc46073c21cade00f835d7d0504fb818db8f534308a46fcb73775",
+   "clause": "width_sensor_combined_gyro_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_temperature_source ∧ vehicle_air_data_temperature_source ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0910598d2c1d3bb7d840b1b5491dfa5e613f901a6ffccfc5b73e05de267fe1e5",
+   "clause": "width_vehicle_air_data_temperature_source",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_calibration_count ∧ vehicle_air_data_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "036ffd433b9c5b8d11b4fd55255ee69ee079fdf61e55b62b6947accba1dd42e4",
+   "clause": "width_vehicle_air_data_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_magnetometer_calibration_count ∧ vehicle_magnetometer_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a6103b6cd6bf9cec1c0cd5629b31832a1c05bb51bc145fefcb6ae0f13f403a19",
+   "clause": "width_vehicle_magnetometer_calibration_count",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_fix_type ∧ vehicle_gps_position_fix_type ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "06ec87cc6a3ee938c4ee01d3266d32cca22241a5c43564da6176af9910616d0a",
+   "clause": "width_vehicle_gps_position_fix_type",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_automatic_gain_control ∧ vehicle_gps_position_automatic_gain_control ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a16a0a6ab89ded8eb6047a1ba68b4572165904934e41a0af8231f47154f00fde",
+   "clause": "width_vehicle_gps_position_automatic_gain_control",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_jamming_state ∧ vehicle_gps_position_jamming_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "af03d24bd6081e01b3b57b99f321872f25afb718e1b4bdbe72d18d9c6027c74a",
+   "clause": "width_vehicle_gps_position_jamming_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_spoofing_state ∧ vehicle_gps_position_spoofing_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ee3b0ac364ccfde0047455a4abbee34cc8d8657395b88e6276a91dbfe85f77f9",
+   "clause": "width_vehicle_gps_position_spoofing_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_authentication_state ∧ vehicle_gps_position_authentication_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "3161bf42409153ee8e0095cea479c6aa6eb22e6d0a726f6260c9c6fdf7180a78",
+   "clause": "width_vehicle_gps_position_authentication_state",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_satellites_used ∧ vehicle_gps_position_satellites_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "12b6f8c2a7cf5329a7eb223d6b59a8535e264a2100d1fc8a6494acc28934dee0",
+   "clause": "width_vehicle_gps_position_satellites_used",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_selected_rtcm_instance ∧ vehicle_gps_position_selected_rtcm_instance ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "e35b090467a0634236a4cdce7acbc97d469e92e0ea38a69494734b2597238e72",
+   "clause": "width_vehicle_gps_position_selected_rtcm_instance",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_rtcm_msg_used ∧ vehicle_gps_position_rtcm_msg_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "12066f29a903c8c996ea73615c5149c9988daa7f6160241b9504c0bbf13fd6f1",
+   "clause": "width_vehicle_gps_position_rtcm_msg_used",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_0 ∧ sensors_status_imu_accel_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "12f532b48e11f58813220017c7b45bfeea7e9f0d7c293054d1f0e7fe302d16ab",
+   "clause": "width_sensors_status_imu_accel_priority_0",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_1 ∧ sensors_status_imu_accel_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "79cb449ab97ad2add028d9fedd0743e688b535483fe78a3b347f38d2076bf39d",
+   "clause": "width_sensors_status_imu_accel_priority_1",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_2 ∧ sensors_status_imu_accel_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "e23a927a4b4a8ecde060fa0965568a0b27f8d17b92f6ece626f939af6f69b8e6",
+   "clause": "width_sensors_status_imu_accel_priority_2",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_3 ∧ sensors_status_imu_accel_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "3e0aff09925685804de696bec73a274a50b070418e007c48d8251d1e6062664f",
+   "clause": "width_sensors_status_imu_accel_priority_3",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_0 ∧ sensors_status_imu_gyro_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b505e5195f9c34e68a63964acdd2cb9a1c498a0c1d55a5bd5a009e76ea6150f3",
+   "clause": "width_sensors_status_imu_gyro_priority_0",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_1 ∧ sensors_status_imu_gyro_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "80932849fd9da0d3ead2dc2860a4fd9f9539d4088dad24689dff68c5b6a6487a",
+   "clause": "width_sensors_status_imu_gyro_priority_1",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_2 ∧ sensors_status_imu_gyro_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "eb03182220754cf4d231cc7e833dd778cb5702b125271498861a2837a50cbe36",
+   "clause": "width_sensors_status_imu_gyro_priority_2",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_3 ∧ sensors_status_imu_gyro_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "4e9ae6acbe88d31dac3e794002caa05ce80500e1cf8e4d26bde23c7da4daee55",
+   "clause": "width_sensors_status_imu_gyro_priority_3",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_attitude_updated ∨ |vehicle_attitude_q_0 * vehicle_attitude_q_0 + vehicle_attitude_q_1 * vehicle_attitude_q_1 + vehicle_attitude_q_2 * vehicle_attitude_q_2 + vehicle_attitude_q_3 * vehicle_attitude_q_3 - 1| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 2892,
+    "sha256":
+    "3d45e51988baa997ac1dcd2b062d1d7a656c247e7cf2386b19a061802722d56d",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step2892.json",
+    "case": 0},
+   "smallest_margin": 0.000009761581,
+   "contract_hash":
+   "3e9311ac86d3e2e67bb97b6bcf4f9948185537439899785074b871f5bde85154",
+   "clause": "attitude_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_attitude_updated ∨ sensor_combined_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "d4ec33d70ef4d57c2502ea5c29442f703ec70fb4aebf918af1a0b18d3518df9e",
+   "clause": "attitude_answers_imu",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_ekf2_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "24a2c1d5d33478f95d421c7b96e56d85ce7f5e3c18fdc8d5db8843d9cf3fba9f",
+   "clause": "px4_ekf2_no_px4_error",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_attitude_quat_reset_counter ∧ vehicle_attitude_quat_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "e32dd58c8384e7e2c2692677d4731044d7131f666226d5ae7834139aaeea52c6",
+   "clause": "width_vehicle_attitude_quat_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_xy_reset_counter ∧ vehicle_local_position_xy_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "121a8faea6d3c1e4d7b15f749dc832cbb135256b80c60960991b7b534d7dd51b",
+   "clause": "width_vehicle_local_position_xy_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_z_reset_counter ∧ vehicle_local_position_z_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "11cfc6005de9f5f5370eecdb0a2082edff4ce15177ff7930d2323aeb68420a5e",
+   "clause": "width_vehicle_local_position_z_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_vxy_reset_counter ∧ vehicle_local_position_vxy_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2796bac83c67cdd3a477628b8e23ca410e88de9c503df3e679ec42b539e703c1",
+   "clause": "width_vehicle_local_position_vxy_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_vz_reset_counter ∧ vehicle_local_position_vz_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "bd3681e867f48c8736d64d8c45ef4d4484a78461e5ba7865abf1a5fe6e84649f",
+   "clause": "width_vehicle_local_position_vz_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_heading_reset_counter ∧ vehicle_local_position_heading_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0da997d035043e29248c3bdf0e140b4083433457c50df432d8f793c35bc158ca",
+   "clause": "width_vehicle_local_position_heading_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_dist_bottom_reset_counter ∧ vehicle_local_position_dist_bottom_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0c492a84d3c7986cbd4094e56e653e79c596c6aaebdf462dfd2eef198e4e58c8",
+   "clause": "width_vehicle_local_position_dist_bottom_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_local_position_dist_bottom_sensor_bitfield ∧ vehicle_local_position_dist_bottom_sensor_bitfield ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "76f5ad70cd19443b7c1c233c744b0d2fa0525022d4ebd3a767b32e2ec6dc850f",
+   "clause": "width_vehicle_local_position_dist_bottom_sensor_bitfield",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_lat_lon_reset_counter ∧ vehicle_global_position_lat_lon_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c0edb7544c4a038b09d5c8346c54aa225a94c995eb2d2912f20e602a39a1f0c3",
+   "clause": "width_vehicle_global_position_lat_lon_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_alt_reset_counter ∧ vehicle_global_position_alt_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a8df1d056865298e9b2286948ee40719417ce14cad210425d717de4a2591c089",
+   "clause": "width_vehicle_global_position_alt_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_global_position_terrain_reset_counter ∧ vehicle_global_position_terrain_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "3ecf5af720b61fd4117b5c9f0dfb9b5023e5a4c41135999be7e4cc6c1ce900f5",
+   "clause": "width_vehicle_global_position_terrain_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_pose_frame ∧ vehicle_odometry_pose_frame ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ab2cde432c4466736864a266be79c36db1e3cb2051674998b05adc0b8a95167e",
+   "clause": "width_vehicle_odometry_pose_frame",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_velocity_frame ∧ vehicle_odometry_velocity_frame ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "58f5942f81be97a0b349e5259833e2197cb335707629a24831e54bbd77569849",
+   "clause": "width_vehicle_odometry_velocity_frame",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_odometry_reset_counter ∧ vehicle_odometry_reset_counter ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "72ac7b605655821a1a505e2f59bd0294c3b5b5d09f3d0b5282829cbaf28597bf",
+   "clause": "width_vehicle_odometry_reset_counter",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "-128 ≤ vehicle_odometry_quality ∧ vehicle_odometry_quality ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "contract_hash":
+   "9fd3db5039d5ddd2b98ea79655006f66208ca63ed4f991d25837d6087f9e99f8",
+   "clause": "width_vehicle_odometry_quality",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_gps_check_fail_flags ∧ estimator_status_gps_check_fail_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0ca071d273bb2d4b1d83d999e5f572455d9f8bbb7a4fd0bd39af4195ae2d40c8",
+   "clause": "width_estimator_status_gps_check_fail_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_solution_status_flags ∧ estimator_status_solution_status_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "fb6be255cfbc4adeeda835bd5a18c8e450790466a21070b03596596619a558df",
+   "clause": "width_estimator_status_solution_status_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_vel_ne ∧ estimator_status_reset_count_vel_ne ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "af5c77815d41f1024518d5635919a36447f7ad89d486bb3c77aec66101b63a60",
+   "clause": "width_estimator_status_reset_count_vel_ne",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_vel_d ∧ estimator_status_reset_count_vel_d ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "5055ab87511e315f19a74319cdf8df0da3944d1854985077a04c2749f0c2239c",
+   "clause": "width_estimator_status_reset_count_vel_d",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_pos_ne ∧ estimator_status_reset_count_pos_ne ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "9671fe52acc49cdca2cf5ac27f12b3e107ca9eff8ef99a429b904db672bac9aa",
+   "clause": "width_estimator_status_reset_count_pos_ne",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_pod_d ∧ estimator_status_reset_count_pod_d ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "e50beac2b79ffaf06fcba40b30bd3e5c03425e387bf96f5103f264cc021725c5",
+   "clause": "width_estimator_status_reset_count_pod_d",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_reset_count_quat ∧ estimator_status_reset_count_quat ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "e461f7e1fb7800f06f02949f044bb5ab2841da71657fed51cc6d4c421dc373c0",
+   "clause": "width_estimator_status_reset_count_quat",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_health_flags ∧ estimator_status_health_flags ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2664413e7ed7e01ee6d854e4a3f4e421aeb740449e913084f939fcc81b491519",
+   "clause": "width_estimator_status_health_flags",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ estimator_status_timeout_flags ∧ estimator_status_timeout_flags ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "64e67b180911e160f6b235274f3c2c527354ea94cb72ca45fbc73ca01c3d0462",
+    "file":
+    "px4/harnesses/px4_est/evidence/tested/20261119T212747Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "10fa7fb7ec46eeaff5694df62c1607a844cfb2f3151cef82cd5a0eb3fb474602",
+   "clause": "width_estimator_status_timeout_flags",
+   "checked": 4000}],
+ "formal_link":
+ "not built: no Lean proof yet that the children's contracts, as wired, imply this system's contract",
+ "command":
+ "harness test px4_est --seed 1 --cases 1 --steps 4000 --regime rest_noise",
+ "code_hash":
+ "fd28c79bb830b8ed5d708108da06ca29e5c29edc31cd871aef859152862853cb",
+ "children":
+ [{"path": "px4_est/plant_sim",
+   "node": "plant_sim",
+   "kind": "module",
+   "code_hash":
+   "fd2497da45964cedef81617eae194ae050433f546f28df45c842b659f399aac7"},
+  {"path": "px4_est/px4_sim_in",
+   "node": "px4_sim_in",
+   "kind": "module",
+   "code_hash":
+   "91e8c3cfa3379d41150cefa7f474884db43fbdb1518035bc7542c22cd71cbbf8"},
+  {"path": "px4_est/px4_sensors",
+   "node": "px4_sensors",
+   "kind": "module",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da"},
+  {"path": "px4_est/px4_ekf2",
+   "node": "px4_ekf2",
+   "kind": "module",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b"}],
+ "cases_skipped": 0,
+ "cases": 1,
+ "assumptions":
+ [{"verdict": "passed",
+   "steps": 4000,
+   "path": "px4_est/plant_sim",
+   "failing_clauses": {},
+   "contract_hash":
+   "5a78455bd0fb0a444f20d2bfe61590afa64289f26b2806541750c2fe15256de5",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 4000,
+   "assumption_held": 4000},
+  {"verdict": "passed",
+   "steps": 4000,
+   "path": "px4_est/px4_sim_in",
+   "failing_clauses": {},
+   "contract_hash":
+   "812022bca9e41c01e29019af6619d69497d4a5e33f2b5dc399aba45b973113d7",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 4000,
+   "assumption_held": 4000},
+  {"verdict": "passed",
+   "steps": 4000,
+   "path": "px4_est/px4_sensors",
+   "failing_clauses": {},
+   "contract_hash":
+   "a7a7882460cbe24d26edc06f4d92c276a2bcbaa6d055e49e90e9c8c4c27b248c",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 4000,
+   "assumption_held": 4000},
+  {"verdict": "passed",
+   "steps": 4000,
+   "path": "px4_est/px4_ekf2",
+   "failing_clauses": {},
+   "contract_hash":
+   "b9cf2e025bb3f3b54e5d01b22b2b184578efed67dc3b6ff7bb4205f276d8f630",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 4000,
+   "assumption_held": 4000}],
+ "assume":
+ ["pwm_range: 1000 ≤ pwm0 ∧ pwm0 ≤ 2000 ∧ 1000 ≤ pwm1 ∧ pwm1 ≤ 2000 ∧ 1000 ≤ pwm2 ∧ pwm2 ≤ 2000 ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+  "imu_full_scale_range: (imu_acc_fs_g = 0 ∨ 2 ≤ imu_acc_fs_g ∧ imu_acc_fs_g ≤ 32) ∧ (imu_gyro_fs_dps = 0 ∨ 250 ≤ imu_gyro_fs_dps ∧ imu_gyro_fs_dps ≤ 4000)",
+  "width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "range_CAL_ACC0_PRIO: CAL_ACC0_PRIO = -1 ∨ CAL_ACC0_PRIO = 0 ∨ CAL_ACC0_PRIO = 1 ∨ CAL_ACC0_PRIO = 25 ∨ CAL_ACC0_PRIO = 50 ∨ CAL_ACC0_PRIO = 75 ∨ CAL_ACC0_PRIO = 100",
+  "range_CAL_ACC0_ROT: -1 ≤ CAL_ACC0_ROT ∧ CAL_ACC0_ROT ≤ 40",
+  "range_CAL_ACC0_XSCALE: 0.1 ≤ CAL_ACC0_XSCALE ∧ CAL_ACC0_XSCALE ≤ 3",
+  "range_CAL_ACC0_YSCALE: 0.1 ≤ CAL_ACC0_YSCALE ∧ CAL_ACC0_YSCALE ≤ 3",
+  "range_CAL_ACC0_ZSCALE: 0.1 ≤ CAL_ACC0_ZSCALE ∧ CAL_ACC0_ZSCALE ≤ 3",
+  "range_CAL_ACC1_PRIO: CAL_ACC1_PRIO = -1 ∨ CAL_ACC1_PRIO = 0 ∨ CAL_ACC1_PRIO = 1 ∨ CAL_ACC1_PRIO = 25 ∨ CAL_ACC1_PRIO = 50 ∨ CAL_ACC1_PRIO = 75 ∨ CAL_ACC1_PRIO = 100",
+  "range_CAL_ACC1_ROT: -1 ≤ CAL_ACC1_ROT ∧ CAL_ACC1_ROT ≤ 40",
+  "range_CAL_ACC1_XSCALE: 0.1 ≤ CAL_ACC1_XSCALE ∧ CAL_ACC1_XSCALE ≤ 3",
+  "range_CAL_ACC1_YSCALE: 0.1 ≤ CAL_ACC1_YSCALE ∧ CAL_ACC1_YSCALE ≤ 3",
+  "range_CAL_ACC1_ZSCALE: 0.1 ≤ CAL_ACC1_ZSCALE ∧ CAL_ACC1_ZSCALE ≤ 3",
+  "range_CAL_ACC2_PRIO: CAL_ACC2_PRIO = -1 ∨ CAL_ACC2_PRIO = 0 ∨ CAL_ACC2_PRIO = 1 ∨ CAL_ACC2_PRIO = 25 ∨ CAL_ACC2_PRIO = 50 ∨ CAL_ACC2_PRIO = 75 ∨ CAL_ACC2_PRIO = 100",
+  "range_CAL_ACC2_ROT: -1 ≤ CAL_ACC2_ROT ∧ CAL_ACC2_ROT ≤ 40",
+  "range_CAL_ACC2_XSCALE: 0.1 ≤ CAL_ACC2_XSCALE ∧ CAL_ACC2_XSCALE ≤ 3",
+  "range_CAL_ACC2_YSCALE: 0.1 ≤ CAL_ACC2_YSCALE ∧ CAL_ACC2_YSCALE ≤ 3",
+  "range_CAL_ACC2_ZSCALE: 0.1 ≤ CAL_ACC2_ZSCALE ∧ CAL_ACC2_ZSCALE ≤ 3",
+  "range_CAL_ACC3_PRIO: CAL_ACC3_PRIO = -1 ∨ CAL_ACC3_PRIO = 0 ∨ CAL_ACC3_PRIO = 1 ∨ CAL_ACC3_PRIO = 25 ∨ CAL_ACC3_PRIO = 50 ∨ CAL_ACC3_PRIO = 75 ∨ CAL_ACC3_PRIO = 100",
+  "range_CAL_ACC3_ROT: -1 ≤ CAL_ACC3_ROT ∧ CAL_ACC3_ROT ≤ 40",
+  "range_CAL_ACC3_XSCALE: 0.1 ≤ CAL_ACC3_XSCALE ∧ CAL_ACC3_XSCALE ≤ 3",
+  "range_CAL_ACC3_YSCALE: 0.1 ≤ CAL_ACC3_YSCALE ∧ CAL_ACC3_YSCALE ≤ 3",
+  "range_CAL_ACC3_ZSCALE: 0.1 ≤ CAL_ACC3_ZSCALE ∧ CAL_ACC3_ZSCALE ≤ 3",
+  "range_CAL_AIR_CMODEL: CAL_AIR_CMODEL = 0 ∨ CAL_AIR_CMODEL = 1 ∨ CAL_AIR_CMODEL = 2",
+  "range_CAL_AIR_TUBED_MM: 1.5 ≤ CAL_AIR_TUBED_MM ∧ CAL_AIR_TUBED_MM ≤ 100",
+  "range_CAL_AIR_TUBELEN: 0.01 ≤ CAL_AIR_TUBELEN ∧ CAL_AIR_TUBELEN ≤ 2",
+  "range_CAL_BARO0_PRIO: CAL_BARO0_PRIO = -1 ∨ CAL_BARO0_PRIO = 0 ∨ CAL_BARO0_PRIO = 1 ∨ CAL_BARO0_PRIO = 25 ∨ CAL_BARO0_PRIO = 50 ∨ CAL_BARO0_PRIO = 75 ∨ CAL_BARO0_PRIO = 100",
+  "range_CAL_BARO1_PRIO: CAL_BARO1_PRIO = -1 ∨ CAL_BARO1_PRIO = 0 ∨ CAL_BARO1_PRIO = 1 ∨ CAL_BARO1_PRIO = 25 ∨ CAL_BARO1_PRIO = 50 ∨ CAL_BARO1_PRIO = 75 ∨ CAL_BARO1_PRIO = 100",
+  "range_CAL_BARO2_PRIO: CAL_BARO2_PRIO = -1 ∨ CAL_BARO2_PRIO = 0 ∨ CAL_BARO2_PRIO = 1 ∨ CAL_BARO2_PRIO = 25 ∨ CAL_BARO2_PRIO = 50 ∨ CAL_BARO2_PRIO = 75 ∨ CAL_BARO2_PRIO = 100",
+  "range_CAL_BARO3_PRIO: CAL_BARO3_PRIO = -1 ∨ CAL_BARO3_PRIO = 0 ∨ CAL_BARO3_PRIO = 1 ∨ CAL_BARO3_PRIO = 25 ∨ CAL_BARO3_PRIO = 50 ∨ CAL_BARO3_PRIO = 75 ∨ CAL_BARO3_PRIO = 100",
+  "range_CAL_GYRO0_PRIO: CAL_GYRO0_PRIO = -1 ∨ CAL_GYRO0_PRIO = 0 ∨ CAL_GYRO0_PRIO = 1 ∨ CAL_GYRO0_PRIO = 25 ∨ CAL_GYRO0_PRIO = 50 ∨ CAL_GYRO0_PRIO = 75 ∨ CAL_GYRO0_PRIO = 100",
+  "range_CAL_GYRO0_ROT: -1 ≤ CAL_GYRO0_ROT ∧ CAL_GYRO0_ROT ≤ 40",
+  "range_CAL_GYRO1_PRIO: CAL_GYRO1_PRIO = -1 ∨ CAL_GYRO1_PRIO = 0 ∨ CAL_GYRO1_PRIO = 1 ∨ CAL_GYRO1_PRIO = 25 ∨ CAL_GYRO1_PRIO = 50 ∨ CAL_GYRO1_PRIO = 75 ∨ CAL_GYRO1_PRIO = 100",
+  "range_CAL_GYRO1_ROT: -1 ≤ CAL_GYRO1_ROT ∧ CAL_GYRO1_ROT ≤ 40",
+  "range_CAL_GYRO2_PRIO: CAL_GYRO2_PRIO = -1 ∨ CAL_GYRO2_PRIO = 0 ∨ CAL_GYRO2_PRIO = 1 ∨ CAL_GYRO2_PRIO = 25 ∨ CAL_GYRO2_PRIO = 50 ∨ CAL_GYRO2_PRIO = 75 ∨ CAL_GYRO2_PRIO = 100",
+  "range_CAL_GYRO2_ROT: -1 ≤ CAL_GYRO2_ROT ∧ CAL_GYRO2_ROT ≤ 40",
+  "range_CAL_GYRO3_PRIO: CAL_GYRO3_PRIO = -1 ∨ CAL_GYRO3_PRIO = 0 ∨ CAL_GYRO3_PRIO = 1 ∨ CAL_GYRO3_PRIO = 25 ∨ CAL_GYRO3_PRIO = 50 ∨ CAL_GYRO3_PRIO = 75 ∨ CAL_GYRO3_PRIO = 100",
+  "range_CAL_GYRO3_ROT: -1 ≤ CAL_GYRO3_ROT ∧ CAL_GYRO3_ROT ≤ 40",
+  "range_CAL_MAG0_PITCH: -180 ≤ CAL_MAG0_PITCH ∧ CAL_MAG0_PITCH ≤ 180",
+  "range_CAL_MAG0_PRIO: CAL_MAG0_PRIO = -1 ∨ CAL_MAG0_PRIO = 0 ∨ CAL_MAG0_PRIO = 1 ∨ CAL_MAG0_PRIO = 25 ∨ CAL_MAG0_PRIO = 50 ∨ CAL_MAG0_PRIO = 75 ∨ CAL_MAG0_PRIO = 100",
+  "range_CAL_MAG0_ROLL: -180 ≤ CAL_MAG0_ROLL ∧ CAL_MAG0_ROLL ≤ 180",
+  "range_CAL_MAG0_ROT: -1 ≤ CAL_MAG0_ROT ∧ CAL_MAG0_ROT ≤ 100",
+  "range_CAL_MAG0_XSCALE: 0.1 ≤ CAL_MAG0_XSCALE ∧ CAL_MAG0_XSCALE ≤ 3",
+  "range_CAL_MAG0_YAW: -180 ≤ CAL_MAG0_YAW ∧ CAL_MAG0_YAW ≤ 180",
+  "range_CAL_MAG0_YSCALE: 0.1 ≤ CAL_MAG0_YSCALE ∧ CAL_MAG0_YSCALE ≤ 3",
+  "range_CAL_MAG0_ZSCALE: 0.1 ≤ CAL_MAG0_ZSCALE ∧ CAL_MAG0_ZSCALE ≤ 3",
+  "range_CAL_MAG1_PITCH: -180 ≤ CAL_MAG1_PITCH ∧ CAL_MAG1_PITCH ≤ 180",
+  "range_CAL_MAG1_PRIO: CAL_MAG1_PRIO = -1 ∨ CAL_MAG1_PRIO = 0 ∨ CAL_MAG1_PRIO = 1 ∨ CAL_MAG1_PRIO = 25 ∨ CAL_MAG1_PRIO = 50 ∨ CAL_MAG1_PRIO = 75 ∨ CAL_MAG1_PRIO = 100",
+  "range_CAL_MAG1_ROLL: -180 ≤ CAL_MAG1_ROLL ∧ CAL_MAG1_ROLL ≤ 180",
+  "range_CAL_MAG1_ROT: -1 ≤ CAL_MAG1_ROT ∧ CAL_MAG1_ROT ≤ 100",
+  "range_CAL_MAG1_XSCALE: 0.1 ≤ CAL_MAG1_XSCALE ∧ CAL_MAG1_XSCALE ≤ 3",
+  "range_CAL_MAG1_YAW: -180 ≤ CAL_MAG1_YAW ∧ CAL_MAG1_YAW ≤ 180",
+  "range_CAL_MAG1_YSCALE: 0.1 ≤ CAL_MAG1_YSCALE ∧ CAL_MAG1_YSCALE ≤ 3",
+  "range_CAL_MAG1_ZSCALE: 0.1 ≤ CAL_MAG1_ZSCALE ∧ CAL_MAG1_ZSCALE ≤ 3",
+  "range_CAL_MAG2_PITCH: -180 ≤ CAL_MAG2_PITCH ∧ CAL_MAG2_PITCH ≤ 180",
+  "range_CAL_MAG2_PRIO: CAL_MAG2_PRIO = -1 ∨ CAL_MAG2_PRIO = 0 ∨ CAL_MAG2_PRIO = 1 ∨ CAL_MAG2_PRIO = 25 ∨ CAL_MAG2_PRIO = 50 ∨ CAL_MAG2_PRIO = 75 ∨ CAL_MAG2_PRIO = 100",
+  "range_CAL_MAG2_ROLL: -180 ≤ CAL_MAG2_ROLL ∧ CAL_MAG2_ROLL ≤ 180",
+  "range_CAL_MAG2_ROT: -1 ≤ CAL_MAG2_ROT ∧ CAL_MAG2_ROT ≤ 100",
+  "range_CAL_MAG2_XSCALE: 0.1 ≤ CAL_MAG2_XSCALE ∧ CAL_MAG2_XSCALE ≤ 3",
+  "range_CAL_MAG2_YAW: -180 ≤ CAL_MAG2_YAW ∧ CAL_MAG2_YAW ≤ 180",
+  "range_CAL_MAG2_YSCALE: 0.1 ≤ CAL_MAG2_YSCALE ∧ CAL_MAG2_YSCALE ≤ 3",
+  "range_CAL_MAG2_ZSCALE: 0.1 ≤ CAL_MAG2_ZSCALE ∧ CAL_MAG2_ZSCALE ≤ 3",
+  "range_CAL_MAG3_PITCH: -180 ≤ CAL_MAG3_PITCH ∧ CAL_MAG3_PITCH ≤ 180",
+  "range_CAL_MAG3_PRIO: CAL_MAG3_PRIO = -1 ∨ CAL_MAG3_PRIO = 0 ∨ CAL_MAG3_PRIO = 1 ∨ CAL_MAG3_PRIO = 25 ∨ CAL_MAG3_PRIO = 50 ∨ CAL_MAG3_PRIO = 75 ∨ CAL_MAG3_PRIO = 100",
+  "range_CAL_MAG3_ROLL: -180 ≤ CAL_MAG3_ROLL ∧ CAL_MAG3_ROLL ≤ 180",
+  "range_CAL_MAG3_ROT: -1 ≤ CAL_MAG3_ROT ∧ CAL_MAG3_ROT ≤ 100",
+  "range_CAL_MAG3_XSCALE: 0.1 ≤ CAL_MAG3_XSCALE ∧ CAL_MAG3_XSCALE ≤ 3",
+  "range_CAL_MAG3_YAW: -180 ≤ CAL_MAG3_YAW ∧ CAL_MAG3_YAW ≤ 180",
+  "range_CAL_MAG3_YSCALE: 0.1 ≤ CAL_MAG3_YSCALE ∧ CAL_MAG3_YSCALE ≤ 3",
+  "range_CAL_MAG3_ZSCALE: 0.1 ≤ CAL_MAG3_ZSCALE ∧ CAL_MAG3_ZSCALE ≤ 3",
+  "range_CAL_MAG_COMP_TYP: CAL_MAG_COMP_TYP = 0 ∨ CAL_MAG_COMP_TYP = 1 ∨ CAL_MAG_COMP_TYP = 2 ∨ CAL_MAG_COMP_TYP = 3",
+  "range_IMU_ACCEL_CUTOFF: 0 ≤ IMU_ACCEL_CUTOFF ∧ IMU_ACCEL_CUTOFF ≤ 1000",
+  "range_IMU_DGYRO_CUTOFF: 0 ≤ IMU_DGYRO_CUTOFF ∧ IMU_DGYRO_CUTOFF ≤ 1000",
+  "range_IMU_GYRO_CUTOFF: 0 ≤ IMU_GYRO_CUTOFF ∧ IMU_GYRO_CUTOFF ≤ 1000",
+  "range_IMU_GYRO_DNF_BW: 5 ≤ IMU_GYRO_DNF_BW ∧ IMU_GYRO_DNF_BW ≤ 30",
+  "range_IMU_GYRO_DNF_EN: 0 ≤ IMU_GYRO_DNF_EN ∧ IMU_GYRO_DNF_EN ≤ 3",
+  "range_IMU_GYRO_DNF_HMC: 1 ≤ IMU_GYRO_DNF_HMC ∧ IMU_GYRO_DNF_HMC ≤ 7",
+  "range_IMU_GYRO_NF0_BW: 0 ≤ IMU_GYRO_NF0_BW ∧ IMU_GYRO_NF0_BW ≤ 100",
+  "range_IMU_GYRO_NF0_FRQ: 0 ≤ IMU_GYRO_NF0_FRQ ∧ IMU_GYRO_NF0_FRQ ≤ 1000",
+  "range_IMU_GYRO_NF1_BW: 0 ≤ IMU_GYRO_NF1_BW ∧ IMU_GYRO_NF1_BW ≤ 100",
+  "range_IMU_GYRO_NF1_FRQ: 0 ≤ IMU_GYRO_NF1_FRQ ∧ IMU_GYRO_NF1_FRQ ≤ 1000",
+  "range_IMU_GYRO_RATEMAX: 100 ≤ IMU_GYRO_RATEMAX ∧ IMU_GYRO_RATEMAX ≤ 2000",
+  "range_IMU_INTEG_RATE: 100 ≤ IMU_INTEG_RATE ∧ IMU_INTEG_RATE ≤ 1000",
+  "range_SENS_BARO_QNH: 500 ≤ SENS_BARO_QNH ∧ SENS_BARO_QNH ≤ 1500",
+  "range_SENS_BARO_RATE: 1 ≤ SENS_BARO_RATE ∧ SENS_BARO_RATE ≤ 200",
+  "range_SENS_BAR_AUTOCAL: SENS_BAR_AUTOCAL = 0 ∨ SENS_BAR_AUTOCAL = 1",
+  "range_SENS_BOARD_ROT: -1 ≤ SENS_BOARD_ROT ∧ SENS_BOARD_ROT ≤ 40",
+  "range_SENS_BOARD_X_OFF: -45 ≤ SENS_BOARD_X_OFF ∧ SENS_BOARD_X_OFF ≤ 45",
+  "range_SENS_BOARD_Y_OFF: -45 ≤ SENS_BOARD_Y_OFF ∧ SENS_BOARD_Y_OFF ≤ 45",
+  "range_SENS_BOARD_Z_OFF: -45 ≤ SENS_BOARD_Z_OFF ∧ SENS_BOARD_Z_OFF ≤ 45",
+  "range_SENS_DPRES_REV: SENS_DPRES_REV = 0 ∨ SENS_DPRES_REV = 1",
+  "range_SENS_EN_THERMAL: SENS_EN_THERMAL = -1 ∨ SENS_EN_THERMAL = 0 ∨ SENS_EN_THERMAL = 1",
+  "range_SENS_EXT_I2C_PRB: SENS_EXT_I2C_PRB = 0 ∨ SENS_EXT_I2C_PRB = 1",
+  "range_SENS_FLOW_MAXHGT: 1 ≤ SENS_FLOW_MAXHGT ∧ SENS_FLOW_MAXHGT ≤ 100",
+  "range_SENS_FLOW_MAXR: 1 ≤ SENS_FLOW_MAXR",
+  "range_SENS_FLOW_MINHGT: 0 ≤ SENS_FLOW_MINHGT ∧ SENS_FLOW_MINHGT ≤ 1",
+  "range_SENS_FLOW_RATE: 1 ≤ SENS_FLOW_RATE ∧ SENS_FLOW_RATE ≤ 200",
+  "range_SENS_FLOW_ROT: SENS_FLOW_ROT = 0 ∨ SENS_FLOW_ROT = 1 ∨ SENS_FLOW_ROT = 2 ∨ SENS_FLOW_ROT = 3 ∨ SENS_FLOW_ROT = 4 ∨ SENS_FLOW_ROT = 5 ∨ SENS_FLOW_ROT = 6 ∨ SENS_FLOW_ROT = 7",
+  "range_SENS_FLOW_SCALE: 0.5 ≤ SENS_FLOW_SCALE ∧ SENS_FLOW_SCALE ≤ 1.5",
+  "range_SENS_GPS_MASK: 0 ≤ SENS_GPS_MASK ∧ SENS_GPS_MASK ≤ 7",
+  "range_SENS_GPS_PRIME: -1 ≤ SENS_GPS_PRIME ∧ SENS_GPS_PRIME ≤ 1",
+  "range_SENS_GPS_TAU: 1 ≤ SENS_GPS_TAU ∧ SENS_GPS_TAU ≤ 100",
+  "range_SENS_IMU_AUTOCAL: SENS_IMU_AUTOCAL = 0 ∨ SENS_IMU_AUTOCAL = 1",
+  "range_SENS_IMU_CLPNOTI: SENS_IMU_CLPNOTI = 0 ∨ SENS_IMU_CLPNOTI = 1",
+  "range_SENS_IMU_MODE: SENS_IMU_MODE = 0 ∨ SENS_IMU_MODE = 1",
+  "range_SENS_INT_BARO_EN: SENS_INT_BARO_EN = 0 ∨ SENS_INT_BARO_EN = 1",
+  "range_SENS_MAG_AUTOCAL: SENS_MAG_AUTOCAL = 0 ∨ SENS_MAG_AUTOCAL = 1",
+  "range_SENS_MAG_AUTOROT: SENS_MAG_AUTOROT = 0 ∨ SENS_MAG_AUTOROT = 1",
+  "range_SENS_MAG_MODE: SENS_MAG_MODE = 0 ∨ SENS_MAG_MODE = 1",
+  "range_SENS_MAG_RATE: 1 ≤ SENS_MAG_RATE ∧ SENS_MAG_RATE ≤ 200",
+  "range_SENS_MAG_SIDES: 34 ≤ SENS_MAG_SIDES ∧ SENS_MAG_SIDES ≤ 63",
+  "range_SYS_CAL_TDEL: 10 ≤ SYS_CAL_TDEL",
+  "range_SYS_FAC_CAL_MODE: SYS_FAC_CAL_MODE = 0 ∨ SYS_FAC_CAL_MODE = 1 ∨ SYS_FAC_CAL_MODE = 2",
+  "range_SYS_HAS_BARO: SYS_HAS_BARO = 0 ∨ SYS_HAS_BARO = 1",
+  "range_SYS_HAS_GPS: SYS_HAS_GPS = 0 ∨ SYS_HAS_GPS = 1",
+  "calibration_physical: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((true ∧ |CAL_ACC0_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_XSCALE ∧ CAL_ACC0_XSCALE ≤ 10) ∧ |CAL_ACC0_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_YSCALE ∧ CAL_ACC0_YSCALE ≤ 10) ∧ |CAL_ACC0_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_ZSCALE ∧ CAL_ACC0_ZSCALE ≤ 10) ∧ |CAL_ACC1_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_XSCALE ∧ CAL_ACC1_XSCALE ≤ 10) ∧ |CAL_ACC1_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_YSCALE ∧ CAL_ACC1_YSCALE ≤ 10) ∧ |CAL_ACC1_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_ZSCALE ∧ CAL_ACC1_ZSCALE ≤ 10) ∧ |CAL_ACC2_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_XSCALE ∧ CAL_ACC2_XSCALE ≤ 10) ∧ |CAL_ACC2_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_YSCALE ∧ CAL_ACC2_YSCALE ≤ 10) ∧ |CAL_ACC2_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_ZSCALE ∧ CAL_ACC2_ZSCALE ≤ 10) ∧ |CAL_ACC3_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_XSCALE ∧ CAL_ACC3_XSCALE ≤ 10) ∧ |CAL_ACC3_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_YSCALE ∧ CAL_ACC3_YSCALE ≤ 10) ∧ |CAL_ACC3_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_ZSCALE ∧ CAL_ACC3_ZSCALE ≤ 10) ∧ |CAL_BARO0_OFF| ≤ 100) ∧ |CAL_BARO1_OFF| ≤ 100) ∧ |CAL_BARO2_OFF| ≤ 100) ∧ |CAL_BARO3_OFF| ≤ 100) ∧ |CAL_GYRO0_XOFF| ≤ 100) ∧ |CAL_GYRO0_YOFF| ≤ 100) ∧ |CAL_GYRO0_ZOFF| ≤ 100) ∧ |CAL_GYRO1_XOFF| ≤ 100) ∧ |CAL_GYRO1_YOFF| ≤ 100) ∧ |CAL_GYRO1_ZOFF| ≤ 100) ∧ |CAL_GYRO2_XOFF| ≤ 100) ∧ |CAL_GYRO2_YOFF| ≤ 100) ∧ |CAL_GYRO2_ZOFF| ≤ 100) ∧ |CAL_GYRO3_XOFF| ≤ 100) ∧ |CAL_GYRO3_YOFF| ≤ 100) ∧ |CAL_GYRO3_ZOFF| ≤ 100) ∧ |CAL_MAG0_XODIAG| ≤ 100) ∧ |CAL_MAG0_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_XSCALE ∧ CAL_MAG0_XSCALE ≤ 10) ∧ |CAL_MAG0_YODIAG| ≤ 100) ∧ |CAL_MAG0_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_YSCALE ∧ CAL_MAG0_YSCALE ≤ 10) ∧ |CAL_MAG0_ZODIAG| ≤ 100) ∧ |CAL_MAG0_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_ZSCALE ∧ CAL_MAG0_ZSCALE ≤ 10) ∧ |CAL_MAG1_XODIAG| ≤ 100) ∧ |CAL_MAG1_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_XSCALE ∧ CAL_MAG1_XSCALE ≤ 10) ∧ |CAL_MAG1_YODIAG| ≤ 100) ∧ |CAL_MAG1_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_YSCALE ∧ CAL_MAG1_YSCALE ≤ 10) ∧ |CAL_MAG1_ZODIAG| ≤ 100) ∧ |CAL_MAG1_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_ZSCALE ∧ CAL_MAG1_ZSCALE ≤ 10) ∧ |CAL_MAG2_XODIAG| ≤ 100) ∧ |CAL_MAG2_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_XSCALE ∧ CAL_MAG2_XSCALE ≤ 10) ∧ |CAL_MAG2_YODIAG| ≤ 100) ∧ |CAL_MAG2_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_YSCALE ∧ CAL_MAG2_YSCALE ≤ 10) ∧ |CAL_MAG2_ZODIAG| ≤ 100) ∧ |CAL_MAG2_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_ZSCALE ∧ CAL_MAG2_ZSCALE ≤ 10) ∧ |CAL_MAG3_XODIAG| ≤ 100) ∧ |CAL_MAG3_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_XSCALE ∧ CAL_MAG3_XSCALE ≤ 10) ∧ |CAL_MAG3_YODIAG| ≤ 100) ∧ |CAL_MAG3_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_YSCALE ∧ CAL_MAG3_YSCALE ≤ 10) ∧ |CAL_MAG3_ZODIAG| ≤ 100) ∧ |CAL_MAG3_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_ZSCALE ∧ CAL_MAG3_ZSCALE ≤ 10) ∧ |SENS_BOARD_X_OFF| ≤ 100) ∧ |SENS_BOARD_Y_OFF| ≤ 100) ∧ |SENS_BOARD_Z_OFF| ≤ 100",
+  "board_rotation_implemented: 0 ≤ SENS_BOARD_ROT",
+  "calibration_slots: ((((CAL_ACC0_ID = 0 ∨ CAL_ACC0_ID = 1310988) ∧ (CAL_ACC1_ID = 0 ∨ CAL_ACC1_ID = 1310988)) ∧ (CAL_ACC2_ID = 0 ∨ CAL_ACC2_ID = 1310988)) ∧ (CAL_ACC3_ID = 0 ∨ CAL_ACC3_ID = 1310988)) ∧ ((((CAL_GYRO0_ID = 0 ∨ CAL_GYRO0_ID = 1310988) ∧ (CAL_GYRO1_ID = 0 ∨ CAL_GYRO1_ID = 1310988)) ∧ (CAL_GYRO2_ID = 0 ∨ CAL_GYRO2_ID = 1310988)) ∧ (CAL_GYRO3_ID = 0 ∨ CAL_GYRO3_ID = 1310988)) ∧ ((((CAL_MAG0_ID = 0 ∨ CAL_MAG0_ID = 197388) ∧ (CAL_MAG1_ID = 0 ∨ CAL_MAG1_ID = 197388)) ∧ (CAL_MAG2_ID = 0 ∨ CAL_MAG2_ID = 197388)) ∧ (CAL_MAG3_ID = 0 ∨ CAL_MAG3_ID = 197388)) ∧ (((CAL_BARO0_ID = 0 ∨ CAL_BARO0_ID = 6620172) ∧ (CAL_BARO1_ID = 0 ∨ CAL_BARO1_ID = 6620172)) ∧ (CAL_BARO2_ID = 0 ∨ CAL_BARO2_ID = 6620172)) ∧ (CAL_BARO3_ID = 0 ∨ CAL_BARO3_ID = 6620172)",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "range_EKF2_ABIAS_INIT: 0 ≤ EKF2_ABIAS_INIT ∧ EKF2_ABIAS_INIT ≤ 0.5",
+  "range_EKF2_ABL_ACCLIM: 20 ≤ EKF2_ABL_ACCLIM ∧ EKF2_ABL_ACCLIM ≤ 200",
+  "range_EKF2_ABL_GYRLIM: 2 ≤ EKF2_ABL_GYRLIM ∧ EKF2_ABL_GYRLIM ≤ 20",
+  "range_EKF2_ABL_LIM: 0 ≤ EKF2_ABL_LIM ∧ EKF2_ABL_LIM ≤ 0.8",
+  "range_EKF2_ABL_TAU: 0.1 ≤ EKF2_ABL_TAU ∧ EKF2_ABL_TAU ≤ 1",
+  "range_EKF2_ACC_B_NOISE: 0 ≤ EKF2_ACC_B_NOISE ∧ EKF2_ACC_B_NOISE ≤ 0.01",
+  "range_EKF2_ACC_NOISE: 0.01 ≤ EKF2_ACC_NOISE ∧ EKF2_ACC_NOISE ≤ 1",
+  "range_EKF2_AGP_CTRL: 0 ≤ EKF2_AGP_CTRL ∧ EKF2_AGP_CTRL ≤ 3",
+  "range_EKF2_AGP_DELAY: 0 ≤ EKF2_AGP_DELAY ∧ EKF2_AGP_DELAY ≤ 300",
+  "range_EKF2_AGP_GATE: 1 ≤ EKF2_AGP_GATE",
+  "range_EKF2_AGP_MODE: EKF2_AGP_MODE = 0 ∨ EKF2_AGP_MODE = 1",
+  "range_EKF2_AGP_NOISE: 0.01 ≤ EKF2_AGP_NOISE",
+  "range_EKF2_ANGERR_INIT: 0 ≤ EKF2_ANGERR_INIT ∧ EKF2_ANGERR_INIT ≤ 0.5",
+  "range_EKF2_ARSP_THR: 0 ≤ EKF2_ARSP_THR",
+  "range_EKF2_ASPD_MAX: 5 ≤ EKF2_ASPD_MAX ∧ EKF2_ASPD_MAX ≤ 50",
+  "range_EKF2_ASP_DELAY: 0 ≤ EKF2_ASP_DELAY ∧ EKF2_ASP_DELAY ≤ 300",
+  "range_EKF2_AVEL_DELAY: 0 ≤ EKF2_AVEL_DELAY ∧ EKF2_AVEL_DELAY ≤ 300",
+  "range_EKF2_BARO_CTRL: EKF2_BARO_CTRL = 0 ∨ EKF2_BARO_CTRL = 1",
+  "range_EKF2_BARO_DELAY: 0 ≤ EKF2_BARO_DELAY ∧ EKF2_BARO_DELAY ≤ 300",
+  "range_EKF2_BARO_GATE: 1 ≤ EKF2_BARO_GATE",
+  "range_EKF2_BARO_NOISE: 0.01 ≤ EKF2_BARO_NOISE ∧ EKF2_BARO_NOISE ≤ 15",
+  "range_EKF2_BCOEF_X: 0 ≤ EKF2_BCOEF_X ∧ EKF2_BCOEF_X ≤ 200",
+  "range_EKF2_BCOEF_Y: 0 ≤ EKF2_BCOEF_Y ∧ EKF2_BCOEF_Y ≤ 200",
+  "range_EKF2_BETA_GATE: 1 ≤ EKF2_BETA_GATE",
+  "range_EKF2_BETA_NOISE: 0.1 ≤ EKF2_BETA_NOISE ∧ EKF2_BETA_NOISE ≤ 1",
+  "range_EKF2_DECL_TYPE: 0 ≤ EKF2_DECL_TYPE ∧ EKF2_DECL_TYPE ≤ 3",
+  "range_EKF2_DELAY_MAX: 0 ≤ EKF2_DELAY_MAX ∧ EKF2_DELAY_MAX ≤ 1000",
+  "range_EKF2_DRAG_CTRL: EKF2_DRAG_CTRL = 0 ∨ EKF2_DRAG_CTRL = 1",
+  "range_EKF2_DRAG_NOISE: 0.5 ≤ EKF2_DRAG_NOISE ∧ EKF2_DRAG_NOISE ≤ 10",
+  "range_EKF2_EAS_NOISE: 0.5 ≤ EKF2_EAS_NOISE ∧ EKF2_EAS_NOISE ≤ 5",
+  "range_EKF2_EN: EKF2_EN = 0 ∨ EKF2_EN = 1",
+  "range_EKF2_EVA_NOISE: 0.05 ≤ EKF2_EVA_NOISE",
+  "range_EKF2_EVP_GATE: 1 ≤ EKF2_EVP_GATE",
+  "range_EKF2_EVP_NOISE: 0.01 ≤ EKF2_EVP_NOISE",
+  "range_EKF2_EVV_GATE: 1 ≤ EKF2_EVV_GATE",
+  "range_EKF2_EVV_NOISE: 0.01 ≤ EKF2_EVV_NOISE",
+  "range_EKF2_EV_CTRL: 0 ≤ EKF2_EV_CTRL ∧ EKF2_EV_CTRL ≤ 15",
+  "range_EKF2_EV_DELAY: 0 ≤ EKF2_EV_DELAY ∧ EKF2_EV_DELAY ≤ 300",
+  "range_EKF2_EV_NOISE_MD: EKF2_EV_NOISE_MD = 0 ∨ EKF2_EV_NOISE_MD = 1",
+  "range_EKF2_EV_QMIN: 0 ≤ EKF2_EV_QMIN ∧ EKF2_EV_QMIN ≤ 100",
+  "range_EKF2_FUSE_BETA: EKF2_FUSE_BETA = 0 ∨ EKF2_FUSE_BETA = 1",
+  "range_EKF2_GBIAS_INIT: 0 ≤ EKF2_GBIAS_INIT ∧ EKF2_GBIAS_INIT ≤ 0.2",
+  "range_EKF2_GND_EFF_DZ: 0 ≤ EKF2_GND_EFF_DZ ∧ EKF2_GND_EFF_DZ ≤ 10",
+  "range_EKF2_GND_MAX_HGT: 0 ≤ EKF2_GND_MAX_HGT ∧ EKF2_GND_MAX_HGT ≤ 5",
+  "range_EKF2_GPS_CHECK: 0 ≤ EKF2_GPS_CHECK ∧ EKF2_GPS_CHECK ≤ 2047",
+  "range_EKF2_GPS_CTRL: 0 ≤ EKF2_GPS_CTRL ∧ EKF2_GPS_CTRL ≤ 15",
+  "range_EKF2_GPS_DELAY: 0 ≤ EKF2_GPS_DELAY ∧ EKF2_GPS_DELAY ≤ 300",
+  "range_EKF2_GPS_MODE: EKF2_GPS_MODE = 0 ∨ EKF2_GPS_MODE = 1",
+  "range_EKF2_GPS_P_GATE: 1 ≤ EKF2_GPS_P_GATE",
+  "range_EKF2_GPS_P_NOISE: 0.01 ≤ EKF2_GPS_P_NOISE ∧ EKF2_GPS_P_NOISE ≤ 10",
+  "range_EKF2_GPS_V_GATE: 1 ≤ EKF2_GPS_V_GATE",
+  "range_EKF2_GPS_V_NOISE: 0.01 ≤ EKF2_GPS_V_NOISE ∧ EKF2_GPS_V_NOISE ≤ 5",
+  "range_EKF2_GPS_YAW_OFF: 0 ≤ EKF2_GPS_YAW_OFF ∧ EKF2_GPS_YAW_OFF ≤ 360",
+  "range_EKF2_GRAV_NOISE: 0.1 ≤ EKF2_GRAV_NOISE ∧ EKF2_GRAV_NOISE ≤ 10",
+  "range_EKF2_GSF_TAS: 0 ≤ EKF2_GSF_TAS ∧ EKF2_GSF_TAS ≤ 100",
+  "range_EKF2_GYR_B_LIM: 0 ≤ EKF2_GYR_B_LIM ∧ EKF2_GYR_B_LIM ≤ 0.4",
+  "range_EKF2_GYR_B_NOISE: 0 ≤ EKF2_GYR_B_NOISE ∧ EKF2_GYR_B_NOISE ≤ 0.01",
+  "range_EKF2_GYR_NOISE: 0.0001 ≤ EKF2_GYR_NOISE ∧ EKF2_GYR_NOISE ≤ 0.1",
+  "range_EKF2_HDG_GATE: 1 ≤ EKF2_HDG_GATE",
+  "range_EKF2_HEAD_NOISE: 0.01 ≤ EKF2_HEAD_NOISE ∧ EKF2_HEAD_NOISE ≤ 1",
+  "range_EKF2_HGT_REF: EKF2_HGT_REF = 0 ∨ EKF2_HGT_REF = 1 ∨ EKF2_HGT_REF = 2 ∨ EKF2_HGT_REF = 3",
+  "range_EKF2_IMU_CTRL: 0 ≤ EKF2_IMU_CTRL ∧ EKF2_IMU_CTRL ≤ 7",
+  "range_EKF2_LOG_VERBOSE: EKF2_LOG_VERBOSE = 0 ∨ EKF2_LOG_VERBOSE = 1",
+  "range_EKF2_MAG_ACCLIM: 0 ≤ EKF2_MAG_ACCLIM ∧ EKF2_MAG_ACCLIM ≤ 5",
+  "range_EKF2_MAG_B_NOISE: 0 ≤ EKF2_MAG_B_NOISE ∧ EKF2_MAG_B_NOISE ≤ 0.1",
+  "range_EKF2_MAG_CHECK: 0 ≤ EKF2_MAG_CHECK ∧ EKF2_MAG_CHECK ≤ 7",
+  "range_EKF2_MAG_CHK_INC: 0 ≤ EKF2_MAG_CHK_INC ∧ EKF2_MAG_CHK_INC ≤ 90",
+  "range_EKF2_MAG_CHK_STR: 0 ≤ EKF2_MAG_CHK_STR ∧ EKF2_MAG_CHK_STR ≤ 1",
+  "range_EKF2_MAG_DELAY: 0 ≤ EKF2_MAG_DELAY ∧ EKF2_MAG_DELAY ≤ 300",
+  "range_EKF2_MAG_E_NOISE: 0 ≤ EKF2_MAG_E_NOISE ∧ EKF2_MAG_E_NOISE ≤ 0.1",
+  "range_EKF2_MAG_GATE: 1 ≤ EKF2_MAG_GATE",
+  "range_EKF2_MAG_NOISE: 0.001 ≤ EKF2_MAG_NOISE ∧ EKF2_MAG_NOISE ≤ 1",
+  "range_EKF2_MAG_TYPE: EKF2_MAG_TYPE = 0 ∨ EKF2_MAG_TYPE = 1 ∨ EKF2_MAG_TYPE = 5 ∨ EKF2_MAG_TYPE = 6",
+  "range_EKF2_MCOEF: 0 ≤ EKF2_MCOEF ∧ EKF2_MCOEF ≤ 1",
+  "range_EKF2_MIN_RNG: 0.01 ≤ EKF2_MIN_RNG",
+  "range_EKF2_MULTI_IMU: 0 ≤ EKF2_MULTI_IMU ∧ EKF2_MULTI_IMU ≤ 4",
+  "range_EKF2_MULTI_MAG: 0 ≤ EKF2_MULTI_MAG ∧ EKF2_MULTI_MAG ≤ 4",
+  "range_EKF2_NOAID_NOISE: 0.5 ≤ EKF2_NOAID_NOISE ∧ EKF2_NOAID_NOISE ≤ 50",
+  "range_EKF2_NOAID_TOUT: 500000 ≤ EKF2_NOAID_TOUT ∧ EKF2_NOAID_TOUT ≤ 10000000",
+  "range_EKF2_OF_CTRL: EKF2_OF_CTRL = 0 ∨ EKF2_OF_CTRL = 1",
+  "range_EKF2_OF_DELAY: 0 ≤ EKF2_OF_DELAY ∧ EKF2_OF_DELAY ≤ 300",
+  "range_EKF2_OF_GATE: 1 ≤ EKF2_OF_GATE",
+  "range_EKF2_OF_GYR_SRC: EKF2_OF_GYR_SRC = 0 ∨ EKF2_OF_GYR_SRC = 1",
+  "range_EKF2_OF_N_MAX: 0.05 ≤ EKF2_OF_N_MAX",
+  "range_EKF2_OF_N_MIN: 0.05 ≤ EKF2_OF_N_MIN",
+  "range_EKF2_OF_QMIN: 0 ≤ EKF2_OF_QMIN ∧ EKF2_OF_QMIN ≤ 255",
+  "range_EKF2_OF_QMIN_GND: 0 ≤ EKF2_OF_QMIN_GND ∧ EKF2_OF_QMIN_GND ≤ 255",
+  "range_EKF2_PCOEF_XN: -0.5 ≤ EKF2_PCOEF_XN ∧ EKF2_PCOEF_XN ≤ 0.5",
+  "range_EKF2_PCOEF_XP: -0.5 ≤ EKF2_PCOEF_XP ∧ EKF2_PCOEF_XP ≤ 0.5",
+  "range_EKF2_PCOEF_YN: -0.5 ≤ EKF2_PCOEF_YN ∧ EKF2_PCOEF_YN ≤ 0.5",
+  "range_EKF2_PCOEF_YP: -0.5 ≤ EKF2_PCOEF_YP ∧ EKF2_PCOEF_YP ≤ 0.5",
+  "range_EKF2_PCOEF_Z: -0.5 ≤ EKF2_PCOEF_Z ∧ EKF2_PCOEF_Z ≤ 0.5",
+  "range_EKF2_PREDICT_US: 1000 ≤ EKF2_PREDICT_US ∧ EKF2_PREDICT_US ≤ 20000",
+  "range_EKF2_REQ_EPH: 2 ≤ EKF2_REQ_EPH ∧ EKF2_REQ_EPH ≤ 100",
+  "range_EKF2_REQ_EPV: 2 ≤ EKF2_REQ_EPV ∧ EKF2_REQ_EPV ≤ 100",
+  "range_EKF2_REQ_FIX: EKF2_REQ_FIX = 0 ∨ EKF2_REQ_FIX = 2 ∨ EKF2_REQ_FIX = 3 ∨ EKF2_REQ_FIX = 4 ∨ EKF2_REQ_FIX = 5 ∨ EKF2_REQ_FIX = 6 ∨ EKF2_REQ_FIX = 8",
+  "range_EKF2_REQ_GPS_H: 0.1 ≤ EKF2_REQ_GPS_H",
+  "range_EKF2_REQ_HDRIFT: 0.1 ≤ EKF2_REQ_HDRIFT ∧ EKF2_REQ_HDRIFT ≤ 1",
+  "range_EKF2_REQ_NSATS: 4 ≤ EKF2_REQ_NSATS ∧ EKF2_REQ_NSATS ≤ 12",
+  "range_EKF2_REQ_PDOP: 1.5 ≤ EKF2_REQ_PDOP ∧ EKF2_REQ_PDOP ≤ 5",
+  "range_EKF2_REQ_SACC: 0.5 ≤ EKF2_REQ_SACC ∧ EKF2_REQ_SACC ≤ 5",
+  "range_EKF2_REQ_VDRIFT: 0.1 ≤ EKF2_REQ_VDRIFT ∧ EKF2_REQ_VDRIFT ≤ 1.5",
+  "range_EKF2_RNG_A_HMAX: 1 ≤ EKF2_RNG_A_HMAX ∧ EKF2_RNG_A_HMAX ≤ 10",
+  "range_EKF2_RNG_A_VMAX: 0.1 ≤ EKF2_RNG_A_VMAX ∧ EKF2_RNG_A_VMAX ≤ 2",
+  "range_EKF2_RNG_CTRL: EKF2_RNG_CTRL = 0 ∨ EKF2_RNG_CTRL = 1 ∨ EKF2_RNG_CTRL = 2",
+  "range_EKF2_RNG_DELAY: 0 ≤ EKF2_RNG_DELAY ∧ EKF2_RNG_DELAY ≤ 300",
+  "range_EKF2_RNG_FOG: 0 ≤ EKF2_RNG_FOG ∧ EKF2_RNG_FOG ≤ 20",
+  "range_EKF2_RNG_GATE: 1 ≤ EKF2_RNG_GATE",
+  "range_EKF2_RNG_K_GATE: 0.1 ≤ EKF2_RNG_K_GATE ∧ EKF2_RNG_K_GATE ≤ 5",
+  "range_EKF2_RNG_NOISE: 0.01 ≤ EKF2_RNG_NOISE",
+  "range_EKF2_RNG_PITCH: -0.75 ≤ EKF2_RNG_PITCH ∧ EKF2_RNG_PITCH ≤ 0.75",
+  "range_EKF2_RNG_QLTY_T: 0.1 ≤ EKF2_RNG_QLTY_T ∧ EKF2_RNG_QLTY_T ≤ 5",
+  "range_EKF2_RNG_SFE: 0 ≤ EKF2_RNG_SFE ∧ EKF2_RNG_SFE ≤ 0.2",
+  "range_EKF2_SYNT_MAG_Z: EKF2_SYNT_MAG_Z = 0 ∨ EKF2_SYNT_MAG_Z = 1",
+  "range_EKF2_TAS_GATE: 1 ≤ EKF2_TAS_GATE",
+  "range_EKF2_TAU_POS: 0.1 ≤ EKF2_TAU_POS ∧ EKF2_TAU_POS ≤ 1",
+  "range_EKF2_TAU_VEL: EKF2_TAU_VEL ≤ 1",
+  "range_EKF2_TERR_GRAD: 0 ≤ EKF2_TERR_GRAD",
+  "range_EKF2_TERR_NOISE: 0.5 ≤ EKF2_TERR_NOISE",
+  "range_EKF2_VEL_LIM: EKF2_VEL_LIM ≤ 299792450",
+  "range_EKF2_WIND_NSD: 0 ≤ EKF2_WIND_NSD ∧ EKF2_WIND_NSD ≤ 1",
+  "single_instance: SENS_IMU_MODE = 1 ∧ SENS_MAG_MODE = 1"]}

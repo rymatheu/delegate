@@ -21,12 +21,13 @@ tools/fetch_deps.sh            # ArduPilot, PX4 v1.17.0, mavlink at pinned commi
 ../sim/setup.sh                # the shared simulator's Python environments and gorge world (once, about 3 min)
 LEAN_NUM_THREADS=1 lake build  # the harness library and the `harness` command (.lake/build/bin/harness)
 tools/build_modules.sh sim        # the simulator modules (plant_sim, plant_formation)
-tools/build_modules.sh ardupilot  # the ArduPilot modules (about 15 min)
-tools/build_modules.sh px4        # the PX4 modules (about 8 min)
+tools/build_modules.sh ardupilot  # the ArduPilot modules (about 2.5 min)
+tools/build_modules.sh px4        # the PX4 modules (about 4 min)
 ```
 
 `tools/fetch_deps.sh` can reuse clones you already have: set `ARDUPILOT_SRC`, `PX4_SRC`, `MAVLINK_SRC` to them.
-Executables go to `build/modules/NAME/`.
+Executables go to `build/modules/NAME/`. `tools/check_fresh_clone.sh` runs these steps in a fresh clone of HEAD, flies
+`single` on each stack and checks that every module's code hash equals the ledgers' and that nothing is stale.
 
 ## Run
 

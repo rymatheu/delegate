@@ -21,7 +21,8 @@ records) and held between.
 Usage (the launchers written by build.sh):
     python adapter.py --build DIR --sim SIM --schema FILE [--vehicles 2]        serve the protocol on stdin/stdout
     python adapter.py ... --code-inputs      one init and one step, then print (JSON) every file of sim/ it read, the
-                                             package versions, and any write it attempted
+                                             package versions, any write it attempted, and the content digest of the
+                                             world cache (`world_digest`), which build.sh hashes in place of its bytes
 """
 from __future__ import annotations
 
@@ -196,6 +197,57 @@ class Plant:
         return out
 
 
+VOLATILE = ("build_s", "bake_times", "asset_dir")   # world-cache values that depend on the machine and the moment
+
+
+def world_digest(path):
+    """SHA-256 of the world cache's content (sim/build/world-cache/gorge_sN.pkl), in place of its bytes, so the code
+    hash does not depend on where or when sim/setup.sh built the world. Left out: `build_s` and `bake_times` (build
+    timings) and `asset_dir` (an absolute path); `files` (absolute paths of the meshes) reduced to the file names (the
+    meshes PyBullet loads are hashed by their bytes, as every other input). Every other value is digested by its
+    content: an array by dtype, shape and bytes, an object by class name and fields, a dict by its (key, value)
+    digests in sorted order, a float by its binary64 bits; any other type stops the build."""
+    import hashlib
+    import pickle
+
+    import numpy as np
+    with open(path, "rb") as fh:
+        state = pickle.load(fh)
+    state = {k: v for k, v in state.items() if k not in VOLATILE}
+    state["files"] = {k: Path(v).name for k, v in state["files"].items()}
+
+    def d(tag, *parts):
+        h = hashlib.sha256(tag)
+        for b in parts:
+            h.update(len(b).to_bytes(8, "little") + b)
+        return h.digest()
+
+    def dig(v):
+        if v is None:
+            return d(b"none")
+        if isinstance(v, bool):
+            return d(b"bool", b"1" if v else b"0")
+        if isinstance(v, int):
+            return d(b"int", str(v).encode())
+        if isinstance(v, float):
+            return d(b"float", struct.pack("<d", v))
+        if isinstance(v, str):
+            return d(b"str", v.encode())
+        if isinstance(v, (np.ndarray, np.generic)):
+            a = np.ascontiguousarray(v)
+            if a.dtype.hasobject:
+                raise SystemExit(f"world_digest: object array in {path}")
+            return d(b"array", a.dtype.str.encode(), repr(a.shape).encode(), a.tobytes())
+        if isinstance(v, (list, tuple)):
+            return d(b"list" if isinstance(v, list) else b"tuple", *(dig(x) for x in v))
+        if isinstance(v, dict):
+            return d(b"dict", *sorted(dig(k) + dig(x) for k, x in v.items()))
+        if hasattr(v, "__dict__") and not isinstance(v, type):
+            return d(b"object", type(v).__qualname__.encode(), dig(vars(v)))
+        raise SystemExit(f"world_digest: no canonical form for {type(v).__qualname__} in {path}")
+    return dig(state).hex()
+
+
 def versions():
     import importlib.metadata as md
     v = {"python": sys.version.split()[0]}
@@ -237,7 +289,8 @@ def code_inputs(plant: Plant, prm, inp):
     files |= {os.path.realpath(g.files[k]) for k in g.files if k.endswith("_hull")}
     files |= {os.path.realpath(g.asset_dir / f"boulder_s{g.seed}_{k:02d}_hull.obj") for k in range(len(g.boulders))}
     files = {f for f in files if "/.venv" not in f}
-    return dict(files=sorted(files), versions=versions(), written=written)
+    cache = os.path.realpath(g._cache_file)
+    return dict(files=sorted(files), versions=versions(), written=written, digests={cache: world_digest(cache)})
 
 
 def main():

@@ -1,0 +1,184 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 800,
+ "steps_per_case": 400,
+ "seed": 71,
+ "seconds": 2.232275,
+ "outputs_seen":
+ {"wall_clear": {"non_finite_steps": 0, "min_finite": 1.98679, "max_finite": 2},
+  "vel_n":
+  {"non_finite_steps": 0, "min_finite": -2.33208, "max_finite": 2.091465},
+  "vel_e":
+  {"non_finite_steps": 0, "min_finite": -0.005716457, "max_finite": 1.704774},
+  "vel_d":
+  {"non_finite_steps": 0, "min_finite": -0.3143858, "max_finite": 2.258894},
+  "thrust3": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8801033},
+  "thrust2": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8579587},
+  "thrust1":
+  {"non_finite_steps": 0, "min_finite": 0.08755305, "max_finite": 0.8714538},
+  "thrust0": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8256494},
+  "t_us": {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 1000000},
+  "rate_r":
+  {"non_finite_steps": 0, "min_finite": -2.387816, "max_finite": 1.484557},
+  "rate_q":
+  {"non_finite_steps": 0, "min_finite": -15.3415, "max_finite": 15.09419},
+  "rate_p":
+  {"non_finite_steps": 0, "min_finite": -9.385072, "max_finite": 13.06626},
+  "q4":
+  {"non_finite_steps": 0, "min_finite": -0.2003238, "max_finite": 0.1805969},
+  "q3":
+  {"non_finite_steps": 0, "min_finite": -0.9374251, "max_finite": 0.913317},
+  "q2":
+  {"non_finite_steps": 0, "min_finite": -0.4339697, "max_finite": 0.655894},
+  "q1":
+  {"non_finite_steps": 0, "min_finite": 0.0002670688, "max_finite": 0.9999985},
+  "pos_n":
+  {"non_finite_steps": 0, "min_finite": -0.5083658, "max_finite": 0.5849785},
+  "pos_e":
+  {"non_finite_steps": 0, "min_finite": 0.00007872754, "max_finite": 0.426996},
+  "pos_d":
+  {"non_finite_steps": 0, "min_finite": -0.2490399, "max_finite": -0.01853709},
+  "mag_z":
+  {"non_finite_steps": 0, "min_finite": -476.1067, "max_finite": 506.3463},
+  "mag_y":
+  {"non_finite_steps": 0, "min_finite": -305.429, "max_finite": 451.7321},
+  "mag_x":
+  {"non_finite_steps": 0, "min_finite": -374.5627, "max_finite": 404.4499},
+  "mag_fresh": {"true_steps": 200},
+  "imu2_gz":
+  {"non_finite_steps": 0, "min_finite": -2.387816, "max_finite": 1.484557},
+  "imu2_gy":
+  {"non_finite_steps": 0, "min_finite": -15.3415, "max_finite": 15.09419},
+  "imu2_gx":
+  {"non_finite_steps": 0, "min_finite": -9.385072, "max_finite": 13.06626},
+  "imu2_az":
+  {"non_finite_steps": 0, "min_finite": -19.50546, "max_finite": 19.6133},
+  "imu2_ay":
+  {"non_finite_steps": 0, "min_finite": -19.6133, "max_finite": 19.6133},
+  "imu2_ax":
+  {"non_finite_steps": 0, "min_finite": -6.338318, "max_finite": 19.6133},
+  "imu1_gz":
+  {"non_finite_steps": 0, "min_finite": -2.394129, "max_finite": 1.484641},
+  "imu1_gy":
+  {"non_finite_steps": 0, "min_finite": -15.31738, "max_finite": 15.11554},
+  "imu1_gx":
+  {"non_finite_steps": 0, "min_finite": -9.405468, "max_finite": 13.02935},
+  "imu1_az":
+  {"non_finite_steps": 0, "min_finite": -16.53532, "max_finite": 19.6133},
+  "imu1_ay":
+  {"non_finite_steps": 0, "min_finite": -2.01931, "max_finite": 19.6133},
+  "imu1_ax":
+  {"non_finite_steps": 0, "min_finite": -4.265199, "max_finite": 19.6133},
+  "imu0_gz":
+  {"non_finite_steps": 0, "min_finite": -2.390881, "max_finite": 1.484315},
+  "imu0_gy":
+  {"non_finite_steps": 0, "min_finite": -15.37018, "max_finite": 15.13661},
+  "imu0_gx":
+  {"non_finite_steps": 0, "min_finite": -9.446913, "max_finite": 13.03041},
+  "imu0_az":
+  {"non_finite_steps": 0, "min_finite": -15.7426, "max_finite": 19.6133},
+  "imu0_ay":
+  {"non_finite_steps": 0, "min_finite": -3.278365, "max_finite": 19.6133},
+  "imu0_ax":
+  {"non_finite_steps": 0, "min_finite": -19.6133, "max_finite": 19.6133},
+  "gps_vn":
+  {"non_finite_steps": 0, "min_finite": -2.33208, "max_finite": 1.743703},
+  "gps_ve": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.704774},
+  "gps_vd":
+  {"non_finite_steps": 0, "min_finite": -0.2976518, "max_finite": 2.097707},
+  "gps_lon_e7":
+  {"non_finite_steps": 0, "min_finite": -1050442000, "max_finite": 0},
+  "gps_lat_e7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 388405600},
+  "gps_fresh": {"true_steps": 10},
+  "gps_alt": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4302.249},
+  "baro_pa": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59275.11},
+  "baro_fresh": {"true_steps": 200},
+  "baro_degc":
+  {"non_finite_steps": 0, "min_finite": -12.94571, "max_finite": 0}},
+ "module": "plant_sim",
+ "kind": "tested",
+ "id": "20261119T212737Z-seed71",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 - 1| ≤ 4e-7",
+   "smallest_margin_case":
+   {"step": 28,
+    "sha256":
+    "f3a66dde4343d62f833a30410f509343082ccb24c09da52e872801bc6a29eb6f",
+    "file":
+    "sim/modules/plant_sim/evidence/tested/20261119T212737Z-seed71/case0-step28.json",
+    "case": 0},
+   "smallest_margin": 0.0000002807907,
+   "contract_hash":
+   "27c5e11d151df57bbdd82b9dbe4b296747c5366fc926163306e3f0ece7ae9b94",
+   "clause": "quat_unit",
+   "checked": 800},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ thrust0 ∧ thrust0 ≤ 1 ∧ 0 ≤ thrust1 ∧ thrust1 ≤ 1 ∧ 0 ≤ thrust2 ∧ thrust2 ≤ 1 ∧ 0 ≤ thrust3 ∧ thrust3 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "dfa5cc967f0d1f73f7d7d306e8da3318f056bf5b275800a0244b30f029bf25f9",
+    "file":
+    "sim/modules/plant_sim/evidence/tested/20261119T212737Z-seed71/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f695762549bbcd7f9d8d56e454a4c4f2051e24be96413db068ed114238be3c42",
+   "clause": "thrust_range",
+   "checked": 800},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4) ∧ finite(rate_p) ∧ finite(rate_q) ∧ finite(rate_r) ∧ finite(thrust0) ∧ finite(thrust1) ∧ finite(thrust2) ∧ finite(thrust3) ∧ finite(imu0_ax) ∧ finite(imu0_ay) ∧ finite(imu0_az) ∧ finite(imu0_gx) ∧ finite(imu0_gy) ∧ finite(imu0_gz) ∧ finite(imu1_ax) ∧ finite(imu1_ay) ∧ finite(imu1_az) ∧ finite(imu1_gx) ∧ finite(imu1_gy) ∧ finite(imu1_gz) ∧ finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz) ∧ finite(baro_pa) ∧ finite(baro_degc) ∧ finite(mag_x) ∧ finite(mag_y) ∧ finite(mag_z) ∧ finite(gps_alt) ∧ finite(gps_vn) ∧ finite(gps_ve) ∧ finite(gps_vd) ∧ finite(wall_clear)",
+   "smallest_margin": null,
+   "contract_hash":
+   "89f393bfb3a185549342c42aabee74bc762d79028167ab890d1b37a55e0acc27",
+   "clause": "outputs_finite",
+   "checked": 800},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ wall_clear ∧ wall_clear ≤ 2",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "dfa5cc967f0d1f73f7d7d306e8da3318f056bf5b275800a0244b30f029bf25f9",
+    "file":
+    "sim/modules/plant_sim/evidence/tested/20261119T212737Z-seed71/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "5e0f163b6ef072e99a4a18341320366538b59c41018c2f56755e9a5dcec8a6a0",
+   "clause": "wall_clear_range",
+   "checked": 800},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ imu_gyro_fs_dps * 0.017453292)",
+   "smallest_margin_case":
+   {"step": 359,
+    "sha256":
+    "9fd71ff7db504263f17cd2f78dfe973f1be8cbbae00a226cefd1f2bf579ccbba",
+    "file":
+    "sim/modules/plant_sim/evidence/tested/20261119T212737Z-seed71/case0-step359.json",
+    "case": 0},
+   "smallest_margin": 19.53641,
+   "contract_hash":
+   "549bd67d6c45878c756ed39b32ca8cc6990f50bf0a512f72c34344106b71aafd",
+   "clause": "imu_full_scale",
+   "checked": 800}],
+ "flags":
+ "env -i PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python -s -B -P adapter.py --vehicles 1; physics 1200 Hz, 3 substeps per step, wind off",
+ "compiler":
+ "python 3.12.13, pybullet 3.2.7, gym-pybullet-drones 2.2.0, numpy 2.5.5, scipy 1.18.1, gymnasium 1.4.0, pillow 13.0.0",
+ "command": "harness test plant_sim --seed 71 --cases 2 --steps 400",
+ "code_hash":
+ "fd2497da45964cedef81617eae194ae050433f546f28df45c842b659f399aac7",
+ "cases_skipped": 0,
+ "cases": 2,
+ "assume":
+ ["pwm_range: 1000 ≤ pwm0 ∧ pwm0 ≤ 2000 ∧ 1000 ≤ pwm1 ∧ pwm1 ≤ 2000 ∧ 1000 ≤ pwm2 ∧ pwm2 ≤ 2000 ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+  "imu_full_scale_range: (imu_acc_fs_g = 0 ∨ 2 ≤ imu_acc_fs_g ∧ imu_acc_fs_g ≤ 32) ∧ (imu_gyro_fs_dps = 0 ∨ 250 ≤ imu_gyro_fs_dps ∧ imu_gyro_fs_dps ≤ 4000)"]}

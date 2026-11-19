@@ -1,0 +1,3488 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "system": "px4_closed_rate",
+ "steps_run": 2000,
+ "steps_per_case": 2000,
+ "seed": 1,
+ "seconds": 4.539966,
+ "regime_text":
+ "default_CAL_ACC0_PRIO: CAL_ACC0_PRIO = -1; default_CAL_ACC0_ROT: CAL_ACC0_ROT = -1; default_CAL_ACC0_XOFF: CAL_ACC0_XOFF = 0; default_CAL_ACC0_XSCALE: CAL_ACC0_XSCALE = 1; default_CAL_ACC0_YOFF: CAL_ACC0_YOFF = 0; default_CAL_ACC0_YSCALE: CAL_ACC0_YSCALE = 1; default_CAL_ACC0_ZOFF: CAL_ACC0_ZOFF = 0; default_CAL_ACC0_ZSCALE: CAL_ACC0_ZSCALE = 1; default_CAL_ACC1_ID: CAL_ACC1_ID = 0; default_CAL_ACC1_PRIO: CAL_ACC1_PRIO = -1; default_CAL_ACC1_ROT: CAL_ACC1_ROT = -1; default_CAL_ACC1_XOFF: CAL_ACC1_XOFF = 0; default_CAL_ACC1_XSCALE: CAL_ACC1_XSCALE = 1; default_CAL_ACC1_YOFF: CAL_ACC1_YOFF = 0; default_CAL_ACC1_YSCALE: CAL_ACC1_YSCALE = 1; default_CAL_ACC1_ZOFF: CAL_ACC1_ZOFF = 0; default_CAL_ACC1_ZSCALE: CAL_ACC1_ZSCALE = 1; default_CAL_ACC2_ID: CAL_ACC2_ID = 0; default_CAL_ACC2_PRIO: CAL_ACC2_PRIO = -1; default_CAL_ACC2_ROT: CAL_ACC2_ROT = -1; default_CAL_ACC2_XOFF: CAL_ACC2_XOFF = 0; default_CAL_ACC2_XSCALE: CAL_ACC2_XSCALE = 1; default_CAL_ACC2_YOFF: CAL_ACC2_YOFF = 0; default_CAL_ACC2_YSCALE: CAL_ACC2_YSCALE = 1; default_CAL_ACC2_ZOFF: CAL_ACC2_ZOFF = 0; default_CAL_ACC2_ZSCALE: CAL_ACC2_ZSCALE = 1; default_CAL_ACC3_ID: CAL_ACC3_ID = 0; default_CAL_ACC3_PRIO: CAL_ACC3_PRIO = -1; default_CAL_ACC3_ROT: CAL_ACC3_ROT = -1; default_CAL_ACC3_XOFF: CAL_ACC3_XOFF = 0; default_CAL_ACC3_XSCALE: CAL_ACC3_XSCALE = 1; default_CAL_ACC3_YOFF: CAL_ACC3_YOFF = 0; default_CAL_ACC3_YSCALE: CAL_ACC3_YSCALE = 1; default_CAL_ACC3_ZOFF: CAL_ACC3_ZOFF = 0; default_CAL_ACC3_ZSCALE: CAL_ACC3_ZSCALE = 1; default_CAL_AIR_CMODEL: CAL_AIR_CMODEL = 0; default_CAL_AIR_TUBED_MM: CAL_AIR_TUBED_MM = 1.5; default_CAL_AIR_TUBELEN: CAL_AIR_TUBELEN = 0.2; default_CAL_BARO0_ID: CAL_BARO0_ID = 0; default_CAL_BARO0_OFF: CAL_BARO0_OFF = 0; default_CAL_BARO0_PRIO: CAL_BARO0_PRIO = -1; default_CAL_BARO1_ID: CAL_BARO1_ID = 0; default_CAL_BARO1_OFF: CAL_BARO1_OFF = 0; default_CAL_BARO1_PRIO: CAL_BARO1_PRIO = -1; default_CAL_BARO2_ID: CAL_BARO2_ID = 0; default_CAL_BARO2_OFF: CAL_BARO2_OFF = 0; default_CAL_BARO2_PRIO: CAL_BARO2_PRIO = -1; default_CAL_BARO3_ID: CAL_BARO3_ID = 0; default_CAL_BARO3_OFF: CAL_BARO3_OFF = 0; default_CAL_BARO3_PRIO: CAL_BARO3_PRIO = -1; default_CAL_GYRO0_PRIO: CAL_GYRO0_PRIO = -1; default_CAL_GYRO0_ROT: CAL_GYRO0_ROT = -1; default_CAL_GYRO0_XOFF: CAL_GYRO0_XOFF = 0; default_CAL_GYRO0_YOFF: CAL_GYRO0_YOFF = 0; default_CAL_GYRO0_ZOFF: CAL_GYRO0_ZOFF = 0; default_CAL_GYRO1_ID: CAL_GYRO1_ID = 0; default_CAL_GYRO1_PRIO: CAL_GYRO1_PRIO = -1; default_CAL_GYRO1_ROT: CAL_GYRO1_ROT = -1; default_CAL_GYRO1_XOFF: CAL_GYRO1_XOFF = 0; default_CAL_GYRO1_YOFF: CAL_GYRO1_YOFF = 0; default_CAL_GYRO1_ZOFF: CAL_GYRO1_ZOFF = 0; default_CAL_GYRO2_ID: CAL_GYRO2_ID = 0; default_CAL_GYRO2_PRIO: CAL_GYRO2_PRIO = -1; default_CAL_GYRO2_ROT: CAL_GYRO2_ROT = -1; default_CAL_GYRO2_XOFF: CAL_GYRO2_XOFF = 0; default_CAL_GYRO2_YOFF: CAL_GYRO2_YOFF = 0; default_CAL_GYRO2_ZOFF: CAL_GYRO2_ZOFF = 0; default_CAL_GYRO3_ID: CAL_GYRO3_ID = 0; default_CAL_GYRO3_PRIO: CAL_GYRO3_PRIO = -1; default_CAL_GYRO3_ROT: CAL_GYRO3_ROT = -1; default_CAL_GYRO3_XOFF: CAL_GYRO3_XOFF = 0; default_CAL_GYRO3_YOFF: CAL_GYRO3_YOFF = 0; default_CAL_GYRO3_ZOFF: CAL_GYRO3_ZOFF = 0; default_CAL_MAG0_PITCH: CAL_MAG0_PITCH = 0; default_CAL_MAG0_ROLL: CAL_MAG0_ROLL = 0; default_CAL_MAG0_ROT: CAL_MAG0_ROT = -1; default_CAL_MAG0_XCOMP: CAL_MAG0_XCOMP = 0; default_CAL_MAG0_XODIAG: CAL_MAG0_XODIAG = 0; default_CAL_MAG0_XOFF: CAL_MAG0_XOFF = 0; default_CAL_MAG0_XSCALE: CAL_MAG0_XSCALE = 1; default_CAL_MAG0_YAW: CAL_MAG0_YAW = 0; default_CAL_MAG0_YCOMP: CAL_MAG0_YCOMP = 0; default_CAL_MAG0_YODIAG: CAL_MAG0_YODIAG = 0; default_CAL_MAG0_YOFF: CAL_MAG0_YOFF = 0; default_CAL_MAG0_YSCALE: CAL_MAG0_YSCALE = 1; default_CAL_MAG0_ZCOMP: CAL_MAG0_ZCOMP = 0; default_CAL_MAG0_ZODIAG: CAL_MAG0_ZODIAG = 0; default_CAL_MAG0_ZOFF: CAL_MAG0_ZOFF = 0; default_CAL_MAG0_ZSCALE: CAL_MAG0_ZSCALE = 1; default_CAL_MAG1_ID: CAL_MAG1_ID = 0; default_CAL_MAG1_PITCH: CAL_MAG1_PITCH = 0; default_CAL_MAG1_PRIO: CAL_MAG1_PRIO = -1; default_CAL_MAG1_ROLL: CAL_MAG1_ROLL = 0; default_CAL_MAG1_ROT: CAL_MAG1_ROT = -1; default_CAL_MAG1_XCOMP: CAL_MAG1_XCOMP = 0; default_CAL_MAG1_XODIAG: CAL_MAG1_XODIAG = 0; default_CAL_MAG1_XOFF: CAL_MAG1_XOFF = 0; default_CAL_MAG1_XSCALE: CAL_MAG1_XSCALE = 1; default_CAL_MAG1_YAW: CAL_MAG1_YAW = 0; default_CAL_MAG1_YCOMP: CAL_MAG1_YCOMP = 0; default_CAL_MAG1_YODIAG: CAL_MAG1_YODIAG = 0; default_CAL_MAG1_YOFF: CAL_MAG1_YOFF = 0; default_CAL_MAG1_YSCALE: CAL_MAG1_YSCALE = 1; default_CAL_MAG1_ZCOMP: CAL_MAG1_ZCOMP = 0; default_CAL_MAG1_ZODIAG: CAL_MAG1_ZODIAG = 0; default_CAL_MAG1_ZOFF: CAL_MAG1_ZOFF = 0; default_CAL_MAG1_ZSCALE: CAL_MAG1_ZSCALE = 1; default_CAL_MAG2_ID: CAL_MAG2_ID = 0; default_CAL_MAG2_PITCH: CAL_MAG2_PITCH = 0; default_CAL_MAG2_PRIO: CAL_MAG2_PRIO = -1; default_CAL_MAG2_ROLL: CAL_MAG2_ROLL = 0; default_CAL_MAG2_ROT: CAL_MAG2_ROT = -1; default_CAL_MAG2_XCOMP: CAL_MAG2_XCOMP = 0; default_CAL_MAG2_XODIAG: CAL_MAG2_XODIAG = 0; default_CAL_MAG2_XOFF: CAL_MAG2_XOFF = 0; default_CAL_MAG2_XSCALE: CAL_MAG2_XSCALE = 1; default_CAL_MAG2_YAW: CAL_MAG2_YAW = 0; default_CAL_MAG2_YCOMP: CAL_MAG2_YCOMP = 0; default_CAL_MAG2_YODIAG: CAL_MAG2_YODIAG = 0; default_CAL_MAG2_YOFF: CAL_MAG2_YOFF = 0; default_CAL_MAG2_YSCALE: CAL_MAG2_YSCALE = 1; default_CAL_MAG2_ZCOMP: CAL_MAG2_ZCOMP = 0; default_CAL_MAG2_ZODIAG: CAL_MAG2_ZODIAG = 0; default_CAL_MAG2_ZOFF: CAL_MAG2_ZOFF = 0; default_CAL_MAG2_ZSCALE: CAL_MAG2_ZSCALE = 1; default_CAL_MAG3_ID: CAL_MAG3_ID = 0; default_CAL_MAG3_PITCH: CAL_MAG3_PITCH = 0; default_CAL_MAG3_PRIO: CAL_MAG3_PRIO = -1; default_CAL_MAG3_ROLL: CAL_MAG3_ROLL = 0; default_CAL_MAG3_ROT: CAL_MAG3_ROT = -1; default_CAL_MAG3_XCOMP: CAL_MAG3_XCOMP = 0; default_CAL_MAG3_XODIAG: CAL_MAG3_XODIAG = 0; default_CAL_MAG3_XOFF: CAL_MAG3_XOFF = 0; default_CAL_MAG3_XSCALE: CAL_MAG3_XSCALE = 1; default_CAL_MAG3_YAW: CAL_MAG3_YAW = 0; default_CAL_MAG3_YCOMP: CAL_MAG3_YCOMP = 0; default_CAL_MAG3_YODIAG: CAL_MAG3_YODIAG = 0; default_CAL_MAG3_YOFF: CAL_MAG3_YOFF = 0; default_CAL_MAG3_YSCALE: CAL_MAG3_YSCALE = 1; default_CAL_MAG3_ZCOMP: CAL_MAG3_ZCOMP = 0; default_CAL_MAG3_ZODIAG: CAL_MAG3_ZODIAG = 0; default_CAL_MAG3_ZOFF: CAL_MAG3_ZOFF = 0; default_CAL_MAG3_ZSCALE: CAL_MAG3_ZSCALE = 1; default_CAL_MAG_COMP_TYP: CAL_MAG_COMP_TYP = 0; default_CAL_MAG_SIDES: CAL_MAG_SIDES = 63; default_IMU_ACCEL_CUTOFF: IMU_ACCEL_CUTOFF = 30; default_IMU_DGYRO_CUTOFF: IMU_DGYRO_CUTOFF = 20; default_IMU_GYRO_CUTOFF: IMU_GYRO_CUTOFF = 40; default_IMU_GYRO_DNF_BW: IMU_GYRO_DNF_BW = 15; default_IMU_GYRO_DNF_EN: IMU_GYRO_DNF_EN = 0; default_IMU_GYRO_DNF_HMC: IMU_GYRO_DNF_HMC = 3; default_IMU_GYRO_DNF_MIN: IMU_GYRO_DNF_MIN = 25; default_IMU_GYRO_NF0_BW: IMU_GYRO_NF0_BW = 20; default_IMU_GYRO_NF0_FRQ: IMU_GYRO_NF0_FRQ = 0; default_IMU_GYRO_NF1_BW: IMU_GYRO_NF1_BW = 20; default_IMU_GYRO_NF1_FRQ: IMU_GYRO_NF1_FRQ = 0; default_IMU_INTEG_RATE: IMU_INTEG_RATE = 200; default_SENS_BARO_QNH: SENS_BARO_QNH = 1013.25; default_SENS_BARO_RATE: SENS_BARO_RATE = 20; default_SENS_BAR_AUTOCAL: SENS_BAR_AUTOCAL = 1; default_SENS_BOARD_ROT: SENS_BOARD_ROT = 0; default_SENS_BOARD_X_OFF: SENS_BOARD_X_OFF = 0; default_SENS_BOARD_Y_OFF: SENS_BOARD_Y_OFF = 0; default_SENS_BOARD_Z_OFF: SENS_BOARD_Z_OFF = 0; default_SENS_DPRES_ANSC: SENS_DPRES_ANSC = 0; default_SENS_DPRES_OFF: SENS_DPRES_OFF = 0; default_SENS_DPRES_REV: SENS_DPRES_REV = 0; default_SENS_EN_THERMAL: SENS_EN_THERMAL = -1; default_SENS_EXT_I2C_PRB: SENS_EXT_I2C_PRB = 1; default_SENS_FLOW_MAXHGT: SENS_FLOW_MAXHGT = 100; default_SENS_FLOW_MAXR: SENS_FLOW_MAXR = 8; default_SENS_FLOW_MINHGT: SENS_FLOW_MINHGT = 0.08; default_SENS_FLOW_RATE: SENS_FLOW_RATE = 70; default_SENS_FLOW_ROT: SENS_FLOW_ROT = 0; default_SENS_FLOW_SCALE: SENS_FLOW_SCALE = 1; default_SENS_GPS_MASK: SENS_GPS_MASK = 7; default_SENS_GPS_PRIME: SENS_GPS_PRIME = 0; default_SENS_GPS_TAU: SENS_GPS_TAU = 10; default_SENS_IMU_AUTOCAL: SENS_IMU_AUTOCAL = 1; default_SENS_IMU_CLPNOTI: SENS_IMU_CLPNOTI = 1; default_SENS_IMU_MODE: SENS_IMU_MODE = 1; default_SENS_INT_BARO_EN: SENS_INT_BARO_EN = 1; default_SENS_MAG_AUTOCAL: SENS_MAG_AUTOCAL = 1; default_SENS_MAG_AUTOROT: SENS_MAG_AUTOROT = 1; default_SENS_MAG_MODE: SENS_MAG_MODE = 1; default_SENS_MAG_RATE: SENS_MAG_RATE = 15; default_SENS_MAG_SIDES: SENS_MAG_SIDES = 63; default_SYS_CAL_TDEL: SYS_CAL_TDEL = 24; default_SYS_CAL_TMAX: SYS_CAL_TMAX = 10; default_SYS_CAL_TMIN: SYS_CAL_TMIN = 5; default_SYS_FAC_CAL_MODE: SYS_FAC_CAL_MODE = 0; default_SYS_HAS_BARO: SYS_HAS_BARO = 1; default_SYS_HAS_GPS: SYS_HAS_GPS = 1; default_SYS_HAS_MAG: SYS_HAS_MAG = 1; sitl_imu_ids: CAL_ACC0_ID = 1310988 ∧ CAL_GYRO0_ID = 1310988; sitl_mag: CAL_MAG0_ID = 197388 ∧ CAL_MAG0_PRIO = 50; mc_gyro_rate: IMU_GYRO_RATEMAX = 800; default_MC_ACRO_EXPO: MC_ACRO_EXPO = 0; default_MC_ACRO_EXPO_Y: MC_ACRO_EXPO_Y = 0; default_MC_ACRO_P_MAX: MC_ACRO_P_MAX = 100; default_MC_ACRO_R_MAX: MC_ACRO_R_MAX = 100; default_MC_ACRO_SUPEXPO: MC_ACRO_SUPEXPO = 0; default_MC_ACRO_SUPEXPOY: MC_ACRO_SUPEXPOY = 0; default_MC_ACRO_Y_MAX: MC_ACRO_Y_MAX = 100; default_MC_BAT_SCALE_EN: MC_BAT_SCALE_EN = 0; default_MC_PITCHRATE_D: MC_PITCHRATE_D = 0.003; default_MC_PITCHRATE_FF: MC_PITCHRATE_FF = 0; default_MC_PITCHRATE_I: MC_PITCHRATE_I = 0.2; default_MC_PITCHRATE_K: MC_PITCHRATE_K = 1; default_MC_PITCHRATE_P: MC_PITCHRATE_P = 0.15; default_MC_PR_INT_LIM: MC_PR_INT_LIM = 0.3; default_MC_ROLLRATE_D: MC_ROLLRATE_D = 0.003; default_MC_ROLLRATE_FF: MC_ROLLRATE_FF = 0; default_MC_ROLLRATE_I: MC_ROLLRATE_I = 0.2; default_MC_ROLLRATE_K: MC_ROLLRATE_K = 1; default_MC_ROLLRATE_P: MC_ROLLRATE_P = 0.15; default_MC_RR_INT_LIM: MC_RR_INT_LIM = 0.3; default_MC_YAWRATE_D: MC_YAWRATE_D = 0; default_MC_YAWRATE_FF: MC_YAWRATE_FF = 0; default_MC_YAWRATE_I: MC_YAWRATE_I = 0.1; default_MC_YAWRATE_K: MC_YAWRATE_K = 1; default_MC_YAWRATE_P: MC_YAWRATE_P = 0.2; default_MC_YAW_TQ_CUTOFF: MC_YAW_TQ_CUTOFF = 2; default_MC_YR_INT_LIM: MC_YR_INT_LIM = 0.3; default_CA_FAILURE_MODE: CA_FAILURE_MODE = 0; default_CA_HELI_PITCH_C0: CA_HELI_PITCH_C0 = -0.05; default_CA_HELI_PITCH_C1: CA_HELI_PITCH_C1 = 0.0725; default_CA_HELI_PITCH_C2: CA_HELI_PITCH_C2 = 0.2; default_CA_HELI_PITCH_C3: CA_HELI_PITCH_C3 = 0.325; default_CA_HELI_PITCH_C4: CA_HELI_PITCH_C4 = 0.45; default_CA_HELI_RPM_I: CA_HELI_RPM_I = 0; default_CA_HELI_RPM_P: CA_HELI_RPM_P = 0; default_CA_HELI_RPM_SP: CA_HELI_RPM_SP = 1500; default_CA_HELI_THR_C0: CA_HELI_THR_C0 = 1; default_CA_HELI_THR_C1: CA_HELI_THR_C1 = 1; default_CA_HELI_THR_C2: CA_HELI_THR_C2 = 1; default_CA_HELI_THR_C3: CA_HELI_THR_C3 = 1; default_CA_HELI_THR_C4: CA_HELI_THR_C4 = 1; default_CA_HELI_YAW_CCW: CA_HELI_YAW_CCW = 0; default_CA_HELI_YAW_CP_O: CA_HELI_YAW_CP_O = 0; default_CA_HELI_YAW_CP_S: CA_HELI_YAW_CP_S = 0; default_CA_HELI_YAW_TH_S: CA_HELI_YAW_TH_S = 0; default_CA_MAX_SVO_THROW: CA_MAX_SVO_THROW = 0; default_CA_METHOD: CA_METHOD = 2; default_CA_R0_SLEW: CA_R0_SLEW = 0; default_CA_R10_SLEW: CA_R10_SLEW = 0; default_CA_R11_SLEW: CA_R11_SLEW = 0; default_CA_R1_SLEW: CA_R1_SLEW = 0; default_CA_R2_SLEW: CA_R2_SLEW = 0; default_CA_R3_SLEW: CA_R3_SLEW = 0; default_CA_R4_SLEW: CA_R4_SLEW = 0; default_CA_R5_SLEW: CA_R5_SLEW = 0; default_CA_R6_SLEW: CA_R6_SLEW = 0; default_CA_R7_SLEW: CA_R7_SLEW = 0; default_CA_R8_SLEW: CA_R8_SLEW = 0; default_CA_R9_SLEW: CA_R9_SLEW = 0; default_CA_ROTOR0_AX: CA_ROTOR0_AX = 0; default_CA_ROTOR0_AY: CA_ROTOR0_AY = 0; default_CA_ROTOR0_AZ: CA_ROTOR0_AZ = -1; default_CA_ROTOR0_CT: CA_ROTOR0_CT = 6.5; default_CA_ROTOR0_PZ: CA_ROTOR0_PZ = 0; default_CA_ROTOR0_TILT: CA_ROTOR0_TILT = 0; default_CA_ROTOR10_AX: CA_ROTOR10_AX = 0; default_CA_ROTOR10_AY: CA_ROTOR10_AY = 0; default_CA_ROTOR10_AZ: CA_ROTOR10_AZ = -1; default_CA_ROTOR10_CT: CA_ROTOR10_CT = 6.5; default_CA_ROTOR10_KM: CA_ROTOR10_KM = 0.05; default_CA_ROTOR10_PX: CA_ROTOR10_PX = 0; default_CA_ROTOR10_PY: CA_ROTOR10_PY = 0; default_CA_ROTOR10_PZ: CA_ROTOR10_PZ = 0; default_CA_ROTOR10_TILT: CA_ROTOR10_TILT = 0; default_CA_ROTOR11_AX: CA_ROTOR11_AX = 0; default_CA_ROTOR11_AY: CA_ROTOR11_AY = 0; default_CA_ROTOR11_AZ: CA_ROTOR11_AZ = -1; default_CA_ROTOR11_CT: CA_ROTOR11_CT = 6.5; default_CA_ROTOR11_KM: CA_ROTOR11_KM = 0.05; default_CA_ROTOR11_PX: CA_ROTOR11_PX = 0; default_CA_ROTOR11_PY: CA_ROTOR11_PY = 0; default_CA_ROTOR11_PZ: CA_ROTOR11_PZ = 0; default_CA_ROTOR11_TILT: CA_ROTOR11_TILT = 0; default_CA_ROTOR1_AX: CA_ROTOR1_AX = 0; default_CA_ROTOR1_AY: CA_ROTOR1_AY = 0; default_CA_ROTOR1_AZ: CA_ROTOR1_AZ = -1; default_CA_ROTOR1_CT: CA_ROTOR1_CT = 6.5; default_CA_ROTOR1_PZ: CA_ROTOR1_PZ = 0; default_CA_ROTOR1_TILT: CA_ROTOR1_TILT = 0; default_CA_ROTOR2_AX: CA_ROTOR2_AX = 0; default_CA_ROTOR2_AY: CA_ROTOR2_AY = 0; default_CA_ROTOR2_AZ: CA_ROTOR2_AZ = -1; default_CA_ROTOR2_CT: CA_ROTOR2_CT = 6.5; default_CA_ROTOR2_PZ: CA_ROTOR2_PZ = 0; default_CA_ROTOR2_TILT: CA_ROTOR2_TILT = 0; default_CA_ROTOR3_AX: CA_ROTOR3_AX = 0; default_CA_ROTOR3_AY: CA_ROTOR3_AY = 0; default_CA_ROTOR3_AZ: CA_ROTOR3_AZ = -1; default_CA_ROTOR3_CT: CA_ROTOR3_CT = 6.5; default_CA_ROTOR3_PZ: CA_ROTOR3_PZ = 0; default_CA_ROTOR3_TILT: CA_ROTOR3_TILT = 0; default_CA_ROTOR4_AX: CA_ROTOR4_AX = 0; default_CA_ROTOR4_AY: CA_ROTOR4_AY = 0; default_CA_ROTOR4_AZ: CA_ROTOR4_AZ = -1; default_CA_ROTOR4_CT: CA_ROTOR4_CT = 6.5; default_CA_ROTOR4_KM: CA_ROTOR4_KM = 0.05; default_CA_ROTOR4_PX: CA_ROTOR4_PX = 0; default_CA_ROTOR4_PY: CA_ROTOR4_PY = 0; default_CA_ROTOR4_PZ: CA_ROTOR4_PZ = 0; default_CA_ROTOR4_TILT: CA_ROTOR4_TILT = 0; default_CA_ROTOR5_AX: CA_ROTOR5_AX = 0; default_CA_ROTOR5_AY: CA_ROTOR5_AY = 0; default_CA_ROTOR5_AZ: CA_ROTOR5_AZ = -1; default_CA_ROTOR5_CT: CA_ROTOR5_CT = 6.5; default_CA_ROTOR5_KM: CA_ROTOR5_KM = 0.05; default_CA_ROTOR5_PX: CA_ROTOR5_PX = 0; default_CA_ROTOR5_PY: CA_ROTOR5_PY = 0; default_CA_ROTOR5_PZ: CA_ROTOR5_PZ = 0; default_CA_ROTOR5_TILT: CA_ROTOR5_TILT = 0; default_CA_ROTOR6_AX: CA_ROTOR6_AX = 0; default_CA_ROTOR6_AY: CA_ROTOR6_AY = 0; default_CA_ROTOR6_AZ: CA_ROTOR6_AZ = -1; default_CA_ROTOR6_CT: CA_ROTOR6_CT = 6.5; default_CA_ROTOR6_KM: CA_ROTOR6_KM = 0.05; default_CA_ROTOR6_PX: CA_ROTOR6_PX = 0; default_CA_ROTOR6_PY: CA_ROTOR6_PY = 0; default_CA_ROTOR6_PZ: CA_ROTOR6_PZ = 0; default_CA_ROTOR6_TILT: CA_ROTOR6_TILT = 0; default_CA_ROTOR7_AX: CA_ROTOR7_AX = 0; default_CA_ROTOR7_AY: CA_ROTOR7_AY = 0; default_CA_ROTOR7_AZ: CA_ROTOR7_AZ = -1; default_CA_ROTOR7_CT: CA_ROTOR7_CT = 6.5; default_CA_ROTOR7_KM: CA_ROTOR7_KM = 0.05; default_CA_ROTOR7_PX: CA_ROTOR7_PX = 0; default_CA_ROTOR7_PY: CA_ROTOR7_PY = 0; default_CA_ROTOR7_PZ: CA_ROTOR7_PZ = 0; default_CA_ROTOR7_TILT: CA_ROTOR7_TILT = 0; default_CA_ROTOR8_AX: CA_ROTOR8_AX = 0; default_CA_ROTOR8_AY: CA_ROTOR8_AY = 0; default_CA_ROTOR8_AZ: CA_ROTOR8_AZ = -1; default_CA_ROTOR8_CT: CA_ROTOR8_CT = 6.5; default_CA_ROTOR8_KM: CA_ROTOR8_KM = 0.05; default_CA_ROTOR8_PX: CA_ROTOR8_PX = 0; default_CA_ROTOR8_PY: CA_ROTOR8_PY = 0; default_CA_ROTOR8_PZ: CA_ROTOR8_PZ = 0; default_CA_ROTOR8_TILT: CA_ROTOR8_TILT = 0; default_CA_ROTOR9_AX: CA_ROTOR9_AX = 0; default_CA_ROTOR9_AY: CA_ROTOR9_AY = 0; default_CA_ROTOR9_AZ: CA_ROTOR9_AZ = -1; default_CA_ROTOR9_CT: CA_ROTOR9_CT = 6.5; default_CA_ROTOR9_KM: CA_ROTOR9_KM = 0.05; default_CA_ROTOR9_PX: CA_ROTOR9_PX = 0; default_CA_ROTOR9_PY: CA_ROTOR9_PY = 0; default_CA_ROTOR9_PZ: CA_ROTOR9_PZ = 0; default_CA_ROTOR9_TILT: CA_ROTOR9_TILT = 0; default_CA_R_REV: CA_R_REV = 0; default_CA_SP0_ANG0: CA_SP0_ANG0 = 0; default_CA_SP0_ANG1: CA_SP0_ANG1 = 140; default_CA_SP0_ANG2: CA_SP0_ANG2 = 220; default_CA_SP0_ANG3: CA_SP0_ANG3 = 0; default_CA_SP0_ARM_L0: CA_SP0_ARM_L0 = 1; default_CA_SP0_ARM_L1: CA_SP0_ARM_L1 = 1; default_CA_SP0_ARM_L2: CA_SP0_ARM_L2 = 1; default_CA_SP0_ARM_L3: CA_SP0_ARM_L3 = 1; default_CA_SP0_COUNT: CA_SP0_COUNT = 3; default_CA_SV0_SLEW: CA_SV0_SLEW = 0; default_CA_SV1_SLEW: CA_SV1_SLEW = 0; default_CA_SV2_SLEW: CA_SV2_SLEW = 0; default_CA_SV3_SLEW: CA_SV3_SLEW = 0; default_CA_SV4_SLEW: CA_SV4_SLEW = 0; default_CA_SV5_SLEW: CA_SV5_SLEW = 0; default_CA_SV6_SLEW: CA_SV6_SLEW = 0; default_CA_SV7_SLEW: CA_SV7_SLEW = 0; default_CA_SV_CS0_FLAP: CA_SV_CS0_FLAP = 0; default_CA_SV_CS0_SPOIL: CA_SV_CS0_SPOIL = 0; default_CA_SV_CS0_TRIM: CA_SV_CS0_TRIM = 0; default_CA_SV_CS0_TRQ_P: CA_SV_CS0_TRQ_P = 0; default_CA_SV_CS0_TRQ_R: CA_SV_CS0_TRQ_R = 0; default_CA_SV_CS0_TRQ_Y: CA_SV_CS0_TRQ_Y = 0; default_CA_SV_CS0_TYPE: CA_SV_CS0_TYPE = 0; default_CA_SV_CS1_FLAP: CA_SV_CS1_FLAP = 0; default_CA_SV_CS1_SPOIL: CA_SV_CS1_SPOIL = 0; default_CA_SV_CS1_TRIM: CA_SV_CS1_TRIM = 0; default_CA_SV_CS1_TRQ_P: CA_SV_CS1_TRQ_P = 0; default_CA_SV_CS1_TRQ_R: CA_SV_CS1_TRQ_R = 0; default_CA_SV_CS1_TRQ_Y: CA_SV_CS1_TRQ_Y = 0; default_CA_SV_CS1_TYPE: CA_SV_CS1_TYPE = 0; default_CA_SV_CS2_FLAP: CA_SV_CS2_FLAP = 0; default_CA_SV_CS2_SPOIL: CA_SV_CS2_SPOIL = 0; default_CA_SV_CS2_TRIM: CA_SV_CS2_TRIM = 0; default_CA_SV_CS2_TRQ_P: CA_SV_CS2_TRQ_P = 0; default_CA_SV_CS2_TRQ_R: CA_SV_CS2_TRQ_R = 0; default_CA_SV_CS2_TRQ_Y: CA_SV_CS2_TRQ_Y = 0; default_CA_SV_CS2_TYPE: CA_SV_CS2_TYPE = 0; default_CA_SV_CS3_FLAP: CA_SV_CS3_FLAP = 0; default_CA_SV_CS3_SPOIL: CA_SV_CS3_SPOIL = 0; default_CA_SV_CS3_TRIM: CA_SV_CS3_TRIM = 0; default_CA_SV_CS3_TRQ_P: CA_SV_CS3_TRQ_P = 0; default_CA_SV_CS3_TRQ_R: CA_SV_CS3_TRQ_R = 0; default_CA_SV_CS3_TRQ_Y: CA_SV_CS3_TRQ_Y = 0; default_CA_SV_CS3_TYPE: CA_SV_CS3_TYPE = 0; default_CA_SV_CS4_FLAP: CA_SV_CS4_FLAP = 0; default_CA_SV_CS4_SPOIL: CA_SV_CS4_SPOIL = 0; default_CA_SV_CS4_TRIM: CA_SV_CS4_TRIM = 0; default_CA_SV_CS4_TRQ_P: CA_SV_CS4_TRQ_P = 0; default_CA_SV_CS4_TRQ_R: CA_SV_CS4_TRQ_R = 0; default_CA_SV_CS4_TRQ_Y: CA_SV_CS4_TRQ_Y = 0; default_CA_SV_CS4_TYPE: CA_SV_CS4_TYPE = 0; default_CA_SV_CS5_FLAP: CA_SV_CS5_FLAP = 0; default_CA_SV_CS5_SPOIL: CA_SV_CS5_SPOIL = 0; default_CA_SV_CS5_TRIM: CA_SV_CS5_TRIM = 0; default_CA_SV_CS5_TRQ_P: CA_SV_CS5_TRQ_P = 0; default_CA_SV_CS5_TRQ_R: CA_SV_CS5_TRQ_R = 0; default_CA_SV_CS5_TRQ_Y: CA_SV_CS5_TRQ_Y = 0; default_CA_SV_CS5_TYPE: CA_SV_CS5_TYPE = 0; default_CA_SV_CS6_FLAP: CA_SV_CS6_FLAP = 0; default_CA_SV_CS6_SPOIL: CA_SV_CS6_SPOIL = 0; default_CA_SV_CS6_TRIM: CA_SV_CS6_TRIM = 0; default_CA_SV_CS6_TRQ_P: CA_SV_CS6_TRQ_P = 0; default_CA_SV_CS6_TRQ_R: CA_SV_CS6_TRQ_R = 0; default_CA_SV_CS6_TRQ_Y: CA_SV_CS6_TRQ_Y = 0; default_CA_SV_CS6_TYPE: CA_SV_CS6_TYPE = 0; default_CA_SV_CS7_FLAP: CA_SV_CS7_FLAP = 0; default_CA_SV_CS7_SPOIL: CA_SV_CS7_SPOIL = 0; default_CA_SV_CS7_TRIM: CA_SV_CS7_TRIM = 0; default_CA_SV_CS7_TRQ_P: CA_SV_CS7_TRQ_P = 0; default_CA_SV_CS7_TRQ_R: CA_SV_CS7_TRQ_R = 0; default_CA_SV_CS7_TRQ_Y: CA_SV_CS7_TRQ_Y = 0; default_CA_SV_CS7_TYPE: CA_SV_CS7_TYPE = 0; default_CA_SV_CS_COUNT: CA_SV_CS_COUNT = 0; default_CA_SV_TL0_CT: CA_SV_TL0_CT = 1; default_CA_SV_TL0_MAXA: CA_SV_TL0_MAXA = 90; default_CA_SV_TL0_MINA: CA_SV_TL0_MINA = 0; default_CA_SV_TL0_TD: CA_SV_TL0_TD = 0; default_CA_SV_TL1_CT: CA_SV_TL1_CT = 1; default_CA_SV_TL1_MAXA: CA_SV_TL1_MAXA = 90; default_CA_SV_TL1_MINA: CA_SV_TL1_MINA = 0; default_CA_SV_TL1_TD: CA_SV_TL1_TD = 0; default_CA_SV_TL2_CT: CA_SV_TL2_CT = 1; default_CA_SV_TL2_MAXA: CA_SV_TL2_MAXA = 90; default_CA_SV_TL2_MINA: CA_SV_TL2_MINA = 0; default_CA_SV_TL2_TD: CA_SV_TL2_TD = 0; default_CA_SV_TL3_CT: CA_SV_TL3_CT = 1; default_CA_SV_TL3_MAXA: CA_SV_TL3_MAXA = 90; default_CA_SV_TL3_MINA: CA_SV_TL3_MINA = 0; default_CA_SV_TL3_TD: CA_SV_TL3_TD = 0; default_CA_SV_TL_COUNT: CA_SV_TL_COUNT = 0; default_COM_SPOOLUP_TIME: COM_SPOOLUP_TIME = 1; default_MC_AIRMODE: MC_AIRMODE = 0; x500_frame: CA_AIRFRAME = 0 ∧ CA_ROTOR_COUNT = 4; x500_rotor0: CA_ROTOR0_PX = 0.13 ∧ CA_ROTOR0_PY = 0.22 ∧ CA_ROTOR0_KM = 0.05; x500_rotor1: CA_ROTOR1_PX = -0.13 ∧ CA_ROTOR1_PY = -0.2 ∧ CA_ROTOR1_KM = 0.05; x500_rotor2: CA_ROTOR2_PX = 0.13 ∧ CA_ROTOR2_PY = -0.22 ∧ CA_ROTOR2_KM = -0.05; x500_rotor3: CA_ROTOR3_PX = -0.13 ∧ CA_ROTOR3_PY = 0.2 ∧ CA_ROTOR3_KM = -0.05; no_noise: noise_on = false; mode: vehicle_control_mode_updated ∧ vehicle_control_mode_flag_armed ∧ vehicle_control_mode_flag_control_rates_enabled ∧ vehicle_control_mode_flag_control_allocation_enabled ∧ ¬vehicle_control_mode_flag_control_manual_enabled; status: vehicle_status_updated ∧ vehicle_status_vehicle_type = 1 ∧ vehicle_status_arming_state = 2 ∧ ¬vehicle_status_is_vtol; setpoint: vehicle_rates_setpoint_updated ∧ |vehicle_rates_setpoint_roll| ≤ 0.2 ∧ |vehicle_rates_setpoint_pitch| ≤ 0.2 ∧ |vehicle_rates_setpoint_yaw| ≤ 0.2 ∧ vehicle_rates_setpoint_thrust_body_0 = 0 ∧ vehicle_rates_setpoint_thrust_body_1 = 0 ∧ -0.7 ≤ vehicle_rates_setpoint_thrust_body_2 ∧ vehicle_rates_setpoint_thrust_body_2 ≤ -0.5; quiet: ¬vehicle_land_detected_updated ∧ ¬battery_status_updated ∧ ¬manual_control_setpoint_updated ∧ ¬failure_detector_status_updated; imu_full_scale_default: imu_acc_fs_g = 0 ∧ imu_gyro_fs_dps = 0",
+ "regime": "x500_hover",
+ "outputs_seen":
+ {"wall_clear": {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "vel_n":
+  {"non_finite_steps": 0, "min_finite": -0.007853466, "max_finite": 0.2320971},
+  "vel_e":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003809872,
+   "max_finite": 0.0006774021},
+  "vel_d":
+  {"non_finite_steps": 0, "min_finite": -2.661586, "max_finite": 0.007935437},
+  "vehicle_torque_setpoint_xyz_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.006955935,
+   "max_finite": 0.007641583},
+  "vehicle_torque_setpoint_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -0.03966176, "max_finite": 0.0369229},
+  "vehicle_torque_setpoint_xyz_0":
+  {"non_finite_steps": 0,
+   "min_finite": -0.002883974,
+   "max_finite": 0.006885818},
+  "vehicle_torque_setpoint_updated": {"true_steps": 1994},
+  "vehicle_torque_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_torque_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_thrust_setpoint_xyz_2":
+  {"non_finite_steps": 0, "min_finite": -0.7, "max_finite": 0},
+  "vehicle_thrust_setpoint_xyz_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_thrust_setpoint_xyz_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_thrust_setpoint_updated": {"true_steps": 1994},
+  "vehicle_thrust_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_thrust_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_magnetometer_updated": {"true_steps": 70},
+  "vehicle_magnetometer_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4900000},
+  "vehicle_magnetometer_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4910000},
+  "vehicle_magnetometer_magnetometer_ga_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.4792575},
+  "vehicle_magnetometer_magnetometer_ga_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.01521515},
+  "vehicle_magnetometer_magnetometer_ga_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2112866},
+  "vehicle_magnetometer_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "vehicle_magnetometer_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_updated": {"true_steps": 997},
+  "vehicle_imu_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "vehicle_imu_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "vehicle_imu_status_var_gyro_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.000003788887},
+  "vehicle_imu_status_var_gyro_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0004770129},
+  "vehicle_imu_status_var_gyro_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0001235794},
+  "vehicle_imu_status_var_accel_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 11.97003},
+  "vehicle_imu_status_var_accel_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.338493},
+  "vehicle_imu_status_var_accel_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.1189546},
+  "vehicle_imu_status_updated": {"true_steps": 50},
+  "vehicle_imu_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4917500},
+  "vehicle_imu_status_temperature_gyro":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_temperature_accel":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_mean_gyro_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.006758147,
+   "max_finite": 0.007440076},
+  "vehicle_imu_status_mean_gyro_1":
+  {"non_finite_steps": 0, "min_finite": -0.02055816, "max_finite": 0.02672545},
+  "vehicle_imu_status_mean_gyro_0":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008730138,
+   "max_finite": 0.002616164},
+  "vehicle_imu_status_mean_accel_2":
+  {"non_finite_steps": 0, "min_finite": -11.33478, "max_finite": 0},
+  "vehicle_imu_status_mean_accel_1":
+  {"non_finite_steps": 0,
+   "min_finite": -0.8246103,
+   "max_finite": 0.00004333514},
+  "vehicle_imu_status_mean_accel_0":
+  {"non_finite_steps": 0, "min_finite": -0.994013, "max_finite": 0.0004704691},
+  "vehicle_imu_status_gyro_vibration_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.003441361},
+  "vehicle_imu_status_gyro_raw_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_gyro_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_gyro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_status_gyro_clipping_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_clipping_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_gyro_clipping_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_delta_angle_coning_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0000000008269936},
+  "vehicle_imu_status_accel_vibration_metric":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.167807},
+  "vehicle_imu_status_accel_raw_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_accel_rate_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "vehicle_imu_status_accel_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_status_accel_clipping_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_clipping_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_status_accel_clipping_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_gyro_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_imu_delta_velocity_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "vehicle_imu_delta_velocity_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_delta_velocity_2":
+  {"non_finite_steps": 0, "min_finite": -0.128543, "max_finite": 0},
+  "vehicle_imu_delta_velocity_1":
+  {"non_finite_steps": 0, "min_finite": -0.00590721, "max_finite": 0.001013083},
+  "vehicle_imu_delta_velocity_0":
+  {"non_finite_steps": 0, "min_finite": -0.01260493, "max_finite": 0.001476902},
+  "vehicle_imu_delta_angle_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "vehicle_imu_delta_angle_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_imu_delta_angle_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.00004234527,
+   "max_finite": 0.0000387609},
+  "vehicle_imu_delta_angle_1":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000201894,
+   "max_finite": 0.000209343},
+  "vehicle_imu_delta_angle_0":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0001379873,
+   "max_finite": 0.00002190889},
+  "vehicle_imu_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "vehicle_imu_accel_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_vel_ned_valid": {"true_steps": 1921},
+  "vehicle_gps_position_vel_n_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2320971},
+  "vehicle_gps_position_vel_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2321284},
+  "vehicle_gps_position_vel_e_m_s":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003809872,
+   "max_finite": 0.00006266865},
+  "vehicle_gps_position_vel_d_m_s":
+  {"non_finite_steps": 0, "min_finite": -2.661586, "max_finite": 0},
+  "vehicle_gps_position_vdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.1},
+  "vehicle_gps_position_updated": {"true_steps": 25},
+  "vehicle_gps_position_timestamp_time_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_gps_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_gps_position_time_utc_usec":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_system_error":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_spoofing_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_selected_rtcm_instance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_satellites_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "vehicle_gps_position_s_variance_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.25},
+  "vehicle_gps_position_rtcm_msg_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_rtcm_injection_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_rtcm_crc_failed": {"true_steps": 0},
+  "vehicle_gps_position_noise_per_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_longitude_deg_lo":
+  {"non_finite_steps": 0, "min_finite": -0.0000002350586, "max_finite": 0},
+  "vehicle_gps_position_longitude_deg":
+  {"non_finite_steps": 0, "min_finite": -105.0442, "max_finite": 0},
+  "vehicle_gps_position_latitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000001713086,
+   "max_finite": 0.000001701611},
+  "vehicle_gps_position_latitude_deg":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 38.84056},
+  "vehicle_gps_position_jamming_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_jamming_indicator":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading_offset":
+  {"non_finite_steps": 1921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading_accuracy":
+  {"non_finite_steps": 1921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_heading":
+  {"non_finite_steps": 1921, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_hdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7},
+  "vehicle_gps_position_fix_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "vehicle_gps_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8},
+  "vehicle_gps_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "vehicle_gps_position_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_cog_rad":
+  {"non_finite_steps": 0, "min_finite": -0.01884008, "max_finite": 0.001294734},
+  "vehicle_gps_position_c_variance_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_automatic_gain_control":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_authentication_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_msl_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_msl_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4308.719},
+  "vehicle_gps_position_altitude_ellipsoid_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_gps_position_altitude_ellipsoid_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4308.719},
+  "vehicle_angular_velocity_xyz_derivative_2":
+  {"non_finite_steps": 0, "min_finite": -0.3737715, "max_finite": 0.184047},
+  "vehicle_angular_velocity_xyz_derivative_1":
+  {"non_finite_steps": 0, "min_finite": -1.691359, "max_finite": 2.151346},
+  "vehicle_angular_velocity_xyz_derivative_0":
+  {"non_finite_steps": 0, "min_finite": -1.307804, "max_finite": 0.9227978},
+  "vehicle_angular_velocity_xyz_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008472163,
+   "max_finite": 0.007752588},
+  "vehicle_angular_velocity_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -0.03991982, "max_finite": 0.04154065},
+  "vehicle_angular_velocity_xyz_0":
+  {"non_finite_steps": 0, "min_finite": -0.02036363, "max_finite": 0.004150607},
+  "vehicle_angular_velocity_updated": {"true_steps": 1994},
+  "vehicle_angular_velocity_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_angular_velocity_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_air_data_updated": {"true_steps": 100},
+  "vehicle_air_data_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4980000},
+  "vehicle_air_data_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "vehicle_air_data_temperature_source":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_air_data_rho":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7164971},
+  "vehicle_air_data_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_air_data_baro_pressure_pa":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59274.27},
+  "vehicle_air_data_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "vehicle_air_data_baro_alt_meter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4306.42},
+  "vehicle_air_data_ambient_temperature":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 15},
+  "vehicle_acceleration_xyz_2":
+  {"non_finite_steps": 0, "min_finite": -11.29271, "max_finite": 0},
+  "vehicle_acceleration_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -0.6829735, "max_finite": 0.1424929},
+  "vehicle_acceleration_xyz_0":
+  {"non_finite_steps": 0, "min_finite": -0.7613323, "max_finite": 0.2704392},
+  "vehicle_acceleration_updated": {"true_steps": 997},
+  "vehicle_acceleration_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "vehicle_acceleration_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "thrust3": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.6818412},
+  "thrust2": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.6939865},
+  "thrust1": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.6811422},
+  "thrust0": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.6969709},
+  "t_us": {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 5000000},
+  "sensors_status_imu_updated": {"true_steps": 999},
+  "sensors_status_imu_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "sensors_status_imu_gyro_priority_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_priority_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "sensors_status_imu_gyro_inconsistency_rad_s_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_inconsistency_rad_s_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_healthy_3": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_2": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_1": {"true_steps": 0},
+  "sensors_status_imu_gyro_healthy_0": {"true_steps": 1994},
+  "sensors_status_imu_gyro_device_ids_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_gyro_device_ids_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_gyro_device_id_primary":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_accel_priority_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_priority_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "sensors_status_imu_accel_inconsistency_m_s_s_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_inconsistency_m_s_s_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_healthy_3": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_2": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_1": {"true_steps": 0},
+  "sensors_status_imu_accel_healthy_0": {"true_steps": 1994},
+  "sensors_status_imu_accel_device_ids_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensors_status_imu_accel_device_ids_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensors_status_imu_accel_device_id_primary":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_selection_updated": {"true_steps": 1},
+  "sensor_selection_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_selection_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_selection_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1310988},
+  "sensor_mag_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.4793487},
+  "sensor_mag_y":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.01521978},
+  "sensor_mag_x":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2113501},
+  "sensor_mag_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_mag_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_mag_temperature":
+  {"non_finite_steps": 500, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "sensor_mag_count": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_gyro_z":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008472014,
+   "max_finite": 0.007754889},
+  "sensor_gyro_y":
+  {"non_finite_steps": 0, "min_finite": -0.04079499, "max_finite": 0.0457348},
+  "sensor_gyro_x":
+  {"non_finite_steps": 0, "min_finite": -0.05331607, "max_finite": 0.0175104},
+  "sensor_gyro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 5000000},
+  "sensor_gyro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 5000000},
+  "sensor_gyro_temperature":
+  {"non_finite_steps": 2000, "min_finite": null, "max_finite": null},
+  "sensor_gyro_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_gyro_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_vel_ned_valid": {"true_steps": 25},
+  "sensor_gps_vel_n_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2320971},
+  "sensor_gps_vel_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2321284},
+  "sensor_gps_vel_e_m_s":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003809872,
+   "max_finite": 0.00006266865},
+  "sensor_gps_vel_d_m_s":
+  {"non_finite_steps": 0, "min_finite": -2.661586, "max_finite": 0},
+  "sensor_gps_vdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.1},
+  "sensor_gps_updated": {"true_steps": 25},
+  "sensor_gps_timestamp_time_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_gps_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_gps_time_utc_usec":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_system_error":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_spoofing_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_selected_rtcm_instance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_satellites_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "sensor_gps_s_variance_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.25},
+  "sensor_gps_rtcm_msg_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_injection_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_crc_failed": {"true_steps": 0},
+  "sensor_gps_noise_per_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_longitude_deg_lo":
+  {"non_finite_steps": 0, "min_finite": -0.0000002350586, "max_finite": 0},
+  "sensor_gps_longitude_deg":
+  {"non_finite_steps": 0, "min_finite": -105.0442, "max_finite": 0},
+  "sensor_gps_latitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000001713086,
+   "max_finite": 0.000001701611},
+  "sensor_gps_latitude_deg":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 38.84056},
+  "sensor_gps_jamming_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_jamming_indicator":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_offset":
+  {"non_finite_steps": 25, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_accuracy":
+  {"non_finite_steps": 25, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading":
+  {"non_finite_steps": 25, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_hdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7},
+  "sensor_gps_fix_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "sensor_gps_epv": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8},
+  "sensor_gps_eph": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "sensor_gps_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_cog_rad":
+  {"non_finite_steps": 0, "min_finite": -0.01884008, "max_finite": 0.001294734},
+  "sensor_gps_c_variance_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_automatic_gain_control":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_authentication_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4308.719},
+  "sensor_gps_altitude_ellipsoid_m_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_ellipsoid_m":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4308.719},
+  "sensor_combined_updated": {"true_steps": 997},
+  "sensor_combined_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "sensor_combined_gyro_rad_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008469054,
+   "max_finite": 0.007752181},
+  "sensor_combined_gyro_rad_1":
+  {"non_finite_steps": 0, "min_finite": -0.0403788, "max_finite": 0.0418686},
+  "sensor_combined_gyro_rad_0":
+  {"non_finite_steps": 0, "min_finite": -0.02759746, "max_finite": 0.004381778},
+  "sensor_combined_gyro_integral_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_combined_gyro_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_gyro_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_combined_accelerometer_timestamp_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_accelerometer_m_s2_2":
+  {"non_finite_steps": 0, "min_finite": -11.31117, "max_finite": 0},
+  "sensor_combined_accelerometer_m_s2_1":
+  {"non_finite_steps": 0, "min_finite": -0.7050743, "max_finite": 0.2026166},
+  "sensor_combined_accelerometer_m_s2_0":
+  {"non_finite_steps": 0, "min_finite": -0.720282, "max_finite": 0.2953804},
+  "sensor_combined_accelerometer_integral_dt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 17500},
+  "sensor_combined_accelerometer_clipping":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_combined_accel_calibration_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_baro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_baro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "sensor_baro_temperature":
+  {"non_finite_steps": 0, "min_finite": -12.9877, "max_finite": 0},
+  "sensor_baro_pressure":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59274.27},
+  "sensor_baro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "sensor_baro_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_accel_z":
+  {"non_finite_steps": 0, "min_finite": -16.52422, "max_finite": -4.170613},
+  "sensor_accel_y":
+  {"non_finite_steps": 0, "min_finite": -2.559909, "max_finite": 0.5317175},
+  "sensor_accel_x":
+  {"non_finite_steps": 0, "min_finite": -1.018368, "max_finite": 0.7663026},
+  "sensor_accel_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 5000000},
+  "sensor_accel_timestamp":
+  {"non_finite_steps": 0, "min_finite": 2500, "max_finite": 5000000},
+  "sensor_accel_temperature":
+  {"non_finite_steps": 2000, "min_finite": null, "max_finite": null},
+  "sensor_accel_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_accel_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_r":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008472014,
+   "max_finite": 0.007754889},
+  "rate_q":
+  {"non_finite_steps": 0, "min_finite": -0.04079499, "max_finite": 0.0457348},
+  "rate_p":
+  {"non_finite_steps": 0, "min_finite": -0.05331607, "max_finite": 0.0175104},
+  "rate_ctrl_status_yawspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_ctrl_status_updated": {"true_steps": 1994},
+  "rate_ctrl_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "rate_ctrl_status_rollspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_ctrl_status_pitchspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "q4":
+  {"non_finite_steps": 0,
+   "min_finite": -0.001496185,
+   "max_finite": 0.0006653061},
+  "q3":
+  {"non_finite_steps": 0,
+   "min_finite": -0.004716179,
+   "max_finite": -0.00002228271},
+  "q2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0002133858,
+   "max_finite": 0.0001275347},
+  "q1":
+  {"non_finite_steps": 0, "min_finite": 0.9999889, "max_finite": 0.9999996},
+  "px4_sensors_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_rate_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_alloc_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pwm3": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1725},
+  "pwm2": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1730},
+  "pwm1": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1727},
+  "pwm0": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1727},
+  "pos_n":
+  {"non_finite_steps": 0, "min_finite": 0.001201779, "max_finite": 0.5699653},
+  "pos_e":
+  {"non_finite_steps": 0,
+   "min_finite": -0.006901144,
+   "max_finite": 0.0001602155},
+  "pos_d":
+  {"non_finite_steps": 0, "min_finite": -6.718519, "max_finite": -0.1264044},
+  "mag_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 479.3487},
+  "mag_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 15.21978},
+  "mag_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 211.3501},
+  "mag_fresh": {"true_steps": 500},
+  "imu2_gz":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008472014,
+   "max_finite": 0.007754889},
+  "imu2_gy":
+  {"non_finite_steps": 0, "min_finite": -0.04079499, "max_finite": 0.0457348},
+  "imu2_gx":
+  {"non_finite_steps": 0, "min_finite": -0.05331607, "max_finite": 0.0175104},
+  "imu2_az":
+  {"non_finite_steps": 0, "min_finite": -16.52422, "max_finite": -4.170613},
+  "imu2_ay":
+  {"non_finite_steps": 0, "min_finite": -2.559909, "max_finite": 0.5317175},
+  "imu2_ax":
+  {"non_finite_steps": 0, "min_finite": -1.018368, "max_finite": 0.7663026},
+  "imu1_gz":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008471934,
+   "max_finite": 0.007754424},
+  "imu1_gy":
+  {"non_finite_steps": 0, "min_finite": -0.04079482, "max_finite": 0.04216272},
+  "imu1_gx":
+  {"non_finite_steps": 0, "min_finite": -0.01748838, "max_finite": 0.0367982},
+  "imu1_az":
+  {"non_finite_steps": 0, "min_finite": -23.20933, "max_finite": -2.213287},
+  "imu1_ay":
+  {"non_finite_steps": 0, "min_finite": -1.57659, "max_finite": 1.405907},
+  "imu1_ax":
+  {"non_finite_steps": 0, "min_finite": -1.683389, "max_finite": 1.823663},
+  "imu0_gz":
+  {"non_finite_steps": 0,
+   "min_finite": -0.008472353,
+   "max_finite": 0.007755029},
+  "imu0_gy":
+  {"non_finite_steps": 0, "min_finite": -0.04087121, "max_finite": 0.04231919},
+  "imu0_gx":
+  {"non_finite_steps": 0, "min_finite": -0.04962678, "max_finite": 0.04291895},
+  "imu0_az":
+  {"non_finite_steps": 0, "min_finite": -11.38854, "max_finite": -1.836541},
+  "imu0_ay":
+  {"non_finite_steps": 0, "min_finite": -1.066125, "max_finite": 1.568169},
+  "imu0_ax":
+  {"non_finite_steps": 0, "min_finite": -1.435661, "max_finite": 0.5991712},
+  "gps_vn": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2320971},
+  "gps_ve":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003809872,
+   "max_finite": 0.00006266865},
+  "gps_vd": {"non_finite_steps": 0, "min_finite": -2.661586, "max_finite": 0},
+  "gps_lon_e7":
+  {"non_finite_steps": 0, "min_finite": -1050442000, "max_finite": 0},
+  "gps_lat_e7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 388405600},
+  "gps_fresh": {"true_steps": 25},
+  "gps_alt": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4308.719},
+  "control_allocator_status_updated": {"true_steps": 997},
+  "control_allocator_status_unallocated_torque_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.00000005512265,
+   "max_finite": 0.00000005349284},
+  "control_allocator_status_unallocated_torque_1":
+  {"non_finite_steps": 0,
+   "min_finite": -0.00000006798655,
+   "max_finite": 0.00000006053597},
+  "control_allocator_status_unallocated_torque_0":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0000001223525,
+   "max_finite": 0.000000107837},
+  "control_allocator_status_unallocated_thrust_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0000001192093,
+   "max_finite": 0.00000005960464},
+  "control_allocator_status_unallocated_thrust_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_unallocated_thrust_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_torque_setpoint_achieved": {"true_steps": 1994},
+  "control_allocator_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4997500},
+  "control_allocator_status_thrust_setpoint_achieved": {"true_steps": 1994},
+  "control_allocator_status_motor_stop_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_handled_motor_failure_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_9":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_8":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_15":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_14":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_13":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_12":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_11":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_10":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "baro_pa": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 59274.27},
+  "baro_fresh": {"true_steps": 500},
+  "baro_degc": {"non_finite_steps": 0, "min_finite": -12.9877, "max_finite": 0},
+  "actuator_servos_updated": {"true_steps": 0},
+  "actuator_servos_trim_updated": {"true_steps": 1},
+  "actuator_servos_trim_trim_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_updated": {"true_steps": 1994},
+  "actuator_motors_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "actuator_motors_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5000000},
+  "actuator_motors_reversible_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_9":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_8":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_7":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_6":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_5":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_4":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7254755},
+  "actuator_motors_control_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7300144},
+  "actuator_motors_control_11":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_10":
+  {"non_finite_steps": 1994, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7267965},
+  "actuator_motors_control_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.726518},
+  "actuator_controls_status_0_updated": {"true_steps": 9},
+  "actuator_controls_status_0_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4522500},
+  "actuator_controls_status_0_control_power_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.00001030979},
+  "actuator_controls_status_0_control_power_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.0002797595},
+  "actuator_controls_status_0_control_power_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.000001084028}},
+ "monitored":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 - 1| ≤ 4e-7",
+   "smallest_margin_case":
+   {"step": 82,
+    "sha256":
+    "e3a3f75ddef3a036f9248cfebaecabe99bfc0f3a33eb05fe02e120f3874d1067",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step82.json",
+    "case": 0},
+   "smallest_margin": 0.0000002807907,
+   "path": "px4_closed_rate/plant_sim",
+   "contract_hash":
+   "f55c2ad8196738c86b404542f79a0d1205244ac88c95233876326b68c95f3490",
+   "clause": "quat_unit",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ thrust0 ∧ thrust0 ≤ 1 ∧ 0 ≤ thrust1 ∧ thrust1 ≤ 1 ∧ 0 ≤ thrust2 ∧ thrust2 ≤ 1 ∧ 0 ≤ thrust3 ∧ thrust3 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/plant_sim",
+   "contract_hash":
+   "8df2f70c68187d649bb3737f5fc114f9d6b775c1a5e4d7a3548886c06e489e2c",
+   "clause": "thrust_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4) ∧ finite(rate_p) ∧ finite(rate_q) ∧ finite(rate_r) ∧ finite(thrust0) ∧ finite(thrust1) ∧ finite(thrust2) ∧ finite(thrust3) ∧ finite(imu0_ax) ∧ finite(imu0_ay) ∧ finite(imu0_az) ∧ finite(imu0_gx) ∧ finite(imu0_gy) ∧ finite(imu0_gz) ∧ finite(imu1_ax) ∧ finite(imu1_ay) ∧ finite(imu1_az) ∧ finite(imu1_gx) ∧ finite(imu1_gy) ∧ finite(imu1_gz) ∧ finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz) ∧ finite(baro_pa) ∧ finite(baro_degc) ∧ finite(mag_x) ∧ finite(mag_y) ∧ finite(mag_z) ∧ finite(gps_alt) ∧ finite(gps_vn) ∧ finite(gps_ve) ∧ finite(gps_vd) ∧ finite(wall_clear)",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/plant_sim",
+   "contract_hash":
+   "1b1e8f270dec7c8873e26d7b137ae48a03223887aec2aebd479b299c1ef1c94b",
+   "clause": "outputs_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ wall_clear ∧ wall_clear ≤ 2",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/plant_sim",
+   "contract_hash":
+   "3e62350ecafe2f8f9d4476c6a71d8db314d6344504d213bba3d8ef80cd092d7f",
+   "clause": "wall_clear_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ imu_gyro_fs_dps * 0.017453292)",
+   "smallest_margin_case":
+   {"step": 8,
+    "sha256":
+    "9dbd15e1fcb637dd26c774a2049947e31c8fdb7fb46de50b18f8bca12698ef27",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step8.json",
+    "case": 0},
+   "smallest_margin": 34.85327,
+   "path": "px4_closed_rate/plant_sim",
+   "contract_hash":
+   "7d33f862e7af49bcd242e2747117e85f078a216e852683f33e659a295ad138f4",
+   "clause": "imu_full_scale",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "sensor_accel_count = 1 ∧ sensor_gyro_count = 1",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "e11fd1d9690a0b3f8842f3aaf8a4cdcaccb994588febbe3be500c5bf1cbd44b4",
+   "clause": "imu_every_tick",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_x = imu2_gx ∧ sensor_gyro_y = imu2_gy ∧ sensor_gyro_z = imu2_gz",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "7023e7ef5211bfe9f24f28fea3e6254373fff9459671a881de70395ebbf82192",
+   "clause": "gyro_is_sample",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_accel_x = imu2_ax ∧ sensor_accel_y = imu2_ay ∧ sensor_accel_z = imu2_az",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "9aac68b34e0780190f75ac4a2585810acb6c9e9b3f01eda0ec8d9458d89ef1c6",
+   "clause": "accel_is_sample",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_timestamp_sample = t_us ∧ sensor_accel_timestamp_sample = t_us",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "6143d800428b3a7c85513524197ce4712f4301ae88148b0b46e7a587e0d15c0d",
+   "clause": "stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(sensor_baro_count = 1) = baro_fresh ∧ (sensor_mag_count = 1) = mag_fresh ∧ sensor_gps_updated = gps_fresh",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "b44758a2b1a713bae7c9415db1c4596a18d7dbb1f7b4191dd6cbe0fee3b410db",
+   "clause": "slow_when_fresh",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬mag_fresh ∨ |sensor_mag_x * 1000 - mag_x| ≤ 0.02 ∧ |sensor_mag_y * 1000 - mag_y| ≤ 0.02 ∧ |sensor_mag_z * 1000 - mag_z| ≤ 0.02",
+   "smallest_margin_case":
+   {"step": 3,
+    "sha256":
+    "7ee2fc6132198a000cfd4a1ef72680f49e7f81a9864dadfee8da34923b82e076",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step3.json",
+    "case": 0},
+   "smallest_margin": 0.02,
+   "path": "px4_closed_rate/px4_sim_in",
+   "contract_hash":
+   "0c69ed7c0a0896d426d1e56fdecc32fd8941fb20b73714a284dff1474fcd2284",
+   "clause": "mag_gauss",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_angular_velocity_updated ∨ finite(vehicle_angular_velocity_xyz_0) ∧ finite(vehicle_angular_velocity_xyz_1) ∧ finite(vehicle_angular_velocity_xyz_2)",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "416690d79108b71cece3697d3131b71b77ef705dcbc05a534ee3b0a04cb0dbdd",
+   "clause": "rates_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_angular_velocity_updated ∨ 1 ≤ sensor_gyro_count",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "39c1719d86d2d0c73739de1fcf067021488e39f90ba479f5409f7b6d56b2bbd6",
+   "clause": "rates_answer_gyro",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_sensors_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "489a4e73a24dca7e08636ad96ecb3bb360540178e46b2047c210bcccc172f50e",
+   "clause": "no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_angle_clipping ∧ vehicle_imu_delta_angle_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "c510d3f9971c35917f7eb36b46ca2e0f948b08c15365792fdecd4f6254af0869",
+   "clause": "width_vehicle_imu_delta_angle_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_velocity_clipping ∧ vehicle_imu_delta_velocity_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "59e48482d81098636e1ea6945fd753b0760120ae1d1cd01aa5d8b7759443e62e",
+   "clause": "width_vehicle_imu_delta_velocity_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_accel_calibration_count ∧ vehicle_imu_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "eef8ee18656d1177d7769da479189415420959daa8fb2ff286be4db36edeef0c",
+   "clause": "width_vehicle_imu_accel_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_gyro_calibration_count ∧ vehicle_imu_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "ec13b9d99687f05fc5afe9afc40437dd68e802aefbec165c8bfc0b41008e527b",
+   "clause": "width_vehicle_imu_gyro_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accelerometer_clipping ∧ sensor_combined_accelerometer_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "74ba446a4c9171d5a851d851ff929eaf4c43878e78c366cc3364f9d628618745",
+   "clause": "width_sensor_combined_accelerometer_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_clipping ∧ sensor_combined_gyro_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "831df3f60c7cf3a0ab073cb5a2c003385d44399c5ecf40aa1d5f1143d3468b03",
+   "clause": "width_sensor_combined_gyro_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accel_calibration_count ∧ sensor_combined_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "12fcd7eaf4448052509447124b54ad50146fde8191904afe3fba4d5bf3330a5b",
+   "clause": "width_sensor_combined_accel_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_calibration_count ∧ sensor_combined_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "6f31ae1580152b25eb9e1eaa62230b6be1bf766763221164a6d26631f502dedd",
+   "clause": "width_sensor_combined_gyro_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_temperature_source ∧ vehicle_air_data_temperature_source ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "d0aaddd9de5828a19f5b874bc20f9de42496afc3742b4a2389a16b83faac32f6",
+   "clause": "width_vehicle_air_data_temperature_source",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_calibration_count ∧ vehicle_air_data_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "99aff7046b3b996041fc9edb6e04cf3ebf800e436d33184f72a8cbbed6b8d3a1",
+   "clause": "width_vehicle_air_data_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_magnetometer_calibration_count ∧ vehicle_magnetometer_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "aa83f36216d6aa6a03e74e49644d89a7f6ae163aedafc0e22522f26de5effb82",
+   "clause": "width_vehicle_magnetometer_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_fix_type ∧ vehicle_gps_position_fix_type ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "09af57d7e6743edf48a0f2f4c3052a8f175bb1ed86c55b2e6eea4511832dc9ed",
+   "clause": "width_vehicle_gps_position_fix_type",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_automatic_gain_control ∧ vehicle_gps_position_automatic_gain_control ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "8381e71febb54eb2693b2c73a2a93f8ffeac48e8fa729305eec7ae70923d88ea",
+   "clause": "width_vehicle_gps_position_automatic_gain_control",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_jamming_state ∧ vehicle_gps_position_jamming_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "38064eb6aac9948db4f787bd052d4e76d6ef423d544abc9dafe44f77b8ef93eb",
+   "clause": "width_vehicle_gps_position_jamming_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_spoofing_state ∧ vehicle_gps_position_spoofing_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "29cf430ab3729e4a8a014b2b3a105b1d724e5cecd6de83a6aa0d84ae36869bd3",
+   "clause": "width_vehicle_gps_position_spoofing_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_authentication_state ∧ vehicle_gps_position_authentication_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "10fc4071625936c2109c2c5d73405c49b5c32319e10547f34545c9b910c944b5",
+   "clause": "width_vehicle_gps_position_authentication_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_satellites_used ∧ vehicle_gps_position_satellites_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "9de4d5c57ab8c25b8bc69bb636346ed596e14451c481f55f103c6248db8e1ff1",
+   "clause": "width_vehicle_gps_position_satellites_used",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_selected_rtcm_instance ∧ vehicle_gps_position_selected_rtcm_instance ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "19e654d59a56d2ebf72aaf2451fdfa2869dec534c316cfd74cff81edb6e9ac89",
+   "clause": "width_vehicle_gps_position_selected_rtcm_instance",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_rtcm_msg_used ∧ vehicle_gps_position_rtcm_msg_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "3175d231320acc5a1287ab964c8c7934d45001fd2ff70e225cdcb0477bbfb108",
+   "clause": "width_vehicle_gps_position_rtcm_msg_used",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_0 ∧ sensors_status_imu_accel_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "350d8acc916ecf13c44ba0ab00b7d184292ee45132d9bacc64ba7be8c7f56750",
+   "clause": "width_sensors_status_imu_accel_priority_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_1 ∧ sensors_status_imu_accel_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "4acc4dac5e45cc40f23af053f2a8f6f726cfe3b996cc52aa0a0ba0ce7e7d2cb9",
+   "clause": "width_sensors_status_imu_accel_priority_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_2 ∧ sensors_status_imu_accel_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "6e154897dbb951ae35268b01ccf2e05986b22f1ba9b558197e4cf9c247a68b78",
+   "clause": "width_sensors_status_imu_accel_priority_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_3 ∧ sensors_status_imu_accel_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "676eae44b636e578f53ffa015820ba2fc9f3f59f3aa0665b8c5e1d87655e5ffb",
+   "clause": "width_sensors_status_imu_accel_priority_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_0 ∧ sensors_status_imu_gyro_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "aa6c1d435ecefc6971bc2682ab7a920079f7acc31c537f631ee1873597ab03fb",
+   "clause": "width_sensors_status_imu_gyro_priority_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_1 ∧ sensors_status_imu_gyro_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "f71668a6412ec5245e2d4ac0a69861c13db9e151472b5af64d17517a3c08fdb9",
+   "clause": "width_sensors_status_imu_gyro_priority_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_2 ∧ sensors_status_imu_gyro_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "8af6e80479d86817ef1f622eb2dc3254422b667b9f320954b98327a507965e1b",
+   "clause": "width_sensors_status_imu_gyro_priority_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_3 ∧ sensors_status_imu_gyro_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sensors",
+   "contract_hash":
+   "871d461be17e1ad675b06afa93ffe3dc4d9ba35ee9f91f3b1f4783b384f4f480",
+   "clause": "width_sensors_status_imu_gyro_priority_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_torque_setpoint_xyz_0) ∧ finite(vehicle_torque_setpoint_xyz_1) ∧ finite(vehicle_torque_setpoint_xyz_2)",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_rate",
+   "contract_hash":
+   "c50d3b4e3e9599a1b70abeb3eae0e8f0d253d7a98748a1f6945e9ca997d7b6d6",
+   "clause": "torque_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|rate_ctrl_status_rollspeed_integ| ≤ MC_RR_INT_LIM ∧ |rate_ctrl_status_pitchspeed_integ| ≤ MC_PR_INT_LIM ∧ |rate_ctrl_status_yawspeed_integ| ≤ MC_YR_INT_LIM",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.3,
+   "path": "px4_closed_rate/px4_rate",
+   "contract_hash":
+   "a6b3879c3f7c8488f9bd94babcf45c9d206810b66dee057d48003bd078d4e438",
+   "clause": "integrator_bounded",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_torque_setpoint_timestamp = t_us ∧ vehicle_torque_setpoint_timestamp_sample = vehicle_angular_velocity_timestamp_sample",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_rate",
+   "contract_hash":
+   "43b829053e664b560a95ef79277f5578df7f706c09ccaf1ca8dc17123a52def3",
+   "clause": "torque_stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_angular_velocity_updated",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_rate",
+   "contract_hash":
+   "c2a5a6210d4d288ac486ed08300ead0302c5798210b4f635190bdf265ea4353a",
+   "clause": "torque_answers_gyro",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_rate_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_rate",
+   "contract_hash":
+   "8bf25432dd35b4162756bd674f4fd309beec8ada7a6eb658136fe591847042e3",
+   "clause": "no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ -1 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ -1 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ -1 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ -1 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ -1 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ -1 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ -1 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ -1 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ -1 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ -1 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ -1 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ -1 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 1489,
+    "sha256":
+    "dd7d899cc92f8f5611512b0d1c575bd2fcb8eb3e7eeed13b157905abf4902573",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step1489.json",
+    "case": 0},
+   "smallest_margin": 0.2699856,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "b2365d3fecb7a80a95c94ace1435bb534e6e735ef15a532bfb36eeed20c8a90a",
+   "clause": "motors_in_documented_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬CA_R_REV = 0 ∨ (((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ 0 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ 0 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ 0 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ 0 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ 0 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ 0 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ 0 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ 0 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ 0 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ 0 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ 0 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ 0 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "e58997ca6a31c5604efe9036def5635e83822b225403be0f480012d4caa3876b",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬actuator_motors_updated ∨ vehicle_torque_setpoint_updated",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "227a4ea4020ac9b61a6d18ee04f6b5da7b2fa72f54aaa7c6a207d623a5472014",
+   "clause": "motors_answer_torque",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ actuator_motors_timestamp = t_us ∧ actuator_motors_timestamp_sample = vehicle_torque_setpoint_timestamp_sample",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "07b926b76a8dee4787da32ab6a9a37993dd05a5e8f95717347befcc37bd3c187",
+   "clause": "motors_stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_alloc_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "d975af276532b5249c5b7a2cbe582d7ecc10a322c043da9d9f20955a2158dacf",
+   "clause": "no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ actuator_motors_reversible_flags ∧ actuator_motors_reversible_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "6acec3e69ab542e2cffb35213430a430dd86bf802b64088ba7ac3a90233ad0ce",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "e653cac413241ddfda14feb78b6d7b80ba25ddac1837675ccc8700185976a108",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "20ad0a831d465bddf79ab2731e2cb757c4c712b40655586cfb67a27b9351ce3d",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "0bc49b9c632bada051f3ad91fbe7c5cdb1923411c7b71ba9d84ea8f2d91cc82d",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "0af273e651a617e859181b74dcda63a1e1f06a1927b3ab9ba27cf870926e2847",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "705acd4018d5ca1f709012874abe97dd9183060324bbcdce35b49b04591a538a",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "778a05b00f7340b81784ebfa552ae084eedec6975e90e0049e47f4adcedfa5be",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "61ddb999b53fd6ff5de34157c96d1d3fc3d700af8595f81b896894442abfd59f",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "ec06147f46f4c1a274209e2195a86e667cc13b4401616fc55b56a47a60f1d888",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "a13bd7956343604ec9a4a0a48aa835ee9eabb54074ea7a9bd92378796b5919b1",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "01be3574840060253f80938d2c310fb8b2560ba6d8524073dbdd58ad10addc29",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "278fe3b5bbc895286fe227244a2acd098f64a5f77a27c7d39146b02328773987",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "266722489a37baf47ed9c5191c8d11db79a3992d0c26d8259d2171d350471101",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "04863c4858a1b81f78a1157f0365a48350083359baddf0ec530731a214964eb2",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "1bd0e7d51c7e8ef9b74833821c4d23a0a0b063c35679d60bfa2ef9ebad02b451",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "83695527469177a4a60d5aecc84ed08e168c596413d3d1e11ea6a3d8c1be431e",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "7ff52016e51d50117c3c8115b482f7520aafefefa8167c397b45a90d58eb2792",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "4307a980b0531d91f4e41b1afcc2545024224f09ab227da193622f073a39986d",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_alloc",
+   "contract_hash":
+   "3bd4aba36c5ab3f76584d78106dabd33d4e2295aff8a7245761b7b3a4a62b8d5",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(1000 ≤ pwm0 ∧ pwm0 ≤ 2000) ∧ (1000 ≤ pwm1 ∧ pwm1 ≤ 2000) ∧ (1000 ≤ pwm2 ∧ pwm2 ≤ 2000) ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_closed_rate/px4_sim_out",
+   "contract_hash":
+   "5dbee16e019f9aa25a7395f5aa68418e1f24b8b96416e7c3493c0d4718929939",
+   "clause": "pwm_in_plant_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ ¬finite(actuator_motors_control_0) ∨ actuator_motors_control_0 < 0 ∨ 1 < actuator_motors_control_0 ∨ |pwm0 - (1000 + 1000 * actuator_motors_control_0)| ≤ 0.5",
+   "smallest_margin_case":
+   {"step": 1568,
+    "sha256":
+    "da4b26cb7d0122cd5f8df645d332769d28b683513e1af07aa073e340b70a44a7",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step1568.json",
+    "case": 0},
+   "smallest_margin": 0.0001220703,
+   "path": "px4_closed_rate/px4_sim_out",
+   "contract_hash":
+   "7a4c0c6b13a8b39652b1bdf08a19da40d9683bda445a17edbcaf2f3abbf7b911",
+   "clause": "pwm_tracks_thrust",
+   "checked": 2000}],
+ "kind": "tested",
+ "id": "20261119T212739Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4 - 1| ≤ 4e-7",
+   "smallest_margin_case":
+   {"step": 82,
+    "sha256":
+    "e3a3f75ddef3a036f9248cfebaecabe99bfc0f3a33eb05fe02e120f3874d1067",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step82.json",
+    "case": 0},
+   "smallest_margin": 0.0000002807907,
+   "contract_hash":
+   "568c0656a33b0d8fce631fdeb5ffb2a1a672d8ffc0843a2a588c43b22c1d2ecc",
+   "clause": "quat_unit",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ thrust0 ∧ thrust0 ≤ 1 ∧ 0 ≤ thrust1 ∧ thrust1 ≤ 1 ∧ 0 ≤ thrust2 ∧ thrust2 ≤ 1 ∧ 0 ≤ thrust3 ∧ thrust3 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b24a3e1b07add3cadce8722e9c6d0bf58cc9405f28aba9e249ffc091c063094c",
+   "clause": "thrust_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4) ∧ finite(rate_p) ∧ finite(rate_q) ∧ finite(rate_r) ∧ finite(thrust0) ∧ finite(thrust1) ∧ finite(thrust2) ∧ finite(thrust3) ∧ finite(imu0_ax) ∧ finite(imu0_ay) ∧ finite(imu0_az) ∧ finite(imu0_gx) ∧ finite(imu0_gy) ∧ finite(imu0_gz) ∧ finite(imu1_ax) ∧ finite(imu1_ay) ∧ finite(imu1_az) ∧ finite(imu1_gx) ∧ finite(imu1_gy) ∧ finite(imu1_gz) ∧ finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz) ∧ finite(baro_pa) ∧ finite(baro_degc) ∧ finite(mag_x) ∧ finite(mag_y) ∧ finite(mag_z) ∧ finite(gps_alt) ∧ finite(gps_vn) ∧ finite(gps_ve) ∧ finite(gps_vd) ∧ finite(wall_clear)",
+   "smallest_margin": null,
+   "contract_hash":
+   "8faa33d7d16f56f0bcdf0ff31b9a5218243d0eb696d38f74d7e70908cf439d3e",
+   "clause": "outputs_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ wall_clear ∧ wall_clear ≤ 2",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "30ef27529b1e16f4ff1b2a9313f6c3e9b6572e4b9c6cc96616db9f2bc8d73a26",
+   "clause": "wall_clear_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu0_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu0_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu0_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu1_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu1_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu1_gz| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ax| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_ay| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_acc_fs_g = 0 ∧ |imu2_az| ≤ 16 * 9.80665 ∨ ¬imu_acc_fs_g = 0 ∧ |imu2_az| ≤ imu_acc_fs_g * 9.80665) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gx| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gy| ≤ imu_gyro_fs_dps * 0.017453292) ∧ (imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ 2000 * 0.017453292 ∨ ¬imu_gyro_fs_dps = 0 ∧ |imu2_gz| ≤ imu_gyro_fs_dps * 0.017453292)",
+   "smallest_margin_case":
+   {"step": 8,
+    "sha256":
+    "9dbd15e1fcb637dd26c774a2049947e31c8fdb7fb46de50b18f8bca12698ef27",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step8.json",
+    "case": 0},
+   "smallest_margin": 34.85327,
+   "contract_hash":
+   "111958f9d7173989dd95d2c238f381f55e43c89539c13f5ef9e10594ad62940b",
+   "clause": "imu_full_scale",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "sensor_accel_count = 1 ∧ sensor_gyro_count = 1",
+   "smallest_margin": null,
+   "contract_hash":
+   "6f5edbf8a6b28046bce27d52dffc3f9527d6eaa10b2d7b6f793c4c955c25910d",
+   "clause": "imu_every_tick",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_x = imu2_gx ∧ sensor_gyro_y = imu2_gy ∧ sensor_gyro_z = imu2_gz",
+   "smallest_margin": null,
+   "contract_hash":
+   "72b374c37610544a82c67b6958a66e377165d54318e7928ed4fefc5f01bef17d",
+   "clause": "gyro_is_sample",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_accel_x = imu2_ax ∧ sensor_accel_y = imu2_ay ∧ sensor_accel_z = imu2_az",
+   "smallest_margin": null,
+   "contract_hash":
+   "6cbd5c079a59fafab36cff8a350abfbff409c06bdf4041af50d6b75f6e7c57fc",
+   "clause": "accel_is_sample",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_timestamp_sample = t_us ∧ sensor_accel_timestamp_sample = t_us",
+   "smallest_margin": null,
+   "contract_hash":
+   "dce96c14ab3894f98097e2c73f126c627106fc81111b5caef41c1625fb071365",
+   "clause": "stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(sensor_baro_count = 1) = baro_fresh ∧ (sensor_mag_count = 1) = mag_fresh ∧ sensor_gps_updated = gps_fresh",
+   "smallest_margin": null,
+   "contract_hash":
+   "b49e7b8e27e04d779ea06f6b18328ed4fd22a2049b86acc5852265a579e86a43",
+   "clause": "slow_when_fresh",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬mag_fresh ∨ |sensor_mag_x * 1000 - mag_x| ≤ 0.02 ∧ |sensor_mag_y * 1000 - mag_y| ≤ 0.02 ∧ |sensor_mag_z * 1000 - mag_z| ≤ 0.02",
+   "smallest_margin_case":
+   {"step": 3,
+    "sha256":
+    "7ee2fc6132198a000cfd4a1ef72680f49e7f81a9864dadfee8da34923b82e076",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step3.json",
+    "case": 0},
+   "smallest_margin": 0.02,
+   "contract_hash":
+   "977295bb227711e834700eec2cc6292a6970fb2d3a0d83e5ef522f37a1bafb95",
+   "clause": "mag_gauss",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_angular_velocity_updated ∨ finite(vehicle_angular_velocity_xyz_0) ∧ finite(vehicle_angular_velocity_xyz_1) ∧ finite(vehicle_angular_velocity_xyz_2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "6dfe2553c979bda0a83bda5da4484bd91c754de48747d67988014f78d4f79408",
+   "clause": "rates_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_angular_velocity_updated ∨ 1 ≤ sensor_gyro_count",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "941537d6c3a19ebd73dfe816f9446f991c2bf6766e2644abbf6ae1602c720fbd",
+   "clause": "rates_answer_gyro",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_sensors_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "603ffdf7516c6fff4e583e97e0b423fe19a5b350ba7c3bb4afebae8227359e10",
+   "clause": "px4_sensors_no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_angle_clipping ∧ vehicle_imu_delta_angle_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "29b002f6571cb566090c310086f045a8920bea20f70f68241e8d35672d6ef69e",
+   "clause": "width_vehicle_imu_delta_angle_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_delta_velocity_clipping ∧ vehicle_imu_delta_velocity_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f975630ed039a7534a88421025881de190da6205d8cafc66efe77b79b1cab48f",
+   "clause": "width_vehicle_imu_delta_velocity_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_accel_calibration_count ∧ vehicle_imu_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "6329fe04c57bca4af538dd205e39911c9889ce46bb936e1e8d9cf44435bdcc23",
+   "clause": "width_vehicle_imu_accel_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_imu_gyro_calibration_count ∧ vehicle_imu_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "fc6c55bd891f1afb837012c2cb01f7136fa3fca3f4b69db5425ed097d54032ce",
+   "clause": "width_vehicle_imu_gyro_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accelerometer_clipping ∧ sensor_combined_accelerometer_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "32b2e1b5d0f049d5ce3ff8e102712be152975abefffdc10dd203c69d9a5518a7",
+   "clause": "width_sensor_combined_accelerometer_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_clipping ∧ sensor_combined_gyro_clipping ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f4db7439b693691ce9e2095c1aa08f6cd42fea9e75bb9189e44fbfc4f4b978bd",
+   "clause": "width_sensor_combined_gyro_clipping",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_accel_calibration_count ∧ sensor_combined_accel_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "94b61f1481d33929ef41fdc60c775ef03e799be26be3bc8f0be4ca1c961b3bde",
+   "clause": "width_sensor_combined_accel_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensor_combined_gyro_calibration_count ∧ sensor_combined_gyro_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b53f53e0569e412942890a527155071e94320728ca894b7bf78b1a49bf056422",
+   "clause": "width_sensor_combined_gyro_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_temperature_source ∧ vehicle_air_data_temperature_source ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ed79e878017fb6f2202543e50d1c263e565d29466a0a9eae47d4018c177c8fcf",
+   "clause": "width_vehicle_air_data_temperature_source",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_air_data_calibration_count ∧ vehicle_air_data_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f1ff71dc03088ba3950dd7f92ddb42b393e1a9ab28f386579592832d5cd8f1c3",
+   "clause": "width_vehicle_air_data_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_magnetometer_calibration_count ∧ vehicle_magnetometer_calibration_count ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "8b635c8cf0827f23ec87a8c1b94fb222b8e0f141bd4be6da3b06d12c19580e03",
+   "clause": "width_vehicle_magnetometer_calibration_count",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_fix_type ∧ vehicle_gps_position_fix_type ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "49ed47be4f29902d1cb8512a808bc91a405bdfaa19a95fb3cc8ab947106cff88",
+   "clause": "width_vehicle_gps_position_fix_type",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_automatic_gain_control ∧ vehicle_gps_position_automatic_gain_control ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0ffec8c837d57beaea3b921244683072209cdce5e06303a0d026c757dcbad7de",
+   "clause": "width_vehicle_gps_position_automatic_gain_control",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_jamming_state ∧ vehicle_gps_position_jamming_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ee0609c5841f16629266b8dd708bb64521ae9c691df69ab7bb828f1a0e2cc456",
+   "clause": "width_vehicle_gps_position_jamming_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_spoofing_state ∧ vehicle_gps_position_spoofing_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b1e2cbedfd4bf63f89234c9b73870632b77da60ed400cba765f38b1b835fd5ac",
+   "clause": "width_vehicle_gps_position_spoofing_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_authentication_state ∧ vehicle_gps_position_authentication_state ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0a63a7aa025ff89ba4275ae2fa75aec4731d2a36e92a7abee7060f8cec5b6c78",
+   "clause": "width_vehicle_gps_position_authentication_state",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_satellites_used ∧ vehicle_gps_position_satellites_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "dd1c459730658b8141a722dd7d4e2cd635dd515a05236e923b660d2e14c54685",
+   "clause": "width_vehicle_gps_position_satellites_used",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_selected_rtcm_instance ∧ vehicle_gps_position_selected_rtcm_instance ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "5f8939cee989045c4429715efb1e980fc79b525bcd40c5730ee670a712d1a074",
+   "clause": "width_vehicle_gps_position_selected_rtcm_instance",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ vehicle_gps_position_rtcm_msg_used ∧ vehicle_gps_position_rtcm_msg_used ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "1f1c07b65698433558bd5b7ccb74f96b49191968e96c9ba867b816b96aa940a9",
+   "clause": "width_vehicle_gps_position_rtcm_msg_used",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_0 ∧ sensors_status_imu_accel_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "102e52bebe21063e9f25c6e386b147e8334882afbedfad40537be7e9f40dbea8",
+   "clause": "width_sensors_status_imu_accel_priority_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_1 ∧ sensors_status_imu_accel_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0356766851e19fb5d8fdf23bc57e65df19b2e9d9b4ab4331f66e329a97d75d11",
+   "clause": "width_sensors_status_imu_accel_priority_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_2 ∧ sensors_status_imu_accel_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f37f226c7d6288609c8a36b2074f6d380ee735fabbd9a6d3081e7559ed473ec3",
+   "clause": "width_sensors_status_imu_accel_priority_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_accel_priority_3 ∧ sensors_status_imu_accel_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "20bbe6a49367d897cf18eed444af1b2863c0740d8ded7f05d5a471f1ccf3c9f2",
+   "clause": "width_sensors_status_imu_accel_priority_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_0 ∧ sensors_status_imu_gyro_priority_0 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "1cae4717acfbcc757aa96fb7dd4f688f0b12672d9ffa64e79e4ff23355666802",
+   "clause": "width_sensors_status_imu_gyro_priority_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_1 ∧ sensors_status_imu_gyro_priority_1 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "8bc41fc0bcd8a8c22a8737a449aacfb6690ed8486f9f19b514f5d076344db2be",
+   "clause": "width_sensors_status_imu_gyro_priority_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_2 ∧ sensors_status_imu_gyro_priority_2 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2854518aa432ca842fbe838b69b18c1b1bd432ed4d0d3ef3ffac2dcc0d3e2492",
+   "clause": "width_sensors_status_imu_gyro_priority_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ sensors_status_imu_gyro_priority_3 ∧ sensors_status_imu_gyro_priority_3 ≤ 255",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f977984ee21186a94fb96722bb85dce6aa6b853085a1f739928a3d2ac1695870",
+   "clause": "width_sensors_status_imu_gyro_priority_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_torque_setpoint_xyz_0) ∧ finite(vehicle_torque_setpoint_xyz_1) ∧ finite(vehicle_torque_setpoint_xyz_2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "dd3393b8d9aa66a5bc7d15a2d3f82c0d2d2d35a98fb78d4ba0cc11352a73958e",
+   "clause": "torque_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|rate_ctrl_status_rollspeed_integ| ≤ MC_RR_INT_LIM ∧ |rate_ctrl_status_pitchspeed_integ| ≤ MC_PR_INT_LIM ∧ |rate_ctrl_status_yawspeed_integ| ≤ MC_YR_INT_LIM",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.3,
+   "contract_hash":
+   "dc1320624030a7e90510d9c1962a8cd43f4cb3da70f8cc420b38b71932d929cd",
+   "clause": "integrator_bounded",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_torque_setpoint_timestamp = t_us ∧ vehicle_torque_setpoint_timestamp_sample = vehicle_angular_velocity_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "4586d035e58148d0037bab568b087f11319c64499810d00e0965875bf335e6bf",
+   "clause": "torque_stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_angular_velocity_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "c21b8ed870ef484930f4d622d22e12b82f3065fca4e3071cce78ba5ac34859f6",
+   "clause": "torque_answers_gyro",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_rate_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "57e944dca0e611d9d81158a1d03f0d884b81eddbcae738474ecdf4a002eb977b",
+   "clause": "px4_rate_no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ -1 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ -1 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ -1 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ -1 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ -1 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ -1 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ -1 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ -1 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ -1 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ -1 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ -1 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ -1 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 1489,
+    "sha256":
+    "dd7d899cc92f8f5611512b0d1c575bd2fcb8eb3e7eeed13b157905abf4902573",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step1489.json",
+    "case": 0},
+   "smallest_margin": 0.2699856,
+   "contract_hash":
+   "7241506dcf61e53dde8f842bf03a9d62020e23a300682ce5c838271323c3c6eb",
+   "clause": "motors_in_documented_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬CA_R_REV = 0 ∨ (((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ 0 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ 0 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ 0 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ 0 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ 0 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ 0 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ 0 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ 0 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ 0 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ 0 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ 0 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ 0 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "60aa855bf905aa9d9ffad20ff68375b6fc851d07820cb63669b6750e04a0c121",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬actuator_motors_updated ∨ vehicle_torque_setpoint_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "09862efa21d004228475d3954461e644b791c272ec8b73a68d7dae1506dc6cbf",
+   "clause": "motors_answer_torque",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ actuator_motors_timestamp = t_us ∧ actuator_motors_timestamp_sample = vehicle_torque_setpoint_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "82805772cbbc309dcc01fdda9563ebc9cf133c08b3a3df803ba11a1288f90a89",
+   "clause": "motors_stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_alloc_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "cc0d51c24f0d43a5fba3bc7cf9af38570476b3fb5f95372028a749fcbf0135ed",
+   "clause": "px4_alloc_no_px4_error",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ actuator_motors_reversible_flags ∧ actuator_motors_reversible_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ce60691aa92d80f5718adddad80e708ab703c28648c6daa3bf81e84dbdf40aec",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "contract_hash":
+   "8bd13b57f64250375a4757f22ecd650867087286da72290a97407855a2def4e4",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "contract_hash":
+   "769cfb8b17d6b77b5e6bf1d04d5e818351472218eba4487413bd65b412580af6",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "contract_hash":
+   "2678202c73dbb0cc86b72dd7f3204fb120d75fc71dce66379e6adaf7a66f7b5e",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 127,
+   "contract_hash":
+   "69a2610be7a1c6bb1d169ea3b09b0cb1ef2be854315562916869f1c0084d8e49",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "3d5e9428c1155ba8b61d39025c0440cb1a8fdf8c9cef903d28749c5f4e0f14f2",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0fe43015fa6a6609cdecd49ff87f1749b35ef5b5ce1891aa9819073009921878",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "e0361475c7e6b13a7a9888f286649a1415c23b690c5a606b611cb64cbf91ccf3",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "d2a375f46d0ca77ab79ef65e9b8ef507cafb5df492acec808286e4fa27cc800d",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "2ad3b4ab51f709dec13f25359607598322ddc57c8db825703334be3a3855dbe7",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "055a1433a1c03ee4bf64c3928dc577fc06ec740902e9ed828a872bcb1a17b6b9",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "35f59de32d5472f2e14efa2797f746db43fc2a8fa4f8b01fece2ce12009b4f0a",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "7dc29245abdf47e53f43d0773f412a7a9821f195dab0d980b4bf9741a06774d3",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "a6faf829120e055ac0db3fd48fa0adef7dd339d5b879a06e8bdb36be769baee9",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "eca80993aed7d2f417f1c9d6d406c45e106cdf22b7eb0018c4d8e06ccceffc5a",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "1be89d8368e18c5fd93e1a69cca4e2d2f528d7326f84f148bc49b5b336655992",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "8de7e09b53fe5e3c80e18af8f82c9e99013d1234e11266f467583f84fb7d9be1",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 125,
+   "contract_hash":
+   "d77c41dc3fa29631c4e4d71899203599f3302b3310a3f86b8608afeb0354f375",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "d41aab33542278cb5de4680f6c68b54f614e94ae551f176206c20f19b1e53c3b",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a6376320542c5d142d590534739f8258d891fc62d978e7b4a8b1b188c4574523",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(1000 ≤ pwm0 ∧ pwm0 ≤ 2000) ∧ (1000 ≤ pwm1 ∧ pwm1 ≤ 2000) ∧ (1000 ≤ pwm2 ∧ pwm2 ≤ 2000) ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "273638c23da4764677a053cbd673cf1d625e536b8cebb79421f3e675366e9442",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "73914361e3e3a59ef22fadc1ef203f2d310cc6d39ecf7e734865ef77327fce97",
+   "clause": "pwm_in_plant_range",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ ¬finite(actuator_motors_control_0) ∨ actuator_motors_control_0 < 0 ∨ 1 < actuator_motors_control_0 ∨ |pwm0 - (1000 + 1000 * actuator_motors_control_0)| ≤ 0.5",
+   "smallest_margin_case":
+   {"step": 1568,
+    "sha256":
+    "da4b26cb7d0122cd5f8df645d332769d28b683513e1af07aa073e340b70a44a7",
+    "file":
+    "px4/harnesses/px4_closed_rate/evidence/tested/20261119T212739Z-seed1/case0-step1568.json",
+    "case": 0},
+   "smallest_margin": 0.0001220703,
+   "contract_hash":
+   "f1eb98bb9f4afd27f78ae1383ab78200d83973e6fe6b07702fb999ef6b5660ac",
+   "clause": "pwm_tracks_thrust",
+   "checked": 2000}],
+ "formal_link":
+ "not built: no Lean proof yet that the children's contracts, as wired, imply this system's contract",
+ "coverage":
+ {"torque_published":
+  {"true_steps": 1994, "text": "vehicle_torque_setpoint_updated = true"},
+  "torque_not_achieved":
+  {"true_steps": 0,
+   "text":
+   "control_allocator_status_updated ∧ ¬control_allocator_status_torque_setpoint_achieved"},
+  "torque_beyond_unit":
+  {"true_steps": 0, "text": "1 < |vehicle_torque_setpoint_xyz_0|"},
+  "motors_published":
+  {"true_steps": 1994, "text": "actuator_motors_updated = true"},
+  "integrator_nonzero":
+  {"true_steps": 0, "text": "¬rate_ctrl_status_rollspeed_integ = 0"},
+  "four_motors_finite":
+  {"true_steps": 2000,
+   "text":
+   "finite(actuator_motors_control_0) ∧ finite(actuator_motors_control_1) ∧ finite(actuator_motors_control_2) ∧ finite(actuator_motors_control_3)"},
+  "a_motor_saturated":
+  {"true_steps": 0,
+   "text":
+   "actuator_motors_control_0 = 1 ∨ actuator_motors_control_1 = 1 ∨ actuator_motors_control_2 = 1 ∨ actuator_motors_control_3 = 1"}},
+ "command":
+ "harness test px4_closed_rate --seed 1 --cases 1 --steps 2000 --regime x500_hover",
+ "code_hash":
+ "d34377f924e7acda3e4579dc42fc7dbb26ddc0eef3c494d30fe4cd7773bf0418",
+ "children":
+ [{"path": "px4_closed_rate/plant_sim",
+   "node": "plant_sim",
+   "kind": "module",
+   "code_hash":
+   "fd2497da45964cedef81617eae194ae050433f546f28df45c842b659f399aac7"},
+  {"path": "px4_closed_rate/px4_sim_in",
+   "node": "px4_sim_in",
+   "kind": "module",
+   "code_hash":
+   "91e8c3cfa3379d41150cefa7f474884db43fbdb1518035bc7542c22cd71cbbf8"},
+  {"path": "px4_closed_rate/px4_sensors",
+   "node": "px4_sensors",
+   "kind": "module",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da"},
+  {"path": "px4_closed_rate/px4_rate",
+   "node": "px4_rate",
+   "kind": "module",
+   "code_hash":
+   "b302aab3f97dc757ff4569e27d4800ef88b7fb2c7110d6bb7c79375f37b3f6dd"},
+  {"path": "px4_closed_rate/px4_alloc",
+   "node": "px4_alloc",
+   "kind": "module",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046"},
+  {"path": "px4_closed_rate/px4_sim_out",
+   "node": "px4_sim_out",
+   "kind": "module",
+   "code_hash":
+   "212f5cf342581a53aff0eab0c1c99a9330fba7842efd5ee70a2a39ed7841a52b"}],
+ "cases_skipped": 0,
+ "cases": 1,
+ "assumptions":
+ [{"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/plant_sim",
+   "failing_clauses": {},
+   "contract_hash":
+   "0c88b280009ac4e40be788614e89cbbd75498a2cb530a5a92b6d01a6c45d861f",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000},
+  {"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/px4_sim_in",
+   "failing_clauses": {},
+   "contract_hash":
+   "cce57364d1d947b9d6004618f28fee5a855529757e5163e61cb6959d938d6c2b",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000},
+  {"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/px4_sensors",
+   "failing_clauses": {},
+   "contract_hash":
+   "7c5898764afc25af70ac70a84cb6b12fbd7fd103c341ecc1333469eb907e996d",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000},
+  {"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/px4_rate",
+   "failing_clauses": {},
+   "contract_hash":
+   "3f2505c3d1e6e75259db1d9dd05f2300b45d47a432a714ddc1f104e84a68fe70",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000},
+  {"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/px4_alloc",
+   "failing_clauses": {},
+   "contract_hash":
+   "3ce0a9f9af3f4148741186d145ec9f90891d385c015c5be54a0bfe3e602b677f",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000},
+  {"verdict": "passed",
+   "steps": 2000,
+   "path": "px4_closed_rate/px4_sim_out",
+   "failing_clauses": {},
+   "contract_hash":
+   "69e898781c5ac06ff3582357a9c37b4d1581916f90f91a3f6cf25a52834362f6",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 2000,
+   "assumption_held": 2000}],
+ "assume":
+ ["imu_full_scale_range: (imu_acc_fs_g = 0 ∨ 2 ≤ imu_acc_fs_g ∧ imu_acc_fs_g ≤ 32) ∧ (imu_gyro_fs_dps = 0 ∨ 250 ≤ imu_gyro_fs_dps ∧ imu_gyro_fs_dps ≤ 4000)",
+  "width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "range_CAL_ACC0_PRIO: CAL_ACC0_PRIO = -1 ∨ CAL_ACC0_PRIO = 0 ∨ CAL_ACC0_PRIO = 1 ∨ CAL_ACC0_PRIO = 25 ∨ CAL_ACC0_PRIO = 50 ∨ CAL_ACC0_PRIO = 75 ∨ CAL_ACC0_PRIO = 100",
+  "range_CAL_ACC0_ROT: -1 ≤ CAL_ACC0_ROT ∧ CAL_ACC0_ROT ≤ 40",
+  "range_CAL_ACC0_XSCALE: 0.1 ≤ CAL_ACC0_XSCALE ∧ CAL_ACC0_XSCALE ≤ 3",
+  "range_CAL_ACC0_YSCALE: 0.1 ≤ CAL_ACC0_YSCALE ∧ CAL_ACC0_YSCALE ≤ 3",
+  "range_CAL_ACC0_ZSCALE: 0.1 ≤ CAL_ACC0_ZSCALE ∧ CAL_ACC0_ZSCALE ≤ 3",
+  "range_CAL_ACC1_PRIO: CAL_ACC1_PRIO = -1 ∨ CAL_ACC1_PRIO = 0 ∨ CAL_ACC1_PRIO = 1 ∨ CAL_ACC1_PRIO = 25 ∨ CAL_ACC1_PRIO = 50 ∨ CAL_ACC1_PRIO = 75 ∨ CAL_ACC1_PRIO = 100",
+  "range_CAL_ACC1_ROT: -1 ≤ CAL_ACC1_ROT ∧ CAL_ACC1_ROT ≤ 40",
+  "range_CAL_ACC1_XSCALE: 0.1 ≤ CAL_ACC1_XSCALE ∧ CAL_ACC1_XSCALE ≤ 3",
+  "range_CAL_ACC1_YSCALE: 0.1 ≤ CAL_ACC1_YSCALE ∧ CAL_ACC1_YSCALE ≤ 3",
+  "range_CAL_ACC1_ZSCALE: 0.1 ≤ CAL_ACC1_ZSCALE ∧ CAL_ACC1_ZSCALE ≤ 3",
+  "range_CAL_ACC2_PRIO: CAL_ACC2_PRIO = -1 ∨ CAL_ACC2_PRIO = 0 ∨ CAL_ACC2_PRIO = 1 ∨ CAL_ACC2_PRIO = 25 ∨ CAL_ACC2_PRIO = 50 ∨ CAL_ACC2_PRIO = 75 ∨ CAL_ACC2_PRIO = 100",
+  "range_CAL_ACC2_ROT: -1 ≤ CAL_ACC2_ROT ∧ CAL_ACC2_ROT ≤ 40",
+  "range_CAL_ACC2_XSCALE: 0.1 ≤ CAL_ACC2_XSCALE ∧ CAL_ACC2_XSCALE ≤ 3",
+  "range_CAL_ACC2_YSCALE: 0.1 ≤ CAL_ACC2_YSCALE ∧ CAL_ACC2_YSCALE ≤ 3",
+  "range_CAL_ACC2_ZSCALE: 0.1 ≤ CAL_ACC2_ZSCALE ∧ CAL_ACC2_ZSCALE ≤ 3",
+  "range_CAL_ACC3_PRIO: CAL_ACC3_PRIO = -1 ∨ CAL_ACC3_PRIO = 0 ∨ CAL_ACC3_PRIO = 1 ∨ CAL_ACC3_PRIO = 25 ∨ CAL_ACC3_PRIO = 50 ∨ CAL_ACC3_PRIO = 75 ∨ CAL_ACC3_PRIO = 100",
+  "range_CAL_ACC3_ROT: -1 ≤ CAL_ACC3_ROT ∧ CAL_ACC3_ROT ≤ 40",
+  "range_CAL_ACC3_XSCALE: 0.1 ≤ CAL_ACC3_XSCALE ∧ CAL_ACC3_XSCALE ≤ 3",
+  "range_CAL_ACC3_YSCALE: 0.1 ≤ CAL_ACC3_YSCALE ∧ CAL_ACC3_YSCALE ≤ 3",
+  "range_CAL_ACC3_ZSCALE: 0.1 ≤ CAL_ACC3_ZSCALE ∧ CAL_ACC3_ZSCALE ≤ 3",
+  "range_CAL_AIR_CMODEL: CAL_AIR_CMODEL = 0 ∨ CAL_AIR_CMODEL = 1 ∨ CAL_AIR_CMODEL = 2",
+  "range_CAL_AIR_TUBED_MM: 1.5 ≤ CAL_AIR_TUBED_MM ∧ CAL_AIR_TUBED_MM ≤ 100",
+  "range_CAL_AIR_TUBELEN: 0.01 ≤ CAL_AIR_TUBELEN ∧ CAL_AIR_TUBELEN ≤ 2",
+  "range_CAL_BARO0_PRIO: CAL_BARO0_PRIO = -1 ∨ CAL_BARO0_PRIO = 0 ∨ CAL_BARO0_PRIO = 1 ∨ CAL_BARO0_PRIO = 25 ∨ CAL_BARO0_PRIO = 50 ∨ CAL_BARO0_PRIO = 75 ∨ CAL_BARO0_PRIO = 100",
+  "range_CAL_BARO1_PRIO: CAL_BARO1_PRIO = -1 ∨ CAL_BARO1_PRIO = 0 ∨ CAL_BARO1_PRIO = 1 ∨ CAL_BARO1_PRIO = 25 ∨ CAL_BARO1_PRIO = 50 ∨ CAL_BARO1_PRIO = 75 ∨ CAL_BARO1_PRIO = 100",
+  "range_CAL_BARO2_PRIO: CAL_BARO2_PRIO = -1 ∨ CAL_BARO2_PRIO = 0 ∨ CAL_BARO2_PRIO = 1 ∨ CAL_BARO2_PRIO = 25 ∨ CAL_BARO2_PRIO = 50 ∨ CAL_BARO2_PRIO = 75 ∨ CAL_BARO2_PRIO = 100",
+  "range_CAL_BARO3_PRIO: CAL_BARO3_PRIO = -1 ∨ CAL_BARO3_PRIO = 0 ∨ CAL_BARO3_PRIO = 1 ∨ CAL_BARO3_PRIO = 25 ∨ CAL_BARO3_PRIO = 50 ∨ CAL_BARO3_PRIO = 75 ∨ CAL_BARO3_PRIO = 100",
+  "range_CAL_GYRO0_PRIO: CAL_GYRO0_PRIO = -1 ∨ CAL_GYRO0_PRIO = 0 ∨ CAL_GYRO0_PRIO = 1 ∨ CAL_GYRO0_PRIO = 25 ∨ CAL_GYRO0_PRIO = 50 ∨ CAL_GYRO0_PRIO = 75 ∨ CAL_GYRO0_PRIO = 100",
+  "range_CAL_GYRO0_ROT: -1 ≤ CAL_GYRO0_ROT ∧ CAL_GYRO0_ROT ≤ 40",
+  "range_CAL_GYRO1_PRIO: CAL_GYRO1_PRIO = -1 ∨ CAL_GYRO1_PRIO = 0 ∨ CAL_GYRO1_PRIO = 1 ∨ CAL_GYRO1_PRIO = 25 ∨ CAL_GYRO1_PRIO = 50 ∨ CAL_GYRO1_PRIO = 75 ∨ CAL_GYRO1_PRIO = 100",
+  "range_CAL_GYRO1_ROT: -1 ≤ CAL_GYRO1_ROT ∧ CAL_GYRO1_ROT ≤ 40",
+  "range_CAL_GYRO2_PRIO: CAL_GYRO2_PRIO = -1 ∨ CAL_GYRO2_PRIO = 0 ∨ CAL_GYRO2_PRIO = 1 ∨ CAL_GYRO2_PRIO = 25 ∨ CAL_GYRO2_PRIO = 50 ∨ CAL_GYRO2_PRIO = 75 ∨ CAL_GYRO2_PRIO = 100",
+  "range_CAL_GYRO2_ROT: -1 ≤ CAL_GYRO2_ROT ∧ CAL_GYRO2_ROT ≤ 40",
+  "range_CAL_GYRO3_PRIO: CAL_GYRO3_PRIO = -1 ∨ CAL_GYRO3_PRIO = 0 ∨ CAL_GYRO3_PRIO = 1 ∨ CAL_GYRO3_PRIO = 25 ∨ CAL_GYRO3_PRIO = 50 ∨ CAL_GYRO3_PRIO = 75 ∨ CAL_GYRO3_PRIO = 100",
+  "range_CAL_GYRO3_ROT: -1 ≤ CAL_GYRO3_ROT ∧ CAL_GYRO3_ROT ≤ 40",
+  "range_CAL_MAG0_PITCH: -180 ≤ CAL_MAG0_PITCH ∧ CAL_MAG0_PITCH ≤ 180",
+  "range_CAL_MAG0_PRIO: CAL_MAG0_PRIO = -1 ∨ CAL_MAG0_PRIO = 0 ∨ CAL_MAG0_PRIO = 1 ∨ CAL_MAG0_PRIO = 25 ∨ CAL_MAG0_PRIO = 50 ∨ CAL_MAG0_PRIO = 75 ∨ CAL_MAG0_PRIO = 100",
+  "range_CAL_MAG0_ROLL: -180 ≤ CAL_MAG0_ROLL ∧ CAL_MAG0_ROLL ≤ 180",
+  "range_CAL_MAG0_ROT: -1 ≤ CAL_MAG0_ROT ∧ CAL_MAG0_ROT ≤ 100",
+  "range_CAL_MAG0_XSCALE: 0.1 ≤ CAL_MAG0_XSCALE ∧ CAL_MAG0_XSCALE ≤ 3",
+  "range_CAL_MAG0_YAW: -180 ≤ CAL_MAG0_YAW ∧ CAL_MAG0_YAW ≤ 180",
+  "range_CAL_MAG0_YSCALE: 0.1 ≤ CAL_MAG0_YSCALE ∧ CAL_MAG0_YSCALE ≤ 3",
+  "range_CAL_MAG0_ZSCALE: 0.1 ≤ CAL_MAG0_ZSCALE ∧ CAL_MAG0_ZSCALE ≤ 3",
+  "range_CAL_MAG1_PITCH: -180 ≤ CAL_MAG1_PITCH ∧ CAL_MAG1_PITCH ≤ 180",
+  "range_CAL_MAG1_PRIO: CAL_MAG1_PRIO = -1 ∨ CAL_MAG1_PRIO = 0 ∨ CAL_MAG1_PRIO = 1 ∨ CAL_MAG1_PRIO = 25 ∨ CAL_MAG1_PRIO = 50 ∨ CAL_MAG1_PRIO = 75 ∨ CAL_MAG1_PRIO = 100",
+  "range_CAL_MAG1_ROLL: -180 ≤ CAL_MAG1_ROLL ∧ CAL_MAG1_ROLL ≤ 180",
+  "range_CAL_MAG1_ROT: -1 ≤ CAL_MAG1_ROT ∧ CAL_MAG1_ROT ≤ 100",
+  "range_CAL_MAG1_XSCALE: 0.1 ≤ CAL_MAG1_XSCALE ∧ CAL_MAG1_XSCALE ≤ 3",
+  "range_CAL_MAG1_YAW: -180 ≤ CAL_MAG1_YAW ∧ CAL_MAG1_YAW ≤ 180",
+  "range_CAL_MAG1_YSCALE: 0.1 ≤ CAL_MAG1_YSCALE ∧ CAL_MAG1_YSCALE ≤ 3",
+  "range_CAL_MAG1_ZSCALE: 0.1 ≤ CAL_MAG1_ZSCALE ∧ CAL_MAG1_ZSCALE ≤ 3",
+  "range_CAL_MAG2_PITCH: -180 ≤ CAL_MAG2_PITCH ∧ CAL_MAG2_PITCH ≤ 180",
+  "range_CAL_MAG2_PRIO: CAL_MAG2_PRIO = -1 ∨ CAL_MAG2_PRIO = 0 ∨ CAL_MAG2_PRIO = 1 ∨ CAL_MAG2_PRIO = 25 ∨ CAL_MAG2_PRIO = 50 ∨ CAL_MAG2_PRIO = 75 ∨ CAL_MAG2_PRIO = 100",
+  "range_CAL_MAG2_ROLL: -180 ≤ CAL_MAG2_ROLL ∧ CAL_MAG2_ROLL ≤ 180",
+  "range_CAL_MAG2_ROT: -1 ≤ CAL_MAG2_ROT ∧ CAL_MAG2_ROT ≤ 100",
+  "range_CAL_MAG2_XSCALE: 0.1 ≤ CAL_MAG2_XSCALE ∧ CAL_MAG2_XSCALE ≤ 3",
+  "range_CAL_MAG2_YAW: -180 ≤ CAL_MAG2_YAW ∧ CAL_MAG2_YAW ≤ 180",
+  "range_CAL_MAG2_YSCALE: 0.1 ≤ CAL_MAG2_YSCALE ∧ CAL_MAG2_YSCALE ≤ 3",
+  "range_CAL_MAG2_ZSCALE: 0.1 ≤ CAL_MAG2_ZSCALE ∧ CAL_MAG2_ZSCALE ≤ 3",
+  "range_CAL_MAG3_PITCH: -180 ≤ CAL_MAG3_PITCH ∧ CAL_MAG3_PITCH ≤ 180",
+  "range_CAL_MAG3_PRIO: CAL_MAG3_PRIO = -1 ∨ CAL_MAG3_PRIO = 0 ∨ CAL_MAG3_PRIO = 1 ∨ CAL_MAG3_PRIO = 25 ∨ CAL_MAG3_PRIO = 50 ∨ CAL_MAG3_PRIO = 75 ∨ CAL_MAG3_PRIO = 100",
+  "range_CAL_MAG3_ROLL: -180 ≤ CAL_MAG3_ROLL ∧ CAL_MAG3_ROLL ≤ 180",
+  "range_CAL_MAG3_ROT: -1 ≤ CAL_MAG3_ROT ∧ CAL_MAG3_ROT ≤ 100",
+  "range_CAL_MAG3_XSCALE: 0.1 ≤ CAL_MAG3_XSCALE ∧ CAL_MAG3_XSCALE ≤ 3",
+  "range_CAL_MAG3_YAW: -180 ≤ CAL_MAG3_YAW ∧ CAL_MAG3_YAW ≤ 180",
+  "range_CAL_MAG3_YSCALE: 0.1 ≤ CAL_MAG3_YSCALE ∧ CAL_MAG3_YSCALE ≤ 3",
+  "range_CAL_MAG3_ZSCALE: 0.1 ≤ CAL_MAG3_ZSCALE ∧ CAL_MAG3_ZSCALE ≤ 3",
+  "range_CAL_MAG_COMP_TYP: CAL_MAG_COMP_TYP = 0 ∨ CAL_MAG_COMP_TYP = 1 ∨ CAL_MAG_COMP_TYP = 2 ∨ CAL_MAG_COMP_TYP = 3",
+  "range_IMU_ACCEL_CUTOFF: 0 ≤ IMU_ACCEL_CUTOFF ∧ IMU_ACCEL_CUTOFF ≤ 1000",
+  "range_IMU_DGYRO_CUTOFF: 0 ≤ IMU_DGYRO_CUTOFF ∧ IMU_DGYRO_CUTOFF ≤ 1000",
+  "range_IMU_GYRO_CUTOFF: 0 ≤ IMU_GYRO_CUTOFF ∧ IMU_GYRO_CUTOFF ≤ 1000",
+  "range_IMU_GYRO_DNF_BW: 5 ≤ IMU_GYRO_DNF_BW ∧ IMU_GYRO_DNF_BW ≤ 30",
+  "range_IMU_GYRO_DNF_EN: 0 ≤ IMU_GYRO_DNF_EN ∧ IMU_GYRO_DNF_EN ≤ 3",
+  "range_IMU_GYRO_DNF_HMC: 1 ≤ IMU_GYRO_DNF_HMC ∧ IMU_GYRO_DNF_HMC ≤ 7",
+  "range_IMU_GYRO_NF0_BW: 0 ≤ IMU_GYRO_NF0_BW ∧ IMU_GYRO_NF0_BW ≤ 100",
+  "range_IMU_GYRO_NF0_FRQ: 0 ≤ IMU_GYRO_NF0_FRQ ∧ IMU_GYRO_NF0_FRQ ≤ 1000",
+  "range_IMU_GYRO_NF1_BW: 0 ≤ IMU_GYRO_NF1_BW ∧ IMU_GYRO_NF1_BW ≤ 100",
+  "range_IMU_GYRO_NF1_FRQ: 0 ≤ IMU_GYRO_NF1_FRQ ∧ IMU_GYRO_NF1_FRQ ≤ 1000",
+  "range_IMU_GYRO_RATEMAX: 100 ≤ IMU_GYRO_RATEMAX ∧ IMU_GYRO_RATEMAX ≤ 2000",
+  "range_IMU_INTEG_RATE: 100 ≤ IMU_INTEG_RATE ∧ IMU_INTEG_RATE ≤ 1000",
+  "range_SENS_BARO_QNH: 500 ≤ SENS_BARO_QNH ∧ SENS_BARO_QNH ≤ 1500",
+  "range_SENS_BARO_RATE: 1 ≤ SENS_BARO_RATE ∧ SENS_BARO_RATE ≤ 200",
+  "range_SENS_BAR_AUTOCAL: SENS_BAR_AUTOCAL = 0 ∨ SENS_BAR_AUTOCAL = 1",
+  "range_SENS_BOARD_ROT: -1 ≤ SENS_BOARD_ROT ∧ SENS_BOARD_ROT ≤ 40",
+  "range_SENS_BOARD_X_OFF: -45 ≤ SENS_BOARD_X_OFF ∧ SENS_BOARD_X_OFF ≤ 45",
+  "range_SENS_BOARD_Y_OFF: -45 ≤ SENS_BOARD_Y_OFF ∧ SENS_BOARD_Y_OFF ≤ 45",
+  "range_SENS_BOARD_Z_OFF: -45 ≤ SENS_BOARD_Z_OFF ∧ SENS_BOARD_Z_OFF ≤ 45",
+  "range_SENS_DPRES_REV: SENS_DPRES_REV = 0 ∨ SENS_DPRES_REV = 1",
+  "range_SENS_EN_THERMAL: SENS_EN_THERMAL = -1 ∨ SENS_EN_THERMAL = 0 ∨ SENS_EN_THERMAL = 1",
+  "range_SENS_EXT_I2C_PRB: SENS_EXT_I2C_PRB = 0 ∨ SENS_EXT_I2C_PRB = 1",
+  "range_SENS_FLOW_MAXHGT: 1 ≤ SENS_FLOW_MAXHGT ∧ SENS_FLOW_MAXHGT ≤ 100",
+  "range_SENS_FLOW_MAXR: 1 ≤ SENS_FLOW_MAXR",
+  "range_SENS_FLOW_MINHGT: 0 ≤ SENS_FLOW_MINHGT ∧ SENS_FLOW_MINHGT ≤ 1",
+  "range_SENS_FLOW_RATE: 1 ≤ SENS_FLOW_RATE ∧ SENS_FLOW_RATE ≤ 200",
+  "range_SENS_FLOW_ROT: SENS_FLOW_ROT = 0 ∨ SENS_FLOW_ROT = 1 ∨ SENS_FLOW_ROT = 2 ∨ SENS_FLOW_ROT = 3 ∨ SENS_FLOW_ROT = 4 ∨ SENS_FLOW_ROT = 5 ∨ SENS_FLOW_ROT = 6 ∨ SENS_FLOW_ROT = 7",
+  "range_SENS_FLOW_SCALE: 0.5 ≤ SENS_FLOW_SCALE ∧ SENS_FLOW_SCALE ≤ 1.5",
+  "range_SENS_GPS_MASK: 0 ≤ SENS_GPS_MASK ∧ SENS_GPS_MASK ≤ 7",
+  "range_SENS_GPS_PRIME: -1 ≤ SENS_GPS_PRIME ∧ SENS_GPS_PRIME ≤ 1",
+  "range_SENS_GPS_TAU: 1 ≤ SENS_GPS_TAU ∧ SENS_GPS_TAU ≤ 100",
+  "range_SENS_IMU_AUTOCAL: SENS_IMU_AUTOCAL = 0 ∨ SENS_IMU_AUTOCAL = 1",
+  "range_SENS_IMU_CLPNOTI: SENS_IMU_CLPNOTI = 0 ∨ SENS_IMU_CLPNOTI = 1",
+  "range_SENS_IMU_MODE: SENS_IMU_MODE = 0 ∨ SENS_IMU_MODE = 1",
+  "range_SENS_INT_BARO_EN: SENS_INT_BARO_EN = 0 ∨ SENS_INT_BARO_EN = 1",
+  "range_SENS_MAG_AUTOCAL: SENS_MAG_AUTOCAL = 0 ∨ SENS_MAG_AUTOCAL = 1",
+  "range_SENS_MAG_AUTOROT: SENS_MAG_AUTOROT = 0 ∨ SENS_MAG_AUTOROT = 1",
+  "range_SENS_MAG_MODE: SENS_MAG_MODE = 0 ∨ SENS_MAG_MODE = 1",
+  "range_SENS_MAG_RATE: 1 ≤ SENS_MAG_RATE ∧ SENS_MAG_RATE ≤ 200",
+  "range_SENS_MAG_SIDES: 34 ≤ SENS_MAG_SIDES ∧ SENS_MAG_SIDES ≤ 63",
+  "range_SYS_CAL_TDEL: 10 ≤ SYS_CAL_TDEL",
+  "range_SYS_FAC_CAL_MODE: SYS_FAC_CAL_MODE = 0 ∨ SYS_FAC_CAL_MODE = 1 ∨ SYS_FAC_CAL_MODE = 2",
+  "range_SYS_HAS_BARO: SYS_HAS_BARO = 0 ∨ SYS_HAS_BARO = 1",
+  "range_SYS_HAS_GPS: SYS_HAS_GPS = 0 ∨ SYS_HAS_GPS = 1",
+  "calibration_physical: ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((true ∧ |CAL_ACC0_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_XSCALE ∧ CAL_ACC0_XSCALE ≤ 10) ∧ |CAL_ACC0_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_YSCALE ∧ CAL_ACC0_YSCALE ≤ 10) ∧ |CAL_ACC0_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC0_ZSCALE ∧ CAL_ACC0_ZSCALE ≤ 10) ∧ |CAL_ACC1_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_XSCALE ∧ CAL_ACC1_XSCALE ≤ 10) ∧ |CAL_ACC1_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_YSCALE ∧ CAL_ACC1_YSCALE ≤ 10) ∧ |CAL_ACC1_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC1_ZSCALE ∧ CAL_ACC1_ZSCALE ≤ 10) ∧ |CAL_ACC2_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_XSCALE ∧ CAL_ACC2_XSCALE ≤ 10) ∧ |CAL_ACC2_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_YSCALE ∧ CAL_ACC2_YSCALE ≤ 10) ∧ |CAL_ACC2_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC2_ZSCALE ∧ CAL_ACC2_ZSCALE ≤ 10) ∧ |CAL_ACC3_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_XSCALE ∧ CAL_ACC3_XSCALE ≤ 10) ∧ |CAL_ACC3_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_YSCALE ∧ CAL_ACC3_YSCALE ≤ 10) ∧ |CAL_ACC3_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_ACC3_ZSCALE ∧ CAL_ACC3_ZSCALE ≤ 10) ∧ |CAL_BARO0_OFF| ≤ 100) ∧ |CAL_BARO1_OFF| ≤ 100) ∧ |CAL_BARO2_OFF| ≤ 100) ∧ |CAL_BARO3_OFF| ≤ 100) ∧ |CAL_GYRO0_XOFF| ≤ 100) ∧ |CAL_GYRO0_YOFF| ≤ 100) ∧ |CAL_GYRO0_ZOFF| ≤ 100) ∧ |CAL_GYRO1_XOFF| ≤ 100) ∧ |CAL_GYRO1_YOFF| ≤ 100) ∧ |CAL_GYRO1_ZOFF| ≤ 100) ∧ |CAL_GYRO2_XOFF| ≤ 100) ∧ |CAL_GYRO2_YOFF| ≤ 100) ∧ |CAL_GYRO2_ZOFF| ≤ 100) ∧ |CAL_GYRO3_XOFF| ≤ 100) ∧ |CAL_GYRO3_YOFF| ≤ 100) ∧ |CAL_GYRO3_ZOFF| ≤ 100) ∧ |CAL_MAG0_XODIAG| ≤ 100) ∧ |CAL_MAG0_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_XSCALE ∧ CAL_MAG0_XSCALE ≤ 10) ∧ |CAL_MAG0_YODIAG| ≤ 100) ∧ |CAL_MAG0_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_YSCALE ∧ CAL_MAG0_YSCALE ≤ 10) ∧ |CAL_MAG0_ZODIAG| ≤ 100) ∧ |CAL_MAG0_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG0_ZSCALE ∧ CAL_MAG0_ZSCALE ≤ 10) ∧ |CAL_MAG1_XODIAG| ≤ 100) ∧ |CAL_MAG1_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_XSCALE ∧ CAL_MAG1_XSCALE ≤ 10) ∧ |CAL_MAG1_YODIAG| ≤ 100) ∧ |CAL_MAG1_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_YSCALE ∧ CAL_MAG1_YSCALE ≤ 10) ∧ |CAL_MAG1_ZODIAG| ≤ 100) ∧ |CAL_MAG1_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG1_ZSCALE ∧ CAL_MAG1_ZSCALE ≤ 10) ∧ |CAL_MAG2_XODIAG| ≤ 100) ∧ |CAL_MAG2_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_XSCALE ∧ CAL_MAG2_XSCALE ≤ 10) ∧ |CAL_MAG2_YODIAG| ≤ 100) ∧ |CAL_MAG2_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_YSCALE ∧ CAL_MAG2_YSCALE ≤ 10) ∧ |CAL_MAG2_ZODIAG| ≤ 100) ∧ |CAL_MAG2_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG2_ZSCALE ∧ CAL_MAG2_ZSCALE ≤ 10) ∧ |CAL_MAG3_XODIAG| ≤ 100) ∧ |CAL_MAG3_XOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_XSCALE ∧ CAL_MAG3_XSCALE ≤ 10) ∧ |CAL_MAG3_YODIAG| ≤ 100) ∧ |CAL_MAG3_YOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_YSCALE ∧ CAL_MAG3_YSCALE ≤ 10) ∧ |CAL_MAG3_ZODIAG| ≤ 100) ∧ |CAL_MAG3_ZOFF| ≤ 100) ∧ 0.1 ≤ CAL_MAG3_ZSCALE ∧ CAL_MAG3_ZSCALE ≤ 10) ∧ |SENS_BOARD_X_OFF| ≤ 100) ∧ |SENS_BOARD_Y_OFF| ≤ 100) ∧ |SENS_BOARD_Z_OFF| ≤ 100",
+  "board_rotation_implemented: 0 ≤ SENS_BOARD_ROT",
+  "calibration_slots: ((((CAL_ACC0_ID = 0 ∨ CAL_ACC0_ID = 1310988) ∧ (CAL_ACC1_ID = 0 ∨ CAL_ACC1_ID = 1310988)) ∧ (CAL_ACC2_ID = 0 ∨ CAL_ACC2_ID = 1310988)) ∧ (CAL_ACC3_ID = 0 ∨ CAL_ACC3_ID = 1310988)) ∧ ((((CAL_GYRO0_ID = 0 ∨ CAL_GYRO0_ID = 1310988) ∧ (CAL_GYRO1_ID = 0 ∨ CAL_GYRO1_ID = 1310988)) ∧ (CAL_GYRO2_ID = 0 ∨ CAL_GYRO2_ID = 1310988)) ∧ (CAL_GYRO3_ID = 0 ∨ CAL_GYRO3_ID = 1310988)) ∧ ((((CAL_MAG0_ID = 0 ∨ CAL_MAG0_ID = 197388) ∧ (CAL_MAG1_ID = 0 ∨ CAL_MAG1_ID = 197388)) ∧ (CAL_MAG2_ID = 0 ∨ CAL_MAG2_ID = 197388)) ∧ (CAL_MAG3_ID = 0 ∨ CAL_MAG3_ID = 197388)) ∧ (((CAL_BARO0_ID = 0 ∨ CAL_BARO0_ID = 6620172) ∧ (CAL_BARO1_ID = 0 ∨ CAL_BARO1_ID = 6620172)) ∧ (CAL_BARO2_ID = 0 ∨ CAL_BARO2_ID = 6620172)) ∧ (CAL_BARO3_ID = 0 ∨ CAL_BARO3_ID = 6620172)",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "width_manual_control_setpoint_data_source: 0 ≤ manual_control_setpoint_data_source ∧ manual_control_setpoint_data_source ≤ 255",
+  "width_manual_control_setpoint_buttons: 0 ≤ manual_control_setpoint_buttons ∧ manual_control_setpoint_buttons ≤ 65535",
+  "width_battery_status_cell_count: 0 ≤ battery_status_cell_count ∧ battery_status_cell_count ≤ 255",
+  "width_battery_status_source: 0 ≤ battery_status_source ∧ battery_status_source ≤ 255",
+  "width_battery_status_priority: 0 ≤ battery_status_priority ∧ battery_status_priority ≤ 255",
+  "width_battery_status_capacity: 0 ≤ battery_status_capacity ∧ battery_status_capacity ≤ 65535",
+  "width_battery_status_cycle_count: 0 ≤ battery_status_cycle_count ∧ battery_status_cycle_count ≤ 65535",
+  "width_battery_status_average_time_to_empty: 0 ≤ battery_status_average_time_to_empty ∧ battery_status_average_time_to_empty ≤ 65535",
+  "width_battery_status_manufacture_date: 0 ≤ battery_status_manufacture_date ∧ battery_status_manufacture_date ≤ 65535",
+  "width_battery_status_state_of_health: 0 ≤ battery_status_state_of_health ∧ battery_status_state_of_health ≤ 65535",
+  "width_battery_status_max_error: 0 ≤ battery_status_max_error ∧ battery_status_max_error ≤ 65535",
+  "width_battery_status_id: 0 ≤ battery_status_id ∧ battery_status_id ≤ 255",
+  "width_battery_status_interface_error: 0 ≤ battery_status_interface_error ∧ battery_status_interface_error ≤ 65535",
+  "width_battery_status_warning: 0 ≤ battery_status_warning ∧ battery_status_warning ≤ 255",
+  "width_battery_status_faults: 0 ≤ battery_status_faults ∧ battery_status_faults ≤ 65535",
+  "width_battery_status_over_discharge_count: 0 ≤ battery_status_over_discharge_count ∧ battery_status_over_discharge_count ≤ 65535",
+  "range_MC_ACRO_EXPO: 0 ≤ MC_ACRO_EXPO ∧ MC_ACRO_EXPO ≤ 1",
+  "range_MC_ACRO_EXPO_Y: 0 ≤ MC_ACRO_EXPO_Y ∧ MC_ACRO_EXPO_Y ≤ 1",
+  "range_MC_ACRO_P_MAX: 0 ≤ MC_ACRO_P_MAX ∧ MC_ACRO_P_MAX ≤ 1800",
+  "range_MC_ACRO_R_MAX: 0 ≤ MC_ACRO_R_MAX ∧ MC_ACRO_R_MAX ≤ 1800",
+  "range_MC_ACRO_SUPEXPO: 0 ≤ MC_ACRO_SUPEXPO ∧ MC_ACRO_SUPEXPO ≤ 0.95",
+  "range_MC_ACRO_SUPEXPOY: 0 ≤ MC_ACRO_SUPEXPOY ∧ MC_ACRO_SUPEXPOY ≤ 0.95",
+  "range_MC_ACRO_Y_MAX: 0 ≤ MC_ACRO_Y_MAX ∧ MC_ACRO_Y_MAX ≤ 1800",
+  "range_MC_BAT_SCALE_EN: MC_BAT_SCALE_EN = 0 ∨ MC_BAT_SCALE_EN = 1",
+  "range_MC_PITCHRATE_D: 0 ≤ MC_PITCHRATE_D",
+  "range_MC_PITCHRATE_FF: 0 ≤ MC_PITCHRATE_FF",
+  "range_MC_PITCHRATE_I: 0 ≤ MC_PITCHRATE_I",
+  "range_MC_PITCHRATE_K: 0.01 ≤ MC_PITCHRATE_K ∧ MC_PITCHRATE_K ≤ 5",
+  "range_MC_PITCHRATE_P: 0.01 ≤ MC_PITCHRATE_P ∧ MC_PITCHRATE_P ≤ 0.6",
+  "range_MC_PR_INT_LIM: 0 ≤ MC_PR_INT_LIM",
+  "range_MC_ROLLRATE_D: 0 ≤ MC_ROLLRATE_D ∧ MC_ROLLRATE_D ≤ 0.01",
+  "range_MC_ROLLRATE_FF: 0 ≤ MC_ROLLRATE_FF",
+  "range_MC_ROLLRATE_I: 0 ≤ MC_ROLLRATE_I",
+  "range_MC_ROLLRATE_K: 0.01 ≤ MC_ROLLRATE_K ∧ MC_ROLLRATE_K ≤ 5",
+  "range_MC_ROLLRATE_P: 0.01 ≤ MC_ROLLRATE_P ∧ MC_ROLLRATE_P ≤ 0.5",
+  "range_MC_RR_INT_LIM: 0 ≤ MC_RR_INT_LIM",
+  "range_MC_YAWRATE_D: 0 ≤ MC_YAWRATE_D",
+  "range_MC_YAWRATE_FF: 0 ≤ MC_YAWRATE_FF",
+  "range_MC_YAWRATE_I: 0 ≤ MC_YAWRATE_I",
+  "range_MC_YAWRATE_K: 0.01 ≤ MC_YAWRATE_K ∧ MC_YAWRATE_K ≤ 5",
+  "range_MC_YAWRATE_P: 0 ≤ MC_YAWRATE_P ∧ MC_YAWRATE_P ≤ 0.6",
+  "range_MC_YAW_TQ_CUTOFF: 0 ≤ MC_YAW_TQ_CUTOFF ∧ MC_YAW_TQ_CUTOFF ≤ 10",
+  "range_MC_YR_INT_LIM: 0 ≤ MC_YR_INT_LIM",
+  "battery_scale_finite: ¬battery_status_updated ∨ finite(battery_status_scale)",
+  "width_failure_detector_status_motor_failure_mask: 0 ≤ failure_detector_status_motor_failure_mask ∧ failure_detector_status_motor_failure_mask ≤ 65535",
+  "width_failure_detector_status_motor_stop_mask: 0 ≤ failure_detector_status_motor_stop_mask ∧ failure_detector_status_motor_stop_mask ≤ 65535",
+  "range_CA_AIRFRAME: CA_AIRFRAME = 0 ∨ CA_AIRFRAME = 1 ∨ CA_AIRFRAME = 2 ∨ CA_AIRFRAME = 3 ∨ CA_AIRFRAME = 4 ∨ CA_AIRFRAME = 5 ∨ CA_AIRFRAME = 6 ∨ CA_AIRFRAME = 7 ∨ CA_AIRFRAME = 8 ∨ CA_AIRFRAME = 9 ∨ CA_AIRFRAME = 10 ∨ CA_AIRFRAME = 11 ∨ CA_AIRFRAME = 12 ∨ CA_AIRFRAME = 13 ∨ CA_AIRFRAME = 14 ∨ CA_AIRFRAME = 15",
+  "range_CA_FAILURE_MODE: CA_FAILURE_MODE = 0 ∨ CA_FAILURE_MODE = 1",
+  "range_CA_HELI_PITCH_C0: -1 ≤ CA_HELI_PITCH_C0 ∧ CA_HELI_PITCH_C0 ≤ 1",
+  "range_CA_HELI_PITCH_C1: -1 ≤ CA_HELI_PITCH_C1 ∧ CA_HELI_PITCH_C1 ≤ 1",
+  "range_CA_HELI_PITCH_C2: -1 ≤ CA_HELI_PITCH_C2 ∧ CA_HELI_PITCH_C2 ≤ 1",
+  "range_CA_HELI_PITCH_C3: -1 ≤ CA_HELI_PITCH_C3 ∧ CA_HELI_PITCH_C3 ≤ 1",
+  "range_CA_HELI_PITCH_C4: -1 ≤ CA_HELI_PITCH_C4 ∧ CA_HELI_PITCH_C4 ≤ 1",
+  "range_CA_HELI_RPM_I: 0 ≤ CA_HELI_RPM_I ∧ CA_HELI_RPM_I ≤ 10",
+  "range_CA_HELI_RPM_P: 0 ≤ CA_HELI_RPM_P ∧ CA_HELI_RPM_P ≤ 10",
+  "range_CA_HELI_RPM_SP: 100 ≤ CA_HELI_RPM_SP ∧ CA_HELI_RPM_SP ≤ 10000",
+  "range_CA_HELI_THR_C0: 0 ≤ CA_HELI_THR_C0 ∧ CA_HELI_THR_C0 ≤ 1",
+  "range_CA_HELI_THR_C1: 0 ≤ CA_HELI_THR_C1 ∧ CA_HELI_THR_C1 ≤ 1",
+  "range_CA_HELI_THR_C2: 0 ≤ CA_HELI_THR_C2 ∧ CA_HELI_THR_C2 ≤ 1",
+  "range_CA_HELI_THR_C3: 0 ≤ CA_HELI_THR_C3 ∧ CA_HELI_THR_C3 ≤ 1",
+  "range_CA_HELI_THR_C4: 0 ≤ CA_HELI_THR_C4 ∧ CA_HELI_THR_C4 ≤ 1",
+  "range_CA_HELI_YAW_CCW: CA_HELI_YAW_CCW = 0 ∨ CA_HELI_YAW_CCW = 1",
+  "range_CA_HELI_YAW_CP_O: -2 ≤ CA_HELI_YAW_CP_O ∧ CA_HELI_YAW_CP_O ≤ 2",
+  "range_CA_HELI_YAW_CP_S: -2 ≤ CA_HELI_YAW_CP_S ∧ CA_HELI_YAW_CP_S ≤ 2",
+  "range_CA_HELI_YAW_TH_S: -2 ≤ CA_HELI_YAW_TH_S ∧ CA_HELI_YAW_TH_S ≤ 2",
+  "range_CA_MAX_SVO_THROW: 0 ≤ CA_MAX_SVO_THROW ∧ CA_MAX_SVO_THROW ≤ 75",
+  "range_CA_METHOD: CA_METHOD = 0 ∨ CA_METHOD = 1 ∨ CA_METHOD = 2",
+  "range_CA_R0_SLEW: 0 ≤ CA_R0_SLEW ∧ CA_R0_SLEW ≤ 10",
+  "range_CA_R10_SLEW: 0 ≤ CA_R10_SLEW ∧ CA_R10_SLEW ≤ 10",
+  "range_CA_R11_SLEW: 0 ≤ CA_R11_SLEW ∧ CA_R11_SLEW ≤ 10",
+  "range_CA_R1_SLEW: 0 ≤ CA_R1_SLEW ∧ CA_R1_SLEW ≤ 10",
+  "range_CA_R2_SLEW: 0 ≤ CA_R2_SLEW ∧ CA_R2_SLEW ≤ 10",
+  "range_CA_R3_SLEW: 0 ≤ CA_R3_SLEW ∧ CA_R3_SLEW ≤ 10",
+  "range_CA_R4_SLEW: 0 ≤ CA_R4_SLEW ∧ CA_R4_SLEW ≤ 10",
+  "range_CA_R5_SLEW: 0 ≤ CA_R5_SLEW ∧ CA_R5_SLEW ≤ 10",
+  "range_CA_R6_SLEW: 0 ≤ CA_R6_SLEW ∧ CA_R6_SLEW ≤ 10",
+  "range_CA_R7_SLEW: 0 ≤ CA_R7_SLEW ∧ CA_R7_SLEW ≤ 10",
+  "range_CA_R8_SLEW: 0 ≤ CA_R8_SLEW ∧ CA_R8_SLEW ≤ 10",
+  "range_CA_R9_SLEW: 0 ≤ CA_R9_SLEW ∧ CA_R9_SLEW ≤ 10",
+  "range_CA_ROTOR0_AX: -100 ≤ CA_ROTOR0_AX ∧ CA_ROTOR0_AX ≤ 100",
+  "range_CA_ROTOR0_AY: -100 ≤ CA_ROTOR0_AY ∧ CA_ROTOR0_AY ≤ 100",
+  "range_CA_ROTOR0_AZ: -100 ≤ CA_ROTOR0_AZ ∧ CA_ROTOR0_AZ ≤ 100",
+  "range_CA_ROTOR0_CT: 0 ≤ CA_ROTOR0_CT ∧ CA_ROTOR0_CT ≤ 100",
+  "range_CA_ROTOR0_KM: -1 ≤ CA_ROTOR0_KM ∧ CA_ROTOR0_KM ≤ 1",
+  "range_CA_ROTOR0_PX: -100 ≤ CA_ROTOR0_PX ∧ CA_ROTOR0_PX ≤ 100",
+  "range_CA_ROTOR0_PY: -100 ≤ CA_ROTOR0_PY ∧ CA_ROTOR0_PY ≤ 100",
+  "range_CA_ROTOR0_PZ: -100 ≤ CA_ROTOR0_PZ ∧ CA_ROTOR0_PZ ≤ 100",
+  "range_CA_ROTOR0_TILT: CA_ROTOR0_TILT = 0 ∨ CA_ROTOR0_TILT = 1 ∨ CA_ROTOR0_TILT = 2 ∨ CA_ROTOR0_TILT = 3 ∨ CA_ROTOR0_TILT = 4",
+  "range_CA_ROTOR10_AX: -100 ≤ CA_ROTOR10_AX ∧ CA_ROTOR10_AX ≤ 100",
+  "range_CA_ROTOR10_AY: -100 ≤ CA_ROTOR10_AY ∧ CA_ROTOR10_AY ≤ 100",
+  "range_CA_ROTOR10_AZ: -100 ≤ CA_ROTOR10_AZ ∧ CA_ROTOR10_AZ ≤ 100",
+  "range_CA_ROTOR10_CT: 0 ≤ CA_ROTOR10_CT ∧ CA_ROTOR10_CT ≤ 100",
+  "range_CA_ROTOR10_KM: -1 ≤ CA_ROTOR10_KM ∧ CA_ROTOR10_KM ≤ 1",
+  "range_CA_ROTOR10_PX: -100 ≤ CA_ROTOR10_PX ∧ CA_ROTOR10_PX ≤ 100",
+  "range_CA_ROTOR10_PY: -100 ≤ CA_ROTOR10_PY ∧ CA_ROTOR10_PY ≤ 100",
+  "range_CA_ROTOR10_PZ: -100 ≤ CA_ROTOR10_PZ ∧ CA_ROTOR10_PZ ≤ 100",
+  "range_CA_ROTOR10_TILT: CA_ROTOR10_TILT = 0 ∨ CA_ROTOR10_TILT = 1 ∨ CA_ROTOR10_TILT = 2 ∨ CA_ROTOR10_TILT = 3 ∨ CA_ROTOR10_TILT = 4",
+  "range_CA_ROTOR11_AX: -100 ≤ CA_ROTOR11_AX ∧ CA_ROTOR11_AX ≤ 100",
+  "range_CA_ROTOR11_AY: -100 ≤ CA_ROTOR11_AY ∧ CA_ROTOR11_AY ≤ 100",
+  "range_CA_ROTOR11_AZ: -100 ≤ CA_ROTOR11_AZ ∧ CA_ROTOR11_AZ ≤ 100",
+  "range_CA_ROTOR11_CT: 0 ≤ CA_ROTOR11_CT ∧ CA_ROTOR11_CT ≤ 100",
+  "range_CA_ROTOR11_KM: -1 ≤ CA_ROTOR11_KM ∧ CA_ROTOR11_KM ≤ 1",
+  "range_CA_ROTOR11_PX: -100 ≤ CA_ROTOR11_PX ∧ CA_ROTOR11_PX ≤ 100",
+  "range_CA_ROTOR11_PY: -100 ≤ CA_ROTOR11_PY ∧ CA_ROTOR11_PY ≤ 100",
+  "range_CA_ROTOR11_PZ: -100 ≤ CA_ROTOR11_PZ ∧ CA_ROTOR11_PZ ≤ 100",
+  "range_CA_ROTOR11_TILT: CA_ROTOR11_TILT = 0 ∨ CA_ROTOR11_TILT = 1 ∨ CA_ROTOR11_TILT = 2 ∨ CA_ROTOR11_TILT = 3 ∨ CA_ROTOR11_TILT = 4",
+  "range_CA_ROTOR1_AX: -100 ≤ CA_ROTOR1_AX ∧ CA_ROTOR1_AX ≤ 100",
+  "range_CA_ROTOR1_AY: -100 ≤ CA_ROTOR1_AY ∧ CA_ROTOR1_AY ≤ 100",
+  "range_CA_ROTOR1_AZ: -100 ≤ CA_ROTOR1_AZ ∧ CA_ROTOR1_AZ ≤ 100",
+  "range_CA_ROTOR1_CT: 0 ≤ CA_ROTOR1_CT ∧ CA_ROTOR1_CT ≤ 100",
+  "range_CA_ROTOR1_KM: -1 ≤ CA_ROTOR1_KM ∧ CA_ROTOR1_KM ≤ 1",
+  "range_CA_ROTOR1_PX: -100 ≤ CA_ROTOR1_PX ∧ CA_ROTOR1_PX ≤ 100",
+  "range_CA_ROTOR1_PY: -100 ≤ CA_ROTOR1_PY ∧ CA_ROTOR1_PY ≤ 100",
+  "range_CA_ROTOR1_PZ: -100 ≤ CA_ROTOR1_PZ ∧ CA_ROTOR1_PZ ≤ 100",
+  "range_CA_ROTOR1_TILT: CA_ROTOR1_TILT = 0 ∨ CA_ROTOR1_TILT = 1 ∨ CA_ROTOR1_TILT = 2 ∨ CA_ROTOR1_TILT = 3 ∨ CA_ROTOR1_TILT = 4",
+  "range_CA_ROTOR2_AX: -100 ≤ CA_ROTOR2_AX ∧ CA_ROTOR2_AX ≤ 100",
+  "range_CA_ROTOR2_AY: -100 ≤ CA_ROTOR2_AY ∧ CA_ROTOR2_AY ≤ 100",
+  "range_CA_ROTOR2_AZ: -100 ≤ CA_ROTOR2_AZ ∧ CA_ROTOR2_AZ ≤ 100",
+  "range_CA_ROTOR2_CT: 0 ≤ CA_ROTOR2_CT ∧ CA_ROTOR2_CT ≤ 100",
+  "range_CA_ROTOR2_KM: -1 ≤ CA_ROTOR2_KM ∧ CA_ROTOR2_KM ≤ 1",
+  "range_CA_ROTOR2_PX: -100 ≤ CA_ROTOR2_PX ∧ CA_ROTOR2_PX ≤ 100",
+  "range_CA_ROTOR2_PY: -100 ≤ CA_ROTOR2_PY ∧ CA_ROTOR2_PY ≤ 100",
+  "range_CA_ROTOR2_PZ: -100 ≤ CA_ROTOR2_PZ ∧ CA_ROTOR2_PZ ≤ 100",
+  "range_CA_ROTOR2_TILT: CA_ROTOR2_TILT = 0 ∨ CA_ROTOR2_TILT = 1 ∨ CA_ROTOR2_TILT = 2 ∨ CA_ROTOR2_TILT = 3 ∨ CA_ROTOR2_TILT = 4",
+  "range_CA_ROTOR3_AX: -100 ≤ CA_ROTOR3_AX ∧ CA_ROTOR3_AX ≤ 100",
+  "range_CA_ROTOR3_AY: -100 ≤ CA_ROTOR3_AY ∧ CA_ROTOR3_AY ≤ 100",
+  "range_CA_ROTOR3_AZ: -100 ≤ CA_ROTOR3_AZ ∧ CA_ROTOR3_AZ ≤ 100",
+  "range_CA_ROTOR3_CT: 0 ≤ CA_ROTOR3_CT ∧ CA_ROTOR3_CT ≤ 100",
+  "range_CA_ROTOR3_KM: -1 ≤ CA_ROTOR3_KM ∧ CA_ROTOR3_KM ≤ 1",
+  "range_CA_ROTOR3_PX: -100 ≤ CA_ROTOR3_PX ∧ CA_ROTOR3_PX ≤ 100",
+  "range_CA_ROTOR3_PY: -100 ≤ CA_ROTOR3_PY ∧ CA_ROTOR3_PY ≤ 100",
+  "range_CA_ROTOR3_PZ: -100 ≤ CA_ROTOR3_PZ ∧ CA_ROTOR3_PZ ≤ 100",
+  "range_CA_ROTOR3_TILT: CA_ROTOR3_TILT = 0 ∨ CA_ROTOR3_TILT = 1 ∨ CA_ROTOR3_TILT = 2 ∨ CA_ROTOR3_TILT = 3 ∨ CA_ROTOR3_TILT = 4",
+  "range_CA_ROTOR4_AX: -100 ≤ CA_ROTOR4_AX ∧ CA_ROTOR4_AX ≤ 100",
+  "range_CA_ROTOR4_AY: -100 ≤ CA_ROTOR4_AY ∧ CA_ROTOR4_AY ≤ 100",
+  "range_CA_ROTOR4_AZ: -100 ≤ CA_ROTOR4_AZ ∧ CA_ROTOR4_AZ ≤ 100",
+  "range_CA_ROTOR4_CT: 0 ≤ CA_ROTOR4_CT ∧ CA_ROTOR4_CT ≤ 100",
+  "range_CA_ROTOR4_KM: -1 ≤ CA_ROTOR4_KM ∧ CA_ROTOR4_KM ≤ 1",
+  "range_CA_ROTOR4_PX: -100 ≤ CA_ROTOR4_PX ∧ CA_ROTOR4_PX ≤ 100",
+  "range_CA_ROTOR4_PY: -100 ≤ CA_ROTOR4_PY ∧ CA_ROTOR4_PY ≤ 100",
+  "range_CA_ROTOR4_PZ: -100 ≤ CA_ROTOR4_PZ ∧ CA_ROTOR4_PZ ≤ 100",
+  "range_CA_ROTOR4_TILT: CA_ROTOR4_TILT = 0 ∨ CA_ROTOR4_TILT = 1 ∨ CA_ROTOR4_TILT = 2 ∨ CA_ROTOR4_TILT = 3 ∨ CA_ROTOR4_TILT = 4",
+  "range_CA_ROTOR5_AX: -100 ≤ CA_ROTOR5_AX ∧ CA_ROTOR5_AX ≤ 100",
+  "range_CA_ROTOR5_AY: -100 ≤ CA_ROTOR5_AY ∧ CA_ROTOR5_AY ≤ 100",
+  "range_CA_ROTOR5_AZ: -100 ≤ CA_ROTOR5_AZ ∧ CA_ROTOR5_AZ ≤ 100",
+  "range_CA_ROTOR5_CT: 0 ≤ CA_ROTOR5_CT ∧ CA_ROTOR5_CT ≤ 100",
+  "range_CA_ROTOR5_KM: -1 ≤ CA_ROTOR5_KM ∧ CA_ROTOR5_KM ≤ 1",
+  "range_CA_ROTOR5_PX: -100 ≤ CA_ROTOR5_PX ∧ CA_ROTOR5_PX ≤ 100",
+  "range_CA_ROTOR5_PY: -100 ≤ CA_ROTOR5_PY ∧ CA_ROTOR5_PY ≤ 100",
+  "range_CA_ROTOR5_PZ: -100 ≤ CA_ROTOR5_PZ ∧ CA_ROTOR5_PZ ≤ 100",
+  "range_CA_ROTOR5_TILT: CA_ROTOR5_TILT = 0 ∨ CA_ROTOR5_TILT = 1 ∨ CA_ROTOR5_TILT = 2 ∨ CA_ROTOR5_TILT = 3 ∨ CA_ROTOR5_TILT = 4",
+  "range_CA_ROTOR6_AX: -100 ≤ CA_ROTOR6_AX ∧ CA_ROTOR6_AX ≤ 100",
+  "range_CA_ROTOR6_AY: -100 ≤ CA_ROTOR6_AY ∧ CA_ROTOR6_AY ≤ 100",
+  "range_CA_ROTOR6_AZ: -100 ≤ CA_ROTOR6_AZ ∧ CA_ROTOR6_AZ ≤ 100",
+  "range_CA_ROTOR6_CT: 0 ≤ CA_ROTOR6_CT ∧ CA_ROTOR6_CT ≤ 100",
+  "range_CA_ROTOR6_KM: -1 ≤ CA_ROTOR6_KM ∧ CA_ROTOR6_KM ≤ 1",
+  "range_CA_ROTOR6_PX: -100 ≤ CA_ROTOR6_PX ∧ CA_ROTOR6_PX ≤ 100",
+  "range_CA_ROTOR6_PY: -100 ≤ CA_ROTOR6_PY ∧ CA_ROTOR6_PY ≤ 100",
+  "range_CA_ROTOR6_PZ: -100 ≤ CA_ROTOR6_PZ ∧ CA_ROTOR6_PZ ≤ 100",
+  "range_CA_ROTOR6_TILT: CA_ROTOR6_TILT = 0 ∨ CA_ROTOR6_TILT = 1 ∨ CA_ROTOR6_TILT = 2 ∨ CA_ROTOR6_TILT = 3 ∨ CA_ROTOR6_TILT = 4",
+  "range_CA_ROTOR7_AX: -100 ≤ CA_ROTOR7_AX ∧ CA_ROTOR7_AX ≤ 100",
+  "range_CA_ROTOR7_AY: -100 ≤ CA_ROTOR7_AY ∧ CA_ROTOR7_AY ≤ 100",
+  "range_CA_ROTOR7_AZ: -100 ≤ CA_ROTOR7_AZ ∧ CA_ROTOR7_AZ ≤ 100",
+  "range_CA_ROTOR7_CT: 0 ≤ CA_ROTOR7_CT ∧ CA_ROTOR7_CT ≤ 100",
+  "range_CA_ROTOR7_KM: -1 ≤ CA_ROTOR7_KM ∧ CA_ROTOR7_KM ≤ 1",
+  "range_CA_ROTOR7_PX: -100 ≤ CA_ROTOR7_PX ∧ CA_ROTOR7_PX ≤ 100",
+  "range_CA_ROTOR7_PY: -100 ≤ CA_ROTOR7_PY ∧ CA_ROTOR7_PY ≤ 100",
+  "range_CA_ROTOR7_PZ: -100 ≤ CA_ROTOR7_PZ ∧ CA_ROTOR7_PZ ≤ 100",
+  "range_CA_ROTOR7_TILT: CA_ROTOR7_TILT = 0 ∨ CA_ROTOR7_TILT = 1 ∨ CA_ROTOR7_TILT = 2 ∨ CA_ROTOR7_TILT = 3 ∨ CA_ROTOR7_TILT = 4",
+  "range_CA_ROTOR8_AX: -100 ≤ CA_ROTOR8_AX ∧ CA_ROTOR8_AX ≤ 100",
+  "range_CA_ROTOR8_AY: -100 ≤ CA_ROTOR8_AY ∧ CA_ROTOR8_AY ≤ 100",
+  "range_CA_ROTOR8_AZ: -100 ≤ CA_ROTOR8_AZ ∧ CA_ROTOR8_AZ ≤ 100",
+  "range_CA_ROTOR8_CT: 0 ≤ CA_ROTOR8_CT ∧ CA_ROTOR8_CT ≤ 100",
+  "range_CA_ROTOR8_KM: -1 ≤ CA_ROTOR8_KM ∧ CA_ROTOR8_KM ≤ 1",
+  "range_CA_ROTOR8_PX: -100 ≤ CA_ROTOR8_PX ∧ CA_ROTOR8_PX ≤ 100",
+  "range_CA_ROTOR8_PY: -100 ≤ CA_ROTOR8_PY ∧ CA_ROTOR8_PY ≤ 100",
+  "range_CA_ROTOR8_PZ: -100 ≤ CA_ROTOR8_PZ ∧ CA_ROTOR8_PZ ≤ 100",
+  "range_CA_ROTOR8_TILT: CA_ROTOR8_TILT = 0 ∨ CA_ROTOR8_TILT = 1 ∨ CA_ROTOR8_TILT = 2 ∨ CA_ROTOR8_TILT = 3 ∨ CA_ROTOR8_TILT = 4",
+  "range_CA_ROTOR9_AX: -100 ≤ CA_ROTOR9_AX ∧ CA_ROTOR9_AX ≤ 100",
+  "range_CA_ROTOR9_AY: -100 ≤ CA_ROTOR9_AY ∧ CA_ROTOR9_AY ≤ 100",
+  "range_CA_ROTOR9_AZ: -100 ≤ CA_ROTOR9_AZ ∧ CA_ROTOR9_AZ ≤ 100",
+  "range_CA_ROTOR9_CT: 0 ≤ CA_ROTOR9_CT ∧ CA_ROTOR9_CT ≤ 100",
+  "range_CA_ROTOR9_KM: -1 ≤ CA_ROTOR9_KM ∧ CA_ROTOR9_KM ≤ 1",
+  "range_CA_ROTOR9_PX: -100 ≤ CA_ROTOR9_PX ∧ CA_ROTOR9_PX ≤ 100",
+  "range_CA_ROTOR9_PY: -100 ≤ CA_ROTOR9_PY ∧ CA_ROTOR9_PY ≤ 100",
+  "range_CA_ROTOR9_PZ: -100 ≤ CA_ROTOR9_PZ ∧ CA_ROTOR9_PZ ≤ 100",
+  "range_CA_ROTOR9_TILT: CA_ROTOR9_TILT = 0 ∨ CA_ROTOR9_TILT = 1 ∨ CA_ROTOR9_TILT = 2 ∨ CA_ROTOR9_TILT = 3 ∨ CA_ROTOR9_TILT = 4",
+  "range_CA_ROTOR_COUNT: CA_ROTOR_COUNT = 0 ∨ CA_ROTOR_COUNT = 1 ∨ CA_ROTOR_COUNT = 2 ∨ CA_ROTOR_COUNT = 3 ∨ CA_ROTOR_COUNT = 4 ∨ CA_ROTOR_COUNT = 5 ∨ CA_ROTOR_COUNT = 6 ∨ CA_ROTOR_COUNT = 7 ∨ CA_ROTOR_COUNT = 8 ∨ CA_ROTOR_COUNT = 9 ∨ CA_ROTOR_COUNT = 10 ∨ CA_ROTOR_COUNT = 11 ∨ CA_ROTOR_COUNT = 12",
+  "range_CA_R_REV: 0 ≤ CA_R_REV ∧ CA_R_REV ≤ 4095",
+  "range_CA_SP0_ANG0: 0 ≤ CA_SP0_ANG0 ∧ CA_SP0_ANG0 ≤ 360",
+  "range_CA_SP0_ANG1: 0 ≤ CA_SP0_ANG1 ∧ CA_SP0_ANG1 ≤ 360",
+  "range_CA_SP0_ANG2: 0 ≤ CA_SP0_ANG2 ∧ CA_SP0_ANG2 ≤ 360",
+  "range_CA_SP0_ANG3: 0 ≤ CA_SP0_ANG3 ∧ CA_SP0_ANG3 ≤ 360",
+  "range_CA_SP0_ARM_L0: 0 ≤ CA_SP0_ARM_L0 ∧ CA_SP0_ARM_L0 ≤ 10",
+  "range_CA_SP0_ARM_L1: 0 ≤ CA_SP0_ARM_L1 ∧ CA_SP0_ARM_L1 ≤ 10",
+  "range_CA_SP0_ARM_L2: 0 ≤ CA_SP0_ARM_L2 ∧ CA_SP0_ARM_L2 ≤ 10",
+  "range_CA_SP0_ARM_L3: 0 ≤ CA_SP0_ARM_L3 ∧ CA_SP0_ARM_L3 ≤ 10",
+  "range_CA_SP0_COUNT: CA_SP0_COUNT = 2 ∨ CA_SP0_COUNT = 3 ∨ CA_SP0_COUNT = 4",
+  "range_CA_SV0_SLEW: 0 ≤ CA_SV0_SLEW ∧ CA_SV0_SLEW ≤ 10",
+  "range_CA_SV1_SLEW: 0 ≤ CA_SV1_SLEW ∧ CA_SV1_SLEW ≤ 10",
+  "range_CA_SV2_SLEW: 0 ≤ CA_SV2_SLEW ∧ CA_SV2_SLEW ≤ 10",
+  "range_CA_SV3_SLEW: 0 ≤ CA_SV3_SLEW ∧ CA_SV3_SLEW ≤ 10",
+  "range_CA_SV4_SLEW: 0 ≤ CA_SV4_SLEW ∧ CA_SV4_SLEW ≤ 10",
+  "range_CA_SV5_SLEW: 0 ≤ CA_SV5_SLEW ∧ CA_SV5_SLEW ≤ 10",
+  "range_CA_SV6_SLEW: 0 ≤ CA_SV6_SLEW ∧ CA_SV6_SLEW ≤ 10",
+  "range_CA_SV7_SLEW: 0 ≤ CA_SV7_SLEW ∧ CA_SV7_SLEW ≤ 10",
+  "range_CA_SV_CS0_FLAP: -1 ≤ CA_SV_CS0_FLAP ∧ CA_SV_CS0_FLAP ≤ 1",
+  "range_CA_SV_CS0_SPOIL: -1 ≤ CA_SV_CS0_SPOIL ∧ CA_SV_CS0_SPOIL ≤ 1",
+  "range_CA_SV_CS0_TRIM: -1 ≤ CA_SV_CS0_TRIM ∧ CA_SV_CS0_TRIM ≤ 1",
+  "range_CA_SV_CS0_TYPE: CA_SV_CS0_TYPE = 0 ∨ CA_SV_CS0_TYPE = 1 ∨ CA_SV_CS0_TYPE = 2 ∨ CA_SV_CS0_TYPE = 3 ∨ CA_SV_CS0_TYPE = 4 ∨ CA_SV_CS0_TYPE = 5 ∨ CA_SV_CS0_TYPE = 6 ∨ CA_SV_CS0_TYPE = 7 ∨ CA_SV_CS0_TYPE = 8 ∨ CA_SV_CS0_TYPE = 9 ∨ CA_SV_CS0_TYPE = 10 ∨ CA_SV_CS0_TYPE = 11 ∨ CA_SV_CS0_TYPE = 12 ∨ CA_SV_CS0_TYPE = 13 ∨ CA_SV_CS0_TYPE = 14 ∨ CA_SV_CS0_TYPE = 15 ∨ CA_SV_CS0_TYPE = 16 ∨ CA_SV_CS0_TYPE = 17 ∨ CA_SV_CS0_TYPE = 18",
+  "range_CA_SV_CS1_FLAP: -1 ≤ CA_SV_CS1_FLAP ∧ CA_SV_CS1_FLAP ≤ 1",
+  "range_CA_SV_CS1_SPOIL: -1 ≤ CA_SV_CS1_SPOIL ∧ CA_SV_CS1_SPOIL ≤ 1",
+  "range_CA_SV_CS1_TRIM: -1 ≤ CA_SV_CS1_TRIM ∧ CA_SV_CS1_TRIM ≤ 1",
+  "range_CA_SV_CS1_TYPE: CA_SV_CS1_TYPE = 0 ∨ CA_SV_CS1_TYPE = 1 ∨ CA_SV_CS1_TYPE = 2 ∨ CA_SV_CS1_TYPE = 3 ∨ CA_SV_CS1_TYPE = 4 ∨ CA_SV_CS1_TYPE = 5 ∨ CA_SV_CS1_TYPE = 6 ∨ CA_SV_CS1_TYPE = 7 ∨ CA_SV_CS1_TYPE = 8 ∨ CA_SV_CS1_TYPE = 9 ∨ CA_SV_CS1_TYPE = 10 ∨ CA_SV_CS1_TYPE = 11 ∨ CA_SV_CS1_TYPE = 12 ∨ CA_SV_CS1_TYPE = 13 ∨ CA_SV_CS1_TYPE = 14 ∨ CA_SV_CS1_TYPE = 15 ∨ CA_SV_CS1_TYPE = 16 ∨ CA_SV_CS1_TYPE = 17 ∨ CA_SV_CS1_TYPE = 18",
+  "range_CA_SV_CS2_FLAP: -1 ≤ CA_SV_CS2_FLAP ∧ CA_SV_CS2_FLAP ≤ 1",
+  "range_CA_SV_CS2_SPOIL: -1 ≤ CA_SV_CS2_SPOIL ∧ CA_SV_CS2_SPOIL ≤ 1",
+  "range_CA_SV_CS2_TRIM: -1 ≤ CA_SV_CS2_TRIM ∧ CA_SV_CS2_TRIM ≤ 1",
+  "range_CA_SV_CS2_TYPE: CA_SV_CS2_TYPE = 0 ∨ CA_SV_CS2_TYPE = 1 ∨ CA_SV_CS2_TYPE = 2 ∨ CA_SV_CS2_TYPE = 3 ∨ CA_SV_CS2_TYPE = 4 ∨ CA_SV_CS2_TYPE = 5 ∨ CA_SV_CS2_TYPE = 6 ∨ CA_SV_CS2_TYPE = 7 ∨ CA_SV_CS2_TYPE = 8 ∨ CA_SV_CS2_TYPE = 9 ∨ CA_SV_CS2_TYPE = 10 ∨ CA_SV_CS2_TYPE = 11 ∨ CA_SV_CS2_TYPE = 12 ∨ CA_SV_CS2_TYPE = 13 ∨ CA_SV_CS2_TYPE = 14 ∨ CA_SV_CS2_TYPE = 15 ∨ CA_SV_CS2_TYPE = 16 ∨ CA_SV_CS2_TYPE = 17 ∨ CA_SV_CS2_TYPE = 18",
+  "range_CA_SV_CS3_FLAP: -1 ≤ CA_SV_CS3_FLAP ∧ CA_SV_CS3_FLAP ≤ 1",
+  "range_CA_SV_CS3_SPOIL: -1 ≤ CA_SV_CS3_SPOIL ∧ CA_SV_CS3_SPOIL ≤ 1",
+  "range_CA_SV_CS3_TRIM: -1 ≤ CA_SV_CS3_TRIM ∧ CA_SV_CS3_TRIM ≤ 1",
+  "range_CA_SV_CS3_TYPE: CA_SV_CS3_TYPE = 0 ∨ CA_SV_CS3_TYPE = 1 ∨ CA_SV_CS3_TYPE = 2 ∨ CA_SV_CS3_TYPE = 3 ∨ CA_SV_CS3_TYPE = 4 ∨ CA_SV_CS3_TYPE = 5 ∨ CA_SV_CS3_TYPE = 6 ∨ CA_SV_CS3_TYPE = 7 ∨ CA_SV_CS3_TYPE = 8 ∨ CA_SV_CS3_TYPE = 9 ∨ CA_SV_CS3_TYPE = 10 ∨ CA_SV_CS3_TYPE = 11 ∨ CA_SV_CS3_TYPE = 12 ∨ CA_SV_CS3_TYPE = 13 ∨ CA_SV_CS3_TYPE = 14 ∨ CA_SV_CS3_TYPE = 15 ∨ CA_SV_CS3_TYPE = 16 ∨ CA_SV_CS3_TYPE = 17 ∨ CA_SV_CS3_TYPE = 18",
+  "range_CA_SV_CS4_FLAP: -1 ≤ CA_SV_CS4_FLAP ∧ CA_SV_CS4_FLAP ≤ 1",
+  "range_CA_SV_CS4_SPOIL: -1 ≤ CA_SV_CS4_SPOIL ∧ CA_SV_CS4_SPOIL ≤ 1",
+  "range_CA_SV_CS4_TRIM: -1 ≤ CA_SV_CS4_TRIM ∧ CA_SV_CS4_TRIM ≤ 1",
+  "range_CA_SV_CS4_TYPE: CA_SV_CS4_TYPE = 0 ∨ CA_SV_CS4_TYPE = 1 ∨ CA_SV_CS4_TYPE = 2 ∨ CA_SV_CS4_TYPE = 3 ∨ CA_SV_CS4_TYPE = 4 ∨ CA_SV_CS4_TYPE = 5 ∨ CA_SV_CS4_TYPE = 6 ∨ CA_SV_CS4_TYPE = 7 ∨ CA_SV_CS4_TYPE = 8 ∨ CA_SV_CS4_TYPE = 9 ∨ CA_SV_CS4_TYPE = 10 ∨ CA_SV_CS4_TYPE = 11 ∨ CA_SV_CS4_TYPE = 12 ∨ CA_SV_CS4_TYPE = 13 ∨ CA_SV_CS4_TYPE = 14 ∨ CA_SV_CS4_TYPE = 15 ∨ CA_SV_CS4_TYPE = 16 ∨ CA_SV_CS4_TYPE = 17 ∨ CA_SV_CS4_TYPE = 18",
+  "range_CA_SV_CS5_FLAP: -1 ≤ CA_SV_CS5_FLAP ∧ CA_SV_CS5_FLAP ≤ 1",
+  "range_CA_SV_CS5_SPOIL: -1 ≤ CA_SV_CS5_SPOIL ∧ CA_SV_CS5_SPOIL ≤ 1",
+  "range_CA_SV_CS5_TRIM: -1 ≤ CA_SV_CS5_TRIM ∧ CA_SV_CS5_TRIM ≤ 1",
+  "range_CA_SV_CS5_TYPE: CA_SV_CS5_TYPE = 0 ∨ CA_SV_CS5_TYPE = 1 ∨ CA_SV_CS5_TYPE = 2 ∨ CA_SV_CS5_TYPE = 3 ∨ CA_SV_CS5_TYPE = 4 ∨ CA_SV_CS5_TYPE = 5 ∨ CA_SV_CS5_TYPE = 6 ∨ CA_SV_CS5_TYPE = 7 ∨ CA_SV_CS5_TYPE = 8 ∨ CA_SV_CS5_TYPE = 9 ∨ CA_SV_CS5_TYPE = 10 ∨ CA_SV_CS5_TYPE = 11 ∨ CA_SV_CS5_TYPE = 12 ∨ CA_SV_CS5_TYPE = 13 ∨ CA_SV_CS5_TYPE = 14 ∨ CA_SV_CS5_TYPE = 15 ∨ CA_SV_CS5_TYPE = 16 ∨ CA_SV_CS5_TYPE = 17 ∨ CA_SV_CS5_TYPE = 18",
+  "range_CA_SV_CS6_FLAP: -1 ≤ CA_SV_CS6_FLAP ∧ CA_SV_CS6_FLAP ≤ 1",
+  "range_CA_SV_CS6_SPOIL: -1 ≤ CA_SV_CS6_SPOIL ∧ CA_SV_CS6_SPOIL ≤ 1",
+  "range_CA_SV_CS6_TRIM: -1 ≤ CA_SV_CS6_TRIM ∧ CA_SV_CS6_TRIM ≤ 1",
+  "range_CA_SV_CS6_TYPE: CA_SV_CS6_TYPE = 0 ∨ CA_SV_CS6_TYPE = 1 ∨ CA_SV_CS6_TYPE = 2 ∨ CA_SV_CS6_TYPE = 3 ∨ CA_SV_CS6_TYPE = 4 ∨ CA_SV_CS6_TYPE = 5 ∨ CA_SV_CS6_TYPE = 6 ∨ CA_SV_CS6_TYPE = 7 ∨ CA_SV_CS6_TYPE = 8 ∨ CA_SV_CS6_TYPE = 9 ∨ CA_SV_CS6_TYPE = 10 ∨ CA_SV_CS6_TYPE = 11 ∨ CA_SV_CS6_TYPE = 12 ∨ CA_SV_CS6_TYPE = 13 ∨ CA_SV_CS6_TYPE = 14 ∨ CA_SV_CS6_TYPE = 15 ∨ CA_SV_CS6_TYPE = 16 ∨ CA_SV_CS6_TYPE = 17 ∨ CA_SV_CS6_TYPE = 18",
+  "range_CA_SV_CS7_FLAP: -1 ≤ CA_SV_CS7_FLAP ∧ CA_SV_CS7_FLAP ≤ 1",
+  "range_CA_SV_CS7_SPOIL: -1 ≤ CA_SV_CS7_SPOIL ∧ CA_SV_CS7_SPOIL ≤ 1",
+  "range_CA_SV_CS7_TRIM: -1 ≤ CA_SV_CS7_TRIM ∧ CA_SV_CS7_TRIM ≤ 1",
+  "range_CA_SV_CS7_TYPE: CA_SV_CS7_TYPE = 0 ∨ CA_SV_CS7_TYPE = 1 ∨ CA_SV_CS7_TYPE = 2 ∨ CA_SV_CS7_TYPE = 3 ∨ CA_SV_CS7_TYPE = 4 ∨ CA_SV_CS7_TYPE = 5 ∨ CA_SV_CS7_TYPE = 6 ∨ CA_SV_CS7_TYPE = 7 ∨ CA_SV_CS7_TYPE = 8 ∨ CA_SV_CS7_TYPE = 9 ∨ CA_SV_CS7_TYPE = 10 ∨ CA_SV_CS7_TYPE = 11 ∨ CA_SV_CS7_TYPE = 12 ∨ CA_SV_CS7_TYPE = 13 ∨ CA_SV_CS7_TYPE = 14 ∨ CA_SV_CS7_TYPE = 15 ∨ CA_SV_CS7_TYPE = 16 ∨ CA_SV_CS7_TYPE = 17 ∨ CA_SV_CS7_TYPE = 18",
+  "range_CA_SV_CS_COUNT: CA_SV_CS_COUNT = 0 ∨ CA_SV_CS_COUNT = 1 ∨ CA_SV_CS_COUNT = 2 ∨ CA_SV_CS_COUNT = 3 ∨ CA_SV_CS_COUNT = 4 ∨ CA_SV_CS_COUNT = 5 ∨ CA_SV_CS_COUNT = 6 ∨ CA_SV_CS_COUNT = 7 ∨ CA_SV_CS_COUNT = 8",
+  "range_CA_SV_TL0_CT: CA_SV_TL0_CT = 0 ∨ CA_SV_TL0_CT = 1 ∨ CA_SV_TL0_CT = 2 ∨ CA_SV_TL0_CT = 3",
+  "range_CA_SV_TL0_MAXA: -90 ≤ CA_SV_TL0_MAXA ∧ CA_SV_TL0_MAXA ≤ 90",
+  "range_CA_SV_TL0_MINA: -90 ≤ CA_SV_TL0_MINA ∧ CA_SV_TL0_MINA ≤ 90",
+  "range_CA_SV_TL0_TD: 0 ≤ CA_SV_TL0_TD ∧ CA_SV_TL0_TD ≤ 359",
+  "range_CA_SV_TL1_CT: CA_SV_TL1_CT = 0 ∨ CA_SV_TL1_CT = 1 ∨ CA_SV_TL1_CT = 2 ∨ CA_SV_TL1_CT = 3",
+  "range_CA_SV_TL1_MAXA: -90 ≤ CA_SV_TL1_MAXA ∧ CA_SV_TL1_MAXA ≤ 90",
+  "range_CA_SV_TL1_MINA: -90 ≤ CA_SV_TL1_MINA ∧ CA_SV_TL1_MINA ≤ 90",
+  "range_CA_SV_TL1_TD: 0 ≤ CA_SV_TL1_TD ∧ CA_SV_TL1_TD ≤ 359",
+  "range_CA_SV_TL2_CT: CA_SV_TL2_CT = 0 ∨ CA_SV_TL2_CT = 1 ∨ CA_SV_TL2_CT = 2 ∨ CA_SV_TL2_CT = 3",
+  "range_CA_SV_TL2_MAXA: -90 ≤ CA_SV_TL2_MAXA ∧ CA_SV_TL2_MAXA ≤ 90",
+  "range_CA_SV_TL2_MINA: -90 ≤ CA_SV_TL2_MINA ∧ CA_SV_TL2_MINA ≤ 90",
+  "range_CA_SV_TL2_TD: 0 ≤ CA_SV_TL2_TD ∧ CA_SV_TL2_TD ≤ 359",
+  "range_CA_SV_TL3_CT: CA_SV_TL3_CT = 0 ∨ CA_SV_TL3_CT = 1 ∨ CA_SV_TL3_CT = 2 ∨ CA_SV_TL3_CT = 3",
+  "range_CA_SV_TL3_MAXA: -90 ≤ CA_SV_TL3_MAXA ∧ CA_SV_TL3_MAXA ≤ 90",
+  "range_CA_SV_TL3_MINA: -90 ≤ CA_SV_TL3_MINA ∧ CA_SV_TL3_MINA ≤ 90",
+  "range_CA_SV_TL3_TD: 0 ≤ CA_SV_TL3_TD ∧ CA_SV_TL3_TD ≤ 359",
+  "range_CA_SV_TL_COUNT: CA_SV_TL_COUNT = 0 ∨ CA_SV_TL_COUNT = 1 ∨ CA_SV_TL_COUNT = 2 ∨ CA_SV_TL_COUNT = 3 ∨ CA_SV_TL_COUNT = 4",
+  "range_COM_SPOOLUP_TIME: 0 ≤ COM_SPOOLUP_TIME ∧ COM_SPOOLUP_TIME ≤ 30",
+  "range_MC_AIRMODE: MC_AIRMODE = 0 ∨ MC_AIRMODE = 1 ∨ MC_AIRMODE = 2",
+  "airframe_allocated_here: ¬CA_AIRFRAME = 6 ∧ ¬CA_AIRFRAME = 15",
+  "actuators_fit: CA_ROTOR_COUNT + CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 16 ∧ CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 8"]}
