@@ -453,7 +453,8 @@ def main():
     finally:
         link.running = False
         try:
-            os.killpg(sess.pid, signal.SIGINT)
+            sess.terminate()  # SIGTERM to the launcher, which ends the session and waits for its records (not
+                              # SIGINT: a shell started as a background job ignores it)
             sess.wait(120)
         except (subprocess.TimeoutExpired, ProcessLookupError):
             try:

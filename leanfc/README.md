@@ -17,7 +17,7 @@ Prerequisites: [elan](https://github.com/leanprover/elan), a C compiler, git, Py
 sim/setup.sh                                  # once: the simulator's Python environments and the gorge world
 cd leanfc
 lake exe cache get                            # prebuilt Mathlib (pinned in lake-manifest.json; never `lake update`)
-LEAN_NUM_THREADS=1 lake build                 # the controller .lake/build/bin/leanfc (first build: FloatLib from source, long)
+LEAN_NUM_THREADS=1 lake build                 # the controller .lake/build/bin/leanfc (first build: about 55 min, FloatLib from source)
 ```
 
 ## Run

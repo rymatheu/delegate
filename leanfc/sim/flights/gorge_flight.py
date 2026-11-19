@@ -286,7 +286,8 @@ def main():
                                 f"{link.sock.dropped} datagrams from component 100"))
     finally:
         link.running = False
-        os.killpg(sess.pid, signal.SIGINT)
+        sess.terminate()      # SIGTERM to the launcher, which ends the session and waits for its records (not SIGINT: a
+                              # shell started as a background job ignores it)
         try:
             sess.wait(120)
         except subprocess.TimeoutExpired:
