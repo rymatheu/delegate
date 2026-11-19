@@ -1,0 +1,67 @@
+{
+  "module": "rate_pid",
+  "code_hash": "(computed by hand)",
+  "campaign": "none",
+  "kind": "hand-checked",
+  "clause": "",
+  "case": 0,
+  "step": 1,
+  "note": "Expected outputs worked out by hand from AC_PID::update_all (docs/8-first-example.md), all values exact in binary32: step 0 resets the filters (error 0.75, P = 1.5, I = 0.75*4*2^-7), step 1 has error 0.5, derivative (0.5-0.75)/2^-7 = -32. Inputs reset_filter, reset_i, relax_i (added with the attitude stage) are false: the steps are unchanged.",
+  "params": {
+    "kp": "0x40000000",
+    "ki": "0x40800000",
+    "kd": "0x3f800000",
+    "kimax": "0x41200000",
+    "kpdmax": "0x00000000",
+    "filt_T_hz": "0x00000000",
+    "filt_E_hz": "0x00000000",
+    "filt_D_hz": "0x00000000",
+    "slew_max": "0x00000000"
+  },
+  "inputs": [
+    {
+      "target": "0x3f800000",
+      "measurement": "0x3e800000",
+      "dt": "0x3c000000",
+      "limit": "false",
+      "pd_scale": "0x3f800000",
+      "i_scale": "0x3f800000",
+      "now_ms": "0",
+      "reset_filter": "false",
+      "reset_i": "false",
+      "relax_i": "false"
+    },
+    {
+      "target": "0x3f800000",
+      "measurement": "0x3f000000",
+      "dt": "0x3c000000",
+      "limit": "false",
+      "pd_scale": "0x3f800000",
+      "i_scale": "0x3f800000",
+      "now_ms": "8",
+      "reset_filter": "false",
+      "reset_i": "false",
+      "relax_i": "false"
+    }
+  ],
+  "outputs": [
+    {
+      "command": "0x3fc30000",
+      "integrator": "0x3cc00000",
+      "p_term": "0x3fc00000",
+      "d_term": "0x00000000",
+      "dmod": "0x3f800000",
+      "pd_limit": "false",
+      "internal_errors": "0"
+    },
+    {
+      "command": "0xc1f7b000",
+      "integrator": "0x3d200000",
+      "p_term": "0x3f800000",
+      "d_term": "0xc2000000",
+      "dmod": "0x3f800000",
+      "pd_limit": "false",
+      "internal_errors": "0"
+    }
+  ]
+}

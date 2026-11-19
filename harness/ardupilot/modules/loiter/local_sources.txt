@@ -1,0 +1,3 @@
+# Translation units of this module's own, compiled after adapter.cpp and stubs.cpp
+# (ardupilot/build.sh reads this file; paths relative to this folder).
+pos_real.cpp   # the real AC_PosControl.cpp under the class name AC_PosControl_Real (see the file)

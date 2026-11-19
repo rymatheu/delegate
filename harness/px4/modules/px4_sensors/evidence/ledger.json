@@ -1,0 +1,794 @@
+{"records":
+ [{"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 54,
+   "result_hash":
+   "2e4d80b10992f19ba983bf8ff7fb477203e70e5605f7095b1105030e135db0ec",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261118T233015Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261118T233015Z",
+   "contract_hash":
+   "742e171a1b09660ac5e90b75e26b817fa4aff3cb529838c54e2f76ff8d8dcde0",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "rates_finite",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "2e4d80b10992f19ba983bf8ff7fb477203e70e5605f7095b1105030e135db0ec",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261118T233015Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261118T233015Z",
+   "contract_hash":
+   "e5732f8fd7f17377a4bb96466dc3bbd40385b8c910afcfd890829107dfaac453",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "rates_answer_gyro",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 54,
+   "result_hash":
+   "2e4d80b10992f19ba983bf8ff7fb477203e70e5605f7095b1105030e135db0ec",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261118T233015Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261118T233015Z",
+   "contract_hash":
+   "abca1f4cbbab202860483da1164a6e90b22faef6a3d037fa8c68975bc7950922",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "no_px4_error",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "742e171a1b09660ac5e90b75e26b817fa4aff3cb529838c54e2f76ff8d8dcde0",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "rates_finite",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "e5732f8fd7f17377a4bb96466dc3bbd40385b8c910afcfd890829107dfaac453",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "rates_answer_gyro",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "abca1f4cbbab202860483da1164a6e90b22faef6a3d037fa8c68975bc7950922",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "no_px4_error",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "aa6f814dbcc963551555065056b624364f1b85e5b6c5f1fd89ac09cd602e793d",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_imu_delta_angle_clipping",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "0985babbd2dd81260758c78d317b389f0a6719104ead846c7e3bd9882b700b03",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_imu_delta_velocity_clipping",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "41bc2d5185a807715e4400ab5a97ece52f94bec5c02cf49d4a919a7b096e90e8",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_imu_accel_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "42f8715c4bf54bdd8e84a3b56ec4a84daac1a05e1342309ca288e68df8f00b89",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_imu_gyro_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "3ab94a59c94c5505500b1e9f3a781e6e3ff04372b22d989558b3b30b9b636109",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensor_combined_accelerometer_clipping",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "a6594af895e600cf66642674b408c6d9ee0f8fe47ae58685f28e945d28da9ffc",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensor_combined_gyro_clipping",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "68b0b401c1731ead37ed26a75a0dca2178a4aefcc2ce68ee8a961061669c7f1b",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensor_combined_accel_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "f7fe73968f558a5938c170c8c81d50d58da560b48343dc5bf6d8f4b19215f0e3",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensor_combined_gyro_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "72cd65e22c0d0620943dec762bb57a0531654d8d90330e4901b64c5f235b954c",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_air_data_temperature_source",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "3a4aeefceac855fec3851a9ab7d5a674c371cd3e1caa4308593e7c87e80f2d44",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_air_data_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "cbbf46649fe12fcd52bf2706ea536dffa92958a0c5ac05615d0e71e6dec1779c",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_magnetometer_calibration_count",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "466c3f87c5deeba957fe4aab485860f2c5da49ab6c4cce51e35d6f510799c50d",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_fix_type",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "6e87b03591443bcb33eb9c23a8564e702176a0bd6a976a47f26a664ac4b5d6cb",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_automatic_gain_control",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "ed1b181f59fcff5cc9736fde3fb88d448aed3ff969bd541559778f05eada5a44",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_jamming_state",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "019ea03db98feb85aec6a52cd39cc554d26585718e22718d8a9065edb86f2ef9",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_spoofing_state",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "6bec25dc0818470e3d3c44ade6ade1727d4ec495448ea0925602fb20182e6208",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_authentication_state",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "7e87c8dfac337d580013e6445808bc28cdfa43eb35c07e5416046e77491b1a63",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_satellites_used",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "8bac644f4057b4db1f28dc3dd76bde3702e7d317b387992c59c335565d4c4b22",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_selected_rtcm_instance",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "aec0cdf64039d2e223d55d447a60f73a06fa17a08273526691517891db5eea71",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_vehicle_gps_position_rtcm_msg_used",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "5f54154a980e5ff47026ff83ff05ed2bcd776c6c23c77f324ccc44a69e970c87",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_accel_priority_0",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "9a544f3466f2d4d06b9e6806a15fab453b7d2ed359ec509035e272a8ef53e707",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_accel_priority_1",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "525df9f46bb1cddf405f287116dbccc36e121bfaba103bdde857cd0903430a37",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_accel_priority_2",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "c1d1eb6193cb129338026969f1b8c4fb531e5d0f268ddaf87d920ab613c85522",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_accel_priority_3",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "352e8dbb5b1173df81be798b3a7ee8c5d2d40090e3e2fabe82bb8ed70013492e",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_gyro_priority_0",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "c9274aed161ef6e8d8060f3347aaf440de06e747a38570c9d1e04127aaec4fde",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_gyro_priority_1",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "d27ecc1c948c8185c1b0ba6df7dc082a0b3bd2e703a8704d68c35248834a2f75",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_gyro_priority_2",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 54,
+   "result_hash":
+   "39fcf77b9c7bf35576486ed2fdd8e410b1f62d6d2b7fad9e957a8d0fd51fcc9f",
+   "result_file":
+   "px4/modules/px4_sensors/evidence/tested/20261119T182503Z-seed54.json",
+   "regime_hash":
+   "956d5323e87054e4452ab67b73573f651a88e5603d7a40784c4c06da2e905da9",
+   "regime": "sitl_flight",
+   "kind": "tested",
+   "date": "20261119T182503Z",
+   "contract_hash":
+   "85222e32f79ffc8edbf05bff7b48fd4d68ae0f2c95460eb8cffcaa879d03efff",
+   "command":
+   "harness test px4_sensors --seed 54 --cases 10 --steps 100 --regime sitl_flight",
+   "code_hash":
+   "f35ad2e6b16cd96c74602f1003edacf1bda8a89f0d434a9f9567881a23a950da",
+   "clause": "width_sensors_status_imu_gyro_priority_3",
+   "checked": 1000,
+   "cases": 10}],
+ "module": "px4_sensors"}

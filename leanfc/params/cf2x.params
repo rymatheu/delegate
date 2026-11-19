@@ -1,0 +1,120 @@
+# leanfc configuration: Bitcraze Crazyflie 2.X (CF2X) flying the pyfc mission square.
+# Format: `NAME value` per line, `#` comments; NAME is the field path in Leanfc `Params`
+# (Leanfc/ParamFile.lean, README.md). Units: SI (kg, m, s, N, rad).
+# This file is the field profile (10 Hz GPS-like fixes); params/mocap.params overrides the
+# fix period and navigation-filter gains for 100 Hz noiseless fixes.
+
+SIM_VEHICLE cf2x                  # harness only: gym-pybullet-drones assets/cf2x.urdf
+
+# --- vehicle: gym-pybullet-drones assets/cf2x.urdf --------------------------------------
+vehicle.mass        0.027                    # kg
+vehicle.inertia.x   1.4e-5                   # kg m^2
+vehicle.inertia.y   1.4e-5                   # kg m^2
+vehicle.inertia.z   2.17e-5                  # kg m^2
+vehicle.l           0.028072139213105935     # m, motor offset per axis = arm 0.0397 / sqrt 2
+vehicle.kmKf        0.025126582278481014     # m, km/kf = 7.94e-12 / 3.16e-10
+vehicle.tMax        0.148938496875           # N per motor, thrust2weight 2.25 * m * g / 4
+
+# --- timing ------------------------------------------------------------------------------
+dt                  0.0025                   # s, control period (400 Hz)
+dtFix               0.1                      # s, position/velocity/heading fix period (10 Hz)
+
+# --- attitude filter (Mahony, pyfc estimator.AttitudeFilter) -------------------------------
+attFilter.kAcc      0.1                      # 1/s, gravity-direction correction gain
+attFilter.kYaw      1.0                      # 1/s, heading correction gain
+attFilter.kBias     0.02                     # 1/s^2, gyro-bias integral gain
+attFilter.cutoffHz  40.0                     # Hz, low-pass of the rate fed to the rate loop
+
+# --- navigation filter (for 10 Hz fixes; kV, kB from pyfc mission FIELD_NAV) ---------------
+navFilter.alpha     0.02                     # position-fix gain on position (per fix); was 0.05 (pyfc)
+navFilter.beta      2.0e-4                   # position-fix gain on velocity (per fix, / dtFix); was 0.0015 (pyfc)
+navFilter.kV        0.3                      # velocity-fix gain on velocity (per fix)
+navFilter.kB        0.03                     # velocity-fix gain on accel bias (per fix, / dtFix)
+
+# --- estimator ---------------------------------------------------------------------------------
+estimator           ekf                      # ekf (Leanfc/EKF.lean) or fixed (attitude filter + nav filter, the baseline); overlays params/{fixed,ekf}.params
+
+# --- EKF (Leanfc/EKF.lean, port of pyfc ekf.py); 1 sigma values, squared by EKF.make -------------
+# Measurement and IMU noise: the harness's field profile (sim/run_leanfc.py `Noise`, = pyfc plant.Noise);
+# params/mocap.params overrides them for the noiseless 100 Hz profile.
+ekf.gyroNoise       0.003                    # rad/s per sample: Noise.gyro
+ekf.accelNoise      0.03                     # m/s^2 per sample: Noise.accel
+ekf.gyroBiasWalk    1e-4                     # rad/s/sqrt(s): pyfc EKFParams.gyro_bias_walk (simulated biases are constant)
+ekf.accelBiasWalk   1e-3                     # m/s^2/sqrt(s): pyfc EKFParams.accel_bias_walk
+ekf.posNE           0.5                      # m: Noise.position_ne (GPS horizontal)
+ekf.posD            0.1                      # m: Noise.position_d (barometer)
+ekf.vel             0.1                      # m/s: Noise.velocity (GPS Doppler)
+ekf.heading         0.035                    # rad: Noise.heading (magnetometer, 2 deg)
+# Initial 1 sigma (pyfc EKFParams, except yaw0, pos0 and gyroBias0):
+ekf.tilt0           0.017453292519943295     # rad, roll/pitch: 1 deg, the vehicle starts level at rest (pyfc 2 deg; with 2 deg the first velocity fixes give up to 2.19 deg on X500 field seeds 5 and 7)
+ekf.yaw0            0.017453292519943295     # rad: 1 deg, the start heading is known (pyfc 5 deg; with 5 deg the first heading fixes give 2.38 deg on X500 field seed 2)
+ekf.vel0            0.1                      # m/s
+ekf.pos0            0.05                     # m: the start position is known (pyfc 0.5, the GPS sigma)
+ekf.gyroBias0       0.017453292519943295     # rad/s, without calibration: 1 deg/s, the field bias magnitude (Noise.gyro_bias)
+ekf.accelBias0      0.1                      # m/s^2: pyfc EKFParams.accel_bias0 (Noise.accel_bias 0.05)
+ekf.gyroBiasMin     1e-5                     # rad/s: floor of the calibrated prior sqrt(gyroNoise^2 / samples) (field: 1.5e-4)
+ekf.pFloor          1e-12                    # floor of every variance on the diagonal of P: pyfc EKFParams.p_floor
+ekf.cutoffHz        40.0                     # Hz, low-pass of the rate fed to the rate loop (as attFilter.cutoffHz)
+
+# --- navigator (pyfc mission) --------------------------------------------------------------
+nav.vMax            1.0                      # m/s, target speed limit
+nav.aMax            1.5                      # m/s^2, target acceleration along the path
+nav.aLat            1.5                      # m/s^2, lateral acceleration limit on spline legs (sets their speed limit sqrt(aLat / max curvature))
+nav.vMaxZ           0.5                      # m/s, vertical speed limit of the target (= position.vMaxZ, the position loop's vertical clamp)
+nav.radius          0.1                      # m, a stop is left when the vehicle is this close
+nav.lagMax          0.3                      # m, target waits while the vehicle lags more
+nav.yawBehavior     1                        # heading: 1 follows the path (ArduCopter WP_YAW_BEHAVIOR 1), 0 holds setpoint.hc/hs
+nav.yawReverse      0                        # heading: 1 points the nose against the direction of travel (flies backward); 0 along it
+nav.yawRateMax      1.5707963267948966       # rad/s, heading setpoint slew limit: 90 deg/s (ArduCopter ATC_RATE_WPY_MAX default 60 finishes no 90 deg turn within a 1 m leg)
+nav.yawAccelMax     4.71238898038469         # rad/s^2, heading setpoint acceleration limit: 270 deg/s^2 (ArduCopter ATC_ACC_Y_MAX default)
+nav.yawSpeedMin     0.05                     # heading follows vFF while |vFF_xy| > 0.05 vMax (AC_PosControl), else held
+
+# --- position and velocity control (pyfc PositionController) ------------------------------
+position.kpPos      1.5                      # 1/s, position error -> velocity
+position.vMaxXY     1.0                      # m/s, horizontal velocity setpoint limit
+position.vMaxZ      0.5                      # m/s, vertical velocity setpoint limit
+position.vel.kp     4.0                      # 1/s, velocity error -> acceleration
+position.vel.ki     0.25                     # 1/s^2
+position.vel.iMax   1.0                      # m/s^2, integral limit per axis
+position.aMaxXY     5.0                      # m/s^2, horizontal acceleration limit
+position.aMaxZ      4.0                      # m/s^2, vertical acceleration limit
+
+# --- attitude and rate control (pyfc AttitudeController) ----------------------------------
+attitude.kpAtt      10                       # 1/s, roll/pitch: attitude error -> rate setpoint
+attitude.rateMax    5                        # rad/s, rate setpoint limit per axis
+attitude.rate.kp    30                       # 1/s, roll/pitch: rate error -> angular acceleration
+attitude.rate.ki    10                       # 1/s^2
+attitude.rate.iMax  2                        # rad/s^2, integral limit (roll, pitch)
+attitude.kpYaw      10                       # 1/s, yaw: attitude error -> yaw rate setpoint
+attitude.rateYaw.kp 30                       # 1/s, yaw: rate error -> angular acceleration
+attitude.rateYaw.ki 10                       # 1/s^2
+attitude.rateYaw.iMax 2                      # rad/s^2
+
+# --- vehicle layer (Leanfc/Copter/*): arming, takeoff, landing, failsafes -------------------
+# ArduCopter's names, meanings and defaults (README.md "Parameters of the vehicle layer"); RTL_ALT_M and LAND_ALT_LOW_M scaled to the CF2X.
+RTL_ALT_M           3                        # m above home: RTL climbs to at least this altitude before returning
+RTL_LOIT_TIME       5000                     # ms: RTL waits this long above home before the final descent
+LAND_SPD_MS         0.5                      # m/s: descent speed of the final stage of a landing
+LAND_ALT_LOW_M      1                        # m above home: above it a landing descends at nav.vMaxZ
+DISARM_DELAY        10                       # s armed on the ground before the automatic disarm (0: never)
+FS_GCS_ENABLE       0                        # ground-station failsafe action: 0 off, 1 RTL, 5 LAND, ... (README)
+FS_GCS_TIMEOUT      5                        # s without a ground-station HEARTBEAT before that failsafe
+FS_EKF_ACTION       1                        # estimator failsafe action: 0 report only, 1 LAND
+copter.ekfPosMax    2.0                      # m: estimator unhealthy while the north or east position 1 sigma exceeds this
+MOT_SPIN_ARM        0.1                      # motor command (fraction of maximum thrust) armed on the ground
+MOT_SPOOL_TIME      0.5                      # s: spool-up before a takeoff, spool-down before the disarm after landing
+TKOFF_SLEW_TIME     2                        # s: the takeoff throttle rises from 0 to 1 in this time
+TKOFF_THR_MAX       0.9                      # throttle at which a takeoff counts as lifted off
+
+# --- mission (pyfc mission.py) -------------------------------------------------------------
+# WAYPOINT n e d [stop] = straight leg, SPLINE n e d [stop] = spline leg (NED m);
+# consecutive WAYPOINT legs stop at their corner. params/cf2x-spline.params flies the same points as SPLINE legs.
+start.x             0                        # m north, start (hovering)
+start.y             0                        # m east
+start.z             -1                       # m down
+setpoint.hc         1                        # heading setpoint (cos psi, sin psi): north
+setpoint.hs         0
+WAYPOINT  1  0  -1.0
+WAYPOINT  1  1  -1.5
+WAYPOINT  0  1  -1.5
+WAYPOINT  0  0  -1.0

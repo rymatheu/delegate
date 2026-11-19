@@ -1,0 +1,376 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 4000,
+ "steps_per_case": 800,
+ "seed": 57,
+ "seconds": 0.2289526,
+ "regime_text":
+ "stock_ek3_noise: ek3_velne_m_nse = 0.3 ∧ ek3_veld_m_nse = 0.5 ∧ ek3_posne_m_nse = 0.5 ∧ ek3_alt_m_nse = 2 ∧ ek3_mag_m_nse = 0.05 ∧ ek3_gyro_p_nse = 0.015 ∧ ek3_acc_p_nse = 0.35 ∧ ek3_gbias_p_nse = 0.001 ∧ ek3_abias_p_nse = 0.02 ∧ ek3_mage_p_nse = 0.001 ∧ ek3_magb_p_nse = 0.0001 ∧ ek3_noaid_m_nse = 10 ∧ ek3_yaw_m_nse = 0.5; stock_ek3_gates: ek3_vel_i_gate = 500 ∧ ek3_pos_i_gate = 500 ∧ ek3_hgt_i_gate = 500 ∧ ek3_mag_i_gate = 300 ∧ ek3_yaw_i_gate = 300 ∧ ek3_glitch_rad = 25; stock_ek3_other: ek3_hgt_delay = 60 ∧ ek3_mag_cal = 3 ∧ ek3_gps_check = 31 ∧ ek3_check_scale = 100 ∧ ek3_tau_output = 25 ∧ ek3_acc_bias_lim = 1 ∧ ek3_mag_ef_lim = 50 ∧ ek3_err_thresh = 0.2 ∧ ek3_imu_mask = 3; stock_ahrs: ahrs_ekf_type = 3 ∧ ahrs_trim_x = 0 ∧ ahrs_trim_y = 0; stock_ins: ins_gyro_filter = 20 ∧ ins_accel_filter = 20 ∧ ins_gyr_cal = 1 ∧ ins_accoffs_x = 0.001 ∧ ins_accoffs_y = 0.001 ∧ ins_accoffs_z = 0.001 ∧ ins_gyroffs_x = 0 ∧ ins_gyroffs_y = 0 ∧ ins_gyroffs_z = 0; stock_compass_gps: compass_use = 1 ∧ compass_autodec = 1 ∧ compass_dec = 0 ∧ gps1_delay_ms = 0; disarmed_on_ground: ¬armed ∧ ¬likely_flying; no_commands: ¬cmd_estimator_set_takeoff_expected ∧ ¬cmd_estimator_set_touchdown_expected ∧ ¬cmd_estimator_set_home ∧ ¬cmd_estimator_reset_height_datum ∧ ¬cmd_estimator_request_yaw_reset ∧ ¬cmd_estimator_set_terrain_hgt_stable; rest_imu: (-1.2 ≤ imu0_ax ∧ imu0_ax ≤ 1.2) ∧ (-1.2 ≤ imu0_ay ∧ imu0_ay ≤ 1.2) ∧ (-10.5 ≤ imu0_az ∧ imu0_az ≤ -9) ∧ |imu0_gx| ≤ 0.03 ∧ |imu0_gy| ≤ 0.03 ∧ |imu0_gz| ≤ 0.03 ∧ (-1.2 ≤ imu1_ax ∧ imu1_ax ≤ 1.2) ∧ (-1.2 ≤ imu1_ay ∧ imu1_ay ≤ 1.2) ∧ (-10.5 ≤ imu1_az ∧ imu1_az ≤ -9) ∧ |imu1_gx| ≤ 0.03 ∧ |imu1_gy| ≤ 0.03 ∧ |imu1_gz| ≤ 0.03 ∧ (-1.2 ≤ imu2_ax ∧ imu2_ax ≤ 1.2) ∧ (-1.2 ≤ imu2_ay ∧ imu2_ay ≤ 1.2) ∧ (-10.5 ≤ imu2_az ∧ imu2_az ≤ -9) ∧ |imu2_gx| ≤ 0.03 ∧ |imu2_gy| ≤ 0.03 ∧ |imu2_gz| ≤ 0.03; site_baro: (59250 ≤ baro_pa ∧ baro_pa ≤ 59300) ∧ -13.5 ≤ baro_degc ∧ baro_degc ≤ -12.5; site_mag: (200 ≤ mag_x ∧ mag_x ≤ 225) ∧ (5 ≤ mag_y ∧ mag_y ≤ 35) ∧ 455 ≤ mag_z ∧ mag_z ≤ 490; site_gps: (388405500 ≤ gps_lat_e7 ∧ gps_lat_e7 ≤ 388405600) ∧ (-1050441700 ≤ gps_lon_e7 ∧ gps_lon_e7 ≤ -1050441600) ∧ (4301 ≤ gps_alt ∧ gps_alt ≤ 4303.5) ∧ |gps_vn| ≤ 0.1 ∧ |gps_ve| ≤ 0.1 ∧ |gps_vd| ≤ 0.1; t_us starts at 2500 and increases by 2500 to 2500 at every step",
+ "regime": "plant_like",
+ "outputs_seen":
+ {"gyro_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "gyro_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "gyro_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_yaw_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_yaw": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vibe_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vibe_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vibe_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_ok": {"true_steps": 0},
+  "est_vel_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_variances_ok": {"true_steps": 0},
+  "est_text_w12": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_text_w11": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_text_w10": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_text_w09": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_text_w08": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_text_w07":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1702127000},
+  "est_text_w06":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1886220000},
+  "est_text_w05":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 544108400},
+  "est_text_w04":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1952543000},
+  "est_text_w03":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1869767000},
+  "est_text_w02":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 543649400},
+  "est_text_w01":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1952543000},
+  "est_text_w00":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1869767000},
+  "est_text_severity":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6},
+  "est_text_seq": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9},
+  "est_text_len": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 32},
+  "est_tas_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_sin_yaw": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_roll": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_q4": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_q3": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_q2": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_q1": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_prearm_ok": {"true_steps": 0},
+  "est_pos_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_rate_d_ok": {"true_steps": 0},
+  "est_pos_rate_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_ok": {"true_steps": 0},
+  "est_pos_ne_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_d_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pitch": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_origin_ok": {"true_steps": 0},
+  "est_origin_lon_e7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_origin_lat_e7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_origin_alt_cm":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_mag_variance_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_mag_variance_y":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_mag_variance_x":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_loop_ticks": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_loc_ok": {"true_steps": 0},
+  "est_loc_lon_e7": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_loc_lat_e7": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_loc_alt_cm": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_ins_gyro_healthy": {"true_steps": 0},
+  "est_ins_accel_healthy": {"true_steps": 0},
+  "est_innov_vel_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_vel_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_vel_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_ok": {"true_steps": 0},
+  "est_initialised": {"true_steps": 0},
+  "est_home_set": {"true_steps": 0},
+  "est_home_lon_e7": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_home_lat_e7": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_home_alt_cm": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_hgt_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_healthy": {"true_steps": 0},
+  "est_have_inertial_nav": {"true_steps": 0},
+  "est_gyro_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_offset_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_offset_y":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_offset_x":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_drift_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_drift_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_drift_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gps_vdop": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gps_status": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gps_num_sats": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gps_healthy": {"true_steps": 0},
+  "est_gps_hdop": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gnd_spd_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gain_scaler_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gain_scaler_xy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_filter_status":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_ekf_vert_pos": {"true_steps": 0},
+  "est_ekf_using_gps": {"true_steps": 0},
+  "est_ekf_started": {"true_steps": 0},
+  "est_ekf_horiz_vel": {"true_steps": 0},
+  "est_ekf_horiz_pos_abs": {"true_steps": 0},
+  "est_ekf_const_pos_mode": {"true_steps": 0},
+  "est_ekf_attitude": {"true_steps": 0},
+  "est_cos_yaw": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_cos_roll": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_cos_pitch": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_config_error": {"true_steps": 556},
+  "est_booted": {"true_steps": 0},
+  "est_baro_healthy": {"true_steps": 0},
+  "est_baro_alt": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_attitude_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_ef_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_ef_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_ef_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_accel_clip_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "air_density_ratio":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0}},
+ "module": "estimator",
+ "kind": "tested",
+ "id": "20261119T174022Z-seed57",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "est_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "b798e577684a11595060f0762e34e6b6b0bfdc3a620f98e6a9e10dc4034eec7d",
+   "clause": "no_internal_error",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(gyro_x) ∧ finite(gyro_y) ∧ finite(gyro_z) ∧ finite(est_q1) ∧ finite(est_q2) ∧ finite(est_q3) ∧ finite(est_q4) ∧ finite(est_roll) ∧ finite(est_pitch) ∧ finite(est_yaw) ∧ finite(est_sin_yaw) ∧ finite(est_cos_yaw) ∧ finite(est_cos_roll) ∧ finite(est_cos_pitch) ∧ finite(est_pos_n) ∧ finite(est_pos_e) ∧ finite(est_pos_d) ∧ finite(est_vel_n) ∧ finite(est_vel_e) ∧ finite(est_vel_d) ∧ finite(est_pos_rate_d) ∧ finite(est_gyro_x) ∧ finite(est_gyro_y) ∧ finite(est_gyro_z) ∧ finite(est_gyro_offset_x) ∧ finite(est_gyro_offset_y) ∧ finite(est_gyro_offset_z) ∧ finite(est_gyro_drift_x) ∧ finite(est_gyro_drift_y) ∧ finite(est_gyro_drift_z) ∧ finite(est_accel_x) ∧ finite(est_accel_y) ∧ finite(est_accel_z) ∧ finite(est_accel_ef_x) ∧ finite(est_accel_ef_y) ∧ finite(est_accel_ef_z) ∧ finite(est_vel_variance) ∧ finite(est_pos_variance) ∧ finite(est_hgt_variance) ∧ finite(est_mag_variance_x) ∧ finite(est_mag_variance_y) ∧ finite(est_mag_variance_z) ∧ finite(est_tas_variance) ∧ finite(est_gain_scaler_xy) ∧ finite(est_gain_scaler_z) ∧ finite(est_gnd_spd_limit) ∧ finite(air_density_ratio) ∧ finite(est_baro_alt) ∧ finite(est_vibe_x) ∧ finite(est_vibe_y) ∧ finite(est_vibe_z) ∧ finite(est_innov_vel_n) ∧ finite(est_innov_vel_e) ∧ finite(est_innov_vel_d) ∧ finite(est_innov_pos_n) ∧ finite(est_innov_pos_e) ∧ finite(est_innov_pos_d)",
+   "smallest_margin": null,
+   "contract_hash":
+   "9618da9fae2d3afd9ea9adb4cde509cf6a7eb222d891f7a20b1909cbe949493e",
+   "clause": "outputs_finite",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "est_booted ∨ gyro_x = 0 ∧ gyro_y = 0 ∧ gyro_z = 0 ∧ est_q1 = 0 ∧ est_q2 = 0 ∧ est_q3 = 0 ∧ est_q4 = 0 ∧ est_roll = 0 ∧ est_pitch = 0 ∧ est_yaw = 0 ∧ est_sin_yaw = 0 ∧ est_cos_yaw = 0 ∧ est_cos_roll = 0 ∧ est_cos_pitch = 0 ∧ est_pos_n = 0 ∧ est_pos_e = 0 ∧ est_pos_d = 0 ∧ est_vel_n = 0 ∧ est_vel_e = 0 ∧ est_vel_d = 0 ∧ est_pos_rate_d = 0 ∧ est_gyro_x = 0 ∧ est_gyro_y = 0 ∧ est_gyro_z = 0 ∧ est_gyro_offset_x = 0 ∧ est_gyro_offset_y = 0 ∧ est_gyro_offset_z = 0 ∧ est_gyro_drift_x = 0 ∧ est_gyro_drift_y = 0 ∧ est_gyro_drift_z = 0 ∧ est_accel_x = 0 ∧ est_accel_y = 0 ∧ est_accel_z = 0 ∧ est_accel_ef_x = 0 ∧ est_accel_ef_y = 0 ∧ est_accel_ef_z = 0 ∧ est_vel_variance = 0 ∧ est_pos_variance = 0 ∧ est_hgt_variance = 0 ∧ est_mag_variance_x = 0 ∧ est_mag_variance_y = 0 ∧ est_mag_variance_z = 0 ∧ est_tas_variance = 0 ∧ est_gain_scaler_xy = 0 ∧ est_gain_scaler_z = 0 ∧ est_gnd_spd_limit = 0 ∧ air_density_ratio = 0 ∧ est_baro_alt = 0 ∧ est_vibe_x = 0 ∧ est_vibe_y = 0 ∧ est_vibe_z = 0 ∧ est_innov_vel_n = 0 ∧ est_innov_vel_e = 0 ∧ est_innov_vel_d = 0 ∧ est_innov_pos_n = 0 ∧ est_innov_pos_e = 0 ∧ est_innov_pos_d = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "b678dd7652f83c4270b9688c397586e6181d120d78dd3f626fbd00cf36c10f95",
+   "clause": "zero_before_boot",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬est_booted ∨ |est_q1 * est_q1 + est_q2 * est_q2 + est_q3 * est_q3 + est_q4 * est_q4 - 1| ≤ 0.0001",
+   "smallest_margin": null,
+   "contract_hash":
+   "fba531ec2a5a0cefe8dccd048242841b5b4e7e882cadbc14a8a462cba300856c",
+   "clause": "quat_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬est_ekf_attitude ∨ |est_q1 * est_q1 + est_q2 * est_q2 + est_q3 * est_q3 + est_q4 * est_q4 - 1| ≤ 0.00001",
+   "smallest_margin": null,
+   "contract_hash":
+   "651eef920bdd4d85cbfad2ba4bdbdc3dfa932c149bcabe7ce5f6250002f1d440",
+   "clause": "quat_unit_ekf",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ est_gnd_spd_limit ∧ est_gnd_spd_limit ≤ 400",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c329b035c458ce1ca4d2990d358d91b4c17bb61d481fb81b352991403702462c",
+   "clause": "gnd_spd_limit_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬est_booted ∨ |est_sin_yaw * est_sin_yaw + est_cos_yaw * est_cos_yaw - 1| ≤ 0.00001",
+   "smallest_margin": null,
+   "contract_hash":
+   "33c1937bdf19d307497dcb5e9bb36012b63a9274152fbe74a16d1ed622b4a7ae",
+   "clause": "yaw_trig_unit",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(1 ≤ est_loop_ticks ∧ ins_gyro_filter = 0) ∨ gyro_x = imu2_gx - est_gyro_offset_x + est_gyro_drift_x ∧ gyro_y = imu2_gy - est_gyro_offset_y + est_gyro_drift_y ∧ gyro_z = imu2_gz - est_gyro_offset_z + est_gyro_drift_z",
+   "smallest_margin": null,
+   "contract_hash":
+   "5ba124b07393402153a0864c2a8e87ae7704480259ec68498a6ae0ffaf998d34",
+   "clause": "gyro_latest_unfiltered",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|gyro_x| ≤ 10000 ∧ |gyro_y| ≤ 10000 ∧ |gyro_z| ≤ 10000",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 10000,
+   "contract_hash":
+   "009ff997ff75ae04c8082b235354a3ad66e76981f08662e686b1b10199e97baf",
+   "clause": "gyro_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ air_density_ratio",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "1a934255a02a6a4ca7dc149c0ca63cc255e60328da5b925095e9447a3d05dba7",
+   "clause": "air_density_positive",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|est_roll| ≤ 3.1415927 ∧ |est_pitch| ≤ 1.5707964 ∧ |est_yaw| ≤ 3.1415927",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 1.570796,
+   "contract_hash":
+   "32bbabdb0a3e91953bb8baf6d191dc8f800cdc51d8b70a7365d3de1c4a279114",
+   "clause": "euler_wrapped",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|est_sin_yaw| ≤ 1 ∧ |est_cos_yaw| ≤ 1 ∧ |est_cos_roll| ≤ 1 ∧ 0 ≤ est_cos_pitch ∧ est_cos_pitch ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "9c3e8b307b56469247b6d85af5391215c82d935dab88c28ba42aeae7f0d80ece",
+   "clause": "trig_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ est_gain_scaler_xy ∧ est_gain_scaler_xy ≤ 1 ∧ 0 ≤ est_gain_scaler_z ∧ est_gain_scaler_z ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "43c3db36b83eb43f34f55c7353a098166599241c16b308fe0d6ad96d99d35ca7",
+   "clause": "gain_scalers_range",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "est_pos_ne_reset_count ≤ 65535 ∧ est_pos_d_reset_count ≤ 65535 ∧ est_yaw_reset_count ≤ 65535 ∧ est_attitude_reset_count ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "8706bdc3d01d1a8f7f143e0dca93d39f5ca6d6b173c12520df35718f53f1a76f",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 65535,
+   "contract_hash":
+   "10038557ca4c685cb28d3b28098051d2098da70bf038c94da0c0cf820c070ebe",
+   "clause": "reset_counts_u16",
+   "checked": 4000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "est_text_len ≤ 50 ∧ est_text_severity ≤ 7",
+   "smallest_margin_case":
+   {"step": 40,
+    "sha256":
+    "a018c2514583d43bc7133676a744d607319855f2fd0deb8c3ca4a2eb21e8fc2a",
+    "file":
+    "ardupilot/modules/estimator/evidence/tested/20261119T174022Z-seed57/case0-step40.json",
+    "case": 0},
+   "smallest_margin": 1,
+   "contract_hash":
+   "2447cc02f6df1ca4a0f162054082f0437bbdeaaa0d0e09728bf1f6514ea147c3",
+   "clause": "text_range",
+   "checked": 4000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h -DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter -DAP_SIM_ENABLED=1 -DAP_BARO_BACKEND_DEFAULT_ENABLED=0 -DAP_COMPASS_I2C_BACKEND_DEFAULT_ENABLED=0 -DHAL_MSP_SENSORS_ENABLED=0 -DAP_GPS_ERB_ENABLED=0 -DAP_GPS_GSOF_ENABLED=0 -DAP_GPS_MAV_ENABLED=0 -DAP_GPS_NMEA_ENABLED=0 -DAP_GPS_NOVA_ENABLED=0 -DAP_GPS_SBF_ENABLED=0 -DAP_GPS_SBP_ENABLED=0 -DAP_GPS_SBP2_ENABLED=0 -DAP_GPS_SIRF_ENABLED=0 -DAP_GPS_UBLOX_ENABLED=0 -DAP_EXTERNAL_AHRS_ENABLED=0 -DAP_AHRS_SIM_ENABLED=0",
+ "coverage":
+ {"using_gps": {"true_steps": 0, "text": "est_ekf_using_gps"},
+  "looping": {"true_steps": 0, "text": "1 ≤ est_loop_ticks"},
+  "gps_3d": {"true_steps": 0, "text": "est_gps_status = 3"},
+  "ekf_started": {"true_steps": 0, "text": "est_ekf_started"},
+  "ekf_healthy": {"true_steps": 0, "text": "est_healthy"},
+  "booted": {"true_steps": 0, "text": "est_booted"}},
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command":
+ "harness test estimator --seed 57 --cases 5 --steps 800 --regime plant_like",
+ "code_hash":
+ "eb9283f970a9369cdecabe052ee81e3b56dfb6d9215ccd7e7308ea84d3c73383",
+ "cases_skipped": 0,
+ "cases": 5,
+ "assume":
+ ["ek3_noise_range: (0.05 ≤ ek3_velne_m_nse ∧ ek3_velne_m_nse ≤ 5) ∧ (0.05 ≤ ek3_veld_m_nse ∧ ek3_veld_m_nse ≤ 5) ∧ (0.1 ≤ ek3_posne_m_nse ∧ ek3_posne_m_nse ≤ 10) ∧ (0.01 ≤ ek3_alt_m_nse ∧ ek3_alt_m_nse ≤ 100) ∧ (0.01 ≤ ek3_mag_m_nse ∧ ek3_mag_m_nse ≤ 0.5) ∧ (0.0001 ≤ ek3_gyro_p_nse ∧ ek3_gyro_p_nse ≤ 0.1) ∧ (0.01 ≤ ek3_acc_p_nse ∧ ek3_acc_p_nse ≤ 1) ∧ (0.00001 ≤ ek3_gbias_p_nse ∧ ek3_gbias_p_nse ≤ 0.001) ∧ (0.00001 ≤ ek3_abias_p_nse ∧ ek3_abias_p_nse ≤ 0.02) ∧ (0.00001 ≤ ek3_mage_p_nse ∧ ek3_mage_p_nse ≤ 0.01) ∧ (0.00001 ≤ ek3_magb_p_nse ∧ ek3_magb_p_nse ≤ 0.01) ∧ (0.5 ≤ ek3_noaid_m_nse ∧ ek3_noaid_m_nse ≤ 50) ∧ 0.05 ≤ ek3_yaw_m_nse ∧ ek3_yaw_m_nse ≤ 1",
+  "ek3_gate_range: (100 ≤ ek3_vel_i_gate ∧ ek3_vel_i_gate ≤ 1000) ∧ (100 ≤ ek3_pos_i_gate ∧ ek3_pos_i_gate ≤ 1000) ∧ (100 ≤ ek3_hgt_i_gate ∧ ek3_hgt_i_gate ≤ 1000) ∧ (100 ≤ ek3_mag_i_gate ∧ ek3_mag_i_gate ≤ 1000) ∧ (100 ≤ ek3_yaw_i_gate ∧ ek3_yaw_i_gate ≤ 1000) ∧ 10 ≤ ek3_glitch_rad ∧ ek3_glitch_rad ≤ 100",
+  "ek3_other_range: (0 ≤ ek3_hgt_delay ∧ ek3_hgt_delay ≤ 250) ∧ (0 ≤ ek3_mag_cal ∧ ek3_mag_cal ≤ 7) ∧ (0 ≤ ek3_gps_check ∧ ek3_gps_check ≤ 255) ∧ (50 ≤ ek3_check_scale ∧ ek3_check_scale ≤ 200) ∧ (10 ≤ ek3_tau_output ∧ ek3_tau_output ≤ 50) ∧ (0.5 ≤ ek3_acc_bias_lim ∧ ek3_acc_bias_lim ≤ 2.5) ∧ (0 ≤ ek3_mag_ef_lim ∧ ek3_mag_ef_lim ≤ 500) ∧ (0.05 ≤ ek3_err_thresh ∧ ek3_err_thresh ≤ 1) ∧ (ek3_imu_mask = 1 ∨ ek3_imu_mask = 3)",
+  "ahrs_range: ahrs_ekf_type = 3 ∧ (-0.1745 ≤ ahrs_trim_x ∧ ahrs_trim_x ≤ 0.1745) ∧ -0.1745 ≤ ahrs_trim_y ∧ ahrs_trim_y ≤ 0.1745",
+  "ins_range: (0 ≤ ins_gyro_filter ∧ ins_gyro_filter ≤ 256) ∧ (0 ≤ ins_accel_filter ∧ ins_accel_filter ≤ 256) ∧ (0 ≤ ins_gyr_cal ∧ ins_gyr_cal ≤ 1) ∧ (-3.5 ≤ ins_accoffs_x ∧ ins_accoffs_x ≤ 3.5) ∧ (-3.5 ≤ ins_accoffs_y ∧ ins_accoffs_y ≤ 3.5) ∧ (-3.5 ≤ ins_accoffs_z ∧ ins_accoffs_z ≤ 3.5) ∧ (-0.2 ≤ ins_gyroffs_x ∧ ins_gyroffs_x ≤ 0.2) ∧ (-0.2 ≤ ins_gyroffs_y ∧ ins_gyroffs_y ≤ 0.2) ∧ -0.2 ≤ ins_gyroffs_z ∧ ins_gyroffs_z ≤ 0.2",
+  "compass_gps_range: (0 ≤ compass_use ∧ compass_use ≤ 1) ∧ (0 ≤ compass_autodec ∧ compass_autodec ≤ 1) ∧ (-3.1416 ≤ compass_dec ∧ compass_dec ≤ 3.1416) ∧ 0 ≤ gps1_delay_ms ∧ gps1_delay_ms ≤ 250",
+  "imu_range: |imu0_ax| ≤ 160 ∧ |imu0_ay| ≤ 160 ∧ |imu0_az| ≤ 160 ∧ |imu0_gx| ≤ 35 ∧ |imu0_gy| ≤ 35 ∧ |imu0_gz| ≤ 35 ∧ |imu1_ax| ≤ 160 ∧ |imu1_ay| ≤ 160 ∧ |imu1_az| ≤ 160 ∧ |imu1_gx| ≤ 35 ∧ |imu1_gy| ≤ 35 ∧ |imu1_gz| ≤ 35 ∧ |imu2_ax| ≤ 160 ∧ |imu2_ay| ≤ 160 ∧ |imu2_az| ≤ 160 ∧ |imu2_gx| ≤ 35 ∧ |imu2_gy| ≤ 35 ∧ |imu2_gz| ≤ 35",
+  "baro_range: (baro_pa = 0 ∨ 50000 ≤ baro_pa ∧ baro_pa ≤ 108000) ∧ (-60 ≤ baro_degc ∧ baro_degc ≤ 80) ∧ (¬baro_fresh ∨ 50000 ≤ baro_pa ∧ baro_pa ≤ 108000)",
+  "mag_range: |mag_x| ≤ 8000 ∧ |mag_y| ≤ 8000 ∧ |mag_z| ≤ 8000",
+  "gps_range: (-900000000 ≤ gps_lat_e7 ∧ gps_lat_e7 ≤ 900000000) ∧ (-1800000000 ≤ gps_lon_e7 ∧ gps_lon_e7 ≤ 1800000000) ∧ (-500 ≤ gps_alt ∧ gps_alt ≤ 6000) ∧ |gps_vn| ≤ 100 ∧ |gps_ve| ≤ 100 ∧ |gps_vd| ≤ 100",
+  "gps_not_null_island: ¬gps_fresh ∨ ¬(gps_lat_e7 = 0 ∧ gps_lon_e7 = 0)",
+  "home_range: (-900000000 ≤ cmd_estimator_set_home_lat_e7 ∧ cmd_estimator_set_home_lat_e7 ≤ 900000000) ∧ (-1800000000 ≤ cmd_estimator_set_home_lon_e7 ∧ cmd_estimator_set_home_lon_e7 ≤ 1800000000) ∧ -50000 ≤ cmd_estimator_set_home_alt_cm ∧ cmd_estimator_set_home_alt_cm ≤ 1000000"]}

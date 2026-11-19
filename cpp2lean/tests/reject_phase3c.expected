@@ -1,0 +1,3 @@
+tests/reject_phase3c.cpp:32:29: rejected: call of non-const method `busy` on a boundary object with a result or reference parameters (only `void` outputs are translated)
+tests/reject_phase3c.cpp:35:33: rejected: local reference `t` to something that may change while it is live (only references into variables that are never assigned, into the object in a const member function, or to the result of a const call on a boundary object are translated, as copies)
+tests/reject_phase3c.cpp:41:25: rejected: call of non-const `zero` on an object returned by reference (the write would reach the referenced object)

@@ -1,0 +1,33 @@
+name = "harness"
+version = "0.1.0"
+defaultTargets = ["harness", "top"]
+
+# the generic library: schemas, records, contracts, protocol client, campaigns, ledger
+[[lean_lib]]
+name = "Harness"
+
+# ArduPilot: modules (leaves, real ArduPilot C++) in ardupilot/modules/<name>/Module.lean,
+# systems (compositions) in ardupilot/harnesses/<name>/Harness.lean or Composed.lean
+[[lean_lib]]
+name = "ardupilot"
+globs = ["ardupilot.modules.+", "ardupilot.harnesses.+"]
+
+# PX4: modules in px4/modules/<name>/ (Module.lean, generated Ports.lean), systems in
+# px4/harnesses/<name>/
+[[lean_lib]]
+name = "px4"
+globs = ["px4.modules.+", "px4.harnesses.+"]
+
+# the simulator, shared by both stacks: sim/modules/<name>/Module.lean
+[[lean_lib]]
+name = "sim"
+globs = ["sim.modules.+"]
+
+[[lean_exe]]
+name = "harness"
+root = "Main"
+
+# the top-level harness: ardupilot/Top.lean, the composition and its command line
+[[lean_exe]]
+name = "top"
+root = "ardupilot.Top"

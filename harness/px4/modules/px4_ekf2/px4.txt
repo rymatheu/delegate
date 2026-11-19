@@ -1,0 +1,73 @@
+# px4_ekf2: PX4's EKF2 (src/modules/ekf2), unmodified, single instance (SENS_IMU_MODE = 1: one
+# estimator on sensor_combined, no EKF2Selector), every CONFIG_EKF2_* aid source of the px4_sitl
+# default build compiled in, as src/modules/ekf2/CMakeLists.txt lists them.
+main ekf2
+source src/modules/ekf2/EKF2.cpp src/modules/ekf2/EKF2Selector.cpp
+source src/modules/ekf2/EKF/aid_sources/ZeroGyroUpdate.cpp
+source src/modules/ekf2/EKF/aid_sources/ZeroVelocityUpdate.cpp
+source src/modules/ekf2/EKF/aid_sources/airspeed/airspeed_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/aux_global_position/aux_global_position.cpp
+source src/modules/ekf2/EKF/aid_sources/auxvel/auxvel_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/barometer/baro_height_control.cpp
+source src/modules/ekf2/EKF/aid_sources/drag/drag_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/external_vision/ev_control.cpp
+source src/modules/ekf2/EKF/aid_sources/external_vision/ev_height_control.cpp
+source src/modules/ekf2/EKF/aid_sources/external_vision/ev_pos_control.cpp
+source src/modules/ekf2/EKF/aid_sources/external_vision/ev_vel_control.cpp
+source src/modules/ekf2/EKF/aid_sources/external_vision/ev_yaw_control.cpp
+source src/modules/ekf2/EKF/aid_sources/fake_height_control.cpp
+source src/modules/ekf2/EKF/aid_sources/fake_pos_control.cpp
+source src/modules/ekf2/EKF/aid_sources/gnss/gnss_checks.cpp
+source src/modules/ekf2/EKF/aid_sources/gnss/gnss_height_control.cpp
+source src/modules/ekf2/EKF/aid_sources/gnss/gnss_yaw_control.cpp
+source src/modules/ekf2/EKF/aid_sources/gnss/gps_control.cpp
+source src/modules/ekf2/EKF/aid_sources/gravity/gravity_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/magnetometer/mag_control.cpp
+source src/modules/ekf2/EKF/aid_sources/magnetometer/mag_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/optical_flow/optical_flow_control.cpp
+source src/modules/ekf2/EKF/aid_sources/optical_flow/optical_flow_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/range_finder/range_finder_consistency_check.cpp
+source src/modules/ekf2/EKF/aid_sources/range_finder/range_height_control.cpp
+source src/modules/ekf2/EKF/aid_sources/range_finder/range_height_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/range_finder/sensor_range_finder.cpp
+source src/modules/ekf2/EKF/aid_sources/sideslip/sideslip_fusion.cpp
+source src/modules/ekf2/EKF/aid_sources/zero_innovation_heading_update.cpp
+source src/modules/ekf2/EKF/control.cpp
+source src/modules/ekf2/EKF/covariance.cpp
+source src/modules/ekf2/EKF/ekf.cpp
+source src/modules/ekf2/EKF/ekf_helper.cpp
+source src/modules/ekf2/EKF/estimator_interface.cpp
+source src/modules/ekf2/EKF/height_control.cpp
+source src/modules/ekf2/EKF/imu_down_sampler/imu_down_sampler.cpp
+source src/modules/ekf2/EKF/position_fusion.cpp
+source src/modules/ekf2/EKF/terrain_control.cpp
+source src/modules/ekf2/EKF/velocity_fusion.cpp
+source src/modules/ekf2/EKF/wind.cpp
+source src/modules/ekf2/EKF/yaw_fusion.cpp
+source src/modules/ekf2/EKF/bias_estimator/bias_estimator.cpp
+source src/modules/ekf2/EKF/output_predictor/output_predictor.cpp
+source src/modules/ekf2/EKF/yaw_estimator/EKFGSF_yaw.cpp
+source src/lib/geo/geo.cpp src/lib/world_magnetic_model/geo_mag_declination.cpp
+source src/lib/lat_lon_alt/lat_lon_alt.cpp src/lib/hysteresis/hysteresis.cpp
+include src/modules/ekf2 src/modules/ekf2/EKF src/modules/ekf2/EKF/aid_sources src/modules/ekf2/EKF/python
+params src/modules/ekf2
+params src/modules/sensors/sensor_params.c SENS_IMU_MODE
+params src/modules/sensors/sensor_params_mag.c SENS_MAG_MODE
+# topics a single-instance multicopter estimator reads (EKF2.hpp:313-461) from the sensor chain and
+# the vehicle state; vehicle_command (queued) and the vision, flow, range, airspeed, landing-target
+# and auxiliary topics are left unpublished
+sub sensor_combined                       # the trigger (SubscriptionCallbackWorkItem)
+sub vehicle_magnetometer
+sub vehicle_air_data
+sub vehicle_gps_position
+sub sensor_selection
+sub vehicle_status
+sub vehicle_land_detected
+pub vehicle_attitude
+pub vehicle_local_position
+pub vehicle_global_position
+pub vehicle_odometry
+pub estimator_status
+pub estimator_sensor_bias
+pub wind
+pub estimator_status_flags

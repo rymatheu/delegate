@@ -1,0 +1,602 @@
+{"records":
+ [{"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "b7097aa8854b51a110a7a46dc3101c845067ed85b4b8cf478f643bc45562ba97",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261118T233024Z-seed6.json",
+   "kind": "tested",
+   "date": "20261118T233024Z",
+   "contract_hash":
+   "40de7d3379655200efde73ba73bc8b8268761942514845ad77b5a41b61fa2f99",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "attitude_unit",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "b7097aa8854b51a110a7a46dc3101c845067ed85b4b8cf478f643bc45562ba97",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261118T233024Z-seed6.json",
+   "kind": "tested",
+   "date": "20261118T233024Z",
+   "contract_hash":
+   "55d7aecd357d81cc57441032f992d95a8c321c9024092f5f73fa47337f7b8890",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "attitude_answers_imu",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "b7097aa8854b51a110a7a46dc3101c845067ed85b4b8cf478f643bc45562ba97",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261118T233024Z-seed6.json",
+   "kind": "tested",
+   "date": "20261118T233024Z",
+   "contract_hash":
+   "bd41366c2b5a0530392d354ba0fda54cf36fa2415afd2dfa8d04fea535c93d14",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "no_px4_error",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "40de7d3379655200efde73ba73bc8b8268761942514845ad77b5a41b61fa2f99",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "attitude_unit",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "55d7aecd357d81cc57441032f992d95a8c321c9024092f5f73fa47337f7b8890",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "attitude_answers_imu",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "bd41366c2b5a0530392d354ba0fda54cf36fa2415afd2dfa8d04fea535c93d14",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "no_px4_error",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "571f6ba5041a8ac6909abe4945fbc44d3a942dbe2dbbc9e23abd6325676331c1",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_attitude_quat_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "685581699b8b0632ab26ef6315b69c5573d93b428b40070cae04f4ed88e3428b",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_xy_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "332f40c8ec6606e00f050dd053c6ae94e5634296d89c4e5f0482beb509f32e57",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_z_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0e1edfc51237077e7dcb0c8adf197afb2d110451a8a9387968c20eba1aa3895f",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_vxy_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "d23331c8795025542c060b39ec1444afb79057559822b6989b00b4373a184555",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_vz_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "1b1cc347f724797607481e0509fc07159fdde175cb577090af0bc8c15d4b0124",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_heading_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0575f204b7eb41314294a19ba45ba4e3666e54dbad9f470b6096636ae2c5c436",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_dist_bottom_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "d1a2b811bd5200c6c859fae1665340183a1dcdf2e8d5ca060460bb2c51804598",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_local_position_dist_bottom_sensor_bitfield",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "b0da03a3fa332645ffd4705fcf895d86a07e9a4deb4d597d056521b67c4616c5",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_global_position_lat_lon_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "926cc77025dc100ad0b34677494445ce830c48d785076c65ab5bdc2f5b96285f",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_global_position_alt_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "6f529ecc69e85dd44b527d5abbd9dc9cc52e0c2a562769ae8d26c5a223868f48",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_global_position_terrain_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0cdaad6265d3b1d02f26025dffe3f57ac4e21e68640562aa5e7cf7fa201b3d1b",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_odometry_pose_frame",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "f5ee7461151f94f62a993967a7d915fb38e60206132dc8221e60fea829dbea84",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_odometry_velocity_frame",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "198909dc6c5d908b226e25c3967d2cfd0a99134cbb64d9632a48ec32e8b9f9e4",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_odometry_reset_counter",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 127,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "3b42f7dded1ad7c146ae44015d263b71a24f91afa7e4549c2c8de1980677fc8e",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_vehicle_odometry_quality",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "e65d2f11d78d44ef2c420627d1389780aa88ea5f0cf4fcabe6dde61c9a369bc7",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_gps_check_fail_flags",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "5b3778171a51b6bfbf34309858a7c1269b39a2e33c25c0d9d259f037fe9b088f",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_solution_status_flags",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "63f98bebe634a43b1dd215fc059e11bc1da3c2187ada35a8abc6a24790bc9adb",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_reset_count_vel_ne",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "89845bd22f69c6d44f00dafbd28d3064c49a2102ea40683632bc39a1604c9aae",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_reset_count_vel_d",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "28cabbf2dc6bba3a624eec7b8595b423ea69a82191be49ad5e07d0404abccb96",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_reset_count_pos_ne",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "005f9248087194730a149b63a2f9c4a349d2924d2a597edc164052c6d98a7171",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_reset_count_pod_d",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "194c515ed0b7b7f3fe1faa95ea195d15ab45380b985376400d86f4f1de4d98f2",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_reset_count_quat",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "9668259293745b621ad63208db247ab7832e6095a15b3f26bcde28fbd605da05",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_health_flags",
+   "checked": 1000,
+   "cases": 10},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 6,
+   "result_hash":
+   "7bde4a7c0058cf90441029fbbc8c569ca83d93e4ade96f5d2546eeeb07770bd1",
+   "result_file":
+   "px4/modules/px4_ekf2/evidence/tested/20261119T182504Z-seed6.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "fac259364793662d5f9204ddfb15b99cc6ed80b7bae2f04f33677765791be8ac",
+   "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+   "code_hash":
+   "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+   "clause": "width_estimator_status_timeout_flags",
+   "checked": 1000,
+   "cases": 10}],
+ "module": "px4_ekf2"}

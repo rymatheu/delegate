@@ -1,0 +1,309 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 30000,
+ "steps_per_case": 300,
+ "seed": 57,
+ "seconds": 3.487472,
+ "outputs_seen":
+ {"wp_update_ok": {"true_steps": 30000},
+  "wp_update_last": {"true_steps": 3067},
+  "wp_track_dt_scalar":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "wp_speed_ne": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "wp_reached": {"true_steps": 8483},
+  "wp_prev_leg_finished": {"true_steps": 30000},
+  "wp_paused": {"true_steps": 5973},
+  "wp_origin_n":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_origin_e":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_origin_d":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_offset_vel": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "wp_offset_accel":
+  {"non_finite_steps": 0, "min_finite": -3.156606, "max_finite": 0.2525681},
+  "wp_limits_incoherent": {"true_steps": 29900},
+  "wp_leg_vel_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 53.6112},
+  "wp_leg_spline": {"true_steps": 11378},
+  "wp_leg_peak_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 51.8388},
+  "wp_leg_arc": {"true_steps": 0},
+  "wp_leg_accel_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6.975034},
+  "wp_internal_errors_uninit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 133},
+  "wp_internal_errors_incoherent":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wp_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 133},
+  "wp_fast": {"true_steps": 15986},
+  "wp_distance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2766.714},
+  "wp_destination_n":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_destination_e":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_destination_d":
+  {"non_finite_steps": 0, "min_finite": -1000, "max_finite": 1000},
+  "wp_bearing":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6.283185},
+  "wp_active": {"true_steps": 29072},
+  "tgt_vel_n":
+  {"non_finite_steps": 0, "min_finite": -95.10214, "max_finite": 95.96568},
+  "tgt_vel_e":
+  {"non_finite_steps": 0, "min_finite": -93.83846, "max_finite": 96.5888},
+  "tgt_vel_d":
+  {"non_finite_steps": 0, "min_finite": -103.4421, "max_finite": 103.3696},
+  "tgt_valid": {"true_steps": 15673},
+  "tgt_update_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "tgt_pos_n":
+  {"non_finite_steps": 0, "min_finite": -1000.521, "max_finite": 1000.164},
+  "tgt_pos_e":
+  {"non_finite_steps": 0, "min_finite": -1000.358, "max_finite": 1000.03},
+  "tgt_pos_d":
+  {"non_finite_steps": 0, "min_finite": -1000.116, "max_finite": 1000},
+  "tgt_ne_set_max_speed_accel": {"true_steps": 27603},
+  "tgt_ne_set_correction_speed_accel": {"true_steps": 27603},
+  "tgt_ne_max_speed":
+  {"non_finite_steps": 0, "min_finite": 0.01, "max_finite": 50},
+  "tgt_ne_max_accel":
+  {"non_finite_steps": 0, "min_finite": 0.1, "max_finite": 20},
+  "tgt_ne_init_stopping_point": {"true_steps": 26644},
+  "tgt_ne_correction_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "tgt_ne_correction_accel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5},
+  "tgt_max_speed_up":
+  {"non_finite_steps": 0, "min_finite": 0.1, "max_finite": 20},
+  "tgt_max_speed_down":
+  {"non_finite_steps": 0, "min_finite": 0.1, "max_finite": 20},
+  "tgt_handover_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "tgt_d_set_max_speed_accel": {"true_steps": 29161},
+  "tgt_d_set_correction_speed_accel": {"true_steps": 26644},
+  "tgt_d_max_accel":
+  {"non_finite_steps": 0, "min_finite": 0.1, "max_finite": 20},
+  "tgt_d_init_stopping_point": {"true_steps": 26644},
+  "tgt_d_correction_speed_up":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "tgt_d_correction_speed_down":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "tgt_d_correction_accel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 5},
+  "tgt_acc_n":
+  {"non_finite_steps": 1, "min_finite": -1364.088, "max_finite": 2421.899},
+  "tgt_acc_e":
+  {"non_finite_steps": 1, "min_finite": -602.959, "max_finite": 740.4053},
+  "tgt_acc_d":
+  {"non_finite_steps": 1, "min_finite": -2449.646, "max_finite": 713.263}},
+ "module": "guidance",
+ "kind": "tested",
+ "id": "20261119T164354Z-seed57",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 < wp_internal_errors_uninit ∨ finite(tgt_pos_n) ∧ finite(tgt_pos_e) ∧ finite(tgt_pos_d) ∧ finite(tgt_vel_n) ∧ finite(tgt_vel_e) ∧ finite(tgt_vel_d) ∧ finite(tgt_acc_n) ∧ finite(tgt_acc_e) ∧ finite(tgt_acc_d) ∧ finite(tgt_ne_max_speed) ∧ finite(tgt_ne_max_accel) ∧ finite(tgt_ne_correction_speed) ∧ finite(tgt_ne_correction_accel) ∧ finite(tgt_max_speed_down) ∧ finite(tgt_max_speed_up) ∧ finite(tgt_d_max_accel) ∧ finite(tgt_d_correction_speed_down) ∧ finite(tgt_d_correction_speed_up) ∧ finite(tgt_d_correction_accel) ∧ finite(wp_distance) ∧ finite(wp_bearing) ∧ finite(wp_origin_n) ∧ finite(wp_origin_e) ∧ finite(wp_origin_d) ∧ finite(wp_destination_n) ∧ finite(wp_destination_e) ∧ finite(wp_destination_d) ∧ finite(wp_leg_peak_speed) ∧ finite(wp_leg_vel_max) ∧ finite(wp_leg_accel_max) ∧ finite(wp_speed_ne) ∧ finite(wp_offset_vel) ∧ finite(wp_offset_accel) ∧ finite(wp_track_dt_scalar) ∧ finite(wp_distance)",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "b870df56a7dd52693ec7beb08e61e62030d46d3791f902cac9323db54ccbb588",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case90-step1.json",
+    "case": 90},
+   "smallest_margin": 2,
+   "contract_hash":
+   "3256d433d09b1ae0bf82c684bb0e58d489952ce83ceacf59bda8a2009af677b8",
+   "clause": "outputs_finite",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "wp_internal_errors = wp_internal_errors_uninit + wp_internal_errors_incoherent",
+   "smallest_margin": null,
+   "contract_hash":
+   "f6a384eeadfdc558fca6409615773349dbfca154ce8b6a2eed07310432c6f720",
+   "clause": "no_internal_error_initialized",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬((tgt_valid ∧ wp_update_last) ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∨ (tgt_pos_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (tgt_pos_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (tgt_pos_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ≤ 0 ∧ (tgt_pos_n - wp_origin_n) * (tgt_pos_n - wp_origin_n) + (tgt_pos_e - wp_origin_e) * (tgt_pos_e - wp_origin_e) + (tgt_pos_d - wp_origin_d) * (tgt_pos_d - wp_origin_d) ≤ 0.01 * 0.01 ∨ (wp_destination_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (wp_destination_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (wp_destination_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ≤ (tgt_pos_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (tgt_pos_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (tgt_pos_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ∧ (tgt_pos_n - wp_destination_n) * (tgt_pos_n - wp_destination_n) + (tgt_pos_e - wp_destination_e) * (tgt_pos_e - wp_destination_e) + (tgt_pos_d - wp_destination_d) * (tgt_pos_d - wp_destination_d) ≤ 0.01 * 0.01 ∨ 0 ≤ (tgt_pos_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (tgt_pos_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (tgt_pos_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ∧ (tgt_pos_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (tgt_pos_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (tgt_pos_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ≤ (wp_destination_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (wp_destination_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (wp_destination_d - wp_origin_d) * (wp_destination_d - wp_origin_d) ∧ ((tgt_pos_e - wp_origin_e) * (wp_destination_d - wp_origin_d) - (tgt_pos_d - wp_origin_d) * (wp_destination_e - wp_origin_e)) * ((tgt_pos_e - wp_origin_e) * (wp_destination_d - wp_origin_d) - (tgt_pos_d - wp_origin_d) * (wp_destination_e - wp_origin_e)) + ((tgt_pos_d - wp_origin_d) * (wp_destination_n - wp_origin_n) - (tgt_pos_n - wp_origin_n) * (wp_destination_d - wp_origin_d)) * ((tgt_pos_d - wp_origin_d) * (wp_destination_n - wp_origin_n) - (tgt_pos_n - wp_origin_n) * (wp_destination_d - wp_origin_d)) + ((tgt_pos_n - wp_origin_n) * (wp_destination_e - wp_origin_e) - (tgt_pos_e - wp_origin_e) * (wp_destination_n - wp_origin_n)) * ((tgt_pos_n - wp_origin_n) * (wp_destination_e - wp_origin_e) - (tgt_pos_e - wp_origin_e) * (wp_destination_n - wp_origin_n)) ≤ 0.01 * 0.01 * ((wp_destination_n - wp_origin_n) * (wp_destination_n - wp_origin_n) + (wp_destination_e - wp_origin_e) * (wp_destination_e - wp_origin_e) + (wp_destination_d - wp_origin_d) * (wp_destination_d - wp_origin_d))",
+   "smallest_margin_case":
+   {"step": 3,
+    "sha256":
+    "138406e050b362525c88c6939fd3401f451edfb3e898a800b7efbaf462041090",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case1-step3.json",
+    "case": 1},
+   "smallest_margin": 0,
+   "contract_hash":
+   "83ba2173f91f70237145fd99ead2fc83dc0f958541a8ffc90da0cd89c8e86d4a",
+   "clause": "on_segment",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬((tgt_valid ∧ wp_update_last) ∧ wp_reached ∧ ¬wp_fast ∧ ¬wp_leg_spline) ∨ |tgt_pos_n - wp_destination_n| ≤ 0.01 ∧ |tgt_pos_e - wp_destination_e| ≤ 0.01 ∧ |tgt_pos_d - wp_destination_d| ≤ 0.01",
+   "smallest_margin_case":
+   {"step": 7,
+    "sha256":
+    "750fe572ccd68a3d9b85613d8ae971face79839fd7a4704a5734fe1557d2a6ea",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case1-step7.json",
+    "case": 1},
+   "smallest_margin": 0.01,
+   "contract_hash":
+   "1989f9e0905d07667b6a029c0f2919e18e385791cb522718cdc00267a4947123",
+   "clause": "reached_holds",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬((tgt_valid ∧ wp_update_last) ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∨ wp_speed_ne < 1.1920929e-7 ∧ tgt_vel_n * tgt_vel_n + tgt_vel_e * tgt_vel_e + tgt_vel_d * tgt_vel_d ≤ wp_leg_peak_speed * wp_leg_peak_speed * 1.00002 ∨ 1.1920929e-7 ≤ wp_speed_ne ∧ (tgt_vel_n * tgt_vel_n + tgt_vel_e * tgt_vel_e + tgt_vel_d * tgt_vel_d) * (wp_speed_ne * wp_speed_ne) ≤ wp_leg_peak_speed * wp_leg_peak_speed * (wp_offset_vel * wp_offset_vel) * 1.00002",
+   "smallest_margin_case":
+   {"step": 7,
+    "sha256":
+    "750fe572ccd68a3d9b85613d8ae971face79839fd7a4704a5734fe1557d2a6ea",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case1-step7.json",
+    "case": 1},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0ca08f36a50cdd19f26e01bfd59afdd2d84ece3f57d7c7c1e77cede76fa36d64",
+   "clause": "speed_within_plan",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(((tgt_valid ∧ wp_update_last) ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∧ wp_offset_vel ≤ wp_speed_ne) ∨ 0 + tgt_vel_n * tgt_vel_n + tgt_vel_e * tgt_vel_e ≤ 2500.05 ∧ |tgt_vel_d| ≤ 20.0002",
+   "smallest_margin_case":
+   {"step": 103,
+    "sha256":
+    "8e719687fb87b0e72b10d800173efabf0bf8e09664dd50f3a382af6fdb5efc68",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case72-step103.json",
+    "case": 72},
+   "smallest_margin": 20.00014,
+   "contract_hash":
+   "2298df153925bf986ef777ca0db084f4613d60257c5ac6f868fb880e2a9903bb",
+   "clause": "speed_within_limits",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(((tgt_valid ∧ wp_update_last) ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∧ wp_offset_vel ≤ wp_speed_ne ∧ wp_offset_accel = 0) ∨ 0 + tgt_acc_n * tgt_acc_n + tgt_acc_e * tgt_acc_e ≤ wp_acc * wp_acc * 1.00002 ∧ |tgt_acc_d| ≤ wp_acc_z * 1.00001",
+   "smallest_margin_case":
+   {"step": 271,
+    "sha256":
+    "f39213a9bfea8cee7667291763ad72f091fdea0ea9be74f068498e4c2cea8142",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case75-step271.json",
+    "case": 75},
+   "smallest_margin": 0.2500045,
+   "contract_hash":
+   "4eea976a99e261b545d57144f9776c762bfb375f04224d6e206680e2a4ef0ed5",
+   "clause": "accel_within_limits",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(0.01 ≤ tgt_ne_max_speed ∧ tgt_ne_max_speed ≤ 50) ∧ (0.1 ≤ tgt_ne_max_accel ∧ tgt_ne_max_accel ≤ 20) ∧ (0.1 ≤ tgt_max_speed_up ∧ tgt_max_speed_up ≤ 20) ∧ (0.1 ≤ tgt_max_speed_down ∧ tgt_max_speed_down ≤ 20) ∧ 0.1 ≤ tgt_d_max_accel ∧ tgt_d_max_accel ≤ 20",
+   "smallest_margin_case":
+   {"step": 8,
+    "sha256":
+    "6b11e93d64ac3dfdc69c84a92b4e393898fb53ddec7b9e38636ed8818a78d172",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case0-step8.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a2de510b77ad98861ec03a93d7f4ece4c724d0f359935c944122d6a959b55222",
+   "clause": "limits_handed_over",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(¬tgt_ne_set_correction_speed_accel ∨ (0 ≤ tgt_ne_correction_speed ∧ tgt_ne_correction_speed ≤ 100) ∧ 0 ≤ tgt_ne_correction_accel ∧ tgt_ne_correction_accel ≤ 100) ∧ (¬tgt_d_set_correction_speed_accel ∨ (0 ≤ tgt_d_correction_speed_down ∧ tgt_d_correction_speed_down ≤ 100) ∧ (0 ≤ tgt_d_correction_speed_up ∧ tgt_d_correction_speed_up ≤ 100) ∧ 0 ≤ tgt_d_correction_accel ∧ tgt_d_correction_accel ≤ 100)",
+   "smallest_margin_case":
+   {"step": 197,
+    "sha256":
+    "ec271b2ac7aa70a7a0d7c32c281b1c06f9c68f046ab57029e9d07d964c8d30e3",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case1-step197.json",
+    "case": 1},
+   "smallest_margin": 0.01,
+   "contract_hash":
+   "42f13553ab83e0a7b03da5147b74ec23919843cb08830256929b9eb4054d520d",
+   "clause": "corrections_handed_over",
+   "checked": 30000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬wp_update_last ∨ wp_leg_spline ∨ (|tgt_pos_n| ≤ 10000 ∧ |tgt_pos_e| ≤ 10000 ∧ |tgt_pos_d| ≤ 10000) ∧ (|tgt_vel_n| ≤ 100 ∧ |tgt_vel_e| ≤ 100 ∧ |tgt_vel_d| ≤ 100) ∧ |tgt_acc_n| ≤ 100 ∧ |tgt_acc_e| ≤ 100 ∧ |tgt_acc_d| ≤ 100",
+   "smallest_margin_case":
+   {"step": 159,
+    "sha256":
+    "483a41d80f2f8a6e379f7f2485aa80e4398e56316d2614eecb93a46d22cf818a",
+    "file":
+    "ardupilot/modules/guidance/evidence/tested/20261119T164354Z-seed57/case90-step159.json",
+    "case": 90},
+   "smallest_margin": 99.99343,
+   "contract_hash":
+   "f57880c4e376a5b5d3b28973b0713593bef4ad5f420549d72e2a5d18d85cc3a3",
+   "clause": "targets_bounded_straight",
+   "checked": 30000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h -DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter -DAP_SIM_ENABLED=1",
+ "coverage":
+ {"straight_settled":
+  {"true_steps": 4144,
+   "text":
+   "(tgt_valid ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∧ wp_offset_vel ≤ wp_speed_ne ∧ wp_offset_accel = 0"},
+  "straight_moving":
+  {"true_steps": 1167,
+   "text":
+   "(tgt_valid ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished) ∧ 0.1 ≤ 0 + tgt_vel_n * tgt_vel_n + tgt_vel_e * tgt_vel_e + tgt_vel_d * tgt_vel_d"},
+  "straight_leg":
+  {"true_steps": 6060,
+   "text":
+   "tgt_valid ∧ ¬wp_leg_spline ∧ ¬wp_leg_arc ∧ ¬wp_fast ∧ wp_prev_leg_finished"},
+  "spline_leg": {"true_steps": 6167, "text": "tgt_valid ∧ wp_leg_spline"},
+  "shaper_active":
+  {"true_steps": 6480,
+   "text": "tgt_valid ∧ ¬(wp_offset_vel ≤ wp_speed_ne ∧ wp_offset_accel = 0)"},
+  "reached_scurve":
+  {"true_steps": 3172,
+   "text": "tgt_valid ∧ wp_reached ∧ ¬wp_fast ∧ ¬wp_leg_spline"},
+  "blending":
+  {"true_steps": 8699,
+   "text": "tgt_valid ∧ (wp_fast ∨ ¬wp_prev_leg_finished)"}},
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test guidance --seed 57 --cases 100 --steps 300",
+ "code_hash":
+ "68bd31999b956b1a0f64471664b9274f46f98816bd96cd40fc4c6e2db5ee63a8",
+ "cases_skipped": 0,
+ "cases": 100,
+ "assume":
+ ["wp_spd_range: 0.1 ≤ wp_spd ∧ wp_spd ≤ 20",
+  "wp_radius_range: 0.05 ≤ wp_radius_m ∧ wp_radius_m ≤ 10",
+  "wp_spd_up_range: 0.1 ≤ wp_spd_up ∧ wp_spd_up ≤ 10",
+  "wp_spd_dn_range: 0.1 ≤ wp_spd_dn ∧ wp_spd_dn ≤ 10",
+  "wp_acc_range: 0.5 ≤ wp_acc ∧ wp_acc ≤ 5",
+  "wp_acc_z_range: 0.5 ≤ wp_acc_z ∧ wp_acc_z ≤ 5",
+  "wp_acc_cnr_range: 0 ≤ wp_acc_cnr ∧ wp_acc_cnr ≤ 5",
+  "wp_jerk_range: 1 ≤ wp_jerk ∧ wp_jerk ≤ 20",
+  "wp_ter_margin_range: 0.1 ≤ wp_ter_margin ∧ wp_ter_margin ≤ 100",
+  "atc_input_tc_range: 0 ≤ atc_input_tc ∧ atc_input_tc ≤ 1",
+  "psc_ne_pos_p_range: 0.5 ≤ psc_ne_pos_p ∧ psc_ne_pos_p ≤ 4",
+  "psc_ne_jerk_range: 1 ≤ psc_ne_jerk ∧ psc_ne_jerk ≤ 50",
+  "atc_rate_range: (atc_rate_r_max = 0 ∨ 60 ≤ atc_rate_r_max ∧ atc_rate_r_max ≤ 1080) ∧ (atc_rate_p_max = 0 ∨ 60 ≤ atc_rate_p_max ∧ atc_rate_p_max ≤ 1080)",
+  "atc_acc_range: (atc_acc_r_max = 0 ∨ 300 ≤ atc_acc_r_max ∧ atc_acc_r_max ≤ 1800) ∧ (atc_acc_p_max = 0 ∨ 300 ≤ atc_acc_p_max ∧ atc_acc_p_max ≤ 1800)",
+  "dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.02",
+  "est_bounded: (|est_pos_n| ≤ 1000 ∧ |est_pos_e| ≤ 1000 ∧ |est_pos_d| ≤ 1000) ∧ |est_vel_n| ≤ 50 ∧ |est_vel_e| ≤ 50 ∧ |est_vel_d| ≤ 50",
+  "pc_signals_bounded: (|pc_vel_desired_n| ≤ 50 ∧ |pc_vel_desired_e| ≤ 50 ∧ |pc_vel_desired_d| ≤ 50) ∧ |pc_vel_offset_d| ≤ 50 ∧ (|pc_pos_offset_n| ≤ 100 ∧ |pc_pos_offset_e| ≤ 100 ∧ |pc_pos_offset_d| ≤ 100) ∧ (|pc_pos_error_n| ≤ 1000 ∧ |pc_pos_error_e| ≤ 1000 ∧ |pc_pos_error_d| ≤ 1000) ∧ |pc_pos_target_d| ≤ 1000 ∧ |pc_stopping_point_n| ≤ 1000 ∧ |pc_stopping_point_e| ≤ 1000 ∧ |pc_stopping_point_d| ≤ 1000",
+  "pc_limits_range: (0.01 ≤ pc_ne_max_speed ∧ pc_ne_max_speed ≤ 50) ∧ (0.1 ≤ pc_ne_max_accel ∧ pc_ne_max_accel ≤ 20) ∧ (0.1 ≤ pc_max_speed_up ∧ pc_max_speed_up ≤ 20) ∧ (0.1 ≤ pc_max_speed_down ∧ pc_max_speed_down ≤ 20) ∧ 0.1 ≤ pc_d_max_accel ∧ pc_d_max_accel ≤ 20",
+  "cmd_init_args: (0 ≤ cmd_guidance_wp_and_spline_init_m_speed_ms ∧ cmd_guidance_wp_and_spline_init_m_speed_ms ≤ 50) ∧ |cmd_guidance_wp_and_spline_init_m_stopping_point_n| ≤ 1000 ∧ |cmd_guidance_wp_and_spline_init_m_stopping_point_e| ≤ 1000 ∧ |cmd_guidance_wp_and_spline_init_m_stopping_point_d| ≤ 1000",
+  "cmd_speed_args: (0 ≤ cmd_guidance_set_speed_NE_ms_speed_ms ∧ cmd_guidance_set_speed_NE_ms_speed_ms ≤ 50) ∧ (cmd_guidance_set_speed_up_ms_speed_up_ms = 0 ∨ 0.1 ≤ cmd_guidance_set_speed_up_ms_speed_up_ms ∧ cmd_guidance_set_speed_up_ms_speed_up_ms ≤ 20) ∧ (cmd_guidance_set_speed_down_ms_speed_down_ms = 0 ∨ 0.1 ≤ cmd_guidance_set_speed_down_ms_speed_down_ms ∧ cmd_guidance_set_speed_down_ms_speed_down_ms ≤ 20)",
+  "cmd_destination_args: ((|cmd_guidance_set_wp_destination_NED_m_destination_n| ≤ 1000 ∧ |cmd_guidance_set_wp_destination_NED_m_destination_e| ≤ 1000 ∧ |cmd_guidance_set_wp_destination_NED_m_destination_d| ≤ 1000) ∧ (|cmd_guidance_set_wp_destination_next_NED_m_destination_n| ≤ 1000 ∧ |cmd_guidance_set_wp_destination_next_NED_m_destination_e| ≤ 1000 ∧ |cmd_guidance_set_wp_destination_next_NED_m_destination_d| ≤ 1000) ∧ (|cmd_guidance_set_spline_destination_NED_m_destination_n| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_NED_m_destination_e| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_NED_m_destination_d| ≤ 1000) ∧ (|cmd_guidance_set_spline_destination_NED_m_next_destination_n| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_NED_m_next_destination_e| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_NED_m_next_destination_d| ≤ 1000) ∧ (|cmd_guidance_set_spline_destination_next_NED_m_next_destination_n| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_next_NED_m_next_destination_e| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_next_NED_m_next_destination_d| ≤ 1000) ∧ |cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_n| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_e| ≤ 1000 ∧ |cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_d| ≤ 1000) ∧ cmd_guidance_set_wp_destination_NED_m_arc_rad = 0 ∧ cmd_guidance_set_wp_destination_next_NED_m_arc_rad = 0"]}

@@ -1,0 +1,8 @@
+# build products (module executables, generated headers, Lean's), fetched third-party sources,
+# run outputs; never committed
+/build/
+/.lake/
+/deps/
+/out/
+# served sessions keep their logs as evidence (the repository ignores *.log elsewhere)
+!/**/evidence/**/*.log

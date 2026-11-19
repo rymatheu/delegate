@@ -1,0 +1,7 @@
+# Compile flags of the position module, added to the shared ones in ardupilot/build.sh.
+# AC_PosControl uses APM_BUILD_TYPE(...) to pick its default gains and AC_PID's Plane-only code;
+# waf defines the vehicle per build (Tools/ardupilotwaf/ardupilotwaf.py).
+-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter
+# The SITL board's configure step defines AP_SIM_ENABLED (Tools/ardupilotwaf/boards.py, class sitl);
+# AP_AHRS.h and AP_HAL use it in expressions, so it must be defined (as for the mixer).
+-DAP_SIM_ENABLED=1

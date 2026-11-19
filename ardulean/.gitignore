@@ -1,0 +1,15 @@
+# build products, caches and run records
+.lake/
+build/
+__pycache__/
+*.olean
+*.ilean
+
+# Python environments (the shared ../sim/setup.sh makes them in ../sim/)
+.venv/
+.venv-video/
+
+.DS_Store
+
+# run records (fly_gorge.sh, fly_qgc.sh)
+out/

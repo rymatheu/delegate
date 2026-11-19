@@ -1,0 +1,96 @@
+# px4_mavlink: PX4's MAVLink module (src/modules/mavlink), unmodified: the code that speaks to
+# QGroundControl (heartbeat and telemetry streams, parameters, missions, commands, FTP, ...).
+# Started as on a serial link, `mavlink start -d /dev/ttyHARNESS0 -b 921600` (mode normal): the
+# device is a byte-stream port of the harness (px4/shim/stream.cpp), 128 words = 512 bytes per
+# tick each way. Three task-like activities, all run by the shim: the module's task
+# (Mavlink::task_main: streams and sends, px4_usleep paced), and its receiver thread
+# (MavlinkReceiver::run, pthread_create: poll on the port, parse, handle). Read by
+# px4/ports.py and px4/build.sh; px4/modules/px4_mavlink/generate.sh makes the generated
+# headers (PX4's own generators). Paths relative to $PX4_ROOT.
+main mavlink
+args -d /dev/ttyHARNESS0 -b 921600       # mode normal, the default (there is no "-m normal")
+start dataman -r                           # the mission manager's storage (see Module.lean)
+run mavlink boot_complete
+process fresh
+stream mavlink /dev/ttyHARNESS0 128
+source src/modules/mavlink/mavlink.c
+source src/modules/mavlink/mavlink_command_sender.cpp
+source src/modules/mavlink/mavlink_events.cpp
+source src/modules/mavlink/mavlink_ftp.cpp
+source src/modules/mavlink/mavlink_log_handler.cpp
+source src/modules/mavlink/mavlink_main.cpp
+source src/modules/mavlink/mavlink_messages.cpp
+source src/modules/mavlink/mavlink_mission.cpp
+source src/modules/mavlink/mavlink_parameters.cpp
+source src/modules/mavlink/mavlink_rate_limiter.cpp
+source src/modules/mavlink/mavlink_receiver.cpp
+source src/modules/mavlink/mavlink_shell.cpp
+source src/modules/mavlink/mavlink_simple_analyzer.cpp
+source src/modules/mavlink/mavlink_stream.cpp
+source src/modules/mavlink/mavlink_timesync.cpp
+source src/modules/mavlink/mavlink_ulog.cpp
+source src/modules/mavlink/MavlinkStatustextHandler.cpp
+source src/modules/mavlink/open_drone_id_translations.cpp
+source src/modules/mavlink/tune_publisher.cpp
+# its libraries (DEPENDS)
+source src/lib/adsb/AdsbConflict.cpp src/lib/airspeed/airspeed.cpp src/lib/atmosphere/atmosphere.cpp
+source src/lib/dataman_client/DatamanClient.cpp src/lib/geo/geo.cpp src/lib/conversion/rotation.cpp
+source src/lib/drivers/accelerometer/PX4Accelerometer.cpp src/lib/drivers/gyroscope/PX4Gyroscope.cpp
+source src/lib/drivers/magnetometer/PX4Magnetometer.cpp
+source src/lib/sensor_calibration/Accelerometer.cpp src/lib/sensor_calibration/Barometer.cpp
+source src/lib/sensor_calibration/Gyroscope.cpp src/lib/sensor_calibration/Magnetometer.cpp
+source src/lib/sensor_calibration/Utilities.cpp
+source src/lib/timesync/Timesync.cpp src/lib/tunes/tunes.cpp src/lib/tunes/default_tunes.cpp
+source src/lib/circuit_breaker/circuit_breaker.cpp
+source src/lib/variable_length_ringbuffer/VariableLengthRingbuffer.cpp src/lib/ringbuffer/Ringbuffer.cpp
+source src/lib/version/version.c src/modules/dataman/dataman.cpp
+# platform code it calls: the board identity, the CRC, the CLI helpers, the posix shell (for
+# MAVLink's SERIAL_CONTROL shell) with the builtin-app table generate.sh makes
+source platforms/common/board_identity.c platforms/posix/src/px4/common/lib_crc32.c
+source platforms/common/px4_cli.cpp platforms/posix/src/px4/common/px4_daemon/pxh.cpp
+source platforms/posix/src/px4/common/px4_daemon/history.cpp GEN/platforms/posix/apps.cpp
+# compile definitions src/lib/version/CMakeLists.txt gives the version library and its users
+define PX4_BOARD_NAME="PX4_SITL" PX4_BOARD_LABEL="default" BUILD_URI=localhost
+include src/modules/mavlink GEN/mavlink GEN/mavlink/development GEN/mavlink/uAvionix GEN/version
+params src/modules/mavlink
+# the parameters of the whole stack, under the same names, so that composeAll gives every module the
+# same value; served to the ground station read-only: PARAM_SET is answered as PX4 answers it
+# (mavlink_parameters.cpp:124-136: param_set, then PARAM_VALUE with the stored value), and the
+# store refuses the write, so the reply carries the unchanged value
+params-of px4_rate px4_alloc px4_commander px4_navigator
+params readonly
+params src/modules/dataman/parameters.c
+# read by name from elsewhere (compile-time Param classes)
+params src/lib/adsb/parameters.c
+params src/lib/battery/module.yaml BAT1_N_CELLS BAT1_V_CHARGED BAT1_V_EMPTY BAT_CRIT_THR BAT_EMERGEN_THR BAT_LOW_THR
+params src/lib/systemlib/system_params.c SYS_FAILURE_EN SYS_HITL
+# ---- topics
+# what the streams of mode normal (PX4's ground-station configuration, mavlink_main.cpp) show:
+# HEARTBEAT, CURRENT_MODE (actuator_armed, vehicle_control_mode, vehicle_status), SYS_STATUS
+# (battery_status, cpuload, health_report), ATTITUDE (vehicle_attitude, vehicle_angular_velocity),
+# GLOBAL_POSITION_INT, LOCAL_POSITION_NED, HOME_POSITION (vehicle_global_position,
+# vehicle_local_position, home_position), GPS_RAW_INT (sensor_gps, the driver's), VFR_HUD
+# (vehicle_air_data, vehicle_thrust_setpoint), EXTENDED_SYS_STATE (vehicle_land_detected,
+# position_setpoint_triplet), mission progress (mission_result: MISSION_CURRENT, ITEM_REACHED)
+sub vehicle_status
+sub vehicle_command_ack
+sub actuator_armed
+sub vehicle_control_mode
+sub battery_status
+sub cpuload
+sub health_report
+sub vehicle_attitude
+sub vehicle_angular_velocity
+sub vehicle_global_position
+sub vehicle_local_position
+sub home_position
+sub sensor_gps
+sub vehicle_air_data
+sub vehicle_thrust_setpoint
+sub vehicle_land_detected
+sub position_setpoint_triplet
+sub mission_result
+pub vehicle_command
+pub dataman_request mirror 170             # every storage request of a step, mirrored into navigator's dataman
+pub mission
+pub telemetry_status

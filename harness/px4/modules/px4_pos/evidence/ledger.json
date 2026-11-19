@@ -1,0 +1,554 @@
+{"records":
+ [{"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.0009997616,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "20105a55b2322ba2f35dd179f13bbd7dfe31147e6227d34500eb2f4cf7ea082a",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_unit",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.001,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "94c4e9ef662aab412da585e4f7831055e3d8e573dfe6ffb89ad1dbf43c31a4d4",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_along_z",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.001,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "b2e54073935d15d110e3f3629eac4a1374f2edd380911cc2e82d478506ff5c19",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_normalized",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.999001,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "89e7b15edf44f10c5eb269a92745a8e285d7e1ea776be67ff0468e3da646370f",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_max",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "4035c47c65f62525b068c5e584af4b96f65eb35920c16511b8990e7c3036619f",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_yawrate_not_inf",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "628b5b43faa9ca4b23774d6239fc5f652192f6ecd22ed5b2047f371c2a4e6fe2",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_stamped",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "73f6692aef49768dd4e4100ab0893bde886338fb3c9c022b5a874f519a59419a",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_answers_position",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "32a04bce3a7f397d6740344e6863fc058dde0f2bf91a0a8a78a72c824dacfdc5",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "lps_not_inf",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 3,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "2f3c167bfbf74b05a3826f26774b3fda2fb0835fbe8c09d21aa9344f88608933",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "takeoff_state_in_range",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.008,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "c5e86527ff3ee5cf491c6da961520170cdbfff42f17e638152bf1508fabf5064",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "tilt_limit_in_range",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "75606649ec9e25be1dc888ac10e796b936fe4ec70f9b448479057352721e1b44",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261118T233043Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261118T233043Z",
+   "contract_hash":
+   "e8655c68b7ba2d73158b329e12f96c03acb6b23cdfab442e9e050d01cb3af657",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "no_px4_error",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.0009997616,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "20105a55b2322ba2f35dd179f13bbd7dfe31147e6227d34500eb2f4cf7ea082a",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_unit",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.001,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "94c4e9ef662aab412da585e4f7831055e3d8e573dfe6ffb89ad1dbf43c31a4d4",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_along_z",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.001,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "b2e54073935d15d110e3f3629eac4a1374f2edd380911cc2e82d478506ff5c19",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_normalized",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.999001,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "89e7b15edf44f10c5eb269a92745a8e285d7e1ea776be67ff0468e3da646370f",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_thrust_max",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "4035c47c65f62525b068c5e584af4b96f65eb35920c16511b8990e7c3036619f",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_yawrate_not_inf",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "628b5b43faa9ca4b23774d6239fc5f652192f6ecd22ed5b2047f371c2a4e6fe2",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_stamped",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "73f6692aef49768dd4e4100ab0893bde886338fb3c9c022b5a874f519a59419a",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "att_sp_answers_position",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "32a04bce3a7f397d6740344e6863fc058dde0f2bf91a0a8a78a72c824dacfdc5",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "lps_not_inf",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 3,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "2f3c167bfbf74b05a3826f26774b3fda2fb0835fbe8c09d21aa9344f88608933",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "takeoff_state_in_range",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0.008,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "c5e86527ff3ee5cf491c6da961520170cdbfff42f17e638152bf1508fabf5064",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "tilt_limit_in_range",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e8655c68b7ba2d73158b329e12f96c03acb6b23cdfab442e9e050d01cb3af657",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "no_px4_error",
+   "checked": 2000,
+   "cases": 20},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 2,
+   "seed": 33,
+   "result_hash":
+   "a13b0d0fce7e2f33346cc6c2ed8ca7938169c93bc82bb4047f2aa87add8d3c5d",
+   "result_file":
+   "px4/modules/px4_pos/evidence/tested/20261119T182506Z-seed33.json",
+   "regime_hash":
+   "4e1675d7318d3d07b5e038ee2021107e7f00ffa67701bbed3c3e9328691ae9fb",
+   "regime": "x500_posctl",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "fbbd756280c194f7e7406a7838fc9ce22e4f957fc3dbfca57077f729e9500966",
+   "command":
+   "harness test px4_pos --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+   "code_hash":
+   "cb47ceb5b63d91b4be4e4cd73c7e70992777852f7f9c176502134613b392971d",
+   "clause": "width_takeoff_status_takeoff_state",
+   "checked": 2000,
+   "cases": 20}],
+ "module": "px4_pos"}

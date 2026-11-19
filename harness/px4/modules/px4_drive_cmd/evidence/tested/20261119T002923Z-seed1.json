@@ -1,0 +1,418 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 2800,
+ "steps_per_case": 400,
+ "seed": 1,
+ "seconds": 0.08401754,
+ "outputs_seen":
+ {"vehicle_command_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "vehicle_command_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_command_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_command_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 255},
+  "vehicle_command_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 190},
+  "vehicle_command_q7_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_from_external": {"true_steps": 0},
+  "vehicle_command_q7_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q7_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_from_external": {"true_steps": 0},
+  "vehicle_command_q6_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q6_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_from_external": {"true_steps": 0},
+  "vehicle_command_q5_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q5_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_from_external": {"true_steps": 0},
+  "vehicle_command_q4_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q4_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_from_external": {"true_steps": 0},
+  "vehicle_command_q3_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q3_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_from_external": {"true_steps": 0},
+  "vehicle_command_q2_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q2_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_source_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_source_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_from_external": {"true_steps": 0},
+  "vehicle_command_q1_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_q1_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param7":
+  {"non_finite_steps": 246, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param6":
+  {"non_finite_steps": 246, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param5":
+  {"non_finite_steps": 246, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_command_from_external": {"true_steps": 246},
+  "vehicle_command_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_command_confirmation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_command_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 400},
+  "position_setpoint_triplet_updated": {"true_steps": 321},
+  "position_setpoint_triplet_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "position_setpoint_triplet_previous_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_valid": {"true_steps": 0},
+  "position_setpoint_triplet_previous_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_previous_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_previous_cruising_throttle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_cruising_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_valid": {"true_steps": 0},
+  "position_setpoint_triplet_next_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_next_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_next_cruising_throttle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_cruising_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_yaw":
+  {"non_finite_steps": 2800, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_valid": {"true_steps": 321},
+  "position_setpoint_triplet_current_type":
+  {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "position_setpoint_triplet_current_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "position_setpoint_triplet_current_lon_lo":
+  {"non_finite_steps": 98,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_lon":
+  {"non_finite_steps": 96,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_current_lat_lo":
+  {"non_finite_steps": 72,
+   "min_finite": -10141200000000000000000000000000,
+   "max_finite": 10141200000000000000000000000000},
+  "position_setpoint_triplet_current_lat":
+  {"non_finite_steps": 655,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_current_cruising_throttle":
+  {"non_finite_steps": 2800, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_cruising_speed":
+  {"non_finite_steps": 2800, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_alt":
+  {"non_finite_steps": 504,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1}},
+ "module": "px4_drive_cmd",
+ "kind": "tested",
+ "id": "20261119T002923Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "vehicle_command_count ≤ 1",
+   "smallest_margin_case":
+   {"step": 13,
+    "sha256":
+    "b4aec9f8b8aa326c659f0d48adc6b73d2123e67b1cead4da1bf5a1fa768876f6",
+    "file":
+    "px4/modules/px4_drive_cmd/evidence/tested/20261119T002923Z-seed1/smallest-margin-one_command.json",
+    "case": 2},
+   "smallest_margin": 0,
+   "contract_hash":
+   "b3fc53478fc6af8ff9614de3df4e4c34e82e5b79ff2516a440f6c62257cff408",
+   "clause": "one_command",
+   "checked": 2800},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "vehicle_command_count = 0 ∨ vehicle_command_source_system = 255 ∧ vehicle_command_target_system = 1",
+   "smallest_margin": null,
+   "contract_hash":
+   "62431d18944e6eac0ddb2019794d503a9f278bf6f5c0c8750688156a4e45dd6c",
+   "clause": "gcs_command",
+   "checked": 2800}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -fno-exceptions",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_drive_cmd --seed 1 --cases 20 --steps 400",
+ "code_hash":
+ "bac371a34d89f4c64d60b6561bff9210ae72946893bc16053ba156ed70ef204a",
+ "cases_skipped": 13,
+ "cases": 20,
+ "assume":
+ ["script: 0 ≤ mode_s ∧ mode_s ≤ arm_s ∧ arm_s ≤ arm_until_s ∧ arm_until_s ≤ step_s ∧ 0 ≤ takeoff_alt ∧ takeoff_alt ≤ 100 ∧ |step_n| ≤ 1000",
+  "times_in_clock: step_s ≤ 4000"]}

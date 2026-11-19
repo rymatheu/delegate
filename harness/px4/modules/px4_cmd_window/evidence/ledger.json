@@ -1,0 +1,23 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 500,
+      "smallest_margin": 0,
+      "seed": 1,
+      "result_hash": "7e4869f0f300cd1b302e3aaf0121d29fdb943246ce1d83de42b88767e1f0890c",
+      "result_file": "px4/modules/px4_cmd_window/evidence/tested/20261119T002923Z-seed1.json",
+      "kind": "tested",
+      "date": "20261119T002923Z",
+      "contract_hash": "47bd49e1a97b7e2c609bb58811dbf68f678d32def193722bdb7d3d7b87c88b24",
+      "command": "harness test px4_cmd_window --seed 1 --cases 20 --steps 500",
+      "code_hash": "c405dcf1d7adbcfaa7a582af72fd8a907027e0b5e4f12e9088f6cee8fd993f28",
+      "clause": "window_holds_tick",
+      "checked": 10000,
+      "cases": 20
+    }
+  ],
+  "module": "px4_cmd_window"
+}

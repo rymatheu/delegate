@@ -1,0 +1,31 @@
+{
+ "namespace": "Pid",
+ "cpp2lean": ["--param-class", "AP_Float=float", "--boundary", "AHRS", "--extern", "ext_sqrt:Float32.sqrt"],
+ "classes": [
+  {"class": "PID",
+   "globals": ["static AHRS ahrs_obj;   // the boundary object; the driver writes its values before each call",
+               "AHRS &AP::ahrs() { return ahrs_obj; }",
+               "float ext_sqrt(float x) { return sqrtf(x); }"],
+   "boundary_args": ["ahrs_obj"],
+   "ctor": ["0.8", "0.3", "0.02", "0.5", "20.0"],
+   "inputs": {"get_control_gain_scaler": "ahrs_obj.gain_scaler = %s;"},
+   "ranges": {"target": [-2, 2], "measurement": [-2, 2], "error": [-2, 2], "dt": [0, 0.05], "pd_scale": [0, 1.5],
+              "v": [0, 2], "integrator": [-1, 1], "time_constant": [0, 1], "p_out": [-1, 1], "d_out": [-1, 1],
+              "get_control_gain_scaler": [0.5, 1.5]},
+   "weights": {"update_all": 8, "update_error": 4},
+   "calls": 20000},
+  {"class": "RateControl",
+   "globals": ["static AHRS ahrs_obj;   // the boundary object; the driver writes its values before each call",
+               "AHRS &AP::ahrs() { return ahrs_obj; }",
+               "float ext_sqrt(float x) { return sqrtf(x); }"],
+   "boundary_args": ["ahrs_obj"],
+   "ctor": [],
+   "inputs": {"get_air_density_ratio": "ahrs_obj.air_density_ratio = %s;",
+              "_pid_roll.get_control_gain_scaler": "ahrs_obj.gain_scaler = %s;"},
+   "input_aliases": {"_pid_pitch.get_control_gain_scaler": "_pid_roll.get_control_gain_scaler"},
+   "ranges": {"target_roll": [-2, 2], "rate_roll": [-2, 2], "target_pitch": [-2, 2], "rate_pitch": [-2, 2],
+              "dt": [0, 0.05], "kp": [0, 1], "get_control_gain_scaler": [0.5, 1.5], "get_air_density_ratio": [0.5, 1.2]},
+   "weights": {"update": 10},
+   "calls": 20000}
+ ]
+}

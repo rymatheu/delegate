@@ -1,0 +1,24 @@
+# ArduPilot sources compiled into the attitude module, relative to $ARDUPILOT_ROOT.
+# The attitude controller, and the code it calls on the step path.
+# input methods, attitude_controller_run_quat
+libraries/AC_AttitudeControl/AC_AttitudeControl.cpp
+# set_throttle_out, angle boost, throttle mix
+libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp
+libraries/AC_PID/AC_PID.cpp                    # the rate PIDs the class holds (stand-ins)
+libraries/AC_PID/AC_P.cpp                      # the angle P controllers
+libraries/AP_Math/AP_Math.cpp                  # constrain_value, wrap_PI, safe_sqrt, ...
+libraries/AP_Math/control.cpp                  # sqrt_controller, inv_sqrt_controller, shaping
+libraries/AP_Math/quaternion.cpp               # quaternion algebra
+libraries/AP_Math/matrix3.cpp                  # from_euler, to_euler
+libraries/AP_Math/vector3.cpp
+libraries/AP_Math/vector2.cpp
+libraries/AP_AHRS/AP_AHRS_View.cpp             # the AHRS view the controller reads (update, trig)
+libraries/AP_AHRS/AP_AHRS_Backend.cpp          # AP_AHRS::calc_trig, called by AP_AHRS_View::update
+libraries/Filter/LowPassFilter.cpp             # PID filters, the motors' throttle filter
+libraries/Filter/SlewLimiter.cpp               # AC_PID's slew limiter (constructor)
+libraries/Filter/DerivativeFilter.cpp          # the motors' throttle slew detector (constructor)
+# the motors object the class holds a reference to (a stand-in, see adapter.cpp): the real class
+libraries/AP_Motors/AP_Motors_Class.cpp
+libraries/AP_Motors/AP_MotorsMulticopter.cpp
+libraries/AP_Motors/AP_MotorsMatrix.cpp
+libraries/AP_Motors/AP_Motors_Thrust_Linearization.cpp

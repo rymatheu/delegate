@@ -1,0 +1,89 @@
+% ==================================================================
+%  Harness -- the lock-step flights of the two vehicles. Two lanes, one
+%  per flight, each its own processes and its own PyBullet world: the
+%  simulator (gym-pybullet-drones, CF2X, PyBullet physics 1200 Hz,
+%  control 400 Hz) writes one line of 17 numbers per tick into the
+%  vehicle's pipe and reads back 4 actuators. The vehicle is one box in
+%  two parts: the harness (sample, AHRS view, tick order, mission logic
+%  of mode_auto.cpp and autoyaw.cpp, printing), the same code written
+%  once in C++ and once in Lean, and the controller classes, compiled
+%  unmodified with stub headers (copter_ref, top) or translated by
+%  cpp2lean into Lean records with Inputs and Outputs (copter_lean,
+%  bottom). Gray parts are the same in both lanes; only the tinted
+%  classes differ. Between the lanes, compare_flights.py receives both
+%  recorded runs and compares them tick by tick, bit for bit.
+%  one sigconf text width (8.2 cm), placed as a plain figure in one of the two text areas,
+%  \input{figs/harness} at natural size (no \resizebox), pdfLaTeX
+%  Preamble:  \usepackage{tikz}  \usetikzlibrary{arrows.meta,calc,positioning,fit,backgrounds}
+%  TikZ only, no image. Titles \footnotesize, bodies \scriptsize, nothing
+%  smaller. Palette shared with figs/translator.tex and figs/pipeline.tex;
+%  style names are prefixed hs so the figures can live in one document.
+% ==================================================================
+\definecolor{fwInk}{HTML}{22252A}%
+\definecolor{fwMute}{HTML}{8A8F96}%
+\definecolor{fwHair}{HTML}{C9CCD1}%
+\definecolor{fwOchre}{HTML}{C4860F}%
+\definecolor{fwBlue}{HTML}{1E3F7C}%
+\begin{tikzpicture}[x=1cm, y=1cm, line cap=round, line join=round,
+  hsbox/.style={draw=fwInk, line width=0.5pt, rounded corners=2pt, fill=white, align=center, font=\scriptsize, inner sep=2.5pt, text=fwInk},
+  hsstage/.style={hsbox, fill=fwHair!25},
+  hscpp/.style={hsbox, fill=fwBlue!8},
+  hslean/.style={hsbox, fill=fwOchre!10},
+  hsveh/.style={draw=fwInk, line width=0.5pt, rounded corners=3pt, fill=white},
+  hsname/.style={font=\footnotesize, text=fwInk, anchor=north west, inner sep=0pt},
+  hslane/.style={draw=fwHair, fill=fwHair!12, rounded corners=3pt, line width=0.4pt},
+  hslanelbl/.style={font=\scriptsize\itshape, text=fwMute, inner sep=1pt},
+  hsnote/.style={font=\scriptsize, text=fwMute, inner sep=1pt},
+  hsarr/.style={-{Stealth[length=2mm,width=1.6mm]}, line width=0.6pt, draw=fwInk},
+  hsdarr/.style={hsarr, dashed, draw=fwMute},
+]
+% ------------------------------------------------------------------
+%  Grid (cm): lanes from x 0.01 to 8.19; simulator centered x 1.00,
+%  vehicle box x 3.30 ... 8.08 (harness cell, then classes cell). First
+%  flight lane y 4.05 ... 5.95, second flight lane y 0.30 ... 2.20,
+%  mirrored (its vehicle's name row at the bottom) so the two vehicles
+%  face each other across the middle strip, which holds the comparison
+%  (left) and the links between the cells (right). Gray is the same in
+%  both lanes; the tinted classes cells are the only difference.
+% ------------------------------------------------------------------
+% ================= lanes ==========================================
+\begin{scope}[on background layer]
+\fill[fwHair!12, draw=fwHair, line width=0.4pt, rounded corners=3pt] (0.01,4.05) rectangle (8.19,5.95);
+\fill[fwHair!12, draw=fwHair, line width=0.4pt, rounded corners=3pt] (0.01,0.30) rectangle (8.19,2.20);
+\end{scope}
+\node[hslanelbl, anchor=south west] at (0.05,5.95) {first flight, its own processes and PyBullet world};
+\node[hslanelbl, anchor=north west] at (0.05,0.30) {second flight, separate, same start and parameter files};
+% ================= first flight: copter_ref (name row on top) =====
+\node[hsstage, text width=15.5mm, minimum height=13mm] (simA) at (1.00,5.00) {{\footnotesize Simulator}\\[0.5pt]CF2X, PyBullet\\physics 1200 Hz\\control 400 Hz};
+\node[hsstage, text width=18mm, minimum height=11mm, anchor=south west] (harA) at (3.44,4.19) {{\footnotesize Harness}\\[0.5pt]sample, AHRS view,\\tick order, mission};
+\node[hscpp, text width=21mm, minimum height=11mm, anchor=south east] (clsA) at (7.94,4.19) {{\footnotesize ArduPilot classes}\\[0.5pt]compiled unmodified,\\stub headers};
+\coordinate (endA) at ($(harA.north west)+(0,0.40)$);
+\begin{scope}[on background layer]
+  \node[hsveh, fit=(harA)(clsA)(endA), inner sep=1.4mm] (vehA) {};
+\end{scope}
+\node[hsname, anchor=north west] at ($(vehA.north west)+(0.14,-0.10)$) {\texttt{copter\_ref}};
+\node[hsnote, anchor=north east] at ($(vehA.north east)+(-0.14,-0.12)$) {C++ binary};
+\draw[hsarr] ([yshift=2.2mm]simA.east) -- node[hsnote, above, yshift=0.6pt] {17 numbers} ([yshift=2.2mm]simA.east -| vehA.west);
+\draw[hsarr] ([yshift=-2.2mm]simA.east -| vehA.west) -- node[hsnote, below, yshift=-0.6pt] {4 actuators} ([yshift=-2.2mm]simA.east);
+% ================= second flight: copter_lean (name row below) ====
+\node[hsstage, text width=15.5mm, minimum height=13mm] (simB) at (1.00,1.25) {{\footnotesize Simulator}\\[0.5pt]CF2X, PyBullet\\physics 1200 Hz\\control 400 Hz};
+\node[hsstage, text width=18mm, minimum height=11mm, anchor=north west] (harB) at (3.44,2.06) {{\footnotesize Harness}\\[0.5pt]sample, AHRS view,\\tick order, mission};
+\node[hslean, text width=21mm, minimum height=11mm, anchor=north east] (clsB) at (7.94,2.06) {{\footnotesize Translated classes}\\[0.5pt]Lean records,\\\texttt{Inputs}, \texttt{Outputs}};
+\coordinate (endB) at ($(harB.south west)+(0,-0.40)$);
+\begin{scope}[on background layer]
+  \node[hsveh, fit=(harB)(clsB)(endB), inner sep=1.4mm] (vehB) {};
+\end{scope}
+\node[hsname, anchor=south west] at ($(vehB.south west)+(0.14,0.12)$) {\texttt{copter\_lean}};
+\node[hsnote, anchor=south east] at ($(vehB.south east)+(-0.14,0.12)$) {Lean binary};
+\draw[hsarr] ([yshift=2.2mm]simB.east) -- node[hsnote, above, yshift=0.6pt] {17 numbers} ([yshift=2.2mm]simB.east -| vehB.west);
+\draw[hsarr] ([yshift=-2.2mm]simB.east -| vehB.west) -- node[hsnote, below, yshift=-0.6pt] {4 actuators} ([yshift=-2.2mm]simB.east);
+% ================= between the flights ============================
+\node[hsbox, text width=36mm, minimum height=9mm, anchor=west] (cmp) at (0.12,3.125) {{\footnotesize Per-tick comparison}\\[0.5pt]bit for bit, 4 actuators as flown,\\22 values on replay with \texttt{-{}-exact -{}-trace}};
+\draw[hsdarr] (simA.south) -- (simA.south |- cmp.north);
+\draw[hsdarr] (simB.north) -- (simB.north |- cmp.south);
+\node[hsnote, anchor=west] at ($(simA.south |- cmp.north)!0.5!(simA.south |- 0,4.05)+(0.08,0)$) {recorded run};
+\node[hsnote, anchor=west] at ($(simB.north |- cmp.south)!0.5!(simB.north |- 0,2.20)+(0.08,0)$) {recorded run};
+\draw[draw=fwMute, line width=0.6pt, dashed] (harA.south) -- node[hsnote, right, align=left] {same harness,\\line for line} (harB.north);
+\draw[hsdarr] (clsA.south) -- node[hsnote, right, font=\scriptsize\ttfamily] {cpp2lean} (clsB.north);
+\end{tikzpicture}%
+% Draft caption: Lock-step flights of the two vehicles, each in its own gym-pybullet-drones simulation (CF2X, physics at 1200 Hz, control at 400 Hz) from the same start: the simulator and the harness (gray) are the same on both sides, and only the controller classes differ, ArduPilot's C++ compiled unmodified in \texttt{copter\_ref} and their cpp2lean translations in \texttt{copter\_lean}. Compared tick by tick, the actuators and all 22 replayed values are bit-identical on every tick of the hover (4000 ticks) and of the figure-eight course at 1 m/s (7797 ticks) and at the default speed (6325 ticks).

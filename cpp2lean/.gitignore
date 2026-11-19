@@ -1,0 +1,42 @@
+# build products
+lean/.lake/
+contracts/.lake/
+build/
+__pycache__/
+sim/__pycache__/
+*.olean
+*.ilean
+
+# ArduPilot at the pinned commit (tools/fetch_ardupilot.sh), translator outputs of the README commands
+/deps/
+/out/
+# the repository's top-level .gitignore ignores every out/ directory; these two hold committed files
+!ardupilot/out/
+!sim/out/
+# generated drivers, python venv
+ardupilot/*_driver.cpp
+sim/.venv
+
+# flight traces and render work files are large; keep the summaries
+sim/out/*
+!sim/out/README.md
+!sim/out/montecarlo*/
+sim/out/montecarlo*/runs/
+sim/out/montecarlo*/*.csv.gz
+!sim/out/lean-course-1ms/
+!sim/out/ref-course-1ms/
+sim/out/lean-course-1ms/*.png
+sim/out/ref-course-1ms/*.png
+sim/out/lean-course-1ms/trace.txt
+sim/out/ref-course-1ms/trace.txt
+sim/figs/out/
+figs/.build/
+figs/out/
+
+# LaTeX work files
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz

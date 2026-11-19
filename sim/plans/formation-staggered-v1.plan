@@ -1,0 +1,218 @@
+{
+    "fileType": "Plan",
+    "version": 1,
+    "groundStation": "QGroundControl",
+    "mission": {
+        "version": 2,
+        "firmwareType": 3,
+        "vehicleType": 2,
+        "plannedHomePosition": [
+            38.8405528,
+            -105.0441825,
+            4302.142
+        ],
+        "items": [
+            {
+                "type": "SimpleItem",
+                "command": 22,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 1,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8405528,
+                    -105.0441825,
+                    3.309
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 2,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8406365,
+                    -105.0441648,
+                    3.412
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 3,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8407255,
+                    -105.0441501,
+                    3.743
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 4,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8407803,
+                    -105.0441385,
+                    3.712
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 5,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8408288,
+                    -105.0441379,
+                    4.085
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 6,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.840906000000004,
+                    -105.0441667,
+                    4.26
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 7,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8409833,
+                    -105.0441986,
+                    4.78
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 8,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8410453,
+                    -105.0441992,
+                    4.797
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 9,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8411333,
+                    -105.0441823,
+                    5.345
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 10,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.8411621,
+                    -105.0441784,
+                    5.672
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 82,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 11,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.841210600000004,
+                    -105.0441718,
+                    5.6
+                ]
+            },
+            {
+                "type": "SimpleItem",
+                "command": 21,
+                "frame": 3,
+                "autoContinue": true,
+                "doJumpId": 12,
+                "params": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    38.841253,
+                    -105.044166,
+                    0.0
+                ]
+            }
+        ]
+    },
+    "geoFence": {
+        "version": 2,
+        "circles": [],
+        "polygons": []
+    },
+    "rallyPoints": {
+        "version": 2,
+        "points": []
+    }
+}

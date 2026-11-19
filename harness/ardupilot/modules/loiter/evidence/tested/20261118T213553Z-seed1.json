@@ -1,0 +1,309 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 10000,
+ "steps_per_case": 100,
+ "seed": 1,
+ "seconds": 0.8635962,
+ "outputs_seen":
+ {"lt_update_ran": {"true_steps": 5179},
+  "lt_update_last": {"true_steps": 2659},
+  "lt_tgt_vel_n":
+  {"non_finite_steps": 0, "min_finite": -44.67447, "max_finite": 35},
+  "lt_tgt_vel_e":
+  {"non_finite_steps": 0, "min_finite": -34.99825, "max_finite": 66.1155},
+  "lt_tgt_valid": {"true_steps": 5179},
+  "lt_tgt_update_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_tgt_pos_n":
+  {"non_finite_steps": 0, "min_finite": -9000.446, "max_finite": 9000.446},
+  "lt_tgt_pos_e":
+  {"non_finite_steps": 0, "min_finite": -9000.188, "max_finite": 9000.394},
+  "lt_tgt_ne_update": {"true_steps": 5179},
+  "lt_tgt_ne_set_correction_speed_accel": {"true_steps": 5366},
+  "lt_tgt_ne_init_stopping_point": {"true_steps": 1691},
+  "lt_tgt_ne_correction_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "lt_tgt_ne_correction_accel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 9.809999},
+  "lt_tgt_handover_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_tgt_acc_n":
+  {"non_finite_steps": 0, "min_finite": -31.0248, "max_finite": 25.08216},
+  "lt_tgt_acc_e":
+  {"non_finite_steps": 0, "min_finite": -75.78117, "max_finite": 82.67284},
+  "lt_stopping_point_n":
+  {"non_finite_steps": 0, "min_finite": -10000, "max_finite": 10000},
+  "lt_stopping_point_e":
+  {"non_finite_steps": 0, "min_finite": -10000, "max_finite": 10000},
+  "lt_speed_max":
+  {"non_finite_steps": 0, "min_finite": 0.2, "max_finite": 79.79391},
+  "lt_predicted_roll_rate":
+  {"non_finite_steps": 0, "min_finite": -0.1693611, "max_finite": 0.1302155},
+  "lt_predicted_roll_accel":
+  {"non_finite_steps": 0, "min_finite": -7.297447, "max_finite": 11.08279},
+  "lt_predicted_roll":
+  {"non_finite_steps": 0, "min_finite": -3.141647, "max_finite": 3.141593},
+  "lt_predicted_pitch_rate":
+  {"non_finite_steps": 0, "min_finite": -1.310397, "max_finite": 1.533491},
+  "lt_predicted_pitch_accel":
+  {"non_finite_steps": 0, "min_finite": -31.41593, "max_finite": 31.41593},
+  "lt_predicted_pitch":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.154018},
+  "lt_predicted_accel_n":
+  {"non_finite_steps": 0, "min_finite": -100, "max_finite": 100},
+  "lt_predicted_accel_e":
+  {"non_finite_steps": 0, "min_finite": -100, "max_finite": 100},
+  "lt_pilot_set": {"true_steps": 1188},
+  "lt_pilot_before_update": {"true_steps": 918},
+  "lt_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "lt_desired_accel_n":
+  {"non_finite_steps": 0, "min_finite": -31.00382, "max_finite": 26.61041},
+  "lt_desired_accel_e":
+  {"non_finite_steps": 0, "min_finite": -75.78117, "max_finite": 82.67284},
+  "lt_cmd_position_set_pos_desired_NE_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_cmd_position_set_pos_desired_NE_m_n":
+  {"non_finite_steps": 0, "min_finite": -8418.641, "max_finite": 6912.877},
+  "lt_cmd_position_set_pos_desired_NE_m_e":
+  {"non_finite_steps": 0, "min_finite": -5861.665, "max_finite": 5149.093},
+  "lt_cmd_position_set_pos_desired_NE_m": {"true_steps": 1691},
+  "lt_cmd_position_NE_soften_for_landing_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_cmd_position_NE_soften_for_landing": {"true_steps": 5143},
+  "lt_cmd_position_NE_set_pos_error_max_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_cmd_position_NE_set_pos_error_max_m_error_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "lt_cmd_position_NE_set_pos_error_max_m": {"true_steps": 5366},
+  "lt_cmd_position_NE_relax_velocity_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_cmd_position_NE_relax_velocity_controller": {"true_steps": 4474},
+  "lt_brake_timer_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "lt_brake_accel": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2.5},
+  "lt_att_lean_angle_max":
+  {"non_finite_steps": 0, "min_finite": 0.1745329, "max_finite": 1.396263},
+  "lt_angle_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9308423},
+  "lt_accel_max": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 9.81}},
+ "module": "loiter",
+ "kind": "tested",
+ "id": "20261118T213553Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(lt_tgt_ne_correction_speed) ∧ finite(lt_tgt_ne_correction_accel) ∧ finite(lt_cmd_position_NE_set_pos_error_max_m_error_max) ∧ finite(lt_cmd_position_set_pos_desired_NE_m_n) ∧ finite(lt_cmd_position_set_pos_desired_NE_m_e) ∧ finite(lt_tgt_pos_n) ∧ finite(lt_tgt_pos_e) ∧ finite(lt_tgt_vel_n) ∧ finite(lt_tgt_vel_e) ∧ finite(lt_tgt_acc_n) ∧ finite(lt_tgt_acc_e) ∧ finite(lt_angle_max) ∧ finite(lt_att_lean_angle_max) ∧ finite(lt_desired_accel_n) ∧ finite(lt_desired_accel_e) ∧ finite(lt_predicted_accel_n) ∧ finite(lt_predicted_accel_e) ∧ finite(lt_predicted_roll) ∧ finite(lt_predicted_pitch) ∧ finite(lt_predicted_roll_rate) ∧ finite(lt_predicted_pitch_rate) ∧ finite(lt_predicted_roll_accel) ∧ finite(lt_predicted_pitch_accel) ∧ finite(lt_brake_accel) ∧ finite(lt_speed_max) ∧ finite(lt_accel_max) ∧ finite(lt_stopping_point_n) ∧ finite(lt_stopping_point_e)",
+   "smallest_margin": null,
+   "contract_hash":
+   "70cea2f2ada8bbd7738e7a7f7e1af51066805924f977b76eba3e2718acd3cf27",
+   "clause": "outputs_finite",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "lt_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "cc32d86e6889dc9d83860faecbfb25e952d58c23401122e20a16f82c15fc9591",
+   "clause": "no_internal_error",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ lt_angle_max ∧ lt_angle_max ≤ pc_lean_angle_max",
+   "smallest_margin_case":
+   {"step": 2,
+    "sha256":
+    "a6c86a3548cef43716c5898a8a78b2f5eb827e105d31b28479293dce46bb903b",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-angle_max_within_position_limit.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "d9cce239aa43fa9acbe6b4f12de553262eaf1e17a3933678fd0f64304b89c336",
+   "clause": "angle_max_within_position_limit",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "1.1920929e-7 ≤ loit_ang_max ∨ lt_angle_max ≤ lt_att_lean_angle_max",
+   "smallest_margin_case":
+   {"step": 7,
+    "sha256":
+    "9f714976091dfa3c856768402bace2d8b0e2a39e6b3a2040d66ea56873ed5449",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-angle_max_two_thirds.json",
+    "case": 23},
+   "smallest_margin": 0.05817764,
+   "contract_hash":
+   "ad28d5c4020a439d0ca6aab198e91bdf437c85ae9a4b11a2f73c4e491dace420",
+   "clause": "angle_max_two_thirds",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|lt_att_lean_angle_max - atc_angle_max * 0.017453292| ≤ 1e-6",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "b9d5e88196f6cab28c47eec21177cbadab358b4d4fa02fe6235c405e66cfbcac",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-att_lean_from_parameter.json",
+    "case": 0},
+   "smallest_margin": 0.000001,
+   "contract_hash":
+   "77ea0ce379fbc9cef001d4c66ed58cdb320d269db28765a7c14516d8c646ff40",
+   "clause": "att_lean_from_parameter",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0.2 ≤ lt_speed_max",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "c4672b88d71d4919d9cb992f9b0ab799e4a2632300007a45111fad6d24c8b864",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-speed_max_floor.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "04ac7b966913bc5972198ddd61f3323a0e31b6a653d36918efd782ad614ec1d5",
+   "clause": "speed_max_floor",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 < lt_accel_max ∧ lt_accel_max ≤ loit_acc_max_m",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "e7a80c6a8db62a96a6c028d8e896ae553583be5568d8758257291f9cb94e7c6f",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-accel_max_bounded.json",
+    "case": 1},
+   "smallest_margin": 0,
+   "contract_hash":
+   "52a755445d0452c599a161bfec4479335f4cb4ca49353ac6a5046e49d7c49476",
+   "clause": "accel_max_bounded",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-0.00001 ≤ lt_brake_accel ∧ lt_brake_accel ≤ loit_brk_acc_m + 0.00001",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "a7cc02586ef2dacd21fdd3ef2ecf1752a36c131996f73628e41d0b09b0f2ba50",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-brake_accel_range.json",
+    "case": 0},
+   "smallest_margin": 0.00001,
+   "contract_hash":
+   "1af568fdfebd54ff843f573e0092f0b3d16acd6149c7a390913c0829f3345c16",
+   "clause": "brake_accel_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(¬lt_tgt_ne_set_correction_speed_accel ∨ lt_tgt_ne_correction_speed = 2 ∧ lt_tgt_ne_correction_accel = lt_accel_max) ∧ (¬lt_cmd_position_NE_set_pos_error_max_m ∨ lt_cmd_position_NE_set_pos_error_max_m_error_max = 2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "b3b31625a2c15b139ec27dfef9f06112f3e3a816a994ec899d5b994c05a42b17",
+   "clause": "handover_constants",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(lt_tgt_valid ∧ lt_update_last) ∨ lt_tgt_vel_n * lt_tgt_vel_n + lt_tgt_vel_e * lt_tgt_vel_e ≤ 0.04 * 1.00001 ∨ lt_tgt_vel_n * lt_tgt_vel_n + lt_tgt_vel_e * lt_tgt_vel_e ≤ lt_speed_max * lt_speed_max * 1.00001 ∧ lt_tgt_vel_n * lt_tgt_vel_n + lt_tgt_vel_e * lt_tgt_vel_e ≤ est_gnd_spd_limit * est_gnd_spd_limit * 1.00001",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "d4db881ecb1493534dc1656907eb518c718c0f1a76017b4bc46438c3410e3fd5",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-vel_within_speed_limit.json",
+    "case": 4},
+   "smallest_margin": 0.0000003911555,
+   "contract_hash":
+   "ffe65870c4d384f75b7203f75484edce314f82a03b05824f827d1cf0ac70daae",
+   "clause": "vel_within_speed_limit",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(lt_tgt_valid ∧ lt_pilot_before_update) ∨ |lt_tgt_acc_n| ≤ 60 ∧ |lt_tgt_acc_e| ≤ 60",
+   "smallest_margin_case":
+   {"step": 25,
+    "sha256":
+    "6567cdfb379148e1a079e91a7e1601e866aa83071e65c691f2e5e541ee513faf",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-accel_bounded.json",
+    "case": 77},
+   "smallest_margin": 28.87263,
+   "contract_hash":
+   "25c04840376622eb0162720149e5ab13191c7dcdb8f63a586d5ae6b6ebe2d603",
+   "clause": "accel_bounded",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬lt_tgt_valid ∨ cmd_loiter_init_target_m ∨ |lt_tgt_pos_n - pc_pos_desired_n - lt_tgt_vel_n * dt| ≤ 0.002 ∧ |lt_tgt_pos_e - pc_pos_desired_e - lt_tgt_vel_e * dt| ≤ 0.002",
+   "smallest_margin_case":
+   {"step": 54,
+    "sha256":
+    "894521077e37d7415614d506be795b817be074c27815a001f6ea80f7a89dc95c",
+    "file":
+    "ardupilot/modules/loiter/evidence/tested/20261118T213553Z-seed1/smallest-margin-pos_follows_vel.json",
+    "case": 64},
+   "smallest_margin": 0.001515186,
+   "contract_hash":
+   "c5c6e404a1db45ca0ae39d9ffa7895efa27628ea89b01e9506a377fc3a31e6ea",
+   "clause": "pos_follows_vel",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "lt_stopping_point_n = pc_stopping_point_n ∧ lt_stopping_point_e = pc_stopping_point_e",
+   "smallest_margin": null,
+   "contract_hash":
+   "fb8cba020202c38294d4533a79e7057bd218ae32e83205650e33b890077c3340",
+   "clause": "stopping_point_passthrough",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬lt_cmd_position_set_pos_desired_NE_m ∨ cmd_loiter_init_target_m ∧ lt_cmd_position_set_pos_desired_NE_m_n = cmd_loiter_init_target_m_n ∧ lt_cmd_position_set_pos_desired_NE_m_e = cmd_loiter_init_target_m_e",
+   "smallest_margin": null,
+   "contract_hash":
+   "ba102383c4538bdb2b6cadf078a4b2dc1d08afbe023142404f16f1ee5ef7cb26",
+   "clause": "pos_desired_from_init_target_m",
+   "checked": 10000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h -DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter -DAP_SIM_ENABLED=1 -DAP_AVOIDANCE_ENABLED=0",
+ "coverage":
+ {"targets": {"true_steps": 5179, "text": "lt_tgt_valid"},
+  "speed_limited":
+  {"true_steps": 3469,
+   "text":
+   "lt_tgt_valid ∧ lt_speed_max * lt_speed_max ≤ (lt_tgt_vel_n * lt_tgt_vel_n + lt_tgt_vel_e * lt_tgt_vel_e) * 1.00001"},
+  "pilot_request":
+  {"true_steps": 5200,
+   "text": "0.01 < |lt_desired_accel_n| + |lt_desired_accel_e|"},
+  "init": {"true_steps": 5366, "text": "lt_tgt_ne_set_correction_speed_accel"},
+  "braking": {"true_steps": 3266, "text": "0.001 < lt_brake_accel"}},
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test loiter --seed 1 --cases 100 --steps 100",
+ "code_hash":
+ "eab5680e771f0d3986e23ad2b671b48fb0578fc67379e9d1a77aa1daeac3c57b",
+ "cases_skipped": 0,
+ "cases": 100,
+ "assume":
+ ["loit_range: (0 ≤ loit_ang_max ∧ loit_ang_max ≤ 45) ∧ (0 ≤ loit_brk_delay ∧ loit_brk_delay ≤ 2) ∧ (0.2 ≤ loit_speed_ms ∧ loit_speed_ms ≤ 35) ∧ (1 ≤ loit_acc_max_m ∧ loit_acc_max_m ≤ 9.81) ∧ (0.25 ≤ loit_brk_acc_m ∧ loit_brk_acc_m ≤ 2.5) ∧ 5 ≤ loit_brk_jrk_m ∧ loit_brk_jrk_m ≤ 50",
+  "no_coordinated_turn: loit_options = 0",
+  "rate_ff_enabled: atc_rate_ff_enab",
+  "atc_range: (0 ≤ atc_rate_r_max ∧ atc_rate_r_max ≤ 1080) ∧ (0 ≤ atc_rate_p_max ∧ atc_rate_p_max ≤ 1080) ∧ (0 ≤ atc_acc_r_max ∧ atc_acc_r_max ≤ 1800) ∧ (0 ≤ atc_acc_p_max ∧ atc_acc_p_max ≤ 1800) ∧ (0 ≤ atc_input_tc ∧ atc_input_tc ≤ 1) ∧ (10 ≤ atc_angle_max ∧ atc_angle_max ≤ 80) ∧ (3 ≤ atc_ang_rll_p ∧ atc_ang_rll_p ≤ 30) ∧ 3 ≤ atc_ang_pit_p ∧ atc_ang_pit_p ≤ 30",
+  "psc_ne_vel_p_range: 0.1 ≤ psc_ne_vel_p ∧ psc_ne_vel_p ≤ 10",
+  "dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.02",
+  "est_yaw_range: |est_yaw| ≤ 3.1415927",
+  "gnd_spd_limit_range: 0 ≤ est_gnd_spd_limit ∧ est_gnd_spd_limit ≤ 1000",
+  "pc_signals_bounded: (|pc_vel_desired_n| ≤ 100 ∧ |pc_vel_desired_e| ≤ 100 ∧ |pc_accel_target_n| ≤ 100 ∧ |pc_accel_target_e| ≤ 100) ∧ (|pc_pos_desired_n| ≤ 9000 ∧ |pc_pos_desired_e| ≤ 9000) ∧ (|pc_stopping_point_n| ≤ 10000 ∧ |pc_stopping_point_e| ≤ 10000) ∧ |pc_roll| ≤ 3.1415927 ∧ |pc_pitch| ≤ 3.1415927",
+  "pc_lean_range: 0 ≤ pc_lean_angle_max ∧ pc_lean_angle_max ≤ 1.3962635",
+  "ac_att_target_range: |ac_att_target_roll| ≤ 3.1415927 ∧ |ac_att_target_pitch| ≤ 3.1415927",
+  "pilot_angles_range: ¬cmd_loiter_set_pilot_desired_acceleration_rad ∨ |cmd_loiter_set_pilot_desired_acceleration_rad_roll| ≤ 1 ∧ |cmd_loiter_set_pilot_desired_acceleration_rad_pitch| ≤ 1",
+  "init_target_m_range: ¬cmd_loiter_init_target_m ∨ |cmd_loiter_init_target_m_n| ≤ 9000 ∧ |cmd_loiter_init_target_m_e| ≤ 9000",
+  "speed_max_range: ¬cmd_loiter_set_speed_max_NE_ms ∨ 0 ≤ cmd_loiter_set_speed_max_NE_ms_speed ∧ cmd_loiter_set_speed_max_NE_ms_speed ≤ 100"]}

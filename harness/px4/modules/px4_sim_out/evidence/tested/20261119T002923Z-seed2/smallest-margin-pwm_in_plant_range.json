@@ -1,0 +1,18 @@
+{"step": 0,
+ "params": {},
+ "outputs": [{"pwm3": "2000", "pwm2": "2000", "pwm1": "2000", "pwm0": "1000"}],
+ "note":
+ "f32 fields are bit patterns; `harness replay` runs this file and prints values",
+ "module": "px4_sim_out",
+ "kind": "smallest margin",
+ "inputs":
+ [{"actuator_motors_updated": "true",
+   "actuator_motors_control_3": "0x7ee7c93d",
+   "actuator_motors_control_2": "0x7f5d2f3d",
+   "actuator_motors_control_1": "0x7de4858a",
+   "actuator_motors_control_0": "0xe8b0e635"}],
+ "code_hash":
+ "212f5cf342581a53aff0eab0c1c99a9330fba7842efd5ee70a2a39ed7841a52b",
+ "clause": "pwm_in_plant_range",
+ "case": 0,
+ "campaign": "20261119T002923Z-seed2"}

@@ -1,0 +1,377 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 20000,
+ "steps_per_case": 100,
+ "seed": 57,
+ "seconds": 10.13267,
+ "outputs_seen":
+ {"throttle_filter_hz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 100},
+  "throttle_avg_max": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "throttle":
+  {"non_finite_steps": 0,
+   "min_finite": -9826865000000000,
+   "max_finite": 9999999000000000},
+  "target_z":
+  {"non_finite_steps": 0, "min_finite": -265.8116, "max_finite": 158.3834},
+  "target_y":
+  {"non_finite_steps": 0, "min_finite": -119.5903, "max_finite": 399.984},
+  "target_x":
+  {"non_finite_steps": 0, "min_finite": -310.1052, "max_finite": 710.373},
+  "pd_scale_z": {"non_finite_steps": 0, "min_finite": 0.25, "max_finite": 1},
+  "pd_scale_y": {"non_finite_steps": 0, "min_finite": 0.25, "max_finite": 2},
+  "pd_scale_x": {"non_finite_steps": 0, "min_finite": 0.25, "max_finite": 2},
+  "i_scale_z": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "i_scale_y": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "i_scale_x": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "ac_thrust_error_angle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3.141593},
+  "ac_throttle_mix_min": {"true_steps": 9685},
+  "ac_throttle_mix":
+  {"non_finite_steps": 0, "min_finite": 0.1, "max_finite": 0.9},
+  "ac_throttle_in":
+  {"non_finite_steps": 0,
+   "min_finite": -1000000000000000,
+   "max_finite": 1000000000000000},
+  "ac_slew_yaw_max":
+  {"non_finite_steps": 0,
+   "min_finite": 0.000000007284656,
+   "max_finite": 3.141593},
+  "ac_rate_reset_i": {"true_steps": 14289},
+  "ac_rate_reset_filter": {"true_steps": 9435},
+  "ac_rate_relax_i": {"true_steps": 2800},
+  "ac_rate_ef_target_z":
+  {"non_finite_steps": 0, "min_finite": -1598.965, "max_finite": 484.0504},
+  "ac_rate_ef_target_y":
+  {"non_finite_steps": 0, "min_finite": -49.47523, "max_finite": 194.2702},
+  "ac_rate_ef_target_x":
+  {"non_finite_steps": 0, "min_finite": -1584.797, "max_finite": 1163.948},
+  "ac_lean_angle_max":
+  {"non_finite_steps": 0, "min_finite": 0.1745329, "max_finite": 1.396263},
+  "ac_lean_angle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3.141593},
+  "ac_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "ac_input_last": {"true_steps": 7426},
+  "ac_feedforward_scalar":
+  {"non_finite_steps": 0, "min_finite": 0.00004029274, "max_finite": 1},
+  "ac_bf_feedforward": {"true_steps": 10600},
+  "ac_att_target_yaw":
+  {"non_finite_steps": 0, "min_finite": -7, "max_finite": 7},
+  "ac_att_target_roll":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.141593},
+  "ac_att_target_q4":
+  {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_att_target_q3":
+  {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_att_target_q2":
+  {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_att_target_q1":
+  {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_att_target_pitch":
+  {"non_finite_steps": 0, "min_finite": -1.558936, "max_finite": 1.551384},
+  "ac_att_error_q4":
+  {"non_finite_steps": 0, "min_finite": -0.3826835, "max_finite": 0.3826835},
+  "ac_att_error_q3":
+  {"non_finite_steps": 0, "min_finite": -0.9994475, "max_finite": 0.9993277},
+  "ac_att_error_q2": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_att_error_q1": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_angle_boost": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "ac_ang_vel_target_z":
+  {"non_finite_steps": 0, "min_finite": -127.7114, "max_finite": 264.8848},
+  "ac_ang_vel_target_y":
+  {"non_finite_steps": 0, "min_finite": -448.8436, "max_finite": 374.4534},
+  "ac_ang_vel_target_x":
+  {"non_finite_steps": 0, "min_finite": -502.0898, "max_finite": 573.908},
+  "ac_ang_accel_target_z":
+  {"non_finite_steps": 0, "min_finite": -32.83157, "max_finite": 35.05738},
+  "ac_ang_accel_target_y":
+  {"non_finite_steps": 0, "min_finite": -36.00051, "max_finite": 38.67826},
+  "ac_ang_accel_target_x":
+  {"non_finite_steps": 0, "min_finite": -31.41593, "max_finite": 39.58651},
+  "ac_althold_lean_angle_max":
+  {"non_finite_steps": 0, "min_finite": 0.1745329, "max_finite": 1.10106}},
+ "module": "attitude",
+ "kind": "tested",
+ "id": "20261119T164405Z-seed57",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(target_x) ∧ finite(target_y) ∧ finite(target_z) ∧ finite(pd_scale_x) ∧ finite(pd_scale_y) ∧ finite(pd_scale_z) ∧ finite(i_scale_x) ∧ finite(i_scale_y) ∧ finite(i_scale_z) ∧ finite(throttle) ∧ finite(throttle_avg_max) ∧ finite(throttle_filter_hz) ∧ finite(ac_att_target_q1) ∧ finite(ac_att_target_q2) ∧ finite(ac_att_target_q3) ∧ finite(ac_att_target_q4) ∧ finite(ac_att_target_roll) ∧ finite(ac_att_target_pitch) ∧ finite(ac_att_target_yaw) ∧ finite(ac_ang_vel_target_x) ∧ finite(ac_ang_vel_target_y) ∧ finite(ac_ang_vel_target_z) ∧ finite(ac_ang_accel_target_x) ∧ finite(ac_ang_accel_target_y) ∧ finite(ac_ang_accel_target_z) ∧ finite(ac_rate_ef_target_x) ∧ finite(ac_rate_ef_target_y) ∧ finite(ac_rate_ef_target_z) ∧ finite(ac_att_error_q1) ∧ finite(ac_att_error_q2) ∧ finite(ac_att_error_q3) ∧ finite(ac_att_error_q4) ∧ finite(ac_thrust_error_angle) ∧ finite(ac_lean_angle) ∧ finite(ac_lean_angle_max) ∧ finite(ac_althold_lean_angle_max) ∧ finite(ac_angle_boost) ∧ finite(ac_throttle_in) ∧ finite(ac_throttle_mix) ∧ finite(ac_slew_yaw_max) ∧ finite(ac_feedforward_scalar)",
+   "smallest_margin": null,
+   "contract_hash":
+   "f35b9e982242dc5291e4952afc235857f42becb0f069ed23b16092594d66b479",
+   "clause": "outputs_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "ac_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "d3bccf55308ebcdb45b02d18d3e2ff94b0ecc032fa3c45851bc114c83ad81e5c",
+   "clause": "no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|ac_att_target_q1 * ac_att_target_q1 + ac_att_target_q2 * ac_att_target_q2 + ac_att_target_q3 * ac_att_target_q3 + ac_att_target_q4 * ac_att_target_q4 - 1| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 12,
+    "sha256":
+    "28865116a90c680a17979b1c54504dc2df8c1e54227c82397d7ca12f72d952a8",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case158-step12.json",
+    "case": 158},
+   "smallest_margin": 0.000009165535,
+   "contract_hash":
+   "b217aca6516d1258fcb8971025a6b1f70b686d695074dfef76d34f7c66b0e6a2",
+   "clause": "target_quat_unit",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|target_x| ≤ 10000 ∧ |target_y| ≤ 10000 ∧ |target_z| ≤ 10000",
+   "smallest_margin_case":
+   {"step": 74,
+    "sha256":
+    "f23651479b146f4c7166cf3f3186fba02f3c7aae566bc8a0adc9f6be060326c2",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case160-step74.json",
+    "case": 160},
+   "smallest_margin": 9289.627,
+   "contract_hash":
+   "609d191fdd8dbf8a760a97a17a1e3da194c0bc88fdad4737802ac0c41c75a12d",
+   "clause": "targets_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬ac_input_last ∨ (atc_rate_r_max * 0.017453292 < 1.1920929e-7 ∨ |target_x| ≤ atc_rate_r_max * 0.017453292 * 1.00001 + ((|ac_ang_vel_target_x| + |ac_ang_vel_target_y| + |ac_ang_vel_target_z|) * 1.00001 + 1e-6)) ∧ (atc_rate_p_max * 0.017453292 < 1.1920929e-7 ∨ |target_y| ≤ atc_rate_p_max * 0.017453292 * 1.00001 + ((|ac_ang_vel_target_x| + |ac_ang_vel_target_y| + |ac_ang_vel_target_z|) * 1.00001 + 1e-6)) ∧ (atc_rate_y_max * 0.017453292 < 1.1920929e-7 ∨ |target_z| ≤ atc_rate_y_max * 0.017453292 * 1.00001 + ((|ac_ang_vel_target_x| + |ac_ang_vel_target_y| + |ac_ang_vel_target_z|) * 1.00001 + 1e-6) + |gyro_z|)",
+   "smallest_margin_case":
+   {"step": 32,
+    "sha256":
+    "7d1bf184a5e7439488e4857f9f4e973b7fd2ca8a916448639234007e7c6b2c7f",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case23-step32.json",
+    "case": 23},
+   "smallest_margin": 0.00000009513478,
+   "contract_hash":
+   "4f3860bf554dc9108363d26e7ecd17b6554688bfb66a3e03e6d9cd55499ae33d",
+   "clause": "rate_targets_limited",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|throttle| ≤ |ac_throttle_in| * 10 ∧ (¬ac_angle_boost = 0 ∨ throttle = ac_throttle_in)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "c95b1a96cd4d23b2f9f668b13cd602a7495e90914cc4d406ed9e6511ea6e4da8",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "0dfba335317cd54ec05f4ea3a4e9af1182bb1e6f71f67e2e6e019aaca26c4446",
+   "clause": "throttle_boosted",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ throttle_avg_max ∧ throttle_avg_max ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "c95b1a96cd4d23b2f9f668b13cd602a7495e90914cc4d406ed9e6511ea6e4da8",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a3a9d2111704bbcc32414f0b263d6b5c8cae6684baada02e08e1533327479388",
+   "clause": "throttle_avg_max_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ throttle_filter_hz ∧ throttle_filter_hz ≤ 100",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "c95b1a96cd4d23b2f9f668b13cd602a7495e90914cc4d406ed9e6511ea6e4da8",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c93d6a174d4b113d9d1390bac33f3ca2f2c7578047b3e421684d8ee5c88e5dc8",
+   "clause": "throttle_filter_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ pd_scale_x ∧ pd_scale_x ≤ 1 + atc_thr_g_boost ∧ 0 ≤ pd_scale_y ∧ pd_scale_y ≤ 1 + atc_thr_g_boost ∧ 0 ≤ pd_scale_z ∧ pd_scale_z ≤ 1",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "652179dc09085e605b6b4c4a148035fa4ae088a740abceca8a5c9cdc3a06e7d9",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case0-step1.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "7ad81233e1b242083ebccee64eaa62b43f63d15b528ae87517248376a20bfdf0",
+   "clause": "pd_scale_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "i_scale_x = 1 ∧ i_scale_y = 1 ∧ i_scale_z = 1",
+   "smallest_margin": null,
+   "contract_hash":
+   "0cde4619a31bb6a9402ce8dc65f30d2391384da24ade51ae7735d496759092a3",
+   "clause": "i_scale_one",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬ac_input_last ∨ ¬(|ac_att_error_q2| ≤ 1e-6 ∧ |ac_att_error_q3| ≤ 1e-6 ∧ |ac_att_error_q4| ≤ 1e-6 ∧ |ac_ang_vel_target_x| ≤ 1e-6 ∧ |ac_ang_vel_target_y| ≤ 1e-6 ∧ |ac_ang_vel_target_z| ≤ 1e-6) ∨ |target_x| ≤ atc_ang_rll_p * (ac_thrust_error_angle + 0.00001) * 1.001 + 0.00001 ∧ |target_y| ≤ atc_ang_pit_p * (ac_thrust_error_angle + 0.00001) * 1.001 + 0.00001 ∧ |target_z| ≤ atc_ang_yaw_p * (ac_thrust_error_angle + 0.00001) * 1.001 + 0.00001",
+   "smallest_margin_case":
+   {"step": 2,
+    "sha256":
+    "151ed7c34fa52011905bd023b4b36fed75701d9cef71517defa752f1d0caacdc",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case68-step2.json",
+    "case": 68},
+   "smallest_margin": 0.000004245209,
+   "contract_hash":
+   "5711aeea69209d7d94ab0bc92baec7c79e79596e1b5011283d3e5392a0e0db05",
+   "clause": "zero_error_zero_target",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0.17453292 ≤ ac_lean_angle_max ∧ ac_lean_angle_max ≤ 1.3962634 ∧ 0.17453292 ≤ ac_althold_lean_angle_max ∧ ac_althold_lean_angle_max ≤ 1.5707964",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "c95b1a96cd4d23b2f9f668b13cd602a7495e90914cc4d406ed9e6511ea6e4da8",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "ece83b0fecff13a1273063cad5705493b4fd4dd1925415b03eda65c069d9b48c",
+   "clause": "lean_limits",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0.1 ≤ ac_throttle_mix ∧ ac_throttle_mix ≤ 5",
+   "smallest_margin_case":
+   {"step": 10,
+    "sha256":
+    "ac1f616191da12d8d74088e6a31c270717573dbd64f8cc42fd24f57a0c0aa4b3",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case9-step10.json",
+    "case": 9},
+   "smallest_margin": 0,
+   "contract_hash":
+   "045d449338a4f3fedf0299633fda323278c5da7bc7a209e72cb6b873539ad0b9",
+   "clause": "mix_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|ac_angle_boost| ≤ 1",
+   "smallest_margin_case":
+   {"step": 25,
+    "sha256":
+    "d2f15e572d9334c77c065ed1c9863165adff5bbf93bbcf87822b65bffbe6f374",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case4-step25.json",
+    "case": 4},
+   "smallest_margin": 0,
+   "contract_hash":
+   "65677241893a26ed495520ccc6080daac69d2305a03f49689563391d00076b24",
+   "clause": "angle_boost_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|ac_throttle_in| ≤ 1e15",
+   "smallest_margin_case":
+   {"step": 62,
+    "sha256":
+    "ae983a5b04eaad4eed37d3cd5db766dd4d483102fb9552b3ca7b5ba82d0dc88f",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case2-step62.json",
+    "case": 2},
+   "smallest_margin": 0,
+   "contract_hash":
+   "f7db4f77766b9e3dd594e8aa6256807828ac1afd639a21232192b25b81312f96",
+   "clause": "ac_throttle_in_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|ac_att_target_roll| ≤ 3.1415927 ∧ |ac_att_target_pitch| ≤ 3.1415927",
+   "smallest_margin_case":
+   {"step": 87,
+    "sha256":
+    "f0c2609a55168fea3159a9439d74117411e6032e8c347c2b3aa169f786e594ee",
+    "file":
+    "ardupilot/modules/attitude/evidence/tested/20261119T164405Z-seed57/case22-step87.json",
+    "case": 22},
+   "smallest_margin": 0,
+   "contract_hash":
+   "8282eca600aabfd837cf6180130666b6d4ce511f21ac4018c5da8d17879faf14",
+   "clause": "att_target_euler_range",
+   "checked": 20000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h -DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter -DAP_SIM_ENABLED=1",
+ "coverage":
+ {"thrust_error_over_60deg":
+  {"true_steps": 6164, "text": "1.0471976 < ac_thrust_error_angle"},
+  "thrust_error_over_30deg":
+  {"true_steps": 8122, "text": "0.5235988 < ac_thrust_error_angle"},
+  "small_error":
+  {"true_steps": 6967,
+   "text":
+   "|ac_att_error_q2| ≤ 1e-6 ∧ |ac_att_error_q3| ≤ 1e-6 ∧ |ac_att_error_q4| ≤ 1e-6"},
+  "rate_reset_i": {"true_steps": 14289, "text": "ac_rate_reset_i"},
+  "rate_relax_i": {"true_steps": 2800, "text": "ac_rate_relax_i"},
+  "mix_not_min": {"true_steps": 10315, "text": "¬ac_throttle_mix_min"},
+  "landed_gain_active": {"true_steps": 3699, "text": "pd_scale_x < 1"},
+  "gain_boost_active": {"true_steps": 6581, "text": "1 < pd_scale_x"},
+  "any_input":
+  {"true_steps": 16952,
+   "text":
+   "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∨ cmd_attitude_input_euler_angle_roll_pitch_yaw ∨ cmd_attitude_input_rate_bf_roll_pitch_yaw ∨ cmd_attitude_input_thrust_vector_rate_heading ∨ cmd_attitude_input_thrust_vector_heading"},
+  "angle_boost_active": {"true_steps": 3630, "text": "0 < |ac_angle_boost|"}},
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test attitude --seed 57 --cases 200 --steps 100",
+ "code_hash":
+ "de128bbcecbe9d164f43dadb9a4b0a8008990da5f4b536d1eecffbcff9af1f86",
+ "cases_skipped": 0,
+ "cases": 200,
+ "assume":
+ ["ang_p_range: 3 ≤ atc_ang_rll_p ∧ atc_ang_rll_p ≤ 30 ∧ 3 ≤ atc_ang_pit_p ∧ atc_ang_pit_p ≤ 30 ∧ 3 ≤ atc_ang_yaw_p ∧ atc_ang_yaw_p ≤ 30",
+  "ang_lim_tc_range: 0.5 ≤ atc_ang_lim_tc ∧ atc_ang_lim_tc ≤ 10",
+  "rate_max_range: 0 ≤ atc_rate_r_max ∧ atc_rate_r_max ≤ 1080 ∧ 0 ≤ atc_rate_p_max ∧ atc_rate_p_max ≤ 1080 ∧ 0 ≤ atc_rate_y_max ∧ atc_rate_y_max ≤ 1080",
+  "input_tc_range: 0 ≤ atc_input_tc ∧ atc_input_tc ≤ 1",
+  "land_mult_range: 0.25 ≤ atc_land_r_mult ∧ atc_land_r_mult ≤ 1 ∧ 0.25 ≤ atc_land_p_mult ∧ atc_land_p_mult ≤ 1 ∧ 0.25 ≤ atc_land_y_mult ∧ atc_land_y_mult ≤ 1",
+  "angle_max_range: 10 ≤ atc_angle_max ∧ atc_angle_max ≤ 80",
+  "rate_wpy_max_range: 5 ≤ atc_rate_wpy_max ∧ atc_rate_wpy_max ≤ 180",
+  "acc_max_range: 0 ≤ atc_acc_y_max ∧ atc_acc_y_max ≤ 720 ∧ 0 ≤ atc_acc_r_max ∧ atc_acc_r_max ≤ 1800 ∧ 0 ≤ atc_acc_p_max ∧ atc_acc_p_max ≤ 1800",
+  "thr_mix_range: 0.1 ≤ atc_thr_mix_min ∧ atc_thr_mix_min ≤ 0.25 ∧ 0.5 ≤ atc_thr_mix_max ∧ atc_thr_mix_max ≤ 0.9 ∧ 0.1 ≤ atc_thr_mix_man ∧ atc_thr_mix_man ≤ 0.9",
+  "thr_g_boost_range: 0 ≤ atc_thr_g_boost ∧ atc_thr_g_boost ≤ 1",
+  "yaw_kp_range: 0.1 ≤ yaw_kp ∧ yaw_kp ≤ 2.5",
+  "dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.01",
+  "gyro_bounded: |gyro_x| ≤ 35 ∧ |gyro_y| ≤ 35 ∧ |gyro_z| ≤ 35",
+  "euler_range: |est_roll| ≤ 3.1415927 ∧ |est_pitch| ≤ 1.4835298 ∧ |est_yaw| ≤ 3.1415927",
+  "thrust_vec_tilt: thrust_vec_z < 0 ∧ -1000 ≤ thrust_vec_z ∧ |thrust_vec_x| ≤ 1000 ∧ |thrust_vec_y| ≤ 1000 ∧ |thrust_vec_x| ≤ -6 * thrust_vec_z ∧ |thrust_vec_y| ≤ -6 * thrust_vec_z",
+  "throttle_in_range: |throttle_in| ≤ 1e15",
+  "hover_range: 0 ≤ throttle_hover ∧ throttle_hover ≤ 1",
+  "mixer_throttle_range: 0 ≤ throttle_filtered ∧ throttle_filtered ≤ 1 ∧ finite(throttle_out) ∧ 0 ≤ throttle_out ∧ finite(throttle_slew_rate) ∧ 0 ≤ throttle_slew_rate ∧ 0 ≤ throttle_thrust_max ∧ throttle_thrust_max ≤ 1",
+  "pc_throttle_cutoff_range: ¬pc_throttle_set ∨ 0 ≤ pc_throttle_cutoff_hz ∧ pc_throttle_cutoff_hz ≤ 100",
+  "single_input: ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_euler_angle_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_rate_bf_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_rate_bf_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_rate_bf_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_rate_bf_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_thrust_vector_rate_heading ∧ cmd_attitude_input_thrust_vector_heading)",
+  "rate_tc_range: 0 ≤ cmd_attitude_set_yaw_rate_tc_input_tc ∧ cmd_attitude_set_yaw_rate_tc_input_tc ≤ 1 ∧ 0 ≤ cmd_attitude_set_roll_pitch_rate_tc_input_tc ∧ cmd_attitude_set_roll_pitch_rate_tc_input_tc ≤ 1",
+  "angle_args_bounded: |cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_roll| ≤ 3.1415927 ∧ |cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_pitch| ≤ 1.4835298 ∧ |cmd_attitude_input_euler_angle_roll_pitch_yaw_roll| ≤ 3.1415927 ∧ |cmd_attitude_input_euler_angle_roll_pitch_yaw_pitch| ≤ 1.4835298 ∧ |cmd_attitude_input_euler_angle_roll_pitch_yaw_yaw| ≤ 7 ∧ |cmd_attitude_input_thrust_vector_heading_yaw_angle| ≤ 7",
+  "rate_args_bounded: |cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_yaw_rate| ≤ 20 ∧ |cmd_attitude_input_rate_bf_roll_pitch_yaw_roll_rate| ≤ 20 ∧ |cmd_attitude_input_rate_bf_roll_pitch_yaw_pitch_rate| ≤ 20 ∧ |cmd_attitude_input_rate_bf_roll_pitch_yaw_yaw_rate| ≤ 20 ∧ |cmd_attitude_input_thrust_vector_rate_heading_heading_rate| ≤ 20 ∧ |cmd_attitude_input_thrust_vector_heading_yaw_rate| ≤ 20",
+  "heading_mode_range: cmd_attitude_input_thrust_vector_heading_heading_mode ≤ 2",
+  "throttle_args_range: 0 ≤ cmd_attitude_set_throttle_out_throttle_in ∧ cmd_attitude_set_throttle_out_throttle_in ≤ 1 ∧ 0 ≤ cmd_attitude_set_throttle_out_filter_cutoff ∧ cmd_attitude_set_throttle_out_filter_cutoff ≤ 100",
+  "mix_ratio_range: 0 ≤ cmd_attitude_set_throttle_mix_max_ratio ∧ cmd_attitude_set_throttle_mix_max_ratio ≤ 1"]}

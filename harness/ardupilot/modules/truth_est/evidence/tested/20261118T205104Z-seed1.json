@@ -1,0 +1,194 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 2000,
+ "steps_per_case": 100,
+ "seed": 1,
+ "seconds": 0.07063158,
+ "outputs_seen":
+ {"gyro_z":
+  {"non_finite_steps": 57,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "gyro_y":
+  {"non_finite_steps": 95,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "gyro_x":
+  {"non_finite_steps": 266,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_yaw_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_yaw":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.141593},
+  "est_vibe_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vibe_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vibe_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_vel_ok": {"true_steps": 2000},
+  "est_vel_n":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_vel_e":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_vel_d":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_variances_ok": {"true_steps": 2000},
+  "est_sin_yaw": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "est_roll":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.141593},
+  "est_q4":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_q3":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_q2":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_q1":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_prearm_ok": {"true_steps": 2000},
+  "est_pos_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_rate_d_ok": {"true_steps": 2000},
+  "est_pos_rate_d":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_pos_ok": {"true_steps": 2000},
+  "est_pos_ne_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_n":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_pos_e":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_pos_d_reset_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_pos_d":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_pitch":
+  {"non_finite_steps": 0, "min_finite": -1.570796, "max_finite": 1.570796},
+  "est_origin_ok": {"true_steps": 2000},
+  "est_origin_lon_e7":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "est_origin_lat_e7":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "est_origin_alt_cm":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2047072000},
+  "est_mag_variance_z":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_mag_variance_y":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_mag_variance_x":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_ins_gyro_healthy": {"true_steps": 2000},
+  "est_ins_accel_healthy": {"true_steps": 2000},
+  "est_innov_vel_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_vel_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_vel_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_n": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_e": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_pos_d": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_innov_ok": {"true_steps": 2000},
+  "est_initialised": {"true_steps": 2000},
+  "est_hgt_variance": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_healthy": {"true_steps": 2000},
+  "est_gyro_z":
+  {"non_finite_steps": 57,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_gyro_y":
+  {"non_finite_steps": 95,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_gyro_x":
+  {"non_finite_steps": 266,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_gyro_drift_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_drift_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gyro_drift_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "est_gps_vdop": {"non_finite_steps": 0, "min_finite": 100, "max_finite": 100},
+  "est_gps_status": {"non_finite_steps": 0, "min_finite": 3, "max_finite": 3},
+  "est_gps_num_sats":
+  {"non_finite_steps": 0, "min_finite": 10, "max_finite": 10},
+  "est_gps_healthy": {"true_steps": 2000},
+  "est_gps_hdop": {"non_finite_steps": 0, "min_finite": 100, "max_finite": 100},
+  "est_gain_scaler_z":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "est_gain_scaler_xy":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "est_filter_status":
+  {"non_finite_steps": 0, "min_finite": 107327, "max_finite": 107327},
+  "est_cos_yaw": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "est_baro_healthy": {"true_steps": 2000},
+  "est_baro_alt":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_z":
+  {"non_finite_steps": 80,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_y":
+  {"non_finite_steps": 69,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_x":
+  {"non_finite_steps": 88,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_ef_z":
+  {"non_finite_steps": 1822,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_ef_y":
+  {"non_finite_steps": 1851,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_ef_x":
+  {"non_finite_steps": 1830,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "est_accel_clip_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "air_density_ratio":
+  {"non_finite_steps": 56,
+   "min_finite": -16513510000000000000000000000,
+   "max_finite": 3540193000000000000000000000000000}},
+ "module": "truth_est",
+ "kind": "tested",
+ "id": "20261118T205104Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "est_pos_n = pos_n ∧ est_pos_e = pos_e ∧ est_pos_d = pos_d",
+   "smallest_margin": null,
+   "contract_hash":
+   "a03b39ca36ed904e1eceb9426cc7d12edd485e12cd3a47dd494f15762c6d47d8",
+   "clause": "copies_position",
+   "checked": 2000}],
+ "flags": "python3 -I adapter.py",
+ "compiler": "3.14.3",
+ "command": "harness test truth_est --seed 1 --cases 20 --steps 100",
+ "code_hash":
+ "5827658bf0d42c63747d7e9b166547e97a9fad4f01c70455d6890eaeb4e481a3",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume":
+ ["state_finite: finite(pos_n) ∧ finite(pos_e) ∧ finite(pos_d) ∧ finite(vel_n) ∧ finite(vel_e) ∧ finite(vel_d) ∧ finite(q1) ∧ finite(q2) ∧ finite(q3) ∧ finite(q4)"]}

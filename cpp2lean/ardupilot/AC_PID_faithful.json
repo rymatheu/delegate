@@ -1,0 +1,169 @@
+{
+ "translate": "ardupilot/translate_ac_pid.sh",
+ "out": "ardupilot/out/AC_PID",
+ "namespace": "AC_PID_lib",
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_sources": [
+  "AC_PID/AC_PID.cpp",
+  "AC_PID/AC_P.cpp",
+  "AC_PID/AC_P_1D.cpp",
+  "AC_PID/AC_PID_Basic.cpp",
+  "AC_PID/AC_PID_2D.cpp",
+  "AC_PID/AC_P_2D.cpp",
+  "Filter/SlewLimiter.cpp",
+  "Filter/LowPassFilter.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/control.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Param/AP_ParamT.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ac_pid_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "AC_PID",
+   "cxx_include": "<AC_PID/AC_PID.h>",
+   "globals": [
+    "extern uint32_t cpp2lean_millis;   // AP_HAL::millis() (ardupilot/ac_pid_env.cpp)"
+   ],
+   "ctor": [
+    "0.135",
+    "0.135",
+    "0.0036",
+    "0.1",
+    "0.5",
+    "5.0",
+    "10.0",
+    "20.0",
+    "0.0",
+    "1.0",
+    "0.002"
+   ],
+   "inputs": {
+    "_slew_limiter.millis": "cpp2lean_millis = %s;"
+   },
+   "monotonic": {
+    "_slew_limiter.millis": [
+     0,
+     12
+    ]
+   },
+   "extra_methods": [
+    "update_i"
+   ],
+   "ranges": {
+    "target": [
+     -3,
+     3
+    ],
+    "measurement": [
+     -3,
+     3
+    ],
+    "error": [
+     -3,
+     3
+    ],
+    "dt": [
+     0.001,
+     0.01
+    ],
+    "pd_scale": [
+     0,
+     1.5
+    ],
+    "i_scale": [
+     0,
+     2
+    ],
+    "v": [
+     0,
+     1
+    ],
+    "hz": [
+     0,
+     50
+    ],
+    "smax": [
+     0,
+     30
+    ],
+    "integrator": [
+     -1,
+     1
+    ],
+    "i": [
+     -1,
+     1
+    ],
+    "time_constant": [
+     0,
+     1
+    ],
+    "target_rate": [
+     -3,
+     3
+    ],
+    "actual": [
+     -3,
+     3
+    ],
+    "scale": [
+     1,
+     3
+    ]
+   },
+   "weights": {
+    "update_all": 30,
+    "update_error": 8,
+    "update_i": 4,
+    "set_slew_limit": 0
+   },
+   "calls": 5000,
+   "range_prob": 1.0,
+   "cxx_prelude": [
+    "#include <AP_Math/AP_Math.h>"
+   ]
+  }
+ ],
+ "comment": "AC_PID only, with SMAX at its default 0 for every update_all and update_error call: set_slew_limit has weight 0 among the random calls, and its corner calls come after the last update call."
+}

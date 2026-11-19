@@ -1,0 +1,1274 @@
+{"records":
+ [{"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "2119815d9920c1ddec6748e2c09f74f1ce1f047b027b58c182ab91039d8d9a72",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "armed_agrees",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "238f3b3d509ad969c3aaae7708787493fd4d6ae4b44947e4cfe1eaa49c81492e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "control_mode_armed",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "f4cc0eb82bf65368d6113399e38f70382729444b16af1a008dfa1ca1dedb7c2e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "published_together",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "f76eb5aced13e5806d6c0d99851aac8d90ddbd3486c7edb4ad15833df4c1bee1",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "control_mode_of_nav_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "2923839ab41d5e023ce67a7fd80f24040077d43713689abd534bf26ac58be5d8",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "stamped",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "bbdafc9936c16dd0b1163dd1c6fb428fded8231ea2a8065ccf477b9290805534",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "ids_from_params",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "e0de988468167760685baef2ac7dab96235290ef8e3a659d7ab5000493260a6f",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "known_states",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 5,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "9fc0beeb820e2e30973cabc8e9468748ef8722b50a4621f6323f330a9efcad82",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "ack_result_known",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "f0aff64b01ab0a8b4c32c9c17e44957015896cc0a9be9a5fcb96b101ac9c261b",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261118T233114Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261118T233114Z",
+   "contract_hash":
+   "9e15feacec5779e194499692d9cdf9e867d9875c274aa42c94f89596f632c23b",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "no_px4_error",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "2119815d9920c1ddec6748e2c09f74f1ce1f047b027b58c182ab91039d8d9a72",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "armed_agrees",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "238f3b3d509ad969c3aaae7708787493fd4d6ae4b44947e4cfe1eaa49c81492e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "control_mode_armed",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "f4cc0eb82bf65368d6113399e38f70382729444b16af1a008dfa1ca1dedb7c2e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "published_together",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "f76eb5aced13e5806d6c0d99851aac8d90ddbd3486c7edb4ad15833df4c1bee1",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "control_mode_of_nav_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "2923839ab41d5e023ce67a7fd80f24040077d43713689abd534bf26ac58be5d8",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "stamped",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "bbdafc9936c16dd0b1163dd1c6fb428fded8231ea2a8065ccf477b9290805534",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "ids_from_params",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e0de988468167760685baef2ac7dab96235290ef8e3a659d7ab5000493260a6f",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "known_states",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 5,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "9fc0beeb820e2e30973cabc8e9468748ef8722b50a4621f6323f330a9efcad82",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "ack_result_known",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "9e15feacec5779e194499692d9cdf9e867d9875c274aa42c94f89596f632c23b",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "no_px4_error",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 1,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "a46e1d1a6683efe0cf877233847c19b1e99197b6b6b168fcf5dfc12247dc3bf5",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_arming_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "dbe9d42de54ab6556a695bda6c6196e2f23b83fb8e4b1291dda282446ea94fa8",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_latest_arming_reason",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "ba654193dd69e7479f3adf59dbcb0a528639a3b425b8e64fa8a05dc7fa5422bf",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_latest_disarming_reason",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "4486fa4366842f740c02c8d680227dc81d4fdc54cc847f88abe49f6dd2913a08",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_nav_state_user_intention",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "7c04d0efe9bb263bcec73f421c13767b1f47fb30437517dda378df5f0b0d02e5",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_nav_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "185844bd055bdea2053f919116982d6d5a28851df9548fbf7588beead3971b99",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_executor_in_charge",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "6cc703cfb7a076fa52de83314da7d8a5d2f3d187efdd2898f8c9833d618795c0",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_failure_detector_status",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e80d8ee1bbe47c6c478a56d185688a64ec290a1ef01831276b7bb1e53ff987ab",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_hil_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 1,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "c94cb2ecb57ad223d37d5d0b08b696b65908ece6122253669077038adc178543",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_vehicle_type",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "0b3a49afeb0e6fe672dc8aa315f11f08beb5ef563a4fc43ff1a53b23288a5b4f",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_failsafe_defer_state",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "7729b575812a34389adc5e05005490d863823251308c9809f8cf0632ce9bc804",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_gcs_connection_lost_counter",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 2,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "22352683f0181db27864343aac10a765b92787b99d992b007a90c25968a7a35e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_system_type",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 1,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "508279ac41ee1dcbae50467f69335a4091f4186c9469062c3a955250879b38a4",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_system_id",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 1,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "d79d53321031e5421c6397d6f51b402ef9063f28cb10a219cee1c3c327f3a5a3",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_status_component_id",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "3f1abfa6e86c09d256fa6175ac8096834e005954eb9b126ba7f348e1afd57399",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_control_mode_source_id",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "0f18ebd337be02546e09d84e87902568beb831a850bce4ec24bb6df8c3c70ee5",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_result",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "ff71db3da46856f7116ecf1d21557d1da27ac2904d0559575f03ea7d4ef87974",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_result_param1",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "102722490e576e72f658b2c12464d0708420ac21cbcdc85662dd9eb5c3a22c17",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_target_system",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e4c8f9ac852e7ca0de1372282bec0203d10ae7a2f501ee376797f657431a40d0",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_target_component",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "6b77b4a302c6530b75d820da7793671816a6db619a6cda5124a1a01322ddcf4f",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q1_result",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "7864a996778ea332ec9dc58ef863e9b26ed074667b2ae8f49791698104573fd1",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q1_result_param1",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "c7384de89ef1fc3398de18089cc963aa347d2464fc90b50e9993793a895f71ff",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q1_target_system",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e9c1b44cefd10591a54727d69b450616f751237956b70c44d3d5467484ec4d4d",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q1_target_component",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "689f7208851e105a8f6246974977e22eecf214d496f8d9c9e325ff8d7b063bb2",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q2_result",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "ec8fa17d5f2d2e7db842c5e792ceaf4dc10935f08c5b0470918296290f5511a5",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q2_result_param1",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "80e660c05b40aa9de421364c458dd24407b382c8969022a4e09104934c1e2697",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q2_target_system",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "1032c1426090fcb36661f417a3dffbb36f72d132d1f9fe9a9e5dc5f8e2dbdf6e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q2_target_component",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e8448450daae99ec955dd8837522440744b5aec8e0aa3605b6799dab8ebefff8",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q3_result",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "61e5375271ad89e7041a7a41e0385bc21481f35a236c0095463bab5246ca2139",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q3_result_param1",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "239e62ec02f98fd17398ecf4aaed63642e424b2c00fe4092b1a0f8fd13dd168e",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q3_target_system",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "be9e05a2dd237dc6ee74f9b486dacc1be49c6976c6d3303800af54f2468f8787",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_vehicle_command_ack_by_px4_commander_q3_target_component",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "de28959d09023e27d64ef8b32ef102a289aa1ea7d80145e1f59d5f7a51514b06",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_failsafe_flags_battery_warning",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "631482fd1d7962df8b6d4acfce1ac654f49f27f015553415b0583d3832e1eb7d",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_failure_detector_status_motor_failure_mask",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "e20f7e7689a635ebffd44afeb0a5f51f7794429adfbf9c930cde7ce634e7fe46",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "width_failure_detector_status_motor_stop_mask",
+   "checked": 500,
+   "cases": 5},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 1,
+   "result_hash":
+   "011555bbab5d969c779b00ab3b5cab0b315246edb9cb8a823caeb9a6ba2c757e",
+   "result_file":
+   "px4/modules/px4_commander/evidence/tested/20261119T182506Z-seed1.json",
+   "regime_hash":
+   "dbde3f89b80487ba0cb7db4cd44bbbf6c9739a0d150c227894c43a5e024fbb27",
+   "regime": "x500_ground",
+   "kind": "tested",
+   "date": "20261119T182506Z",
+   "contract_hash":
+   "13b6e3b5f80ce3334c6290e3ea2f45b4cb3b77b4f60b95e4211007a6a0214dbe",
+   "command":
+   "harness test px4_commander --seed 1 --cases 5 --steps 100 --regime x500_ground",
+   "code_hash":
+   "c441dffee37769b87dbcc0107ba8497828edd9741876a6cefd9db38e46a1442b",
+   "clause": "slots_vehicle_command_ack_by_px4_commander_count",
+   "checked": 500,
+   "cases": 5}],
+ "module": "px4_commander"}

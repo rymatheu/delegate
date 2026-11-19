@@ -1,0 +1,20 @@
+# ArduPilot sources compiled into the position module, relative to $ARDUPILOT_ROOT.
+# The position controller, the controllers it owns, and the code they call on the step path.
+libraries/AC_AttitudeControl/AC_PosControl.cpp   # the position controller
+libraries/AC_PID/AC_P_2D.cpp                     # NE position P (square-root controller)
+libraries/AC_PID/AC_P_1D.cpp                     # D position P
+libraries/AC_PID/AC_PID_2D.cpp                   # NE velocity PID
+libraries/AC_PID/AC_PID_Basic.cpp                # D velocity PID
+libraries/AC_PID/AC_PID.cpp                      # D acceleration PID
+libraries/AP_Math/control.cpp                    # input shaping, sqrt_controller, limit_accel_xy
+libraries/AP_Math/AP_Math.cpp                    # constrain_value, safe_sqrt, calc_lowpass_alpha_dt
+libraries/AP_Math/vector2.cpp                    # Vector2 length, limit_length, angle
+libraries/AP_Math/vector3.cpp                    # Vector3 length, normalize
+libraries/Filter/SlewLimiter.cpp                 # the accel PID's slew limiter
+libraries/Filter/LowPassFilter.cpp               # the slew limiter's filter
+# Stand-in support (not on the position controller's own path): the attitude controller's angle
+# P objects are members of the AC_AttitudeControl the stand-in derives from (stubs_attitude.cpp).
+libraries/AC_PID/AC_P.cpp
+# AP_Motors' throttle slew detector member (DerivativeFilterFloat_Size7), constructed with the
+# stand-in mixer object (stubs_motors.cpp); never stepped here.
+libraries/Filter/DerivativeFilter.cpp

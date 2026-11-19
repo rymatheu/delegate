@@ -1,0 +1,10 @@
+# ArduPilot sources compiled into the guidance module, relative to $ARDUPILOT_ROOT.
+# The waypoint navigator and the trajectory code it owns and calls on its step path.
+libraries/AC_WPNav/AC_WPNav.cpp       # the navigator: destinations, speeds, update_wpnav
+libraries/AP_Math/SCurve.cpp          # jerk-limited straight and arc legs, corner blending
+libraries/AP_Math/SplineCurve.cpp     # spline legs
+libraries/AP_Math/control.cpp         # shape_vel_accel, update_vel_accel, kinematic_limit, sqrt_controller
+libraries/AP_Math/AP_Math.cpp         # constrain_value, wrap_PI, safe_sqrt, is_equal
+libraries/AP_Math/location.cpp        # get_bearing_rad
+libraries/AP_Math/vector2.cpp         # Vector2 length, angle, normalized
+libraries/AP_Math/vector3.cpp         # Vector3 length, normalized, dot

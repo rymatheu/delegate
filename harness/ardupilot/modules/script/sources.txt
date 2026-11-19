@@ -1,0 +1,2 @@
+# script compiles no ArduPilot source: it is a hand-written TEST DRIVER (adapter.cpp) standing
+# where the supervisor stage will be, not part of the flight stack.

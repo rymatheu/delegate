@@ -1,0 +1,25 @@
+# Tuned gains for the copter vehicles on the CF2X (27 g, 400 Hz control), an overlay to pass after
+# copter-cf2x.txt and copter-course-speed.txt:
+#   run_copter.py --params params/copter-cf2x.txt --params params/copter-course-speed.txt \
+#     --params params/copter-cf2x-tuned.txt
+# Parameters only, every value inside ArduPilot's @Range. ardupilot/AC_Attitude.json's `tuned` run
+# uses the ATC_ values; sim/fly.sh passes this file on every flight (UNTUNED=1 omits it).
+
+# Attitude input shaping: input time constant (default 0.1 s), roll and pitch acceleration limits
+# (default 1100 deg/s^2)
+ATC_INPUT_TC 0.05
+ATC_ACC_R_MAX 1800
+ATC_ACC_P_MAX 1800
+
+# Angle P (default 4.5)
+ATC_ANG_RLL_P 9
+ATC_ANG_PIT_P 9
+
+# Horizontal position P (default 1), velocity P and D (defaults 2 and 0.5)
+PSC_NE_POS_P 1.5
+PSC_NE_VEL_P 6
+PSC_NE_VEL_D 0.5
+
+# Navigator: waypoint radius (default 2 m) and jerk (default 1 m/s^3)
+WP_RADIUS_M 0.1
+WP_JERK 5

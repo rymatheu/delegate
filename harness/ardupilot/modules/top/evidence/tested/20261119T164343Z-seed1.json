@@ -1,0 +1,501 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 10000,
+ "steps_per_case": 500,
+ "seed": 1,
+ "seconds": 2.025361,
+ "regime_text":
+ "roll_stock: roll_kp = 0.135 ∧ roll_ki = 0.135 ∧ roll_kd = 0.0036 ∧ roll_kimax = 0.5 ∧ roll_kpdmax = 0 ∧ roll_filt_T_hz = 20 ∧ roll_filt_E_hz = 0 ∧ roll_filt_D_hz = 20 ∧ roll_slew_max = 0; pitch_stock: pitch_kp = 0.135 ∧ pitch_ki = 0.135 ∧ pitch_kd = 0.0036 ∧ pitch_kimax = 0.5 ∧ pitch_kpdmax = 0 ∧ pitch_filt_T_hz = 20 ∧ pitch_filt_E_hz = 0 ∧ pitch_filt_D_hz = 20 ∧ pitch_slew_max = 0; yaw_stock: yaw_kp = 0.18 ∧ yaw_ki = 0.018 ∧ yaw_kd = 0 ∧ yaw_kimax = 0.5 ∧ yaw_kpdmax = 0 ∧ yaw_filt_T_hz = 20 ∧ yaw_filt_E_hz = 2.5 ∧ yaw_filt_D_hz = 20 ∧ yaw_slew_max = 0; stock_rates: |target_x| ≤ 3 ∧ |target_y| ≤ 3 ∧ |target_z| ≤ 3 ∧ |gyro_x| ≤ 3 ∧ |gyro_y| ≤ 3 ∧ |gyro_z| ≤ 3; stock_dt: 0.0024 ≤ dt ∧ dt ≤ 0.0026; stock_scales: pd_scale_x = 1 ∧ pd_scale_y = 1 ∧ pd_scale_z = 1 ∧ i_scale_x = 1 ∧ i_scale_y = 1 ∧ i_scale_z = 1; stock_spin: spin_min = 0.15 ∧ spin_max = 0.95 ∧ spin_arm = 0.1; stock_thrust: thst_expo = 0.65 ∧ thst_hover = 0.35 ∧ yaw_headroom = 200; stock_pwm: pwm_min = 1000 ∧ pwm_max = 2000; stock_battery: bat_volt_max = 0 ∧ bat_volt_min = 0 ∧ bat_curr_max = 0 ∧ bat_curr_tc = 5; stock_spool: spool_time = 0.5 ∧ spool_tim_dn = 0 ∧ slew_up_time = 0 ∧ slew_dn_time = 0; stock_safety: safe_disarm = false ∧ safe_time = 1 ∧ idle_sec = 0; stock_hover_learn: hover_learn = 2; stock_throttle: 0.25 ≤ throttle ∧ throttle ≤ 0.5 ∧ 0.35 ≤ throttle_avg_max ∧ throttle_avg_max ≤ 1 ∧ throttle_filter_hz = 2; stock_battery_readings: 22 ≤ batt_voltage ∧ batt_voltage ≤ 25.2 ∧ 22 ≤ batt_resting_voltage ∧ batt_resting_voltage ≤ 25.2 ∧ 5 ≤ batt_current ∧ batt_current ≤ 40 ∧ batt_current_ok ∧ 0.01 ≤ batt_resistance ∧ batt_resistance ≤ 0.05; stock_air: 0.9 ≤ air_density_ratio ∧ air_density_ratio ≤ 1.1; armed_interlock: armed ∧ interlock; spool_unlimited_desired: spool_desired = 2; spoolup_unblocked: clear_spoolup_block = true; now_ms starts at 1000 and increases by 2 to 3 at every step; now_us starts at 1000000 and increases by 2400 to 2600 at every step",
+ "regime": "stock_flight",
+ "outputs_seen":
+ {"yaw_p_term":
+  {"non_finite_steps": 0, "min_finite": -1.08, "max_finite": 1.08},
+  "yaw_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "yaw_integrator":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0003622606,
+   "max_finite": 0.0002887381},
+  "yaw_d_term": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "yaw":
+  {"non_finite_steps": 0, "min_finite": -1.080268, "max_finite": 1.080289},
+  "thrust_boost": {"true_steps": 0},
+  "thrust_4": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "thrust_3": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "thrust_2": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "thrust_1": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "throttle_thrust_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "throttle_slew_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 8.119002},
+  "throttle_out":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.603456},
+  "throttle_hover":
+  {"non_finite_steps": 0, "min_finite": 0.2815998, "max_finite": 0.4414468},
+  "throttle_filtered":
+  {"non_finite_steps": 0, "min_finite": 0.007561521, "max_finite": 0.4999995},
+  "spoolup_block": {"true_steps": 4},
+  "spool_state": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "roll_p_term":
+  {"non_finite_steps": 0, "min_finite": -0.8100001, "max_finite": 0.8100001},
+  "roll_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "roll_integrator":
+  {"non_finite_steps": 0,
+   "min_finite": -0.003171385,
+   "max_finite": 0.002245598},
+  "roll_d_term":
+  {"non_finite_steps": 0, "min_finite": -2.171729, "max_finite": 2.207253},
+  "roll":
+  {"non_finite_steps": 0, "min_finite": -2.635433, "max_finite": 2.631767},
+  "pwm_writes": {"non_finite_steps": 0, "min_finite": 4, "max_finite": 4},
+  "pwm_4": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_3": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_2": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_1": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pitch_p_term":
+  {"non_finite_steps": 0, "min_finite": -0.8100001, "max_finite": 0.8100001},
+  "pitch_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pitch_integrator":
+  {"non_finite_steps": 0,
+   "min_finite": -0.004507939,
+   "max_finite": 0.005245215},
+  "pitch_d_term":
+  {"non_finite_steps": 0, "min_finite": -2.195436, "max_finite": 2.185709},
+  "pitch":
+  {"non_finite_steps": 0, "min_finite": -2.675761, "max_finite": 2.490396},
+  "mixer_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "limit_yaw": {"true_steps": 9307},
+  "limit_throttle_upper": {"true_steps": 9132},
+  "limit_throttle_lower": {"true_steps": 8815},
+  "limit_roll": {"true_steps": 9243},
+  "limit_pitch": {"true_steps": 9243},
+  "lift_max": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "compensation_gain":
+  {"non_finite_steps": 0, "min_finite": 0.9090909, "max_finite": 1.111111},
+  "actuator_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999}},
+ "module": "top",
+ "kind": "tested",
+ "id": "20261119T164343Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|roll_integrator| ≤ roll_kimax",
+   "smallest_margin_case":
+   {"step": 321,
+    "sha256":
+    "3112c61aff04a940b315844bc6f693f1bea32a06ee42ff7c0a72a6817de3f562",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case6-step321.json",
+    "case": 6},
+   "smallest_margin": 0.4968286,
+   "contract_hash":
+   "957b11706e6ec36eb1b54d528fb0e52322ab606a7f6ea809d8f4782132380193",
+   "clause": "roll_integrator_bounded",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(roll)",
+   "smallest_margin": null,
+   "contract_hash":
+   "10c2cbaa2eb961328bfc42d615ad6f4612b9f84885747a009c5938e6185c98e2",
+   "clause": "roll_command_finite",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "roll_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "298d76555d25fe0474aed0e4bb735db7fef709f73a7ca70fc7a76804121c2b53",
+   "clause": "roll_no_internal_error",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|roll| ≤ 7e15 + roll_kimax",
+   "smallest_margin_case":
+   {"step": 295,
+    "sha256":
+    "04717aca3ced929a20c1dc1e4c51505f35b6eccb1970baa1a36db00e22f55624",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step295.json",
+    "case": 1},
+   "smallest_margin": 7000000000000000,
+   "contract_hash":
+   "0dd51e8bdf6db7095bfbc46e0af5e491888e6b4d1e8483a08c1c1fd4e8f849ff",
+   "clause": "roll_command_magnitude",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|pitch_integrator| ≤ pitch_kimax",
+   "smallest_margin_case":
+   {"step": 485,
+    "sha256":
+    "74c6059460e6bbcad384696e619dde115d2ad1048cea75f12fe142adf33a346a",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step485.json",
+    "case": 1},
+   "smallest_margin": 0.4947548,
+   "contract_hash":
+   "1fc06ba7167e20a1819fed40d0af0cbf9829ce1e91969275b3162f6f70566e16",
+   "clause": "pitch_integrator_bounded",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(pitch)",
+   "smallest_margin": null,
+   "contract_hash":
+   "599cf1d919d22bb9866bf4aff5757ef33bd42532cc4ee175ebe2e10850a2f89f",
+   "clause": "pitch_command_finite",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pitch_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "aa664d11c4508e234159ad9ecb05d5fc35234a6f297abb5a1f6c4e335d3de844",
+   "clause": "pitch_no_internal_error",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|pitch| ≤ 7e15 + pitch_kimax",
+   "smallest_margin_case":
+   {"step": 221,
+    "sha256":
+    "5ed8eee62b47c3c77458480e214239bdc2729e6f8fed2ff263c2d3f5d35b05d7",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case3-step221.json",
+    "case": 3},
+   "smallest_margin": 7000000000000000,
+   "contract_hash":
+   "231f7d4260a7ef7ed5cf4e2777e12e5ffc5bbe9038ee2be694390cb4275400d1",
+   "clause": "pitch_command_magnitude",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|yaw_integrator| ≤ yaw_kimax",
+   "smallest_margin_case":
+   {"step": 292,
+    "sha256":
+    "8df52aed494ee45c2eace156b0c236037acb597a0e9653ef97f71e3470688ec5",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case15-step292.json",
+    "case": 15},
+   "smallest_margin": 0.4996377,
+   "contract_hash":
+   "da82d6105cc3487b50f583cf1f6e3ab7086168053c2bb328231c8aa43dfeb484",
+   "clause": "yaw_integrator_bounded",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(yaw)",
+   "smallest_margin": null,
+   "contract_hash":
+   "c19454f2a5fc7bd106a3071b7c8c4175e6bff813eb220fcd2667cccdcec7092f",
+   "clause": "yaw_command_finite",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "yaw_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "a7e45f5104b01bef579f23151d1921ca365d0562d7421f33724270af21c2f2d8",
+   "clause": "yaw_no_internal_error",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|yaw| ≤ 7e15 + yaw_kimax",
+   "smallest_margin_case":
+   {"step": 11,
+    "sha256":
+    "9d38a97bb4f3cc3c66355e569ae952b68c388d73d1a536b62b5a73c8a4204574",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case0-step11.json",
+    "case": 0},
+   "smallest_margin": 7000000000000000,
+   "contract_hash":
+   "150531a0d4c45053f6f5e6974fff7598c07e8fed45d6ae21e1af2b3f891c6c34",
+   "clause": "yaw_command_magnitude",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(0 ≤ actuator_1 ∧ actuator_1 ≤ 1) ∧ (0 ≤ actuator_2 ∧ actuator_2 ≤ 1) ∧ (0 ≤ actuator_3 ∧ actuator_3 ≤ 1) ∧ 0 ≤ actuator_4 ∧ actuator_4 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "6a6e458c6bdfcb89c4ad31b23e8c35b2505583e69bb8f4bbbe475f4400a06be7",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "43446872b0f33d0b4fcf491917456aac101592269ba893249a42b5da45cc87ff",
+   "clause": "actuators_in_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(pwm_min ≤ pwm_1 ∧ pwm_1 ≤ pwm_max) ∧ (pwm_min ≤ pwm_2 ∧ pwm_2 ≤ pwm_max) ∧ (pwm_min ≤ pwm_3 ∧ pwm_3 ≤ pwm_max) ∧ pwm_min ≤ pwm_4 ∧ pwm_4 ≤ pwm_max ∨ safe_disarm ∧ ¬armed ∧ pwm_1 = 0 ∧ pwm_2 = 0 ∧ pwm_3 = 0 ∧ pwm_4 = 0",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "6a6e458c6bdfcb89c4ad31b23e8c35b2505583e69bb8f4bbbe475f4400a06be7",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "78fb34749130f2a0ca540380cab2c97203ca704cafaeece5cefdc36c20f97849",
+   "clause": "pwm_in_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pwm_writes = 4",
+   "smallest_margin": null,
+   "contract_hash":
+   "7edeb36640357005b137254c20fea10845add7ee737044ab1a59679a8f71bbe1",
+   "clause": "every_motor_written",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(-1e-6 ≤ thrust_1 ∧ thrust_1 ≤ 1 + 1e-6) ∧ (-1e-6 ≤ thrust_2 ∧ thrust_2 ≤ 1 + 1e-6) ∧ (-1e-6 ≤ thrust_3 ∧ thrust_3 ≤ 1 + 1e-6) ∧ -1e-6 ≤ thrust_4 ∧ thrust_4 ≤ 1 + 1e-6",
+   "smallest_margin_case":
+   {"step": 271,
+    "sha256":
+    "39b261391523102a0cb6e91cf4b649331646d679ab6790acae490bf04b24a887",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step271.json",
+    "case": 1},
+   "smallest_margin": 0.0000009536743,
+   "contract_hash":
+   "6de7fb81f30df1edcca9640e4069e5f028df5a7834fba9d2ce8075ec45b32b6b",
+   "clause": "thrusts_in_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(throttle_out) ∧ 0 ≤ throttle_out ∧ finite(throttle_slew_rate) ∧ 0 ≤ throttle_slew_rate ∧ 0 ≤ throttle_thrust_max ∧ throttle_thrust_max ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "6a6e458c6bdfcb89c4ad31b23e8c35b2505583e69bb8f4bbbe475f4400a06be7",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "38664f25ac956b1a198cf2e57bd896872debe55e0172a1219ad710b406ef3b33",
+   "clause": "signals_finite",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "armed ∧ interlock ∨ spool_state = 0 ∧ actuator_1 = 0 ∧ actuator_2 = 0 ∧ actuator_3 = 0 ∧ actuator_4 = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "643de000281690a68c0b00ba64b17de3e339a2794a4ae320317c1b4b2d06be81",
+   "clause": "stopped_unless_armed",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_roll ∨ |0.5 * (thrust_2 + thrust_3 - thrust_1 - thrust_4) - (roll + 0) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 396,
+    "sha256":
+    "db91703fa484016508e3711576dc80f8f4e72cc70d688f47bea48274fd991232",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case10-step396.json",
+    "case": 10},
+   "smallest_margin": 0.000009910593,
+   "contract_hash":
+   "ab011ada4b080f86bc18fd3422854a67a615c4ddc21372166141e84d49eb2a39",
+   "clause": "roll_realized",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_pitch ∨ |0.5 * (thrust_1 + thrust_3 - thrust_2 - thrust_4) - (pitch + 0) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 441,
+    "sha256":
+    "cbc8ecd110c17d65fdc707b036868ebf0e0d158aca1ff4e522301b624ac7a2f0",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case6-step441.json",
+    "case": 6},
+   "smallest_margin": 0.000009910593,
+   "contract_hash":
+   "4c2c55a31ea5ccf7fe0080712eab8a41e9a7c8cd74554c6cc99abba00b5114fe",
+   "clause": "pitch_realized",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_yaw ∨ |0.5 * (thrust_1 + thrust_2 - thrust_3 - thrust_4) - (yaw + 0) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 301,
+    "sha256":
+    "be0232fb864bedc7e92c95f4436ac7f8f9b2d5a9c74c06653155e70e1691d929",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step301.json",
+    "case": 1},
+   "smallest_margin": 0.000009940395,
+   "contract_hash":
+   "955197417f752b87ba3159cb9f30bf8a12490cf30284d5486b6a457035a85df8",
+   "clause": "yaw_realized",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_throttle_upper ∨ throttle_filtered * compensation_gain - 0.00001 ≤ 0.25 * (thrust_1 + thrust_2 + thrust_3 + thrust_4)",
+   "smallest_margin_case":
+   {"step": 305,
+    "sha256":
+    "09cfab7a2fe01f7932fbb7835ff5c67981e72dcb87bf2539203b153d4a705bac",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step305.json",
+    "case": 1},
+   "smallest_margin": 0.000009983778,
+   "contract_hash":
+   "b0c0c56a13b25dcf319d9786b489f8ba76e3ae1f12a922525ca66f781dbd5ace",
+   "clause": "collective_not_below_demand",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "mixer_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "7cd7a342330b7e4d9737f16cc4c2a55b5e7c2914be91828cb23d21e9b73c161e",
+   "clause": "no_internal_error",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ throttle_filtered ∧ throttle_filtered ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "abd6c4a57f0f70c2fcd62aaf4734dda9f58f32385370c4f940862b553da30930",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case13-step0.json",
+    "case": 13},
+   "smallest_margin": 0.007561521,
+   "contract_hash":
+   "d28a29dcf3e0c5f8dfd315d60ec43fc3c7b1a8bfce42ce3cfe3c2021d8a0b7c8",
+   "clause": "throttle_filtered_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0.125 ≤ throttle_hover ∧ throttle_hover ≤ 0.6875",
+   "smallest_margin_case":
+   {"step": 476,
+    "sha256":
+    "e41d1b97ce431aef22d1133a1fdddedbdd729e5d12b6449ea3ac55fa31a99b63",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case13-step476.json",
+    "case": 13},
+   "smallest_margin": 0.1565998,
+   "contract_hash":
+   "3c23aad92e751c609a111e56ff2c8a99aef33606154708345ce7d84cf0c9215e",
+   "clause": "throttle_hover_range",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "spool_state ≤ 4",
+   "smallest_margin_case":
+   {"step": 274,
+    "sha256":
+    "600f2ef15bce9af7657f0bae1cfe7592ffa95095037791294edb474db6ed9369",
+    "file":
+    "ardupilot/modules/top/evidence/tested/20261119T164343Z-seed1/case1-step274.json",
+    "case": 1},
+   "smallest_margin": 1,
+   "contract_hash":
+   "395cb7475f26d787b93cd3c5613e91f4a648ccc09319768619913d29629f5543",
+   "clause": "spool_state_enum",
+   "checked": 10000}],
+ "flags": "harness system top served by top serve",
+ "coverage":
+ {"yaw_pd_scale_above_1": {"true_steps": 0, "text": "1 < pd_scale_z"},
+  "unlimited_throttle_above_1":
+  {"true_steps": 0, "text": "spool_state = 3 ∧ 1 < throttle"},
+  "unlimited_no_rpy_limit":
+  {"true_steps": 598,
+   "text": "spool_state = 3 ∧ ¬limit_roll ∧ ¬limit_pitch ∧ ¬limit_yaw"},
+  "unlimited_no_limit":
+  {"true_steps": 597,
+   "text":
+   "spool_state = 3 ∧ ¬limit_roll ∧ ¬limit_pitch ∧ ¬limit_yaw ∧ ¬limit_throttle_lower ∧ ¬limit_throttle_upper"},
+  "throttle_unlimited": {"true_steps": 875, "text": "spool_state = 3"},
+  "throttle_negative": {"true_steps": 0, "text": "throttle < 0"},
+  "throttle_above_1": {"true_steps": 0, "text": "1 < throttle"},
+  "roll_pd_scale_above_1": {"true_steps": 0, "text": "1 < pd_scale_x"},
+  "reset_i": {"true_steps": 5485, "text": "ac_rate_reset_i"},
+  "reset_filter": {"true_steps": 5280, "text": "ac_rate_reset_filter"},
+  "relax_i": {"true_steps": 2997, "text": "ac_rate_relax_i ∧ ¬ac_rate_reset_i"},
+  "pitch_pd_scale_above_1": {"true_steps": 0, "text": "1 < pd_scale_y"}},
+ "compiler": "harness 0.1.0 (Lean 4.35.0)",
+ "command":
+ "harness test top --seed 1 --cases 20 --steps 500 --regime stock_flight",
+ "code_hash":
+ "1c22d16444e058155b954ef067e63a1780b156c20367c0d778a35566192c570b",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume":
+ ["roll_gains_bounded: |roll_kp| ≤ 10000 ∧ |roll_ki| ≤ 10000 ∧ |roll_kd| ≤ 10000",
+  "roll_kimax_range: 0 ≤ roll_kimax ∧ finite(roll_kimax)",
+  "roll_kpdmax_range: 0 ≤ roll_kpdmax ∧ finite(roll_kpdmax)",
+  "roll_filters_range: 0 ≤ roll_filt_T_hz ∧ finite(roll_filt_T_hz) ∧ 0 ≤ roll_filt_E_hz ∧ finite(roll_filt_E_hz) ∧ 0 ≤ roll_filt_D_hz ∧ finite(roll_filt_D_hz)",
+  "roll_slew_range: 0 ≤ roll_slew_max ∧ finite(roll_slew_max)",
+  "roll_signals_bounded: |target_x| ≤ 10000 ∧ |gyro_x| ≤ 10000",
+  "rate_c_dt_range: 0 < dt ∧ dt ≤ 0.01",
+  "roll_scales_range: 0 ≤ pd_scale_x ∧ pd_scale_x ≤ 2 ∧ 0 ≤ i_scale_x ∧ i_scale_x ≤ 1",
+  "pitch_gains_bounded: |pitch_kp| ≤ 10000 ∧ |pitch_ki| ≤ 10000 ∧ |pitch_kd| ≤ 10000",
+  "pitch_kimax_range: 0 ≤ pitch_kimax ∧ finite(pitch_kimax)",
+  "pitch_kpdmax_range: 0 ≤ pitch_kpdmax ∧ finite(pitch_kpdmax)",
+  "pitch_filters_range: 0 ≤ pitch_filt_T_hz ∧ finite(pitch_filt_T_hz) ∧ 0 ≤ pitch_filt_E_hz ∧ finite(pitch_filt_E_hz) ∧ 0 ≤ pitch_filt_D_hz ∧ finite(pitch_filt_D_hz)",
+  "pitch_slew_range: 0 ≤ pitch_slew_max ∧ finite(pitch_slew_max)",
+  "pitch_signals_bounded: |target_y| ≤ 10000 ∧ |gyro_y| ≤ 10000",
+  "pitch_scales_range: 0 ≤ pd_scale_y ∧ pd_scale_y ≤ 2 ∧ 0 ≤ i_scale_y ∧ i_scale_y ≤ 1",
+  "yaw_gains_bounded: |yaw_kp| ≤ 10000 ∧ |yaw_ki| ≤ 10000 ∧ |yaw_kd| ≤ 10000",
+  "yaw_kimax_range: 0 ≤ yaw_kimax ∧ finite(yaw_kimax)",
+  "yaw_kpdmax_range: 0 ≤ yaw_kpdmax ∧ finite(yaw_kpdmax)",
+  "yaw_filters_range: 0 ≤ yaw_filt_T_hz ∧ finite(yaw_filt_T_hz) ∧ 0 ≤ yaw_filt_E_hz ∧ finite(yaw_filt_E_hz) ∧ 0 ≤ yaw_filt_D_hz ∧ finite(yaw_filt_D_hz)",
+  "yaw_slew_range: 0 ≤ yaw_slew_max ∧ finite(yaw_slew_max)",
+  "yaw_signals_bounded: |target_z| ≤ 10000 ∧ |gyro_z| ≤ 10000",
+  "yaw_scales_range: 0 ≤ pd_scale_z ∧ pd_scale_z ≤ 2 ∧ 0 ≤ i_scale_z ∧ i_scale_z ≤ 1",
+  "throttle_finite: finite(throttle) ∧ 0 ≤ throttle_avg_max ∧ throttle_avg_max ≤ 1",
+  "throttle_filter_range: 0 ≤ throttle_filter_hz ∧ throttle_filter_hz ≤ 100",
+  "mixer_dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.02",
+  "spool_desired_range: spool_desired ≤ 2",
+  "air_density_range: 0 ≤ air_density_ratio ∧ air_density_ratio ≤ 2",
+  "hover_learn_range: 0 ≤ hover_learn ∧ hover_learn ≤ 2",
+  "hover_dt_range: ¬cmd_mixer_update_throttle_hover ∨ 0 ≤ cmd_mixer_update_throttle_hover_dt ∧ cmd_mixer_update_throttle_hover_dt ≤ 1",
+  "battery_range: 0 ≤ batt_voltage ∧ batt_voltage ≤ 60 ∧ 0 ≤ batt_resting_voltage ∧ batt_resting_voltage ≤ 60 ∧ 0 ≤ batt_current ∧ batt_current ≤ 500 ∧ 0 ≤ batt_resistance ∧ batt_resistance ≤ 1",
+  "current_positive: bat_curr_max = 0 ∨ ¬batt_current_ok ∨ 0 < batt_current",
+  "spin_min_range: 0 ≤ spin_min ∧ spin_min ≤ 0.25",
+  "spin_max_range: 0.9 ≤ spin_max ∧ spin_max ≤ 1",
+  "spin_arm_range: 0 ≤ spin_arm ∧ spin_arm ≤ 0.2",
+  "thst_expo_range: -1 ≤ thst_expo ∧ thst_expo ≤ 1",
+  "thst_hover_range: 0.125 ≤ thst_hover ∧ thst_hover ≤ 0.6875",
+  "yaw_headroom_range: 0 ≤ yaw_headroom ∧ yaw_headroom ≤ 500",
+  "pwm_min_range: 0 ≤ pwm_min ∧ pwm_min ≤ 2000",
+  "pwm_max_range: 0 ≤ pwm_max ∧ pwm_max ≤ 2000",
+  "bat_volt_max_range: bat_volt_max = 0 ∨ 6 ≤ bat_volt_max ∧ bat_volt_max ≤ 53",
+  "bat_volt_min_range: bat_volt_min = 0 ∨ 6 ≤ bat_volt_min ∧ bat_volt_min ≤ 42",
+  "bat_curr_max_range: 0 ≤ bat_curr_max ∧ bat_curr_max ≤ 200",
+  "bat_curr_tc_range: 0 ≤ bat_curr_tc ∧ bat_curr_tc ≤ 10",
+  "spool_time_range: 0.05 ≤ spool_time ∧ spool_time ≤ 2",
+  "spool_tim_dn_range: 0 ≤ spool_tim_dn ∧ spool_tim_dn ≤ 2",
+  "slew_range: 0 ≤ slew_up_time ∧ slew_up_time ≤ 0.5 ∧ 0 ≤ slew_dn_time ∧ slew_dn_time ≤ 0.5",
+  "safe_time_range: 0 ≤ safe_time ∧ safe_time ≤ 5",
+  "idle_sec_range: 0 ≤ idle_sec ∧ idle_sec ≤ 5",
+  "pwm_valid: 1 ≤ pwm_min ∧ pwm_min < pwm_max"]}

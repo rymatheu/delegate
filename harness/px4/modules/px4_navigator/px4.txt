@@ -1,0 +1,65 @@
+# px4_navigator: PX4's navigator (src/modules/navigator), unmodified, with PX4's data manager
+# (src/modules/dataman, RAM backend) in the same process, as the mission storage it reads.
+# Both are task modules: navigator's loop waits in px4_poll on vehicle_local_position (rate-limited
+# to 20 Hz), vehicle_status and mission (1 s timeout); dataman's task waits in px4_poll on
+# dataman_request. Read by px4/ports.py and px4/build.sh. Paths relative to $PX4_ROOT.
+main navigator
+start dataman -r                           # started first, as PX4's rcS starts it
+process fresh
+source src/modules/navigator/navigator_main.cpp
+source src/modules/navigator/navigator_mode.cpp
+source src/modules/navigator/mission_base.cpp
+source src/modules/navigator/mission_block.cpp
+source src/modules/navigator/mission.cpp
+source src/modules/navigator/loiter.cpp
+source src/modules/navigator/rtl.cpp
+source src/modules/navigator/rtl_direct.cpp
+source src/modules/navigator/rtl_direct_mission_land.cpp
+source src/modules/navigator/rtl_mission_fast.cpp
+source src/modules/navigator/rtl_mission_fast_reverse.cpp
+source src/modules/navigator/takeoff.cpp
+source src/modules/navigator/land.cpp
+source src/modules/navigator/precland.cpp
+source src/modules/navigator/mission_feasibility_checker.cpp
+source src/modules/navigator/geofence.cpp
+source src/modules/navigator/vtol_takeoff.cpp
+# its libraries (DEPENDS): geofence_breach_avoidance, mission_feasibility_checker, dataman_client,
+# geo, adsb, motion_planning, rtl_time_estimator; and dataman itself
+source src/modules/navigator/GeofenceBreachAvoidance/geofence_breach_avoidance.cpp src/modules/navigator/MissionFeasibility/FeasibilityChecker.cpp
+source src/lib/dataman_client/DatamanClient.cpp src/lib/geo/geo.cpp src/lib/adsb/AdsbConflict.cpp
+source src/lib/motion_planning/HeadingSmoothing.cpp src/lib/motion_planning/ManualVelocitySmoothingXY.cpp
+source src/lib/motion_planning/ManualVelocitySmoothingZ.cpp src/lib/motion_planning/PositionSmoothing.cpp
+source src/lib/motion_planning/VelocitySmoothing.cpp src/lib/rtl/rtl_time_estimator.cpp
+source src/modules/dataman/dataman.cpp
+source platforms/posix/src/px4/common/lib_crc32.c   # crc32part (the mission checksum), the posix platform's
+include src/modules/navigator
+params src/modules/navigator
+params src/modules/dataman/parameters.c
+params src/lib/weather_vane/weathervane_params.c WV_EN     # read by rtl_direct.h
+# read by name (param_find) by the mission, RTL and takeoff code and the RTL time estimator
+params src/lib/fw_performance_model/performance_model_params.c FW_AIRSPD_TRIM
+params src/modules/fw_mode_manager/fw_mode_manager_params.c FW_LND_ANG FW_T_CLMB_R_SP FW_T_SINK_R_SP
+params src/modules/mc_pos_control/multicopter_altitude_mode_params.c MPC_ACC_DOWN_MAX MPC_ACC_UP_MAX
+params src/modules/mc_pos_control/multicopter_autonomous_params.c MPC_ACC_HOR MPC_JERK_AUTO MPC_XY_CRUISE MPC_Z_V_AUTO_DN MPC_Z_V_AUTO_UP
+params src/modules/mc_pos_control/multicopter_position_mode_params.c MPC_ACC_HOR_MAX MPC_JERK_MAX
+params src/lib/rover_control/rovercontrol_params.c RO_SPEED_LIM
+params src/modules/vtol_att_control/vtol_att_control_params.c VT_B_DEC_MSS
+# ---- topics
+sub vehicle_status
+sub vehicle_land_detected
+sub vehicle_local_position
+sub vehicle_global_position
+sub vehicle_gps_position
+sub home_position
+sub mission                                # what MAVLink's mission manager publishes after an upload
+sub vehicle_command                        # queued, 8 slots
+sub position_controller_status
+sub position_controller_landing_status
+sub wind
+sub dataman_request mirror 170 from px4_mavlink   # MAVLink's storage requests, mirrored (see Module.lean)
+pub position_setpoint_triplet
+pub mission_result
+pub navigator_status
+pub geofence_result
+pub vehicle_command_ack by           # one of two publishers: merged by px4_merge_ack
+pub dataman_response

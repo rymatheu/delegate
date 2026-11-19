@@ -1,0 +1,768 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 3000,
+ "steps_per_case": 100,
+ "seed": 97,
+ "seconds": 0.4628729,
+ "outputs_seen":
+ {"px4_alloc_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_updated": {"true_steps": 907},
+  "control_allocator_status_unallocated_torque_2":
+  {"non_finite_steps": 1190,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "control_allocator_status_unallocated_torque_1":
+  {"non_finite_steps": 1211,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "control_allocator_status_unallocated_torque_0":
+  {"non_finite_steps": 1211,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "control_allocator_status_unallocated_thrust_2":
+  {"non_finite_steps": 1211,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 280756900000000000000000000000000000000},
+  "control_allocator_status_unallocated_thrust_1":
+  {"non_finite_steps": 1451,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "control_allocator_status_unallocated_thrust_0":
+  {"non_finite_steps": 1451,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "control_allocator_status_torque_setpoint_achieved": {"true_steps": 41},
+  "control_allocator_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "control_allocator_status_thrust_setpoint_achieved": {"true_steps": 177},
+  "control_allocator_status_motor_stop_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 65535},
+  "control_allocator_status_handled_motor_failure_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_9":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_8":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_7":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_6":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_5":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_4":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_3":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_2":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_15":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_14":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_13":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_12":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_11":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_10":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_1":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_0":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 2},
+  "actuator_servos_updated": {"true_steps": 439},
+  "actuator_servos_trim_updated": {"true_steps": 71},
+  "actuator_servos_trim_trim_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.3962831},
+  "actuator_servos_trim_trim_3":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0000000006375745e-13,
+   "max_finite": 0.9999999},
+  "actuator_servos_trim_trim_2":
+  {"non_finite_steps": 0,
+   "min_finite": -0.0000000001175494e-28,
+   "max_finite": 0.3335201},
+  "actuator_servos_trim_trim_1":
+  {"non_finite_steps": 0, "min_finite": -0.8651989, "max_finite": 0.9999999},
+  "actuator_servos_trim_trim_0":
+  {"non_finite_steps": 0, "min_finite": -0.9940675, "max_finite": 1},
+  "actuator_servos_trim_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_servos_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_servos_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_servos_control_7":
+  {"non_finite_steps": 1186, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_6":
+  {"non_finite_steps": 1186, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_5":
+  {"non_finite_steps": 1186, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_4":
+  {"non_finite_steps": 1088, "min_finite": -1, "max_finite": 0.004},
+  "actuator_servos_control_3":
+  {"non_finite_steps": 1001, "min_finite": -1, "max_finite": 0.08},
+  "actuator_servos_control_2":
+  {"non_finite_steps": 835, "min_finite": -1, "max_finite": 1},
+  "actuator_servos_control_1":
+  {"non_finite_steps": 635, "min_finite": -1, "max_finite": 1},
+  "actuator_servos_control_0":
+  {"non_finite_steps": 465, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_updated": {"true_steps": 864},
+  "actuator_motors_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_motors_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_motors_reversible_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4095},
+  "actuator_motors_control_9":
+  {"non_finite_steps": 2052, "min_finite": 0, "max_finite": 1},
+  "actuator_motors_control_8":
+  {"non_finite_steps": 1978, "min_finite": 0, "max_finite": 1},
+  "actuator_motors_control_7":
+  {"non_finite_steps": 1914, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_6":
+  {"non_finite_steps": 1936, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_5":
+  {"non_finite_steps": 1842, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_4":
+  {"non_finite_steps": 1841, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_3":
+  {"non_finite_steps": 1792, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_2":
+  {"non_finite_steps": 1847, "min_finite": 0, "max_finite": 1},
+  "actuator_motors_control_11":
+  {"non_finite_steps": 2060, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_10":
+  {"non_finite_steps": 2082, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_1":
+  {"non_finite_steps": 1536, "min_finite": -1, "max_finite": 1},
+  "actuator_motors_control_0":
+  {"non_finite_steps": 1469, "min_finite": -1, "max_finite": 1}},
+ "module": "px4_alloc",
+ "kind": "tested",
+ "id": "20261119T182504Z-seed97",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ -1 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ -1 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ -1 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ -1 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ -1 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ -1 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ -1 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ -1 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ -1 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ -1 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ -1 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ -1 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "17a98077eed9bf216f407c13beb4ccc1e2bdf986d6007a00f851d274dde47cf3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 0,
+   "contract_hash":
+   "d81d488ac3a1ad4f56ad876cc1c34fb713a5d7715c706dcbe5064720e1a7f6fe",
+   "clause": "motors_in_documented_range",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬CA_R_REV = 0 ∨ (((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ 0 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ 0 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ 0 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ 0 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ 0 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ 0 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ 0 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ 0 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ 0 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ 0 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ 0 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ 0 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "7da45fb420bc016282c569e45a6dbf4f62cd81424ad38af1b32b43f13278f6ac",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case8-step0.json",
+    "case": 8},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a2cfc3a7e5e745297640d36d665bf1c0668440037d5dec9a1ad39cb8dd6c239f",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬actuator_motors_updated ∨ vehicle_torque_setpoint_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "4bf215b3b467c653a06394438ab16da76f8dc2e7e15f08c5e12797872df9f55e",
+   "clause": "motors_answer_torque",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ actuator_motors_timestamp = t_us ∧ actuator_motors_timestamp_sample = vehicle_torque_setpoint_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "d2f08d956c0f8e16cdaf1444f493cfdfd49f21400db016364d1a05d5ce08c4f9",
+   "clause": "motors_stamped",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_alloc_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "84bf2930e0b2f307ff3d0b41e21aff619b060beaa13c92ca98ece71bcf1d4bee",
+   "clause": "no_px4_error",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ actuator_motors_reversible_flags ∧ actuator_motors_reversible_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "b05b864c1b41a6c8a518182781b366b7854cf85e9e673d34d3a82ffc141392e3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "47eaebb207552844f3c7fce0d86db1e37a96ffc0941e76402c50406226208210",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+   "smallest_margin_case":
+   {"step": 66,
+    "sha256":
+    "c1b12015c8993fb41233c19739a55158f7549ef63a600b7263290633eb071d38",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case3-step66.json",
+    "case": 3},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0b4d0e1f130e5df328f548b4b5dbc601d841e3c0280303c4d9daa6fd03e9a6a8",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "17a98077eed9bf216f407c13beb4ccc1e2bdf986d6007a00f851d274dde47cf3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0f7a555a75269149d633ef1f312bcc56565f025bebeec0c36e054be935b4790a",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+   "smallest_margin_case":
+   {"step": 19,
+    "sha256":
+    "b9429c8d1a4b080c3a2b8b0f0dd8ff96e7e53f993303256f1fb98548526b0b91",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step19.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0ef8ce5f56a2b32308fd5b0f02b9ce62a7c1032867f140f8e8ef928e3665564d",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+   "smallest_margin_case":
+   {"step": 67,
+    "sha256":
+    "45b7a42ea8b2f6376d0e9c66e5816e2d6e10faf29bcd65b085f299ada0309bb3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step67.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "93287d032846bee72fcb90110f23b49df7f9006f52c4826353ffa69746fe4831",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+   "smallest_margin_case":
+   {"step": 19,
+    "sha256":
+    "ce5c0d3824fa41a1ad0377ffdb50b6b4f7b530ddcbf23ed1f3904fc722d0cc18",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case3-step19.json",
+    "case": 3},
+   "smallest_margin": 125,
+   "contract_hash":
+   "da2be219ddbbd38582cdfa04cdcc041b5c49c49ac4c6bb93a9dfcde05443bea4",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "3e6d2fbdaf7fcd20b2172c384af4b7c72c7edc664f0a086019af4f1db50045a3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case6-step0.json",
+    "case": 6},
+   "smallest_margin": 125,
+   "contract_hash":
+   "c47205bed339005af08c07615ba3267b1e1364f52f7e35745eaa879e3ee49e9b",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+   "smallest_margin_case":
+   {"step": 2,
+    "sha256":
+    "2f013ffef1a316466ea16e6270de32d3ad66fa84bf00c5f8bea19e65d50f5356",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case5-step2.json",
+    "case": 5},
+   "smallest_margin": 125,
+   "contract_hash":
+   "18517c24c3b11efe5510371b4e58051211f9f0468c0cdb23ef30871f6b6fd95b",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "85ad6d9412f32cb947c8059bf21526be838b724d3fb5fcb034da8ea10c68ce7b",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "7e4d6f39286a8acd01b863199c171ed40f0403adeccea3aa8fb845e5b5553d1d",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "9a975ed6cc5fe8c84c8ecbb64af20b4eab533132173727c7b260003427d709ba",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "048f5f35914d7b111ce616a6a1a9a3ad28b161047a7b23d6a9db5e3ec044d6bb",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0e61909e55c1d0fb5cad868b168d2b79d8d1fdd0540d3b9deab37bcb7777c9ab",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "d26c297a359487e3bf9b8794786632f197801808838e615ee3cad4d7528adb3b",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "a8fdfdd395059fa30dc315dda7c4aa0ac7e1eb5056e02c2905c2b90f3133ee07",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "a21c3c4198ca07b61f35d070dcd103164c4e7bf961c80e28ed68e11e8077b820",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+   "smallest_margin_case":
+   {"step": 5,
+    "sha256":
+    "451c182b5fe947f8e5602ed1b7f8a274fc5725853f22e6d42a2128b1aa6fcf09",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case2-step5.json",
+    "case": 2},
+   "smallest_margin": 125,
+   "contract_hash":
+   "7db2febb618e810667b88c82cca6a6d1773b779fc5c8762f2298a10c2630426b",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "b05b864c1b41a6c8a518182781b366b7854cf85e9e673d34d3a82ffc141392e3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c4ceb7fed6ea6cab47e9edcb2cde786fc2a76aeff9c438459105b1820b6e8f90",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "b05b864c1b41a6c8a518182781b366b7854cf85e9e673d34d3a82ffc141392e3",
+    "file":
+    "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "20044c8c30c2474028ef47580cec5fc767bf18bff085da1c65806fa572c22f32",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 3000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER -DMODULE_NAME=\"control_allocator\" (C: -std=gnu11 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER)",
+ "coverage":
+ {"torque_not_achieved":
+  {"true_steps": 884,
+   "text":
+   "control_allocator_status_updated ∧ ¬control_allocator_status_torque_setpoint_achieved"},
+  "motors_published":
+  {"true_steps": 864, "text": "actuator_motors_updated = true"},
+  "four_motors_finite":
+  {"true_steps": 1049,
+   "text":
+   "finite(actuator_motors_control_0) ∧ finite(actuator_motors_control_1) ∧ finite(actuator_motors_control_2) ∧ finite(actuator_motors_control_3)"},
+  "a_motor_saturated":
+  {"true_steps": 427,
+   "text":
+   "actuator_motors_control_0 = 1 ∨ actuator_motors_control_1 = 1 ∨ actuator_motors_control_2 = 1 ∨ actuator_motors_control_3 = 1"}},
+ "compiler":
+ "Apple clang version 17.0.0 (clang-1700.6.4.2); Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+ "code_hash":
+ "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+ "cases_skipped": 0,
+ "cases": 30,
+ "assume":
+ ["width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "width_failure_detector_status_motor_failure_mask: 0 ≤ failure_detector_status_motor_failure_mask ∧ failure_detector_status_motor_failure_mask ≤ 65535",
+  "width_failure_detector_status_motor_stop_mask: 0 ≤ failure_detector_status_motor_stop_mask ∧ failure_detector_status_motor_stop_mask ≤ 65535",
+  "range_CA_AIRFRAME: CA_AIRFRAME = 0 ∨ CA_AIRFRAME = 1 ∨ CA_AIRFRAME = 2 ∨ CA_AIRFRAME = 3 ∨ CA_AIRFRAME = 4 ∨ CA_AIRFRAME = 5 ∨ CA_AIRFRAME = 6 ∨ CA_AIRFRAME = 7 ∨ CA_AIRFRAME = 8 ∨ CA_AIRFRAME = 9 ∨ CA_AIRFRAME = 10 ∨ CA_AIRFRAME = 11 ∨ CA_AIRFRAME = 12 ∨ CA_AIRFRAME = 13 ∨ CA_AIRFRAME = 14 ∨ CA_AIRFRAME = 15",
+  "range_CA_FAILURE_MODE: CA_FAILURE_MODE = 0 ∨ CA_FAILURE_MODE = 1",
+  "range_CA_HELI_PITCH_C0: -1 ≤ CA_HELI_PITCH_C0 ∧ CA_HELI_PITCH_C0 ≤ 1",
+  "range_CA_HELI_PITCH_C1: -1 ≤ CA_HELI_PITCH_C1 ∧ CA_HELI_PITCH_C1 ≤ 1",
+  "range_CA_HELI_PITCH_C2: -1 ≤ CA_HELI_PITCH_C2 ∧ CA_HELI_PITCH_C2 ≤ 1",
+  "range_CA_HELI_PITCH_C3: -1 ≤ CA_HELI_PITCH_C3 ∧ CA_HELI_PITCH_C3 ≤ 1",
+  "range_CA_HELI_PITCH_C4: -1 ≤ CA_HELI_PITCH_C4 ∧ CA_HELI_PITCH_C4 ≤ 1",
+  "range_CA_HELI_RPM_I: 0 ≤ CA_HELI_RPM_I ∧ CA_HELI_RPM_I ≤ 10",
+  "range_CA_HELI_RPM_P: 0 ≤ CA_HELI_RPM_P ∧ CA_HELI_RPM_P ≤ 10",
+  "range_CA_HELI_RPM_SP: 100 ≤ CA_HELI_RPM_SP ∧ CA_HELI_RPM_SP ≤ 10000",
+  "range_CA_HELI_THR_C0: 0 ≤ CA_HELI_THR_C0 ∧ CA_HELI_THR_C0 ≤ 1",
+  "range_CA_HELI_THR_C1: 0 ≤ CA_HELI_THR_C1 ∧ CA_HELI_THR_C1 ≤ 1",
+  "range_CA_HELI_THR_C2: 0 ≤ CA_HELI_THR_C2 ∧ CA_HELI_THR_C2 ≤ 1",
+  "range_CA_HELI_THR_C3: 0 ≤ CA_HELI_THR_C3 ∧ CA_HELI_THR_C3 ≤ 1",
+  "range_CA_HELI_THR_C4: 0 ≤ CA_HELI_THR_C4 ∧ CA_HELI_THR_C4 ≤ 1",
+  "range_CA_HELI_YAW_CCW: CA_HELI_YAW_CCW = 0 ∨ CA_HELI_YAW_CCW = 1",
+  "range_CA_HELI_YAW_CP_O: -2 ≤ CA_HELI_YAW_CP_O ∧ CA_HELI_YAW_CP_O ≤ 2",
+  "range_CA_HELI_YAW_CP_S: -2 ≤ CA_HELI_YAW_CP_S ∧ CA_HELI_YAW_CP_S ≤ 2",
+  "range_CA_HELI_YAW_TH_S: -2 ≤ CA_HELI_YAW_TH_S ∧ CA_HELI_YAW_TH_S ≤ 2",
+  "range_CA_MAX_SVO_THROW: 0 ≤ CA_MAX_SVO_THROW ∧ CA_MAX_SVO_THROW ≤ 75",
+  "range_CA_METHOD: CA_METHOD = 0 ∨ CA_METHOD = 1 ∨ CA_METHOD = 2",
+  "range_CA_R0_SLEW: 0 ≤ CA_R0_SLEW ∧ CA_R0_SLEW ≤ 10",
+  "range_CA_R10_SLEW: 0 ≤ CA_R10_SLEW ∧ CA_R10_SLEW ≤ 10",
+  "range_CA_R11_SLEW: 0 ≤ CA_R11_SLEW ∧ CA_R11_SLEW ≤ 10",
+  "range_CA_R1_SLEW: 0 ≤ CA_R1_SLEW ∧ CA_R1_SLEW ≤ 10",
+  "range_CA_R2_SLEW: 0 ≤ CA_R2_SLEW ∧ CA_R2_SLEW ≤ 10",
+  "range_CA_R3_SLEW: 0 ≤ CA_R3_SLEW ∧ CA_R3_SLEW ≤ 10",
+  "range_CA_R4_SLEW: 0 ≤ CA_R4_SLEW ∧ CA_R4_SLEW ≤ 10",
+  "range_CA_R5_SLEW: 0 ≤ CA_R5_SLEW ∧ CA_R5_SLEW ≤ 10",
+  "range_CA_R6_SLEW: 0 ≤ CA_R6_SLEW ∧ CA_R6_SLEW ≤ 10",
+  "range_CA_R7_SLEW: 0 ≤ CA_R7_SLEW ∧ CA_R7_SLEW ≤ 10",
+  "range_CA_R8_SLEW: 0 ≤ CA_R8_SLEW ∧ CA_R8_SLEW ≤ 10",
+  "range_CA_R9_SLEW: 0 ≤ CA_R9_SLEW ∧ CA_R9_SLEW ≤ 10",
+  "range_CA_ROTOR0_AX: -100 ≤ CA_ROTOR0_AX ∧ CA_ROTOR0_AX ≤ 100",
+  "range_CA_ROTOR0_AY: -100 ≤ CA_ROTOR0_AY ∧ CA_ROTOR0_AY ≤ 100",
+  "range_CA_ROTOR0_AZ: -100 ≤ CA_ROTOR0_AZ ∧ CA_ROTOR0_AZ ≤ 100",
+  "range_CA_ROTOR0_CT: 0 ≤ CA_ROTOR0_CT ∧ CA_ROTOR0_CT ≤ 100",
+  "range_CA_ROTOR0_KM: -1 ≤ CA_ROTOR0_KM ∧ CA_ROTOR0_KM ≤ 1",
+  "range_CA_ROTOR0_PX: -100 ≤ CA_ROTOR0_PX ∧ CA_ROTOR0_PX ≤ 100",
+  "range_CA_ROTOR0_PY: -100 ≤ CA_ROTOR0_PY ∧ CA_ROTOR0_PY ≤ 100",
+  "range_CA_ROTOR0_PZ: -100 ≤ CA_ROTOR0_PZ ∧ CA_ROTOR0_PZ ≤ 100",
+  "range_CA_ROTOR0_TILT: CA_ROTOR0_TILT = 0 ∨ CA_ROTOR0_TILT = 1 ∨ CA_ROTOR0_TILT = 2 ∨ CA_ROTOR0_TILT = 3 ∨ CA_ROTOR0_TILT = 4",
+  "range_CA_ROTOR10_AX: -100 ≤ CA_ROTOR10_AX ∧ CA_ROTOR10_AX ≤ 100",
+  "range_CA_ROTOR10_AY: -100 ≤ CA_ROTOR10_AY ∧ CA_ROTOR10_AY ≤ 100",
+  "range_CA_ROTOR10_AZ: -100 ≤ CA_ROTOR10_AZ ∧ CA_ROTOR10_AZ ≤ 100",
+  "range_CA_ROTOR10_CT: 0 ≤ CA_ROTOR10_CT ∧ CA_ROTOR10_CT ≤ 100",
+  "range_CA_ROTOR10_KM: -1 ≤ CA_ROTOR10_KM ∧ CA_ROTOR10_KM ≤ 1",
+  "range_CA_ROTOR10_PX: -100 ≤ CA_ROTOR10_PX ∧ CA_ROTOR10_PX ≤ 100",
+  "range_CA_ROTOR10_PY: -100 ≤ CA_ROTOR10_PY ∧ CA_ROTOR10_PY ≤ 100",
+  "range_CA_ROTOR10_PZ: -100 ≤ CA_ROTOR10_PZ ∧ CA_ROTOR10_PZ ≤ 100",
+  "range_CA_ROTOR10_TILT: CA_ROTOR10_TILT = 0 ∨ CA_ROTOR10_TILT = 1 ∨ CA_ROTOR10_TILT = 2 ∨ CA_ROTOR10_TILT = 3 ∨ CA_ROTOR10_TILT = 4",
+  "range_CA_ROTOR11_AX: -100 ≤ CA_ROTOR11_AX ∧ CA_ROTOR11_AX ≤ 100",
+  "range_CA_ROTOR11_AY: -100 ≤ CA_ROTOR11_AY ∧ CA_ROTOR11_AY ≤ 100",
+  "range_CA_ROTOR11_AZ: -100 ≤ CA_ROTOR11_AZ ∧ CA_ROTOR11_AZ ≤ 100",
+  "range_CA_ROTOR11_CT: 0 ≤ CA_ROTOR11_CT ∧ CA_ROTOR11_CT ≤ 100",
+  "range_CA_ROTOR11_KM: -1 ≤ CA_ROTOR11_KM ∧ CA_ROTOR11_KM ≤ 1",
+  "range_CA_ROTOR11_PX: -100 ≤ CA_ROTOR11_PX ∧ CA_ROTOR11_PX ≤ 100",
+  "range_CA_ROTOR11_PY: -100 ≤ CA_ROTOR11_PY ∧ CA_ROTOR11_PY ≤ 100",
+  "range_CA_ROTOR11_PZ: -100 ≤ CA_ROTOR11_PZ ∧ CA_ROTOR11_PZ ≤ 100",
+  "range_CA_ROTOR11_TILT: CA_ROTOR11_TILT = 0 ∨ CA_ROTOR11_TILT = 1 ∨ CA_ROTOR11_TILT = 2 ∨ CA_ROTOR11_TILT = 3 ∨ CA_ROTOR11_TILT = 4",
+  "range_CA_ROTOR1_AX: -100 ≤ CA_ROTOR1_AX ∧ CA_ROTOR1_AX ≤ 100",
+  "range_CA_ROTOR1_AY: -100 ≤ CA_ROTOR1_AY ∧ CA_ROTOR1_AY ≤ 100",
+  "range_CA_ROTOR1_AZ: -100 ≤ CA_ROTOR1_AZ ∧ CA_ROTOR1_AZ ≤ 100",
+  "range_CA_ROTOR1_CT: 0 ≤ CA_ROTOR1_CT ∧ CA_ROTOR1_CT ≤ 100",
+  "range_CA_ROTOR1_KM: -1 ≤ CA_ROTOR1_KM ∧ CA_ROTOR1_KM ≤ 1",
+  "range_CA_ROTOR1_PX: -100 ≤ CA_ROTOR1_PX ∧ CA_ROTOR1_PX ≤ 100",
+  "range_CA_ROTOR1_PY: -100 ≤ CA_ROTOR1_PY ∧ CA_ROTOR1_PY ≤ 100",
+  "range_CA_ROTOR1_PZ: -100 ≤ CA_ROTOR1_PZ ∧ CA_ROTOR1_PZ ≤ 100",
+  "range_CA_ROTOR1_TILT: CA_ROTOR1_TILT = 0 ∨ CA_ROTOR1_TILT = 1 ∨ CA_ROTOR1_TILT = 2 ∨ CA_ROTOR1_TILT = 3 ∨ CA_ROTOR1_TILT = 4",
+  "range_CA_ROTOR2_AX: -100 ≤ CA_ROTOR2_AX ∧ CA_ROTOR2_AX ≤ 100",
+  "range_CA_ROTOR2_AY: -100 ≤ CA_ROTOR2_AY ∧ CA_ROTOR2_AY ≤ 100",
+  "range_CA_ROTOR2_AZ: -100 ≤ CA_ROTOR2_AZ ∧ CA_ROTOR2_AZ ≤ 100",
+  "range_CA_ROTOR2_CT: 0 ≤ CA_ROTOR2_CT ∧ CA_ROTOR2_CT ≤ 100",
+  "range_CA_ROTOR2_KM: -1 ≤ CA_ROTOR2_KM ∧ CA_ROTOR2_KM ≤ 1",
+  "range_CA_ROTOR2_PX: -100 ≤ CA_ROTOR2_PX ∧ CA_ROTOR2_PX ≤ 100",
+  "range_CA_ROTOR2_PY: -100 ≤ CA_ROTOR2_PY ∧ CA_ROTOR2_PY ≤ 100",
+  "range_CA_ROTOR2_PZ: -100 ≤ CA_ROTOR2_PZ ∧ CA_ROTOR2_PZ ≤ 100",
+  "range_CA_ROTOR2_TILT: CA_ROTOR2_TILT = 0 ∨ CA_ROTOR2_TILT = 1 ∨ CA_ROTOR2_TILT = 2 ∨ CA_ROTOR2_TILT = 3 ∨ CA_ROTOR2_TILT = 4",
+  "range_CA_ROTOR3_AX: -100 ≤ CA_ROTOR3_AX ∧ CA_ROTOR3_AX ≤ 100",
+  "range_CA_ROTOR3_AY: -100 ≤ CA_ROTOR3_AY ∧ CA_ROTOR3_AY ≤ 100",
+  "range_CA_ROTOR3_AZ: -100 ≤ CA_ROTOR3_AZ ∧ CA_ROTOR3_AZ ≤ 100",
+  "range_CA_ROTOR3_CT: 0 ≤ CA_ROTOR3_CT ∧ CA_ROTOR3_CT ≤ 100",
+  "range_CA_ROTOR3_KM: -1 ≤ CA_ROTOR3_KM ∧ CA_ROTOR3_KM ≤ 1",
+  "range_CA_ROTOR3_PX: -100 ≤ CA_ROTOR3_PX ∧ CA_ROTOR3_PX ≤ 100",
+  "range_CA_ROTOR3_PY: -100 ≤ CA_ROTOR3_PY ∧ CA_ROTOR3_PY ≤ 100",
+  "range_CA_ROTOR3_PZ: -100 ≤ CA_ROTOR3_PZ ∧ CA_ROTOR3_PZ ≤ 100",
+  "range_CA_ROTOR3_TILT: CA_ROTOR3_TILT = 0 ∨ CA_ROTOR3_TILT = 1 ∨ CA_ROTOR3_TILT = 2 ∨ CA_ROTOR3_TILT = 3 ∨ CA_ROTOR3_TILT = 4",
+  "range_CA_ROTOR4_AX: -100 ≤ CA_ROTOR4_AX ∧ CA_ROTOR4_AX ≤ 100",
+  "range_CA_ROTOR4_AY: -100 ≤ CA_ROTOR4_AY ∧ CA_ROTOR4_AY ≤ 100",
+  "range_CA_ROTOR4_AZ: -100 ≤ CA_ROTOR4_AZ ∧ CA_ROTOR4_AZ ≤ 100",
+  "range_CA_ROTOR4_CT: 0 ≤ CA_ROTOR4_CT ∧ CA_ROTOR4_CT ≤ 100",
+  "range_CA_ROTOR4_KM: -1 ≤ CA_ROTOR4_KM ∧ CA_ROTOR4_KM ≤ 1",
+  "range_CA_ROTOR4_PX: -100 ≤ CA_ROTOR4_PX ∧ CA_ROTOR4_PX ≤ 100",
+  "range_CA_ROTOR4_PY: -100 ≤ CA_ROTOR4_PY ∧ CA_ROTOR4_PY ≤ 100",
+  "range_CA_ROTOR4_PZ: -100 ≤ CA_ROTOR4_PZ ∧ CA_ROTOR4_PZ ≤ 100",
+  "range_CA_ROTOR4_TILT: CA_ROTOR4_TILT = 0 ∨ CA_ROTOR4_TILT = 1 ∨ CA_ROTOR4_TILT = 2 ∨ CA_ROTOR4_TILT = 3 ∨ CA_ROTOR4_TILT = 4",
+  "range_CA_ROTOR5_AX: -100 ≤ CA_ROTOR5_AX ∧ CA_ROTOR5_AX ≤ 100",
+  "range_CA_ROTOR5_AY: -100 ≤ CA_ROTOR5_AY ∧ CA_ROTOR5_AY ≤ 100",
+  "range_CA_ROTOR5_AZ: -100 ≤ CA_ROTOR5_AZ ∧ CA_ROTOR5_AZ ≤ 100",
+  "range_CA_ROTOR5_CT: 0 ≤ CA_ROTOR5_CT ∧ CA_ROTOR5_CT ≤ 100",
+  "range_CA_ROTOR5_KM: -1 ≤ CA_ROTOR5_KM ∧ CA_ROTOR5_KM ≤ 1",
+  "range_CA_ROTOR5_PX: -100 ≤ CA_ROTOR5_PX ∧ CA_ROTOR5_PX ≤ 100",
+  "range_CA_ROTOR5_PY: -100 ≤ CA_ROTOR5_PY ∧ CA_ROTOR5_PY ≤ 100",
+  "range_CA_ROTOR5_PZ: -100 ≤ CA_ROTOR5_PZ ∧ CA_ROTOR5_PZ ≤ 100",
+  "range_CA_ROTOR5_TILT: CA_ROTOR5_TILT = 0 ∨ CA_ROTOR5_TILT = 1 ∨ CA_ROTOR5_TILT = 2 ∨ CA_ROTOR5_TILT = 3 ∨ CA_ROTOR5_TILT = 4",
+  "range_CA_ROTOR6_AX: -100 ≤ CA_ROTOR6_AX ∧ CA_ROTOR6_AX ≤ 100",
+  "range_CA_ROTOR6_AY: -100 ≤ CA_ROTOR6_AY ∧ CA_ROTOR6_AY ≤ 100",
+  "range_CA_ROTOR6_AZ: -100 ≤ CA_ROTOR6_AZ ∧ CA_ROTOR6_AZ ≤ 100",
+  "range_CA_ROTOR6_CT: 0 ≤ CA_ROTOR6_CT ∧ CA_ROTOR6_CT ≤ 100",
+  "range_CA_ROTOR6_KM: -1 ≤ CA_ROTOR6_KM ∧ CA_ROTOR6_KM ≤ 1",
+  "range_CA_ROTOR6_PX: -100 ≤ CA_ROTOR6_PX ∧ CA_ROTOR6_PX ≤ 100",
+  "range_CA_ROTOR6_PY: -100 ≤ CA_ROTOR6_PY ∧ CA_ROTOR6_PY ≤ 100",
+  "range_CA_ROTOR6_PZ: -100 ≤ CA_ROTOR6_PZ ∧ CA_ROTOR6_PZ ≤ 100",
+  "range_CA_ROTOR6_TILT: CA_ROTOR6_TILT = 0 ∨ CA_ROTOR6_TILT = 1 ∨ CA_ROTOR6_TILT = 2 ∨ CA_ROTOR6_TILT = 3 ∨ CA_ROTOR6_TILT = 4",
+  "range_CA_ROTOR7_AX: -100 ≤ CA_ROTOR7_AX ∧ CA_ROTOR7_AX ≤ 100",
+  "range_CA_ROTOR7_AY: -100 ≤ CA_ROTOR7_AY ∧ CA_ROTOR7_AY ≤ 100",
+  "range_CA_ROTOR7_AZ: -100 ≤ CA_ROTOR7_AZ ∧ CA_ROTOR7_AZ ≤ 100",
+  "range_CA_ROTOR7_CT: 0 ≤ CA_ROTOR7_CT ∧ CA_ROTOR7_CT ≤ 100",
+  "range_CA_ROTOR7_KM: -1 ≤ CA_ROTOR7_KM ∧ CA_ROTOR7_KM ≤ 1",
+  "range_CA_ROTOR7_PX: -100 ≤ CA_ROTOR7_PX ∧ CA_ROTOR7_PX ≤ 100",
+  "range_CA_ROTOR7_PY: -100 ≤ CA_ROTOR7_PY ∧ CA_ROTOR7_PY ≤ 100",
+  "range_CA_ROTOR7_PZ: -100 ≤ CA_ROTOR7_PZ ∧ CA_ROTOR7_PZ ≤ 100",
+  "range_CA_ROTOR7_TILT: CA_ROTOR7_TILT = 0 ∨ CA_ROTOR7_TILT = 1 ∨ CA_ROTOR7_TILT = 2 ∨ CA_ROTOR7_TILT = 3 ∨ CA_ROTOR7_TILT = 4",
+  "range_CA_ROTOR8_AX: -100 ≤ CA_ROTOR8_AX ∧ CA_ROTOR8_AX ≤ 100",
+  "range_CA_ROTOR8_AY: -100 ≤ CA_ROTOR8_AY ∧ CA_ROTOR8_AY ≤ 100",
+  "range_CA_ROTOR8_AZ: -100 ≤ CA_ROTOR8_AZ ∧ CA_ROTOR8_AZ ≤ 100",
+  "range_CA_ROTOR8_CT: 0 ≤ CA_ROTOR8_CT ∧ CA_ROTOR8_CT ≤ 100",
+  "range_CA_ROTOR8_KM: -1 ≤ CA_ROTOR8_KM ∧ CA_ROTOR8_KM ≤ 1",
+  "range_CA_ROTOR8_PX: -100 ≤ CA_ROTOR8_PX ∧ CA_ROTOR8_PX ≤ 100",
+  "range_CA_ROTOR8_PY: -100 ≤ CA_ROTOR8_PY ∧ CA_ROTOR8_PY ≤ 100",
+  "range_CA_ROTOR8_PZ: -100 ≤ CA_ROTOR8_PZ ∧ CA_ROTOR8_PZ ≤ 100",
+  "range_CA_ROTOR8_TILT: CA_ROTOR8_TILT = 0 ∨ CA_ROTOR8_TILT = 1 ∨ CA_ROTOR8_TILT = 2 ∨ CA_ROTOR8_TILT = 3 ∨ CA_ROTOR8_TILT = 4",
+  "range_CA_ROTOR9_AX: -100 ≤ CA_ROTOR9_AX ∧ CA_ROTOR9_AX ≤ 100",
+  "range_CA_ROTOR9_AY: -100 ≤ CA_ROTOR9_AY ∧ CA_ROTOR9_AY ≤ 100",
+  "range_CA_ROTOR9_AZ: -100 ≤ CA_ROTOR9_AZ ∧ CA_ROTOR9_AZ ≤ 100",
+  "range_CA_ROTOR9_CT: 0 ≤ CA_ROTOR9_CT ∧ CA_ROTOR9_CT ≤ 100",
+  "range_CA_ROTOR9_KM: -1 ≤ CA_ROTOR9_KM ∧ CA_ROTOR9_KM ≤ 1",
+  "range_CA_ROTOR9_PX: -100 ≤ CA_ROTOR9_PX ∧ CA_ROTOR9_PX ≤ 100",
+  "range_CA_ROTOR9_PY: -100 ≤ CA_ROTOR9_PY ∧ CA_ROTOR9_PY ≤ 100",
+  "range_CA_ROTOR9_PZ: -100 ≤ CA_ROTOR9_PZ ∧ CA_ROTOR9_PZ ≤ 100",
+  "range_CA_ROTOR9_TILT: CA_ROTOR9_TILT = 0 ∨ CA_ROTOR9_TILT = 1 ∨ CA_ROTOR9_TILT = 2 ∨ CA_ROTOR9_TILT = 3 ∨ CA_ROTOR9_TILT = 4",
+  "range_CA_ROTOR_COUNT: CA_ROTOR_COUNT = 0 ∨ CA_ROTOR_COUNT = 1 ∨ CA_ROTOR_COUNT = 2 ∨ CA_ROTOR_COUNT = 3 ∨ CA_ROTOR_COUNT = 4 ∨ CA_ROTOR_COUNT = 5 ∨ CA_ROTOR_COUNT = 6 ∨ CA_ROTOR_COUNT = 7 ∨ CA_ROTOR_COUNT = 8 ∨ CA_ROTOR_COUNT = 9 ∨ CA_ROTOR_COUNT = 10 ∨ CA_ROTOR_COUNT = 11 ∨ CA_ROTOR_COUNT = 12",
+  "range_CA_R_REV: 0 ≤ CA_R_REV ∧ CA_R_REV ≤ 4095",
+  "range_CA_SP0_ANG0: 0 ≤ CA_SP0_ANG0 ∧ CA_SP0_ANG0 ≤ 360",
+  "range_CA_SP0_ANG1: 0 ≤ CA_SP0_ANG1 ∧ CA_SP0_ANG1 ≤ 360",
+  "range_CA_SP0_ANG2: 0 ≤ CA_SP0_ANG2 ∧ CA_SP0_ANG2 ≤ 360",
+  "range_CA_SP0_ANG3: 0 ≤ CA_SP0_ANG3 ∧ CA_SP0_ANG3 ≤ 360",
+  "range_CA_SP0_ARM_L0: 0 ≤ CA_SP0_ARM_L0 ∧ CA_SP0_ARM_L0 ≤ 10",
+  "range_CA_SP0_ARM_L1: 0 ≤ CA_SP0_ARM_L1 ∧ CA_SP0_ARM_L1 ≤ 10",
+  "range_CA_SP0_ARM_L2: 0 ≤ CA_SP0_ARM_L2 ∧ CA_SP0_ARM_L2 ≤ 10",
+  "range_CA_SP0_ARM_L3: 0 ≤ CA_SP0_ARM_L3 ∧ CA_SP0_ARM_L3 ≤ 10",
+  "range_CA_SP0_COUNT: CA_SP0_COUNT = 2 ∨ CA_SP0_COUNT = 3 ∨ CA_SP0_COUNT = 4",
+  "range_CA_SV0_SLEW: 0 ≤ CA_SV0_SLEW ∧ CA_SV0_SLEW ≤ 10",
+  "range_CA_SV1_SLEW: 0 ≤ CA_SV1_SLEW ∧ CA_SV1_SLEW ≤ 10",
+  "range_CA_SV2_SLEW: 0 ≤ CA_SV2_SLEW ∧ CA_SV2_SLEW ≤ 10",
+  "range_CA_SV3_SLEW: 0 ≤ CA_SV3_SLEW ∧ CA_SV3_SLEW ≤ 10",
+  "range_CA_SV4_SLEW: 0 ≤ CA_SV4_SLEW ∧ CA_SV4_SLEW ≤ 10",
+  "range_CA_SV5_SLEW: 0 ≤ CA_SV5_SLEW ∧ CA_SV5_SLEW ≤ 10",
+  "range_CA_SV6_SLEW: 0 ≤ CA_SV6_SLEW ∧ CA_SV6_SLEW ≤ 10",
+  "range_CA_SV7_SLEW: 0 ≤ CA_SV7_SLEW ∧ CA_SV7_SLEW ≤ 10",
+  "range_CA_SV_CS0_FLAP: -1 ≤ CA_SV_CS0_FLAP ∧ CA_SV_CS0_FLAP ≤ 1",
+  "range_CA_SV_CS0_SPOIL: -1 ≤ CA_SV_CS0_SPOIL ∧ CA_SV_CS0_SPOIL ≤ 1",
+  "range_CA_SV_CS0_TRIM: -1 ≤ CA_SV_CS0_TRIM ∧ CA_SV_CS0_TRIM ≤ 1",
+  "range_CA_SV_CS0_TYPE: CA_SV_CS0_TYPE = 0 ∨ CA_SV_CS0_TYPE = 1 ∨ CA_SV_CS0_TYPE = 2 ∨ CA_SV_CS0_TYPE = 3 ∨ CA_SV_CS0_TYPE = 4 ∨ CA_SV_CS0_TYPE = 5 ∨ CA_SV_CS0_TYPE = 6 ∨ CA_SV_CS0_TYPE = 7 ∨ CA_SV_CS0_TYPE = 8 ∨ CA_SV_CS0_TYPE = 9 ∨ CA_SV_CS0_TYPE = 10 ∨ CA_SV_CS0_TYPE = 11 ∨ CA_SV_CS0_TYPE = 12 ∨ CA_SV_CS0_TYPE = 13 ∨ CA_SV_CS0_TYPE = 14 ∨ CA_SV_CS0_TYPE = 15 ∨ CA_SV_CS0_TYPE = 16 ∨ CA_SV_CS0_TYPE = 17 ∨ CA_SV_CS0_TYPE = 18",
+  "range_CA_SV_CS1_FLAP: -1 ≤ CA_SV_CS1_FLAP ∧ CA_SV_CS1_FLAP ≤ 1",
+  "range_CA_SV_CS1_SPOIL: -1 ≤ CA_SV_CS1_SPOIL ∧ CA_SV_CS1_SPOIL ≤ 1",
+  "range_CA_SV_CS1_TRIM: -1 ≤ CA_SV_CS1_TRIM ∧ CA_SV_CS1_TRIM ≤ 1",
+  "range_CA_SV_CS1_TYPE: CA_SV_CS1_TYPE = 0 ∨ CA_SV_CS1_TYPE = 1 ∨ CA_SV_CS1_TYPE = 2 ∨ CA_SV_CS1_TYPE = 3 ∨ CA_SV_CS1_TYPE = 4 ∨ CA_SV_CS1_TYPE = 5 ∨ CA_SV_CS1_TYPE = 6 ∨ CA_SV_CS1_TYPE = 7 ∨ CA_SV_CS1_TYPE = 8 ∨ CA_SV_CS1_TYPE = 9 ∨ CA_SV_CS1_TYPE = 10 ∨ CA_SV_CS1_TYPE = 11 ∨ CA_SV_CS1_TYPE = 12 ∨ CA_SV_CS1_TYPE = 13 ∨ CA_SV_CS1_TYPE = 14 ∨ CA_SV_CS1_TYPE = 15 ∨ CA_SV_CS1_TYPE = 16 ∨ CA_SV_CS1_TYPE = 17 ∨ CA_SV_CS1_TYPE = 18",
+  "range_CA_SV_CS2_FLAP: -1 ≤ CA_SV_CS2_FLAP ∧ CA_SV_CS2_FLAP ≤ 1",
+  "range_CA_SV_CS2_SPOIL: -1 ≤ CA_SV_CS2_SPOIL ∧ CA_SV_CS2_SPOIL ≤ 1",
+  "range_CA_SV_CS2_TRIM: -1 ≤ CA_SV_CS2_TRIM ∧ CA_SV_CS2_TRIM ≤ 1",
+  "range_CA_SV_CS2_TYPE: CA_SV_CS2_TYPE = 0 ∨ CA_SV_CS2_TYPE = 1 ∨ CA_SV_CS2_TYPE = 2 ∨ CA_SV_CS2_TYPE = 3 ∨ CA_SV_CS2_TYPE = 4 ∨ CA_SV_CS2_TYPE = 5 ∨ CA_SV_CS2_TYPE = 6 ∨ CA_SV_CS2_TYPE = 7 ∨ CA_SV_CS2_TYPE = 8 ∨ CA_SV_CS2_TYPE = 9 ∨ CA_SV_CS2_TYPE = 10 ∨ CA_SV_CS2_TYPE = 11 ∨ CA_SV_CS2_TYPE = 12 ∨ CA_SV_CS2_TYPE = 13 ∨ CA_SV_CS2_TYPE = 14 ∨ CA_SV_CS2_TYPE = 15 ∨ CA_SV_CS2_TYPE = 16 ∨ CA_SV_CS2_TYPE = 17 ∨ CA_SV_CS2_TYPE = 18",
+  "range_CA_SV_CS3_FLAP: -1 ≤ CA_SV_CS3_FLAP ∧ CA_SV_CS3_FLAP ≤ 1",
+  "range_CA_SV_CS3_SPOIL: -1 ≤ CA_SV_CS3_SPOIL ∧ CA_SV_CS3_SPOIL ≤ 1",
+  "range_CA_SV_CS3_TRIM: -1 ≤ CA_SV_CS3_TRIM ∧ CA_SV_CS3_TRIM ≤ 1",
+  "range_CA_SV_CS3_TYPE: CA_SV_CS3_TYPE = 0 ∨ CA_SV_CS3_TYPE = 1 ∨ CA_SV_CS3_TYPE = 2 ∨ CA_SV_CS3_TYPE = 3 ∨ CA_SV_CS3_TYPE = 4 ∨ CA_SV_CS3_TYPE = 5 ∨ CA_SV_CS3_TYPE = 6 ∨ CA_SV_CS3_TYPE = 7 ∨ CA_SV_CS3_TYPE = 8 ∨ CA_SV_CS3_TYPE = 9 ∨ CA_SV_CS3_TYPE = 10 ∨ CA_SV_CS3_TYPE = 11 ∨ CA_SV_CS3_TYPE = 12 ∨ CA_SV_CS3_TYPE = 13 ∨ CA_SV_CS3_TYPE = 14 ∨ CA_SV_CS3_TYPE = 15 ∨ CA_SV_CS3_TYPE = 16 ∨ CA_SV_CS3_TYPE = 17 ∨ CA_SV_CS3_TYPE = 18",
+  "range_CA_SV_CS4_FLAP: -1 ≤ CA_SV_CS4_FLAP ∧ CA_SV_CS4_FLAP ≤ 1",
+  "range_CA_SV_CS4_SPOIL: -1 ≤ CA_SV_CS4_SPOIL ∧ CA_SV_CS4_SPOIL ≤ 1",
+  "range_CA_SV_CS4_TRIM: -1 ≤ CA_SV_CS4_TRIM ∧ CA_SV_CS4_TRIM ≤ 1",
+  "range_CA_SV_CS4_TYPE: CA_SV_CS4_TYPE = 0 ∨ CA_SV_CS4_TYPE = 1 ∨ CA_SV_CS4_TYPE = 2 ∨ CA_SV_CS4_TYPE = 3 ∨ CA_SV_CS4_TYPE = 4 ∨ CA_SV_CS4_TYPE = 5 ∨ CA_SV_CS4_TYPE = 6 ∨ CA_SV_CS4_TYPE = 7 ∨ CA_SV_CS4_TYPE = 8 ∨ CA_SV_CS4_TYPE = 9 ∨ CA_SV_CS4_TYPE = 10 ∨ CA_SV_CS4_TYPE = 11 ∨ CA_SV_CS4_TYPE = 12 ∨ CA_SV_CS4_TYPE = 13 ∨ CA_SV_CS4_TYPE = 14 ∨ CA_SV_CS4_TYPE = 15 ∨ CA_SV_CS4_TYPE = 16 ∨ CA_SV_CS4_TYPE = 17 ∨ CA_SV_CS4_TYPE = 18",
+  "range_CA_SV_CS5_FLAP: -1 ≤ CA_SV_CS5_FLAP ∧ CA_SV_CS5_FLAP ≤ 1",
+  "range_CA_SV_CS5_SPOIL: -1 ≤ CA_SV_CS5_SPOIL ∧ CA_SV_CS5_SPOIL ≤ 1",
+  "range_CA_SV_CS5_TRIM: -1 ≤ CA_SV_CS5_TRIM ∧ CA_SV_CS5_TRIM ≤ 1",
+  "range_CA_SV_CS5_TYPE: CA_SV_CS5_TYPE = 0 ∨ CA_SV_CS5_TYPE = 1 ∨ CA_SV_CS5_TYPE = 2 ∨ CA_SV_CS5_TYPE = 3 ∨ CA_SV_CS5_TYPE = 4 ∨ CA_SV_CS5_TYPE = 5 ∨ CA_SV_CS5_TYPE = 6 ∨ CA_SV_CS5_TYPE = 7 ∨ CA_SV_CS5_TYPE = 8 ∨ CA_SV_CS5_TYPE = 9 ∨ CA_SV_CS5_TYPE = 10 ∨ CA_SV_CS5_TYPE = 11 ∨ CA_SV_CS5_TYPE = 12 ∨ CA_SV_CS5_TYPE = 13 ∨ CA_SV_CS5_TYPE = 14 ∨ CA_SV_CS5_TYPE = 15 ∨ CA_SV_CS5_TYPE = 16 ∨ CA_SV_CS5_TYPE = 17 ∨ CA_SV_CS5_TYPE = 18",
+  "range_CA_SV_CS6_FLAP: -1 ≤ CA_SV_CS6_FLAP ∧ CA_SV_CS6_FLAP ≤ 1",
+  "range_CA_SV_CS6_SPOIL: -1 ≤ CA_SV_CS6_SPOIL ∧ CA_SV_CS6_SPOIL ≤ 1",
+  "range_CA_SV_CS6_TRIM: -1 ≤ CA_SV_CS6_TRIM ∧ CA_SV_CS6_TRIM ≤ 1",
+  "range_CA_SV_CS6_TYPE: CA_SV_CS6_TYPE = 0 ∨ CA_SV_CS6_TYPE = 1 ∨ CA_SV_CS6_TYPE = 2 ∨ CA_SV_CS6_TYPE = 3 ∨ CA_SV_CS6_TYPE = 4 ∨ CA_SV_CS6_TYPE = 5 ∨ CA_SV_CS6_TYPE = 6 ∨ CA_SV_CS6_TYPE = 7 ∨ CA_SV_CS6_TYPE = 8 ∨ CA_SV_CS6_TYPE = 9 ∨ CA_SV_CS6_TYPE = 10 ∨ CA_SV_CS6_TYPE = 11 ∨ CA_SV_CS6_TYPE = 12 ∨ CA_SV_CS6_TYPE = 13 ∨ CA_SV_CS6_TYPE = 14 ∨ CA_SV_CS6_TYPE = 15 ∨ CA_SV_CS6_TYPE = 16 ∨ CA_SV_CS6_TYPE = 17 ∨ CA_SV_CS6_TYPE = 18",
+  "range_CA_SV_CS7_FLAP: -1 ≤ CA_SV_CS7_FLAP ∧ CA_SV_CS7_FLAP ≤ 1",
+  "range_CA_SV_CS7_SPOIL: -1 ≤ CA_SV_CS7_SPOIL ∧ CA_SV_CS7_SPOIL ≤ 1",
+  "range_CA_SV_CS7_TRIM: -1 ≤ CA_SV_CS7_TRIM ∧ CA_SV_CS7_TRIM ≤ 1",
+  "range_CA_SV_CS7_TYPE: CA_SV_CS7_TYPE = 0 ∨ CA_SV_CS7_TYPE = 1 ∨ CA_SV_CS7_TYPE = 2 ∨ CA_SV_CS7_TYPE = 3 ∨ CA_SV_CS7_TYPE = 4 ∨ CA_SV_CS7_TYPE = 5 ∨ CA_SV_CS7_TYPE = 6 ∨ CA_SV_CS7_TYPE = 7 ∨ CA_SV_CS7_TYPE = 8 ∨ CA_SV_CS7_TYPE = 9 ∨ CA_SV_CS7_TYPE = 10 ∨ CA_SV_CS7_TYPE = 11 ∨ CA_SV_CS7_TYPE = 12 ∨ CA_SV_CS7_TYPE = 13 ∨ CA_SV_CS7_TYPE = 14 ∨ CA_SV_CS7_TYPE = 15 ∨ CA_SV_CS7_TYPE = 16 ∨ CA_SV_CS7_TYPE = 17 ∨ CA_SV_CS7_TYPE = 18",
+  "range_CA_SV_CS_COUNT: CA_SV_CS_COUNT = 0 ∨ CA_SV_CS_COUNT = 1 ∨ CA_SV_CS_COUNT = 2 ∨ CA_SV_CS_COUNT = 3 ∨ CA_SV_CS_COUNT = 4 ∨ CA_SV_CS_COUNT = 5 ∨ CA_SV_CS_COUNT = 6 ∨ CA_SV_CS_COUNT = 7 ∨ CA_SV_CS_COUNT = 8",
+  "range_CA_SV_TL0_CT: CA_SV_TL0_CT = 0 ∨ CA_SV_TL0_CT = 1 ∨ CA_SV_TL0_CT = 2 ∨ CA_SV_TL0_CT = 3",
+  "range_CA_SV_TL0_MAXA: -90 ≤ CA_SV_TL0_MAXA ∧ CA_SV_TL0_MAXA ≤ 90",
+  "range_CA_SV_TL0_MINA: -90 ≤ CA_SV_TL0_MINA ∧ CA_SV_TL0_MINA ≤ 90",
+  "range_CA_SV_TL0_TD: 0 ≤ CA_SV_TL0_TD ∧ CA_SV_TL0_TD ≤ 359",
+  "range_CA_SV_TL1_CT: CA_SV_TL1_CT = 0 ∨ CA_SV_TL1_CT = 1 ∨ CA_SV_TL1_CT = 2 ∨ CA_SV_TL1_CT = 3",
+  "range_CA_SV_TL1_MAXA: -90 ≤ CA_SV_TL1_MAXA ∧ CA_SV_TL1_MAXA ≤ 90",
+  "range_CA_SV_TL1_MINA: -90 ≤ CA_SV_TL1_MINA ∧ CA_SV_TL1_MINA ≤ 90",
+  "range_CA_SV_TL1_TD: 0 ≤ CA_SV_TL1_TD ∧ CA_SV_TL1_TD ≤ 359",
+  "range_CA_SV_TL2_CT: CA_SV_TL2_CT = 0 ∨ CA_SV_TL2_CT = 1 ∨ CA_SV_TL2_CT = 2 ∨ CA_SV_TL2_CT = 3",
+  "range_CA_SV_TL2_MAXA: -90 ≤ CA_SV_TL2_MAXA ∧ CA_SV_TL2_MAXA ≤ 90",
+  "range_CA_SV_TL2_MINA: -90 ≤ CA_SV_TL2_MINA ∧ CA_SV_TL2_MINA ≤ 90",
+  "range_CA_SV_TL2_TD: 0 ≤ CA_SV_TL2_TD ∧ CA_SV_TL2_TD ≤ 359",
+  "range_CA_SV_TL3_CT: CA_SV_TL3_CT = 0 ∨ CA_SV_TL3_CT = 1 ∨ CA_SV_TL3_CT = 2 ∨ CA_SV_TL3_CT = 3",
+  "range_CA_SV_TL3_MAXA: -90 ≤ CA_SV_TL3_MAXA ∧ CA_SV_TL3_MAXA ≤ 90",
+  "range_CA_SV_TL3_MINA: -90 ≤ CA_SV_TL3_MINA ∧ CA_SV_TL3_MINA ≤ 90",
+  "range_CA_SV_TL3_TD: 0 ≤ CA_SV_TL3_TD ∧ CA_SV_TL3_TD ≤ 359",
+  "range_CA_SV_TL_COUNT: CA_SV_TL_COUNT = 0 ∨ CA_SV_TL_COUNT = 1 ∨ CA_SV_TL_COUNT = 2 ∨ CA_SV_TL_COUNT = 3 ∨ CA_SV_TL_COUNT = 4",
+  "range_COM_SPOOLUP_TIME: 0 ≤ COM_SPOOLUP_TIME ∧ COM_SPOOLUP_TIME ≤ 30",
+  "range_MC_AIRMODE: MC_AIRMODE = 0 ∨ MC_AIRMODE = 1 ∨ MC_AIRMODE = 2",
+  "airframe_allocated_here: ¬CA_AIRFRAME = 6 ∧ ¬CA_AIRFRAME = 15",
+  "actuators_fit: CA_ROTOR_COUNT + CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 16 ∧ CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 8"]}

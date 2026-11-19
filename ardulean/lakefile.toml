@@ -1,0 +1,54 @@
+# ArduLean: one Lake project for the flight code, the proofs about it, and the plant.
+name = "ardulean"
+defaultTargets = ["ardulean"]
+# An unknown name must be an error, not an auto-bound implicit argument. Mathlib's style linters (active through the
+# imports of Mathlib) do not apply to translated code, which keeps the C names (`Musl.sinf.sinf`, `__rem_pio2f`).
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false, weak.linter.dupNamespace = false, weak.linter.style.nameCheck = false }
+
+# FloatLib: IEEE 754 binary32 and binary64 in software, which the flight code computes with (so the C that Lean emits
+# has no floating-point arithmetic of its own).
+[[require]]
+name = "floatlib"
+git = "https://github.com/lean-dojo/FloatLib.git"
+rev = "acba2057e452f32f4ed4f06bb0adbeda5342ba92"
+
+# DynamicalSystems: existence of flows of Lipschitz fields, used by the plant. The last commit on its 4.35 line.
+[[require]]
+name = "DynamicalSystems"
+git = "https://github.com/mcdoll/DynamicalSystems"
+rev = "c2a753b74de172aacce2f4aae88b662f6c2cda05"
+
+# Mathlib last and pinned, so that its version wins over the ones FloatLib and DynamicalSystems ask for.
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.35.0"
+
+# The flight code (ArduLean/): Vehicle/ is ArduCopter and its libraries, translated (namespace Vehicle_lib), and
+# Estimator/ the sensor front ends, AP_AHRS and NavEKF3 (namespace Estimator_lib), both laid out after ArduPilot's
+# source tree (Vehicle/INDEX.md, Estimator/INDEX.md; tools/split_modules.py); Vehicle.lean and Estimator.lean import
+# all their modules. Musl/ is the C math library they call, translated; Runtime/ is what the code runs on (C's float
+# conversions, the byte memory, the hardware layer, the bridge between vehicle and estimator); Driver/ is support for
+# the executable. Vehicle/, Estimator/, Musl/ and Runtime/ are hash-guarded (Corpus/CODE.sha256,
+# tests/check_code_frozen.sh).
+[[lean_lib]]
+name = "ArduLean"
+globs = ["ArduLean.Vehicle", "ArduLean.Vehicle.+", "ArduLean.Estimator", "ArduLean.Estimator.+", "ArduLean.Musl.+",
+         "ArduLean.Runtime.+", "ArduLean.Driver.+"]
+
+# The executable (Main.lean): the vehicle on the lock-step boundary. It reads one input line per 400 Hz step (sensors,
+# RC, battery, uplink bytes) and writes one output line (motor PWM, downlink bytes); sim/harness/vehicle.py drives it.
+[[lean_exe]]
+name = "ardulean"
+root = "Main"
+
+# The proof corpus over the frozen flight code (Corpus/PLAN.md).
+[[lean_lib]]
+name = "Corpus"
+roots = ["Corpus"]
+
+# The plant: the X500's equations of motion and theorems about them (Plant/PLAN.md). Real-valued; imports nothing from
+# ArduLean or Corpus.
+[[lean_lib]]
+name = "Plant"
+roots = ["Plant"]

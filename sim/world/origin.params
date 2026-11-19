@@ -1,0 +1,4 @@
+# The geographic origin of the gorge world (world ENU (0, 0, 0)): Pikes Peak summit, Colorado
+# (38 deg 50' 26" N, 105 deg 2' 39" W, 4302 m AMSL), as exact decimals (read by geo.Origin.from_params into integers,
+# deg 1e7 and mm).
+ORIGIN  38.8405556  -105.0441667  4302

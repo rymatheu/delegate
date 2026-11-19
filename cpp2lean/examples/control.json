@@ -1,0 +1,17 @@
+{
+ "namespace": "Control",
+ "cpp2lean": ["--boundary", "Nav", "--boundary-query", "Nav::armed"],
+ "classes": [
+  {"class": "Hold",
+   "globals": ["static Nav nav_obj;   // the boundary object: the driver writes its inputs before each call"],
+   "boundary_args": ["nav_obj"],
+   "ctor": [],
+   "inputs": {"target.x": "nav_obj.tgt.x = %s;", "target.y": "nav_obj.tgt.y = %s;", "target.z": "nav_obj.tgt.z = %s;",
+              "armed": "nav_obj.on = %s;", "trim": "nav_obj.trim = %s;"},
+   "enum_leaves": true,
+   "ranges": {"dt": [0.0025, 0.004], "f": [0.5, 2], "x": [-10, 10], "y": [-10, 10], "target": [-10, 10], "trim": [-1, 1],
+              "c.angle": [-3.2, 3.2], "c.rate": [-5, 5]},
+   "weights": {"Hold.run": 8, "Hold.boost": 0.5},
+   "calls": 20000}
+ ]
+}

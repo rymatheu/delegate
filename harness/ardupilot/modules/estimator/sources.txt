@@ -1,0 +1,76 @@
+# ArduPilot sources compiled into the estimator module, relative to $ARDUPILOT_ROOT.
+# The front ends of the four sensors, the AHRS with its DCM and EKF3 backends, EKF3 and the data
+# abstraction layer it reads the sensors through, and the library code on their step paths.
+# The sensor back ends (drivers) are not here: backend_*.cpp in the module folder stand in for
+# ArduPilot's SITL drivers.
+libraries/AP_InertialSensor/AP_InertialSensor.cpp          # front end: init, gyro cal, update, wait_for_sample
+libraries/AP_InertialSensor/AP_InertialSensor_Backend.cpp  # the front-end half of a driver: filters, delta angles
+libraries/AP_InertialSensor/AP_InertialSensor_Params.cpp   # per-IMU parameters (offsets, scales, ids)
+libraries/AP_InertialSensor/AP_InertialSensor_tempcal.cpp  # temperature calibration (off by default)
+libraries/AP_InertialSensor/FastRateBuffer.cpp             # the fast-rate gyro buffer (FSTRATE_ENABLE 0)
+libraries/AP_Baro/AP_Baro.cpp                              # front end: init, calibrate, update, altitude
+libraries/AP_Baro/AP_Baro_Backend.cpp                      # the front-end half of a driver
+libraries/AP_Baro/AP_Baro_atmosphere.cpp                   # the 1976 atmosphere, EAS2TAS
+libraries/AP_Baro/AP_Baro_Wind.cpp                         # wind compensation (BARO1_WCF_)
+libraries/AP_Compass/AP_Compass.cpp                        # front end: init, read, declination
+libraries/AP_Compass/AP_Compass_Backend.cpp                # the front-end half of a driver: rotation, offsets
+libraries/AP_Compass/Compass_learn.cpp                     # in-flight offset learning (COMPASS_LEARN)
+libraries/AP_Compass/Compass_PerMotor.cpp                  # per-motor interference compensation
+libraries/AP_GPS/AP_GPS.cpp                                # front end: init, update, status
+libraries/AP_GPS/AP_GPS_Params.cpp                         # per-GPS parameters
+libraries/AP_GPS/GPS_Backend.cpp                           # the front-end half of a driver
+libraries/AP_GPS/AP_GPS_Blended.cpp                        # the blended virtual GPS (GPS_AUTO_SWITCH 2)
+libraries/AP_GPS/MovingBase.cpp                            # moving-baseline parameters (GPS1_MB_)
+libraries/AP_AHRS/AP_AHRS.cpp                              # the AHRS: update, accessors
+libraries/AP_AHRS/AP_AHRS_Backend.cpp                      # flags, view rotations
+libraries/AP_AHRS/AP_AHRS_DCM.cpp                          # DCM backend (runs before and beside EKF3)
+libraries/AP_AHRS/AP_AHRS_NavEKF3.cpp                      # the EKF3 backend
+libraries/AP_AHRS/AP_AHRS_View.cpp                         # an alternative attitude view (create_view)
+libraries/AP_NavEKF3/AP_NavEKF3.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_Control.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_GyroBias.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_MagFusion.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_Measurements.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_OptFlowFusion.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_Outputs.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_RngBcnFusion.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp
+libraries/AP_NavEKF3/AP_NavEKF3_core.cpp
+libraries/AP_NavEKF/AP_NavEKF_Source.cpp                   # EK3_SRC sensor-source selection
+libraries/AP_NavEKF/AP_NavEKF_core_common.cpp
+libraries/AP_NavEKF/EKFGSF_yaw.cpp                         # the Gaussian-sum yaw estimator
+libraries/AP_NavEKF/EKF_Buffer.cpp
+libraries/AP_DAL/AP_DAL.cpp                                # the data abstraction layer EKF3 reads
+libraries/AP_DAL/AP_DAL_InertialSensor.cpp
+libraries/AP_DAL/AP_DAL_Baro.cpp
+libraries/AP_DAL/AP_DAL_GPS.cpp
+libraries/AP_DAL/AP_DAL_Compass.cpp
+libraries/AP_DAL/AP_DAL_Airspeed.cpp                       # the optional sensors' DAL parts: allocated
+libraries/AP_DAL/AP_DAL_RangeFinder.cpp                    # only when the sensor exists (none here)
+libraries/AP_DAL/AP_DAL_Beacon.cpp
+libraries/AP_DAL/AP_DAL_VisualOdom.cpp
+libraries/AP_Declination/AP_Declination.cpp                # world magnetic model
+libraries/AP_Declination/tables.cpp
+libraries/AP_Param/AP_ParamT.cpp                           # AP_Param value setters (set_default, set_and_save, ...)
+libraries/AP_Math/AP_Math.cpp
+libraries/AP_Math/vector2.cpp
+libraries/AP_Math/vector3.cpp
+libraries/AP_Math/matrix3.cpp
+libraries/AP_Math/quaternion.cpp
+libraries/AP_Math/location.cpp
+libraries/AP_Math/location_double.cpp
+libraries/AP_Math/matrix_alg.cpp
+libraries/AP_Math/polyfit.cpp                              # temperature-calibration fit
+libraries/AP_Math/crc.cpp
+libraries/AP_RTC/JitterCorrection.cpp                      # GPS message timing
+libraries/AP_Common/Location.cpp
+libraries/AP_Common/AP_Common.cpp
+libraries/AP_Common/c++.cpp                                # ArduPilot's zero-filling operator new
+libraries/AP_HAL/utility/RingBuffer.cpp                    # ByteBuffer, held by AP_InertialSensor
+libraries/Filter/LowPassFilter.cpp
+libraries/Filter/LowPassFilter2p.cpp
+libraries/Filter/NotchFilter.cpp
+libraries/Filter/HarmonicNotchFilter.cpp
+libraries/Filter/DerivativeFilter.cpp

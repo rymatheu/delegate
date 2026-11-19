@@ -1,0 +1,74 @@
+# px4_fmm: PX4's flight mode manager (src/modules/flight_mode_manager) with every flight task of
+# the px4_sitl build, unmodified. Read by px4/ports.py and px4/build.sh. Paths relative
+# to $PX4_ROOT.
+main flight_mode_manager
+# FlightTasks_generated.{hpp,cpp}, made by PX4's generator with the task list of the module's
+# CMakeLists.txt (not a constrained-flash build, so AutoFollowTarget and Orbit are in)
+pygen src/modules/flight_mode_manager generate_flight_tasks.py -t Auto Descend Failsafe ManualAcceleration ManualAccelerationSlow ManualAltitude ManualAltitudeSmoothVel ManualPosition Transition AltitudeCruise AutoFollowTarget Orbit -i Templates -o {GEN} -f FlightTasks_generated.hpp FlightTasks_generated.cpp
+gensource FlightTasks_generated.cpp
+source src/modules/flight_mode_manager/FlightModeManager.cpp
+# the flight tasks and the libraries their CMakeLists.txt link
+source src/modules/flight_mode_manager/tasks/FlightTask/FlightTask.cpp
+source src/modules/flight_mode_manager/tasks/Utility/StickAccelerationXY.cpp src/modules/flight_mode_manager/tasks/Utility/StickTiltXY.cpp src/modules/flight_mode_manager/tasks/Utility/Gimbal.cpp
+source src/modules/flight_mode_manager/tasks/Auto/FlightTaskAuto.cpp src/modules/flight_mode_manager/tasks/Descend/FlightTaskDescend.cpp src/modules/flight_mode_manager/tasks/Failsafe/FlightTaskFailsafe.cpp
+source src/modules/flight_mode_manager/tasks/ManualAcceleration/FlightTaskManualAcceleration.cpp
+source src/modules/flight_mode_manager/tasks/ManualAccelerationSlow/FlightTaskManualAccelerationSlow.cpp
+source src/modules/flight_mode_manager/tasks/ManualAltitude/FlightTaskManualAltitude.cpp
+source src/modules/flight_mode_manager/tasks/ManualAltitudeSmoothVel/FlightTaskManualAltitudeSmoothVel.cpp
+source src/modules/flight_mode_manager/tasks/ManualPosition/FlightTaskManualPosition.cpp src/modules/flight_mode_manager/tasks/Transition/FlightTaskTransition.cpp
+source src/modules/flight_mode_manager/tasks/AltitudeCruise/FlightTaskAltitudeCruise.cpp src/modules/flight_mode_manager/tasks/Orbit/FlightTaskOrbit.cpp
+source src/modules/flight_mode_manager/tasks/AutoFollowTarget/FlightTaskAutoFollowTarget.cpp
+source src/modules/flight_mode_manager/tasks/AutoFollowTarget/follow_target_estimator/TargetEstimator.cpp
+source src/lib/sticks/Sticks.cpp src/lib/stick_yaw/StickYaw.cpp src/lib/weather_vane/WeatherVane.cpp
+source src/lib/collision_prevention/CollisionPrevention.cpp src/lib/collision_prevention/ObstacleMath.cpp
+source src/lib/motion_planning/HeadingSmoothing.cpp src/lib/motion_planning/PositionSmoothing.cpp
+source src/lib/motion_planning/VelocitySmoothing.cpp src/lib/motion_planning/ManualVelocitySmoothingXY.cpp
+source src/lib/motion_planning/ManualVelocitySmoothingZ.cpp src/lib/hysteresis/hysteresis.cpp
+source src/lib/geo/geo.cpp
+include src/modules/flight_mode_manager
+include src/modules/flight_mode_manager/tasks/FlightTask src/modules/flight_mode_manager/tasks/Utility src/modules/flight_mode_manager/tasks/Auto src/modules/flight_mode_manager/tasks/Descend src/modules/flight_mode_manager/tasks/Failsafe src/modules/flight_mode_manager/tasks/ManualAcceleration
+include src/modules/flight_mode_manager/tasks/ManualAccelerationSlow src/modules/flight_mode_manager/tasks/ManualAltitude src/modules/flight_mode_manager/tasks/ManualAltitudeSmoothVel src/modules/flight_mode_manager/tasks/ManualPosition
+include src/modules/flight_mode_manager/tasks/Transition src/modules/flight_mode_manager/tasks/AltitudeCruise src/modules/flight_mode_manager/tasks/Orbit src/modules/flight_mode_manager/tasks/AutoFollowTarget
+include src/modules/flight_mode_manager/tasks/AutoFollowTarget/follow_target_estimator src/lib/sticks src/lib/stick_yaw
+include src/lib/weather_vane src/lib/collision_prevention src/lib/motion_planning src/lib/slew_rate
+# parameters: the module's and its tasks' (PX4's scanner reads one directory, not below it), the
+# multicopter position control parameters the tasks read, and the libraries' and other modules'
+# they read by name
+params src/modules/flight_mode_manager
+params src/modules/flight_mode_manager/tasks/ManualAccelerationSlow
+params src/modules/flight_mode_manager/tasks/Orbit
+params src/modules/flight_mode_manager/tasks/AutoFollowTarget
+params src/modules/mc_pos_control
+params src/lib/weather_vane
+params src/lib/collision_prevention
+params src/modules/manual_control/manual_control_params.c MAN_DEADZONE
+params src/modules/mc_att_control/mc_att_control_params.c MC_MAN_TILT_TAU
+params src/modules/mavlink/mavlink_params.c MAV_SYS_ID MAV_COMP_ID
+params src/modules/navigator/mission_params.c MIS_YAW_ERR
+params src/modules/navigator/navigator_params.c NAV_MC_ALT_RAD
+# FlightTaskTransition reads these by name at construction (FlightTaskTransition.cpp)
+params src/modules/fw_att_control/fw_att_control_params.c FW_PSP_OFF
+params src/modules/vtol_att_control/vtol_att_control_params.c VT_B_DEC_I VT_B_DEC_MSS
+# the topics a multicopter's flight tasks read (FlightModeManager.hpp:141-150, the tasks, Sticks,
+# WeatherVane), except: parameter_update (fixed at init); follow_target, follow_target_estimator
+# and the gimbal topics, read only by AutoFollowTarget (nav state 19, excluded by the contract);
+# vehicle_attitude, obstacle_distance and distance_sensor, read only by CollisionPrevention, off
+# unless CP_DIST > 0 (excluded by the contract)
+sub vehicle_local_position                 # the trigger (SubscriptionCallbackWorkItem, at most 50 Hz)
+sub vehicle_control_mode
+sub vehicle_status
+sub vehicle_land_detected
+sub takeoff_status
+sub position_setpoint_triplet
+sub home_position
+sub vehicle_local_position_setpoint
+sub velocity_limits
+sub manual_control_setpoint
+sub failsafe_flags
+sub vehicle_attitude_setpoint
+sub vehicle_command slots 1                 # one command per tick (queued topic, ORB_QUEUE_LENGTH 8)
+# what it publishes for a multicopter (FlightModeManager.hpp:152-154); the tasks' orbit_status,
+# follow_target_status, gimbal_manager_set_attitude and vehicle_command stay on its bus
+pub trajectory_setpoint
+pub vehicle_constraints
+pub landing_gear

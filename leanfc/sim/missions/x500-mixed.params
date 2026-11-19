@@ -1,0 +1,11 @@
+# Test mission (overlay after params/x500.params): every transition between leg kinds once.
+#   W1 -> S2: Waypoint -> Spline, passed at speed     S2 -> S3: Spline -> Spline, passed
+#   S3 stop: a stop mark on a point that would be passed
+#   S3 -> S4: from rest                               S4 -> W5: Spline -> Waypoint, passed
+#   W5 -> W6: Waypoint -> Waypoint, a corner flown by stopping;  W6: the last waypoint, stop
+WAYPOINT  4  0  -2
+SPLINE    6  3  -2.5
+SPLINE    4  6  -3 stop
+SPLINE    0  6  -3
+WAYPOINT -2  3  -2.5
+WAYPOINT  0  0  -2

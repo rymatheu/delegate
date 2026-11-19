@@ -1,0 +1,506 @@
+{
+ "namespace": "Numeric",
+ "source": "examples/numeric.cpp",
+ "functions": [
+  {
+   "name": "constrain_float",
+   "lean": "Numeric.constrain_float",
+   "params": [
+    [
+     "amt",
+     "float"
+    ],
+    [
+     "low",
+     "float"
+    ],
+    [
+     "high",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:7-19"
+  },
+  {
+   "name": "is_zero",
+   "lean": "Numeric.is_zero",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "bool",
+   "source": "examples/numeric.cpp:22"
+  },
+  {
+   "name": "safe_sqrt",
+   "lean": "Numeric.safe_sqrt",
+   "params": [
+    [
+     "v",
+     "double"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:25-32"
+  },
+  {
+   "name": "thrust_curve",
+   "lean": "Numeric.thrust_curve",
+   "params": [
+    [
+     "thrust",
+     "float"
+    ],
+    [
+     "expo",
+     "float"
+    ],
+    [
+     "lift_max",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:36-44"
+  },
+  {
+   "name": "horner",
+   "lean": "Numeric.horner",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:49-56"
+  },
+  {
+   "name": "half_angle_sin",
+   "lean": "Numeric.half_angle_sin",
+   "params": [
+    [
+     "theta",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:59"
+  },
+  {
+   "name": "half_angle_sin_d",
+   "lean": "Numeric.half_angle_sin_d",
+   "params": [
+    [
+     "theta",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "examples/numeric.cpp:60"
+  },
+  {
+   "name": "clamp_steps",
+   "lean": "Numeric.clamp_steps",
+   "params": [
+    [
+     "n",
+     "int32_t"
+    ],
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "int32_t",
+   "source": "examples/numeric.cpp:63-79"
+  }
+ ],
+ "classes": [],
+ "enums": [],
+ "free": [
+  {
+   "cxx": "constrain_float",
+   "cxx_call": "constrain_float",
+   "lean": "Numeric.constrain_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "amt",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "low",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "high",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "is_zero",
+   "cxx_call": "is_zero",
+   "lean": "Numeric.is_zero",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "safe_sqrt",
+   "cxx_call": "safe_sqrt",
+   "lean": "Numeric.safe_sqrt",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "double",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "thrust_curve",
+   "cxx_call": "thrust_curve",
+   "lean": "Numeric.thrust_curve",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "thrust",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "expo",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "lift_max",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "horner",
+   "cxx_call": "horner",
+   "lean": "Numeric.horner",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "half_angle_sin",
+   "cxx_call": "half_angle_sin",
+   "lean": "Numeric.half_angle_sin",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "theta",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "half_angle_sin_d",
+   "cxx_call": "half_angle_sin_d",
+   "lean": "Numeric.half_angle_sin_d",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "theta",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "clamp_steps",
+   "cxx_call": "clamp_steps",
+   "lean": "Numeric.clamp_steps",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "n",
+     "type": "int32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "int32_t",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "47:40"
+  },
+  {
+   "lean": "(0.5 : Float32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "47:47"
+  },
+  {
+   "lean": "(0.25 : Float32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "47:53"
+  },
+  {
+   "lean": "(0.125 : Float32)",
+   "bits": "3e000000",
+   "cpp": "0.125f",
+   "at": "47:61"
+  },
+  {
+   "lean": "(0.0625 : Float32)",
+   "bits": "3d800000",
+   "cpp": "0.0625f",
+   "at": "47:69"
+  },
+  {
+   "lean": "(1.1920929e-7 : Float32)",
+   "bits": "34000000",
+   "cpp": "1.1920929E-7",
+   "at": "22:43"
+  },
+  {
+   "lean": "(1.0 : Float)",
+   "bits": "3ff0000000000000",
+   "cpp": "1.0",
+   "at": "38:54"
+  },
+  {
+   "lean": "(4.0 : Float)",
+   "bits": "4010000000000000",
+   "cpp": "4.0",
+   "at": "42:123"
+  },
+  {
+   "lean": "(2.0 : Float)",
+   "bits": "4000000000000000",
+   "cpp": "2.0",
+   "at": "42:172"
+  },
+  {
+   "lean": "(0.0 : Float)",
+   "bits": "0000000000000000",
+   "cpp": "0.0",
+   "at": "43:44"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "51:17"
+  },
+  {
+   "lean": "(0.5 : Float)",
+   "bits": "3fe0000000000000",
+   "cpp": "0.5",
+   "at": "60:57"
+  }
+ ],
+ "var_info": {}
+}

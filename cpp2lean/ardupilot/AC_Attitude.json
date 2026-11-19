@@ -1,0 +1,1014 @@
+{
+ "translate": "ardupilot/translate_ac_attitude.sh",
+ "out": "ardupilot/out/AC_Attitude",
+ "namespace": "AC_Attitude_lib",
+ "lean_imports": [
+  "ardupilot/out/AP_Motors"
+ ],
+ "cxx_flags": [
+  "-std=gnu++11",
+  "-O2",
+  "-ffp-contract=off",
+  "-fno-fast-math",
+  "-ftrapping-math",
+  "-fsigned-char",
+  "-fno-exceptions",
+  "-fno-rtti",
+  "-Wno-unused-parameter",
+  "-Wno-invalid-offsetof",
+  "-cl-single-precision-constant",
+  "-Wno-inconsistent-missing-override",
+  "-Wno-gnu-designator",
+  "-Wno-vla-extension",
+  "-Wno-expansion-to-defined",
+  "-Wno-trigraphs",
+  "-fno-builtin-sinf",
+  "-fno-builtin-cosf",
+  "-DCONFIG_HAL_BOARD=HAL_BOARD_SITL",
+  "-DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE",
+  "-DAP_SCRIPTING_CHECKS=1",
+  "-DAP_BARO_PROBE_EXTERNAL_I2C_BUSES=1",
+  "-DHAL_NAVEKF2_AVAILABLE=1",
+  "-DARDUPILOT_BUILD",
+  "-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter",
+  "-DAP_BUILD_TARGET_NAME=\"ArduCopter\"",
+  "-DFRAME_CONFIG=MULTICOPTER_FRAME",
+  "-D__AP_LINE__=__LINE__",
+  "-DHAL_WITH_POSTYPE_DOUBLE=1",
+  "-DHAL_WITH_EKF_DOUBLE=1",
+  "-DAP_FILTER_ENABLED=0",
+  "-I$STUBS",
+  "-I$L/AP_Common/missing",
+  "-I$L",
+  "-I$HERE/ardupilot",
+  "-include",
+  "ap_config.h"
+ ],
+ "cxx_sources": [
+  "AC_AttitudeControl/AC_AttitudeControl.cpp",
+  "AC_AttitudeControl/AC_AttitudeControl_Multi.cpp",
+  "AC_PID/AC_PID.cpp",
+  "AC_PID/AC_P.cpp",
+  "Filter/SlewLimiter.cpp",
+  "Filter/LowPassFilter.cpp",
+  "Filter/DerivativeFilter.cpp",
+  "AP_Math/AP_Math.cpp",
+  "AP_Math/control.cpp",
+  "AP_Math/vector2.cpp",
+  "AP_Math/vector3.cpp",
+  "AP_Math/matrix3.cpp",
+  "AP_Math/quaternion.cpp",
+  "AP_Motors/AP_Motors_Class.cpp",
+  "AP_Motors/AP_MotorsMulticopter.cpp",
+  "AP_Motors/AP_MotorsMatrix.cpp",
+  "AP_Motors/AP_Motors_Thrust_Linearization.cpp",
+  "AP_Param/AP_ParamT.cpp"
+ ],
+ "cxx_env": [
+  "ardupilot/ac_control_env.cpp"
+ ],
+ "classes": [
+  {
+   "class": "AC_AttitudeControl_Multi",
+   "cxx_include": [
+    "<AC_AttitudeControl/AC_AttitudeControl_Multi.h>",
+    "<AP_Motors/AP_MotorsMatrix.h>",
+    "<AP_Scheduler/AP_Scheduler.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_control_env.cpp: the AHRS stub, whose sample.gyro is get_gyro_latest()",
+    "extern AP_Scheduler cpp2lean_scheduler;",
+    "extern uint32_t cpp2lean_millis;",
+    "extern uint64_t cpp2lean_micros64;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AP_MotorsMatrix motors_obj(400);   // the motors object the controller writes into"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "motors_obj"
+   ],
+   "inputs": {
+    "get_quat_body_to_ned_q.q1": "view_obj.quat.q1 = %s;",
+    "get_quat_body_to_ned_q.q2": "view_obj.quat.q2 = %s;",
+    "get_quat_body_to_ned_q.q3": "view_obj.quat.q3 = %s;",
+    "get_quat_body_to_ned_q.q4": "view_obj.quat.q4 = %s;",
+    "yaw": "view_obj.yaw = %s;",
+    "get_filtered_loop_time": "cpp2lean_scheduler._last_loop_time_s = %s;",
+    "get_throttle_hover": "motors_obj._throttle_hover.set(%s);",
+    "get_throttle_thrust_max": "motors_obj._throttle_thrust_max = %s;",
+    "cos_pitch": "view_obj.trig.cos_pitch = %s;",
+    "cos_roll": "view_obj.trig.cos_roll = %s;",
+    "get_throttle_slew_rate": "motors_obj._throttle_slew_rate = %s;",
+    "get_throttle": "motors_obj._throttle_filter.reset(%s);",
+    "get_throttle_out": "motors_obj._throttle_out = %s;",
+    "micros64": "cpp2lean_micros64 = %s;",
+    "limit_roll": "motors_obj.limit.roll = %s;",
+    "limit_pitch": "motors_obj.limit.pitch = %s;",
+    "limit_yaw": "motors_obj.limit.yaw = %s;",
+    "get_gyro_latest.x": "oracle_ahrs.sample.gyro.x = %s;",
+    "get_gyro_latest.y": "oracle_ahrs.sample.gyro.y = %s;",
+    "get_gyro_latest.z": "oracle_ahrs.sample.gyro.z = %s;",
+    "_pid_rate_roll._slew_limiter.millis": "cpp2lean_millis = %s;"
+   },
+   "input_aliases": {
+    "_pid_rate_pitch._slew_limiter.millis": "_pid_rate_roll._slew_limiter.millis",
+    "_pid_rate_yaw._slew_limiter.millis": "_pid_rate_roll._slew_limiter.millis"
+   },
+   "input_domains": {
+    "get_throttle_hover": [
+     0.125,
+     0.6875
+    ],
+    "get_throttle": [
+     0,
+     1
+    ]
+   },
+   "input_domains_note": "get_throttle_hover() is constrain_float(_throttle_hover, 0.125, 0.6875) (AP_MotorsMulticopter.h:55) and get_throttle() constrain_float(filter output, 0, 1) (AP_Motors_Class.h:219): the C++ returns the input only inside these intervals",
+   "unit_inputs": {
+    "get_quat_body_to_ned_q": 0.98
+   },
+   "monotonic": {
+    "micros64": [
+     2000,
+     4000
+    ],
+    "_pid_rate_roll._slew_limiter.millis": [
+     0,
+     4
+    ]
+   },
+   "outputs": {
+    "set_throttle_filter_cutoff": "motors_obj._throttle_filter.get_cutoff_freq()",
+    "set_throttle": "motors_obj._throttle_in",
+    "set_throttle_avg_max": "motors_obj._throttle_avg_max",
+    "set_roll": "motors_obj._roll_in",
+    "set_roll_ff": "motors_obj._roll_in_ff",
+    "set_pitch": "motors_obj._pitch_in",
+    "set_pitch_ff": "motors_obj._pitch_in_ff",
+    "set_yaw": "motors_obj._yaw_in",
+    "set_yaw_ff": "motors_obj._yaw_in_ff"
+   },
+   "lean_outputs": {
+    "set_throttle_avg_max": "(AP_Motors_lib.AP_MotorsMatrix.set_throttle_avg_max {} %s)._throttle_avg_max"
+   },
+   "lean_outputs_note": "AP_Motors::set_throttle_avg_max stores constrain_float(throttle_avg_max, 0, 1) (AP_Motors_Class.h:199); the Lean side applies the AP_Motors translation's setter to the value the attitude controller passed",
+   "extra_methods": [
+    "AC_AttitudeControl_Multi.get_throttle_avg_max",
+    "AC_AttitudeControl_Multi.update_throttle_rpy_mix",
+    "AC_AttitudeControl_Multi.update_throttle_gain_boost",
+    "AC_AttitudeControl_Multi.update_ang_vel_target_from_att_error",
+    "AC_AttitudeControl_Multi.get_latest_gyro"
+   ],
+   "enum_leaves": true,
+   "unit_args": {
+    "attitude_desired_quat": 0.9,
+    "att": 0.9,
+    "attitude_target": 0.9,
+    "attitude_body": 0.9
+   },
+   "ranges": {
+    "euler_roll_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "euler_pitch_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "euler_yaw_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "euler_roll_angle_cd": [
+     -6000,
+     6000
+    ],
+    "euler_pitch_angle_cd": [
+     -6000,
+     6000
+    ],
+    "euler_yaw_angle_cd": [
+     -18000,
+     18000
+    ],
+    "heading_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "heading_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "heading.yaw_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "roll_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "pitch_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "yaw_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "error_angle": [
+     -1.0472,
+     1.0472
+    ],
+    "error_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "heading_rate_rads": [
+     -5,
+     5
+    ],
+    "heading.yaw_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_yaw_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_roll_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_pitch_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_yaw_rate_cds": [
+     -28648,
+     28648
+    ],
+    "roll_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "pitch_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "yaw_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "roll_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "pitch_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "yaw_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "roll_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "pitch_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "yaw_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "ang_vel_body_rads": [
+     -5,
+     5
+    ],
+    "gyro_rads": [
+     -5,
+     5
+    ],
+    "desired_ang_vel": [
+     -5,
+     5
+    ],
+    "target_ang_vel": [
+     -5,
+     5
+    ],
+    "target_ang_vel_rads": [
+     -5,
+     5
+    ],
+    "target_ang_accel": [
+     -30,
+     30
+    ],
+    "target_ang_accel_rads": [
+     -30,
+     30
+    ],
+    "euler_rad": [
+     -5,
+     5
+    ],
+    "body_derivative_rads": [
+     -5,
+     5
+    ],
+    "euler_derivative_rads": [
+     -5,
+     5
+    ],
+    "body_limit": [
+     0,
+     10
+    ],
+    "attitude_error_rad": [
+     -1,
+     1
+    ],
+    "attitude_error_rot_vec_rad": [
+     -1,
+     1
+    ],
+    "rate_rads": [
+     -1,
+     1
+    ],
+    "rate_cds": [
+     -5000,
+     5000
+    ],
+    "command": [
+     -0.1,
+     0.1
+    ],
+    "max_ang_vel": [
+     0,
+     10
+    ],
+    "accel_max": [
+     0,
+     30
+    ],
+    "input_tc": [
+     0,
+     1
+    ],
+    "ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "ang_vel_yaw_max_rads": [
+     0,
+     10
+    ],
+    "vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "vel_yaw_max_rads": [
+     0,
+     10
+    ],
+    "accel_roll_max_radss": [
+     0.5,
+     35
+    ],
+    "accel_pitch_max_radss": [
+     0.5,
+     35
+    ],
+    "accel_yaw_max_radss": [
+     0.5,
+     10
+    ],
+    "angle_P_scale": [
+     0.5,
+     2
+    ],
+    "pd_scale": [
+     0.5,
+     2
+    ],
+    "i_scale": [
+     0.5,
+     2
+    ],
+    "thrust_vector.x": [
+     -6,
+     6
+    ],
+    "thrust_vector.y": [
+     -6,
+     6
+    ],
+    "thrust_vector.z": [
+     -12,
+     -7
+    ],
+    "throttle_in": [
+     0,
+     1
+    ],
+    "filter_cutoff": [
+     0,
+     10
+    ],
+    "ratio": [
+     0,
+     1
+    ],
+    "value": [
+     0.1,
+     0.9
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "dt_s": [
+     0.0025,
+     0.004
+    ],
+    "yaw": [
+     -3.1416,
+     3.1416
+    ],
+    "get_filtered_loop_time": [
+     0.0025,
+     0.004
+    ],
+    "get_throttle_thrust_max": [
+     0.5,
+     1
+    ],
+    "cos_pitch": [
+     0.5,
+     1
+    ],
+    "cos_roll": [
+     0.5,
+     1
+    ],
+    "get_throttle_slew_rate": [
+     0,
+     2
+    ],
+    "get_throttle_out": [
+     0,
+     1
+    ],
+    "get_gyro_latest": [
+     -5,
+     5
+    ]
+   },
+   "weights": {
+    "AC_AttitudeControl_Multi.rate_controller_run": 30,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading": 15,
+    "AC_AttitudeControl_Multi.set_throttle_out": 10,
+    "AC_AttitudeControl_Multi.input_quaternion": 5,
+    "AC_AttitudeControl_Multi.input_euler_angle_roll_pitch_yaw_rad": 5,
+    "AC_AttitudeControl_Multi.input_euler_angle_roll_pitch_euler_rate_yaw_rad": 5,
+    "AC_AttitudeControl_Multi.input_thrust_vector_rate_heading_rads": 3,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading_rad_Vector3f_float2": 3,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading_rad_Vector3f_float": 2,
+    "AC_AttitudeControl_Multi.input_rate_bf_roll_pitch_yaw_rads": 2,
+    "AC_AttitudeControl_Multi.input_euler_rate_roll_pitch_yaw_rads": 2,
+    "AC_AttitudeControl_Multi.rate_controller_run_dt": 3,
+    "AC_AttitudeControl_Multi.set_dt_s": 4,
+    "AC_AttitudeControl_Multi.update_althold_lean_angle_max": 3,
+    "AC_AttitudeControl_Multi.get_throttle_boosted": 3,
+    "AC_AttitudeControl_Multi.rate_controller_target_reset": 4,
+    "AC_AttitudeControl_Multi.attitude_controller_run_quat": 3,
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_void": 0.3,
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_bool": 0.2,
+    "AC_AttitudeControl_Multi.reset_rate_controller_I_terms": 0.3,
+    "AC_AttitudeControl_Multi.reset_rate_controller_I_terms_smoothly": 0.5,
+    "AC_AttitudeControl_Multi.reset_target_and_rate": 0.3,
+    "AC_AttitudeControl_Multi.reset_yaw_target_and_rate": 0.3,
+    "AC_AttitudeControl_Multi.inertial_frame_reset": 0.3,
+    "AC_AttitudeControl_Multi.parameter_sanity_check": 0.2,
+    "AC_AttitudeControl_Multi.landed_gain_reduction": 1,
+    "AC_AttitudeControl_Multi.set_accel_roll_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.set_accel_pitch_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.set_accel_yaw_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.save_accel_roll_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.save_accel_pitch_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.save_accel_yaw_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.set_ang_vel_roll_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_ang_vel_pitch_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_ang_vel_yaw_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_input_tc": 0.2,
+    "AC_AttitudeControl_Multi.bf_feedforward": 0.2,
+    "AC_AttitudeControl_Multi.bf_feedforward_save": 0.1,
+    "AC_AttitudeControl_Multi.accel_limiting": 0.2,
+    "AC_AttitudeControl_Multi.use_sqrt_controller": 0.2,
+    "AC_AttitudeControl_Multi.set_throttle_mix_value": 0.5,
+    "AC_AttitudeControl_Multi.set_throttle_mix_max": 1,
+    "AC_AttitudeControl_Multi.set_throttle_mix_min": 0.5,
+    "AC_AttitudeControl_Multi.set_throttle_mix_man": 0.5
+   },
+   "setup": [
+    "AC_AttitudeControl_Multi.set_dt_s 3b23d70a",
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_void",
+    "AC_AttitudeControl_Multi.set_throttle_out 3ee38866 1 40000000"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "defaults"
+  },
+  {
+   "class": "AC_AttitudeControl_Multi",
+   "cxx_include": [
+    "<AC_AttitudeControl/AC_AttitudeControl_Multi.h>",
+    "<AP_Motors/AP_MotorsMatrix.h>",
+    "<AP_Scheduler/AP_Scheduler.h>"
+   ],
+   "globals": [
+    "extern AP_AHRS oracle_ahrs;         // ardupilot/ac_control_env.cpp: the AHRS stub, whose sample.gyro is get_gyro_latest()",
+    "extern AP_Scheduler cpp2lean_scheduler;",
+    "extern uint32_t cpp2lean_millis;",
+    "extern uint64_t cpp2lean_micros64;",
+    "static AP_AHRS_View view_obj(oracle_ahrs, ROTATION_NONE);   // ardupilot/stubs/AP_AHRS/AP_AHRS_View.h",
+    "static AP_MotorsMatrix motors_obj(400);   // the motors object the controller writes into"
+   ],
+   "ctor": [],
+   "boundary_args": [
+    "view_obj",
+    "motors_obj"
+   ],
+   "inputs": {
+    "get_quat_body_to_ned_q.q1": "view_obj.quat.q1 = %s;",
+    "get_quat_body_to_ned_q.q2": "view_obj.quat.q2 = %s;",
+    "get_quat_body_to_ned_q.q3": "view_obj.quat.q3 = %s;",
+    "get_quat_body_to_ned_q.q4": "view_obj.quat.q4 = %s;",
+    "yaw": "view_obj.yaw = %s;",
+    "get_filtered_loop_time": "cpp2lean_scheduler._last_loop_time_s = %s;",
+    "get_throttle_hover": "motors_obj._throttle_hover.set(%s);",
+    "get_throttle_thrust_max": "motors_obj._throttle_thrust_max = %s;",
+    "cos_pitch": "view_obj.trig.cos_pitch = %s;",
+    "cos_roll": "view_obj.trig.cos_roll = %s;",
+    "get_throttle_slew_rate": "motors_obj._throttle_slew_rate = %s;",
+    "get_throttle": "motors_obj._throttle_filter.reset(%s);",
+    "get_throttle_out": "motors_obj._throttle_out = %s;",
+    "micros64": "cpp2lean_micros64 = %s;",
+    "limit_roll": "motors_obj.limit.roll = %s;",
+    "limit_pitch": "motors_obj.limit.pitch = %s;",
+    "limit_yaw": "motors_obj.limit.yaw = %s;",
+    "get_gyro_latest.x": "oracle_ahrs.sample.gyro.x = %s;",
+    "get_gyro_latest.y": "oracle_ahrs.sample.gyro.y = %s;",
+    "get_gyro_latest.z": "oracle_ahrs.sample.gyro.z = %s;",
+    "_pid_rate_roll._slew_limiter.millis": "cpp2lean_millis = %s;"
+   },
+   "input_aliases": {
+    "_pid_rate_pitch._slew_limiter.millis": "_pid_rate_roll._slew_limiter.millis",
+    "_pid_rate_yaw._slew_limiter.millis": "_pid_rate_roll._slew_limiter.millis"
+   },
+   "input_domains": {
+    "get_throttle_hover": [
+     0.125,
+     0.6875
+    ],
+    "get_throttle": [
+     0,
+     1
+    ]
+   },
+   "input_domains_note": "get_throttle_hover() is constrain_float(_throttle_hover, 0.125, 0.6875) (AP_MotorsMulticopter.h:55) and get_throttle() constrain_float(filter output, 0, 1) (AP_Motors_Class.h:219): the C++ returns the input only inside these intervals",
+   "unit_inputs": {
+    "get_quat_body_to_ned_q": 0.98
+   },
+   "monotonic": {
+    "micros64": [
+     2000,
+     4000
+    ],
+    "_pid_rate_roll._slew_limiter.millis": [
+     0,
+     4
+    ]
+   },
+   "outputs": {
+    "set_throttle_filter_cutoff": "motors_obj._throttle_filter.get_cutoff_freq()",
+    "set_throttle": "motors_obj._throttle_in",
+    "set_throttle_avg_max": "motors_obj._throttle_avg_max",
+    "set_roll": "motors_obj._roll_in",
+    "set_roll_ff": "motors_obj._roll_in_ff",
+    "set_pitch": "motors_obj._pitch_in",
+    "set_pitch_ff": "motors_obj._pitch_in_ff",
+    "set_yaw": "motors_obj._yaw_in",
+    "set_yaw_ff": "motors_obj._yaw_in_ff"
+   },
+   "lean_outputs": {
+    "set_throttle_avg_max": "(AP_Motors_lib.AP_MotorsMatrix.set_throttle_avg_max {} %s)._throttle_avg_max"
+   },
+   "lean_outputs_note": "AP_Motors::set_throttle_avg_max stores constrain_float(throttle_avg_max, 0, 1) (AP_Motors_Class.h:199); the Lean side applies the AP_Motors translation's setter to the value the attitude controller passed",
+   "extra_methods": [
+    "AC_AttitudeControl_Multi.get_throttle_avg_max",
+    "AC_AttitudeControl_Multi.update_throttle_rpy_mix",
+    "AC_AttitudeControl_Multi.update_throttle_gain_boost",
+    "AC_AttitudeControl_Multi.update_ang_vel_target_from_att_error",
+    "AC_AttitudeControl_Multi.get_latest_gyro"
+   ],
+   "enum_leaves": true,
+   "unit_args": {
+    "attitude_desired_quat": 0.9,
+    "att": 0.9,
+    "attitude_target": 0.9,
+    "attitude_body": 0.9
+   },
+   "ranges": {
+    "euler_roll_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "euler_pitch_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "euler_yaw_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "euler_roll_angle_cd": [
+     -6000,
+     6000
+    ],
+    "euler_pitch_angle_cd": [
+     -6000,
+     6000
+    ],
+    "euler_yaw_angle_cd": [
+     -18000,
+     18000
+    ],
+    "heading_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "heading_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "heading.yaw_angle_rad": [
+     -3.1416,
+     3.1416
+    ],
+    "roll_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "pitch_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "yaw_angle_step_bf_rad": [
+     -0.5,
+     0.5
+    ],
+    "error_angle": [
+     -1.0472,
+     1.0472
+    ],
+    "error_angle_rad": [
+     -1.0472,
+     1.0472
+    ],
+    "heading_rate_rads": [
+     -5,
+     5
+    ],
+    "heading.yaw_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_yaw_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_roll_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_pitch_rate_rads": [
+     -5,
+     5
+    ],
+    "euler_yaw_rate_cds": [
+     -28648,
+     28648
+    ],
+    "roll_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "pitch_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "yaw_rate_bf_rads": [
+     -5,
+     5
+    ],
+    "roll_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "pitch_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "yaw_rate_bf_cds": [
+     -28648,
+     28648
+    ],
+    "roll_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "pitch_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "yaw_rate_step_bf_rads": [
+     -1,
+     1
+    ],
+    "ang_vel_body_rads": [
+     -5,
+     5
+    ],
+    "gyro_rads": [
+     -5,
+     5
+    ],
+    "desired_ang_vel": [
+     -5,
+     5
+    ],
+    "target_ang_vel": [
+     -5,
+     5
+    ],
+    "target_ang_vel_rads": [
+     -5,
+     5
+    ],
+    "target_ang_accel": [
+     -30,
+     30
+    ],
+    "target_ang_accel_rads": [
+     -30,
+     30
+    ],
+    "euler_rad": [
+     -5,
+     5
+    ],
+    "body_derivative_rads": [
+     -5,
+     5
+    ],
+    "euler_derivative_rads": [
+     -5,
+     5
+    ],
+    "body_limit": [
+     0,
+     10
+    ],
+    "attitude_error_rad": [
+     -1,
+     1
+    ],
+    "attitude_error_rot_vec_rad": [
+     -1,
+     1
+    ],
+    "rate_rads": [
+     -1,
+     1
+    ],
+    "rate_cds": [
+     -5000,
+     5000
+    ],
+    "command": [
+     -0.1,
+     0.1
+    ],
+    "max_ang_vel": [
+     0,
+     10
+    ],
+    "accel_max": [
+     0,
+     30
+    ],
+    "input_tc": [
+     0,
+     1
+    ],
+    "ang_vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "ang_vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "ang_vel_yaw_max_rads": [
+     0,
+     10
+    ],
+    "vel_roll_max_rads": [
+     0,
+     10
+    ],
+    "vel_pitch_max_rads": [
+     0,
+     10
+    ],
+    "vel_yaw_max_rads": [
+     0,
+     10
+    ],
+    "accel_roll_max_radss": [
+     0.5,
+     35
+    ],
+    "accel_pitch_max_radss": [
+     0.5,
+     35
+    ],
+    "accel_yaw_max_radss": [
+     0.5,
+     10
+    ],
+    "angle_P_scale": [
+     0.5,
+     2
+    ],
+    "pd_scale": [
+     0.5,
+     2
+    ],
+    "i_scale": [
+     0.5,
+     2
+    ],
+    "thrust_vector.x": [
+     -6,
+     6
+    ],
+    "thrust_vector.y": [
+     -6,
+     6
+    ],
+    "thrust_vector.z": [
+     -12,
+     -7
+    ],
+    "throttle_in": [
+     0,
+     1
+    ],
+    "filter_cutoff": [
+     0,
+     10
+    ],
+    "ratio": [
+     0,
+     1
+    ],
+    "value": [
+     0.1,
+     0.9
+    ],
+    "dt": [
+     0.0025,
+     0.004
+    ],
+    "dt_s": [
+     0.0025,
+     0.004
+    ],
+    "yaw": [
+     -3.1416,
+     3.1416
+    ],
+    "get_filtered_loop_time": [
+     0.0025,
+     0.004
+    ],
+    "get_throttle_thrust_max": [
+     0.5,
+     1
+    ],
+    "cos_pitch": [
+     0.5,
+     1
+    ],
+    "cos_roll": [
+     0.5,
+     1
+    ],
+    "get_throttle_slew_rate": [
+     0,
+     2
+    ],
+    "get_throttle_out": [
+     0,
+     1
+    ],
+    "get_gyro_latest": [
+     -5,
+     5
+    ]
+   },
+   "weights": {
+    "AC_AttitudeControl_Multi.rate_controller_run": 30,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading": 15,
+    "AC_AttitudeControl_Multi.set_throttle_out": 10,
+    "AC_AttitudeControl_Multi.input_quaternion": 5,
+    "AC_AttitudeControl_Multi.input_euler_angle_roll_pitch_yaw_rad": 5,
+    "AC_AttitudeControl_Multi.input_euler_angle_roll_pitch_euler_rate_yaw_rad": 5,
+    "AC_AttitudeControl_Multi.input_thrust_vector_rate_heading_rads": 3,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading_rad_Vector3f_float2": 3,
+    "AC_AttitudeControl_Multi.input_thrust_vector_heading_rad_Vector3f_float": 2,
+    "AC_AttitudeControl_Multi.input_rate_bf_roll_pitch_yaw_rads": 2,
+    "AC_AttitudeControl_Multi.input_euler_rate_roll_pitch_yaw_rads": 2,
+    "AC_AttitudeControl_Multi.rate_controller_run_dt": 3,
+    "AC_AttitudeControl_Multi.set_dt_s": 4,
+    "AC_AttitudeControl_Multi.update_althold_lean_angle_max": 3,
+    "AC_AttitudeControl_Multi.get_throttle_boosted": 3,
+    "AC_AttitudeControl_Multi.rate_controller_target_reset": 4,
+    "AC_AttitudeControl_Multi.attitude_controller_run_quat": 3,
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_void": 0.3,
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_bool": 0.2,
+    "AC_AttitudeControl_Multi.reset_rate_controller_I_terms": 0.3,
+    "AC_AttitudeControl_Multi.reset_rate_controller_I_terms_smoothly": 0.5,
+    "AC_AttitudeControl_Multi.reset_target_and_rate": 0.3,
+    "AC_AttitudeControl_Multi.reset_yaw_target_and_rate": 0.3,
+    "AC_AttitudeControl_Multi.inertial_frame_reset": 0.3,
+    "AC_AttitudeControl_Multi.parameter_sanity_check": 0.2,
+    "AC_AttitudeControl_Multi.landed_gain_reduction": 1,
+    "AC_AttitudeControl_Multi.set_accel_roll_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.set_accel_pitch_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.set_accel_yaw_max_radss": 0.2,
+    "AC_AttitudeControl_Multi.save_accel_roll_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.save_accel_pitch_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.save_accel_yaw_max_radss": 0.1,
+    "AC_AttitudeControl_Multi.set_ang_vel_roll_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_ang_vel_pitch_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_ang_vel_yaw_max_rads": 0.2,
+    "AC_AttitudeControl_Multi.set_input_tc": 0.2,
+    "AC_AttitudeControl_Multi.bf_feedforward": 0.2,
+    "AC_AttitudeControl_Multi.bf_feedforward_save": 0.1,
+    "AC_AttitudeControl_Multi.accel_limiting": 0.2,
+    "AC_AttitudeControl_Multi.use_sqrt_controller": 0.2,
+    "AC_AttitudeControl_Multi.set_throttle_mix_value": 0.5,
+    "AC_AttitudeControl_Multi.set_throttle_mix_max": 1,
+    "AC_AttitudeControl_Multi.set_throttle_mix_min": 0.5,
+    "AC_AttitudeControl_Multi.set_throttle_mix_man": 0.5
+   },
+   "setup": [
+    "AC_AttitudeControl_Multi.set_dt_s 3b23d70a",
+    "AC_AttitudeControl_Multi.relax_attitude_controllers_void",
+    "AC_AttitudeControl_Multi.set_throttle_out 3ee38866 1 40000000"
+   ],
+   "calls": 20000,
+   "range_prob": 0.995,
+   "input_corners": "readers",
+   "run": "tuned",
+   "params": {
+    "_input_tc": "0.05",
+    "_accel_roll_max_degss": "1800.0",
+    "_accel_pitch_max_degss": "1800.0",
+    "_p_angle_roll._kp": "9.0",
+    "_p_angle_pitch._kp": "9.0",
+    "_pid_rate_yaw._kp": "0.3",
+    "_pid_rate_yaw._ki": "0.02"
+   },
+   "params_note": "sim/params/copter-cf2x-tuned.txt (ATC_INPUT_TC, ATC_ACC_R_MAX, ATC_ACC_P_MAX, ATC_ANG_RLL_P, ATC_ANG_PIT_P) and SITL's ATC_RAT_YAW_P 0.3, ATC_RAT_YAW_I 0.02 (copter.parm)"
+  }
+ ]
+}

@@ -1,0 +1,138 @@
+# px4_commander: PX4's commander (src/modules/commander), unmodified: arming, the mode state
+# machine, failsafes, health and arming checks, home position. A task module: `commander start`
+# spawns a task (px4_task_spawn_cmd) whose loop runs every 10 ms (px4_usleep(10 ms),
+# COMMANDER_MONITORING_INTERVAL), or at once again while vehicle_command has unread messages.
+# Read by px4/ports.py and px4/build.sh. Paths relative to $PX4_ROOT.
+main commander
+process fresh
+# the module (CMakeLists.txt SRCS, the calibration routines included: the worker thread links them)
+source src/modules/commander/accelerometer_calibration.cpp
+source src/modules/commander/airspeed_calibration.cpp
+source src/modules/commander/baro_calibration.cpp
+source src/modules/commander/calibration_routines.cpp
+source src/modules/commander/Commander.cpp
+source src/modules/commander/commander_helper.cpp
+source src/modules/commander/esc_calibration.cpp
+source src/modules/commander/factory_calibration_storage.cpp
+source src/modules/commander/gyro_calibration.cpp
+source src/modules/commander/HomePosition.cpp
+source src/modules/commander/ModeManagement.cpp
+source src/modules/commander/level_calibration.cpp
+source src/modules/commander/lm_fit.cpp
+source src/modules/commander/mag_calibration.cpp
+source src/modules/commander/rc_calibration.cpp
+source src/modules/commander/Safety.cpp
+source src/modules/commander/UserModeIntention.cpp
+source src/modules/commander/worker_thread.cpp
+# its libraries (DEPENDS): ArmAuthorization, failsafe, failure_detector, health_and_arming_checks,
+# mode_util, MulticopterThrowLaunch, circuit_breaker, geo, hysteresis, sensor_calibration (and its
+# conversion), world_magnetic_model, atmosphere
+source src/modules/commander/Arming/ArmAuthorization/ArmAuthorization.cpp
+source src/modules/commander/failsafe/failsafe.cpp src/modules/commander/failsafe/framework.cpp
+source src/modules/commander/failure_detector/FailureDetector.cpp src/modules/commander/failure_detector/FailureInjector.cpp
+source src/modules/commander/HealthAndArmingChecks/Common.cpp src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/accelerometerCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/airspeedCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/armPermissionCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/baroCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/batteryCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/cpuResourceCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/distanceSensorChecks.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/escCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/estimatorCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/externalChecks.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/failureDetectorCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/flightTimeCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/geofenceCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/gyroCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/homePositionCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/imuConsistencyCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/loggerCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/magnetometerCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/manualControlCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/missionCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/modeCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/navigatorCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/offboardCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/openDroneIDCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/opticalFlowCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/parachuteCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/powerCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/rcAndDataLinkCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/rcCalibrationCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/sdcardCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/systemCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/vtolCheck.cpp
+source src/modules/commander/HealthAndArmingChecks/checks/windCheck.cpp
+source src/modules/commander/ModeUtil/control_mode.cpp src/modules/commander/ModeUtil/mode_requirements.cpp
+source src/modules/commander/MulticopterThrowLaunch/MulticopterThrowLaunch.cpp
+source src/lib/circuit_breaker/circuit_breaker.cpp src/lib/geo/geo.cpp src/lib/hysteresis/hysteresis.cpp
+source src/lib/sensor_calibration/Accelerometer.cpp
+source src/lib/sensor_calibration/Barometer.cpp
+source src/lib/sensor_calibration/Gyroscope.cpp
+source src/lib/sensor_calibration/Magnetometer.cpp
+source src/lib/sensor_calibration/Utilities.cpp
+source src/lib/conversion/rotation.cpp src/lib/world_magnetic_model/geo_mag_declination.cpp
+source src/lib/atmosphere/atmosphere.cpp
+include src/modules/commander src/modules/commander/Arming/ArmAuthorization
+params src/modules/commander
+params src/modules/commander/failure_detector
+# read by name from elsewhere (compile-time Param classes, and circuit_breaker_enabled at run time)
+params src/lib/circuit_breaker/circuit_breaker_params.c
+params src/lib/systemlib/system_params.c SYS_FAILURE_EN SYS_HAS_BARO SYS_HAS_GPS SYS_HAS_MAG SYS_HAS_NUM_ASPD SYS_HAS_NUM_DIST SYS_HAS_NUM_OF
+params src/modules/navigator/geofence_params.c GF_ACTION
+params src/modules/sensors/sensor_params.c SENS_IMU_MODE
+params src/modules/sensors/module.yaml CAL_ACC* CAL_GYRO* CAL_MAG* CAL_BARO*   # sensor calibration
+params src/modules/rc_update/params.c       # the RC calibration (rcCalibrationCheck), RC_MAP_FLTMODE
+params src/modules/mavlink/mavlink_params.c MAV_COMP_ID MAV_SYS_ID MAV_TYPE
+params src/modules/ekf2/module.yaml EKF2_EN
+params src/modules/logger/module.yaml SDLOG_MODE
+params src/lib/fw_performance_model/performance_model_params.c FW_AIRSPD_MAX
+# ---- topics
+# what commands it (vehicle_command is queued, 8 slots; commander also publishes it, to itself and
+# others, which stays on its bus)
+sub vehicle_command
+# the vehicle's state, as the estimator and the land detector publish it
+sub vehicle_land_detected
+sub vehicle_local_position
+sub vehicle_global_position
+sub vehicle_attitude
+sub vehicle_gps_position
+sub vehicle_air_data
+sub vehicle_angular_velocity
+sub vehicle_acceleration
+sub estimator_status
+sub estimator_status_flags
+sub estimator_selector_status
+sub estimator_sensor_bias
+# sensors (instance 0: one IMU, one magnetometer, one barometer)
+sub sensor_accel slots 1
+sub sensor_gyro slots 1
+sub sensor_mag slots 1
+sub sensor_baro slots 1
+sub sensor_selection
+sub sensor_preflight_mag
+sub sensors_status_imu
+sub vehicle_imu_status
+# power, links, the rest of the system
+sub battery_status
+sub system_power
+sub cpuload
+sub telemetry_status
+sub manual_control_setpoint
+sub action_request
+sub offboard_control_mode
+sub mission_result
+sub navigator_status
+sub geofence_result
+sub actuator_motors
+sub logger_status
+# what it publishes
+pub actuator_armed
+pub vehicle_status
+pub vehicle_control_mode
+pub vehicle_command_ack by           # one of two publishers: merged by px4_merge_ack
+pub failsafe_flags
+pub failure_detector_status
+pub home_position
+pub health_report

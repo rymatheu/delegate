@@ -1,0 +1,123 @@
+# leanfc configuration: Holybro PX4 Development Kit X500 V2 flying the mission square scaled to
+# the vehicle (4 m sides, altitudes 2 m and 3 m, 2 m/s).
+# Format: `NAME value` per line, `#` comments; NAME is the field path in Leanfc `Params`
+# (Leanfc/ParamFile.lean, README.md). Units: SI (kg, m, s, N, rad).
+# This file is the field profile (10 Hz GPS-like fixes); params/mocap.params overrides the
+# fix period and navigation-filter gains for 100 Hz noiseless fixes.
+
+SIM_VEHICLE x500                  # harness only: sim/assets/x500.urdf
+
+# --- vehicle: PX4-gazebo-models x500_base/model.sdf and x500/model.sdf ----------------------
+vehicle.mass        2.0643076923076923       # kg, base_link 2.0 + 4 rotors x 0.016076923076923075
+vehicle.inertia.x   0.02166666666666667      # kg m^2, base_link ixx (rotors left out)
+vehicle.inertia.y   0.02166666666666667      # kg m^2, base_link iyy
+vehicle.inertia.z   0.04000000000000001      # kg m^2, base_link izz
+vehicle.l           0.174                    # m, rotor poses (+-0.174, +-0.174, 0.06); arm 0.2461
+vehicle.kmKf        0.016                    # m, momentConstant (yaw torque = 0.016 * thrust)
+vehicle.tMax        8.54858                  # N per motor, motorConstant 8.54858e-06 * maxRotVelocity 1000^2
+
+# --- timing ------------------------------------------------------------------------------
+dt                  0.0025                   # s, control period (400 Hz)
+dtFix               0.1                      # s, position/velocity/heading fix period (10 Hz)
+
+# --- attitude filter (Mahony, pyfc estimator.AttitudeFilter) -------------------------------
+attFilter.kAcc      0.1                      # 1/s, gravity-direction correction gain
+attFilter.kYaw      1.0                      # 1/s, heading correction gain
+attFilter.kBias     0.02                     # 1/s^2, gyro-bias integral gain
+attFilter.cutoffHz  40.0                     # Hz, low-pass of the rate fed to the rate loop
+
+# --- navigation filter (for 10 Hz fixes) ----------------------------------------------------
+navFilter.alpha     0.02                     # position-fix gain on position (per fix); was 0.05 (pyfc)
+navFilter.beta      2.0e-4                   # position-fix gain on velocity (per fix, / dtFix); was 0.0015 (pyfc)
+navFilter.kV        0.3                      # velocity-fix gain on velocity (per fix)
+navFilter.kB        0.03                     # velocity-fix gain on accel bias (per fix, / dtFix)
+
+# --- estimator ---------------------------------------------------------------------------------
+estimator           ekf                      # ekf (Leanfc/EKF.lean) or fixed (attitude filter + nav filter, the baseline); overlays params/{fixed,ekf}.params
+
+# --- EKF (Leanfc/EKF.lean, port of pyfc ekf.py); 1 sigma values, squared by EKF.make -------------
+# Measurement and IMU noise: the harness's field profile (sim/run_leanfc.py `Noise`, = pyfc plant.Noise);
+# params/mocap.params overrides them for the noiseless 100 Hz profile.
+ekf.gyroNoise       0.003                    # rad/s per sample: Noise.gyro
+ekf.accelNoise      0.03                     # m/s^2 per sample: Noise.accel
+ekf.gyroBiasWalk    1e-4                     # rad/s/sqrt(s): pyfc EKFParams.gyro_bias_walk (simulated biases are constant)
+ekf.accelBiasWalk   1e-3                     # m/s^2/sqrt(s): pyfc EKFParams.accel_bias_walk
+ekf.posNE           0.5                      # m: Noise.position_ne (GPS horizontal)
+ekf.posD            0.1                      # m: Noise.position_d (barometer)
+ekf.vel             0.1                      # m/s: Noise.velocity (GPS Doppler)
+ekf.heading         0.035                    # rad: Noise.heading (magnetometer, 2 deg)
+# Initial 1 sigma (pyfc EKFParams, except yaw0, pos0 and gyroBias0):
+ekf.tilt0           0.017453292519943295     # rad, roll/pitch: 1 deg, the vehicle starts level at rest (pyfc 2 deg; with 2 deg the first velocity fixes give up to 2.19 deg on X500 field seeds 5 and 7)
+ekf.yaw0            0.017453292519943295     # rad: 1 deg, the start heading is known (pyfc 5 deg; with 5 deg the first heading fixes give 2.38 deg on X500 field seed 2)
+ekf.vel0            0.1                      # m/s
+ekf.pos0            0.05                     # m: the start position is known (pyfc 0.5, the GPS sigma)
+ekf.gyroBias0       0.017453292519943295     # rad/s, without calibration: 1 deg/s, the field bias magnitude (Noise.gyro_bias)
+ekf.accelBias0      0.1                      # m/s^2: pyfc EKFParams.accel_bias0 (Noise.accel_bias 0.05)
+ekf.gyroBiasMin     1e-5                     # rad/s: floor of the calibrated prior sqrt(gyroNoise^2 / samples) (field: 1.5e-4)
+ekf.pFloor          1e-12                    # floor of every variance on the diagonal of P: pyfc EKFParams.p_floor
+ekf.cutoffHz        40.0                     # Hz, low-pass of the rate fed to the rate loop (as attFilter.cutoffHz)
+
+# --- navigator ------------------------------------------------------------------------------
+nav.vMax            2.0                      # m/s, target speed limit
+nav.aMax            2.0                      # m/s^2, target acceleration along the path
+nav.aLat            2.0                      # m/s^2, lateral acceleration limit on spline legs (sets their speed limit sqrt(aLat / max curvature))
+nav.vMaxZ           0.5                      # m/s, vertical speed limit of the target (= position.vMaxZ, the position loop's vertical clamp)
+nav.radius          0.2                      # m, a stop is left when the vehicle is this close
+nav.lagMax          0.6                      # m, target waits while the vehicle lags more
+nav.yawBehavior     1                        # heading: 1 follows the path (ArduCopter WP_YAW_BEHAVIOR 1), 0 holds setpoint.hc/hs
+nav.yawReverse      0                        # heading: 1 points the nose against the direction of travel (flies backward); 0 along it
+nav.yawRateMax      1.0471975511965976       # rad/s, heading setpoint slew limit: 60 deg/s (ArduCopter ATC_RATE_WPY_MAX default)
+nav.yawAccelMax     1.0471975511965976       # rad/s^2, heading setpoint acceleration limit: 60 deg/s^2 (ArduCopter ATC_ACC_Y_MAX 270 saturates the motors; yaw authority 5.6 rad/s^2)
+nav.yawSpeedMin     0.05                     # heading follows vFF while |vFF_xy| > 0.05 vMax (AC_PosControl), else held
+
+# --- position and velocity control (CF2X gains except vMaxXY) -------------------------------
+position.kpPos      1.5                      # 1/s, position error -> velocity
+position.vMaxXY     3.0                      # m/s, horizontal velocity setpoint limit; CF2X 1.0 is below the 2 m/s cruise
+position.vMaxZ      0.5                      # m/s, vertical velocity setpoint limit
+position.vel.kp     4.0                      # 1/s, velocity error -> acceleration
+position.vel.ki     0.25                     # 1/s^2
+position.vel.iMax   1.0                      # m/s^2, integral limit per axis
+position.aMaxXY     5.0                      # m/s^2, horizontal acceleration limit
+position.aMaxZ      4.0                      # m/s^2, vertical acceleration limit
+
+# --- attitude and rate control (CF2X gains except rate.kp and the yaw gains) ---------------
+# Angular-acceleration authority from hover: roll/pitch about 112 rad/s^2, yaw about 5.6 rad/s^2
+# (CF2X: 530 and 306), so the X500 needs a softer rate loop and much softer yaw gains.
+attitude.kpAtt      10                       # 1/s, roll/pitch: attitude error -> rate setpoint
+attitude.rateMax    5                        # rad/s, rate setpoint limit per axis
+attitude.rate.kp    20                       # 1/s, roll/pitch: rate error -> angular acceleration; CF2X 30
+attitude.rate.ki    10                       # 1/s^2
+attitude.rate.iMax  2                        # rad/s^2, integral limit (roll, pitch)
+attitude.kpYaw      2.0                      # 1/s, yaw: attitude error -> yaw rate setpoint; CF2X 10
+attitude.rateYaw.kp 10                       # 1/s, yaw: rate error -> angular acceleration; CF2X 30
+attitude.rateYaw.ki 3                        # 1/s^2; CF2X 10
+attitude.rateYaw.iMax 2                      # rad/s^2
+
+# --- vehicle layer (Leanfc/Copter/*): arming, takeoff, landing, failsafes -------------------
+# ArduCopter's names, meanings and defaults (README.md "Parameters of the vehicle layer").
+RTL_ALT_M           15                       # m above home: RTL climbs to at least this altitude before returning
+RTL_LOIT_TIME       5000                     # ms: RTL waits this long above home before the final descent
+LAND_SPD_MS         0.5                      # m/s: descent speed of the final stage of a landing
+LAND_ALT_LOW_M      10                       # m above home: above it a landing descends at nav.vMaxZ
+DISARM_DELAY        10                       # s armed on the ground before the automatic disarm (0: never)
+FS_GCS_ENABLE       0                        # ground-station failsafe action: 0 off, 1 RTL, 5 LAND, ... (README)
+FS_GCS_TIMEOUT      5                        # s without a ground-station HEARTBEAT before that failsafe
+FS_EKF_ACTION       1                        # estimator failsafe action: 0 report only, 1 LAND
+copter.ekfPosMax    2.0                      # m: estimator unhealthy while the north or east position 1 sigma exceeds this
+MOT_SPIN_ARM        0.1                      # motor command (fraction of maximum thrust) armed on the ground
+MOT_SPOOL_TIME      0.5                      # s: spool-up before a takeoff, spool-down before the disarm after landing
+TKOFF_SLEW_TIME     2                        # s: the takeoff throttle rises from 0 to 1 in this time
+TKOFF_THR_MAX       0.9                      # throttle at which a takeoff counts as lifted off
+
+# --- mission --------------------------------------------------------------------------------
+# WAYPOINT n e d [stop] = straight leg, SPLINE n e d [stop] = spline leg (NED m);
+# consecutive WAYPOINT legs stop at their corner. params/x500-spline.params flies the same points as SPLINE legs.
+start.x             0                        # m north, start (hovering)
+start.y             0                        # m east
+start.z             -1                       # m down
+setpoint.hc         1                        # heading setpoint (cos psi, sin psi): north
+setpoint.hs         0
+WAYPOINT  4  0  -2
+WAYPOINT  4  4  -3
+WAYPOINT  0  4  -3
+WAYPOINT  0  0  -2

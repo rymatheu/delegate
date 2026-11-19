@@ -1,0 +1,55 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 5000,
+ "steps_per_case": 100,
+ "seed": 2,
+ "seconds": 0.03027488,
+ "outputs_seen":
+ {"pwm3": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm2": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm1": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm0": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000}},
+ "module": "px4_sim_out",
+ "kind": "tested",
+ "id": "20261119T002923Z-seed2",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(1000 ≤ pwm0 ∧ pwm0 ≤ 2000) ∧ (1000 ≤ pwm1 ∧ pwm1 ≤ 2000) ∧ (1000 ≤ pwm2 ∧ pwm2 ≤ 2000) ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "92ce46e43fad036f1480fc5b8a0adb0a3d62f9f9b5c3ba386db2268464fcb9b2",
+    "file":
+    "px4/modules/px4_sim_out/evidence/tested/20261119T002923Z-seed2/smallest-margin-pwm_in_plant_range.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "7aa32d23aeb3677eeafda60c0f57450d37052556364445066a36c025fd4d2e56",
+   "clause": "pwm_in_plant_range",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ ¬finite(actuator_motors_control_0) ∨ actuator_motors_control_0 < 0 ∨ 1 < actuator_motors_control_0 ∨ |pwm0 - (1000 + 1000 * actuator_motors_control_0)| ≤ 0.5",
+   "smallest_margin_case":
+   {"step": 38,
+    "sha256":
+    "a9604bcf07177e4fea3ea85685dbe75670e26c86668796ede6da4c880ae431ae",
+    "file":
+    "px4/modules/px4_sim_out/evidence/tested/20261119T002923Z-seed2/smallest-margin-pwm_tracks_thrust.json",
+    "case": 9},
+   "smallest_margin": 0.001729244,
+   "contract_hash":
+   "73a9920b057c31f53525e3d9872d9bfba280c088e099badd05f9dfb880aa69cf",
+   "clause": "pwm_tracks_thrust",
+   "checked": 5000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -fno-exceptions",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_sim_out --seed 2 --cases 50 --steps 100",
+ "code_hash":
+ "212f5cf342581a53aff0eab0c1c99a9330fba7842efd5ee70a2a39ed7841a52b",
+ "cases_skipped": 0,
+ "cases": 50,
+ "assume": []}

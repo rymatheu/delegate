@@ -1,0 +1,667 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 1000,
+ "steps_per_case": 100,
+ "seed": 6,
+ "seconds": 0.1887302,
+ "outputs_seen":
+ {"wind_windspeed_north":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_windspeed_east":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_variance_north":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "wind_variance_east":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "wind_updated": {"true_steps": 92},
+  "wind_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "wind_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "wind_tas_innov_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_tas_innov": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_beta_innov_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "wind_beta_innov": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_velocity_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 56.25},
+  "vehicle_odometry_velocity_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 25},
+  "vehicle_odometry_velocity_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 25},
+  "vehicle_odometry_velocity_frame":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_odometry_velocity_2":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_velocity_1":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_velocity_0":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_updated": {"true_steps": 399},
+  "vehicle_odometry_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_odometry_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_odometry_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 220},
+  "vehicle_odometry_quality":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_q_3":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_q_2":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_q_1":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_q_0":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_position_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2500},
+  "vehicle_odometry_position_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2500},
+  "vehicle_odometry_position_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2500},
+  "vehicle_odometry_position_2":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_position_1":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_position_0":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_pose_frame":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "vehicle_odometry_orientation_variance_2":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_orientation_variance_1":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_orientation_variance_0":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_odometry_angular_velocity_2":
+  {"non_finite_steps": 814,
+   "min_finite": -0.001357053,
+   "max_finite": 0.003737798},
+  "vehicle_odometry_angular_velocity_1":
+  {"non_finite_steps": 814,
+   "min_finite": -0.002342615,
+   "max_finite": 0.001051704},
+  "vehicle_odometry_angular_velocity_0":
+  {"non_finite_steps": 814,
+   "min_finite": -0.003737798,
+   "max_finite": 0.002199687},
+  "vehicle_local_position_z_valid": {"true_steps": 0},
+  "vehicle_local_position_z_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "vehicle_local_position_z_global": {"true_steps": 0},
+  "vehicle_local_position_z_deriv":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_z":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_y":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_xy_valid": {"true_steps": 0},
+  "vehicle_local_position_xy_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "vehicle_local_position_xy_global": {"true_steps": 0},
+  "vehicle_local_position_x":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vz_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "vehicle_local_position_vz_max":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vz":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vy":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vxy_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "vehicle_local_position_vxy_max":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_vx":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_v_z_valid": {"true_steps": 0},
+  "vehicle_local_position_v_xy_valid": {"true_steps": 0},
+  "vehicle_local_position_updated": {"true_steps": 399},
+  "vehicle_local_position_unaided_heading":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_local_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_local_position_tilt_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "vehicle_local_position_ref_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lon":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_lat":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ref_alt":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_heading_var":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.000000001},
+  "vehicle_local_position_heading_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_heading_good_for_control": {"true_steps": 0},
+  "vehicle_local_position_heading":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_hagl_min":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_hagl_max_z":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_hagl_max_xy":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_evv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 7.5},
+  "vehicle_local_position_evh":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 7.071068},
+  "vehicle_local_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "vehicle_local_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 70.71067},
+  "vehicle_local_position_dist_bottom_var":
+  {"non_finite_steps": 696,
+   "min_finite": 0,
+   "max_finite": 1097303000000000000000000000},
+  "vehicle_local_position_dist_bottom_valid": {"true_steps": 0},
+  "vehicle_local_position_dist_bottom_sensor_bitfield":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_dist_bottom_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "vehicle_local_position_dist_bottom":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_z":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_xy_1":
+  {"non_finite_steps": 696, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_xy_0":
+  {"non_finite_steps": 696, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_vz":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_vxy_1":
+  {"non_finite_steps": 696, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_vxy_0":
+  {"non_finite_steps": 696, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_heading":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_delta_dist_bottom":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_dead_reckoning": {"true_steps": 896},
+  "vehicle_local_position_az":
+  {"non_finite_steps": 895, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ay":
+  {"non_finite_steps": 895, "min_finite": 0, "max_finite": 0},
+  "vehicle_local_position_ax":
+  {"non_finite_steps": 895, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_updated": {"true_steps": 0},
+  "vehicle_global_position_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_terrain_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_terrain_alt_valid": {"true_steps": 0},
+  "vehicle_global_position_terrain_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat_lon_valid": {"true_steps": 0},
+  "vehicle_global_position_lat_lon_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_epv":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_eph":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_delta_terrain":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_delta_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_dead_reckoning": {"true_steps": 0},
+  "vehicle_global_position_alt_valid": {"true_steps": 0},
+  "vehicle_global_position_alt_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_alt_ellipsoid":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_global_position_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_updated": {"true_steps": 0},
+  "vehicle_attitude_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_quat_reset_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_q_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_q_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_q_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_q_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_attitude_delta_q_reset_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_ekf2_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_vel_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_updated": {"true_steps": 399},
+  "estimator_status_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_timeout_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_time_slip":
+  {"non_finite_steps": 0, "min_finite": -190050, "max_finite": 183.2338},
+  "estimator_status_tas_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_solution_status_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2176},
+  "estimator_status_reset_count_vel_ne":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "estimator_status_reset_count_vel_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "estimator_status_reset_count_quat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_reset_count_pos_ne":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "estimator_status_reset_count_pod_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 55},
+  "estimator_status_pre_flt_fail_mag_field_disturbed": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_vel_vert": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_vel_horiz": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_pos_horiz": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_height": {"true_steps": 0},
+  "estimator_status_pre_flt_fail_innov_heading": {"true_steps": 0},
+  "estimator_status_pos_vert_accuracy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 50},
+  "estimator_status_pos_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_pos_horiz_accuracy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 70.71067},
+  "estimator_status_output_tracking_error_2":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_output_tracking_error_1":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_output_tracking_error_0":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_strength_ref_gs":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_strength_gs":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_inclination_ref_deg":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_inclination_deg":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_hgt_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_health_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_hdg_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_hagl_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_gps_check_fail_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "estimator_status_flags_updated": {"true_steps": 193},
+  "estimator_status_flags_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_flags_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_flags_reject_yaw": {"true_steps": 0},
+  "estimator_status_flags_reject_ver_vel": {"true_steps": 0},
+  "estimator_status_flags_reject_ver_pos": {"true_steps": 0},
+  "estimator_status_flags_reject_sideslip": {"true_steps": 0},
+  "estimator_status_flags_reject_optflow_y": {"true_steps": 0},
+  "estimator_status_flags_reject_optflow_x": {"true_steps": 0},
+  "estimator_status_flags_reject_hor_vel": {"true_steps": 0},
+  "estimator_status_flags_reject_hor_pos": {"true_steps": 0},
+  "estimator_status_flags_reject_hagl": {"true_steps": 0},
+  "estimator_status_flags_reject_airspeed": {"true_steps": 0},
+  "estimator_status_flags_innovation_fault_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_status_flags_fs_bad_sideslip": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_optflow_y": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_optflow_x": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_z": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_y": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_x": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_mag_decl": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_hdg": {"true_steps": 896},
+  "estimator_status_flags_fs_bad_airspeed": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_acc_vertical": {"true_steps": 0},
+  "estimator_status_flags_fs_bad_acc_clipping": {"true_steps": 43},
+  "estimator_status_flags_fault_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 33},
+  "estimator_status_flags_cs_yaw_manual": {"true_steps": 0},
+  "estimator_status_flags_cs_yaw_align": {"true_steps": 0},
+  "estimator_status_flags_cs_wind_dead_reckoning": {"true_steps": 0},
+  "estimator_status_flags_cs_wind": {"true_steps": 200},
+  "estimator_status_flags_cs_vehicle_at_rest": {"true_steps": 69},
+  "estimator_status_flags_cs_valid_fake_pos": {"true_steps": 69},
+  "estimator_status_flags_cs_tilt_align": {"true_steps": 0},
+  "estimator_status_flags_cs_synthetic_mag_z": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_terrain": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_stuck": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_kin_consistent": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_rng_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_opt_flow_terrain": {"true_steps": 0},
+  "estimator_status_flags_cs_opt_flow": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_heading_consistent": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_hdg": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_field_disturbed": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_dec": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_aligned_in_flight": {"true_steps": 0},
+  "estimator_status_flags_cs_mag_3d": {"true_steps": 0},
+  "estimator_status_flags_cs_mag": {"true_steps": 0},
+  "estimator_status_flags_cs_inertial_dead_reckoning": {"true_steps": 896},
+  "estimator_status_flags_cs_in_air": {"true_steps": 635},
+  "estimator_status_flags_cs_gravity_vector": {"true_steps": 0},
+  "estimator_status_flags_cs_gps_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_yaw_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_yaw": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_vel": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_hgt_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnss_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_gnd_effect": {"true_steps": 0},
+  "estimator_status_flags_cs_fuse_beta": {"true_steps": 0},
+  "estimator_status_flags_cs_fuse_aspd": {"true_steps": 0},
+  "estimator_status_flags_cs_fixed_wing": {"true_steps": 99},
+  "estimator_status_flags_cs_fake_pos": {"true_steps": 627},
+  "estimator_status_flags_cs_fake_hgt": {"true_steps": 896},
+  "estimator_status_flags_cs_ev_yaw_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_yaw": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_vel": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_ev_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_constant_pos": {"true_steps": 0},
+  "estimator_status_flags_cs_baro_hgt": {"true_steps": 0},
+  "estimator_status_flags_cs_baro_fault": {"true_steps": 0},
+  "estimator_status_flags_cs_aux_gpos": {"true_steps": 0},
+  "estimator_status_flags_control_status_changes":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 13},
+  "estimator_status_filter_fault_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2056},
+  "estimator_status_control_mode_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 603979800},
+  "estimator_status_beta_test_ratio":
+  {"non_finite_steps": 896, "min_finite": 0, "max_finite": 0},
+  "estimator_status_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_status_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_sensor_bias_updated": {"true_steps": 106},
+  "estimator_sensor_bias_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_sensor_bias_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_sensor_bias_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_sensor_bias_mag_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_sensor_bias_mag_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_sensor_bias_mag_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "estimator_sensor_bias_mag_bias_valid": {"true_steps": 199},
+  "estimator_sensor_bias_mag_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_mag_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "estimator_sensor_bias_mag_bias_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_mag_bias_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_mag_bias_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "estimator_sensor_bias_gyro_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.00000002091497},
+  "estimator_sensor_bias_gyro_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.00000002091497},
+  "estimator_sensor_bias_gyro_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.00000002091497},
+  "estimator_sensor_bias_gyro_bias_valid": {"true_steps": 99},
+  "estimator_sensor_bias_gyro_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_gyro_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.2305778},
+  "estimator_sensor_bias_gyro_bias_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_gyro_bias_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_gyro_bias_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_variance_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_variance_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_variance_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_valid": {"true_steps": 0},
+  "estimator_sensor_bias_accel_bias_stable": {"true_steps": 0},
+  "estimator_sensor_bias_accel_bias_limit":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "estimator_sensor_bias_accel_bias_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0}},
+ "module": "px4_ekf2",
+ "kind": "tested",
+ "id": "20261118T233024Z-seed6",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_attitude_updated ∨ |vehicle_attitude_q_0 * vehicle_attitude_q_0 + vehicle_attitude_q_1 * vehicle_attitude_q_1 + vehicle_attitude_q_2 * vehicle_attitude_q_2 + vehicle_attitude_q_3 * vehicle_attitude_q_3 - 1| ≤ 0.00001",
+   "smallest_margin": null,
+   "contract_hash":
+   "40de7d3379655200efde73ba73bc8b8268761942514845ad77b5a41b61fa2f99",
+   "clause": "attitude_unit",
+   "checked": 1000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_attitude_updated ∨ sensor_combined_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "55d7aecd357d81cc57441032f992d95a8c321c9024092f5f73fa47337f7b8890",
+   "clause": "attitude_answers_imu",
+   "checked": 1000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_ekf2_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "bd41366c2b5a0530392d354ba0fda54cf36fa2415afd2dfa8d04fea535c93d14",
+   "clause": "no_px4_error",
+   "checked": 1000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER -DMODULE_NAME=\"ekf2\" (C: -std=gnu11 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER)",
+ "compiler":
+ "Apple clang version 17.0.0 (clang-1700.6.4.2); Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_ekf2 --seed 6 --cases 10 --steps 100",
+ "code_hash":
+ "4afacd7feb956286608fd794f357c8aa1c43e6aecf98075bf2623c951e64910b",
+ "cases_skipped": 0,
+ "cases": 10,
+ "assume":
+ ["width_sensor_combined_accelerometer_clipping: 0 ≤ sensor_combined_accelerometer_clipping ∧ sensor_combined_accelerometer_clipping ≤ 255",
+  "width_sensor_combined_gyro_clipping: 0 ≤ sensor_combined_gyro_clipping ∧ sensor_combined_gyro_clipping ≤ 255",
+  "width_sensor_combined_accel_calibration_count: 0 ≤ sensor_combined_accel_calibration_count ∧ sensor_combined_accel_calibration_count ≤ 255",
+  "width_sensor_combined_gyro_calibration_count: 0 ≤ sensor_combined_gyro_calibration_count ∧ sensor_combined_gyro_calibration_count ≤ 255",
+  "width_vehicle_magnetometer_calibration_count: 0 ≤ vehicle_magnetometer_calibration_count ∧ vehicle_magnetometer_calibration_count ≤ 255",
+  "width_vehicle_air_data_temperature_source: 0 ≤ vehicle_air_data_temperature_source ∧ vehicle_air_data_temperature_source ≤ 255",
+  "width_vehicle_air_data_calibration_count: 0 ≤ vehicle_air_data_calibration_count ∧ vehicle_air_data_calibration_count ≤ 255",
+  "width_vehicle_gps_position_fix_type: 0 ≤ vehicle_gps_position_fix_type ∧ vehicle_gps_position_fix_type ≤ 255",
+  "width_vehicle_gps_position_automatic_gain_control: 0 ≤ vehicle_gps_position_automatic_gain_control ∧ vehicle_gps_position_automatic_gain_control ≤ 65535",
+  "width_vehicle_gps_position_jamming_state: 0 ≤ vehicle_gps_position_jamming_state ∧ vehicle_gps_position_jamming_state ≤ 255",
+  "width_vehicle_gps_position_spoofing_state: 0 ≤ vehicle_gps_position_spoofing_state ∧ vehicle_gps_position_spoofing_state ≤ 255",
+  "width_vehicle_gps_position_authentication_state: 0 ≤ vehicle_gps_position_authentication_state ∧ vehicle_gps_position_authentication_state ≤ 255",
+  "width_vehicle_gps_position_satellites_used: 0 ≤ vehicle_gps_position_satellites_used ∧ vehicle_gps_position_satellites_used ≤ 255",
+  "width_vehicle_gps_position_selected_rtcm_instance: 0 ≤ vehicle_gps_position_selected_rtcm_instance ∧ vehicle_gps_position_selected_rtcm_instance ≤ 255",
+  "width_vehicle_gps_position_rtcm_msg_used: 0 ≤ vehicle_gps_position_rtcm_msg_used ∧ vehicle_gps_position_rtcm_msg_used ≤ 255",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "pair_vehicle_gps_position_latitude_deg: |vehicle_gps_position_latitude_deg_lo| ≤ 0.001",
+  "pair_vehicle_gps_position_longitude_deg: |vehicle_gps_position_longitude_deg_lo| ≤ 0.001",
+  "pair_vehicle_gps_position_altitude_msl_m: |vehicle_gps_position_altitude_msl_m_lo| ≤ 0.001",
+  "pair_vehicle_gps_position_altitude_ellipsoid_m: |vehicle_gps_position_altitude_ellipsoid_m_lo| ≤ 0.001",
+  "range_EKF2_ABIAS_INIT: 0 ≤ EKF2_ABIAS_INIT ∧ EKF2_ABIAS_INIT ≤ 0.5",
+  "range_EKF2_ABL_ACCLIM: 20 ≤ EKF2_ABL_ACCLIM ∧ EKF2_ABL_ACCLIM ≤ 200",
+  "range_EKF2_ABL_GYRLIM: 2 ≤ EKF2_ABL_GYRLIM ∧ EKF2_ABL_GYRLIM ≤ 20",
+  "range_EKF2_ABL_LIM: 0 ≤ EKF2_ABL_LIM ∧ EKF2_ABL_LIM ≤ 0.8",
+  "range_EKF2_ABL_TAU: 0.1 ≤ EKF2_ABL_TAU ∧ EKF2_ABL_TAU ≤ 1",
+  "range_EKF2_ACC_B_NOISE: 0 ≤ EKF2_ACC_B_NOISE ∧ EKF2_ACC_B_NOISE ≤ 0.01",
+  "range_EKF2_ACC_NOISE: 0.01 ≤ EKF2_ACC_NOISE ∧ EKF2_ACC_NOISE ≤ 1",
+  "range_EKF2_AGP_CTRL: 0 ≤ EKF2_AGP_CTRL ∧ EKF2_AGP_CTRL ≤ 3",
+  "range_EKF2_AGP_DELAY: 0 ≤ EKF2_AGP_DELAY ∧ EKF2_AGP_DELAY ≤ 300",
+  "range_EKF2_AGP_GATE: 1 ≤ EKF2_AGP_GATE",
+  "range_EKF2_AGP_MODE: EKF2_AGP_MODE = 0 ∨ EKF2_AGP_MODE = 1",
+  "range_EKF2_AGP_NOISE: 0.01 ≤ EKF2_AGP_NOISE",
+  "range_EKF2_ANGERR_INIT: 0 ≤ EKF2_ANGERR_INIT ∧ EKF2_ANGERR_INIT ≤ 0.5",
+  "range_EKF2_ARSP_THR: 0 ≤ EKF2_ARSP_THR",
+  "range_EKF2_ASPD_MAX: 5 ≤ EKF2_ASPD_MAX ∧ EKF2_ASPD_MAX ≤ 50",
+  "range_EKF2_ASP_DELAY: 0 ≤ EKF2_ASP_DELAY ∧ EKF2_ASP_DELAY ≤ 300",
+  "range_EKF2_AVEL_DELAY: 0 ≤ EKF2_AVEL_DELAY ∧ EKF2_AVEL_DELAY ≤ 300",
+  "range_EKF2_BARO_CTRL: EKF2_BARO_CTRL = 0 ∨ EKF2_BARO_CTRL = 1",
+  "range_EKF2_BARO_DELAY: 0 ≤ EKF2_BARO_DELAY ∧ EKF2_BARO_DELAY ≤ 300",
+  "range_EKF2_BARO_GATE: 1 ≤ EKF2_BARO_GATE",
+  "range_EKF2_BARO_NOISE: 0.01 ≤ EKF2_BARO_NOISE ∧ EKF2_BARO_NOISE ≤ 15",
+  "range_EKF2_BCOEF_X: 0 ≤ EKF2_BCOEF_X ∧ EKF2_BCOEF_X ≤ 200",
+  "range_EKF2_BCOEF_Y: 0 ≤ EKF2_BCOEF_Y ∧ EKF2_BCOEF_Y ≤ 200",
+  "range_EKF2_BETA_GATE: 1 ≤ EKF2_BETA_GATE",
+  "range_EKF2_BETA_NOISE: 0.1 ≤ EKF2_BETA_NOISE ∧ EKF2_BETA_NOISE ≤ 1",
+  "range_EKF2_DECL_TYPE: 0 ≤ EKF2_DECL_TYPE ∧ EKF2_DECL_TYPE ≤ 3",
+  "range_EKF2_DELAY_MAX: 0 ≤ EKF2_DELAY_MAX ∧ EKF2_DELAY_MAX ≤ 1000",
+  "range_EKF2_DRAG_CTRL: EKF2_DRAG_CTRL = 0 ∨ EKF2_DRAG_CTRL = 1",
+  "range_EKF2_DRAG_NOISE: 0.5 ≤ EKF2_DRAG_NOISE ∧ EKF2_DRAG_NOISE ≤ 10",
+  "range_EKF2_EAS_NOISE: 0.5 ≤ EKF2_EAS_NOISE ∧ EKF2_EAS_NOISE ≤ 5",
+  "range_EKF2_EN: EKF2_EN = 0 ∨ EKF2_EN = 1",
+  "range_EKF2_EVA_NOISE: 0.05 ≤ EKF2_EVA_NOISE",
+  "range_EKF2_EVP_GATE: 1 ≤ EKF2_EVP_GATE",
+  "range_EKF2_EVP_NOISE: 0.01 ≤ EKF2_EVP_NOISE",
+  "range_EKF2_EVV_GATE: 1 ≤ EKF2_EVV_GATE",
+  "range_EKF2_EVV_NOISE: 0.01 ≤ EKF2_EVV_NOISE",
+  "range_EKF2_EV_CTRL: 0 ≤ EKF2_EV_CTRL ∧ EKF2_EV_CTRL ≤ 15",
+  "range_EKF2_EV_DELAY: 0 ≤ EKF2_EV_DELAY ∧ EKF2_EV_DELAY ≤ 300",
+  "range_EKF2_EV_NOISE_MD: EKF2_EV_NOISE_MD = 0 ∨ EKF2_EV_NOISE_MD = 1",
+  "range_EKF2_EV_QMIN: 0 ≤ EKF2_EV_QMIN ∧ EKF2_EV_QMIN ≤ 100",
+  "range_EKF2_FUSE_BETA: EKF2_FUSE_BETA = 0 ∨ EKF2_FUSE_BETA = 1",
+  "range_EKF2_GBIAS_INIT: 0 ≤ EKF2_GBIAS_INIT ∧ EKF2_GBIAS_INIT ≤ 0.2",
+  "range_EKF2_GND_EFF_DZ: 0 ≤ EKF2_GND_EFF_DZ ∧ EKF2_GND_EFF_DZ ≤ 10",
+  "range_EKF2_GND_MAX_HGT: 0 ≤ EKF2_GND_MAX_HGT ∧ EKF2_GND_MAX_HGT ≤ 5",
+  "range_EKF2_GPS_CHECK: 0 ≤ EKF2_GPS_CHECK ∧ EKF2_GPS_CHECK ≤ 2047",
+  "range_EKF2_GPS_CTRL: 0 ≤ EKF2_GPS_CTRL ∧ EKF2_GPS_CTRL ≤ 15",
+  "range_EKF2_GPS_DELAY: 0 ≤ EKF2_GPS_DELAY ∧ EKF2_GPS_DELAY ≤ 300",
+  "range_EKF2_GPS_MODE: EKF2_GPS_MODE = 0 ∨ EKF2_GPS_MODE = 1",
+  "range_EKF2_GPS_P_GATE: 1 ≤ EKF2_GPS_P_GATE",
+  "range_EKF2_GPS_P_NOISE: 0.01 ≤ EKF2_GPS_P_NOISE ∧ EKF2_GPS_P_NOISE ≤ 10",
+  "range_EKF2_GPS_V_GATE: 1 ≤ EKF2_GPS_V_GATE",
+  "range_EKF2_GPS_V_NOISE: 0.01 ≤ EKF2_GPS_V_NOISE ∧ EKF2_GPS_V_NOISE ≤ 5",
+  "range_EKF2_GPS_YAW_OFF: 0 ≤ EKF2_GPS_YAW_OFF ∧ EKF2_GPS_YAW_OFF ≤ 360",
+  "range_EKF2_GRAV_NOISE: 0.1 ≤ EKF2_GRAV_NOISE ∧ EKF2_GRAV_NOISE ≤ 10",
+  "range_EKF2_GSF_TAS: 0 ≤ EKF2_GSF_TAS ∧ EKF2_GSF_TAS ≤ 100",
+  "range_EKF2_GYR_B_LIM: 0 ≤ EKF2_GYR_B_LIM ∧ EKF2_GYR_B_LIM ≤ 0.4",
+  "range_EKF2_GYR_B_NOISE: 0 ≤ EKF2_GYR_B_NOISE ∧ EKF2_GYR_B_NOISE ≤ 0.01",
+  "range_EKF2_GYR_NOISE: 0.0001 ≤ EKF2_GYR_NOISE ∧ EKF2_GYR_NOISE ≤ 0.1",
+  "range_EKF2_HDG_GATE: 1 ≤ EKF2_HDG_GATE",
+  "range_EKF2_HEAD_NOISE: 0.01 ≤ EKF2_HEAD_NOISE ∧ EKF2_HEAD_NOISE ≤ 1",
+  "range_EKF2_HGT_REF: EKF2_HGT_REF = 0 ∨ EKF2_HGT_REF = 1 ∨ EKF2_HGT_REF = 2 ∨ EKF2_HGT_REF = 3",
+  "range_EKF2_IMU_CTRL: 0 ≤ EKF2_IMU_CTRL ∧ EKF2_IMU_CTRL ≤ 7",
+  "range_EKF2_LOG_VERBOSE: EKF2_LOG_VERBOSE = 0 ∨ EKF2_LOG_VERBOSE = 1",
+  "range_EKF2_MAG_ACCLIM: 0 ≤ EKF2_MAG_ACCLIM ∧ EKF2_MAG_ACCLIM ≤ 5",
+  "range_EKF2_MAG_B_NOISE: 0 ≤ EKF2_MAG_B_NOISE ∧ EKF2_MAG_B_NOISE ≤ 0.1",
+  "range_EKF2_MAG_CHECK: 0 ≤ EKF2_MAG_CHECK ∧ EKF2_MAG_CHECK ≤ 7",
+  "range_EKF2_MAG_CHK_INC: 0 ≤ EKF2_MAG_CHK_INC ∧ EKF2_MAG_CHK_INC ≤ 90",
+  "range_EKF2_MAG_CHK_STR: 0 ≤ EKF2_MAG_CHK_STR ∧ EKF2_MAG_CHK_STR ≤ 1",
+  "range_EKF2_MAG_DELAY: 0 ≤ EKF2_MAG_DELAY ∧ EKF2_MAG_DELAY ≤ 300",
+  "range_EKF2_MAG_E_NOISE: 0 ≤ EKF2_MAG_E_NOISE ∧ EKF2_MAG_E_NOISE ≤ 0.1",
+  "range_EKF2_MAG_GATE: 1 ≤ EKF2_MAG_GATE",
+  "range_EKF2_MAG_NOISE: 0.001 ≤ EKF2_MAG_NOISE ∧ EKF2_MAG_NOISE ≤ 1",
+  "range_EKF2_MAG_TYPE: EKF2_MAG_TYPE = 0 ∨ EKF2_MAG_TYPE = 1 ∨ EKF2_MAG_TYPE = 5 ∨ EKF2_MAG_TYPE = 6",
+  "range_EKF2_MCOEF: 0 ≤ EKF2_MCOEF ∧ EKF2_MCOEF ≤ 1",
+  "range_EKF2_MIN_RNG: 0.01 ≤ EKF2_MIN_RNG",
+  "range_EKF2_MULTI_IMU: 0 ≤ EKF2_MULTI_IMU ∧ EKF2_MULTI_IMU ≤ 4",
+  "range_EKF2_MULTI_MAG: 0 ≤ EKF2_MULTI_MAG ∧ EKF2_MULTI_MAG ≤ 4",
+  "range_EKF2_NOAID_NOISE: 0.5 ≤ EKF2_NOAID_NOISE ∧ EKF2_NOAID_NOISE ≤ 50",
+  "range_EKF2_NOAID_TOUT: 500000 ≤ EKF2_NOAID_TOUT ∧ EKF2_NOAID_TOUT ≤ 10000000",
+  "range_EKF2_OF_CTRL: EKF2_OF_CTRL = 0 ∨ EKF2_OF_CTRL = 1",
+  "range_EKF2_OF_DELAY: 0 ≤ EKF2_OF_DELAY ∧ EKF2_OF_DELAY ≤ 300",
+  "range_EKF2_OF_GATE: 1 ≤ EKF2_OF_GATE",
+  "range_EKF2_OF_GYR_SRC: EKF2_OF_GYR_SRC = 0 ∨ EKF2_OF_GYR_SRC = 1",
+  "range_EKF2_OF_N_MAX: 0.05 ≤ EKF2_OF_N_MAX",
+  "range_EKF2_OF_N_MIN: 0.05 ≤ EKF2_OF_N_MIN",
+  "range_EKF2_OF_QMIN: 0 ≤ EKF2_OF_QMIN ∧ EKF2_OF_QMIN ≤ 255",
+  "range_EKF2_OF_QMIN_GND: 0 ≤ EKF2_OF_QMIN_GND ∧ EKF2_OF_QMIN_GND ≤ 255",
+  "range_EKF2_PCOEF_XN: -0.5 ≤ EKF2_PCOEF_XN ∧ EKF2_PCOEF_XN ≤ 0.5",
+  "range_EKF2_PCOEF_XP: -0.5 ≤ EKF2_PCOEF_XP ∧ EKF2_PCOEF_XP ≤ 0.5",
+  "range_EKF2_PCOEF_YN: -0.5 ≤ EKF2_PCOEF_YN ∧ EKF2_PCOEF_YN ≤ 0.5",
+  "range_EKF2_PCOEF_YP: -0.5 ≤ EKF2_PCOEF_YP ∧ EKF2_PCOEF_YP ≤ 0.5",
+  "range_EKF2_PCOEF_Z: -0.5 ≤ EKF2_PCOEF_Z ∧ EKF2_PCOEF_Z ≤ 0.5",
+  "range_EKF2_PREDICT_US: 1000 ≤ EKF2_PREDICT_US ∧ EKF2_PREDICT_US ≤ 20000",
+  "range_EKF2_REQ_EPH: 2 ≤ EKF2_REQ_EPH ∧ EKF2_REQ_EPH ≤ 100",
+  "range_EKF2_REQ_EPV: 2 ≤ EKF2_REQ_EPV ∧ EKF2_REQ_EPV ≤ 100",
+  "range_EKF2_REQ_FIX: EKF2_REQ_FIX = 0 ∨ EKF2_REQ_FIX = 2 ∨ EKF2_REQ_FIX = 3 ∨ EKF2_REQ_FIX = 4 ∨ EKF2_REQ_FIX = 5 ∨ EKF2_REQ_FIX = 6 ∨ EKF2_REQ_FIX = 8",
+  "range_EKF2_REQ_GPS_H: 0.1 ≤ EKF2_REQ_GPS_H",
+  "range_EKF2_REQ_HDRIFT: 0.1 ≤ EKF2_REQ_HDRIFT ∧ EKF2_REQ_HDRIFT ≤ 1",
+  "range_EKF2_REQ_NSATS: 4 ≤ EKF2_REQ_NSATS ∧ EKF2_REQ_NSATS ≤ 12",
+  "range_EKF2_REQ_PDOP: 1.5 ≤ EKF2_REQ_PDOP ∧ EKF2_REQ_PDOP ≤ 5",
+  "range_EKF2_REQ_SACC: 0.5 ≤ EKF2_REQ_SACC ∧ EKF2_REQ_SACC ≤ 5",
+  "range_EKF2_REQ_VDRIFT: 0.1 ≤ EKF2_REQ_VDRIFT ∧ EKF2_REQ_VDRIFT ≤ 1.5",
+  "range_EKF2_RNG_A_HMAX: 1 ≤ EKF2_RNG_A_HMAX ∧ EKF2_RNG_A_HMAX ≤ 10",
+  "range_EKF2_RNG_A_VMAX: 0.1 ≤ EKF2_RNG_A_VMAX ∧ EKF2_RNG_A_VMAX ≤ 2",
+  "range_EKF2_RNG_CTRL: EKF2_RNG_CTRL = 0 ∨ EKF2_RNG_CTRL = 1 ∨ EKF2_RNG_CTRL = 2",
+  "range_EKF2_RNG_DELAY: 0 ≤ EKF2_RNG_DELAY ∧ EKF2_RNG_DELAY ≤ 300",
+  "range_EKF2_RNG_FOG: 0 ≤ EKF2_RNG_FOG ∧ EKF2_RNG_FOG ≤ 20",
+  "range_EKF2_RNG_GATE: 1 ≤ EKF2_RNG_GATE",
+  "range_EKF2_RNG_K_GATE: 0.1 ≤ EKF2_RNG_K_GATE ∧ EKF2_RNG_K_GATE ≤ 5",
+  "range_EKF2_RNG_NOISE: 0.01 ≤ EKF2_RNG_NOISE",
+  "range_EKF2_RNG_PITCH: -0.75 ≤ EKF2_RNG_PITCH ∧ EKF2_RNG_PITCH ≤ 0.75",
+  "range_EKF2_RNG_QLTY_T: 0.1 ≤ EKF2_RNG_QLTY_T ∧ EKF2_RNG_QLTY_T ≤ 5",
+  "range_EKF2_RNG_SFE: 0 ≤ EKF2_RNG_SFE ∧ EKF2_RNG_SFE ≤ 0.2",
+  "range_EKF2_SYNT_MAG_Z: EKF2_SYNT_MAG_Z = 0 ∨ EKF2_SYNT_MAG_Z = 1",
+  "range_EKF2_TAS_GATE: 1 ≤ EKF2_TAS_GATE",
+  "range_EKF2_TAU_POS: 0.1 ≤ EKF2_TAU_POS ∧ EKF2_TAU_POS ≤ 1",
+  "range_EKF2_TAU_VEL: EKF2_TAU_VEL ≤ 1",
+  "range_EKF2_TERR_GRAD: 0 ≤ EKF2_TERR_GRAD",
+  "range_EKF2_TERR_NOISE: 0.5 ≤ EKF2_TERR_NOISE",
+  "range_EKF2_VEL_LIM: EKF2_VEL_LIM ≤ 299792450",
+  "range_EKF2_WIND_NSD: 0 ≤ EKF2_WIND_NSD ∧ EKF2_WIND_NSD ≤ 1",
+  "range_SENS_IMU_MODE: SENS_IMU_MODE = 0 ∨ SENS_IMU_MODE = 1",
+  "range_SENS_MAG_MODE: SENS_MAG_MODE = 0 ∨ SENS_MAG_MODE = 1",
+  "single_instance: SENS_IMU_MODE = 1 ∧ SENS_MAG_MODE = 1"]}

@@ -1,0 +1,45 @@
+% ==================================================================
+%  The plant as a block: real-valued rigid body inside, Float ports on the boundary
+%  one sigconf text width (8.2 cm), pdfLaTeX
+%  Preamble: \usepackage{tikz} \usetikzlibrary{arrows.meta,calc,positioning}
+% ==================================================================
+\definecolor{fwInk}{HTML}{22252A}%
+\definecolor{fwMute}{HTML}{8A8F96}%
+\definecolor{fwHair}{HTML}{C9CCD1}%
+\definecolor{fwOchre}{HTML}{C4860F}%
+\definecolor{fwBlue}{HTML}{1E3F7C}%
+\definecolor{fwSage}{HTML}{C3D7B4}%
+\begin{tikzpicture}[
+  x=1cm, y=1cm, line cap=round, line join=round,
+  >={Stealth[length=1.5mm, width=1.2mm]},
+  sig/.style={draw=fwInk, line width=0.45pt, ->},
+  lbl/.style={font=\footnotesize, text=fwInk, inner sep=1pt},
+  sub/.style={font=\scriptsize, text=fwMute, inner sep=1pt},
+  port/.style={draw=fwBlue, fill=white, line width=0.45pt, minimum width=0.42cm, minimum height=0.30cm, inner sep=0, font=\scriptsize\ttfamily, text=fwBlue, rounded corners=0.6pt},
+]
+% ---------------- the block ----------------
+\draw[draw=fwInk, line width=0.5pt, fill=fwSage!35] (0,0) rectangle (3.4,2.4);
+\node[lbl, anchor=center] at (1.7,1.45) {plant};
+\node[sub, anchor=center] at (1.7,1.05) {$\mathbb{R}$, $h = 1/400$};
+% ---------------- actuation port (left, centered) ----------------
+\node[port, anchor=center] (pin) at (0,1.2) {$\lceil\cdot\rceil$};
+\draw[sig] (-1.75,1.2) -- (pin.west);
+\node[lbl, anchor=south west] at (-1.6,1.27) {$\mathbf{u}\in[0,1]^4$};
+\node[sub, anchor=north west] at (-1.6,1.13) {\texttt{Float32}};
+% ---------------- sensing ports (right) ----------------
+\node[port, anchor=center] (pp) at (3.4,1.85) {\texttt{F}};
+\node[port, anchor=center] (p32) at (3.4,0.55) {\texttt{F32}};
+\draw[sig] (pp.east) -- (5.8,1.85);
+\draw[sig] (p32.east) -- (5.8,0.55);
+\node[lbl, anchor=south west] at (3.75,1.92) {$\mathbf{p}$};
+\node[sub, anchor=north west] at (3.75,1.80) {\texttt{Float}};
+\node[lbl, anchor=south west] at (3.75,0.62) {$\mathbf{v},\ \mathbf{f},\ q,\ \boldsymbol{\omega}$};
+\node[sub, anchor=north west] at (3.75,0.50) {\texttt{Float32}};
+% ---------------- the loop back through the controller ----------------
+\node[draw=fwHair, line width=0.45pt, fill=white, rounded corners=1pt, font=\footnotesize, text=fwInk, inner sep=3pt, minimum height=0.5cm] (ctrl) at (1.7,-0.95) {\texttt{Copter.loop}};
+\draw[draw=fwMute, line width=0.4pt, ->] (5.8,0.55) -- (6.05,0.55) -- (6.05,-0.95) -- (ctrl.east);
+\draw[draw=fwMute, line width=0.4pt] (5.8,1.85) -- (6.05,1.85) -- (6.05,0.55);
+\draw[draw=fwMute, line width=0.4pt] (ctrl.west) -- (-1.9,-0.95) -- (-1.9,1.2) -- (-1.75,1.2);
+\node[sub, anchor=north] at (4.2,-1.0) {sample, $\Delta t$};
+\node[sub, anchor=north] at (-0.3,-1.0) {actuators};
+\end{tikzpicture}%

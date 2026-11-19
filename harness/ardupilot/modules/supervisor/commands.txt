@@ -1,0 +1,104 @@
+# The supervisor's commands as fields: which stand-in call (Class::method, in the command log)
+# becomes which consumer's command fields. gen/gen_commands.py turns this into gen/Commands.lean
+# (the output fields) and gen/out/cmd_emit.inc (filling them from the log).
+#
+#   Class::method -> stage field_method : arg arg ...
+#
+# Each arg names one word of the log entry in order (the stand-in records its arguments in
+# declaration order, vectors component-wise, Location as lat, lng, alt_cm, frame): name:t with t
+# f (f32), b (bool), u (u32), i (i32); "-" skips a word. Every target gets cmd_<stage>_<method>
+# (bool), cmd_<stage>_<method>_seq (u32: position of the call in this tick's log, from 1, across
+# all stages; 0 = not called) and cmd_<stage>_<method>_<arg>. Several sources may feed one target
+# (the _loc forms of AC_WPNav are recorded under their NED names by stand_ins/stubs_guidance.cpp).
+# Consumer names: modules/{position,attitude,guidance}/Module.lean of the integration copy.
+
+# ---- position (AC_PosControl)
+AC_PosControl::update_estimates -> position update_estimates : high_vibes:b
+AC_PosControl::set_vibe_comp -> position set_vibe_comp : on:b
+AC_PosControl::NE_set_max_speed_accel_m -> position NE_set_max_speed_accel_m : speed:f accel:f
+AC_PosControl::NE_set_correction_speed_accel_m -> position NE_set_correction_speed_accel_m : speed:f accel:f
+AC_PosControl::NE_set_pos_error_max_m -> position NE_set_pos_error_max_m : error_max:f
+AC_PosControl::D_set_max_speed_accel_m -> position D_set_max_speed_accel_m : down:f up:f accel:f
+AC_PosControl::D_set_correction_speed_accel_m -> position D_set_correction_speed_accel_m : down:f up:f accel:f
+AC_PosControl::NE_init_controller -> position NE_init_controller :
+AC_PosControl::NE_init_controller_stopping_point -> position NE_init_controller_stopping_point :
+AC_PosControl::D_init_controller -> position D_init_controller :
+AC_PosControl::D_init_controller_no_descent -> position D_init_controller_no_descent :
+AC_PosControl::D_init_controller_stopping_point -> position D_init_controller_stopping_point :
+AC_PosControl::init_pos_terrain_D_m -> position init_pos_terrain_D_m : terrain_d:f
+AC_PosControl::D_accel_pid_set_integrator -> position D_accel_pid_set_integrator : i:f
+AC_PosControl::NE_relax_velocity_controller -> position NE_relax_velocity_controller :
+AC_PosControl::NE_soften_for_landing -> position NE_soften_for_landing :
+AC_PosControl::input_vel_accel_NE_m -> position input_vel_accel_NE_m : vel_n:f vel_e:f accel_n:f accel_e:f limit_output:b
+AC_PosControl::input_pos_vel_accel_NE_m -> position input_pos_vel_accel_NE_m : pos_n:f pos_e:f vel_n:f vel_e:f accel_n:f accel_e:f limit_output:b
+AC_PosControl::input_pos_NED_m -> position input_pos_NED_m : pos_n:f pos_e:f pos_d:f terrain_d:f terrain_margin:f
+AC_PosControl::NE_stop_vel_stabilisation -> position NE_stop_vel_stabilisation :
+AC_PosControl::NE_stop_pos_stabilisation -> position NE_stop_pos_stabilisation :
+AC_PosControl::NE_update_controller -> position NE_update_controller :
+AC_PosControl::D_relax_controller -> position D_relax_controller : throttle:f
+AC_PosControl::D_set_pos_target_from_climb_rate_ms -> position D_set_pos_target_from_climb_rate_ms : climb_rate:f ignore_descent_limit:b
+AC_PosControl::input_pos_vel_accel_D_m -> position input_pos_vel_accel_D_m : pos:f vel:f accel:f limit_output:b
+AC_PosControl::input_vel_accel_D_m -> position input_vel_accel_D_m : vel:f accel:f limit_output:b
+AC_PosControl::D_set_alt_target_with_slew_m -> position D_set_alt_target_with_slew_m : alt:f
+AC_PosControl::D_update_controller -> position D_update_controller :
+
+# ---- attitude (AC_AttitudeControl, AC_AttitudeControl_Multi)
+AC_AttitudeControl::set_yaw_rate_tc -> attitude set_yaw_rate_tc : input_tc:f
+AC_AttitudeControl::set_roll_pitch_rate_tc -> attitude set_roll_pitch_rate_tc : input_tc:f
+AC_AttitudeControl::inertial_frame_reset -> attitude inertial_frame_reset :
+AC_AttitudeControl::landed_gain_reduction -> attitude landed_gain_reduction : landed:b
+AC_AttitudeControl::relax_attitude_controllers -> attitude relax_attitude_controllers :
+AC_AttitudeControl::reset_target_and_rate -> attitude reset_target_and_rate : reset_rate:b
+AC_AttitudeControl::reset_yaw_target_and_rate -> attitude reset_yaw_target_and_rate : reset_rate:b
+AC_AttitudeControl::reset_rate_controller_I_terms -> attitude reset_rate_controller_I_terms :
+AC_AttitudeControl::reset_rate_controller_I_terms_smoothly -> attitude reset_rate_controller_I_terms_smoothly :
+AC_AttitudeControl::input_euler_angle_roll_pitch_euler_rate_yaw_rad -> attitude input_euler_angle_roll_pitch_euler_rate_yaw : roll:f pitch:f yaw_rate:f
+AC_AttitudeControl::input_euler_angle_roll_pitch_yaw_rad -> attitude input_euler_angle_roll_pitch_yaw : roll:f pitch:f yaw:f slew_yaw:b
+AC_AttitudeControl::input_rate_bf_roll_pitch_yaw_rads -> attitude input_rate_bf_roll_pitch_yaw : roll_rate:f pitch_rate:f yaw_rate:f
+AC_AttitudeControl::input_thrust_vector_rate_heading_rads -> attitude input_thrust_vector_rate_heading : - - - heading_rate:f slew_yaw:b
+AC_AttitudeControl::input_thrust_vector_heading -> attitude input_thrust_vector_heading : - - - yaw_angle:f yaw_rate:f heading_mode:u
+AC_AttitudeControl_Multi::set_throttle_out -> attitude set_throttle_out : throttle_in:f apply_angle_boost:b filter_cutoff:f
+AC_AttitudeControl_Multi::set_throttle_mix_min -> attitude set_throttle_mix_min :
+AC_AttitudeControl_Multi::set_throttle_mix_man -> attitude set_throttle_mix_man :
+AC_AttitudeControl_Multi::set_throttle_mix_max -> attitude set_throttle_mix_max : ratio:f
+
+# ---- guidance (AC_WPNav)
+AC_WPNav::wp_and_spline_init_m -> guidance wp_and_spline_init_m : speed_ms:f stopping_point_n:f stopping_point_e:f stopping_point_d:f
+AC_WPNav::set_speed_NE_ms -> guidance set_speed_NE_ms : speed_ms:f
+AC_WPNav::set_speed_up_ms -> guidance set_speed_up_ms : speed_up_ms:f
+AC_WPNav::set_speed_down_ms -> guidance set_speed_down_ms : speed_down_ms:f
+AC_WPNav::set_wp_destination_NED_m -> guidance set_wp_destination_NED_m : destination_n:f destination_e:f destination_d:f - arc_rad:f
+AC_WPNav::set_wp_destination_next_NED_m -> guidance set_wp_destination_next_NED_m : destination_n:f destination_e:f destination_d:f - arc_rad:f
+AC_WPNav::set_spline_destination_NED_m -> guidance set_spline_destination_NED_m : destination_n:f destination_e:f destination_d:f - next_destination_n:f next_destination_e:f next_destination_d:f - next_is_spline:b
+AC_WPNav::set_spline_destination_next_NED_m -> guidance set_spline_destination_next_NED_m : next_destination_n:f next_destination_e:f next_destination_d:f - next_next_destination_n:f next_next_destination_e:f next_next_destination_d:f - next_next_is_spline:b
+AC_WPNav::force_stop_at_next_wp -> guidance force_stop_at_next_wp :
+AC_WPNav::set_pause -> guidance set_pause :
+AC_WPNav::set_resume -> guidance set_resume :
+AC_WPNav::update_wpnav -> guidance update_wpnav :
+
+# ---- calls carried by signals, not command fields (the mixer reads the level every tick)
+AP_Motors::armed -> signal armed :
+AP_MotorsMulticopter::set_desired_spool_state -> signal spool_desired :
+
+# ---- round 3: the calls the stages now take (h-apctl interfaces)
+AC_AttitudeControl::rate_controller_target_reset -> attitude rate_controller_target_reset :
+AP_MotorsMulticopter::output_min -> mixer output_min :
+AP_MotorsMulticopter::update_throttle_hover -> mixer update_throttle_hover : dt:f
+AP_Motors::set_thrust_boost -> mixer set_thrust_boost : enable:b
+AP_AHRS::set_home -> estimator set_home : lat_e7:i lon_e7:i alt_cm:i -
+AP_AHRS::resetHeightDatum -> estimator reset_height_datum :
+NavEKF3::requestYawReset -> estimator request_yaw_reset :
+# Copter::update_ekf_terrain_height_stable (baro_ground_effect.cpp:29-39)
+AP_AHRS::set_terrain_hgt_stable -> estimator set_terrain_hgt_stable : stable:b
+# the mixer runs it itself when it is disarmed (AP_Motors::armed(false), AP_Motors_Class.cpp)
+AP_MotorsMulticopter::save_params_on_disarm -> signal armed :
+
+# ---- loiter (AC_Loiter): the loiter stage (ardupilot/modules/loiter). clear_pilot_desired_acceleration
+# is inline (set_pilot_desired_acceleration_rad(0, 0)); set_pilot_desired_acceleration_cd is not
+# called by ArduCopter and stays unmapped.
+AC_Loiter::set_speed_max_NE_ms -> loiter set_speed_max_NE_ms : speed:f
+AC_Loiter::set_pilot_desired_acceleration_rad -> loiter set_pilot_desired_acceleration_rad : roll:f pitch:f
+AC_Loiter::soften_for_landing -> loiter soften_for_landing :
+AC_Loiter::init_target_m -> loiter init_target_m : n:f e:f
+AC_Loiter::init_target -> loiter init_target :
+AC_Loiter::update -> loiter update : avoidance_on:b

@@ -1,0 +1,2193 @@
+{
+ "namespace": "AHRS_View_lib",
+ "source": "ardupilot/unity_ahrs_view.cpp",
+ "functions": [
+  {
+   "name": "safe_asin",
+   "lean": "AHRS_View_lib.safe_asin_float",
+   "params": [
+    [
+     "v",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:50-63"
+  },
+  {
+   "name": "safe_sqrt",
+   "lean": "AHRS_View_lib.safe_sqrt_float",
+   "params": [
+    [
+     "v",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:72-81"
+  },
+  {
+   "name": "constrain_value_line",
+   "lean": "AHRS_View_lib.constrain_value_line_float",
+   "params": [
+    [
+     "amt",
+     "float"
+    ],
+    [
+     "low",
+     "float"
+    ],
+    [
+     "high",
+     "float"
+    ],
+    [
+     "line",
+     "uint32_t"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:283-304"
+  },
+  {
+   "name": "degrees",
+   "lean": "AHRS_View_lib.degrees",
+   "params": [
+    [
+     "rad",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:255-258"
+  },
+  {
+   "name": "sq",
+   "lean": "AHRS_View_lib.sq_float",
+   "params": [
+    [
+     "val",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:266-269"
+  },
+  {
+   "name": "norm",
+   "lean": "AHRS_View_lib.norm_float2",
+   "params": [
+    [
+     "first",
+     "float"
+    ],
+    [
+     "second",
+     "float"
+    ]
+   ],
+   "ret": "float",
+   "source": "ardupilot/unity_ahrs_view.cpp:291-293"
+  },
+  {
+   "name": "is_zero",
+   "lean": "AHRS_View_lib.is_zero_float",
+   "params": [
+    [
+     "x",
+     "float"
+    ]
+   ],
+   "ret": "bool",
+   "source": "ardupilot/unity_ahrs_view.cpp:61-63"
+  }
+ ],
+ "classes": [
+  {
+   "cxx": "AP_AHRS_View",
+   "lean": "AHRS_View_lib.AP_AHRS_View",
+   "has_params": false,
+   "inputs": [
+    {
+     "lean": "get_rotation_body_to_ned",
+     "type": "Matrix3<float>",
+     "cxx": "ahrs.get_rotation_body_to_ned()",
+     "leaves": [
+      {
+       "lean": "a.x",
+       "cxx": "a.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.y",
+       "cxx": "a.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.z",
+       "cxx": "a.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.x",
+       "cxx": "b.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.y",
+       "cxx": "b.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.z",
+       "cxx": "b.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.x",
+       "cxx": "c.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.y",
+       "cxx": "c.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.z",
+       "cxx": "c.z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "lean": "get_gyro",
+     "type": "Vector3<float>",
+     "cxx": "ahrs.get_gyro()",
+     "leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "AP_AHRS_View",
+     "lean": "AHRS_View_lib.AP_AHRS_View.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "AP_AHRS_View",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "_ahrs",
+       "type": "AP_AHRS",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "update",
+     "lean": "AHRS_View_lib.AP_AHRS_View.update",
+     "top": false,
+     "kind": "method",
+     "owner": "AP_AHRS_View",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "roll",
+     "cxx": "roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pitch",
+     "cxx": "pitch",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "yaw",
+     "cxx": "yaw",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "roll_sensor",
+     "cxx": "roll_sensor",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "pitch_sensor",
+     "cxx": "pitch_sensor",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "yaw_sensor",
+     "cxx": "yaw_sensor",
+     "type": "int32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.a.x",
+     "cxx": "rot_view.a.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.a.y",
+     "cxx": "rot_view.a.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.a.z",
+     "cxx": "rot_view.a.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.b.x",
+     "cxx": "rot_view.b.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.b.y",
+     "cxx": "rot_view.b.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.b.z",
+     "cxx": "rot_view.b.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.c.x",
+     "cxx": "rot_view.c.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.c.y",
+     "cxx": "rot_view.c.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view.c.z",
+     "cxx": "rot_view.c.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.a.x",
+     "cxx": "rot_view_T.a.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.a.y",
+     "cxx": "rot_view_T.a.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.a.z",
+     "cxx": "rot_view_T.a.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.b.x",
+     "cxx": "rot_view_T.b.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.b.y",
+     "cxx": "rot_view_T.b.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.b.z",
+     "cxx": "rot_view_T.b.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.c.x",
+     "cxx": "rot_view_T.c.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.c.y",
+     "cxx": "rot_view_T.c.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_view_T.c.z",
+     "cxx": "rot_view_T.c.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.a.x",
+     "cxx": "rot_body_to_ned.a.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.a.y",
+     "cxx": "rot_body_to_ned.a.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.a.z",
+     "cxx": "rot_body_to_ned.a.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.b.x",
+     "cxx": "rot_body_to_ned.b.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.b.y",
+     "cxx": "rot_body_to_ned.b.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.b.z",
+     "cxx": "rot_body_to_ned.b.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.c.x",
+     "cxx": "rot_body_to_ned.c.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.c.y",
+     "cxx": "rot_body_to_ned.c.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "rot_body_to_ned.c.z",
+     "cxx": "rot_body_to_ned.c.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "gyro.x",
+     "cxx": "gyro.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "gyro.y",
+     "cxx": "gyro.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "gyro.z",
+     "cxx": "gyro.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.cos_roll",
+     "cxx": "trig.cos_roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.cos_pitch",
+     "cxx": "trig.cos_pitch",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.cos_yaw",
+     "cxx": "trig.cos_yaw",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.sin_roll",
+     "cxx": "trig.sin_roll",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.sin_pitch",
+     "cxx": "trig.sin_pitch",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "trig.sin_yaw",
+     "cxx": "trig.sin_yaw",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y_angle",
+     "cxx": "y_angle",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_pitch_trim_deg",
+     "cxx": "_pitch_trim_deg",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Matrix3<float>",
+   "lean": "AHRS_View_lib.Matrix3f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Matrix3",
+     "lean": "AHRS_View_lib.Matrix3f.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Matrix3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Matrix3",
+     "lean": "AHRS_View_lib.Matrix3f.init_Vector3f3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Matrix3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "a0",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "b0",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      },
+      {
+       "name": "c0",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator*",
+     "lean": "AHRS_View_lib.Matrix3f.op_mul_Matrix3f",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "m",
+       "type": "Matrix3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Matrix3f.State",
+       "leaves": [
+        {
+         "lean": "a.x",
+         "cxx": "a.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a.y",
+         "cxx": "a.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a.z",
+         "cxx": "a.z",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.x",
+         "cxx": "b.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.y",
+         "cxx": "b.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.z",
+         "cxx": "b.z",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.x",
+         "cxx": "c.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.y",
+         "cxx": "c.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.z",
+         "cxx": "c.z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Matrix3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "a.x",
+       "cxx": "a.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.y",
+       "cxx": "a.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.z",
+       "cxx": "a.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.x",
+       "cxx": "b.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.y",
+       "cxx": "b.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.z",
+       "cxx": "b.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.x",
+       "cxx": "c.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.y",
+       "cxx": "c.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.z",
+       "cxx": "c.z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "operator*",
+     "lean": "AHRS_View_lib.Matrix3f.op_mul_Vector3f",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "v",
+       "type": "Vector3<float>",
+       "ref": "const",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Vector3f.State",
+       "leaves": [
+        {
+         "lean": "x",
+         "cxx": "x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "y",
+         "cxx": "y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "z",
+         "cxx": "z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "Vector3<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "z",
+       "cxx": "z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "to_euler",
+     "lean": "AHRS_View_lib.Matrix3f.to_euler",
+     "top": false,
+     "kind": "method",
+     "owner": "Matrix3<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "roll",
+       "type": "float",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "pitch",
+       "type": "float",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "yaw",
+       "type": "float",
+       "ref": "ptr",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "a.x",
+     "cxx": "a.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.y",
+     "cxx": "a.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "a.z",
+     "cxx": "a.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.x",
+     "cxx": "b.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.y",
+     "cxx": "b.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "b.z",
+     "cxx": "b.z",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.x",
+     "cxx": "c.x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.y",
+     "cxx": "c.y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "c.z",
+     "cxx": "c.z",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector3<float>",
+   "lean": "AHRS_View_lib.Vector3f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector3",
+     "lean": "AHRS_View_lib.Vector3f.init_void",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "Vector3",
+     "lean": "AHRS_View_lib.Vector3f.init_float3",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector3<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "z0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "z",
+     "cxx": "z",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "Vector2<float>",
+   "lean": "AHRS_View_lib.Vector2f",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Vector2",
+     "lean": "AHRS_View_lib.Vector2f.init_float2",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "x0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "y0",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "operator/=",
+     "lean": "AHRS_View_lib.Vector2f.op_div_assign",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "num",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "Vector2<float>",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": [
+      {
+       "lean": "x",
+       "cxx": "x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "y",
+       "cxx": "y",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "cxx": "length",
+     "lean": "AHRS_View_lib.Vector2f.length",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "normalize",
+     "lean": "AHRS_View_lib.Vector2f.normalize",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_inf",
+     "lean": "AHRS_View_lib.Vector2f.is_inf",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "is_nan",
+     "lean": "AHRS_View_lib.Vector2f.is_nan",
+     "top": false,
+     "kind": "method",
+     "owner": "Vector2<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "x",
+     "cxx": "x",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "y",
+     "cxx": "y",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  },
+  {
+   "cxx": "QuaternionT<float>",
+   "lean": "AHRS_View_lib.Quaternion",
+   "has_params": false,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "rotation_matrix",
+     "lean": "AHRS_View_lib.Quaternion.rotation_matrix_Matrix3f",
+     "top": false,
+     "kind": "method",
+     "owner": "QuaternionT<float>",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "m",
+       "type": "Matrix3<float>",
+       "ref": "mut",
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "AHRS_View_lib.Matrix3f.State",
+       "leaves": [
+        {
+         "lean": "a.x",
+         "cxx": "a.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a.y",
+         "cxx": "a.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "a.z",
+         "cxx": "a.z",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.x",
+         "cxx": "b.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.y",
+         "cxx": "b.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "b.z",
+         "cxx": "b.z",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.x",
+         "cxx": "c.x",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.y",
+         "cxx": "c.y",
+         "type": "float",
+         "enum": null
+        },
+        {
+         "lean": "c.z",
+         "cxx": "c.z",
+         "type": "float",
+         "enum": null
+        }
+       ]
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "s",
+     "lean": "q1",
+     "cxx": "q1",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q2",
+     "cxx": "q2",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q3",
+     "cxx": "q3",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "q4",
+     "cxx": "q4",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": false
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "Rotation",
+   "lean": "AHRS_View_lib.Rotation",
+   "under": "uint8_t",
+   "values": [
+    [
+     "ROTATION_NONE",
+     0,
+     "ROTATION_NONE"
+    ],
+    [
+     "ROTATION_YAW_45",
+     1,
+     "ROTATION_YAW_45"
+    ],
+    [
+     "ROTATION_YAW_90",
+     2,
+     "ROTATION_YAW_90"
+    ],
+    [
+     "ROTATION_YAW_135",
+     3,
+     "ROTATION_YAW_135"
+    ],
+    [
+     "ROTATION_YAW_180",
+     4,
+     "ROTATION_YAW_180"
+    ],
+    [
+     "ROTATION_YAW_225",
+     5,
+     "ROTATION_YAW_225"
+    ],
+    [
+     "ROTATION_YAW_270",
+     6,
+     "ROTATION_YAW_270"
+    ],
+    [
+     "ROTATION_YAW_315",
+     7,
+     "ROTATION_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_180",
+     8,
+     "ROTATION_ROLL_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_45",
+     9,
+     "ROTATION_ROLL_180_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_90",
+     10,
+     "ROTATION_ROLL_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_135",
+     11,
+     "ROTATION_ROLL_180_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_180",
+     12,
+     "ROTATION_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_225",
+     13,
+     "ROTATION_ROLL_180_YAW_225"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_270",
+     14,
+     "ROTATION_ROLL_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_180_YAW_315",
+     15,
+     "ROTATION_ROLL_180_YAW_315"
+    ],
+    [
+     "ROTATION_ROLL_90",
+     16,
+     "ROTATION_ROLL_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_45",
+     17,
+     "ROTATION_ROLL_90_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_90",
+     18,
+     "ROTATION_ROLL_90_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_135",
+     19,
+     "ROTATION_ROLL_90_YAW_135"
+    ],
+    [
+     "ROTATION_ROLL_270",
+     20,
+     "ROTATION_ROLL_270"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_45",
+     21,
+     "ROTATION_ROLL_270_YAW_45"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_90",
+     22,
+     "ROTATION_ROLL_270_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_270_YAW_135",
+     23,
+     "ROTATION_ROLL_270_YAW_135"
+    ],
+    [
+     "ROTATION_PITCH_90",
+     24,
+     "ROTATION_PITCH_90"
+    ],
+    [
+     "ROTATION_PITCH_270",
+     25,
+     "ROTATION_PITCH_270"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_90",
+     26,
+     "ROTATION_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_PITCH_180_YAW_270",
+     27,
+     "ROTATION_PITCH_180_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_90",
+     28,
+     "ROTATION_ROLL_90_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_90",
+     29,
+     "ROTATION_ROLL_180_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_90",
+     30,
+     "ROTATION_ROLL_270_PITCH_90"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180",
+     31,
+     "ROTATION_ROLL_90_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_180",
+     32,
+     "ROTATION_ROLL_270_PITCH_180"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_270",
+     33,
+     "ROTATION_ROLL_90_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_180_PITCH_270",
+     34,
+     "ROTATION_ROLL_180_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_270_PITCH_270",
+     35,
+     "ROTATION_ROLL_270_PITCH_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_180_YAW_90",
+     36,
+     "ROTATION_ROLL_90_PITCH_180_YAW_90"
+    ],
+    [
+     "ROTATION_ROLL_90_YAW_270",
+     37,
+     "ROTATION_ROLL_90_YAW_270"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_68_YAW_293",
+     38,
+     "ROTATION_ROLL_90_PITCH_68_YAW_293"
+    ],
+    [
+     "ROTATION_PITCH_315",
+     39,
+     "ROTATION_PITCH_315"
+    ],
+    [
+     "ROTATION_ROLL_90_PITCH_315",
+     40,
+     "ROTATION_ROLL_90_PITCH_315"
+    ],
+    [
+     "ROTATION_PITCH_7",
+     41,
+     "ROTATION_PITCH_7"
+    ],
+    [
+     "ROTATION_ROLL_45",
+     42,
+     "ROTATION_ROLL_45"
+    ],
+    [
+     "ROTATION_ROLL_315",
+     43,
+     "ROTATION_ROLL_315"
+    ],
+    [
+     "ROTATION_MAX",
+     44,
+     "ROTATION_MAX"
+    ],
+    [
+     "ROTATION_CUSTOM_OLD",
+     100,
+     "ROTATION_CUSTOM_OLD"
+    ],
+    [
+     "ROTATION_CUSTOM_1",
+     101,
+     "ROTATION_CUSTOM_1"
+    ],
+    [
+     "ROTATION_CUSTOM_2",
+     102,
+     "ROTATION_CUSTOM_2"
+    ],
+    [
+     "ROTATION_CUSTOM_END",
+     103,
+     "ROTATION_CUSTOM_END"
+    ]
+   ]
+  }
+ ],
+ "free": [
+  {
+   "cxx": "safe_asin",
+   "cxx_call": "safe_asin<float>",
+   "lean": "AHRS_View_lib.safe_asin_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "safe_sqrt",
+   "cxx_call": "safe_sqrt<float>",
+   "lean": "AHRS_View_lib.safe_sqrt_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "v",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "constrain_value_line",
+   "cxx_call": "constrain_value_line<float>",
+   "lean": "AHRS_View_lib.constrain_value_line_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "amt",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "low",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "high",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "line",
+     "type": "uint32_t",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "degrees",
+   "cxx_call": "degrees",
+   "lean": "AHRS_View_lib.degrees",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "rad",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "sq",
+   "cxx_call": "sq",
+   "lean": "AHRS_View_lib.sq_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "val",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "norm",
+   "cxx_call": "norm",
+   "lean": "AHRS_View_lib.norm_float2",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "first",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "second",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "float",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "is_zero",
+   "cxx_call": "is_zero",
+   "lean": "AHRS_View_lib.is_zero_float",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "x",
+     "type": "float",
+     "ref": null,
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "bool",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": true,
+   "ret_leaves": null
+  },
+  {
+   "cxx": "calc_trig",
+   "cxx_call": "calc_trig",
+   "lean": "AHRS_View_lib.AP_AHRS_calc_trig",
+   "file_static": false,
+   "kind": "free",
+   "top": false,
+   "owner": null,
+   "access": "public",
+   "reads": [],
+   "writes": [],
+   "uses_inp": false,
+   "params": [
+    {
+     "name": "rot",
+     "type": "Matrix3<float>",
+     "ref": "const",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": false,
+     "lean_type": "AHRS_View_lib.Matrix3f.State",
+     "leaves": [
+      {
+       "lean": "a.x",
+       "cxx": "a.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.y",
+       "cxx": "a.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "a.z",
+       "cxx": "a.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.x",
+       "cxx": "b.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.y",
+       "cxx": "b.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "b.z",
+       "cxx": "b.z",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.x",
+       "cxx": "c.x",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.y",
+       "cxx": "c.y",
+       "type": "float",
+       "enum": null
+      },
+      {
+       "lean": "c.z",
+       "cxx": "c.z",
+       "type": "float",
+       "enum": null
+      }
+     ]
+    },
+    {
+     "name": "cr",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cp",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "cy",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sr",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sp",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    },
+    {
+     "name": "sy",
+     "type": "float",
+     "ref": "mut",
+     "boundary": false,
+     "enum": null,
+     "under": null,
+     "scalar": true,
+     "lean_type": null,
+     "leaves": null
+    }
+   ],
+   "ret": "void",
+   "ret_enum": null,
+   "ret_under": null,
+   "ret_scalar": false,
+   "ret_leaves": null
+  }
+ ],
+ "output_log": [],
+ "output_ns": null,
+ "literals": [
+  {
+   "lean": "(1.1920929e-7 : Float32)",
+   "bits": "34000000",
+   "cpp": "1.1920929E-7",
+   "at": "62:23"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0",
+   "at": "54:16"
+  },
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1",
+   "at": "56:14"
+  },
+  {
+   "lean": "(3.1415926535897931 : Float)",
+   "bits": "400921fb54442d18",
+   "cpp": "3.1415926535897931",
+   "at": "57:35"
+  },
+  {
+   "lean": "(180.0 : Float32)",
+   "bits": "43340000",
+   "cpp": "180",
+   "at": "257:18"
+  },
+  {
+   "lean": "(2.0 : Float32)",
+   "bits": "40000000",
+   "cpp": "2",
+   "at": "71:18"
+  }
+ ],
+ "var_info": {}
+}

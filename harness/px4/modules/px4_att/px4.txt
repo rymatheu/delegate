@@ -1,0 +1,33 @@
+# px4_att: PX4's multicopter attitude controller (src/modules/mc_att_control), unmodified.
+# Read by px4/ports.py (ports) and px4/build.sh (sources). Paths relative to $PX4_ROOT.
+main mc_att_control                        # mc_att_control_main(argc, argv), started with "start"
+# the module and the libraries its CMakeLists.txt links (AttitudeControl, StickYaw; mathlib's
+# functions and filters used here are headers)
+source src/modules/mc_att_control/mc_att_control_main.cpp
+source src/modules/mc_att_control/AttitudeControl/AttitudeControl.cpp
+source src/lib/stick_yaw/StickYaw.cpp
+include src/modules/mc_att_control/AttitudeControl src/lib/stick_yaw
+# parameters: the module's own (MC_ROLL_P ... MC_MAN_TILT_TAU), and those it and StickYaw read by
+# name from elsewhere (mc_att_control.hpp:151-170, StickYaw.hpp:84-87)
+params src/modules/mc_att_control/mc_att_control_params.c
+params src/lib/mixer_module/params.c MC_AIRMODE
+params src/modules/manual_control/manual_control_params.c MAN_DEADZONE
+params src/modules/mc_pos_control/multicopter_stabilized_mode_params.c MPC_MAN_TILT_MAX MPC_MANTHR_MIN MPC_THR_CURVE MPC_MAN_Y_MAX
+params src/modules/mc_pos_control/multicopter_position_control_limits_params.c MPC_THR_MAX
+params src/modules/mc_pos_control/multicopter_position_control_params.c MPC_THR_HOVER
+params src/modules/mc_pos_control/multicopter_altitude_mode_params.c MPC_MAN_Y_TAU
+params src/modules/commander/commander_params.c COM_SPOOLUP_TIME
+# every topic the module subscribes to (mc_att_control.hpp:98-109), except parameter_update
+# (parameters are fixed at init)
+sub vehicle_attitude                       # the trigger (SubscriptionCallbackWorkItem)
+sub vehicle_attitude_setpoint
+sub vehicle_control_mode
+sub vehicle_status
+sub vehicle_land_detected
+sub vehicle_local_position
+sub manual_control_setpoint
+sub hover_thrust_estimate
+sub autotune_attitude_control_status
+# what it publishes (mc_att_control.hpp:111-112), except vehicle_attitude_setpoint, which it
+# also reads (in Manual/Stabilized it publishes the stick attitude there; that stays on its bus)
+pub vehicle_rates_setpoint

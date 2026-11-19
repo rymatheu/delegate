@@ -1,0 +1,8 @@
+tests/reject_phase3d.cpp:24:9: rejected: array of class objects `Box[2]` (arrays of scalars, enums, plain structs and library value classes only)
+tests/reject_phase3d.cpp:40:19: rejected: `++` on a one-bit bit-field
+tests/reject_phase3d.cpp:46:9: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body)
+tests/reject_phase3d.cpp:55:9: rejected: `for` loop whose trip count is not a compile-time constant (required: `for (T i = C0; i op C1; i++ / i-- / i += C)` with constants C0, C1, C and no assignment to i in the body)
+tests/reject_phase3d.cpp:63:28: rejected: reference argument `t[0]`, a part of this object that the called member function also reaches through `this`, by a path other than data members
+tests/reject_phase3d.cpp:68:80: rejected: read of `Seg::noisy::calls`, which is not part of the model (--drop)
+tests/reject_phase3d.cpp:74:5: rejected: constructor that reads a live boundary object (--boundary-live)
+tests/reject_phase3d.cpp:79:42: rejected: local reference `r` to the result of a live boundary read with arguments

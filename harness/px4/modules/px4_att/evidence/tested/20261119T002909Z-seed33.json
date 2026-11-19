@@ -1,0 +1,185 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 2000,
+ "steps_per_case": 100,
+ "seed": 33,
+ "seconds": 0.1986461,
+ "regime_text":
+ "default_COM_SPOOLUP_TIME: COM_SPOOLUP_TIME = 1; default_MAN_DEADZONE: MAN_DEADZONE = 0.1; default_MC_AIRMODE: MC_AIRMODE = 0; default_MC_MAN_TILT_TAU: MC_MAN_TILT_TAU = 0; default_MC_PITCHRATE_MAX: MC_PITCHRATE_MAX = 220; default_MC_PITCH_P: MC_PITCH_P = 4; default_MC_ROLLRATE_MAX: MC_ROLLRATE_MAX = 220; default_MC_ROLL_P: MC_ROLL_P = 4; default_MC_YAWRATE_MAX: MC_YAWRATE_MAX = 200; default_MC_YAW_P: MC_YAW_P = 2.8; default_MC_YAW_WEIGHT: MC_YAW_WEIGHT = 0.4; default_MPC_MANTHR_MIN: MPC_MANTHR_MIN = 0.08; default_MPC_MAN_TILT_MAX: MPC_MAN_TILT_MAX = 35; default_MPC_MAN_Y_MAX: MPC_MAN_Y_MAX = 150; default_MPC_MAN_Y_TAU: MPC_MAN_Y_TAU = 0.08; default_MPC_THR_CURVE: MPC_THR_CURVE = 0; default_MPC_THR_MAX: MPC_THR_MAX = 1; x500_MPC_THR_HOVER: MPC_THR_HOVER = 0.6; thrust_ranges: ((-1 ≤ vehicle_attitude_setpoint_thrust_body_0 ∧ vehicle_attitude_setpoint_thrust_body_0 ≤ 1) ∧ -1 ≤ vehicle_attitude_setpoint_thrust_body_1 ∧ vehicle_attitude_setpoint_thrust_body_1 ≤ 1) ∧ -1 ≤ vehicle_attitude_setpoint_thrust_body_2 ∧ vehicle_attitude_setpoint_thrust_body_2 ≤ 1; yawrate_range: -4 ≤ vehicle_attitude_setpoint_yaw_sp_move_rate ∧ vehicle_attitude_setpoint_yaw_sp_move_rate ≤ 4; stick_ranges: (((-1 ≤ manual_control_setpoint_roll ∧ manual_control_setpoint_roll ≤ 1) ∧ -1 ≤ manual_control_setpoint_pitch ∧ manual_control_setpoint_pitch ≤ 1) ∧ -1 ≤ manual_control_setpoint_yaw ∧ manual_control_setpoint_yaw ≤ 1) ∧ -1 ≤ manual_control_setpoint_throttle ∧ manual_control_setpoint_throttle ≤ 1; unaided_heading_range: -3.2 ≤ vehicle_local_position_unaided_heading ∧ vehicle_local_position_unaided_heading ≤ 3.2; hover_thrust_range: 0.1 ≤ hover_thrust_estimate_hover_thrust ∧ hover_thrust_estimate_hover_thrust ≤ 0.9; autotune_idle: autotune_attitude_control_status_state = 0; attitude_every_tick: vehicle_attitude_updated = true; setpoint_every_tick: vehicle_attitude_setpoint_updated = true; posctl_flags: vehicle_control_mode_updated ∧ vehicle_control_mode_flag_armed ∧ vehicle_control_mode_flag_control_manual_enabled ∧ vehicle_control_mode_flag_control_position_enabled ∧ vehicle_control_mode_flag_control_velocity_enabled ∧ vehicle_control_mode_flag_control_altitude_enabled ∧ vehicle_control_mode_flag_control_climb_rate_enabled ∧ vehicle_control_mode_flag_control_attitude_enabled ∧ vehicle_control_mode_flag_control_rates_enabled ∧ vehicle_control_mode_flag_control_allocation_enabled ∧ vehicle_control_mode_flag_multicopter_position_control_enabled ∧ ¬vehicle_control_mode_flag_control_auto_enabled ∧ ¬vehicle_control_mode_flag_control_offboard_enabled ∧ ¬vehicle_control_mode_flag_control_acceleration_enabled ∧ ¬vehicle_control_mode_flag_control_termination_enabled; posctl_status: vehicle_status_updated ∧ vehicle_status_vehicle_type = 1 ∧ vehicle_status_arming_state = 2 ∧ vehicle_status_nav_state = 2 ∧ ¬vehicle_status_is_vtol ∧ ¬vehicle_status_in_transition_mode; vertical_thrust: vehicle_attitude_setpoint_thrust_body_0 = 0 ∧ vehicle_attitude_setpoint_thrust_body_1 = 0 ∧ -1 ≤ vehicle_attitude_setpoint_thrust_body_2 ∧ vehicle_attitude_setpoint_thrust_body_2 ≤ 0; no_reset: vehicle_attitude_quat_reset_counter = 0; no_autotune: ¬autotune_attitude_control_status_updated; t_us starts at 1000000 and increases by 2500 to 2500 at every step; vehicle_attitude_setpoint_timestamp starts at 1000000 and increases by 2500 to 2500 at every step; (vehicle_attitude_q_0, vehicle_attitude_q_1, vehicle_attitude_q_2, vehicle_attitude_q_3) is a unit vector, starting near [1.000000, 0.000000, 0.000000, 0.000000] (spread [0.000000, 0.080000, 0.080000, 0.080000]) and moving by at most [0.000000, 0.002000, 0.002000, 0.002000] per component at every step; (vehicle_attitude_delta_q_reset_0, vehicle_attitude_delta_q_reset_1, vehicle_attitude_delta_q_reset_2, vehicle_attitude_delta_q_reset_3) is a unit vector, starting near [1.000000, 0.000000, 0.000000, 0.000000] (spread [0.000000, 0.000000, 0.000000, 0.000000]) and moving by at most [0.000000, 0.000000, 0.000000, 0.000000] per component at every step; (vehicle_attitude_setpoint_q_d_0, vehicle_attitude_setpoint_q_d_1, vehicle_attitude_setpoint_q_d_2, vehicle_attitude_setpoint_q_d_3) is a unit vector, starting near [1.000000, 0.000000, 0.000000, 0.000000] (spread [0.000000, 0.080000, 0.080000, 0.080000]) and moving by at most [0.000000, 0.002000, 0.002000, 0.002000] per component at every step",
+ "regime": "x500_posctl",
+ "outputs_seen":
+ {"vehicle_rates_setpoint_yaw":
+  {"non_finite_steps": 0, "min_finite": -3.490659, "max_finite": 3.490659},
+  "vehicle_rates_setpoint_updated": {"true_steps": 2000},
+  "vehicle_rates_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 1000000, "max_finite": 1247500},
+  "vehicle_rates_setpoint_thrust_body_2":
+  {"non_finite_steps": 0, "min_finite": -1, "max_finite": 0},
+  "vehicle_rates_setpoint_thrust_body_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_rates_setpoint_thrust_body_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_rates_setpoint_roll":
+  {"non_finite_steps": 0, "min_finite": -1.350332, "max_finite": 1.450895},
+  "vehicle_rates_setpoint_reset_integral": {"true_steps": 0},
+  "vehicle_rates_setpoint_pitch":
+  {"non_finite_steps": 0, "min_finite": -1.457585, "max_finite": 1.549762},
+  "px4_att_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0}},
+ "module": "px4_att",
+ "kind": "tested",
+ "id": "20261119T002909Z-seed33",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_rates_setpoint_roll) ∧ finite(vehicle_rates_setpoint_pitch) ∧ finite(vehicle_rates_setpoint_yaw)",
+   "smallest_margin": null,
+   "contract_hash":
+   "63a3213935f3239b8453cb6028aaa967df7cdabe82132c9e36f1ec78dd492aa5",
+   "clause": "rates_finite",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|vehicle_rates_setpoint_roll| ≤ MC_ROLLRATE_MAX * 0.017453292 ∧ |vehicle_rates_setpoint_pitch| ≤ MC_PITCHRATE_MAX * 0.017453292 ∧ |vehicle_rates_setpoint_yaw| ≤ MC_YAWRATE_MAX * 0.017453292",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "69f289afbf43a5d5df973cd9390b928281040dfa7e438cf5a401e12dd603fc3a",
+    "file":
+    "px4/modules/px4_att/evidence/tested/20261119T002909Z-seed33/smallest-margin-rates_limited.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "bced274abe58b81b1fbd1ef222e716c5338de5a55c226122d38272e94c7bd6bb",
+   "clause": "rates_limited",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "((-1 ≤ vehicle_rates_setpoint_thrust_body_0 ∧ vehicle_rates_setpoint_thrust_body_0 ≤ 1) ∧ -1 ≤ vehicle_rates_setpoint_thrust_body_1 ∧ vehicle_rates_setpoint_thrust_body_1 ≤ 1) ∧ -1 ≤ vehicle_rates_setpoint_thrust_body_2 ∧ vehicle_rates_setpoint_thrust_body_2 ≤ 1",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "c9aa9ae69f866c93e6f21b20ccdf08322b69d7dce4835cf2806655b03b46f8f5",
+    "file":
+    "px4/modules/px4_att/evidence/tested/20261119T002909Z-seed33/smallest-margin-thrust_normalized.json",
+    "case": 3},
+   "smallest_margin": 0,
+   "contract_hash":
+   "2d26ff58b022588549e7c0028d11d978f9d15345b5876e3689dcca4f09c4e1ee",
+   "clause": "thrust_normalized",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_rates_setpoint_updated ∨ vehicle_rates_setpoint_timestamp = t_us",
+   "smallest_margin": null,
+   "contract_hash":
+   "7966ce334e120ed501dbf618ae9b1c5d2df8107209391dc37c705f44e3eeffca",
+   "clause": "rates_stamped",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_rates_setpoint_updated ∨ vehicle_attitude_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "a1f58bf69932eb8129daa6834855997715263ea1443064b6efe2cd2de6094ec4",
+   "clause": "rates_answer_attitude",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬vehicle_rates_setpoint_reset_integral",
+   "smallest_margin": null,
+   "contract_hash":
+   "d8f3559566d54263d852651b6385c7a3cfaa462e96a79ad951113d97c39ac063",
+   "clause": "no_integral_reset",
+   "checked": 2000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_att_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "1aff884aa4e81fe77fe8c7899dea861d243ac71ac0072e3017c0ad3c7a6b2925",
+   "clause": "no_px4_error",
+   "checked": 2000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER -DMODULE_NAME=\"mc_att_control\" (C: -std=gnu11 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER)",
+ "coverage":
+ {"thrust_nonzero":
+  {"true_steps": 1869,
+   "text":
+   "vehicle_rates_setpoint_updated ∧ ¬vehicle_rates_setpoint_thrust_body_2 = 0"},
+  "roll_rate_at_limit":
+  {"true_steps": 0,
+   "text":
+   "vehicle_rates_setpoint_updated ∧ |vehicle_rates_setpoint_roll| = MC_ROLLRATE_MAX * 0.017453292"},
+  "rates_published":
+  {"true_steps": 2000, "text": "vehicle_rates_setpoint_updated = true"},
+  "rates_below_limit":
+  {"true_steps": 1614,
+   "text":
+   "vehicle_rates_setpoint_updated ∧ |vehicle_rates_setpoint_roll| < MC_ROLLRATE_MAX * 0.017453292 ∧ |vehicle_rates_setpoint_pitch| < MC_PITCHRATE_MAX * 0.017453292 ∧ |vehicle_rates_setpoint_yaw| < MC_YAWRATE_MAX * 0.017453292"}},
+ "compiler":
+ "Apple clang version 17.0.0 (clang-1700.6.4.2); Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command":
+ "harness test px4_att --seed 33 --cases 20 --steps 100 --regime x500_posctl",
+ "code_hash":
+ "dd1cf744f4e968fb03968533dfdfec254d53feb32854b436955c9bf3db801c10",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume":
+ ["width_vehicle_attitude_quat_reset_counter: 0 ≤ vehicle_attitude_quat_reset_counter ∧ vehicle_attitude_quat_reset_counter ≤ 255",
+  "width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "width_vehicle_local_position_xy_reset_counter: 0 ≤ vehicle_local_position_xy_reset_counter ∧ vehicle_local_position_xy_reset_counter ≤ 255",
+  "width_vehicle_local_position_z_reset_counter: 0 ≤ vehicle_local_position_z_reset_counter ∧ vehicle_local_position_z_reset_counter ≤ 255",
+  "width_vehicle_local_position_vxy_reset_counter: 0 ≤ vehicle_local_position_vxy_reset_counter ∧ vehicle_local_position_vxy_reset_counter ≤ 255",
+  "width_vehicle_local_position_vz_reset_counter: 0 ≤ vehicle_local_position_vz_reset_counter ∧ vehicle_local_position_vz_reset_counter ≤ 255",
+  "width_vehicle_local_position_heading_reset_counter: 0 ≤ vehicle_local_position_heading_reset_counter ∧ vehicle_local_position_heading_reset_counter ≤ 255",
+  "width_vehicle_local_position_dist_bottom_reset_counter: 0 ≤ vehicle_local_position_dist_bottom_reset_counter ∧ vehicle_local_position_dist_bottom_reset_counter ≤ 255",
+  "width_vehicle_local_position_dist_bottom_sensor_bitfield: 0 ≤ vehicle_local_position_dist_bottom_sensor_bitfield ∧ vehicle_local_position_dist_bottom_sensor_bitfield ≤ 255",
+  "width_manual_control_setpoint_data_source: 0 ≤ manual_control_setpoint_data_source ∧ manual_control_setpoint_data_source ≤ 255",
+  "width_manual_control_setpoint_buttons: 0 ≤ manual_control_setpoint_buttons ∧ manual_control_setpoint_buttons ≤ 65535",
+  "width_autotune_attitude_control_status_state: 0 ≤ autotune_attitude_control_status_state ∧ autotune_attitude_control_status_state ≤ 255",
+  "pair_vehicle_local_position_ref_lat: |vehicle_local_position_ref_lat_lo| ≤ 0.001",
+  "pair_vehicle_local_position_ref_lon: |vehicle_local_position_ref_lon_lo| ≤ 0.001",
+  "range_COM_SPOOLUP_TIME: 0 ≤ COM_SPOOLUP_TIME ∧ COM_SPOOLUP_TIME ≤ 30",
+  "range_MAN_DEADZONE: 0 ≤ MAN_DEADZONE ∧ MAN_DEADZONE ≤ 1",
+  "range_MC_AIRMODE: MC_AIRMODE = 0 ∨ MC_AIRMODE = 1 ∨ MC_AIRMODE = 2",
+  "range_MC_MAN_TILT_TAU: 0 ≤ MC_MAN_TILT_TAU ∧ MC_MAN_TILT_TAU ≤ 2",
+  "range_MC_PITCHRATE_MAX: 0 ≤ MC_PITCHRATE_MAX ∧ MC_PITCHRATE_MAX ≤ 1800",
+  "range_MC_PITCH_P: 0 ≤ MC_PITCH_P ∧ MC_PITCH_P ≤ 12",
+  "range_MC_ROLLRATE_MAX: 0 ≤ MC_ROLLRATE_MAX ∧ MC_ROLLRATE_MAX ≤ 1800",
+  "range_MC_ROLL_P: 0 ≤ MC_ROLL_P ∧ MC_ROLL_P ≤ 12",
+  "range_MC_YAWRATE_MAX: 0 ≤ MC_YAWRATE_MAX ∧ MC_YAWRATE_MAX ≤ 1800",
+  "range_MC_YAW_P: 0 ≤ MC_YAW_P ∧ MC_YAW_P ≤ 5",
+  "range_MC_YAW_WEIGHT: 0 ≤ MC_YAW_WEIGHT ∧ MC_YAW_WEIGHT ≤ 1",
+  "range_MPC_MANTHR_MIN: 0 ≤ MPC_MANTHR_MIN ∧ MPC_MANTHR_MIN ≤ 1",
+  "range_MPC_MAN_TILT_MAX: 1 ≤ MPC_MAN_TILT_MAX ∧ MPC_MAN_TILT_MAX ≤ 70",
+  "range_MPC_MAN_Y_MAX: 0 ≤ MPC_MAN_Y_MAX ∧ MPC_MAN_Y_MAX ≤ 400",
+  "range_MPC_MAN_Y_TAU: 0 ≤ MPC_MAN_Y_TAU ∧ MPC_MAN_Y_TAU ≤ 5",
+  "range_MPC_THR_CURVE: MPC_THR_CURVE = 0 ∨ MPC_THR_CURVE = 1 ∨ MPC_THR_CURVE = 2",
+  "range_MPC_THR_HOVER: 0.1 ≤ MPC_THR_HOVER ∧ MPC_THR_HOVER ≤ 0.8",
+  "range_MPC_THR_MAX: 0 ≤ MPC_THR_MAX ∧ MPC_THR_MAX ≤ 1",
+  "attitude_unit: ¬vehicle_attitude_updated ∨ |vehicle_attitude_q_0 * vehicle_attitude_q_0 + vehicle_attitude_q_1 * vehicle_attitude_q_1 + vehicle_attitude_q_2 * vehicle_attitude_q_2 + vehicle_attitude_q_3 * vehicle_attitude_q_3 - 1| ≤ 0.001",
+  "reset_delta_unit: ¬vehicle_attitude_updated ∨ |vehicle_attitude_delta_q_reset_0 * vehicle_attitude_delta_q_reset_0 + vehicle_attitude_delta_q_reset_1 * vehicle_attitude_delta_q_reset_1 + vehicle_attitude_delta_q_reset_2 * vehicle_attitude_delta_q_reset_2 + vehicle_attitude_delta_q_reset_3 * vehicle_attitude_delta_q_reset_3 - 1| ≤ 0.001",
+  "setpoint_unit: ¬vehicle_attitude_setpoint_updated ∨ |vehicle_attitude_setpoint_q_d_0 * vehicle_attitude_setpoint_q_d_0 + vehicle_attitude_setpoint_q_d_1 * vehicle_attitude_setpoint_q_d_1 + vehicle_attitude_setpoint_q_d_2 * vehicle_attitude_setpoint_q_d_2 + vehicle_attitude_setpoint_q_d_3 * vehicle_attitude_setpoint_q_d_3 - 1| ≤ 0.001",
+  "setpoint_thrust_normalized: ¬vehicle_attitude_setpoint_updated ∨ ((-1 ≤ vehicle_attitude_setpoint_thrust_body_0 ∧ vehicle_attitude_setpoint_thrust_body_0 ≤ 1) ∧ -1 ≤ vehicle_attitude_setpoint_thrust_body_1 ∧ vehicle_attitude_setpoint_thrust_body_1 ≤ 1) ∧ -1 ≤ vehicle_attitude_setpoint_thrust_body_2 ∧ vehicle_attitude_setpoint_thrust_body_2 ≤ 1",
+  "setpoint_yawrate_not_inf: ¬vehicle_attitude_setpoint_updated ∨ finite(vehicle_attitude_setpoint_yaw_sp_move_rate) ∨ ¬vehicle_attitude_setpoint_yaw_sp_move_rate = vehicle_attitude_setpoint_yaw_sp_move_rate",
+  "sticks_in_range: ¬manual_control_setpoint_updated ∨ (((-1 ≤ manual_control_setpoint_roll ∧ manual_control_setpoint_roll ≤ 1) ∧ -1 ≤ manual_control_setpoint_pitch ∧ manual_control_setpoint_pitch ≤ 1) ∧ -1 ≤ manual_control_setpoint_yaw ∧ manual_control_setpoint_yaw ≤ 1) ∧ -1 ≤ manual_control_setpoint_throttle ∧ manual_control_setpoint_throttle ≤ 1",
+  "unaided_heading_not_inf: ¬vehicle_local_position_updated ∨ finite(vehicle_local_position_unaided_heading) ∨ ¬vehicle_local_position_unaided_heading = vehicle_local_position_unaided_heading",
+  "hover_thrust_in_range: ¬hover_thrust_estimate_updated ∨ ¬hover_thrust_estimate_valid ∨ 0.1 ≤ hover_thrust_estimate_hover_thrust ∧ hover_thrust_estimate_hover_thrust ≤ 0.9",
+  "autotune_not_exciting: ¬autotune_attitude_control_status_updated ∨ ((¬autotune_attitude_control_status_state = 3 ∧ ¬autotune_attitude_control_status_state = 6) ∧ ¬autotune_attitude_control_status_state = 9) ∧ ¬autotune_attitude_control_status_state = 13"]}

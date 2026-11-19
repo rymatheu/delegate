@@ -1,0 +1,1 @@
+# est_scenario compiles no ArduPilot source: it is a test fixture (Module.lean), adapter.cpp only.

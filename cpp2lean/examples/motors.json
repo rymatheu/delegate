@@ -1,0 +1,27 @@
+{
+ "namespace": "Motors",
+ "cpp2lean": ["--boundary", "Motors"],
+ "classes": [
+  {"class": "Mixer",
+   "globals": ["static Motors motors_obj;   // the boundary object: the driver writes its inputs before each call and prints what it received"],
+   "boundary_args": ["motors_obj"],
+   "ctor": [],
+   "inputs": {"get_lean_max_out": "motors_obj.lean_max = %s;", "get_lean_max": "motors_obj.lean_ok = %s;"},
+   "outputs": {"set_roll": "motors_obj.roll_in", "set_pitch": "motors_obj.pitch_in"},
+   "ranges": {"roll": [-3, 3], "pitch": [-3, 3], "get_lean_max_out": [0, 1.5]},
+   "calls": 20000},
+  {"class": "Attitude",
+   "globals": ["static Motors motors_obj;   // the boundary object: the driver writes its inputs before each call and prints what it received"],
+   "boundary_args": ["motors_obj"],
+   "ctor": [],
+   "inputs": {"get_saturation_count": "motors_obj.sat_count = %s;", "get_saturation_margin": "motors_obj.sat_margin = %s;",
+              "_mixer.get_lean_max_out": "motors_obj.lean_max = %s;", "_mixer.get_lean_max": "motors_obj.lean_ok = %s;"},
+   "outputs": {"set_throttle_out_throttle": "motors_obj.throttle_in", "set_throttle_out_apply_angle_boost": "motors_obj.boost_in",
+               "set_throttle_out_filt_cutoff": "motors_obj.cutoff_in",
+               "_mixer.set_roll": "motors_obj.roll_in", "_mixer.set_pitch": "motors_obj.pitch_in"},
+   "ranges": {"roll": [-3, 3], "pitch": [-3, 3], "throttle": [0, 1], "get_saturation_count": [-2, 2],
+              "get_saturation_margin": [0, 1], "get_lean_max_out": [0, 1.5]},
+   "weights": {"run": 8},
+   "calls": 20000}
+ ]
+}

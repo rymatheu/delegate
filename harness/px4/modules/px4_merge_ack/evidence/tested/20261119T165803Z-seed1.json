@@ -1,0 +1,127 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 5000,
+ "steps_per_case": 100,
+ "seed": 1,
+ "seconds": 0.128017,
+ "outputs_seen":
+ {"vehicle_command_ack_updated": {"true_steps": 4800},
+  "vehicle_command_ack_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_result_param2":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "vehicle_command_ack_result_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_result":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_result_param2":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "vehicle_command_ack_q3_result_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_result":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q3_from_external": {"true_steps": 1454},
+  "vehicle_command_ack_q3_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_result_param2":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "vehicle_command_ack_q2_result_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_result":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q2_from_external": {"true_steps": 1869},
+  "vehicle_command_ack_q2_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_target_system":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_target_component":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_result_param2":
+  {"non_finite_steps": 0, "min_finite": -2147484000, "max_finite": 2147484000},
+  "vehicle_command_ack_q1_result_param1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_result":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_q1_from_external": {"true_steps": 1913},
+  "vehicle_command_ack_q1_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_command_ack_lost":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4},
+  "vehicle_command_ack_from_external": {"true_steps": 2000},
+  "vehicle_command_ack_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4},
+  "vehicle_command_ack_command":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000}},
+ "module": "px4_merge_ack",
+ "kind": "tested",
+ "id": "20261119T165803Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "vehicle_command_ack_count = vehicle_command_ack_by_px4_commander_count + vehicle_command_ack_by_px4_navigator_count ∧ vehicle_command_ack_by_px4_commander_count + vehicle_command_ack_by_px4_navigator_count ≤ 4 ∨ vehicle_command_ack_count = 4 ∧ 4 < vehicle_command_ack_by_px4_commander_count + vehicle_command_ack_by_px4_navigator_count",
+   "smallest_margin_case":
+   {"step": 15,
+    "sha256":
+    "34208d8aedf350aea69d3715b4bb372676bd52d2043313b4838a0a50c1d8e90c",
+    "file":
+    "px4/modules/px4_merge_ack/evidence/tested/20261119T165803Z-seed1/case0-step15.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "7cdb38ba5b927beb4cd8e0452320af857764ef33715f8a5ff89f0704daf1ee43",
+   "clause": "count_within_queue",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "vehicle_command_ack_count + vehicle_command_ack_lost = vehicle_command_ack_by_px4_commander_count + vehicle_command_ack_by_px4_navigator_count",
+   "smallest_margin": null,
+   "contract_hash":
+   "8e9e0d3dcffe4da2226609433b5c1713df246e33d38addb050097202a0eb9aaf",
+   "clause": "lost_rest",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "vehicle_command_ack_updated = (0 < vehicle_command_ack_count)",
+   "smallest_margin": null,
+   "contract_hash":
+   "55d5032b9f0fbeb031eee1fc704565659d30ef0b1ec57348fc3d1ccc1c92927e",
+   "clause": "updated_iff_any",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "vehicle_command_ack_by_px4_commander_count = 0 ∨ vehicle_command_ack_command = vehicle_command_ack_by_px4_commander_command ∧ vehicle_command_ack_result = vehicle_command_ack_by_px4_commander_result",
+   "smallest_margin": null,
+   "contract_hash":
+   "04cecef18eb2d8dc2f4a0a6856d5c943738262ceac55c552a4f2edf964e0f588",
+   "clause": "commander_first",
+   "checked": 5000}],
+ "flags": "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_merge_ack --seed 1 --cases 50 --steps 100",
+ "code_hash":
+ "e6719fd7d2d7e2b7edd70cc513f727a2875ff4130b53b1d868de782c4aa2c15f",
+ "cases_skipped": 0,
+ "cases": 50,
+ "assume":
+ ["slots_vehicle_command_ack_by_px4_commander_count: vehicle_command_ack_by_px4_commander_count ≤ 4",
+  "slots_vehicle_command_ack_by_px4_navigator_count: vehicle_command_ack_by_px4_navigator_count ≤ 4"]}

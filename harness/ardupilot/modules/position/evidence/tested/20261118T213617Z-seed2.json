@@ -1,0 +1,375 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 20000,
+ "steps_per_case": 200,
+ "seed": 2,
+ "seconds": 11.25624,
+ "regime_text":
+ "est_valid: est_pos_ok ∧ est_vel_ok ∧ est_pos_rate_d_ok; every_tick: cmd_position_update_estimates ∧ cmd_position_NE_update_controller ∧ cmd_position_D_update_controller; loop_dt: 0.0024 ≤ dt ∧ dt ≤ 0.0026; reset_method_range: cmd_position_set_reset_handling_method_method ≤ 1; ne_limits_args: (0 ≤ cmd_position_NE_set_max_speed_accel_m_speed ∧ cmd_position_NE_set_max_speed_accel_m_speed ≤ 100) ∧ (0.5 ≤ cmd_position_NE_set_max_speed_accel_m_accel ∧ cmd_position_NE_set_max_speed_accel_m_accel ≤ 100) ∧ (0 ≤ cmd_position_NE_set_correction_speed_accel_m_speed ∧ cmd_position_NE_set_correction_speed_accel_m_speed ≤ 100) ∧ (0 ≤ cmd_position_NE_set_correction_speed_accel_m_accel ∧ cmd_position_NE_set_correction_speed_accel_m_accel ≤ 100) ∧ 0 ≤ cmd_position_NE_set_pos_error_max_m_error_max ∧ cmd_position_NE_set_pos_error_max_m_error_max ≤ 10000; d_limits_args: (0 ≤ cmd_position_D_set_max_speed_accel_m_down ∧ cmd_position_D_set_max_speed_accel_m_down ≤ 100) ∧ (0 ≤ cmd_position_D_set_max_speed_accel_m_up ∧ cmd_position_D_set_max_speed_accel_m_up ≤ 100) ∧ (0.5 ≤ cmd_position_D_set_max_speed_accel_m_accel ∧ cmd_position_D_set_max_speed_accel_m_accel ≤ 100) ∧ (0 ≤ cmd_position_D_set_correction_speed_accel_m_down ∧ cmd_position_D_set_correction_speed_accel_m_down ≤ 100) ∧ (0 ≤ cmd_position_D_set_correction_speed_accel_m_up ∧ cmd_position_D_set_correction_speed_accel_m_up ≤ 100) ∧ 0 ≤ cmd_position_D_set_correction_speed_accel_m_accel ∧ cmd_position_D_set_correction_speed_accel_m_accel ≤ 100; init_args: (|cmd_position_init_pos_terrain_D_m_terrain_d| ≤ 10000 ∧ |cmd_position_set_pos_desired_NE_m_n| ≤ 10000 ∧ |cmd_position_set_pos_desired_NE_m_e| ≤ 10000) ∧ |cmd_position_D_accel_pid_set_integrator_i| ≤ 1; ne_input_args: (|cmd_position_input_vel_accel_NE_m_vel_n| ≤ 100 ∧ |cmd_position_input_vel_accel_NE_m_vel_e| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_vel_n| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_vel_e| ≤ 100) ∧ (|cmd_position_input_vel_accel_NE_m_accel_n| ≤ 100 ∧ |cmd_position_input_vel_accel_NE_m_accel_e| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_accel_n| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_accel_e| ≤ 100) ∧ (|cmd_position_input_pos_vel_accel_NE_m_pos_n| ≤ 10000 ∧ |cmd_position_input_pos_vel_accel_NE_m_pos_e| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_pos_n| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_pos_e| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_pos_d| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_terrain_d| ≤ 10000) ∧ 0 ≤ cmd_position_input_pos_NED_m_terrain_margin ∧ cmd_position_input_pos_NED_m_terrain_margin ≤ 100; d_input_args: (0 ≤ cmd_position_D_relax_controller_throttle ∧ cmd_position_D_relax_controller_throttle ≤ 1) ∧ (|cmd_position_D_set_pos_target_from_climb_rate_ms_climb_rate| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_D_m_vel| ≤ 100 ∧ |cmd_position_input_vel_accel_D_m_vel| ≤ 100) ∧ (|cmd_position_input_pos_vel_accel_D_m_accel| ≤ 100 ∧ |cmd_position_input_vel_accel_D_m_accel| ≤ 100) ∧ |cmd_position_input_pos_vel_accel_D_m_pos| ≤ 10000 ∧ |cmd_position_D_set_alt_target_with_slew_m_alt| ≤ 10000; same_tick_throttle_sampled: 0 ≤ cmd_attitude_set_throttle_out_throttle_in ∧ cmd_attitude_set_throttle_out_throttle_in ≤ 1; loiter_args_sampled: (|lt_tgt_pos_n| ≤ 1000 ∧ |lt_tgt_pos_e| ≤ 1000 ∧ |lt_cmd_position_set_pos_desired_NE_m_n| ≤ 1000 ∧ |lt_cmd_position_set_pos_desired_NE_m_e| ≤ 1000) ∧ (|lt_tgt_vel_n| ≤ 10 ∧ |lt_tgt_vel_e| ≤ 10 ∧ |lt_tgt_acc_n| ≤ 10 ∧ |lt_tgt_acc_e| ≤ 10) ∧ (0 ≤ lt_tgt_ne_correction_speed ∧ lt_tgt_ne_correction_speed ≤ 10) ∧ (0 ≤ lt_tgt_ne_correction_accel ∧ lt_tgt_ne_correction_accel ≤ 10) ∧ 0 ≤ lt_cmd_position_NE_set_pos_error_max_m_error_max ∧ lt_cmd_position_NE_set_pos_error_max_m_error_max ≤ 10; no_loiter: ¬lt_tgt_ne_init_stopping_point ∧ ¬lt_tgt_ne_set_correction_speed_accel ∧ ¬lt_cmd_position_NE_set_pos_error_max_m ∧ ¬lt_cmd_position_set_pos_desired_NE_m ∧ ¬lt_cmd_position_NE_relax_velocity_controller ∧ ¬lt_cmd_position_NE_soften_for_landing ∧ ¬lt_tgt_valid ∧ ¬lt_tgt_ne_update; now_ms starts at 1000 and increases by 2 to 3 at every step",
+ "regime": "flight",
+ "outputs_seen":
+ {"thrust_vec_z":
+  {"non_finite_steps": 0, "min_finite": -9.80665, "max_finite": -9.80665},
+  "thrust_vec_y":
+  {"non_finite_steps": 0, "min_finite": -55.61626, "max_finite": 55.61626},
+  "thrust_vec_x":
+  {"non_finite_steps": 0, "min_finite": -55.61626, "max_finite": 55.61626},
+  "throttle_in":
+  {"non_finite_steps": 0, "min_finite": -30223590, "max_finite": 11480260},
+  "pc_yaw_rate":
+  {"non_finite_steps": 0, "min_finite": -263507400, "max_finite": 257906.5},
+  "pc_yaw":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "pc_vibe_comp": {"true_steps": 7748},
+  "pc_vel_terrain_d":
+  {"non_finite_steps": 0, "min_finite": -0.0001014, "max_finite": 0.0002352873},
+  "pc_vel_target_n":
+  {"non_finite_steps": 0, "min_finite": -64126.5, "max_finite": 131509.4},
+  "pc_vel_target_e":
+  {"non_finite_steps": 0, "min_finite": -78672.03, "max_finite": 261135.5},
+  "pc_vel_target_d":
+  {"non_finite_steps": 0, "min_finite": -43495.55, "max_finite": 50016.64},
+  "pc_vel_offset_n":
+  {"non_finite_steps": 0, "min_finite": -81510.25, "max_finite": 70788.05},
+  "pc_vel_offset_e":
+  {"non_finite_steps": 0, "min_finite": -126851.8, "max_finite": 118624.6},
+  "pc_vel_offset_d":
+  {"non_finite_steps": 0, "min_finite": -250.8649, "max_finite": 704.9525},
+  "pc_vel_ne_p_n":
+  {"non_finite_steps": 0, "min_finite": -669386.6, "max_finite": 1228207},
+  "pc_vel_ne_p_e":
+  {"non_finite_steps": 0, "min_finite": -640008.1, "max_finite": 2144524},
+  "pc_vel_ne_i_n": {"non_finite_steps": 0, "min_finite": -10, "max_finite": 10},
+  "pc_vel_ne_i_e": {"non_finite_steps": 0, "min_finite": -10, "max_finite": 10},
+  "pc_vel_ne_ff_n":
+  {"non_finite_steps": 0, "min_finite": -582801.8, "max_finite": 860682.5},
+  "pc_vel_ne_ff_e":
+  {"non_finite_steps": 0, "min_finite": -380407, "max_finite": 754344.6},
+  "pc_vel_ne_d_n":
+  {"non_finite_steps": 0, "min_finite": -7202432, "max_finite": 5543784},
+  "pc_vel_ne_d_e":
+  {"non_finite_steps": 0, "min_finite": -3394298, "max_finite": 8538939},
+  "pc_vel_desired_n":
+  {"non_finite_steps": 0, "min_finite": -32540.32, "max_finite": 81534.13},
+  "pc_vel_desired_e":
+  {"non_finite_steps": 0, "min_finite": -118652.5, "max_finite": 48179.98},
+  "pc_vel_desired_d":
+  {"non_finite_steps": 0, "min_finite": -3874.021, "max_finite": 2618.339},
+  "pc_vel_d_i": {"non_finite_steps": 0, "min_finite": -10, "max_finite": 10},
+  "pc_vel_d_control_ratio":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "pc_throttle_set": {"true_steps": 20000},
+  "pc_throttle_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "pc_throttle_cutoff_hz":
+  {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "pc_throttle_angle_boost": {"true_steps": 20000},
+  "pc_stopping_point_n":
+  {"non_finite_steps": 0, "min_finite": -26018.83, "max_finite": 20180.47},
+  "pc_stopping_point_e":
+  {"non_finite_steps": 0, "min_finite": -70976.78, "max_finite": 69633.63},
+  "pc_stopping_point_d":
+  {"non_finite_steps": 0, "min_finite": -11681.99, "max_finite": 10002},
+  "pc_roll":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.141593},
+  "pc_pos_terrain_d":
+  {"non_finite_steps": 0, "min_finite": -10000, "max_finite": 10000},
+  "pc_pos_target_n":
+  {"non_finite_steps": 0, "min_finite": -24345.32, "max_finite": 35959.51},
+  "pc_pos_target_e":
+  {"non_finite_steps": 0, "min_finite": -27179.21, "max_finite": 80916.63},
+  "pc_pos_target_d":
+  {"non_finite_steps": 0, "min_finite": -16046.13, "max_finite": 19799.04},
+  "pc_pos_offset_n":
+  {"non_finite_steps": 0, "min_finite": -19984.96, "max_finite": 35959.51},
+  "pc_pos_offset_e":
+  {"non_finite_steps": 0, "min_finite": -59633.63, "max_finite": 70916.63},
+  "pc_pos_offset_d":
+  {"non_finite_steps": 0, "min_finite": -13688.8, "max_finite": 13610.65},
+  "pc_pos_error_n":
+  {"non_finite_steps": 0, "min_finite": -79623.25, "max_finite": 30165.44},
+  "pc_pos_error_max_ne":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 8317329000},
+  "pc_pos_error_e":
+  {"non_finite_steps": 0, "min_finite": -37179.21, "max_finite": 80916.63},
+  "pc_pos_error_d":
+  {"non_finite_steps": 0, "min_finite": -42044.41, "max_finite": 28105.32},
+  "pc_pos_desired_n":
+  {"non_finite_steps": 0, "min_finite": -20000.09, "max_finite": 19824.69},
+  "pc_pos_desired_e":
+  {"non_finite_steps": 0, "min_finite": -30458.31, "max_finite": 32634.93},
+  "pc_pos_desired_d":
+  {"non_finite_steps": 0, "min_finite": -20000, "max_finite": 20000},
+  "pc_pitch":
+  {"non_finite_steps": 0, "min_finite": -3.141593, "max_finite": 3.141593},
+  "pc_ne_updated": {"true_steps": 20000},
+  "pc_ne_update_last": {"true_steps": 3603},
+  "pc_ne_max_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 100},
+  "pc_ne_max_accel":
+  {"non_finite_steps": 0, "min_finite": 0.5, "max_finite": 100},
+  "pc_ne_active": {"true_steps": 20000},
+  "pc_max_speed_up":
+  {"non_finite_steps": 0, "min_finite": 0.0000001379221, "max_finite": 100},
+  "pc_max_speed_down":
+  {"non_finite_steps": 0, "min_finite": 0.0000001293415, "max_finite": 100},
+  "pc_limit_n":
+  {"non_finite_steps": 0, "min_finite": -4318334, "max_finite": 3528196},
+  "pc_limit_e":
+  {"non_finite_steps": 0, "min_finite": -3475528, "max_finite": 9471365},
+  "pc_limit_d": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "pc_lean_angle_max":
+  {"non_finite_steps": 0, "min_finite": 0.01745329, "max_finite": 1.396263},
+  "pc_lean_angle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.396263},
+  "pc_jerk_max_ne":
+  {"non_finite_steps": 0, "min_finite": 0.1462696, "max_finite": 50},
+  "pc_jerk_max_d":
+  {"non_finite_steps": 0, "min_finite": 0.6283185, "max_finite": 50},
+  "pc_internal_errors_flow":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pc_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pc_internal_error_line":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pc_internal_error_bits":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pc_handover_limits_last": {"true_steps": 9943},
+  "pc_d_updated": {"true_steps": 20000},
+  "pc_d_update_last": {"true_steps": 2538},
+  "pc_d_max_accel":
+  {"non_finite_steps": 0, "min_finite": 0.2531238, "max_finite": 100},
+  "pc_d_active": {"true_steps": 20000},
+  "pc_accel_target_n":
+  {"non_finite_steps": 0, "min_finite": -55.61626, "max_finite": 55.61626},
+  "pc_accel_target_e":
+  {"non_finite_steps": 0, "min_finite": -55.61626, "max_finite": 55.61626},
+  "pc_accel_target_d":
+  {"non_finite_steps": 0, "min_finite": -27849540, "max_finite": 1084751},
+  "pc_accel_offset_n":
+  {"non_finite_steps": 0, "min_finite": -0.2539571, "max_finite": 0.1601578},
+  "pc_accel_offset_e":
+  {"non_finite_steps": 0, "min_finite": -0.3068904, "max_finite": 0.26},
+  "pc_accel_offset_d":
+  {"non_finite_steps": 0, "min_finite": -0.1259531, "max_finite": 0.1269974},
+  "pc_accel_desired_n":
+  {"non_finite_steps": 0, "min_finite": -100.0048, "max_finite": 100},
+  "pc_accel_desired_e":
+  {"non_finite_steps": 0, "min_finite": -100.0635, "max_finite": 100.0001},
+  "pc_accel_desired_d":
+  {"non_finite_steps": 0, "min_finite": -27895140, "max_finite": 107.5},
+  "pc_accel_d_p":
+  {"non_finite_steps": 0, "min_finite": -197062.6, "max_finite": 34081.02},
+  "pc_accel_d_imax":
+  {"non_finite_steps": 0, "min_finite": 0.125, "max_finite": 1},
+  "pc_accel_d_i": {"non_finite_steps": 0, "min_finite": -1, "max_finite": 1},
+  "pc_accel_d_ff":
+  {"non_finite_steps": 0, "min_finite": -7950484, "max_finite": 30223590},
+  "pc_accel_d_d":
+  {"non_finite_steps": 0, "min_finite": -8137416, "max_finite": 116382.2}},
+ "module": "position",
+ "kind": "tested",
+ "id": "20261118T213617Z-seed2",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(thrust_vec_x) ∧ finite(thrust_vec_y) ∧ finite(thrust_vec_z) ∧ finite(throttle_in) ∧ finite(pc_throttle_cutoff_hz) ∧ finite(pc_pos_target_n) ∧ finite(pc_pos_target_e) ∧ finite(pc_pos_target_d) ∧ finite(pc_pos_desired_n) ∧ finite(pc_pos_desired_e) ∧ finite(pc_pos_desired_d) ∧ finite(pc_vel_target_n) ∧ finite(pc_vel_target_e) ∧ finite(pc_vel_target_d) ∧ finite(pc_vel_desired_n) ∧ finite(pc_vel_desired_e) ∧ finite(pc_vel_desired_d) ∧ finite(pc_accel_target_n) ∧ finite(pc_accel_target_e) ∧ finite(pc_accel_target_d) ∧ finite(pc_accel_desired_n) ∧ finite(pc_accel_desired_e) ∧ finite(pc_accel_desired_d) ∧ finite(pc_pos_offset_n) ∧ finite(pc_pos_offset_e) ∧ finite(pc_pos_offset_d) ∧ finite(pc_vel_offset_n) ∧ finite(pc_vel_offset_e) ∧ finite(pc_vel_offset_d) ∧ finite(pc_accel_offset_n) ∧ finite(pc_accel_offset_e) ∧ finite(pc_accel_offset_d) ∧ finite(pc_pos_terrain_d) ∧ finite(pc_vel_terrain_d) ∧ finite(pc_pos_error_n) ∧ finite(pc_pos_error_e) ∧ finite(pc_pos_error_d) ∧ finite(pc_limit_n) ∧ finite(pc_limit_e) ∧ finite(pc_limit_d) ∧ finite(pc_roll) ∧ finite(pc_pitch) ∧ finite(pc_yaw) ∧ finite(pc_yaw_rate) ∧ finite(pc_ne_max_speed) ∧ finite(pc_max_speed_up) ∧ finite(pc_max_speed_down) ∧ finite(pc_ne_max_accel) ∧ finite(pc_d_max_accel) ∧ finite(pc_jerk_max_ne) ∧ finite(pc_jerk_max_d) ∧ finite(pc_pos_error_max_ne) ∧ finite(pc_lean_angle_max) ∧ finite(pc_lean_angle) ∧ finite(pc_vel_d_control_ratio) ∧ finite(pc_stopping_point_n) ∧ finite(pc_stopping_point_e) ∧ finite(pc_stopping_point_d) ∧ finite(pc_vel_ne_p_n) ∧ finite(pc_vel_ne_p_e) ∧ finite(pc_vel_ne_i_n) ∧ finite(pc_vel_ne_i_e) ∧ finite(pc_vel_ne_d_n) ∧ finite(pc_vel_ne_d_e) ∧ finite(pc_vel_ne_ff_n) ∧ finite(pc_vel_ne_ff_e) ∧ finite(pc_vel_d_i) ∧ finite(pc_accel_d_p) ∧ finite(pc_accel_d_i) ∧ finite(pc_accel_d_d) ∧ finite(pc_accel_d_ff) ∧ finite(pc_accel_d_imax)",
+   "smallest_margin": null,
+   "contract_hash":
+   "91bd9efce41f5f440c1a32bcd7840a94d665cbd05d6179bbb12d1ba1071e6833",
+   "clause": "outputs_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "thrust_vec_z = -9.80665",
+   "smallest_margin": null,
+   "contract_hash":
+   "cd8d82b0cf137b910a5ca5b012f91848086967d1bd3759b90de45ba2466da7c7",
+   "clause": "thrust_z_gravity",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬pc_ne_update_last ∨ pc_lean_angle ≤ ac_althold_lean_angle_max + (0.00001 + 1e-7 * (|pc_limit_n| + |pc_limit_e|)) ∧ (¬1.1920929e-7 ≤ psc_angle_max ∧ pc_lean_angle ≤ ac_lean_angle_max + (0.00001 + 1e-7 * (|pc_limit_n| + |pc_limit_e|)) ∨ 1.1920929e-7 ≤ psc_angle_max ∧ pc_lean_angle ≤ psc_angle_max * 0.017453292 + (0.00001 + 1e-7 * (|pc_limit_n| + |pc_limit_e|)))",
+   "smallest_margin_case":
+   {"step": 3,
+    "sha256":
+    "c98c2eb5b89292d9d82d78f89dc8ad2c739e6f53cca0432d87b5be2d379ba0fb",
+    "file":
+    "ardupilot/modules/position/evidence/tested/20261118T213617Z-seed2/smallest-margin-lean_within_max.json",
+    "case": 2},
+   "smallest_margin": 0.0000001192093,
+   "contract_hash":
+   "ac9dac8fa1e59ee7b35a2d5be8bd0bccf71862a582d237c657a7694a97580695",
+   "clause": "lean_within_max",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬pc_d_update_last ∨ pc_vibe_comp ∨ throttle_in = -(pc_accel_d_p + pc_accel_d_d + pc_accel_d_i + pc_accel_d_ff - throttle_hover)",
+   "smallest_margin": null,
+   "contract_hash":
+   "c74c3af7336e49e8f6dce8a3f268c7817ebc510d20642497a3f3d87a797f9964",
+   "clause": "throttle_from_accel_pid",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(pc_d_update_last ∧ ¬pc_vibe_comp ∧ 1.1920929e-7 ≤ psc_d_acc_pdmx ∧ psc_d_acc_ff = 0 ∧ psc_d_acc_d_ff = 0) ∨ |throttle_in - throttle_hover| ≤ psc_d_acc_pdmx + pc_accel_d_imax + 1e-6",
+   "smallest_margin": null,
+   "contract_hash":
+   "3a8bd139055577240e1be41875238d3ed489d48939320e460fcc07387ba3fc21",
+   "clause": "throttle_bounded_by_pdmx",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(¬(pc_d_update_last ∧ ¬pc_vibe_comp ∧ pc_accel_d_p = 0 ∧ pc_accel_d_i = 0 ∧ pc_accel_d_d = 0 ∧ pc_accel_d_ff = 0) ∨ throttle_in = throttle_hover) ∧ (¬(pc_ne_update_last ∧ pc_vel_ne_p_n = 0 ∧ pc_vel_ne_p_e = 0 ∧ pc_vel_ne_i_n = 0 ∧ pc_vel_ne_i_e = 0 ∧ pc_vel_ne_d_n = 0 ∧ pc_vel_ne_d_e = 0 ∧ pc_vel_ne_ff_n = 0 ∧ pc_vel_ne_ff_e = 0 ∧ pc_accel_desired_n = 0 ∧ pc_accel_desired_e = 0 ∧ pc_accel_offset_n = 0 ∧ pc_accel_offset_e = 0) ∨ thrust_vec_x = 0 ∧ thrust_vec_y = 0)",
+   "smallest_margin": null,
+   "contract_hash":
+   "d50208298eb4dd86fe0082620ef3eea57229af416d72ba79ad4b7d62eb747ce3",
+   "clause": "hover_level",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬pc_ne_update_last ∨ |pc_roll| ≤ 1.5707964 ∧ |pc_pitch| ≤ 1.5707964",
+   "smallest_margin_case":
+   {"step": 55,
+    "sha256":
+    "7fea6709b69079699a1cb740dcceca1da7aa22230bca7b62e7ddaec1a2468924",
+    "file":
+    "ardupilot/modules/position/evidence/tested/20261118T213617Z-seed2/smallest-margin-angles_bounded.json",
+    "case": 99},
+   "smallest_margin": 0.211728,
+   "contract_hash":
+   "342e400882c6cefb8527f384c828a104580178c0a5563c7cd8e8020cba84dffe",
+   "clause": "angles_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "pc_throttle_set = pc_d_updated ∧ (¬pc_throttle_set ∨ pc_throttle_angle_boost ∧ pc_throttle_cutoff_hz = 2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "676c61d8ab4886525bd2b95429402398d5b4c39ca4e5f45754971e5ecf54281d",
+   "clause": "throttle_set_by_d_update",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pc_internal_errors = pc_internal_errors_flow",
+   "smallest_margin": null,
+   "contract_hash":
+   "6a89c147476d3480594c94e5e1e2992942aab47651a4c3e853261da1ee03cd6b",
+   "clause": "no_internal_error_but_flow",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|throttle_in| ≤ 1e15",
+   "smallest_margin_case":
+   {"step": 93,
+    "sha256":
+    "116f939a61186e6cf3bc51b206060e7189a78cb4c42b2723a3f3a35e0d50f4ed",
+    "file":
+    "ardupilot/modules/position/evidence/tested/20261118T213617Z-seed2/smallest-margin-throttle_in_bounded.json",
+    "case": 59},
+   "smallest_margin": 1000000000000000,
+   "contract_hash":
+   "2019c817e79b02e59992fe773f5c582efc9437b6c3311e0fcf59afb7742537d4",
+   "clause": "throttle_in_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬pc_handover_limits_last ∨ (¬tgt_ne_set_max_speed_accel ∨ pc_ne_max_speed = |tgt_ne_max_speed| ∧ pc_ne_max_accel = |tgt_ne_max_accel|) ∧ (¬tgt_d_set_max_speed_accel ∨ (|tgt_max_speed_down| < 1.1920929e-7 ∨ pc_max_speed_down = |tgt_max_speed_down|) ∧ (|tgt_max_speed_up| < 1.1920929e-7 ∨ pc_max_speed_up = |tgt_max_speed_up|) ∧ (|tgt_d_max_accel| < 1.1920929e-7 ∨ pc_d_max_accel = |tgt_d_max_accel|))",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "7679b5d29b7436c3cf8ad39b35719e37a369ec027c7c515678c2c062c6954e94",
+    "file":
+    "ardupilot/modules/position/evidence/tested/20261118T213617Z-seed2/smallest-margin-limits_follow_guidance.json",
+    "case": 65},
+   "smallest_margin": 0.0000001192093,
+   "contract_hash":
+   "e5bbbf6ab141850a58235af3410d92a335739b6e7f0e5b3e10aec70b5e7724ce",
+   "clause": "limits_follow_guidance",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0.0174 ≤ pc_lean_angle_max ∧ pc_lean_angle_max ≤ 1.3962635",
+   "smallest_margin_case":
+   {"step": 12,
+    "sha256":
+    "1504e7c0cf3580150411cf5a76d2953c8d5c78aa38dd2d76be3c528ea6ba9b52",
+    "file":
+    "ardupilot/modules/position/evidence/tested/20261118T213617Z-seed2/smallest-margin-lean_limit_range.json",
+    "case": 2},
+   "smallest_margin": 0.0000001192093,
+   "contract_hash":
+   "b4e82f583025995f74940c325fcf2d9fe6fceb0e164805d6fbb5f1273d05dbc4",
+   "clause": "lean_limit_range",
+   "checked": 20000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h -DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter -DAP_SIM_ENABLED=1",
+ "coverage":
+ {"throttle_outside_0_1":
+  {"true_steps": 13863,
+   "text": "pc_d_updated ∧ ¬(0 ≤ throttle_in ∧ throttle_in ≤ 1)"},
+  "throttle_limit_flag": {"true_steps": 13742, "text": "¬pc_limit_d = 0"},
+  "pdmx_bound_applies":
+  {"true_steps": 0,
+   "text":
+   "pc_d_updated ∧ ¬pc_vibe_comp ∧ 1.1920929e-7 ≤ psc_d_acc_pdmx ∧ psc_d_acc_ff = 0 ∧ psc_d_acc_d_ff = 0"},
+  "ne_updated": {"true_steps": 20000, "text": "pc_ne_updated"},
+  "ne_accel_limited":
+  {"true_steps": 12697, "text": "¬(pc_limit_n = 0 ∧ pc_limit_e = 0)"},
+  "level_hover":
+  {"true_steps": 22,
+   "text":
+   "thrust_vec_x = 0 ∧ thrust_vec_y = 0 ∧ throttle_in = throttle_hover"},
+  "lean_at_limit":
+  {"true_steps": 1650,
+   "text": "pc_ne_updated ∧ ac_althold_lean_angle_max ≤ pc_lean_angle + 0.001"},
+  "flow_error_seen": {"true_steps": 0, "text": "0 < pc_internal_errors_flow"},
+  "ekf_reset_seen":
+  {"true_steps": 354,
+   "text": "pc_ne_updated ∧ ¬(pc_pos_offset_n = 0 ∧ pc_pos_offset_e = 0)"},
+  "d_updated": {"true_steps": 20000, "text": "pc_d_updated"}},
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command":
+ "harness test position --seed 2 --cases 100 --steps 200 --regime flight",
+ "code_hash":
+ "36e3ceb04b6d622478740628fd06aafcaa177b46e78c176199ec2d601039ecd6",
+ "cases_skipped": 0,
+ "cases": 100,
+ "assume":
+ ["pos_p_range: (0.5 ≤ psc_ne_pos_p ∧ psc_ne_pos_p ≤ 4) ∧ 0.5 ≤ psc_d_pos_p ∧ psc_d_pos_p ≤ 4",
+  "ne_vel_range: (0.1 ≤ psc_ne_vel_p ∧ psc_ne_vel_p ≤ 10) ∧ (0 ≤ psc_ne_vel_i ∧ psc_ne_vel_i ≤ 10) ∧ (0 ≤ psc_ne_vel_d ∧ psc_ne_vel_d ≤ 1) ∧ (0 ≤ psc_ne_vel_imax ∧ psc_ne_vel_imax ≤ 10) ∧ (0 ≤ psc_ne_vel_flte ∧ psc_ne_vel_flte ≤ 100) ∧ (0 ≤ psc_ne_vel_fltd ∧ psc_ne_vel_fltd ≤ 100) ∧ 0 ≤ psc_ne_vel_ff ∧ psc_ne_vel_ff ≤ 10",
+  "d_vel_range: (1 ≤ psc_d_vel_p ∧ psc_d_vel_p ≤ 10) ∧ (0 ≤ psc_d_vel_i ∧ psc_d_vel_i ≤ 10) ∧ (0 ≤ psc_d_vel_d ∧ psc_d_vel_d ≤ 2) ∧ (1 ≤ psc_d_vel_imax ∧ psc_d_vel_imax ≤ 10) ∧ (0 ≤ psc_d_vel_flte ∧ psc_d_vel_flte ≤ 100) ∧ (0 ≤ psc_d_vel_fltd ∧ psc_d_vel_fltd ≤ 100) ∧ 0 ≤ psc_d_vel_ff ∧ psc_d_vel_ff ≤ 2",
+  "d_acc_range: (0.01 ≤ psc_d_acc_p ∧ psc_d_acc_p ≤ 0.25) ∧ (0 ≤ psc_d_acc_i ∧ psc_d_acc_i ≤ 0.5) ∧ (0 ≤ psc_d_acc_d ∧ psc_d_acc_d ≤ 0.1) ∧ (0 ≤ psc_d_acc_imax ∧ psc_d_acc_imax ≤ 1) ∧ (0 ≤ psc_d_acc_ff ∧ psc_d_acc_ff ≤ 0.1) ∧ ((psc_d_acc_fltt = 0 ∨ 1 ≤ psc_d_acc_fltt ∧ psc_d_acc_fltt ≤ 50) ∧ (psc_d_acc_flte = 0 ∨ 1 ≤ psc_d_acc_flte ∧ psc_d_acc_flte ≤ 100)) ∧ (0 ≤ psc_d_acc_fltd ∧ psc_d_acc_fltd ≤ 100) ∧ (0 ≤ psc_d_acc_smax ∧ psc_d_acc_smax ≤ 100) ∧ (0 ≤ psc_d_acc_pdmx ∧ psc_d_acc_pdmx ≤ 1) ∧ 0 ≤ psc_d_acc_d_ff ∧ psc_d_acc_d_ff ≤ 0.05",
+  "shaping_range: (psc_angle_max = 0 ∨ 1 ≤ psc_angle_max ∧ psc_angle_max ≤ 45) ∧ (1 ≤ psc_ne_jerk ∧ psc_ne_jerk ≤ 50) ∧ 1 ≤ psc_d_jerk ∧ psc_d_jerk ≤ 50",
+  "atc_limits_range: (atc_rate_r_max = 0 ∨ 1 ≤ atc_rate_r_max ∧ atc_rate_r_max ≤ 1080) ∧ (atc_rate_p_max = 0 ∨ 1 ≤ atc_rate_p_max ∧ atc_rate_p_max ≤ 1080) ∧ (atc_acc_r_max = 0 ∨ 1 ≤ atc_acc_r_max ∧ atc_acc_r_max ≤ 1800) ∧ (atc_acc_p_max = 0 ∨ 1 ≤ atc_acc_p_max ∧ atc_acc_p_max ≤ 1800)",
+  "dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.02",
+  "est_pos_bounded: |est_pos_n| ≤ 10000 ∧ |est_pos_e| ≤ 10000 ∧ |est_pos_d| ≤ 10000",
+  "est_vel_bounded: |est_vel_n| ≤ 100 ∧ |est_vel_e| ≤ 100 ∧ |est_vel_d| ≤ 100 ∧ |est_pos_rate_d| ≤ 100",
+  "est_accel_bounded: |est_accel_ef_z| ≤ 10000",
+  "est_yaw_range: |est_yaw| ≤ 3.1415927 ∧ |est_cos_yaw| ≤ 1 ∧ |est_sin_yaw| ≤ 1",
+  "est_scalers_range: (0 ≤ est_gain_scaler_xy ∧ est_gain_scaler_xy ≤ 1) ∧ 0 ≤ est_gain_scaler_z ∧ est_gain_scaler_z ≤ 1",
+  "est_reset_counts_range: est_pos_ne_reset_count ≤ 65535 ∧ est_pos_d_reset_count ≤ 65535",
+  "ac_att_target_range: |ac_att_target_roll| ≤ 3.1415927 ∧ |ac_att_target_pitch| ≤ 3.1415927 ∧ finite(ac_att_target_yaw)",
+  "ac_throttle_range: |ac_throttle_in| ≤ 1e15",
+  "ac_lean_range: (0.17453292 ≤ ac_althold_lean_angle_max ∧ ac_althold_lean_angle_max ≤ 1.5707964) ∧ 0.17453292 ≤ ac_lean_angle_max ∧ ac_lean_angle_max ≤ 1.3962634",
+  "hover_range: 0.125 ≤ throttle_hover ∧ throttle_hover ≤ 0.6875",
+  "tgt_bounded: (|tgt_pos_n| ≤ 10000 ∧ |tgt_pos_e| ≤ 10000 ∧ |tgt_pos_d| ≤ 10000 ∧ |tgt_terrain_d| ≤ 10000) ∧ (|tgt_vel_n| ≤ 100 ∧ |tgt_vel_e| ≤ 100 ∧ |tgt_vel_d| ≤ 100) ∧ |tgt_acc_n| ≤ 100 ∧ |tgt_acc_e| ≤ 100 ∧ |tgt_acc_d| ≤ 100",
+  "tgt_handover_args: (¬tgt_ne_set_max_speed_accel ∨ (0 ≤ tgt_ne_max_speed ∧ tgt_ne_max_speed ≤ 100) ∧ 0.1 ≤ tgt_ne_max_accel ∧ tgt_ne_max_accel ≤ 100) ∧ (¬tgt_ne_set_correction_speed_accel ∨ (0 ≤ tgt_ne_correction_speed ∧ tgt_ne_correction_speed ≤ 100) ∧ 0 ≤ tgt_ne_correction_accel ∧ tgt_ne_correction_accel ≤ 100) ∧ (¬tgt_d_set_max_speed_accel ∨ (0 ≤ tgt_max_speed_down ∧ tgt_max_speed_down ≤ 100) ∧ (0 ≤ tgt_max_speed_up ∧ tgt_max_speed_up ≤ 100) ∧ 0.1 ≤ tgt_d_max_accel ∧ tgt_d_max_accel ≤ 100) ∧ (¬tgt_d_set_correction_speed_accel ∨ (0 ≤ tgt_d_correction_speed_down ∧ tgt_d_correction_speed_down ≤ 100) ∧ (0 ≤ tgt_d_correction_speed_up ∧ tgt_d_correction_speed_up ≤ 100) ∧ 0 ≤ tgt_d_correction_accel ∧ tgt_d_correction_accel ≤ 100)",
+  "same_tick_throttle_range: ¬cmd_attitude_set_throttle_out ∨ |cmd_attitude_set_throttle_out_throttle_in| ≤ 1e15",
+  "lt_tgt_bounded: (|lt_tgt_pos_n| ≤ 10000 ∧ |lt_tgt_pos_e| ≤ 10000) ∧ (|lt_tgt_vel_n| ≤ 100 ∧ |lt_tgt_vel_e| ≤ 100) ∧ |lt_tgt_acc_n| ≤ 100 ∧ |lt_tgt_acc_e| ≤ 100",
+  "lt_handover_args: (¬lt_tgt_ne_set_correction_speed_accel ∨ (0 ≤ lt_tgt_ne_correction_speed ∧ lt_tgt_ne_correction_speed ≤ 100) ∧ 0 ≤ lt_tgt_ne_correction_accel ∧ lt_tgt_ne_correction_accel ≤ 100) ∧ (¬lt_cmd_position_NE_set_pos_error_max_m ∨ 0 ≤ lt_cmd_position_NE_set_pos_error_max_m_error_max ∧ lt_cmd_position_NE_set_pos_error_max_m_error_max ≤ 10000) ∧ (¬lt_cmd_position_set_pos_desired_NE_m ∨ |lt_cmd_position_set_pos_desired_NE_m_n| ≤ 10000 ∧ |lt_cmd_position_set_pos_desired_NE_m_e| ≤ 10000)",
+  "reset_method_range: ¬cmd_position_set_reset_handling_method ∨ cmd_position_set_reset_handling_method_method ≤ 1",
+  "ne_limits_args: (¬cmd_position_NE_set_max_speed_accel_m ∨ (0 ≤ cmd_position_NE_set_max_speed_accel_m_speed ∧ cmd_position_NE_set_max_speed_accel_m_speed ≤ 100) ∧ 0.5 ≤ cmd_position_NE_set_max_speed_accel_m_accel ∧ cmd_position_NE_set_max_speed_accel_m_accel ≤ 100) ∧ (¬cmd_position_NE_set_correction_speed_accel_m ∨ (0 ≤ cmd_position_NE_set_correction_speed_accel_m_speed ∧ cmd_position_NE_set_correction_speed_accel_m_speed ≤ 100) ∧ 0 ≤ cmd_position_NE_set_correction_speed_accel_m_accel ∧ cmd_position_NE_set_correction_speed_accel_m_accel ≤ 100) ∧ (¬cmd_position_NE_set_pos_error_max_m ∨ 0 ≤ cmd_position_NE_set_pos_error_max_m_error_max ∧ cmd_position_NE_set_pos_error_max_m_error_max ≤ 10000)",
+  "d_limits_args: (¬cmd_position_D_set_max_speed_accel_m ∨ (0 ≤ cmd_position_D_set_max_speed_accel_m_down ∧ cmd_position_D_set_max_speed_accel_m_down ≤ 100) ∧ (0 ≤ cmd_position_D_set_max_speed_accel_m_up ∧ cmd_position_D_set_max_speed_accel_m_up ≤ 100) ∧ 0.5 ≤ cmd_position_D_set_max_speed_accel_m_accel ∧ cmd_position_D_set_max_speed_accel_m_accel ≤ 100) ∧ (¬cmd_position_D_set_correction_speed_accel_m ∨ (0 ≤ cmd_position_D_set_correction_speed_accel_m_down ∧ cmd_position_D_set_correction_speed_accel_m_down ≤ 100) ∧ (0 ≤ cmd_position_D_set_correction_speed_accel_m_up ∧ cmd_position_D_set_correction_speed_accel_m_up ≤ 100) ∧ 0 ≤ cmd_position_D_set_correction_speed_accel_m_accel ∧ cmd_position_D_set_correction_speed_accel_m_accel ≤ 100)",
+  "init_args: (¬cmd_position_init_pos_terrain_D_m ∨ |cmd_position_init_pos_terrain_D_m_terrain_d| ≤ 10000) ∧ (¬cmd_position_set_pos_desired_NE_m ∨ |cmd_position_set_pos_desired_NE_m_n| ≤ 10000 ∧ |cmd_position_set_pos_desired_NE_m_e| ≤ 10000) ∧ (¬cmd_position_D_accel_pid_set_integrator ∨ |cmd_position_D_accel_pid_set_integrator_i| ≤ 1)",
+  "ne_input_args: (¬cmd_position_input_vel_accel_NE_m ∨ (|cmd_position_input_vel_accel_NE_m_vel_n| ≤ 100 ∧ |cmd_position_input_vel_accel_NE_m_vel_e| ≤ 100) ∧ |cmd_position_input_vel_accel_NE_m_accel_n| ≤ 100 ∧ |cmd_position_input_vel_accel_NE_m_accel_e| ≤ 100) ∧ (¬cmd_position_input_pos_vel_accel_NE_m ∨ (|cmd_position_input_pos_vel_accel_NE_m_vel_n| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_vel_e| ≤ 100) ∧ (|cmd_position_input_pos_vel_accel_NE_m_accel_n| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_NE_m_accel_e| ≤ 100) ∧ |cmd_position_input_pos_vel_accel_NE_m_pos_n| ≤ 10000 ∧ |cmd_position_input_pos_vel_accel_NE_m_pos_e| ≤ 10000) ∧ (¬cmd_position_input_pos_NED_m ∨ (|cmd_position_input_pos_NED_m_pos_n| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_pos_e| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_pos_d| ≤ 10000 ∧ |cmd_position_input_pos_NED_m_terrain_d| ≤ 10000) ∧ 0 ≤ cmd_position_input_pos_NED_m_terrain_margin ∧ cmd_position_input_pos_NED_m_terrain_margin ≤ 100)",
+  "d_input_args: (¬cmd_position_D_relax_controller ∨ 0 ≤ cmd_position_D_relax_controller_throttle ∧ cmd_position_D_relax_controller_throttle ≤ 1) ∧ (¬cmd_position_D_set_pos_target_from_climb_rate_ms ∨ |cmd_position_D_set_pos_target_from_climb_rate_ms_climb_rate| ≤ 100) ∧ (¬cmd_position_input_pos_vel_accel_D_m ∨ |cmd_position_input_pos_vel_accel_D_m_vel| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_D_m_accel| ≤ 100 ∧ |cmd_position_input_pos_vel_accel_D_m_pos| ≤ 10000) ∧ (¬cmd_position_input_vel_accel_D_m ∨ |cmd_position_input_vel_accel_D_m_vel| ≤ 100 ∧ |cmd_position_input_vel_accel_D_m_accel| ≤ 100) ∧ (¬cmd_position_D_set_alt_target_with_slew_m ∨ |cmd_position_D_set_alt_target_with_slew_m_alt| ≤ 10000)"]}

@@ -1,0 +1,886 @@
+{
+ "namespace": "Frame",
+ "source": "examples/frame.cpp",
+ "functions": [],
+ "classes": [
+  {
+   "cxx": "Lin",
+   "lean": "Frame.Lin",
+   "has_params": true,
+   "inputs": [],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Lin",
+     "lean": "Frame.Lin.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Lin",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "host_in",
+       "type": "Host",
+       "ref": "mut",
+       "boundary": true,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": "Frame.Host.State",
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "actuator",
+     "lean": "Frame.Lin.actuator",
+     "top": false,
+     "kind": "method",
+     "owner": "Lin",
+     "access": "public",
+     "reads": [
+      "p",
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": true,
+     "params": [
+      {
+       "name": "thrust",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "relax",
+     "lean": "Frame.Lin.relax",
+     "top": false,
+     "kind": "method",
+     "owner": "Lin",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "k",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "expo",
+     "cxx": "expo.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "lift",
+     "cxx": "lift",
+     "type": "float",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  },
+  {
+   "cxx": "Host",
+   "lean": "Frame.Host",
+   "has_params": true,
+   "inputs": [
+    {
+     "lean": "_gain_configured",
+     "type": "bool",
+     "cxx": "_gain.configured()",
+     "leaves": null
+    },
+    {
+     "lean": "lin_expo_configured",
+     "type": "bool",
+     "cxx": "expo.configured()",
+     "leaves": null
+    },
+    {
+     "lean": "read_at",
+     "type": "float",
+     "cxx": "AP::sensor().read_at(i) at examples/frame.cpp:197:16",
+     "leaves": null
+    },
+    {
+     "lean": "channel_mask_2",
+     "type": "uint32_t",
+     "cxx": "Servo.channel_mask(2)",
+     "leaves": null
+    }
+   ],
+   "sub_inputs": [],
+   "outputs": [],
+   "sub_outputs": [],
+   "methods": [
+    {
+     "cxx": "Host",
+     "lean": "Frame.Host.init",
+     "top": true,
+     "kind": "ctor",
+     "owner": "Host",
+     "access": "public",
+     "reads": [],
+     "writes": [
+      "p",
+      "s"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "gain",
+     "lean": "Frame.Host.gain",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "scale",
+     "lean": "Frame.Host.scale",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "add_all",
+     "lean": "Frame.Host.add_all",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "defs",
+       "type": "Host::Def[0]",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": false,
+       "lean_type": null,
+       "leaves": null
+      },
+      {
+       "name": "n",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "setup",
+     "lean": "Frame.Host.setup",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "kind",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "bool",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "step",
+     "lean": "Frame.Host.step",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "o",
+      "p",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "thrust",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "arm",
+     "lean": "Frame.Host.arm",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "o",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "on",
+       "type": "bool",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_mode",
+     "lean": "Frame.Host.set_mode",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "o",
+      "p",
+      "s"
+     ],
+     "writes": [
+      "o",
+      "p"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "m",
+       "type": "uint8_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "set_roll",
+     "lean": "Frame.Host.set_roll",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [
+      "s"
+     ],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "r",
+       "type": "float",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "configure",
+     "lean": "Frame.Host.configure",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [
+      "p"
+     ],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [],
+     "ret": "void",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "sample",
+     "lean": "Frame.Host.sample",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "p"
+     ],
+     "writes": [],
+     "uses_inp": true,
+     "uses_own": false,
+     "params": [
+      {
+       "name": "i",
+       "type": "int32_t",
+       "ref": null,
+       "boundary": false,
+       "enum": null,
+       "under": null,
+       "scalar": true,
+       "lean_type": null,
+       "leaves": null
+      }
+     ],
+     "ret": "float",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": true,
+     "ret_leaves": null
+    },
+    {
+     "cxx": "name",
+     "lean": "Frame.Host.name",
+     "top": false,
+     "kind": "method",
+     "owner": "Host",
+     "access": "public",
+     "reads": [
+      "s"
+     ],
+     "writes": [],
+     "uses_inp": false,
+     "uses_own": false,
+     "params": [],
+     "ret": "const char *",
+     "ret_enum": null,
+     "ret_under": null,
+     "ret_scalar": false,
+     "ret_leaves": null
+    }
+   ],
+   "leaves": [
+    {
+     "root": "p",
+     "lean": "lin.expo",
+     "cxx": "lin.expo.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_gain",
+     "cxx": "_gain.get()",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "p",
+     "lean": "_mode",
+     "cxx": "_mode.get()",
+     "type": "uint8_t",
+     "enum": "Frame.Host.Mode"
+    },
+    {
+     "root": "s",
+     "lean": "trim",
+     "cxx": "trim",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "lin.lift",
+     "cxx": "lin.lift",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_armed",
+     "cxx": "_armed",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll_in",
+     "cxx": "_roll_in",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_enabled[0]!",
+     "cxx": "_enabled[0]",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_enabled[1]!",
+     "cxx": "_enabled[1]",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_enabled[2]!",
+     "cxx": "_enabled[2]",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_enabled[3]!",
+     "cxx": "_enabled[3]",
+     "type": "bool",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll[0]!",
+     "cxx": "_roll[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll[1]!",
+     "cxx": "_roll[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll[2]!",
+     "cxx": "_roll[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_roll[3]!",
+     "cxx": "_roll[3]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_order[0]!",
+     "cxx": "_order[0]",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_order[1]!",
+     "cxx": "_order[1]",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_order[2]!",
+     "cxx": "_order[2]",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_order[3]!",
+     "cxx": "_order[3]",
+     "type": "uint8_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_out[0]!",
+     "cxx": "_out[0]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_out[1]!",
+     "cxx": "_out[1]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_out[2]!",
+     "cxx": "_out[2]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_out[3]!",
+     "cxx": "_out[3]",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_name",
+     "cxx": "_name",
+     "type": "const char *",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_scaled.mask",
+     "cxx": "_scaled.mask",
+     "type": "uint32_t",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_scaled.offset",
+     "cxx": "_scaled.offset",
+     "type": "float",
+     "enum": null
+    },
+    {
+     "root": "s",
+     "lean": "_note_count",
+     "cxx": "_note_count",
+     "type": "int32_t",
+     "enum": null
+    }
+   ],
+   "output_log": true
+  }
+ ],
+ "enums": [
+  {
+   "cxx": "ap_var_type",
+   "lean": "Frame.ap_var_type",
+   "under": "uint32_t",
+   "values": [
+    [
+     "AP_PARAM_NONE",
+     0,
+     "AP_PARAM_NONE"
+    ],
+    [
+     "AP_PARAM_INT8",
+     1,
+     "AP_PARAM_INT8"
+    ],
+    [
+     "AP_PARAM_INT16",
+     2,
+     "AP_PARAM_INT16"
+    ],
+    [
+     "AP_PARAM_INT32",
+     3,
+     "AP_PARAM_INT32"
+    ],
+    [
+     "AP_PARAM_FLOAT",
+     4,
+     "AP_PARAM_FLOAT"
+    ]
+   ]
+  },
+  {
+   "cxx": "Host::Mode",
+   "lean": "Frame.Host.Mode",
+   "under": "uint8_t",
+   "values": [
+    [
+     "OFF",
+     0,
+     "OFF"
+    ],
+    [
+     "ON",
+     1,
+     "ON"
+    ],
+    [
+     "BOOST",
+     2,
+     "BOOST"
+    ]
+   ]
+  }
+ ],
+ "free": [],
+ "output_log": [
+  {
+   "name": "write",
+   "cxx": "Servo.write(uint8_t chan, uint16_t pwm)",
+   "args": [
+    {
+     "name": "chan",
+     "type": "uint8_t",
+     "enum": null,
+     "leaves": null
+    },
+    {
+     "name": "pwm",
+     "type": "uint16_t",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  },
+  {
+   "name": "emit",
+   "cxx": "emit(uint8_t code)",
+   "args": [
+    {
+     "name": "code",
+     "type": "uint8_t",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  },
+  {
+   "name": "Notify_flags_armed",
+   "cxx": "Notify::flags.armed = bool",
+   "args": [
+    {
+     "name": "armed",
+     "type": "bool",
+     "enum": null,
+     "leaves": null
+    }
+   ]
+  }
+ ],
+ "output_ns": "Frame.",
+ "literals": [
+  {
+   "lean": "(1.0 : Float32)",
+   "bits": "3f800000",
+   "cpp": "1.0f",
+   "at": "65:31"
+  },
+  {
+   "lean": "(0.0 : Float32)",
+   "bits": "00000000",
+   "cpp": "0.0f",
+   "at": "229:41"
+  },
+  {
+   "lean": "(0.5 : Float32)",
+   "bits": "3f000000",
+   "cpp": "0.5f",
+   "at": "85:28"
+  },
+  {
+   "lean": "(0.25 : Float32)",
+   "bits": "3e800000",
+   "cpp": "0.25f",
+   "at": "86:30"
+  },
+  {
+   "lean": "(2.0 : Float32)",
+   "bits": "40000000",
+   "cpp": "2.0f",
+   "at": "94:42"
+  },
+  {
+   "lean": "(90.0 : Float32)",
+   "bits": "42b40000",
+   "cpp": "90.0f",
+   "at": "142:44"
+  },
+  {
+   "lean": "(0.0174532925 : Float32)",
+   "bits": "3c8efa35",
+   "cpp": "0.0174532925f",
+   "at": "142:53"
+  },
+  {
+   "lean": "(1000.0 : Float32)",
+   "bits": "447a0000",
+   "cpp": "1000.0f",
+   "at": "153:44"
+  },
+  {
+   "lean": "(0.1 : Float32)",
+   "bits": "3dcccccd",
+   "cpp": "0.1f",
+   "at": "159:19"
+  },
+  {
+   "lean": "(0.75 : Float32)",
+   "bits": "3f400000",
+   "cpp": "0.75f",
+   "at": "192:61"
+  }
+ ],
+ "var_info": {}
+}

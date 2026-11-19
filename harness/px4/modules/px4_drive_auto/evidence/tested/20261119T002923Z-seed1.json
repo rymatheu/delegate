@@ -1,0 +1,297 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 8000,
+ "steps_per_case": 400,
+ "seed": 1,
+ "seconds": 0.104823,
+ "outputs_seen":
+ {"vehicle_status_vehicle_type":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "vehicle_status_valid_nav_states_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_usb_connected": {"true_steps": 0},
+  "vehicle_status_updated": {"true_steps": 8000},
+  "vehicle_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_status_takeoff_time":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_system_type":
+  {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "vehicle_status_system_id":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "vehicle_status_safety_off": {"true_steps": 8000},
+  "vehicle_status_safety_button_available": {"true_steps": 0},
+  "vehicle_status_rc_calibration_in_progress": {"true_steps": 0},
+  "vehicle_status_pre_flight_checks_pass": {"true_steps": 8000},
+  "vehicle_status_power_input_valid": {"true_steps": 8000},
+  "vehicle_status_parachute_system_present": {"true_steps": 0},
+  "vehicle_status_parachute_system_healthy": {"true_steps": 0},
+  "vehicle_status_open_drone_id_system_present": {"true_steps": 0},
+  "vehicle_status_open_drone_id_system_healthy": {"true_steps": 0},
+  "vehicle_status_nav_state_user_intention":
+  {"non_finite_steps": 0, "min_finite": 4, "max_finite": 4},
+  "vehicle_status_nav_state_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_nav_state":
+  {"non_finite_steps": 0, "min_finite": 4, "max_finite": 4},
+  "vehicle_status_latest_disarming_reason":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_latest_arming_reason":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_is_vtol_tailsitter": {"true_steps": 0},
+  "vehicle_status_is_vtol": {"true_steps": 0},
+  "vehicle_status_in_transition_to_fw": {"true_steps": 0},
+  "vehicle_status_in_transition_mode": {"true_steps": 0},
+  "vehicle_status_hil_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_high_latency_data_link_lost": {"true_steps": 0},
+  "vehicle_status_gcs_connection_lost_counter":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_gcs_connection_lost": {"true_steps": 0},
+  "vehicle_status_failure_detector_status":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_failsafe_defer_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_failsafe_and_user_took_over": {"true_steps": 0},
+  "vehicle_status_failsafe": {"true_steps": 0},
+  "vehicle_status_executor_in_charge":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_component_id":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "vehicle_status_can_set_nav_states_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_status_calibration_enabled": {"true_steps": 0},
+  "vehicle_status_arming_state":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 2},
+  "vehicle_status_armed_time":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 12361},
+  "vehicle_control_mode_updated": {"true_steps": 8000},
+  "vehicle_control_mode_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_control_mode_source_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "vehicle_control_mode_flag_multicopter_position_control_enabled":
+  {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_velocity_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_termination_enabled": {"true_steps": 0},
+  "vehicle_control_mode_flag_control_rates_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_position_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_offboard_enabled": {"true_steps": 0},
+  "vehicle_control_mode_flag_control_manual_enabled": {"true_steps": 0},
+  "vehicle_control_mode_flag_control_climb_rate_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_auto_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_attitude_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_altitude_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_allocation_enabled": {"true_steps": 8000},
+  "vehicle_control_mode_flag_control_acceleration_enabled": {"true_steps": 0},
+  "vehicle_control_mode_flag_armed": {"true_steps": 5033},
+  "position_setpoint_triplet_updated": {"true_steps": 620},
+  "position_setpoint_triplet_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "position_setpoint_triplet_previous_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_valid": {"true_steps": 0},
+  "position_setpoint_triplet_previous_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_previous_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_previous_cruising_throttle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_cruising_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_previous_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_valid": {"true_steps": 0},
+  "position_setpoint_triplet_next_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lon_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lon":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_next_lat_lo":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_lat":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_next_cruising_throttle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_cruising_speed":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_next_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_yaw":
+  {"non_finite_steps": 8000, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_vz":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_vy":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_vx":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_valid": {"true_steps": 620},
+  "position_setpoint_triplet_current_type":
+  {"non_finite_steps": 0, "min_finite": 2, "max_finite": 2},
+  "position_setpoint_triplet_current_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "position_setpoint_triplet_current_lon_lo":
+  {"non_finite_steps": 738,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_lon":
+  {"non_finite_steps": 614,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_loiter_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_pattern":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_orientation":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_minor_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_loiter_direction_counter_clockwise":
+  {"true_steps": 0},
+  "position_setpoint_triplet_current_lat_lo":
+  {"non_finite_steps": 264,
+   "min_finite": -10141200000000000000000000000000,
+   "max_finite": 10141200000000000000000000000000},
+  "position_setpoint_triplet_current_lat":
+  {"non_finite_steps": 1202,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_gliding_enabled": {"true_steps": 0},
+  "position_setpoint_triplet_current_cruising_throttle":
+  {"non_finite_steps": 8000, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_cruising_speed":
+  {"non_finite_steps": 8000, "min_finite": null, "max_finite": null},
+  "position_setpoint_triplet_current_alt_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "position_setpoint_triplet_current_alt":
+  {"non_finite_steps": 530,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "position_setpoint_triplet_current_acceptance_radius":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "home_position_z": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_y": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_x": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_valid_lpos": {"true_steps": 620},
+  "home_position_valid_hpos": {"true_steps": 620},
+  "home_position_valid_alt": {"true_steps": 620},
+  "home_position_updated": {"true_steps": 620},
+  "home_position_update_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "home_position_roll":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_pitch":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "home_position_manual_home": {"true_steps": 0},
+  "home_position_lon_lo":
+  {"non_finite_steps": 738,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "home_position_lon":
+  {"non_finite_steps": 614,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "home_position_lat_lo":
+  {"non_finite_steps": 316,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "home_position_lat":
+  {"non_finite_steps": 653,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "home_position_alt":
+  {"non_finite_steps": 530,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "actuator_armed_updated": {"true_steps": 8000},
+  "actuator_armed_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_armed_termination": {"true_steps": 0},
+  "actuator_armed_ready_to_arm": {"true_steps": 8000},
+  "actuator_armed_prearmed": {"true_steps": 8000},
+  "actuator_armed_lockdown": {"true_steps": 0},
+  "actuator_armed_kill": {"true_steps": 0},
+  "actuator_armed_in_esc_calibration_mode": {"true_steps": 0},
+  "actuator_armed_armed": {"true_steps": 5033}},
+ "module": "px4_drive_auto",
+ "kind": "tested",
+ "id": "20261119T002923Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬position_setpoint_triplet_updated ∨ position_setpoint_triplet_current_type = 2 ∧ finite(position_setpoint_triplet_current_alt)",
+   "smallest_margin": null,
+   "contract_hash":
+   "bd5a259c1d0da8e2eceeafbf538e1ef990214ec052213ec268e07ecc4c2a9850",
+   "clause": "loiter_setpoint",
+   "checked": 8000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -fno-exceptions",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_drive_auto --seed 1 --cases 20 --steps 400",
+ "code_hash":
+ "ff70444d24afebe83ba329e163103d0f8ce9e71021f8240ddb8558349a9e60f5",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume":
+ ["script: 0 ≤ arm_s ∧ arm_s ≤ step_s ∧ 0 ≤ takeoff_alt ∧ takeoff_alt ≤ 100 ∧ |step_n| ≤ 1000",
+  "ekf2_reference_bounded: ¬(vehicle_local_position_xy_global ∧ vehicle_local_position_z_global) ∨ |vehicle_local_position_ref_alt| ≤ 10000000 ∧ |vehicle_local_position_z| ≤ 10000000"]}

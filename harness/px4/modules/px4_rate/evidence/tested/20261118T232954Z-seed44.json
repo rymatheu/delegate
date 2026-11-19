@@ -1,0 +1,206 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 3000,
+ "steps_per_case": 100,
+ "seed": 44,
+ "seconds": 1.05641,
+ "regime_text":
+ "default_MC_ACRO_EXPO: MC_ACRO_EXPO = 0; default_MC_ACRO_EXPO_Y: MC_ACRO_EXPO_Y = 0; default_MC_ACRO_P_MAX: MC_ACRO_P_MAX = 100; default_MC_ACRO_R_MAX: MC_ACRO_R_MAX = 100; default_MC_ACRO_SUPEXPO: MC_ACRO_SUPEXPO = 0; default_MC_ACRO_SUPEXPOY: MC_ACRO_SUPEXPOY = 0; default_MC_ACRO_Y_MAX: MC_ACRO_Y_MAX = 100; default_MC_BAT_SCALE_EN: MC_BAT_SCALE_EN = 0; default_MC_PITCHRATE_D: MC_PITCHRATE_D = 0.003; default_MC_PITCHRATE_FF: MC_PITCHRATE_FF = 0; default_MC_PITCHRATE_I: MC_PITCHRATE_I = 0.2; default_MC_PITCHRATE_K: MC_PITCHRATE_K = 1; default_MC_PITCHRATE_P: MC_PITCHRATE_P = 0.15; default_MC_PR_INT_LIM: MC_PR_INT_LIM = 0.3; default_MC_ROLLRATE_D: MC_ROLLRATE_D = 0.003; default_MC_ROLLRATE_FF: MC_ROLLRATE_FF = 0; default_MC_ROLLRATE_I: MC_ROLLRATE_I = 0.2; default_MC_ROLLRATE_K: MC_ROLLRATE_K = 1; default_MC_ROLLRATE_P: MC_ROLLRATE_P = 0.15; default_MC_RR_INT_LIM: MC_RR_INT_LIM = 0.3; default_MC_YAWRATE_D: MC_YAWRATE_D = 0; default_MC_YAWRATE_FF: MC_YAWRATE_FF = 0; default_MC_YAWRATE_I: MC_YAWRATE_I = 0.1; default_MC_YAWRATE_K: MC_YAWRATE_K = 1; default_MC_YAWRATE_P: MC_YAWRATE_P = 0.2; default_MC_YAW_TQ_CUTOFF: MC_YAW_TQ_CUTOFF = 2; default_MC_YR_INT_LIM: MC_YR_INT_LIM = 0.3; gyro_every_tick: vehicle_angular_velocity_updated = true; rates_enabled: ¬vehicle_control_mode_updated ∨ vehicle_control_mode_flag_control_rates_enabled ∧ vehicle_control_mode_flag_armed; rotary_wing: ¬vehicle_status_updated ∨ vehicle_status_vehicle_type = 1; modest_rates: |vehicle_angular_velocity_xyz_0| ≤ 10 ∧ |vehicle_angular_velocity_xyz_1| ≤ 10 ∧ |vehicle_angular_velocity_xyz_2| ≤ 10; modest_accel: |vehicle_angular_velocity_xyz_derivative_0| ≤ 100 ∧ |vehicle_angular_velocity_xyz_derivative_1| ≤ 100 ∧ |vehicle_angular_velocity_xyz_derivative_2| ≤ 100; modest_setpoints: |vehicle_rates_setpoint_roll| ≤ 4 ∧ |vehicle_rates_setpoint_pitch| ≤ 4 ∧ |vehicle_rates_setpoint_yaw| ≤ 4; t_us starts at 1000000 and increases by 2400 to 2600 at every step",
+ "regime": "stock_flight",
+ "outputs_seen":
+ {"vehicle_torque_setpoint_xyz_2":
+  {"non_finite_steps": 0, "min_finite": -1.189145, "max_finite": 1.219757},
+  "vehicle_torque_setpoint_xyz_1":
+  {"non_finite_steps": 0, "min_finite": -1.946267, "max_finite": 2.344435},
+  "vehicle_torque_setpoint_xyz_0":
+  {"non_finite_steps": 0, "min_finite": -2.029756, "max_finite": 2.4},
+  "vehicle_torque_setpoint_updated": {"true_steps": 1552},
+  "vehicle_torque_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_torque_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1248337},
+  "vehicle_thrust_setpoint_xyz_2":
+  {"non_finite_steps": 158,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "vehicle_thrust_setpoint_xyz_1":
+  {"non_finite_steps": 23,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "vehicle_thrust_setpoint_xyz_0":
+  {"non_finite_steps": 17,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "vehicle_thrust_setpoint_updated": {"true_steps": 1552},
+  "vehicle_thrust_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_thrust_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1248337},
+  "rate_ctrl_status_yawspeed_integ":
+  {"non_finite_steps": 0, "min_finite": -0.02242606, "max_finite": 0.006339},
+  "rate_ctrl_status_updated": {"true_steps": 1552},
+  "rate_ctrl_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1248337},
+  "rate_ctrl_status_rollspeed_integ":
+  {"non_finite_steps": 0, "min_finite": -0.1002337, "max_finite": 0.02856037},
+  "rate_ctrl_status_pitchspeed_integ":
+  {"non_finite_steps": 0, "min_finite": -0.03772732, "max_finite": 0.03228279},
+  "px4_rate_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_controls_status_0_updated": {"true_steps": 24},
+  "actuator_controls_status_0_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1216414},
+  "actuator_controls_status_0_control_power_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.4293124},
+  "actuator_controls_status_0_control_power_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.256604},
+  "actuator_controls_status_0_control_power_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.273062}},
+ "module": "px4_rate",
+ "kind": "tested",
+ "id": "20261118T232954Z-seed44",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_torque_setpoint_xyz_0) ∧ finite(vehicle_torque_setpoint_xyz_1) ∧ finite(vehicle_torque_setpoint_xyz_2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "a947232574969d7f97c355143373c244c8e36b0ac1140ed7f4f6742e45e66c7e",
+   "clause": "torque_finite",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|rate_ctrl_status_rollspeed_integ| ≤ MC_RR_INT_LIM ∧ |rate_ctrl_status_pitchspeed_integ| ≤ MC_PR_INT_LIM ∧ |rate_ctrl_status_yawspeed_integ| ≤ MC_YR_INT_LIM",
+   "smallest_margin_case":
+   {"step": 71,
+    "sha256":
+    "6fc6beec425570aacb2424313e059e8f7927a28e27cfb380c85a4a158f0546a2",
+    "file":
+    "px4/modules/px4_rate/evidence/tested/20261118T232954Z-seed44/smallest-margin-integrator_bounded.json",
+    "case": 28},
+   "smallest_margin": 0.1997663,
+   "contract_hash":
+   "9092b8b9f7832551486e4a00710bb08b546f58368af9bd8c61a4653d510de0be",
+   "clause": "integrator_bounded",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_torque_setpoint_timestamp = t_us ∧ vehicle_torque_setpoint_timestamp_sample = vehicle_angular_velocity_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "87f15a898617d1fe4a762fd0ea75004d8640bc975b4c33515c4fcf3918fb1e1d",
+   "clause": "torque_stamped",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_angular_velocity_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "8ea0883075d59f3247166763606873718c0e360c6fd1187d3ea8e23b21f53071",
+   "clause": "torque_answers_gyro",
+   "checked": 3000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_rate_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "ef8f6d3d7184e62c3faf9066dc7720395eefb99aeeb2e0eb99749cf4c79020af",
+   "clause": "no_px4_error",
+   "checked": 3000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER -DMODULE_NAME=\"mc_rate_control\" (C: -std=gnu11 -O2 -ffp-contract=off -fno-fast-math -fno-common -fno-math-errno -fno-strict-aliasing -fvisibility=hidden -include visibility.h -Wno-c99-designator -Wno-unknown-warning-option -Wno-unused-const-variable -Wno-varargs -Wno-vla-cxx-extension -Wno-missing-field-initializers -D__PX4_POSIX -D__PX4_DARWIN -Dnoreturn_function=__attribute__((noreturn)) -DCONFIG_ARCH_BOARD_PX4_SITL -D__CUSTOM_FILE_IO__ -D__STDC_FORMAT_MACROS -DENABLE_LOCKSTEP_SCHEDULER)",
+ "coverage":
+ {"torque_published":
+  {"true_steps": 1552, "text": "vehicle_torque_setpoint_updated = true"},
+  "torque_beyond_unit":
+  {"true_steps": 359, "text": "1 < |vehicle_torque_setpoint_xyz_0|"},
+  "integrator_nonzero":
+  {"true_steps": 274, "text": "¬rate_ctrl_status_rollspeed_integ = 0"}},
+ "compiler":
+ "Apple clang version 17.0.0 (clang-1700.6.4.2); Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command":
+ "harness test px4_rate --seed 44 --cases 30 --steps 100 --regime stock_flight",
+ "code_hash":
+ "b302aab3f97dc757ff4569e27d4800ef88b7fb2c7110d6bb7c79375f37b3f6dd",
+ "cases_skipped": 0,
+ "cases": 30,
+ "assume":
+ ["width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "width_control_allocator_status_actuator_saturation_0: -128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_1: -128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_2: -128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_3: -128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_4: -128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_5: -128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_6: -128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_7: -128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_8: -128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_9: -128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_10: -128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_11: -128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_12: -128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_13: -128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_14: -128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+  "width_control_allocator_status_actuator_saturation_15: -128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+  "width_control_allocator_status_handled_motor_failure_mask: 0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+  "width_control_allocator_status_motor_stop_mask: 0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+  "width_manual_control_setpoint_data_source: 0 ≤ manual_control_setpoint_data_source ∧ manual_control_setpoint_data_source ≤ 255",
+  "width_manual_control_setpoint_buttons: 0 ≤ manual_control_setpoint_buttons ∧ manual_control_setpoint_buttons ≤ 65535",
+  "width_battery_status_cell_count: 0 ≤ battery_status_cell_count ∧ battery_status_cell_count ≤ 255",
+  "width_battery_status_source: 0 ≤ battery_status_source ∧ battery_status_source ≤ 255",
+  "width_battery_status_priority: 0 ≤ battery_status_priority ∧ battery_status_priority ≤ 255",
+  "width_battery_status_capacity: 0 ≤ battery_status_capacity ∧ battery_status_capacity ≤ 65535",
+  "width_battery_status_cycle_count: 0 ≤ battery_status_cycle_count ∧ battery_status_cycle_count ≤ 65535",
+  "width_battery_status_average_time_to_empty: 0 ≤ battery_status_average_time_to_empty ∧ battery_status_average_time_to_empty ≤ 65535",
+  "width_battery_status_manufacture_date: 0 ≤ battery_status_manufacture_date ∧ battery_status_manufacture_date ≤ 65535",
+  "width_battery_status_state_of_health: 0 ≤ battery_status_state_of_health ∧ battery_status_state_of_health ≤ 65535",
+  "width_battery_status_max_error: 0 ≤ battery_status_max_error ∧ battery_status_max_error ≤ 65535",
+  "width_battery_status_id: 0 ≤ battery_status_id ∧ battery_status_id ≤ 255",
+  "width_battery_status_interface_error: 0 ≤ battery_status_interface_error ∧ battery_status_interface_error ≤ 65535",
+  "width_battery_status_warning: 0 ≤ battery_status_warning ∧ battery_status_warning ≤ 255",
+  "width_battery_status_faults: 0 ≤ battery_status_faults ∧ battery_status_faults ≤ 65535",
+  "width_battery_status_over_discharge_count: 0 ≤ battery_status_over_discharge_count ∧ battery_status_over_discharge_count ≤ 65535",
+  "range_MC_ACRO_EXPO: 0 ≤ MC_ACRO_EXPO ∧ MC_ACRO_EXPO ≤ 1",
+  "range_MC_ACRO_EXPO_Y: 0 ≤ MC_ACRO_EXPO_Y ∧ MC_ACRO_EXPO_Y ≤ 1",
+  "range_MC_ACRO_P_MAX: 0 ≤ MC_ACRO_P_MAX ∧ MC_ACRO_P_MAX ≤ 1800",
+  "range_MC_ACRO_R_MAX: 0 ≤ MC_ACRO_R_MAX ∧ MC_ACRO_R_MAX ≤ 1800",
+  "range_MC_ACRO_SUPEXPO: 0 ≤ MC_ACRO_SUPEXPO ∧ MC_ACRO_SUPEXPO ≤ 0.95",
+  "range_MC_ACRO_SUPEXPOY: 0 ≤ MC_ACRO_SUPEXPOY ∧ MC_ACRO_SUPEXPOY ≤ 0.95",
+  "range_MC_ACRO_Y_MAX: 0 ≤ MC_ACRO_Y_MAX ∧ MC_ACRO_Y_MAX ≤ 1800",
+  "range_MC_BAT_SCALE_EN: MC_BAT_SCALE_EN = 0 ∨ MC_BAT_SCALE_EN = 1",
+  "range_MC_PITCHRATE_D: 0 ≤ MC_PITCHRATE_D",
+  "range_MC_PITCHRATE_FF: 0 ≤ MC_PITCHRATE_FF",
+  "range_MC_PITCHRATE_I: 0 ≤ MC_PITCHRATE_I",
+  "range_MC_PITCHRATE_K: 0.01 ≤ MC_PITCHRATE_K ∧ MC_PITCHRATE_K ≤ 5",
+  "range_MC_PITCHRATE_P: 0.01 ≤ MC_PITCHRATE_P ∧ MC_PITCHRATE_P ≤ 0.6",
+  "range_MC_PR_INT_LIM: 0 ≤ MC_PR_INT_LIM",
+  "range_MC_ROLLRATE_D: 0 ≤ MC_ROLLRATE_D ∧ MC_ROLLRATE_D ≤ 0.01",
+  "range_MC_ROLLRATE_FF: 0 ≤ MC_ROLLRATE_FF",
+  "range_MC_ROLLRATE_I: 0 ≤ MC_ROLLRATE_I",
+  "range_MC_ROLLRATE_K: 0.01 ≤ MC_ROLLRATE_K ∧ MC_ROLLRATE_K ≤ 5",
+  "range_MC_ROLLRATE_P: 0.01 ≤ MC_ROLLRATE_P ∧ MC_ROLLRATE_P ≤ 0.5",
+  "range_MC_RR_INT_LIM: 0 ≤ MC_RR_INT_LIM",
+  "range_MC_YAWRATE_D: 0 ≤ MC_YAWRATE_D",
+  "range_MC_YAWRATE_FF: 0 ≤ MC_YAWRATE_FF",
+  "range_MC_YAWRATE_I: 0 ≤ MC_YAWRATE_I",
+  "range_MC_YAWRATE_K: 0.01 ≤ MC_YAWRATE_K ∧ MC_YAWRATE_K ≤ 5",
+  "range_MC_YAWRATE_P: 0 ≤ MC_YAWRATE_P ∧ MC_YAWRATE_P ≤ 0.6",
+  "range_MC_YAW_TQ_CUTOFF: 0 ≤ MC_YAW_TQ_CUTOFF ∧ MC_YAW_TQ_CUTOFF ≤ 10",
+  "range_MC_YR_INT_LIM: 0 ≤ MC_YR_INT_LIM",
+  "battery_scale_finite: ¬battery_status_updated ∨ finite(battery_status_scale)"]}

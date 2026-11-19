@@ -1,0 +1,46 @@
+# px4_alloc: PX4's control allocator (src/modules/control_allocator), unmodified.
+# Read by px4/ports.py (ports) and px4/build.sh (sources). Paths relative to $PX4_ROOT.
+main control_allocator
+# the module and the libraries its CMakeLists.txt links (ActuatorEffectiveness,
+# VehicleActuatorEffectiveness, ControlAllocation, PID; SlewRate and mathlib are headers)
+source src/modules/control_allocator/ControlAllocator.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessUUV.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessControlSurfaces.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessCustom.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessFixedWing.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessHelicopter.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessHelicopterCoaxial.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessMCTilt.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessMultirotor.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessTilts.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessRotors.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessSpacecraft.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessStandardVTOL.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessTiltrotorVTOL.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessTailsitterVTOL.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/ActuatorEffectivenessRoverAckermann.cpp
+source src/modules/control_allocator/VehicleActuatorEffectiveness/RpmControl.cpp
+source src/lib/control_allocation/actuator_effectiveness/ActuatorEffectiveness.cpp
+source src/lib/control_allocation/control_allocation/ControlAllocation.cpp
+source src/lib/control_allocation/control_allocation/ControlAllocationPseudoInverse.cpp
+source src/lib/control_allocation/control_allocation/ControlAllocationSequentialDesaturation.cpp
+source src/lib/pid/PID.cpp
+include src/modules/control_allocator src/modules/control_allocator/VehicleActuatorEffectiveness
+include src/lib/control_allocation/actuator_effectiveness src/lib/control_allocation/control_allocation
+# parameters: the module's module.yaml (CA_*), and the two it reads by name from elsewhere
+params src/modules/control_allocator
+params src/lib/mixer_module/params.c MC_AIRMODE
+params src/modules/commander/commander_params.c COM_SPOOLUP_TIME
+# topics a multicopter configuration reads (ControlAllocator.hpp:178-195); instance 1 of the
+# torque and thrust setpoints is the VTOL's second controller, and flaps, spoilers, rpm,
+# manual_control_switches and tiltrotor_extra_controls are read only by the fixed-wing, VTOL and
+# helicopter effectiveness classes
+sub vehicle_torque_setpoint                # the trigger (SubscriptionCallbackWorkItem)
+sub vehicle_thrust_setpoint
+sub vehicle_status
+sub vehicle_control_mode
+sub failure_detector_status
+pub actuator_motors
+pub actuator_servos
+pub control_allocator_status
+pub actuator_servos_trim

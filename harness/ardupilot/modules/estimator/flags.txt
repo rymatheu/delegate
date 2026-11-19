@@ -1,0 +1,28 @@
+# Compile flags of the estimator module, added to the shared ones in ardupilot/build.sh.
+# The vehicle the libraries are built for (waf defines it per vehicle): selects Copter's EKF3
+# defaults, AP_AHRS's FLAG_ALWAYS_USE_EKF and the vehicle-specific branches.
+-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter
+# The SITL board's configure step defines AP_SIM_ENABLED (Tools/ardupilotwaf/boards.py, class sitl);
+# ardupilot/build.sh does not write waf's ap_config.h, so it is defined here (as for the mixer).
+-DAP_SIM_ENABLED=1
+# Back ends (sensor drivers) are outside the stage; backend_*.cpp stand in for the SITL drivers,
+# the only ones the X500's simulated vehicle uses. The other drivers are compiled out, as a board
+# without them compiles them out (each flag is ArduPilot's own feature switch, *_config.h):
+-DAP_BARO_BACKEND_DEFAULT_ENABLED=0        # every barometer driver but SITL's (AP_SIM_BARO_ENABLED)
+-DAP_COMPASS_I2C_BACKEND_DEFAULT_ENABLED=0 # every I2C/SPI compass driver
+-DHAL_MSP_SENSORS_ENABLED=0                # MSP baro, compass, GPS drivers
+-DAP_GPS_ERB_ENABLED=0
+-DAP_GPS_GSOF_ENABLED=0
+-DAP_GPS_MAV_ENABLED=0
+-DAP_GPS_NMEA_ENABLED=0
+-DAP_GPS_NOVA_ENABLED=0
+-DAP_GPS_SBF_ENABLED=0
+-DAP_GPS_SBP_ENABLED=0
+-DAP_GPS_SBP2_ENABLED=0
+-DAP_GPS_SIRF_ENABLED=0
+-DAP_GPS_UBLOX_ENABLED=0
+# Two AHRS backends that are not estimators of this vehicle: the external AHRS (a separate INS
+# device on a UART; EAHRS_TYPE 0 by default, so in SITL it is present but inert) and the SITL-only
+# SIM backend (AHRS_EKF_TYPE 10, which reads the simulator's true state through AP::sitl()).
+-DAP_EXTERNAL_AHRS_ENABLED=0
+-DAP_AHRS_SIM_ENABLED=0

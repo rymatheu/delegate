@@ -1,0 +1,36 @@
+{"step": 0,
+ "params":
+ {"slew_max": "0x7f50bad0",
+  "kpdmax": "0x00800000",
+  "kp": "0x7efbae36",
+  "kimax": "0x12278575",
+  "ki": "0xee42c90b",
+  "kd": "0x7f069a17",
+  "filt_T_hz": "0x7f1afcd4",
+  "filt_E_hz": "0x7f07b341",
+  "filt_D_hz": "0x7e2b0b38"},
+ "outputs":
+ [{"pd_limit": "false",
+   "p_term": "0x7f800000",
+   "internal_errors": "0",
+   "integrator": "0x00000000",
+   "dmod": "0x3f800000",
+   "d_term": "0x00000000",
+   "command": "0x7f800000"}],
+ "note":
+ "f32 fields are bit patterns; `harness replay` runs this file and prints values",
+ "module": "rate_pid",
+ "kind": "counterexample",
+ "inputs":
+ [{"target": "0xfe5298ec",
+   "pd_scale": "0x3f0b2e02",
+   "now_ms": "314953860",
+   "measurement": "0xfefca5f6",
+   "limit": "true",
+   "i_scale": "0x18e9685e",
+   "dt": "0x00000001"}],
+ "code_hash":
+ "902272e51c456b359a86d903e6875e6898fbec2846c94cfcc4b0525b35070e26",
+ "clause": "command_finite",
+ "case": 0,
+ "campaign": "20261116T231125Z-seed1"}

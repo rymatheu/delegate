@@ -1,0 +1,1386 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "system": "px4_inner",
+ "steps_run": 500,
+ "steps_per_case": 100,
+ "seed": 2,
+ "seconds": 0.5650228,
+ "regime_text":
+ "default_CA_FAILURE_MODE: CA_FAILURE_MODE = 0; default_CA_HELI_PITCH_C0: CA_HELI_PITCH_C0 = -0.05; default_CA_HELI_PITCH_C1: CA_HELI_PITCH_C1 = 0.0725; default_CA_HELI_PITCH_C2: CA_HELI_PITCH_C2 = 0.2; default_CA_HELI_PITCH_C3: CA_HELI_PITCH_C3 = 0.325; default_CA_HELI_PITCH_C4: CA_HELI_PITCH_C4 = 0.45; default_CA_HELI_RPM_I: CA_HELI_RPM_I = 0; default_CA_HELI_RPM_P: CA_HELI_RPM_P = 0; default_CA_HELI_RPM_SP: CA_HELI_RPM_SP = 1500; default_CA_HELI_THR_C0: CA_HELI_THR_C0 = 1; default_CA_HELI_THR_C1: CA_HELI_THR_C1 = 1; default_CA_HELI_THR_C2: CA_HELI_THR_C2 = 1; default_CA_HELI_THR_C3: CA_HELI_THR_C3 = 1; default_CA_HELI_THR_C4: CA_HELI_THR_C4 = 1; default_CA_HELI_YAW_CCW: CA_HELI_YAW_CCW = 0; default_CA_HELI_YAW_CP_O: CA_HELI_YAW_CP_O = 0; default_CA_HELI_YAW_CP_S: CA_HELI_YAW_CP_S = 0; default_CA_HELI_YAW_TH_S: CA_HELI_YAW_TH_S = 0; default_CA_MAX_SVO_THROW: CA_MAX_SVO_THROW = 0; default_CA_METHOD: CA_METHOD = 2; default_CA_R0_SLEW: CA_R0_SLEW = 0; default_CA_R10_SLEW: CA_R10_SLEW = 0; default_CA_R11_SLEW: CA_R11_SLEW = 0; default_CA_R1_SLEW: CA_R1_SLEW = 0; default_CA_R2_SLEW: CA_R2_SLEW = 0; default_CA_R3_SLEW: CA_R3_SLEW = 0; default_CA_R4_SLEW: CA_R4_SLEW = 0; default_CA_R5_SLEW: CA_R5_SLEW = 0; default_CA_R6_SLEW: CA_R6_SLEW = 0; default_CA_R7_SLEW: CA_R7_SLEW = 0; default_CA_R8_SLEW: CA_R8_SLEW = 0; default_CA_R9_SLEW: CA_R9_SLEW = 0; default_CA_ROTOR0_AX: CA_ROTOR0_AX = 0; default_CA_ROTOR0_AY: CA_ROTOR0_AY = 0; default_CA_ROTOR0_AZ: CA_ROTOR0_AZ = -1; default_CA_ROTOR0_CT: CA_ROTOR0_CT = 6.5; default_CA_ROTOR0_PZ: CA_ROTOR0_PZ = 0; default_CA_ROTOR0_TILT: CA_ROTOR0_TILT = 0; default_CA_ROTOR10_AX: CA_ROTOR10_AX = 0; default_CA_ROTOR10_AY: CA_ROTOR10_AY = 0; default_CA_ROTOR10_AZ: CA_ROTOR10_AZ = -1; default_CA_ROTOR10_CT: CA_ROTOR10_CT = 6.5; default_CA_ROTOR10_KM: CA_ROTOR10_KM = 0.05; default_CA_ROTOR10_PX: CA_ROTOR10_PX = 0; default_CA_ROTOR10_PY: CA_ROTOR10_PY = 0; default_CA_ROTOR10_PZ: CA_ROTOR10_PZ = 0; default_CA_ROTOR10_TILT: CA_ROTOR10_TILT = 0; default_CA_ROTOR11_AX: CA_ROTOR11_AX = 0; default_CA_ROTOR11_AY: CA_ROTOR11_AY = 0; default_CA_ROTOR11_AZ: CA_ROTOR11_AZ = -1; default_CA_ROTOR11_CT: CA_ROTOR11_CT = 6.5; default_CA_ROTOR11_KM: CA_ROTOR11_KM = 0.05; default_CA_ROTOR11_PX: CA_ROTOR11_PX = 0; default_CA_ROTOR11_PY: CA_ROTOR11_PY = 0; default_CA_ROTOR11_PZ: CA_ROTOR11_PZ = 0; default_CA_ROTOR11_TILT: CA_ROTOR11_TILT = 0; default_CA_ROTOR1_AX: CA_ROTOR1_AX = 0; default_CA_ROTOR1_AY: CA_ROTOR1_AY = 0; default_CA_ROTOR1_AZ: CA_ROTOR1_AZ = -1; default_CA_ROTOR1_CT: CA_ROTOR1_CT = 6.5; default_CA_ROTOR1_PZ: CA_ROTOR1_PZ = 0; default_CA_ROTOR1_TILT: CA_ROTOR1_TILT = 0; default_CA_ROTOR2_AX: CA_ROTOR2_AX = 0; default_CA_ROTOR2_AY: CA_ROTOR2_AY = 0; default_CA_ROTOR2_AZ: CA_ROTOR2_AZ = -1; default_CA_ROTOR2_CT: CA_ROTOR2_CT = 6.5; default_CA_ROTOR2_PZ: CA_ROTOR2_PZ = 0; default_CA_ROTOR2_TILT: CA_ROTOR2_TILT = 0; default_CA_ROTOR3_AX: CA_ROTOR3_AX = 0; default_CA_ROTOR3_AY: CA_ROTOR3_AY = 0; default_CA_ROTOR3_AZ: CA_ROTOR3_AZ = -1; default_CA_ROTOR3_CT: CA_ROTOR3_CT = 6.5; default_CA_ROTOR3_PZ: CA_ROTOR3_PZ = 0; default_CA_ROTOR3_TILT: CA_ROTOR3_TILT = 0; default_CA_ROTOR4_AX: CA_ROTOR4_AX = 0; default_CA_ROTOR4_AY: CA_ROTOR4_AY = 0; default_CA_ROTOR4_AZ: CA_ROTOR4_AZ = -1; default_CA_ROTOR4_CT: CA_ROTOR4_CT = 6.5; default_CA_ROTOR4_KM: CA_ROTOR4_KM = 0.05; default_CA_ROTOR4_PX: CA_ROTOR4_PX = 0; default_CA_ROTOR4_PY: CA_ROTOR4_PY = 0; default_CA_ROTOR4_PZ: CA_ROTOR4_PZ = 0; default_CA_ROTOR4_TILT: CA_ROTOR4_TILT = 0; default_CA_ROTOR5_AX: CA_ROTOR5_AX = 0; default_CA_ROTOR5_AY: CA_ROTOR5_AY = 0; default_CA_ROTOR5_AZ: CA_ROTOR5_AZ = -1; default_CA_ROTOR5_CT: CA_ROTOR5_CT = 6.5; default_CA_ROTOR5_KM: CA_ROTOR5_KM = 0.05; default_CA_ROTOR5_PX: CA_ROTOR5_PX = 0; default_CA_ROTOR5_PY: CA_ROTOR5_PY = 0; default_CA_ROTOR5_PZ: CA_ROTOR5_PZ = 0; default_CA_ROTOR5_TILT: CA_ROTOR5_TILT = 0; default_CA_ROTOR6_AX: CA_ROTOR6_AX = 0; default_CA_ROTOR6_AY: CA_ROTOR6_AY = 0; default_CA_ROTOR6_AZ: CA_ROTOR6_AZ = -1; default_CA_ROTOR6_CT: CA_ROTOR6_CT = 6.5; default_CA_ROTOR6_KM: CA_ROTOR6_KM = 0.05; default_CA_ROTOR6_PX: CA_ROTOR6_PX = 0; default_CA_ROTOR6_PY: CA_ROTOR6_PY = 0; default_CA_ROTOR6_PZ: CA_ROTOR6_PZ = 0; default_CA_ROTOR6_TILT: CA_ROTOR6_TILT = 0; default_CA_ROTOR7_AX: CA_ROTOR7_AX = 0; default_CA_ROTOR7_AY: CA_ROTOR7_AY = 0; default_CA_ROTOR7_AZ: CA_ROTOR7_AZ = -1; default_CA_ROTOR7_CT: CA_ROTOR7_CT = 6.5; default_CA_ROTOR7_KM: CA_ROTOR7_KM = 0.05; default_CA_ROTOR7_PX: CA_ROTOR7_PX = 0; default_CA_ROTOR7_PY: CA_ROTOR7_PY = 0; default_CA_ROTOR7_PZ: CA_ROTOR7_PZ = 0; default_CA_ROTOR7_TILT: CA_ROTOR7_TILT = 0; default_CA_ROTOR8_AX: CA_ROTOR8_AX = 0; default_CA_ROTOR8_AY: CA_ROTOR8_AY = 0; default_CA_ROTOR8_AZ: CA_ROTOR8_AZ = -1; default_CA_ROTOR8_CT: CA_ROTOR8_CT = 6.5; default_CA_ROTOR8_KM: CA_ROTOR8_KM = 0.05; default_CA_ROTOR8_PX: CA_ROTOR8_PX = 0; default_CA_ROTOR8_PY: CA_ROTOR8_PY = 0; default_CA_ROTOR8_PZ: CA_ROTOR8_PZ = 0; default_CA_ROTOR8_TILT: CA_ROTOR8_TILT = 0; default_CA_ROTOR9_AX: CA_ROTOR9_AX = 0; default_CA_ROTOR9_AY: CA_ROTOR9_AY = 0; default_CA_ROTOR9_AZ: CA_ROTOR9_AZ = -1; default_CA_ROTOR9_CT: CA_ROTOR9_CT = 6.5; default_CA_ROTOR9_KM: CA_ROTOR9_KM = 0.05; default_CA_ROTOR9_PX: CA_ROTOR9_PX = 0; default_CA_ROTOR9_PY: CA_ROTOR9_PY = 0; default_CA_ROTOR9_PZ: CA_ROTOR9_PZ = 0; default_CA_ROTOR9_TILT: CA_ROTOR9_TILT = 0; default_CA_R_REV: CA_R_REV = 0; default_CA_SP0_ANG0: CA_SP0_ANG0 = 0; default_CA_SP0_ANG1: CA_SP0_ANG1 = 140; default_CA_SP0_ANG2: CA_SP0_ANG2 = 220; default_CA_SP0_ANG3: CA_SP0_ANG3 = 0; default_CA_SP0_ARM_L0: CA_SP0_ARM_L0 = 1; default_CA_SP0_ARM_L1: CA_SP0_ARM_L1 = 1; default_CA_SP0_ARM_L2: CA_SP0_ARM_L2 = 1; default_CA_SP0_ARM_L3: CA_SP0_ARM_L3 = 1; default_CA_SP0_COUNT: CA_SP0_COUNT = 3; default_CA_SV0_SLEW: CA_SV0_SLEW = 0; default_CA_SV1_SLEW: CA_SV1_SLEW = 0; default_CA_SV2_SLEW: CA_SV2_SLEW = 0; default_CA_SV3_SLEW: CA_SV3_SLEW = 0; default_CA_SV4_SLEW: CA_SV4_SLEW = 0; default_CA_SV5_SLEW: CA_SV5_SLEW = 0; default_CA_SV6_SLEW: CA_SV6_SLEW = 0; default_CA_SV7_SLEW: CA_SV7_SLEW = 0; default_CA_SV_CS0_FLAP: CA_SV_CS0_FLAP = 0; default_CA_SV_CS0_SPOIL: CA_SV_CS0_SPOIL = 0; default_CA_SV_CS0_TRIM: CA_SV_CS0_TRIM = 0; default_CA_SV_CS0_TRQ_P: CA_SV_CS0_TRQ_P = 0; default_CA_SV_CS0_TRQ_R: CA_SV_CS0_TRQ_R = 0; default_CA_SV_CS0_TRQ_Y: CA_SV_CS0_TRQ_Y = 0; default_CA_SV_CS0_TYPE: CA_SV_CS0_TYPE = 0; default_CA_SV_CS1_FLAP: CA_SV_CS1_FLAP = 0; default_CA_SV_CS1_SPOIL: CA_SV_CS1_SPOIL = 0; default_CA_SV_CS1_TRIM: CA_SV_CS1_TRIM = 0; default_CA_SV_CS1_TRQ_P: CA_SV_CS1_TRQ_P = 0; default_CA_SV_CS1_TRQ_R: CA_SV_CS1_TRQ_R = 0; default_CA_SV_CS1_TRQ_Y: CA_SV_CS1_TRQ_Y = 0; default_CA_SV_CS1_TYPE: CA_SV_CS1_TYPE = 0; default_CA_SV_CS2_FLAP: CA_SV_CS2_FLAP = 0; default_CA_SV_CS2_SPOIL: CA_SV_CS2_SPOIL = 0; default_CA_SV_CS2_TRIM: CA_SV_CS2_TRIM = 0; default_CA_SV_CS2_TRQ_P: CA_SV_CS2_TRQ_P = 0; default_CA_SV_CS2_TRQ_R: CA_SV_CS2_TRQ_R = 0; default_CA_SV_CS2_TRQ_Y: CA_SV_CS2_TRQ_Y = 0; default_CA_SV_CS2_TYPE: CA_SV_CS2_TYPE = 0; default_CA_SV_CS3_FLAP: CA_SV_CS3_FLAP = 0; default_CA_SV_CS3_SPOIL: CA_SV_CS3_SPOIL = 0; default_CA_SV_CS3_TRIM: CA_SV_CS3_TRIM = 0; default_CA_SV_CS3_TRQ_P: CA_SV_CS3_TRQ_P = 0; default_CA_SV_CS3_TRQ_R: CA_SV_CS3_TRQ_R = 0; default_CA_SV_CS3_TRQ_Y: CA_SV_CS3_TRQ_Y = 0; default_CA_SV_CS3_TYPE: CA_SV_CS3_TYPE = 0; default_CA_SV_CS4_FLAP: CA_SV_CS4_FLAP = 0; default_CA_SV_CS4_SPOIL: CA_SV_CS4_SPOIL = 0; default_CA_SV_CS4_TRIM: CA_SV_CS4_TRIM = 0; default_CA_SV_CS4_TRQ_P: CA_SV_CS4_TRQ_P = 0; default_CA_SV_CS4_TRQ_R: CA_SV_CS4_TRQ_R = 0; default_CA_SV_CS4_TRQ_Y: CA_SV_CS4_TRQ_Y = 0; default_CA_SV_CS4_TYPE: CA_SV_CS4_TYPE = 0; default_CA_SV_CS5_FLAP: CA_SV_CS5_FLAP = 0; default_CA_SV_CS5_SPOIL: CA_SV_CS5_SPOIL = 0; default_CA_SV_CS5_TRIM: CA_SV_CS5_TRIM = 0; default_CA_SV_CS5_TRQ_P: CA_SV_CS5_TRQ_P = 0; default_CA_SV_CS5_TRQ_R: CA_SV_CS5_TRQ_R = 0; default_CA_SV_CS5_TRQ_Y: CA_SV_CS5_TRQ_Y = 0; default_CA_SV_CS5_TYPE: CA_SV_CS5_TYPE = 0; default_CA_SV_CS6_FLAP: CA_SV_CS6_FLAP = 0; default_CA_SV_CS6_SPOIL: CA_SV_CS6_SPOIL = 0; default_CA_SV_CS6_TRIM: CA_SV_CS6_TRIM = 0; default_CA_SV_CS6_TRQ_P: CA_SV_CS6_TRQ_P = 0; default_CA_SV_CS6_TRQ_R: CA_SV_CS6_TRQ_R = 0; default_CA_SV_CS6_TRQ_Y: CA_SV_CS6_TRQ_Y = 0; default_CA_SV_CS6_TYPE: CA_SV_CS6_TYPE = 0; default_CA_SV_CS7_FLAP: CA_SV_CS7_FLAP = 0; default_CA_SV_CS7_SPOIL: CA_SV_CS7_SPOIL = 0; default_CA_SV_CS7_TRIM: CA_SV_CS7_TRIM = 0; default_CA_SV_CS7_TRQ_P: CA_SV_CS7_TRQ_P = 0; default_CA_SV_CS7_TRQ_R: CA_SV_CS7_TRQ_R = 0; default_CA_SV_CS7_TRQ_Y: CA_SV_CS7_TRQ_Y = 0; default_CA_SV_CS7_TYPE: CA_SV_CS7_TYPE = 0; default_CA_SV_CS_COUNT: CA_SV_CS_COUNT = 0; default_CA_SV_TL0_CT: CA_SV_TL0_CT = 1; default_CA_SV_TL0_MAXA: CA_SV_TL0_MAXA = 90; default_CA_SV_TL0_MINA: CA_SV_TL0_MINA = 0; default_CA_SV_TL0_TD: CA_SV_TL0_TD = 0; default_CA_SV_TL1_CT: CA_SV_TL1_CT = 1; default_CA_SV_TL1_MAXA: CA_SV_TL1_MAXA = 90; default_CA_SV_TL1_MINA: CA_SV_TL1_MINA = 0; default_CA_SV_TL1_TD: CA_SV_TL1_TD = 0; default_CA_SV_TL2_CT: CA_SV_TL2_CT = 1; default_CA_SV_TL2_MAXA: CA_SV_TL2_MAXA = 90; default_CA_SV_TL2_MINA: CA_SV_TL2_MINA = 0; default_CA_SV_TL2_TD: CA_SV_TL2_TD = 0; default_CA_SV_TL3_CT: CA_SV_TL3_CT = 1; default_CA_SV_TL3_MAXA: CA_SV_TL3_MAXA = 90; default_CA_SV_TL3_MINA: CA_SV_TL3_MINA = 0; default_CA_SV_TL3_TD: CA_SV_TL3_TD = 0; default_CA_SV_TL_COUNT: CA_SV_TL_COUNT = 0; default_COM_SPOOLUP_TIME: COM_SPOOLUP_TIME = 1; default_MC_AIRMODE: MC_AIRMODE = 0; x500_frame: CA_AIRFRAME = 0 ∧ CA_ROTOR_COUNT = 4; x500_rotor0: CA_ROTOR0_PX = 0.13 ∧ CA_ROTOR0_PY = 0.22 ∧ CA_ROTOR0_KM = 0.05; x500_rotor1: CA_ROTOR1_PX = -0.13 ∧ CA_ROTOR1_PY = -0.2 ∧ CA_ROTOR1_KM = 0.05; x500_rotor2: CA_ROTOR2_PX = 0.13 ∧ CA_ROTOR2_PY = -0.22 ∧ CA_ROTOR2_KM = -0.05; x500_rotor3: CA_ROTOR3_PX = -0.13 ∧ CA_ROTOR3_PY = 0.2 ∧ CA_ROTOR3_KM = -0.05; allocation_enabled: ¬vehicle_control_mode_updated ∨ vehicle_control_mode_flag_control_allocation_enabled; armed_rotary_wing: ¬vehicle_status_updated ∨ vehicle_status_vehicle_type = 1 ∧ vehicle_status_arming_state = 2; t_us starts at 1000000 and increases by 2400 to 2600 at every step",
+ "regime": "x500_flight",
+ "outputs_seen":
+ {"vehicle_torque_setpoint_xyz_2":
+  {"non_finite_steps": 0,
+   "min_finite": -1.212805,
+   "max_finite": 307495300000000000000},
+  "vehicle_torque_setpoint_xyz_1":
+  {"non_finite_steps": 0,
+   "min_finite": -6010221000,
+   "max_finite": 291674500000000000000000000000000000000},
+  "vehicle_torque_setpoint_xyz_0":
+  {"non_finite_steps": 0,
+   "min_finite": -111846900000000000000000000000000000000,
+   "max_finite": 7745230000000000000000000000000000000},
+  "vehicle_torque_setpoint_updated": {"true_steps": 44},
+  "vehicle_torque_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_torque_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1246138},
+  "vehicle_thrust_setpoint_xyz_2":
+  {"non_finite_steps": 0,
+   "min_finite": -163296900000000000000000000000000000000,
+   "max_finite": 54.99101},
+  "vehicle_thrust_setpoint_xyz_1":
+  {"non_finite_steps": 0,
+   "min_finite": -1,
+   "max_finite": 59747820000000000000000000000000000000},
+  "vehicle_thrust_setpoint_xyz_0":
+  {"non_finite_steps": 3,
+   "min_finite": -277064400000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "vehicle_thrust_setpoint_updated": {"true_steps": 44},
+  "vehicle_thrust_setpoint_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "vehicle_thrust_setpoint_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1246138},
+  "rate_ctrl_status_yawspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_ctrl_status_updated": {"true_steps": 44},
+  "rate_ctrl_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1246138},
+  "rate_ctrl_status_rollspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "rate_ctrl_status_pitchspeed_integ":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_rate_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "px4_alloc_errors": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_updated": {"true_steps": 24},
+  "control_allocator_status_unallocated_torque_2":
+  {"non_finite_steps": 5, "min_finite": -1.212805, "max_finite": 0},
+  "control_allocator_status_unallocated_torque_1":
+  {"non_finite_steps": 5, "min_finite": -6010221000, "max_finite": 3.691085},
+  "control_allocator_status_unallocated_torque_0":
+  {"non_finite_steps": 5,
+   "min_finite": 0,
+   "max_finite": 7745230000000000000000000000000000000},
+  "control_allocator_status_unallocated_thrust_2":
+  {"non_finite_steps": 5, "min_finite": 0, "max_finite": 54.99101},
+  "control_allocator_status_unallocated_thrust_1":
+  {"non_finite_steps": 5,
+   "min_finite": 0,
+   "max_finite": 59747820000000000000000000000000000000},
+  "control_allocator_status_unallocated_thrust_0":
+  {"non_finite_steps": 5,
+   "min_finite": -277064400000000000000000000000000000000,
+   "max_finite": 270190500000000000000000000000000000000},
+  "control_allocator_status_torque_setpoint_achieved": {"true_steps": 77},
+  "control_allocator_status_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1246138},
+  "control_allocator_status_thrust_setpoint_achieved": {"true_steps": 5},
+  "control_allocator_status_motor_stop_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_handled_motor_failure_mask":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_9":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_8":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_3":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_2":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_15":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_14":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_13":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_12":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_11":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_10":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 2},
+  "control_allocator_status_actuator_saturation_1":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 0},
+  "control_allocator_status_actuator_saturation_0":
+  {"non_finite_steps": 0, "min_finite": -2, "max_finite": 0},
+  "actuator_servos_updated": {"true_steps": 0},
+  "actuator_servos_trim_updated": {"true_steps": 5},
+  "actuator_servos_trim_trim_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_trim_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_trim_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_7":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_6":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_5":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_servos_control_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_updated": {"true_steps": 44},
+  "actuator_motors_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "actuator_motors_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1246138},
+  "actuator_motors_reversible_flags":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_9":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_8":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_7":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_6":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_5":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_4":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_3":
+  {"non_finite_steps": 3, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_2":
+  {"non_finite_steps": 3, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_11":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_10":
+  {"non_finite_steps": 99, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_1":
+  {"non_finite_steps": 3, "min_finite": 0, "max_finite": 0},
+  "actuator_motors_control_0":
+  {"non_finite_steps": 3, "min_finite": 0, "max_finite": 0},
+  "actuator_controls_status_0_updated": {"true_steps": 1},
+  "actuator_controls_status_0_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1134230},
+  "actuator_controls_status_0_control_power_2":
+  {"non_finite_steps": 46, "min_finite": 0, "max_finite": 0},
+  "actuator_controls_status_0_control_power_1":
+  {"non_finite_steps": 46, "min_finite": 0, "max_finite": 0},
+  "actuator_controls_status_0_control_power_0":
+  {"non_finite_steps": 46, "min_finite": 0, "max_finite": 0}},
+ "monitored":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_torque_setpoint_xyz_0) ∧ finite(vehicle_torque_setpoint_xyz_1) ∧ finite(vehicle_torque_setpoint_xyz_2)",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_rate",
+   "contract_hash":
+   "2a829576b3a94226717e5c84ef6e9f3f24e568a1940aefe982bc8924bd6ad0b0",
+   "clause": "torque_finite",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|rate_ctrl_status_rollspeed_integ| ≤ MC_RR_INT_LIM ∧ |rate_ctrl_status_pitchspeed_integ| ≤ MC_PR_INT_LIM ∧ |rate_ctrl_status_yawspeed_integ| ≤ MC_YR_INT_LIM",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "0faf4ade1ac97ed36a612ac732c9e066f736f3927c394927245f51930ce2450b",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case2-step0.json",
+    "case": 2},
+   "smallest_margin": 0,
+   "path": "px4_inner/px4_rate",
+   "contract_hash":
+   "7564499b480c29369cae6460ea8bf01b6d2a568c671975ab318374a5bca926dd",
+   "clause": "integrator_bounded",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_torque_setpoint_timestamp = t_us ∧ vehicle_torque_setpoint_timestamp_sample = vehicle_angular_velocity_timestamp_sample",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_rate",
+   "contract_hash":
+   "5ff124fd944b7f73b244b4f582bd465563f7d83c8e81f388b3cb380ca3330c94",
+   "clause": "torque_stamped",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_angular_velocity_updated",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_rate",
+   "contract_hash":
+   "0d1ddb67f52c626cc8641b12c69087d5c0d116462e03ff6e07c83580189a5e4a",
+   "clause": "torque_answers_gyro",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_rate_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_rate",
+   "contract_hash":
+   "622b31295da50c11787df41681567a6fa3f7ff45051df886232298e6bf24a8c0",
+   "clause": "no_px4_error",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ -1 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ -1 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ -1 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ -1 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ -1 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ -1 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ -1 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ -1 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ -1 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ -1 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ -1 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ -1 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 1,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "fcbc5e3202aee4e22792664efaed33e28931b8c52aed87833f0eb016a33b5319",
+   "clause": "motors_in_documented_range",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬CA_R_REV = 0 ∨ (((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ 0 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ 0 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ 0 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ 0 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ 0 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ 0 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ 0 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ 0 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ 0 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ 0 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ 0 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ 0 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "7ee2c1de1070b2d0763f61cc9e7461e6a2f5a5d937810e9f29b3b33f9b2fe43c",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬actuator_motors_updated ∨ vehicle_torque_setpoint_updated",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "d010e8b4eaf4b51c5e3a90e86547cc98c425085f0f6c8e9f44ee373a40ddd665",
+   "clause": "motors_answer_torque",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ actuator_motors_timestamp = t_us ∧ actuator_motors_timestamp_sample = vehicle_torque_setpoint_timestamp_sample",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "995e3fd41ae4a98b2ed85f4f14c6d5a2a49dd6ce99128dfdfea22f5306067b8d",
+   "clause": "motors_stamped",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_alloc_errors = 0",
+   "smallest_margin": null,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "0b15c847f94250a3389b1ef386abe68cecb5ed996dd5736861b7bb414e15091e",
+   "clause": "no_px4_error",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ actuator_motors_reversible_flags ∧ actuator_motors_reversible_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "41ac886b6d41d4e009fcaf5cb439322881bacfe29824d77fb713a293d5f2fe16",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "ccd2d76f90db703e7010edd403288d15d59ae7ae171d007885a8620d30ef29f2",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "a909a2d479e4fa55850bea4179db66a1d367218c003d88feae3f79e6b6d3fec3",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "03f6b8968eb2731b59a38c6a61d6f2b44dfb1f681b962c948817c3a72e981623",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "b739b2a48e937947d63224695cc0177fdecc77170acb70eabbf6df0c495b3fba",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "e5e7f54d2bdbe6859937d4cd61ea0e101ff67ccc94407d25aaea9239efc51bb5",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "429c4cc3c615c639507e2383547bbf3c0bdc9fafd547dff67a98ae1c713e28ef",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "50b40afcf03603180a6f8c4448a86a144353fcddf770a37123b6dd82de896e38",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "8c3e375cecdeba2e2cdbf4ea885bc430abec2fc8f960b24c4e79c07fe1064c42",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "ed0229efa32c71c5b34c3e891467ccfa5bf70cd8c33e8292675472e872fb50a0",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "9c9ed05db04622ce13161100f61f01bf6a1b09682e8b534562fef64595584171",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "35d962e87627be2da980fafc3c3bfa7db78ca65bd7a93c2fb1e2184f9e4b77a6",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "3ce9b6bbc393edb92117416aa9caff4ea66cd67351194b49f796946c9f8d349b",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "2eb9632d72a51f6303d7f1cd250eebee12baa41f2afcd2f4d7da99812926babb",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "89f8eafd1d7f4271a3e5ea559f0f64d1fbab3cc24f6371100d1eb5f9807a9e65",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "41bcad8c22078083792c5d4262a5f86d3878c5c86c00522177c95dec74f35b00",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "b5e4d06cf08894ed783f9a37db52fec79beb19b5064eb62c597fe2148e320897",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "b068afe69f08dff43f49aaa6142a669c6ac239bbc7c10e05a76334eb352dd2a2",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "px4_inner/px4_alloc",
+   "contract_hash":
+   "9fc8fedc27d5e941884b6b4e4197097ee0d68d81e7b0b1f4d1c792da16addd87",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 500}],
+ "kind": "tested",
+ "id": "20261119T010056Z-seed2",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(vehicle_torque_setpoint_xyz_0) ∧ finite(vehicle_torque_setpoint_xyz_1) ∧ finite(vehicle_torque_setpoint_xyz_2)",
+   "smallest_margin": null,
+   "contract_hash":
+   "ec0cb565743284972f85654df4013299ca164a60e8b2d423bc88817255b91cc2",
+   "clause": "torque_finite",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "|rate_ctrl_status_rollspeed_integ| ≤ MC_RR_INT_LIM ∧ |rate_ctrl_status_pitchspeed_integ| ≤ MC_PR_INT_LIM ∧ |rate_ctrl_status_yawspeed_integ| ≤ MC_YR_INT_LIM",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "0faf4ade1ac97ed36a612ac732c9e066f736f3927c394927245f51930ce2450b",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case2-step0.json",
+    "case": 2},
+   "smallest_margin": 0,
+   "contract_hash":
+   "73962226a3cc336c43a3b5b5841c513dccf4a783e6ab7682dedffd09a0060597",
+   "clause": "integrator_bounded",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_torque_setpoint_timestamp = t_us ∧ vehicle_torque_setpoint_timestamp_sample = vehicle_angular_velocity_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "9dfbface3e1ac4561465352612f804e5b6babd8f53c3c74d9b02a6fcbe53961e",
+   "clause": "torque_stamped",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬vehicle_torque_setpoint_updated ∨ vehicle_angular_velocity_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "acdf520b75ed3b61d6f3182982cfc144d81527e53448569581c9c6730faf3fec",
+   "clause": "torque_answers_gyro",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_rate_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "dbadf63e130945b75ccc6e5e29520a80f9d00c80e70bd842ace33e77e4744637",
+   "clause": "px4_rate_no_px4_error",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ -1 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ -1 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ -1 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ -1 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ -1 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ -1 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ -1 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ -1 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ -1 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ -1 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ -1 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ -1 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 1,
+   "contract_hash":
+   "30d307d023c597a0a1f1dcfb5bf4d1abc85d5fcbc89b2c65713bb3789125fd42",
+   "clause": "motors_in_documented_range",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬CA_R_REV = 0 ∨ (((((((((((¬actuator_motors_control_0 = actuator_motors_control_0 ∨ 0 ≤ actuator_motors_control_0 ∧ actuator_motors_control_0 ≤ 1) ∧ (¬actuator_motors_control_1 = actuator_motors_control_1 ∨ 0 ≤ actuator_motors_control_1 ∧ actuator_motors_control_1 ≤ 1)) ∧ (¬actuator_motors_control_2 = actuator_motors_control_2 ∨ 0 ≤ actuator_motors_control_2 ∧ actuator_motors_control_2 ≤ 1)) ∧ (¬actuator_motors_control_3 = actuator_motors_control_3 ∨ 0 ≤ actuator_motors_control_3 ∧ actuator_motors_control_3 ≤ 1)) ∧ (¬actuator_motors_control_4 = actuator_motors_control_4 ∨ 0 ≤ actuator_motors_control_4 ∧ actuator_motors_control_4 ≤ 1)) ∧ (¬actuator_motors_control_5 = actuator_motors_control_5 ∨ 0 ≤ actuator_motors_control_5 ∧ actuator_motors_control_5 ≤ 1)) ∧ (¬actuator_motors_control_6 = actuator_motors_control_6 ∨ 0 ≤ actuator_motors_control_6 ∧ actuator_motors_control_6 ≤ 1)) ∧ (¬actuator_motors_control_7 = actuator_motors_control_7 ∨ 0 ≤ actuator_motors_control_7 ∧ actuator_motors_control_7 ≤ 1)) ∧ (¬actuator_motors_control_8 = actuator_motors_control_8 ∨ 0 ≤ actuator_motors_control_8 ∧ actuator_motors_control_8 ≤ 1)) ∧ (¬actuator_motors_control_9 = actuator_motors_control_9 ∨ 0 ≤ actuator_motors_control_9 ∧ actuator_motors_control_9 ≤ 1)) ∧ (¬actuator_motors_control_10 = actuator_motors_control_10 ∨ 0 ≤ actuator_motors_control_10 ∧ actuator_motors_control_10 ≤ 1)) ∧ (¬actuator_motors_control_11 = actuator_motors_control_11 ∨ 0 ≤ actuator_motors_control_11 ∧ actuator_motors_control_11 ≤ 1)",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "5e4fb2bcff65aa9c32c6e1bed7b1c63e66b6e2c73f137749fe7af2a240955951",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "¬actuator_motors_updated ∨ vehicle_torque_setpoint_updated",
+   "smallest_margin": null,
+   "contract_hash":
+   "083d93c569873283f01a5d897095bb4e2b34636d3d41f24820938f7acf57e31b",
+   "clause": "motors_answer_torque",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬actuator_motors_updated ∨ actuator_motors_timestamp = t_us ∧ actuator_motors_timestamp_sample = vehicle_torque_setpoint_timestamp_sample",
+   "smallest_margin": null,
+   "contract_hash":
+   "159b09ddfdb06b9d6a26bbc4fc37894914b542d124cbd6cd7e01e2e1c4cfa751",
+   "clause": "motors_stamped",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "px4_alloc_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "bf77ee7527e317dfbceea8c65d4bb36afe509b995d541c81015d147d84db40bb",
+   "clause": "px4_alloc_no_px4_error",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ actuator_motors_reversible_flags ∧ actuator_motors_reversible_flags ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "d89b34039d5977161d8de6de4f4136eef64aaf33a6c519b9f2ad270d026c425e",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_0 ∧ control_allocator_status_actuator_saturation_0 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "contract_hash":
+   "b3005bc7cfedeb87b77fac199015552f9c45283375666120ad3669a77e1e1e30",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_1 ∧ control_allocator_status_actuator_saturation_1 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "contract_hash":
+   "e7b1b20294734f1030fa5007d592dda395947987a8e4810e30dca166ef4b0d5d",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_2 ∧ control_allocator_status_actuator_saturation_2 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "contract_hash":
+   "3a69c7420c5ec1bba011ea3144d9f6f5d64ea8069f4d6d6344b83554a53d1d9f",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_3 ∧ control_allocator_status_actuator_saturation_3 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 126,
+   "contract_hash":
+   "d9f6d7873bfd86bac87699b748aaaea4134add6e141ff25792edb67e0790a7d0",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_4 ∧ control_allocator_status_actuator_saturation_4 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "e75a95b957039a2556e56964ab9078bbecf82b3d96983c3c0353eab402f86122",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_5 ∧ control_allocator_status_actuator_saturation_5 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0696bfe0b9389bc2b8f33fedc54dac7b7ce855333cb5936b5fb4a32e2eecbda7",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_6 ∧ control_allocator_status_actuator_saturation_6 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "07aedb75df0c424444fa617bd51ced4a595f1ac51f429a05ee5f2ad04cce065b",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_7 ∧ control_allocator_status_actuator_saturation_7 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "21475b9c6aa46fd070e29af28208c7b75e4593ea13ce1335230ef330234c604f",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_8 ∧ control_allocator_status_actuator_saturation_8 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "8265785346b7c2e5fe708d567bef131b1fe75f56b068160c73e3b1d0d8583b8a",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_9 ∧ control_allocator_status_actuator_saturation_9 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "b6e72a03fc610100a71f785cc0cf9ca0a8b4bc7cf2d50bac661eaf774e338e25",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_10 ∧ control_allocator_status_actuator_saturation_10 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "0388c4205c687d556e3a6d87b7c3b3fa059db8af1f9db133f4f3e9b600d0520c",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_11 ∧ control_allocator_status_actuator_saturation_11 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "4ab11456d4cc9953c4b75f238c4182e05ab955eabff65cfae750d7386fad9d4e",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_12 ∧ control_allocator_status_actuator_saturation_12 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "7c51899752f24e90d70d560739ced9e6317e3186f7bf07ffff38633a05f1b366",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_13 ∧ control_allocator_status_actuator_saturation_13 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "220f7fcc41c0366ec7c08a514dff7f3260d92eca0f6025e051e7209cf7dd0213",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_14 ∧ control_allocator_status_actuator_saturation_14 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "cf11a8c15140cfb8131e21baf809dc19cac5f2c79b4963fd243d37354f5c2010",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "-128 ≤ control_allocator_status_actuator_saturation_15 ∧ control_allocator_status_actuator_saturation_15 ≤ 127",
+   "smallest_margin_case":
+   {"step": 1,
+    "sha256":
+    "fde969994ead038534da6df2673ada96a42f583e59f38cfc06205fdac1507bc1",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case1-step1.json",
+    "case": 1},
+   "smallest_margin": 125,
+   "contract_hash":
+   "2607a5a69f4e8460fd131efb9a2688c0f2f949f5d4599d50bb8d512df896c6e5",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_handled_motor_failure_mask ∧ control_allocator_status_handled_motor_failure_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "38d40620854c0da0c5592e35e646e32d0970b2a72fe90ce7511dc6d258b2ca12",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 500},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "0 ≤ control_allocator_status_motor_stop_mask ∧ control_allocator_status_motor_stop_mask ≤ 65535",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "09007e94b428b263dc7ef995daa3bce9f43baaa371dc026ff0b710d05b9e8b0d",
+    "file":
+    "px4/harnesses/px4_inner/evidence/tested/20261119T010056Z-seed2/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "143b4f0b079a57ef6f203866de75384c18c8a7759cbac1ffe1531e7535caf5a5",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 500}],
+ "formal_link":
+ "not built: no Lean proof yet that the children's contracts, as wired, imply this system's contract",
+ "coverage":
+ {"torque_published":
+  {"true_steps": 44, "text": "vehicle_torque_setpoint_updated = true"},
+  "torque_not_achieved":
+  {"true_steps": 5,
+   "text":
+   "control_allocator_status_updated ∧ ¬control_allocator_status_torque_setpoint_achieved"},
+  "torque_beyond_unit":
+  {"true_steps": 5, "text": "1 < |vehicle_torque_setpoint_xyz_0|"},
+  "motors_published":
+  {"true_steps": 44, "text": "actuator_motors_updated = true"},
+  "integrator_nonzero":
+  {"true_steps": 0, "text": "¬rate_ctrl_status_rollspeed_integ = 0"},
+  "four_motors_finite":
+  {"true_steps": 497,
+   "text":
+   "finite(actuator_motors_control_0) ∧ finite(actuator_motors_control_1) ∧ finite(actuator_motors_control_2) ∧ finite(actuator_motors_control_3)"},
+  "a_motor_saturated":
+  {"true_steps": 0,
+   "text":
+   "actuator_motors_control_0 = 1 ∨ actuator_motors_control_1 = 1 ∨ actuator_motors_control_2 = 1 ∨ actuator_motors_control_3 = 1"}},
+ "command":
+ "harness test px4_inner --seed 2 --cases 5 --steps 100 --regime x500_flight",
+ "code_hash":
+ "c69d8f58b6291802df6884938001f644cd0e5047bd5aca8c44bc37495e963c17",
+ "children":
+ [{"path": "px4_inner/px4_rate",
+   "node": "px4_rate",
+   "kind": "module",
+   "code_hash":
+   "b302aab3f97dc757ff4569e27d4800ef88b7fb2c7110d6bb7c79375f37b3f6dd"},
+  {"path": "px4_inner/px4_alloc",
+   "node": "px4_alloc",
+   "kind": "module",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046"}],
+ "cases_skipped": 0,
+ "cases": 5,
+ "assumptions":
+ [{"verdict": "passed",
+   "steps": 500,
+   "path": "px4_inner/px4_rate",
+   "failing_clauses": {},
+   "contract_hash":
+   "ec4e9fa0843d6300502ae40b87412527ae509c1ddaa73b824bddbae6cfcfc611",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 500,
+   "assumption_held": 500},
+  {"verdict": "passed",
+   "steps": 500,
+   "path": "px4_inner/px4_alloc",
+   "failing_clauses": {},
+   "contract_hash":
+   "712cce40f04d4fc13f71d52a44cc6c1f85eb5c3541ad329d7a48dcb9810d90a3",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 500,
+   "assumption_held": 500}],
+ "assume":
+ ["width_vehicle_control_mode_source_id: 0 ≤ vehicle_control_mode_source_id ∧ vehicle_control_mode_source_id ≤ 255",
+  "width_vehicle_status_arming_state: 0 ≤ vehicle_status_arming_state ∧ vehicle_status_arming_state ≤ 255",
+  "width_vehicle_status_latest_arming_reason: 0 ≤ vehicle_status_latest_arming_reason ∧ vehicle_status_latest_arming_reason ≤ 255",
+  "width_vehicle_status_latest_disarming_reason: 0 ≤ vehicle_status_latest_disarming_reason ∧ vehicle_status_latest_disarming_reason ≤ 255",
+  "width_vehicle_status_nav_state_user_intention: 0 ≤ vehicle_status_nav_state_user_intention ∧ vehicle_status_nav_state_user_intention ≤ 255",
+  "width_vehicle_status_nav_state: 0 ≤ vehicle_status_nav_state ∧ vehicle_status_nav_state ≤ 255",
+  "width_vehicle_status_executor_in_charge: 0 ≤ vehicle_status_executor_in_charge ∧ vehicle_status_executor_in_charge ≤ 255",
+  "width_vehicle_status_failure_detector_status: 0 ≤ vehicle_status_failure_detector_status ∧ vehicle_status_failure_detector_status ≤ 65535",
+  "width_vehicle_status_hil_state: 0 ≤ vehicle_status_hil_state ∧ vehicle_status_hil_state ≤ 255",
+  "width_vehicle_status_vehicle_type: 0 ≤ vehicle_status_vehicle_type ∧ vehicle_status_vehicle_type ≤ 255",
+  "width_vehicle_status_failsafe_defer_state: 0 ≤ vehicle_status_failsafe_defer_state ∧ vehicle_status_failsafe_defer_state ≤ 255",
+  "width_vehicle_status_gcs_connection_lost_counter: 0 ≤ vehicle_status_gcs_connection_lost_counter ∧ vehicle_status_gcs_connection_lost_counter ≤ 255",
+  "width_vehicle_status_system_type: 0 ≤ vehicle_status_system_type ∧ vehicle_status_system_type ≤ 255",
+  "width_vehicle_status_system_id: 0 ≤ vehicle_status_system_id ∧ vehicle_status_system_id ≤ 255",
+  "width_vehicle_status_component_id: 0 ≤ vehicle_status_component_id ∧ vehicle_status_component_id ≤ 255",
+  "width_manual_control_setpoint_data_source: 0 ≤ manual_control_setpoint_data_source ∧ manual_control_setpoint_data_source ≤ 255",
+  "width_manual_control_setpoint_buttons: 0 ≤ manual_control_setpoint_buttons ∧ manual_control_setpoint_buttons ≤ 65535",
+  "width_battery_status_cell_count: 0 ≤ battery_status_cell_count ∧ battery_status_cell_count ≤ 255",
+  "width_battery_status_source: 0 ≤ battery_status_source ∧ battery_status_source ≤ 255",
+  "width_battery_status_priority: 0 ≤ battery_status_priority ∧ battery_status_priority ≤ 255",
+  "width_battery_status_capacity: 0 ≤ battery_status_capacity ∧ battery_status_capacity ≤ 65535",
+  "width_battery_status_cycle_count: 0 ≤ battery_status_cycle_count ∧ battery_status_cycle_count ≤ 65535",
+  "width_battery_status_average_time_to_empty: 0 ≤ battery_status_average_time_to_empty ∧ battery_status_average_time_to_empty ≤ 65535",
+  "width_battery_status_manufacture_date: 0 ≤ battery_status_manufacture_date ∧ battery_status_manufacture_date ≤ 65535",
+  "width_battery_status_state_of_health: 0 ≤ battery_status_state_of_health ∧ battery_status_state_of_health ≤ 65535",
+  "width_battery_status_max_error: 0 ≤ battery_status_max_error ∧ battery_status_max_error ≤ 65535",
+  "width_battery_status_id: 0 ≤ battery_status_id ∧ battery_status_id ≤ 255",
+  "width_battery_status_interface_error: 0 ≤ battery_status_interface_error ∧ battery_status_interface_error ≤ 65535",
+  "width_battery_status_warning: 0 ≤ battery_status_warning ∧ battery_status_warning ≤ 255",
+  "width_battery_status_faults: 0 ≤ battery_status_faults ∧ battery_status_faults ≤ 65535",
+  "width_battery_status_over_discharge_count: 0 ≤ battery_status_over_discharge_count ∧ battery_status_over_discharge_count ≤ 65535",
+  "range_MC_ACRO_EXPO: 0 ≤ MC_ACRO_EXPO ∧ MC_ACRO_EXPO ≤ 1",
+  "range_MC_ACRO_EXPO_Y: 0 ≤ MC_ACRO_EXPO_Y ∧ MC_ACRO_EXPO_Y ≤ 1",
+  "range_MC_ACRO_P_MAX: 0 ≤ MC_ACRO_P_MAX ∧ MC_ACRO_P_MAX ≤ 1800",
+  "range_MC_ACRO_R_MAX: 0 ≤ MC_ACRO_R_MAX ∧ MC_ACRO_R_MAX ≤ 1800",
+  "range_MC_ACRO_SUPEXPO: 0 ≤ MC_ACRO_SUPEXPO ∧ MC_ACRO_SUPEXPO ≤ 0.95",
+  "range_MC_ACRO_SUPEXPOY: 0 ≤ MC_ACRO_SUPEXPOY ∧ MC_ACRO_SUPEXPOY ≤ 0.95",
+  "range_MC_ACRO_Y_MAX: 0 ≤ MC_ACRO_Y_MAX ∧ MC_ACRO_Y_MAX ≤ 1800",
+  "range_MC_BAT_SCALE_EN: MC_BAT_SCALE_EN = 0 ∨ MC_BAT_SCALE_EN = 1",
+  "range_MC_PITCHRATE_D: 0 ≤ MC_PITCHRATE_D",
+  "range_MC_PITCHRATE_FF: 0 ≤ MC_PITCHRATE_FF",
+  "range_MC_PITCHRATE_I: 0 ≤ MC_PITCHRATE_I",
+  "range_MC_PITCHRATE_K: 0.01 ≤ MC_PITCHRATE_K ∧ MC_PITCHRATE_K ≤ 5",
+  "range_MC_PITCHRATE_P: 0.01 ≤ MC_PITCHRATE_P ∧ MC_PITCHRATE_P ≤ 0.6",
+  "range_MC_PR_INT_LIM: 0 ≤ MC_PR_INT_LIM",
+  "range_MC_ROLLRATE_D: 0 ≤ MC_ROLLRATE_D ∧ MC_ROLLRATE_D ≤ 0.01",
+  "range_MC_ROLLRATE_FF: 0 ≤ MC_ROLLRATE_FF",
+  "range_MC_ROLLRATE_I: 0 ≤ MC_ROLLRATE_I",
+  "range_MC_ROLLRATE_K: 0.01 ≤ MC_ROLLRATE_K ∧ MC_ROLLRATE_K ≤ 5",
+  "range_MC_ROLLRATE_P: 0.01 ≤ MC_ROLLRATE_P ∧ MC_ROLLRATE_P ≤ 0.5",
+  "range_MC_RR_INT_LIM: 0 ≤ MC_RR_INT_LIM",
+  "range_MC_YAWRATE_D: 0 ≤ MC_YAWRATE_D",
+  "range_MC_YAWRATE_FF: 0 ≤ MC_YAWRATE_FF",
+  "range_MC_YAWRATE_I: 0 ≤ MC_YAWRATE_I",
+  "range_MC_YAWRATE_K: 0.01 ≤ MC_YAWRATE_K ∧ MC_YAWRATE_K ≤ 5",
+  "range_MC_YAWRATE_P: 0 ≤ MC_YAWRATE_P ∧ MC_YAWRATE_P ≤ 0.6",
+  "range_MC_YAW_TQ_CUTOFF: 0 ≤ MC_YAW_TQ_CUTOFF ∧ MC_YAW_TQ_CUTOFF ≤ 10",
+  "range_MC_YR_INT_LIM: 0 ≤ MC_YR_INT_LIM",
+  "battery_scale_finite: ¬battery_status_updated ∨ finite(battery_status_scale)",
+  "width_failure_detector_status_motor_failure_mask: 0 ≤ failure_detector_status_motor_failure_mask ∧ failure_detector_status_motor_failure_mask ≤ 65535",
+  "width_failure_detector_status_motor_stop_mask: 0 ≤ failure_detector_status_motor_stop_mask ∧ failure_detector_status_motor_stop_mask ≤ 65535",
+  "range_CA_AIRFRAME: CA_AIRFRAME = 0 ∨ CA_AIRFRAME = 1 ∨ CA_AIRFRAME = 2 ∨ CA_AIRFRAME = 3 ∨ CA_AIRFRAME = 4 ∨ CA_AIRFRAME = 5 ∨ CA_AIRFRAME = 6 ∨ CA_AIRFRAME = 7 ∨ CA_AIRFRAME = 8 ∨ CA_AIRFRAME = 9 ∨ CA_AIRFRAME = 10 ∨ CA_AIRFRAME = 11 ∨ CA_AIRFRAME = 12 ∨ CA_AIRFRAME = 13 ∨ CA_AIRFRAME = 14 ∨ CA_AIRFRAME = 15",
+  "range_CA_FAILURE_MODE: CA_FAILURE_MODE = 0 ∨ CA_FAILURE_MODE = 1",
+  "range_CA_HELI_PITCH_C0: -1 ≤ CA_HELI_PITCH_C0 ∧ CA_HELI_PITCH_C0 ≤ 1",
+  "range_CA_HELI_PITCH_C1: -1 ≤ CA_HELI_PITCH_C1 ∧ CA_HELI_PITCH_C1 ≤ 1",
+  "range_CA_HELI_PITCH_C2: -1 ≤ CA_HELI_PITCH_C2 ∧ CA_HELI_PITCH_C2 ≤ 1",
+  "range_CA_HELI_PITCH_C3: -1 ≤ CA_HELI_PITCH_C3 ∧ CA_HELI_PITCH_C3 ≤ 1",
+  "range_CA_HELI_PITCH_C4: -1 ≤ CA_HELI_PITCH_C4 ∧ CA_HELI_PITCH_C4 ≤ 1",
+  "range_CA_HELI_RPM_I: 0 ≤ CA_HELI_RPM_I ∧ CA_HELI_RPM_I ≤ 10",
+  "range_CA_HELI_RPM_P: 0 ≤ CA_HELI_RPM_P ∧ CA_HELI_RPM_P ≤ 10",
+  "range_CA_HELI_RPM_SP: 100 ≤ CA_HELI_RPM_SP ∧ CA_HELI_RPM_SP ≤ 10000",
+  "range_CA_HELI_THR_C0: 0 ≤ CA_HELI_THR_C0 ∧ CA_HELI_THR_C0 ≤ 1",
+  "range_CA_HELI_THR_C1: 0 ≤ CA_HELI_THR_C1 ∧ CA_HELI_THR_C1 ≤ 1",
+  "range_CA_HELI_THR_C2: 0 ≤ CA_HELI_THR_C2 ∧ CA_HELI_THR_C2 ≤ 1",
+  "range_CA_HELI_THR_C3: 0 ≤ CA_HELI_THR_C3 ∧ CA_HELI_THR_C3 ≤ 1",
+  "range_CA_HELI_THR_C4: 0 ≤ CA_HELI_THR_C4 ∧ CA_HELI_THR_C4 ≤ 1",
+  "range_CA_HELI_YAW_CCW: CA_HELI_YAW_CCW = 0 ∨ CA_HELI_YAW_CCW = 1",
+  "range_CA_HELI_YAW_CP_O: -2 ≤ CA_HELI_YAW_CP_O ∧ CA_HELI_YAW_CP_O ≤ 2",
+  "range_CA_HELI_YAW_CP_S: -2 ≤ CA_HELI_YAW_CP_S ∧ CA_HELI_YAW_CP_S ≤ 2",
+  "range_CA_HELI_YAW_TH_S: -2 ≤ CA_HELI_YAW_TH_S ∧ CA_HELI_YAW_TH_S ≤ 2",
+  "range_CA_MAX_SVO_THROW: 0 ≤ CA_MAX_SVO_THROW ∧ CA_MAX_SVO_THROW ≤ 75",
+  "range_CA_METHOD: CA_METHOD = 0 ∨ CA_METHOD = 1 ∨ CA_METHOD = 2",
+  "range_CA_R0_SLEW: 0 ≤ CA_R0_SLEW ∧ CA_R0_SLEW ≤ 10",
+  "range_CA_R10_SLEW: 0 ≤ CA_R10_SLEW ∧ CA_R10_SLEW ≤ 10",
+  "range_CA_R11_SLEW: 0 ≤ CA_R11_SLEW ∧ CA_R11_SLEW ≤ 10",
+  "range_CA_R1_SLEW: 0 ≤ CA_R1_SLEW ∧ CA_R1_SLEW ≤ 10",
+  "range_CA_R2_SLEW: 0 ≤ CA_R2_SLEW ∧ CA_R2_SLEW ≤ 10",
+  "range_CA_R3_SLEW: 0 ≤ CA_R3_SLEW ∧ CA_R3_SLEW ≤ 10",
+  "range_CA_R4_SLEW: 0 ≤ CA_R4_SLEW ∧ CA_R4_SLEW ≤ 10",
+  "range_CA_R5_SLEW: 0 ≤ CA_R5_SLEW ∧ CA_R5_SLEW ≤ 10",
+  "range_CA_R6_SLEW: 0 ≤ CA_R6_SLEW ∧ CA_R6_SLEW ≤ 10",
+  "range_CA_R7_SLEW: 0 ≤ CA_R7_SLEW ∧ CA_R7_SLEW ≤ 10",
+  "range_CA_R8_SLEW: 0 ≤ CA_R8_SLEW ∧ CA_R8_SLEW ≤ 10",
+  "range_CA_R9_SLEW: 0 ≤ CA_R9_SLEW ∧ CA_R9_SLEW ≤ 10",
+  "range_CA_ROTOR0_AX: -100 ≤ CA_ROTOR0_AX ∧ CA_ROTOR0_AX ≤ 100",
+  "range_CA_ROTOR0_AY: -100 ≤ CA_ROTOR0_AY ∧ CA_ROTOR0_AY ≤ 100",
+  "range_CA_ROTOR0_AZ: -100 ≤ CA_ROTOR0_AZ ∧ CA_ROTOR0_AZ ≤ 100",
+  "range_CA_ROTOR0_CT: 0 ≤ CA_ROTOR0_CT ∧ CA_ROTOR0_CT ≤ 100",
+  "range_CA_ROTOR0_KM: -1 ≤ CA_ROTOR0_KM ∧ CA_ROTOR0_KM ≤ 1",
+  "range_CA_ROTOR0_PX: -100 ≤ CA_ROTOR0_PX ∧ CA_ROTOR0_PX ≤ 100",
+  "range_CA_ROTOR0_PY: -100 ≤ CA_ROTOR0_PY ∧ CA_ROTOR0_PY ≤ 100",
+  "range_CA_ROTOR0_PZ: -100 ≤ CA_ROTOR0_PZ ∧ CA_ROTOR0_PZ ≤ 100",
+  "range_CA_ROTOR0_TILT: CA_ROTOR0_TILT = 0 ∨ CA_ROTOR0_TILT = 1 ∨ CA_ROTOR0_TILT = 2 ∨ CA_ROTOR0_TILT = 3 ∨ CA_ROTOR0_TILT = 4",
+  "range_CA_ROTOR10_AX: -100 ≤ CA_ROTOR10_AX ∧ CA_ROTOR10_AX ≤ 100",
+  "range_CA_ROTOR10_AY: -100 ≤ CA_ROTOR10_AY ∧ CA_ROTOR10_AY ≤ 100",
+  "range_CA_ROTOR10_AZ: -100 ≤ CA_ROTOR10_AZ ∧ CA_ROTOR10_AZ ≤ 100",
+  "range_CA_ROTOR10_CT: 0 ≤ CA_ROTOR10_CT ∧ CA_ROTOR10_CT ≤ 100",
+  "range_CA_ROTOR10_KM: -1 ≤ CA_ROTOR10_KM ∧ CA_ROTOR10_KM ≤ 1",
+  "range_CA_ROTOR10_PX: -100 ≤ CA_ROTOR10_PX ∧ CA_ROTOR10_PX ≤ 100",
+  "range_CA_ROTOR10_PY: -100 ≤ CA_ROTOR10_PY ∧ CA_ROTOR10_PY ≤ 100",
+  "range_CA_ROTOR10_PZ: -100 ≤ CA_ROTOR10_PZ ∧ CA_ROTOR10_PZ ≤ 100",
+  "range_CA_ROTOR10_TILT: CA_ROTOR10_TILT = 0 ∨ CA_ROTOR10_TILT = 1 ∨ CA_ROTOR10_TILT = 2 ∨ CA_ROTOR10_TILT = 3 ∨ CA_ROTOR10_TILT = 4",
+  "range_CA_ROTOR11_AX: -100 ≤ CA_ROTOR11_AX ∧ CA_ROTOR11_AX ≤ 100",
+  "range_CA_ROTOR11_AY: -100 ≤ CA_ROTOR11_AY ∧ CA_ROTOR11_AY ≤ 100",
+  "range_CA_ROTOR11_AZ: -100 ≤ CA_ROTOR11_AZ ∧ CA_ROTOR11_AZ ≤ 100",
+  "range_CA_ROTOR11_CT: 0 ≤ CA_ROTOR11_CT ∧ CA_ROTOR11_CT ≤ 100",
+  "range_CA_ROTOR11_KM: -1 ≤ CA_ROTOR11_KM ∧ CA_ROTOR11_KM ≤ 1",
+  "range_CA_ROTOR11_PX: -100 ≤ CA_ROTOR11_PX ∧ CA_ROTOR11_PX ≤ 100",
+  "range_CA_ROTOR11_PY: -100 ≤ CA_ROTOR11_PY ∧ CA_ROTOR11_PY ≤ 100",
+  "range_CA_ROTOR11_PZ: -100 ≤ CA_ROTOR11_PZ ∧ CA_ROTOR11_PZ ≤ 100",
+  "range_CA_ROTOR11_TILT: CA_ROTOR11_TILT = 0 ∨ CA_ROTOR11_TILT = 1 ∨ CA_ROTOR11_TILT = 2 ∨ CA_ROTOR11_TILT = 3 ∨ CA_ROTOR11_TILT = 4",
+  "range_CA_ROTOR1_AX: -100 ≤ CA_ROTOR1_AX ∧ CA_ROTOR1_AX ≤ 100",
+  "range_CA_ROTOR1_AY: -100 ≤ CA_ROTOR1_AY ∧ CA_ROTOR1_AY ≤ 100",
+  "range_CA_ROTOR1_AZ: -100 ≤ CA_ROTOR1_AZ ∧ CA_ROTOR1_AZ ≤ 100",
+  "range_CA_ROTOR1_CT: 0 ≤ CA_ROTOR1_CT ∧ CA_ROTOR1_CT ≤ 100",
+  "range_CA_ROTOR1_KM: -1 ≤ CA_ROTOR1_KM ∧ CA_ROTOR1_KM ≤ 1",
+  "range_CA_ROTOR1_PX: -100 ≤ CA_ROTOR1_PX ∧ CA_ROTOR1_PX ≤ 100",
+  "range_CA_ROTOR1_PY: -100 ≤ CA_ROTOR1_PY ∧ CA_ROTOR1_PY ≤ 100",
+  "range_CA_ROTOR1_PZ: -100 ≤ CA_ROTOR1_PZ ∧ CA_ROTOR1_PZ ≤ 100",
+  "range_CA_ROTOR1_TILT: CA_ROTOR1_TILT = 0 ∨ CA_ROTOR1_TILT = 1 ∨ CA_ROTOR1_TILT = 2 ∨ CA_ROTOR1_TILT = 3 ∨ CA_ROTOR1_TILT = 4",
+  "range_CA_ROTOR2_AX: -100 ≤ CA_ROTOR2_AX ∧ CA_ROTOR2_AX ≤ 100",
+  "range_CA_ROTOR2_AY: -100 ≤ CA_ROTOR2_AY ∧ CA_ROTOR2_AY ≤ 100",
+  "range_CA_ROTOR2_AZ: -100 ≤ CA_ROTOR2_AZ ∧ CA_ROTOR2_AZ ≤ 100",
+  "range_CA_ROTOR2_CT: 0 ≤ CA_ROTOR2_CT ∧ CA_ROTOR2_CT ≤ 100",
+  "range_CA_ROTOR2_KM: -1 ≤ CA_ROTOR2_KM ∧ CA_ROTOR2_KM ≤ 1",
+  "range_CA_ROTOR2_PX: -100 ≤ CA_ROTOR2_PX ∧ CA_ROTOR2_PX ≤ 100",
+  "range_CA_ROTOR2_PY: -100 ≤ CA_ROTOR2_PY ∧ CA_ROTOR2_PY ≤ 100",
+  "range_CA_ROTOR2_PZ: -100 ≤ CA_ROTOR2_PZ ∧ CA_ROTOR2_PZ ≤ 100",
+  "range_CA_ROTOR2_TILT: CA_ROTOR2_TILT = 0 ∨ CA_ROTOR2_TILT = 1 ∨ CA_ROTOR2_TILT = 2 ∨ CA_ROTOR2_TILT = 3 ∨ CA_ROTOR2_TILT = 4",
+  "range_CA_ROTOR3_AX: -100 ≤ CA_ROTOR3_AX ∧ CA_ROTOR3_AX ≤ 100",
+  "range_CA_ROTOR3_AY: -100 ≤ CA_ROTOR3_AY ∧ CA_ROTOR3_AY ≤ 100",
+  "range_CA_ROTOR3_AZ: -100 ≤ CA_ROTOR3_AZ ∧ CA_ROTOR3_AZ ≤ 100",
+  "range_CA_ROTOR3_CT: 0 ≤ CA_ROTOR3_CT ∧ CA_ROTOR3_CT ≤ 100",
+  "range_CA_ROTOR3_KM: -1 ≤ CA_ROTOR3_KM ∧ CA_ROTOR3_KM ≤ 1",
+  "range_CA_ROTOR3_PX: -100 ≤ CA_ROTOR3_PX ∧ CA_ROTOR3_PX ≤ 100",
+  "range_CA_ROTOR3_PY: -100 ≤ CA_ROTOR3_PY ∧ CA_ROTOR3_PY ≤ 100",
+  "range_CA_ROTOR3_PZ: -100 ≤ CA_ROTOR3_PZ ∧ CA_ROTOR3_PZ ≤ 100",
+  "range_CA_ROTOR3_TILT: CA_ROTOR3_TILT = 0 ∨ CA_ROTOR3_TILT = 1 ∨ CA_ROTOR3_TILT = 2 ∨ CA_ROTOR3_TILT = 3 ∨ CA_ROTOR3_TILT = 4",
+  "range_CA_ROTOR4_AX: -100 ≤ CA_ROTOR4_AX ∧ CA_ROTOR4_AX ≤ 100",
+  "range_CA_ROTOR4_AY: -100 ≤ CA_ROTOR4_AY ∧ CA_ROTOR4_AY ≤ 100",
+  "range_CA_ROTOR4_AZ: -100 ≤ CA_ROTOR4_AZ ∧ CA_ROTOR4_AZ ≤ 100",
+  "range_CA_ROTOR4_CT: 0 ≤ CA_ROTOR4_CT ∧ CA_ROTOR4_CT ≤ 100",
+  "range_CA_ROTOR4_KM: -1 ≤ CA_ROTOR4_KM ∧ CA_ROTOR4_KM ≤ 1",
+  "range_CA_ROTOR4_PX: -100 ≤ CA_ROTOR4_PX ∧ CA_ROTOR4_PX ≤ 100",
+  "range_CA_ROTOR4_PY: -100 ≤ CA_ROTOR4_PY ∧ CA_ROTOR4_PY ≤ 100",
+  "range_CA_ROTOR4_PZ: -100 ≤ CA_ROTOR4_PZ ∧ CA_ROTOR4_PZ ≤ 100",
+  "range_CA_ROTOR4_TILT: CA_ROTOR4_TILT = 0 ∨ CA_ROTOR4_TILT = 1 ∨ CA_ROTOR4_TILT = 2 ∨ CA_ROTOR4_TILT = 3 ∨ CA_ROTOR4_TILT = 4",
+  "range_CA_ROTOR5_AX: -100 ≤ CA_ROTOR5_AX ∧ CA_ROTOR5_AX ≤ 100",
+  "range_CA_ROTOR5_AY: -100 ≤ CA_ROTOR5_AY ∧ CA_ROTOR5_AY ≤ 100",
+  "range_CA_ROTOR5_AZ: -100 ≤ CA_ROTOR5_AZ ∧ CA_ROTOR5_AZ ≤ 100",
+  "range_CA_ROTOR5_CT: 0 ≤ CA_ROTOR5_CT ∧ CA_ROTOR5_CT ≤ 100",
+  "range_CA_ROTOR5_KM: -1 ≤ CA_ROTOR5_KM ∧ CA_ROTOR5_KM ≤ 1",
+  "range_CA_ROTOR5_PX: -100 ≤ CA_ROTOR5_PX ∧ CA_ROTOR5_PX ≤ 100",
+  "range_CA_ROTOR5_PY: -100 ≤ CA_ROTOR5_PY ∧ CA_ROTOR5_PY ≤ 100",
+  "range_CA_ROTOR5_PZ: -100 ≤ CA_ROTOR5_PZ ∧ CA_ROTOR5_PZ ≤ 100",
+  "range_CA_ROTOR5_TILT: CA_ROTOR5_TILT = 0 ∨ CA_ROTOR5_TILT = 1 ∨ CA_ROTOR5_TILT = 2 ∨ CA_ROTOR5_TILT = 3 ∨ CA_ROTOR5_TILT = 4",
+  "range_CA_ROTOR6_AX: -100 ≤ CA_ROTOR6_AX ∧ CA_ROTOR6_AX ≤ 100",
+  "range_CA_ROTOR6_AY: -100 ≤ CA_ROTOR6_AY ∧ CA_ROTOR6_AY ≤ 100",
+  "range_CA_ROTOR6_AZ: -100 ≤ CA_ROTOR6_AZ ∧ CA_ROTOR6_AZ ≤ 100",
+  "range_CA_ROTOR6_CT: 0 ≤ CA_ROTOR6_CT ∧ CA_ROTOR6_CT ≤ 100",
+  "range_CA_ROTOR6_KM: -1 ≤ CA_ROTOR6_KM ∧ CA_ROTOR6_KM ≤ 1",
+  "range_CA_ROTOR6_PX: -100 ≤ CA_ROTOR6_PX ∧ CA_ROTOR6_PX ≤ 100",
+  "range_CA_ROTOR6_PY: -100 ≤ CA_ROTOR6_PY ∧ CA_ROTOR6_PY ≤ 100",
+  "range_CA_ROTOR6_PZ: -100 ≤ CA_ROTOR6_PZ ∧ CA_ROTOR6_PZ ≤ 100",
+  "range_CA_ROTOR6_TILT: CA_ROTOR6_TILT = 0 ∨ CA_ROTOR6_TILT = 1 ∨ CA_ROTOR6_TILT = 2 ∨ CA_ROTOR6_TILT = 3 ∨ CA_ROTOR6_TILT = 4",
+  "range_CA_ROTOR7_AX: -100 ≤ CA_ROTOR7_AX ∧ CA_ROTOR7_AX ≤ 100",
+  "range_CA_ROTOR7_AY: -100 ≤ CA_ROTOR7_AY ∧ CA_ROTOR7_AY ≤ 100",
+  "range_CA_ROTOR7_AZ: -100 ≤ CA_ROTOR7_AZ ∧ CA_ROTOR7_AZ ≤ 100",
+  "range_CA_ROTOR7_CT: 0 ≤ CA_ROTOR7_CT ∧ CA_ROTOR7_CT ≤ 100",
+  "range_CA_ROTOR7_KM: -1 ≤ CA_ROTOR7_KM ∧ CA_ROTOR7_KM ≤ 1",
+  "range_CA_ROTOR7_PX: -100 ≤ CA_ROTOR7_PX ∧ CA_ROTOR7_PX ≤ 100",
+  "range_CA_ROTOR7_PY: -100 ≤ CA_ROTOR7_PY ∧ CA_ROTOR7_PY ≤ 100",
+  "range_CA_ROTOR7_PZ: -100 ≤ CA_ROTOR7_PZ ∧ CA_ROTOR7_PZ ≤ 100",
+  "range_CA_ROTOR7_TILT: CA_ROTOR7_TILT = 0 ∨ CA_ROTOR7_TILT = 1 ∨ CA_ROTOR7_TILT = 2 ∨ CA_ROTOR7_TILT = 3 ∨ CA_ROTOR7_TILT = 4",
+  "range_CA_ROTOR8_AX: -100 ≤ CA_ROTOR8_AX ∧ CA_ROTOR8_AX ≤ 100",
+  "range_CA_ROTOR8_AY: -100 ≤ CA_ROTOR8_AY ∧ CA_ROTOR8_AY ≤ 100",
+  "range_CA_ROTOR8_AZ: -100 ≤ CA_ROTOR8_AZ ∧ CA_ROTOR8_AZ ≤ 100",
+  "range_CA_ROTOR8_CT: 0 ≤ CA_ROTOR8_CT ∧ CA_ROTOR8_CT ≤ 100",
+  "range_CA_ROTOR8_KM: -1 ≤ CA_ROTOR8_KM ∧ CA_ROTOR8_KM ≤ 1",
+  "range_CA_ROTOR8_PX: -100 ≤ CA_ROTOR8_PX ∧ CA_ROTOR8_PX ≤ 100",
+  "range_CA_ROTOR8_PY: -100 ≤ CA_ROTOR8_PY ∧ CA_ROTOR8_PY ≤ 100",
+  "range_CA_ROTOR8_PZ: -100 ≤ CA_ROTOR8_PZ ∧ CA_ROTOR8_PZ ≤ 100",
+  "range_CA_ROTOR8_TILT: CA_ROTOR8_TILT = 0 ∨ CA_ROTOR8_TILT = 1 ∨ CA_ROTOR8_TILT = 2 ∨ CA_ROTOR8_TILT = 3 ∨ CA_ROTOR8_TILT = 4",
+  "range_CA_ROTOR9_AX: -100 ≤ CA_ROTOR9_AX ∧ CA_ROTOR9_AX ≤ 100",
+  "range_CA_ROTOR9_AY: -100 ≤ CA_ROTOR9_AY ∧ CA_ROTOR9_AY ≤ 100",
+  "range_CA_ROTOR9_AZ: -100 ≤ CA_ROTOR9_AZ ∧ CA_ROTOR9_AZ ≤ 100",
+  "range_CA_ROTOR9_CT: 0 ≤ CA_ROTOR9_CT ∧ CA_ROTOR9_CT ≤ 100",
+  "range_CA_ROTOR9_KM: -1 ≤ CA_ROTOR9_KM ∧ CA_ROTOR9_KM ≤ 1",
+  "range_CA_ROTOR9_PX: -100 ≤ CA_ROTOR9_PX ∧ CA_ROTOR9_PX ≤ 100",
+  "range_CA_ROTOR9_PY: -100 ≤ CA_ROTOR9_PY ∧ CA_ROTOR9_PY ≤ 100",
+  "range_CA_ROTOR9_PZ: -100 ≤ CA_ROTOR9_PZ ∧ CA_ROTOR9_PZ ≤ 100",
+  "range_CA_ROTOR9_TILT: CA_ROTOR9_TILT = 0 ∨ CA_ROTOR9_TILT = 1 ∨ CA_ROTOR9_TILT = 2 ∨ CA_ROTOR9_TILT = 3 ∨ CA_ROTOR9_TILT = 4",
+  "range_CA_ROTOR_COUNT: CA_ROTOR_COUNT = 0 ∨ CA_ROTOR_COUNT = 1 ∨ CA_ROTOR_COUNT = 2 ∨ CA_ROTOR_COUNT = 3 ∨ CA_ROTOR_COUNT = 4 ∨ CA_ROTOR_COUNT = 5 ∨ CA_ROTOR_COUNT = 6 ∨ CA_ROTOR_COUNT = 7 ∨ CA_ROTOR_COUNT = 8 ∨ CA_ROTOR_COUNT = 9 ∨ CA_ROTOR_COUNT = 10 ∨ CA_ROTOR_COUNT = 11 ∨ CA_ROTOR_COUNT = 12",
+  "range_CA_R_REV: 0 ≤ CA_R_REV ∧ CA_R_REV ≤ 4095",
+  "range_CA_SP0_ANG0: 0 ≤ CA_SP0_ANG0 ∧ CA_SP0_ANG0 ≤ 360",
+  "range_CA_SP0_ANG1: 0 ≤ CA_SP0_ANG1 ∧ CA_SP0_ANG1 ≤ 360",
+  "range_CA_SP0_ANG2: 0 ≤ CA_SP0_ANG2 ∧ CA_SP0_ANG2 ≤ 360",
+  "range_CA_SP0_ANG3: 0 ≤ CA_SP0_ANG3 ∧ CA_SP0_ANG3 ≤ 360",
+  "range_CA_SP0_ARM_L0: 0 ≤ CA_SP0_ARM_L0 ∧ CA_SP0_ARM_L0 ≤ 10",
+  "range_CA_SP0_ARM_L1: 0 ≤ CA_SP0_ARM_L1 ∧ CA_SP0_ARM_L1 ≤ 10",
+  "range_CA_SP0_ARM_L2: 0 ≤ CA_SP0_ARM_L2 ∧ CA_SP0_ARM_L2 ≤ 10",
+  "range_CA_SP0_ARM_L3: 0 ≤ CA_SP0_ARM_L3 ∧ CA_SP0_ARM_L3 ≤ 10",
+  "range_CA_SP0_COUNT: CA_SP0_COUNT = 2 ∨ CA_SP0_COUNT = 3 ∨ CA_SP0_COUNT = 4",
+  "range_CA_SV0_SLEW: 0 ≤ CA_SV0_SLEW ∧ CA_SV0_SLEW ≤ 10",
+  "range_CA_SV1_SLEW: 0 ≤ CA_SV1_SLEW ∧ CA_SV1_SLEW ≤ 10",
+  "range_CA_SV2_SLEW: 0 ≤ CA_SV2_SLEW ∧ CA_SV2_SLEW ≤ 10",
+  "range_CA_SV3_SLEW: 0 ≤ CA_SV3_SLEW ∧ CA_SV3_SLEW ≤ 10",
+  "range_CA_SV4_SLEW: 0 ≤ CA_SV4_SLEW ∧ CA_SV4_SLEW ≤ 10",
+  "range_CA_SV5_SLEW: 0 ≤ CA_SV5_SLEW ∧ CA_SV5_SLEW ≤ 10",
+  "range_CA_SV6_SLEW: 0 ≤ CA_SV6_SLEW ∧ CA_SV6_SLEW ≤ 10",
+  "range_CA_SV7_SLEW: 0 ≤ CA_SV7_SLEW ∧ CA_SV7_SLEW ≤ 10",
+  "range_CA_SV_CS0_FLAP: -1 ≤ CA_SV_CS0_FLAP ∧ CA_SV_CS0_FLAP ≤ 1",
+  "range_CA_SV_CS0_SPOIL: -1 ≤ CA_SV_CS0_SPOIL ∧ CA_SV_CS0_SPOIL ≤ 1",
+  "range_CA_SV_CS0_TRIM: -1 ≤ CA_SV_CS0_TRIM ∧ CA_SV_CS0_TRIM ≤ 1",
+  "range_CA_SV_CS0_TYPE: CA_SV_CS0_TYPE = 0 ∨ CA_SV_CS0_TYPE = 1 ∨ CA_SV_CS0_TYPE = 2 ∨ CA_SV_CS0_TYPE = 3 ∨ CA_SV_CS0_TYPE = 4 ∨ CA_SV_CS0_TYPE = 5 ∨ CA_SV_CS0_TYPE = 6 ∨ CA_SV_CS0_TYPE = 7 ∨ CA_SV_CS0_TYPE = 8 ∨ CA_SV_CS0_TYPE = 9 ∨ CA_SV_CS0_TYPE = 10 ∨ CA_SV_CS0_TYPE = 11 ∨ CA_SV_CS0_TYPE = 12 ∨ CA_SV_CS0_TYPE = 13 ∨ CA_SV_CS0_TYPE = 14 ∨ CA_SV_CS0_TYPE = 15 ∨ CA_SV_CS0_TYPE = 16 ∨ CA_SV_CS0_TYPE = 17 ∨ CA_SV_CS0_TYPE = 18",
+  "range_CA_SV_CS1_FLAP: -1 ≤ CA_SV_CS1_FLAP ∧ CA_SV_CS1_FLAP ≤ 1",
+  "range_CA_SV_CS1_SPOIL: -1 ≤ CA_SV_CS1_SPOIL ∧ CA_SV_CS1_SPOIL ≤ 1",
+  "range_CA_SV_CS1_TRIM: -1 ≤ CA_SV_CS1_TRIM ∧ CA_SV_CS1_TRIM ≤ 1",
+  "range_CA_SV_CS1_TYPE: CA_SV_CS1_TYPE = 0 ∨ CA_SV_CS1_TYPE = 1 ∨ CA_SV_CS1_TYPE = 2 ∨ CA_SV_CS1_TYPE = 3 ∨ CA_SV_CS1_TYPE = 4 ∨ CA_SV_CS1_TYPE = 5 ∨ CA_SV_CS1_TYPE = 6 ∨ CA_SV_CS1_TYPE = 7 ∨ CA_SV_CS1_TYPE = 8 ∨ CA_SV_CS1_TYPE = 9 ∨ CA_SV_CS1_TYPE = 10 ∨ CA_SV_CS1_TYPE = 11 ∨ CA_SV_CS1_TYPE = 12 ∨ CA_SV_CS1_TYPE = 13 ∨ CA_SV_CS1_TYPE = 14 ∨ CA_SV_CS1_TYPE = 15 ∨ CA_SV_CS1_TYPE = 16 ∨ CA_SV_CS1_TYPE = 17 ∨ CA_SV_CS1_TYPE = 18",
+  "range_CA_SV_CS2_FLAP: -1 ≤ CA_SV_CS2_FLAP ∧ CA_SV_CS2_FLAP ≤ 1",
+  "range_CA_SV_CS2_SPOIL: -1 ≤ CA_SV_CS2_SPOIL ∧ CA_SV_CS2_SPOIL ≤ 1",
+  "range_CA_SV_CS2_TRIM: -1 ≤ CA_SV_CS2_TRIM ∧ CA_SV_CS2_TRIM ≤ 1",
+  "range_CA_SV_CS2_TYPE: CA_SV_CS2_TYPE = 0 ∨ CA_SV_CS2_TYPE = 1 ∨ CA_SV_CS2_TYPE = 2 ∨ CA_SV_CS2_TYPE = 3 ∨ CA_SV_CS2_TYPE = 4 ∨ CA_SV_CS2_TYPE = 5 ∨ CA_SV_CS2_TYPE = 6 ∨ CA_SV_CS2_TYPE = 7 ∨ CA_SV_CS2_TYPE = 8 ∨ CA_SV_CS2_TYPE = 9 ∨ CA_SV_CS2_TYPE = 10 ∨ CA_SV_CS2_TYPE = 11 ∨ CA_SV_CS2_TYPE = 12 ∨ CA_SV_CS2_TYPE = 13 ∨ CA_SV_CS2_TYPE = 14 ∨ CA_SV_CS2_TYPE = 15 ∨ CA_SV_CS2_TYPE = 16 ∨ CA_SV_CS2_TYPE = 17 ∨ CA_SV_CS2_TYPE = 18",
+  "range_CA_SV_CS3_FLAP: -1 ≤ CA_SV_CS3_FLAP ∧ CA_SV_CS3_FLAP ≤ 1",
+  "range_CA_SV_CS3_SPOIL: -1 ≤ CA_SV_CS3_SPOIL ∧ CA_SV_CS3_SPOIL ≤ 1",
+  "range_CA_SV_CS3_TRIM: -1 ≤ CA_SV_CS3_TRIM ∧ CA_SV_CS3_TRIM ≤ 1",
+  "range_CA_SV_CS3_TYPE: CA_SV_CS3_TYPE = 0 ∨ CA_SV_CS3_TYPE = 1 ∨ CA_SV_CS3_TYPE = 2 ∨ CA_SV_CS3_TYPE = 3 ∨ CA_SV_CS3_TYPE = 4 ∨ CA_SV_CS3_TYPE = 5 ∨ CA_SV_CS3_TYPE = 6 ∨ CA_SV_CS3_TYPE = 7 ∨ CA_SV_CS3_TYPE = 8 ∨ CA_SV_CS3_TYPE = 9 ∨ CA_SV_CS3_TYPE = 10 ∨ CA_SV_CS3_TYPE = 11 ∨ CA_SV_CS3_TYPE = 12 ∨ CA_SV_CS3_TYPE = 13 ∨ CA_SV_CS3_TYPE = 14 ∨ CA_SV_CS3_TYPE = 15 ∨ CA_SV_CS3_TYPE = 16 ∨ CA_SV_CS3_TYPE = 17 ∨ CA_SV_CS3_TYPE = 18",
+  "range_CA_SV_CS4_FLAP: -1 ≤ CA_SV_CS4_FLAP ∧ CA_SV_CS4_FLAP ≤ 1",
+  "range_CA_SV_CS4_SPOIL: -1 ≤ CA_SV_CS4_SPOIL ∧ CA_SV_CS4_SPOIL ≤ 1",
+  "range_CA_SV_CS4_TRIM: -1 ≤ CA_SV_CS4_TRIM ∧ CA_SV_CS4_TRIM ≤ 1",
+  "range_CA_SV_CS4_TYPE: CA_SV_CS4_TYPE = 0 ∨ CA_SV_CS4_TYPE = 1 ∨ CA_SV_CS4_TYPE = 2 ∨ CA_SV_CS4_TYPE = 3 ∨ CA_SV_CS4_TYPE = 4 ∨ CA_SV_CS4_TYPE = 5 ∨ CA_SV_CS4_TYPE = 6 ∨ CA_SV_CS4_TYPE = 7 ∨ CA_SV_CS4_TYPE = 8 ∨ CA_SV_CS4_TYPE = 9 ∨ CA_SV_CS4_TYPE = 10 ∨ CA_SV_CS4_TYPE = 11 ∨ CA_SV_CS4_TYPE = 12 ∨ CA_SV_CS4_TYPE = 13 ∨ CA_SV_CS4_TYPE = 14 ∨ CA_SV_CS4_TYPE = 15 ∨ CA_SV_CS4_TYPE = 16 ∨ CA_SV_CS4_TYPE = 17 ∨ CA_SV_CS4_TYPE = 18",
+  "range_CA_SV_CS5_FLAP: -1 ≤ CA_SV_CS5_FLAP ∧ CA_SV_CS5_FLAP ≤ 1",
+  "range_CA_SV_CS5_SPOIL: -1 ≤ CA_SV_CS5_SPOIL ∧ CA_SV_CS5_SPOIL ≤ 1",
+  "range_CA_SV_CS5_TRIM: -1 ≤ CA_SV_CS5_TRIM ∧ CA_SV_CS5_TRIM ≤ 1",
+  "range_CA_SV_CS5_TYPE: CA_SV_CS5_TYPE = 0 ∨ CA_SV_CS5_TYPE = 1 ∨ CA_SV_CS5_TYPE = 2 ∨ CA_SV_CS5_TYPE = 3 ∨ CA_SV_CS5_TYPE = 4 ∨ CA_SV_CS5_TYPE = 5 ∨ CA_SV_CS5_TYPE = 6 ∨ CA_SV_CS5_TYPE = 7 ∨ CA_SV_CS5_TYPE = 8 ∨ CA_SV_CS5_TYPE = 9 ∨ CA_SV_CS5_TYPE = 10 ∨ CA_SV_CS5_TYPE = 11 ∨ CA_SV_CS5_TYPE = 12 ∨ CA_SV_CS5_TYPE = 13 ∨ CA_SV_CS5_TYPE = 14 ∨ CA_SV_CS5_TYPE = 15 ∨ CA_SV_CS5_TYPE = 16 ∨ CA_SV_CS5_TYPE = 17 ∨ CA_SV_CS5_TYPE = 18",
+  "range_CA_SV_CS6_FLAP: -1 ≤ CA_SV_CS6_FLAP ∧ CA_SV_CS6_FLAP ≤ 1",
+  "range_CA_SV_CS6_SPOIL: -1 ≤ CA_SV_CS6_SPOIL ∧ CA_SV_CS6_SPOIL ≤ 1",
+  "range_CA_SV_CS6_TRIM: -1 ≤ CA_SV_CS6_TRIM ∧ CA_SV_CS6_TRIM ≤ 1",
+  "range_CA_SV_CS6_TYPE: CA_SV_CS6_TYPE = 0 ∨ CA_SV_CS6_TYPE = 1 ∨ CA_SV_CS6_TYPE = 2 ∨ CA_SV_CS6_TYPE = 3 ∨ CA_SV_CS6_TYPE = 4 ∨ CA_SV_CS6_TYPE = 5 ∨ CA_SV_CS6_TYPE = 6 ∨ CA_SV_CS6_TYPE = 7 ∨ CA_SV_CS6_TYPE = 8 ∨ CA_SV_CS6_TYPE = 9 ∨ CA_SV_CS6_TYPE = 10 ∨ CA_SV_CS6_TYPE = 11 ∨ CA_SV_CS6_TYPE = 12 ∨ CA_SV_CS6_TYPE = 13 ∨ CA_SV_CS6_TYPE = 14 ∨ CA_SV_CS6_TYPE = 15 ∨ CA_SV_CS6_TYPE = 16 ∨ CA_SV_CS6_TYPE = 17 ∨ CA_SV_CS6_TYPE = 18",
+  "range_CA_SV_CS7_FLAP: -1 ≤ CA_SV_CS7_FLAP ∧ CA_SV_CS7_FLAP ≤ 1",
+  "range_CA_SV_CS7_SPOIL: -1 ≤ CA_SV_CS7_SPOIL ∧ CA_SV_CS7_SPOIL ≤ 1",
+  "range_CA_SV_CS7_TRIM: -1 ≤ CA_SV_CS7_TRIM ∧ CA_SV_CS7_TRIM ≤ 1",
+  "range_CA_SV_CS7_TYPE: CA_SV_CS7_TYPE = 0 ∨ CA_SV_CS7_TYPE = 1 ∨ CA_SV_CS7_TYPE = 2 ∨ CA_SV_CS7_TYPE = 3 ∨ CA_SV_CS7_TYPE = 4 ∨ CA_SV_CS7_TYPE = 5 ∨ CA_SV_CS7_TYPE = 6 ∨ CA_SV_CS7_TYPE = 7 ∨ CA_SV_CS7_TYPE = 8 ∨ CA_SV_CS7_TYPE = 9 ∨ CA_SV_CS7_TYPE = 10 ∨ CA_SV_CS7_TYPE = 11 ∨ CA_SV_CS7_TYPE = 12 ∨ CA_SV_CS7_TYPE = 13 ∨ CA_SV_CS7_TYPE = 14 ∨ CA_SV_CS7_TYPE = 15 ∨ CA_SV_CS7_TYPE = 16 ∨ CA_SV_CS7_TYPE = 17 ∨ CA_SV_CS7_TYPE = 18",
+  "range_CA_SV_CS_COUNT: CA_SV_CS_COUNT = 0 ∨ CA_SV_CS_COUNT = 1 ∨ CA_SV_CS_COUNT = 2 ∨ CA_SV_CS_COUNT = 3 ∨ CA_SV_CS_COUNT = 4 ∨ CA_SV_CS_COUNT = 5 ∨ CA_SV_CS_COUNT = 6 ∨ CA_SV_CS_COUNT = 7 ∨ CA_SV_CS_COUNT = 8",
+  "range_CA_SV_TL0_CT: CA_SV_TL0_CT = 0 ∨ CA_SV_TL0_CT = 1 ∨ CA_SV_TL0_CT = 2 ∨ CA_SV_TL0_CT = 3",
+  "range_CA_SV_TL0_MAXA: -90 ≤ CA_SV_TL0_MAXA ∧ CA_SV_TL0_MAXA ≤ 90",
+  "range_CA_SV_TL0_MINA: -90 ≤ CA_SV_TL0_MINA ∧ CA_SV_TL0_MINA ≤ 90",
+  "range_CA_SV_TL0_TD: 0 ≤ CA_SV_TL0_TD ∧ CA_SV_TL0_TD ≤ 359",
+  "range_CA_SV_TL1_CT: CA_SV_TL1_CT = 0 ∨ CA_SV_TL1_CT = 1 ∨ CA_SV_TL1_CT = 2 ∨ CA_SV_TL1_CT = 3",
+  "range_CA_SV_TL1_MAXA: -90 ≤ CA_SV_TL1_MAXA ∧ CA_SV_TL1_MAXA ≤ 90",
+  "range_CA_SV_TL1_MINA: -90 ≤ CA_SV_TL1_MINA ∧ CA_SV_TL1_MINA ≤ 90",
+  "range_CA_SV_TL1_TD: 0 ≤ CA_SV_TL1_TD ∧ CA_SV_TL1_TD ≤ 359",
+  "range_CA_SV_TL2_CT: CA_SV_TL2_CT = 0 ∨ CA_SV_TL2_CT = 1 ∨ CA_SV_TL2_CT = 2 ∨ CA_SV_TL2_CT = 3",
+  "range_CA_SV_TL2_MAXA: -90 ≤ CA_SV_TL2_MAXA ∧ CA_SV_TL2_MAXA ≤ 90",
+  "range_CA_SV_TL2_MINA: -90 ≤ CA_SV_TL2_MINA ∧ CA_SV_TL2_MINA ≤ 90",
+  "range_CA_SV_TL2_TD: 0 ≤ CA_SV_TL2_TD ∧ CA_SV_TL2_TD ≤ 359",
+  "range_CA_SV_TL3_CT: CA_SV_TL3_CT = 0 ∨ CA_SV_TL3_CT = 1 ∨ CA_SV_TL3_CT = 2 ∨ CA_SV_TL3_CT = 3",
+  "range_CA_SV_TL3_MAXA: -90 ≤ CA_SV_TL3_MAXA ∧ CA_SV_TL3_MAXA ≤ 90",
+  "range_CA_SV_TL3_MINA: -90 ≤ CA_SV_TL3_MINA ∧ CA_SV_TL3_MINA ≤ 90",
+  "range_CA_SV_TL3_TD: 0 ≤ CA_SV_TL3_TD ∧ CA_SV_TL3_TD ≤ 359",
+  "range_CA_SV_TL_COUNT: CA_SV_TL_COUNT = 0 ∨ CA_SV_TL_COUNT = 1 ∨ CA_SV_TL_COUNT = 2 ∨ CA_SV_TL_COUNT = 3 ∨ CA_SV_TL_COUNT = 4",
+  "range_COM_SPOOLUP_TIME: 0 ≤ COM_SPOOLUP_TIME ∧ COM_SPOOLUP_TIME ≤ 30",
+  "range_MC_AIRMODE: MC_AIRMODE = 0 ∨ MC_AIRMODE = 1 ∨ MC_AIRMODE = 2",
+  "airframe_allocated_here: ¬CA_AIRFRAME = 6 ∧ ¬CA_AIRFRAME = 15",
+  "actuators_fit: CA_ROTOR_COUNT + CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 16 ∧ CA_SV_CS_COUNT + CA_SV_TL_COUNT ≤ 8"]}

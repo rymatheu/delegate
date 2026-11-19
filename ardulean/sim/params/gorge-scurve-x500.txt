@@ -1,0 +1,12 @@
+# The S-curve flight of the X500 in the gorge (sim/README.md, "Scripted flights"): sent with PARAM_SET
+# after the parameter download (sim/fly_gorge.py --params) on top of the X500 image (sim/storage/storage-x500.bin,
+# sim/params/storage-x500.txt), with the route flown as straight NAV_WAYPOINT legs (--straight-north 26.34,47.3,72.0:
+# three legs of 26.6, 21.7 and 24.8 m, turns of 23 and 20 deg, between points of the gorge's centerline). Same plant, same world.
+# Mechanism (ArduPilot 802db19de1, libraries/AP_Math/SCurve.cpp, AC_WPNav.cpp): each straight leg is a jerk- and
+# snap-limited S-curve to WP_SPD with acceleration feedforward; at a fast waypoint the next leg's acceleration is started
+# while this leg decelerates (advance_target_along_track), so the speed through a corner of angle t is about
+# WP_SPD cos(t/2) and the cornering acceleration about 2 WP_ACC sin(t/2), whatever the speed. A leg must be long enough
+# to reach WP_SPD (about WP_SPD^2 / WP_ACC + WP_SPD WP_ACC / WP_JERK); the 21.7 m middle leg sets the reachable speed.
+WP_SPD 9       # m/s (image 2; default 10): the middle leg reaches about 8.5 m/s, the last about 9.1 before braking for the land item
+WP_ACC 5       # m/s^2 (default 2.5; @Range 0.5 5, the largest): start and stop at about 27 deg tilt; corners 2 x 5 x sin(t/2), about 2 m/s^2 here
+WP_JERK 8      # m/s^3 (default 1; @Range 1 20): the S-curves' jerk (roll and pitch rate limits unset); 1 would make every acceleration phase 5 s long, 20 (or 10 on four legs) swings the pitch

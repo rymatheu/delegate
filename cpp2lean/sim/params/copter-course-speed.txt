@@ -1,0 +1,6 @@
+# Path speed and acceleration for the figure-eight course of copter-cf2x.txt: 1 m/s, 1.5 m/s^2
+# with the ArduPilot names, for a second flight of the course; pass it after copter-cf2x.txt:
+#   run_copter.py --params params/copter-cf2x.txt --params params/copter-course-speed.txt
+# Everything else (gains, WP_RADIUS_M, jerk, corner acceleration) stays at the ArduPilot default.
+WP_SPD 1
+WP_ACC 1.5

@@ -1,0 +1,14 @@
+# Compile flags of the loiter module, added to the shared ones in ardupilot/build.sh.
+# AC_Loiter and AC_AttitudeControl use APM_BUILD_TYPE(...) (Copter's loiter defaults,
+# AC_Loiter.cpp:8-16; Copter's INPUT_TC default and lean limits, AC_AttitudeControl.cpp:9-19),
+# which needs the vehicle the library is built for; waf defines it per vehicle
+# (Tools/ardupilotwaf/ardupilotwaf.py).
+-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter
+# The SITL board's configure step defines AP_SIM_ENABLED (Tools/ardupilotwaf/boards.py, class sitl);
+# AP_AHRS.h uses it in an expression, so it must be defined (as for the other stages).
+-DAP_SIM_ENABLED=1
+# Fence and obstacle avoidance are switched off as in the supervisor's build
+# (ardupilot/modules/supervisor/probe/features.txt: AP_AVOIDANCE_ENABLED=0): the vehicle code this
+# stage serves has no AC_Avoid object, so calc_desired_velocity's avoidance block
+# (AC_Loiter.cpp:379-390) is compiled out, as it is in that vehicle.
+-DAP_AVOIDANCE_ENABLED=0

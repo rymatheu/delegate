@@ -1,0 +1,829 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "system": "inner_loop",
+ "steps_run": 20000,
+ "steps_per_case": 500,
+ "seed": 1,
+ "seconds": 3.267267,
+ "regime_text":
+ "roll_stock: roll_kp = 0.135 ∧ roll_ki = 0.135 ∧ roll_kd = 0.0036 ∧ roll_kimax = 0.5 ∧ roll_kpdmax = 0 ∧ roll_filt_T_hz = 20 ∧ roll_filt_E_hz = 0 ∧ roll_filt_D_hz = 20 ∧ roll_slew_max = 0; pitch_stock: pitch_kp = 0.135 ∧ pitch_ki = 0.135 ∧ pitch_kd = 0.0036 ∧ pitch_kimax = 0.5 ∧ pitch_kpdmax = 0 ∧ pitch_filt_T_hz = 20 ∧ pitch_filt_E_hz = 0 ∧ pitch_filt_D_hz = 20 ∧ pitch_slew_max = 0; yaw_stock: yaw_kp = 0.18 ∧ yaw_ki = 0.018 ∧ yaw_kd = 0 ∧ yaw_kimax = 0.5 ∧ yaw_kpdmax = 0 ∧ yaw_filt_T_hz = 20 ∧ yaw_filt_E_hz = 2.5 ∧ yaw_filt_D_hz = 20 ∧ yaw_slew_max = 0; stock_rates: |target_x| ≤ 3 ∧ |target_y| ≤ 3 ∧ |target_z| ≤ 3 ∧ |gyro_x| ≤ 3 ∧ |gyro_y| ≤ 3 ∧ |gyro_z| ≤ 3; stock_dt: 0.0024 ≤ dt ∧ dt ≤ 0.0026; stock_scales: pd_scale_x = 1 ∧ pd_scale_y = 1 ∧ pd_scale_z = 1 ∧ i_scale_x = 1 ∧ i_scale_y = 1 ∧ i_scale_z = 1; stock_spin: spin_min = 0.15 ∧ spin_max = 0.95 ∧ spin_arm = 0.1; stock_thrust: thst_expo = 0.65 ∧ thst_hover = 0.35 ∧ yaw_headroom = 200; stock_pwm: pwm_min = 1000 ∧ pwm_max = 2000; stock_battery: bat_volt_max = 0 ∧ bat_volt_min = 0 ∧ bat_curr_max = 0 ∧ bat_curr_tc = 5; stock_spool: spool_time = 0.5 ∧ spool_tim_dn = 0 ∧ slew_up_time = 0 ∧ slew_dn_time = 0; stock_safety: safe_disarm = false ∧ safe_time = 1 ∧ idle_sec = 0; stock_hover_learn: hover_learn = 2; stock_throttle: 0.25 ≤ throttle ∧ throttle ≤ 0.5 ∧ 0.35 ≤ throttle_avg_max ∧ throttle_avg_max ≤ 1 ∧ throttle_filter_hz = 2; stock_battery_readings: 22 ≤ batt_voltage ∧ batt_voltage ≤ 25.2 ∧ 22 ≤ batt_resting_voltage ∧ batt_resting_voltage ≤ 25.2 ∧ 5 ≤ batt_current ∧ batt_current ≤ 40 ∧ batt_current_ok ∧ 0.01 ≤ batt_resistance ∧ batt_resistance ≤ 0.05; stock_air: 0.9 ≤ air_density_ratio ∧ air_density_ratio ≤ 1.1; armed_interlock: armed ∧ interlock; spool_unlimited_desired: spool_desired = 2; spoolup_unblocked: clear_spoolup_block = true; now_us starts at 1000000 and increases by 2400 to 2600 at every step; now_ms starts at 1000 and increases by 2 to 3 at every step",
+ "regime": "stock_flight",
+ "outputs_seen":
+ {"yaw_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "yaw":
+  {"non_finite_steps": 0, "min_finite": -0.976895, "max_finite": 1.009257},
+  "spool_state": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "roll_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "roll":
+  {"non_finite_steps": 0, "min_finite": -2.206383, "max_finite": 2.246148},
+  "pwm_4": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_3": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_2": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pwm_1": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 1950},
+  "pitch_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "pitch":
+  {"non_finite_steps": 0, "min_finite": -2.228754, "max_finite": 2.473979},
+  "mixer_internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "limit_yaw": {"true_steps": 18215},
+  "limit_throttle_upper": {"true_steps": 17372},
+  "limit_throttle_lower": {"true_steps": 16151},
+  "limit_roll": {"true_steps": 17980},
+  "limit_pitch": {"true_steps": 17980},
+  "actuator_4":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_3":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999},
+  "actuator_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.9499999}},
+ "monitored":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|roll_integrator| ≤ roll_kimax",
+   "smallest_margin_case":
+   {"step": 499,
+    "sha256":
+    "d3fa16cac06f3e58aa459d26c2547325238dabdc40cf98954a960defaf133a43",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case39-step499.json",
+    "case": 39},
+   "smallest_margin": 0.3772959,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "0d4673a050a8227cb5517664d78118d5274c2b240b42048503806a3ebfe3fae2",
+   "clause": "roll_integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(roll)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "7d65c88cb1609f863a9f9c5aa1f925718689065e01bc7ded40082e4abf3f8b29",
+   "clause": "roll_command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "roll_internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "07f5609c2c68630f53743205d0633340df3bd2f01373c9a08e7d70d87128b8ce",
+   "clause": "roll_no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|pitch_integrator| ≤ pitch_kimax",
+   "smallest_margin_case":
+   {"step": 492,
+    "sha256":
+    "fd32134319fca7d86abd7f233c96abf5c11d3019fa6bb4390978bb2cd05be826",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case18-step492.json",
+    "case": 18},
+   "smallest_margin": 0.3906462,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "ac1c338fadef6b087de4494c5a5625e171676443537201fcb5a8868d7edd25e7",
+   "clause": "pitch_integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(pitch)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "a8c49f83f9b31b01eb1d8947fc67dea6b3c838dd5ec73b25a145b2664f0b317e",
+   "clause": "pitch_command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pitch_internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "c4b6c3c0d31ccb4c2b33b637224fb21cfd7405eb52fb6a0c4ff152470c22475b",
+   "clause": "pitch_no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|yaw_integrator| ≤ yaw_kimax",
+   "smallest_margin_case":
+   {"step": 497,
+    "sha256":
+    "8079439762612122ecbffb0c2ded2bcdcd1c1d8312b42bfdc2c79f8e15f375f7",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case14-step497.json",
+    "case": 14},
+   "smallest_margin": 0.490649,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "6144ad05a28ac912db5a10db09c78095d2a384d790a7d111f4f2459ff250578e",
+   "clause": "yaw_integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(yaw)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "95414a172bd4b78169cf20d87f688d8511a777e182e225c89de6534daa72a47a",
+   "clause": "yaw_command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "yaw_internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "5fba6efc868a19162c44f8df1aa9700473027330b9c1fbf7406974480aa7641c",
+   "clause": "yaw_no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "roll = roll_p_term + roll_d_term + roll_integrator",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "b98cf5c7ad9c88b89c716dca83d3a060513aed0f1787ddff48eb728e1f299881",
+   "clause": "roll_command_sum",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "roll_kpdmax < 1.1920929e-7 ∨ |roll_p_term + roll_d_term| ≤ roll_kpdmax * 1.0000005 + (|roll_p_term| + |roll_d_term|) * 1.8e-7",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.0000001192093,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "01fcea400f18c449db6eae7edcfac66b194db74246eb96bead73a556b7f787a6",
+   "clause": "roll_pd_limited",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|roll| ≤ 3.5e15 + roll_kimax",
+   "smallest_margin_case":
+   {"step": 26,
+    "sha256":
+    "27ffea9d26881cfba8963ce2fa2510df551ca9fa1915038b12f17f3382b6fab2",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step26.json",
+    "case": 0},
+   "smallest_margin": 3500000000000000,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "042b818b943db4879d0e7ab971430b9f3646acd7f8f8e0eeb70d08e9917ebc0d",
+   "clause": "roll_command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pitch = pitch_p_term + pitch_d_term + pitch_integrator",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "d179986bc41f919775eb18c8a9fb841ec475ef72f49e28a850b5b45f15be0698",
+   "clause": "pitch_command_sum",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "pitch_kpdmax < 1.1920929e-7 ∨ |pitch_p_term + pitch_d_term| ≤ pitch_kpdmax * 1.0000005 + (|pitch_p_term| + |pitch_d_term|) * 1.8e-7",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.0000001192093,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "d2f352f7b7c4cc53a8427852d00cd4671d5a65704393a0eb1470a5321ddaf005",
+   "clause": "pitch_pd_limited",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|pitch| ≤ 3.5e15 + pitch_kimax",
+   "smallest_margin_case":
+   {"step": 89,
+    "sha256":
+    "93e8e6118e06ba33ffa927125e88a7f17cf372177580edbd6f20e01b972e4623",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case1-step89.json",
+    "case": 1},
+   "smallest_margin": 3500000000000000,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "df0db881d3bd046ddb644225eacb5f0e40d6df6284acec934bac25e191b92335",
+   "clause": "pitch_command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "yaw = yaw_p_term + yaw_d_term + yaw_integrator",
+   "smallest_margin": null,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "c9dcbdf4f82146cdfb089cd276340e24bf615e35533f0aa103f83d6ab81da78c",
+   "clause": "yaw_command_sum",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "yaw_kpdmax < 1.1920929e-7 ∨ |yaw_p_term + yaw_d_term| ≤ yaw_kpdmax * 1.0000005 + (|yaw_p_term| + |yaw_d_term|) * 1.8e-7",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.0000001192093,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "3b138a10442376d6e343b8711c43a55c421e9e472d306c98f7d60d6bad425ad3",
+   "clause": "yaw_pd_limited",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|yaw| ≤ 3.5e15 + yaw_kimax",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "84d94ef0302fb98d9efca8712cfc80105ae37b13811efedeb010e29642e05bc3",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case6-step0.json",
+    "case": 6},
+   "smallest_margin": 3500000000000000,
+   "path": "inner_loop/rate",
+   "contract_hash":
+   "71f5407f06809609df922fd1132a35ed58c5693f138e512992841d1fc9f3192e",
+   "clause": "yaw_command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|integrator| ≤ kimax",
+   "smallest_margin_case":
+   {"step": 499,
+    "sha256":
+    "d3fa16cac06f3e58aa459d26c2547325238dabdc40cf98954a960defaf133a43",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case39-step499.json",
+    "case": 39},
+   "smallest_margin": 0.3772959,
+   "path": "inner_loop/rate/roll",
+   "contract_hash":
+   "e0676cc79dc389a06b9b37a84f2a81b610379696a1e4c36d5f0ae50429344db7",
+   "clause": "integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(command)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/roll",
+   "contract_hash":
+   "0661cf208b86997bc459c85eddd22c2bda546d4d4976cd699450eda3087fda57",
+   "clause": "command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/roll",
+   "contract_hash":
+   "8974872760a1d1e19799f0a07438906c9063d6bef465a718f42175206b3ef768",
+   "clause": "no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|command| ≤ 7e15 + kimax",
+   "smallest_margin_case":
+   {"step": 13,
+    "sha256":
+    "6fd295c070034f14168dcc6704c10c9c4a020e4e6f4629f344b1f00a62ea2772",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step13.json",
+    "case": 0},
+   "smallest_margin": 7000000000000000,
+   "path": "inner_loop/rate/roll",
+   "contract_hash":
+   "2e744ac06a01c0b61e50002ca2eea1805493ab92957f541ed4e5f2cb25d4cfba",
+   "clause": "command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|integrator| ≤ kimax",
+   "smallest_margin_case":
+   {"step": 492,
+    "sha256":
+    "fd32134319fca7d86abd7f233c96abf5c11d3019fa6bb4390978bb2cd05be826",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case18-step492.json",
+    "case": 18},
+   "smallest_margin": 0.3906462,
+   "path": "inner_loop/rate/pitch",
+   "contract_hash":
+   "e0676cc79dc389a06b9b37a84f2a81b610379696a1e4c36d5f0ae50429344db7",
+   "clause": "integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(command)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/pitch",
+   "contract_hash":
+   "0661cf208b86997bc459c85eddd22c2bda546d4d4976cd699450eda3087fda57",
+   "clause": "command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/pitch",
+   "contract_hash":
+   "8974872760a1d1e19799f0a07438906c9063d6bef465a718f42175206b3ef768",
+   "clause": "no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|command| ≤ 7e15 + kimax",
+   "smallest_margin_case":
+   {"step": 6,
+    "sha256":
+    "7a4c4fea188bde592672159a905e6f80d7e67fe19600846b9073570ed2fe6f40",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step6.json",
+    "case": 0},
+   "smallest_margin": 7000000000000000,
+   "path": "inner_loop/rate/pitch",
+   "contract_hash":
+   "2e744ac06a01c0b61e50002ca2eea1805493ab92957f541ed4e5f2cb25d4cfba",
+   "clause": "command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|integrator| ≤ kimax",
+   "smallest_margin_case":
+   {"step": 497,
+    "sha256":
+    "8079439762612122ecbffb0c2ded2bcdcd1c1d8312b42bfdc2c79f8e15f375f7",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case14-step497.json",
+    "case": 14},
+   "smallest_margin": 0.490649,
+   "path": "inner_loop/rate/yaw",
+   "contract_hash":
+   "e0676cc79dc389a06b9b37a84f2a81b610379696a1e4c36d5f0ae50429344db7",
+   "clause": "integrator_bounded",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "finite(command)",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/yaw",
+   "contract_hash":
+   "0661cf208b86997bc459c85eddd22c2bda546d4d4976cd699450eda3087fda57",
+   "clause": "command_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/rate/yaw",
+   "contract_hash":
+   "8974872760a1d1e19799f0a07438906c9063d6bef465a718f42175206b3ef768",
+   "clause": "no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "|command| ≤ 7e15 + kimax",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 7000000000000000,
+   "path": "inner_loop/rate/yaw",
+   "contract_hash":
+   "2e744ac06a01c0b61e50002ca2eea1805493ab92957f541ed4e5f2cb25d4cfba",
+   "clause": "command_magnitude",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(0 ≤ actuator_1 ∧ actuator_1 ≤ 1) ∧ (0 ≤ actuator_2 ∧ actuator_2 ≤ 1) ∧ (0 ≤ actuator_3 ∧ actuator_3 ≤ 1) ∧ 0 ≤ actuator_4 ∧ actuator_4 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "41bb52ffb8ee371b0467e99871b66f485972f3a77ac372f74114e990afa70d2a",
+   "clause": "actuators_in_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(pwm_min ≤ pwm_1 ∧ pwm_1 ≤ pwm_max) ∧ (pwm_min ≤ pwm_2 ∧ pwm_2 ≤ pwm_max) ∧ (pwm_min ≤ pwm_3 ∧ pwm_3 ≤ pwm_max) ∧ pwm_min ≤ pwm_4 ∧ pwm_4 ≤ pwm_max ∨ safe_disarm ∧ ¬armed ∧ pwm_1 = 0 ∧ pwm_2 = 0 ∧ pwm_3 = 0 ∧ pwm_4 = 0",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "64a842cef5238fd543bc319d1d5e773f166e239a30c4786ad1ec7c728787230a",
+   "clause": "pwm_in_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "pwm_writes = 4",
+   "smallest_margin": null,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "6ae22f0de4339dcf9bb12dd973633e0fb5b3ba3fdb9f5b814f63f063f7badfdf",
+   "clause": "every_motor_written",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(-1e-6 ≤ thrust_1 ∧ thrust_1 ≤ 1 + 1e-6) ∧ (-1e-6 ≤ thrust_2 ∧ thrust_2 ≤ 1 + 1e-6) ∧ (-1e-6 ≤ thrust_3 ∧ thrust_3 ≤ 1 + 1e-6) ∧ -1e-6 ≤ thrust_4 ∧ thrust_4 ≤ 1 + 1e-6",
+   "smallest_margin_case":
+   {"step": 406,
+    "sha256":
+    "136a0708670f8882e54b1579f7464a88e723d08b74af926b32e07edd6515a152",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case1-step406.json",
+    "case": 1},
+   "smallest_margin": 0.000000834465,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "32a918ecb00d4a8b0b6d9e0ab64f8d24f8b8a84919a4e26c1d62609039ebe2b3",
+   "clause": "thrusts_in_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "finite(throttle_out) ∧ 0 ≤ throttle_out ∧ finite(throttle_slew_rate) ∧ 0 ≤ throttle_slew_rate ∧ 0 ≤ throttle_thrust_max ∧ throttle_thrust_max ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "f9116dc238d6ddbe1172e2e894f8bdaed1a3f45c015a6f788d33194bdaf7916f",
+   "clause": "signals_finite",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "armed ∧ interlock ∨ spool_state = 0 ∧ actuator_1 = 0 ∧ actuator_2 = 0 ∧ actuator_3 = 0 ∧ actuator_4 = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "95251888105386838fa768b1c9bcbdbcb29f59572fcced0e18cb5449812dbfe0",
+   "clause": "stopped_unless_armed",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_roll ∨ |0.5 * (thrust_2 + thrust_3 - thrust_1 - thrust_4) - (roll + roll_ff) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 371,
+    "sha256":
+    "101abb7fd0bfc55273b39fdd4310b31ac40a8da83bfc70870682ea749f654cb9",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case14-step371.json",
+    "case": 14},
+   "smallest_margin": 0.00000988079,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "7d274ed23c395453e64999cb146e1c28f4f2baeaf5d88e8056286351c54db998",
+   "clause": "roll_realized",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_pitch ∨ |0.5 * (thrust_1 + thrust_3 - thrust_2 - thrust_4) - (pitch + pitch_ff) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 472,
+    "sha256":
+    "e06363f2b5eed818dfc86075d8afa0525cff84141e35ea6cd0543cba24c05053",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case11-step472.json",
+    "case": 11},
+   "smallest_margin": 0.000009910593,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "59f439c0bdaad15af11eb1db2cd6d4759f3e793e9edca59c8508cb18aa0c1e82",
+   "clause": "pitch_realized",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_yaw ∨ |0.5 * (thrust_1 + thrust_2 - thrust_3 - thrust_4) - (yaw + yaw_ff) * compensation_gain| ≤ 0.00001",
+   "smallest_margin_case":
+   {"step": 379,
+    "sha256":
+    "eb6c97414709864105efb101793642f29dd82faa5cce3a45d8eff0f5cfbf1591",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case33-step379.json",
+    "case": 33},
+   "smallest_margin": 0.000009914318,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "1af61fe93ebdeeb3edce6c72bef6356bdcda56ca2492affaa8bfd69d8e546741",
+   "clause": "yaw_realized",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "limit_throttle_upper ∨ throttle_filtered * compensation_gain - 0.00001 ≤ 0.25 * (thrust_1 + thrust_2 + thrust_3 + thrust_4)",
+   "smallest_margin_case":
+   {"step": 402,
+    "sha256":
+    "c9b0a75c63e18cb65e6799642d40b77c4eb9949b60cca706464242818dd85ea5",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case21-step402.json",
+    "case": 21},
+   "smallest_margin": 0.000009953976,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "980f085058ff578a50cc7fa20371a27787b0e59f9f98c6399de360ff637d84c9",
+   "clause": "collective_not_below_demand",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "internal_errors = 0",
+   "smallest_margin": null,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "5f3a9fb88e8f275c5836d1a7f27a5eb63f85dd464ed3464c55911f7079c93fbd",
+   "clause": "no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0 ≤ throttle_filtered ∧ throttle_filtered ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0.007319086,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "4a430a0e4bf24f1076fc7dcd6a9d0568d5c5168001aea18792589a930174c895",
+   "clause": "throttle_filtered_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "0.125 ≤ throttle_hover ∧ throttle_hover ≤ 0.6875",
+   "smallest_margin_case":
+   {"step": 25,
+    "sha256":
+    "ea20341ea5d39d61b105d00bb16d1343d8a7ccf2fd955f1c656bdd9a3c0fa062",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case31-step25.json",
+    "case": 31},
+   "smallest_margin": 0.1610838,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "2dc3f2a9618ef0b490f2d9fcc83985a8e0735e82122a811ad06774f92185646f",
+   "clause": "throttle_hover_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "spool_state ≤ 4",
+   "smallest_margin_case":
+   {"step": 314,
+    "sha256":
+    "9bf5036b07fc449516699c2952ef7cea8947270dbec75fbe25ac1504b84d3522",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case1-step314.json",
+    "case": 1},
+   "smallest_margin": 1,
+   "path": "inner_loop/mixer",
+   "contract_hash":
+   "112b1b8f2a682a88af3e66aeb5abfc519c0e4e6a29c21b13a8ce88a97a0e6d99",
+   "clause": "spool_state_enum",
+   "checked": 20000}],
+ "kind": "tested",
+ "id": "20261119T164333Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(0 ≤ actuator_1 ∧ actuator_1 ≤ 1) ∧ (0 ≤ actuator_2 ∧ actuator_2 ≤ 1) ∧ (0 ≤ actuator_3 ∧ actuator_3 ≤ 1) ∧ 0 ≤ actuator_4 ∧ actuator_4 ≤ 1",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "a4c7addf2aca1daef4ad64a68fc5cdc7caf3453a1f882d93aae51ac0fef520f3",
+   "clause": "actuators_in_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(pwm_min ≤ pwm_1 ∧ pwm_1 ≤ pwm_max) ∧ (pwm_min ≤ pwm_2 ∧ pwm_2 ≤ pwm_max) ∧ (pwm_min ≤ pwm_3 ∧ pwm_3 ≤ pwm_max) ∧ pwm_min ≤ pwm_4 ∧ pwm_4 ≤ pwm_max ∨ safe_disarm ∧ ¬armed ∧ pwm_1 = 0 ∧ pwm_2 = 0 ∧ pwm_3 = 0 ∧ pwm_4 = 0",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "46cd817d84ed7c9900ef54711004a7f70088f6bce01bf0e0305b6d2a1c1dbf1b",
+    "file":
+    "ardupilot/harnesses/inner_loop/evidence/tested/20261119T164333Z-seed1/case0-step0.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c20e97530332d947827db5fcf0d10aa0d94b3a6a519bec38ad267db27b370b3b",
+   "clause": "pwm_in_range",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "roll_internal_errors = 0 ∧ pitch_internal_errors = 0 ∧ yaw_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "ff47667fa34c11fec8231044dae7abfd082aac415f3de67d83c414c1709fd814",
+   "clause": "rate_no_internal_error",
+   "checked": 20000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "mixer_internal_errors = 0",
+   "smallest_margin": null,
+   "contract_hash":
+   "1c4014527dfccc5b0a3c3b001f1190179cf33d568eabe0f52ff0903d540bf809",
+   "clause": "mixer_no_internal_error",
+   "checked": 20000}],
+ "formal_link":
+ "not built: no Lean proof yet that the children's contracts, as wired, imply this system's contract",
+ "coverage":
+ {"unlimited_throttle_above_1":
+  {"true_steps": 0, "text": "spool_state = 3 ∧ 1 < throttle"},
+  "unlimited_no_rpy_limit":
+  {"true_steps": 1512,
+   "text": "spool_state = 3 ∧ ¬limit_roll ∧ ¬limit_pitch ∧ ¬limit_yaw"},
+  "unlimited_no_limit":
+  {"true_steps": 1499,
+   "text":
+   "spool_state = 3 ∧ ¬limit_roll ∧ ¬limit_pitch ∧ ¬limit_yaw ∧ ¬limit_throttle_lower ∧ ¬limit_throttle_upper"},
+  "throttle_unlimited": {"true_steps": 2806, "text": "spool_state = 3"},
+  "throttle_negative": {"true_steps": 0, "text": "throttle < 0"},
+  "throttle_above_1": {"true_steps": 0, "text": "1 < throttle"}},
+ "command":
+ "harness test inner_loop --seed 1 --cases 40 --steps 500 --regime stock_flight",
+ "code_hash":
+ "02e35725db75341294ed6adb9080ec10ddc8f8c1887c854c6a8644963b725bc5",
+ "children":
+ [{"path": "inner_loop/rate",
+   "node": "rate",
+   "kind": "system",
+   "code_hash":
+   "a4672a5a11befa4bb6c90155a8c728e5af6f0bd3d6db3fd688adbf358b2a3332"},
+  {"path": "inner_loop/rate/roll",
+   "node": "rate_pid",
+   "kind": "module",
+   "code_hash":
+   "0be29e52d8e3bd919822393d3de3739381d660f7fb571fc20d91873c2388f81c"},
+  {"path": "inner_loop/rate/pitch",
+   "node": "rate_pid",
+   "kind": "module",
+   "code_hash":
+   "0be29e52d8e3bd919822393d3de3739381d660f7fb571fc20d91873c2388f81c"},
+  {"path": "inner_loop/rate/yaw",
+   "node": "rate_pid",
+   "kind": "module",
+   "code_hash":
+   "0be29e52d8e3bd919822393d3de3739381d660f7fb571fc20d91873c2388f81c"},
+  {"path": "inner_loop/mixer",
+   "node": "mixer",
+   "kind": "module",
+   "code_hash":
+   "693591fb98348885e0281566edd6500c6bdae1058d8d36414a6e0d0a07c1e7d8"}],
+ "cases_skipped": 0,
+ "cases": 40,
+ "assumptions":
+ [{"verdict": "passed",
+   "steps": 20000,
+   "path": "inner_loop/rate",
+   "failing_clauses": {},
+   "contract_hash":
+   "ec63f491fa6b106afe6403d8906b1f17588d6fce8ce1a07890af56b884f05f22",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 20000,
+   "assumption_held": 20000},
+  {"verdict": "passed",
+   "steps": 20000,
+   "path": "inner_loop/rate/roll",
+   "failing_clauses": {},
+   "contract_hash":
+   "76fb6c0e113a9a0f66e98b85385e2b0cb25041363c4711f7b84490d5c3311bd4",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 20000,
+   "assumption_held": 20000},
+  {"verdict": "passed",
+   "steps": 20000,
+   "path": "inner_loop/rate/pitch",
+   "failing_clauses": {},
+   "contract_hash":
+   "76fb6c0e113a9a0f66e98b85385e2b0cb25041363c4711f7b84490d5c3311bd4",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 20000,
+   "assumption_held": 20000},
+  {"verdict": "passed",
+   "steps": 20000,
+   "path": "inner_loop/rate/yaw",
+   "failing_clauses": {},
+   "contract_hash":
+   "76fb6c0e113a9a0f66e98b85385e2b0cb25041363c4711f7b84490d5c3311bd4",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 20000,
+   "assumption_held": 20000},
+  {"verdict": "passed",
+   "steps": 20000,
+   "path": "inner_loop/mixer",
+   "failing_clauses": {},
+   "contract_hash":
+   "c42f67714717de302b1c2b492b1f0509988e3dc1db530fb64c799890da7c5f76",
+   "cases_with_discharge_failure": 0,
+   "assumption_held_so_far": 20000,
+   "assumption_held": 20000}],
+ "assume":
+ ["roll_gains_bounded: |roll_kp| ≤ 10000 ∧ |roll_ki| ≤ 10000 ∧ |roll_kd| ≤ 10000",
+  "roll_kimax_range: 0 ≤ roll_kimax ∧ finite(roll_kimax)",
+  "roll_kpdmax_range: 0 ≤ roll_kpdmax ∧ finite(roll_kpdmax)",
+  "roll_filters_range: 0 ≤ roll_filt_T_hz ∧ finite(roll_filt_T_hz) ∧ 0 ≤ roll_filt_E_hz ∧ finite(roll_filt_E_hz) ∧ 0 ≤ roll_filt_D_hz ∧ finite(roll_filt_D_hz)",
+  "roll_slew_range: 0 ≤ roll_slew_max ∧ finite(roll_slew_max)",
+  "pitch_gains_bounded: |pitch_kp| ≤ 10000 ∧ |pitch_ki| ≤ 10000 ∧ |pitch_kd| ≤ 10000",
+  "pitch_kimax_range: 0 ≤ pitch_kimax ∧ finite(pitch_kimax)",
+  "pitch_kpdmax_range: 0 ≤ pitch_kpdmax ∧ finite(pitch_kpdmax)",
+  "pitch_filters_range: 0 ≤ pitch_filt_T_hz ∧ finite(pitch_filt_T_hz) ∧ 0 ≤ pitch_filt_E_hz ∧ finite(pitch_filt_E_hz) ∧ 0 ≤ pitch_filt_D_hz ∧ finite(pitch_filt_D_hz)",
+  "pitch_slew_range: 0 ≤ pitch_slew_max ∧ finite(pitch_slew_max)",
+  "yaw_gains_bounded: |yaw_kp| ≤ 10000 ∧ |yaw_ki| ≤ 10000 ∧ |yaw_kd| ≤ 10000",
+  "yaw_kimax_range: 0 ≤ yaw_kimax ∧ finite(yaw_kimax)",
+  "yaw_kpdmax_range: 0 ≤ yaw_kpdmax ∧ finite(yaw_kpdmax)",
+  "yaw_filters_range: 0 ≤ yaw_filt_T_hz ∧ finite(yaw_filt_T_hz) ∧ 0 ≤ yaw_filt_E_hz ∧ finite(yaw_filt_E_hz) ∧ 0 ≤ yaw_filt_D_hz ∧ finite(yaw_filt_D_hz)",
+  "yaw_slew_range: 0 ≤ yaw_slew_max ∧ finite(yaw_slew_max)",
+  "signals_bounded: |target_x| ≤ 10000 ∧ |target_y| ≤ 10000 ∧ |target_z| ≤ 10000 ∧ |gyro_x| ≤ 10000 ∧ |gyro_y| ≤ 10000 ∧ |gyro_z| ≤ 10000",
+  "dt_range: 0 < dt ∧ dt ≤ 0.01",
+  "scales_range_x: 0 ≤ pd_scale_x ∧ pd_scale_x ≤ 1 ∧ 0 ≤ i_scale_x ∧ i_scale_x ≤ 1",
+  "scales_range_y: 0 ≤ pd_scale_y ∧ pd_scale_y ≤ 1 ∧ 0 ≤ i_scale_y ∧ i_scale_y ≤ 1",
+  "scales_range_z: 0 ≤ pd_scale_z ∧ pd_scale_z ≤ 1 ∧ 0 ≤ i_scale_z ∧ i_scale_z ≤ 1",
+  "throttle_finite: finite(throttle) ∧ 0 ≤ throttle_avg_max ∧ throttle_avg_max ≤ 1",
+  "throttle_filter_range: 0 ≤ throttle_filter_hz ∧ throttle_filter_hz ≤ 100",
+  "mixer_dt_range: 0.0001 ≤ dt ∧ dt ≤ 0.02",
+  "spool_desired_range: spool_desired ≤ 2",
+  "air_density_range: 0 ≤ air_density_ratio ∧ air_density_ratio ≤ 2",
+  "hover_learn_range: 0 ≤ hover_learn ∧ hover_learn ≤ 2",
+  "hover_dt_range: ¬cmd_mixer_update_throttle_hover ∨ 0 ≤ cmd_mixer_update_throttle_hover_dt ∧ cmd_mixer_update_throttle_hover_dt ≤ 1",
+  "battery_range: 0 ≤ batt_voltage ∧ batt_voltage ≤ 60 ∧ 0 ≤ batt_resting_voltage ∧ batt_resting_voltage ≤ 60 ∧ 0 ≤ batt_current ∧ batt_current ≤ 500 ∧ 0 ≤ batt_resistance ∧ batt_resistance ≤ 1",
+  "current_positive: bat_curr_max = 0 ∨ ¬batt_current_ok ∨ 0 < batt_current",
+  "spin_min_range: 0 ≤ spin_min ∧ spin_min ≤ 0.25",
+  "spin_max_range: 0.9 ≤ spin_max ∧ spin_max ≤ 1",
+  "spin_arm_range: 0 ≤ spin_arm ∧ spin_arm ≤ 0.2",
+  "thst_expo_range: -1 ≤ thst_expo ∧ thst_expo ≤ 1",
+  "thst_hover_range: 0.125 ≤ thst_hover ∧ thst_hover ≤ 0.6875",
+  "yaw_headroom_range: 0 ≤ yaw_headroom ∧ yaw_headroom ≤ 500",
+  "pwm_min_range: 0 ≤ pwm_min ∧ pwm_min ≤ 2000",
+  "pwm_max_range: 0 ≤ pwm_max ∧ pwm_max ≤ 2000",
+  "bat_volt_max_range: bat_volt_max = 0 ∨ 6 ≤ bat_volt_max ∧ bat_volt_max ≤ 53",
+  "bat_volt_min_range: bat_volt_min = 0 ∨ 6 ≤ bat_volt_min ∧ bat_volt_min ≤ 42",
+  "bat_curr_max_range: 0 ≤ bat_curr_max ∧ bat_curr_max ≤ 200",
+  "bat_curr_tc_range: 0 ≤ bat_curr_tc ∧ bat_curr_tc ≤ 10",
+  "spool_time_range: 0.05 ≤ spool_time ∧ spool_time ≤ 2",
+  "spool_tim_dn_range: 0 ≤ spool_tim_dn ∧ spool_tim_dn ≤ 2",
+  "slew_range: 0 ≤ slew_up_time ∧ slew_up_time ≤ 0.5 ∧ 0 ≤ slew_dn_time ∧ slew_dn_time ≤ 0.5",
+  "safe_time_range: 0 ≤ safe_time ∧ safe_time ≤ 5",
+  "idle_sec_range: 0 ≤ idle_sec ∧ idle_sec ≤ 5",
+  "pwm_valid: 1 ≤ pwm_min ∧ pwm_min < pwm_max",
+  "roll_kimax_documented: roll_kimax ≤ 1",
+  "pitch_kimax_documented: pitch_kimax ≤ 1",
+  "yaw_kimax_documented: yaw_kimax ≤ 1"]}

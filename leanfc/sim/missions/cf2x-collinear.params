@@ -1,0 +1,5 @@
+# Test mission (overlay after params/cf2x.params): WAYPOINT, SPLINE, SPLINE on one straight line north
+# at the start altitude. The two inner points are passed at speed; the target must not slow down there.
+WAYPOINT  1  0  -1
+SPLINE    2  0  -1
+SPLINE    3  0  -1

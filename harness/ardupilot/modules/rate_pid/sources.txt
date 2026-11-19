@@ -1,0 +1,6 @@
+# ArduPilot sources compiled into the rate_pid module, relative to $ARDUPILOT_ROOT.
+# The controller, and the code it calls on the step path of AC_PID::update_all.
+libraries/AC_PID/AC_PID.cpp          # the controller
+libraries/AP_Math/AP_Math.cpp        # calc_lowpass_alpha_dt, constrain_value_line
+libraries/Filter/SlewLimiter.cpp     # the slew limiter (Dmod)
+libraries/Filter/LowPassFilter.cpp   # the slew limiter's rate filter

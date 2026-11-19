@@ -1,0 +1,23 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 100,
+      "smallest_margin": null,
+      "seed": 1,
+      "result_hash": "b15d64fc380ecda359ce44f83e2cb10541eb0427e600588cad344ba047f409f2",
+      "result_file": "ardupilot/modules/truth_est/evidence/tested/20261118T205104Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T205104Z",
+      "contract_hash": "a03b39ca36ed904e1eceb9426cc7d12edd485e12cd3a47dd494f15762c6d47d8",
+      "command": "harness test truth_est --seed 1 --cases 20 --steps 100",
+      "code_hash": "5827658bf0d42c63747d7e9b166547e97a9fad4f01c70455d6890eaeb4e481a3",
+      "clause": "copies_position",
+      "checked": 2000,
+      "cases": 20
+    }
+  ],
+  "module": "truth_est"
+}

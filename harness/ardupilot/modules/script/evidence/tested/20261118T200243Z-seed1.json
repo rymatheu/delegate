@@ -1,0 +1,439 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 40000,
+ "steps_per_case": 2000,
+ "seed": 1,
+ "seconds": 1.284178,
+ "outputs_seen":
+ {"spool_desired": {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sc_phase": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sc_land_complete": {"true_steps": 40000},
+  "sc_auto_armed": {"true_steps": 0},
+  "now_us":
+  {"non_finite_steps": 0, "min_finite": 619709, "max_finite": 4294678000},
+  "now_ms": {"non_finite_steps": 0, "min_finite": 619, "max_finite": 4294677},
+  "interlock": {"true_steps": 3998},
+  "dt": {"non_finite_steps": 0, "min_finite": 0.0025, "max_finite": 0.0025},
+  "cmd_position_update_estimates_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_update_estimates_high_vibes": {"true_steps": 0},
+  "cmd_position_update_estimates": {"true_steps": 40000},
+  "cmd_position_set_vibe_comp_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_vibe_comp_on": {"true_steps": 0},
+  "cmd_position_set_vibe_comp": {"true_steps": 0},
+  "cmd_position_set_reset_handling_method_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_reset_handling_method_method":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_reset_handling_method": {"true_steps": 40000},
+  "cmd_position_set_pos_desired_NE_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_pos_desired_NE_m_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_pos_desired_NE_m_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_set_pos_desired_NE_m": {"true_steps": 0},
+  "cmd_position_input_vel_accel_NE_m_vel_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_NE_m_vel_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_NE_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_NE_m_limit_output": {"true_steps": 0},
+  "cmd_position_input_vel_accel_NE_m_accel_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_NE_m_accel_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_NE_m": {"true_steps": 0},
+  "cmd_position_input_vel_accel_D_m_vel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_D_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_D_m_limit_output": {"true_steps": 0},
+  "cmd_position_input_vel_accel_D_m_accel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_vel_accel_D_m": {"true_steps": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_vel_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_vel_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_pos_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_pos_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_limit_output": {"true_steps": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_accel_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m_accel_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_NE_m": {"true_steps": 0},
+  "cmd_position_input_pos_vel_accel_D_m_vel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_D_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_D_m_pos":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_D_m_limit_output": {"true_steps": 0},
+  "cmd_position_input_pos_vel_accel_D_m_accel":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_vel_accel_D_m": {"true_steps": 0},
+  "cmd_position_input_pos_NED_m_terrain_margin":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m_terrain_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m_pos_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m_pos_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m_pos_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_input_pos_NED_m": {"true_steps": 0},
+  "cmd_position_init_pos_terrain_D_m_terrain_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_init_pos_terrain_D_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_init_pos_terrain_D_m": {"true_steps": 0},
+  "cmd_position_NE_update_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_update_controller": {"true_steps": 40000},
+  "cmd_position_NE_stop_vel_stabilisation_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_stop_vel_stabilisation": {"true_steps": 0},
+  "cmd_position_NE_stop_pos_stabilisation_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_stop_pos_stabilisation": {"true_steps": 0},
+  "cmd_position_NE_soften_for_landing_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_soften_for_landing": {"true_steps": 0},
+  "cmd_position_NE_set_pos_error_max_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_set_pos_error_max_m_error_max":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_set_pos_error_max_m": {"true_steps": 0},
+  "cmd_position_NE_set_max_speed_accel_m_speed":
+  {"non_finite_steps": 3,
+   "min_finite": -301228300000000000000000000000000000000,
+   "max_finite": 228078300000000000000000000000000000000},
+  "cmd_position_NE_set_max_speed_accel_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_set_max_speed_accel_m_accel":
+  {"non_finite_steps": 1,
+   "min_finite": -293136300000000000000000000000000000000,
+   "max_finite": 215039800000000000000000000000000000000},
+  "cmd_position_NE_set_max_speed_accel_m": {"true_steps": 20},
+  "cmd_position_NE_set_correction_speed_accel_m_speed":
+  {"non_finite_steps": 3,
+   "min_finite": -301228300000000000000000000000000000000,
+   "max_finite": 228078300000000000000000000000000000000},
+  "cmd_position_NE_set_correction_speed_accel_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_set_correction_speed_accel_m_accel":
+  {"non_finite_steps": 1,
+   "min_finite": -293136300000000000000000000000000000000,
+   "max_finite": 215039800000000000000000000000000000000},
+  "cmd_position_NE_set_correction_speed_accel_m": {"true_steps": 20},
+  "cmd_position_NE_relax_velocity_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_relax_velocity_controller": {"true_steps": 40000},
+  "cmd_position_NE_init_controller_stopping_point_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_init_controller_stopping_point": {"true_steps": 0},
+  "cmd_position_NE_init_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_NE_init_controller": {"true_steps": 20},
+  "cmd_position_D_update_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_update_controller": {"true_steps": 40000},
+  "cmd_position_D_set_pos_target_from_climb_rate_ms_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_pos_target_from_climb_rate_ms_ignore_descent_limit":
+  {"true_steps": 0},
+  "cmd_position_D_set_pos_target_from_climb_rate_ms_climb_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_pos_target_from_climb_rate_ms": {"true_steps": 0},
+  "cmd_position_D_set_max_speed_accel_m_up":
+  {"non_finite_steps": 1,
+   "min_finite": -293281100000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "cmd_position_D_set_max_speed_accel_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_max_speed_accel_m_down":
+  {"non_finite_steps": 3,
+   "min_finite": -327381700000000000000000000000000000000,
+   "max_finite": 181638400000000000000000000000000000000},
+  "cmd_position_D_set_max_speed_accel_m_accel":
+  {"non_finite_steps": 2,
+   "min_finite": -242247500000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "cmd_position_D_set_max_speed_accel_m": {"true_steps": 20},
+  "cmd_position_D_set_correction_speed_accel_m_up":
+  {"non_finite_steps": 1,
+   "min_finite": -293281100000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "cmd_position_D_set_correction_speed_accel_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_correction_speed_accel_m_down":
+  {"non_finite_steps": 3,
+   "min_finite": -327381700000000000000000000000000000000,
+   "max_finite": 181638400000000000000000000000000000000},
+  "cmd_position_D_set_correction_speed_accel_m_accel":
+  {"non_finite_steps": 2,
+   "min_finite": -242247500000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "cmd_position_D_set_correction_speed_accel_m": {"true_steps": 20},
+  "cmd_position_D_set_alt_target_with_slew_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_alt_target_with_slew_m_alt":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_set_alt_target_with_slew_m": {"true_steps": 0},
+  "cmd_position_D_relax_controller_throttle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_relax_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_relax_controller": {"true_steps": 40000},
+  "cmd_position_D_init_controller_stopping_point_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_init_controller_stopping_point": {"true_steps": 0},
+  "cmd_position_D_init_controller_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_init_controller_no_descent_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_init_controller_no_descent": {"true_steps": 0},
+  "cmd_position_D_init_controller": {"true_steps": 20},
+  "cmd_position_D_accel_pid_set_integrator_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_accel_pid_set_integrator_i":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_position_D_accel_pid_set_integrator": {"true_steps": 0},
+  "cmd_guidance_wp_and_spline_init_m_stopping_point_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_wp_and_spline_init_m_stopping_point_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_wp_and_spline_init_m_stopping_point_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_wp_and_spline_init_m_speed_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_wp_and_spline_init_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_wp_and_spline_init_m": {"true_steps": 0},
+  "cmd_guidance_update_wpnav_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_update_wpnav": {"true_steps": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m_arc_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_next_NED_m": {"true_steps": 0},
+  "cmd_guidance_set_wp_destination_NED_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_NED_m_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_NED_m_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_NED_m_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_NED_m_arc_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_wp_destination_NED_m": {"true_steps": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_next_is_spline":
+  {"true_steps": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_next_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m_next_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_next_NED_m": {"true_steps": 0},
+  "cmd_guidance_set_spline_destination_NED_m_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_next_is_spline": {"true_steps": 0},
+  "cmd_guidance_set_spline_destination_NED_m_next_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_next_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_next_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_destination_n":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_destination_e":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m_destination_d":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_spline_destination_NED_m": {"true_steps": 0},
+  "cmd_guidance_set_speed_up_ms_speed_up_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_up_ms_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_up_ms": {"true_steps": 0},
+  "cmd_guidance_set_speed_down_ms_speed_down_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_down_ms_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_down_ms": {"true_steps": 0},
+  "cmd_guidance_set_speed_NE_ms_speed_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_NE_ms_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_speed_NE_ms": {"true_steps": 0},
+  "cmd_guidance_set_resume_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_resume": {"true_steps": 0},
+  "cmd_guidance_set_pause_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_set_pause": {"true_steps": 0},
+  "cmd_guidance_force_stop_at_next_wp_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_guidance_force_stop_at_next_wp": {"true_steps": 0},
+  "cmd_attitude_set_yaw_rate_tc_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_yaw_rate_tc_input_tc":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_yaw_rate_tc": {"true_steps": 20},
+  "cmd_attitude_set_throttle_out_throttle_in":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_out_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_out_filter_cutoff":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_out_before_input": {"true_steps": 0},
+  "cmd_attitude_set_throttle_out_apply_angle_boost": {"true_steps": 0},
+  "cmd_attitude_set_throttle_out": {"true_steps": 0},
+  "cmd_attitude_set_throttle_mix_min_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_mix_min": {"true_steps": 5000},
+  "cmd_attitude_set_throttle_mix_max_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_mix_max_ratio":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_mix_max": {"true_steps": 0},
+  "cmd_attitude_set_throttle_mix_man_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_throttle_mix_man": {"true_steps": 0},
+  "cmd_attitude_set_roll_pitch_rate_tc_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_roll_pitch_rate_tc_input_tc":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_set_roll_pitch_rate_tc": {"true_steps": 20},
+  "cmd_attitude_reset_yaw_target_and_rate_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_reset_yaw_target_and_rate_reset_rate": {"true_steps": 1824},
+  "cmd_attitude_reset_yaw_target_and_rate": {"true_steps": 1824},
+  "cmd_attitude_reset_target_and_rate_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_reset_target_and_rate_reset_rate": {"true_steps": 0},
+  "cmd_attitude_reset_target_and_rate": {"true_steps": 0},
+  "cmd_attitude_reset_rate_controller_I_terms_smoothly_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_reset_rate_controller_I_terms_smoothly": {"true_steps": 40000},
+  "cmd_attitude_reset_rate_controller_I_terms_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_reset_rate_controller_I_terms": {"true_steps": 0},
+  "cmd_attitude_relax_attitude_controllers_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_relax_attitude_controllers": {"true_steps": 0},
+  "cmd_attitude_rate_controller_target_reset_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_rate_controller_target_reset": {"true_steps": 0},
+  "cmd_attitude_pos_throttle_after_input": {"true_steps": 0},
+  "cmd_attitude_landed_gain_reduction_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_landed_gain_reduction_landed": {"true_steps": 40000},
+  "cmd_attitude_landed_gain_reduction": {"true_steps": 40000},
+  "cmd_attitude_input_thrust_vector_rate_heading_slew_yaw": {"true_steps": 0},
+  "cmd_attitude_input_thrust_vector_rate_heading_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_rate_heading_heading_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_rate_heading": {"true_steps": 0},
+  "cmd_attitude_input_thrust_vector_heading_yaw_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_heading_yaw_angle":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_heading_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_heading_heading_mode":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_thrust_vector_heading": {"true_steps": 0},
+  "cmd_attitude_input_rate_bf_roll_pitch_yaw_yaw_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_rate_bf_roll_pitch_yaw_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_rate_bf_roll_pitch_yaw_roll_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_rate_bf_roll_pitch_yaw_pitch_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_rate_bf_roll_pitch_yaw": {"true_steps": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw_yaw":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw_slew_yaw": {"true_steps": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw_roll":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw_pitch":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_yaw": {"true_steps": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_yaw_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_roll":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw_pitch":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw":
+  {"true_steps": 40000},
+  "cmd_attitude_inertial_frame_reset_seq":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "cmd_attitude_inertial_frame_reset": {"true_steps": 0},
+  "clear_spoolup_block": {"true_steps": 5000},
+  "armed": {"true_steps": 6000}},
+ "module": "script",
+ "kind": "tested",
+ "id": "20261118T200243Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_euler_angle_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_rate_bf_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_euler_rate_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_rate_bf_roll_pitch_yaw) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_euler_angle_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_rate_bf_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_rate_heading) ∧ ¬(cmd_attitude_input_rate_bf_roll_pitch_yaw ∧ cmd_attitude_input_thrust_vector_heading) ∧ ¬(cmd_attitude_input_thrust_vector_rate_heading ∧ cmd_attitude_input_thrust_vector_heading)",
+   "smallest_margin": null,
+   "contract_hash":
+   "0f7502918d3d39a92969a24de02d451e1cfa012f668ebb035c221d90a9df7678",
+   "clause": "single_input",
+   "checked": 40000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text": "dt = 0.0025",
+   "smallest_margin": null,
+   "contract_hash":
+   "1e22d87f10e863e34cdc27748c8a6b34bab120575e5fd07d7b155bc7c052d00f",
+   "clause": "dt_400hz",
+   "checked": 40000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test script --seed 1 --cases 20 --steps 2000",
+ "code_hash":
+ "01581d3be35a58f65b8ed182ed93050ebf3b48aac8ccc082867aba3a65b1bd75",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume":
+ ["inputs_finite: finite(ac_throttle_in) ∧ finite(ac_att_target_roll) ∧ finite(ac_att_target_pitch) ∧ finite(ac_att_target_yaw) ∧ finite(ac_thrust_error_angle) ∧ finite(pc_pos_desired_d) ∧ finite(pc_vel_desired_d) ∧ finite(pc_max_speed_up) ∧ finite(pc_d_max_accel) ∧ finite(pc_stopping_point_n) ∧ finite(pc_stopping_point_e) ∧ finite(pc_stopping_point_d) ∧ finite(pc_yaw) ∧ finite(pc_yaw_rate) ∧ finite(pc_vel_d_control_ratio) ∧ finite(est_pos_d) ∧ finite(est_vel_d) ∧ finite(est_accel_ef_z)"]}

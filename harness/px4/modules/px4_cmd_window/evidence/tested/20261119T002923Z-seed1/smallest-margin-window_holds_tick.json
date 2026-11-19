@@ -1,0 +1,13 @@
+{"step": 0,
+ "params": {},
+ "outputs": [{"vehicle_command_last_400_ticks": "3"}],
+ "note":
+ "f32 fields are bit patterns; `harness replay` runs this file and prints values",
+ "module": "px4_cmd_window",
+ "kind": "smallest margin",
+ "inputs": [{"vehicle_command_count": "3"}],
+ "code_hash":
+ "c405dcf1d7adbcfaa7a582af72fd8a907027e0b5e4f12e9088f6cee8fd993f28",
+ "clause": "window_holds_tick",
+ "case": 0,
+ "campaign": "20261119T002923Z-seed1"}

@@ -1,0 +1,59 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 200,
+      "smallest_margin": null,
+      "seed": 1,
+      "result_hash": "da1a9d72ccaa81c5dc59aa0689c8d5cd74a9079771fc1ed1afcf8f88c650f7c6",
+      "result_file": "ardupilot/modules/est_scenario/evidence/tested/20261118T200640Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T200640Z",
+      "contract_hash": "b3578aff2d4d3b3aaa47543c2e1da482ca60faf24fb6a320c151c28d8b125526",
+      "command": "harness test est_scenario --seed 1 --cases 50 --steps 200",
+      "code_hash": "a3a382a10367d690c7f786cb597e4e573ec71233d1102856e07390be54926483",
+      "clause": "one_phase",
+      "checked": 10000,
+      "cases": 50
+    },
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 200,
+      "smallest_margin": 1000,
+      "seed": 1,
+      "result_hash": "da1a9d72ccaa81c5dc59aa0689c8d5cd74a9079771fc1ed1afcf8f88c650f7c6",
+      "result_file": "ardupilot/modules/est_scenario/evidence/tested/20261118T200640Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T200640Z",
+      "contract_hash": "f488920abfc5d670f782a6440813dd6326415b997d9b75f2a9ed86958ce96801",
+      "command": "harness test est_scenario --seed 1 --cases 50 --steps 200",
+      "code_hash": "a3a382a10367d690c7f786cb597e4e573ec71233d1102856e07390be54926483",
+      "clause": "schedule",
+      "checked": 10000,
+      "cases": 50
+    },
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 200,
+      "smallest_margin": 0,
+      "seed": 1,
+      "result_hash": "da1a9d72ccaa81c5dc59aa0689c8d5cd74a9079771fc1ed1afcf8f88c650f7c6",
+      "result_file": "ardupilot/modules/est_scenario/evidence/tested/20261118T200640Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T200640Z",
+      "contract_hash": "c0411b5b402f3f8124b283a9033bae5dd12c2f08d1316f016dedf5bd1ddfd4e8",
+      "command": "harness test est_scenario --seed 1 --cases 50 --steps 200",
+      "code_hash": "a3a382a10367d690c7f786cb597e4e573ec71233d1102856e07390be54926483",
+      "clause": "pwm_range",
+      "checked": 10000,
+      "cases": 50
+    }
+  ],
+  "module": "est_scenario"
+}

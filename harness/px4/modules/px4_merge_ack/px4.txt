@@ -1,0 +1,6 @@
+# px4_merge_ack: the merge node of vehicle_command_ack, which commander and navigator both publish
+# (each acknowledges the commands it handles). Not PX4 code: generated word copying
+# (px4/ports.py merge_main). Inputs vehicle_command_ack_by_px4_commander_* and
+# vehicle_command_ack_by_px4_navigator_* (their `pub vehicle_command_ack by` ports), output the
+# queue mavlink reads, vehicle_command_ack_*.
+merge vehicle_command_ack px4_commander px4_navigator

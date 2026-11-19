@@ -1,0 +1,92 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 400000,
+ "steps_per_case": 200,
+ "seed": 1,
+ "seconds": 2.669716,
+ "outputs_seen":
+ {"pd_limit": {"true_steps": 20473},
+  "p_term":
+  {"non_finite_steps": 349810,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "internal_errors":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 200},
+  "integrator":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "dmod": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "d_term":
+  {"non_finite_steps": 288674,
+   "min_finite": -106902100000000000000000000000000000000,
+   "max_finite": 105476600000000000000000000000000000000},
+  "command":
+  {"non_finite_steps": 358104,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000}},
+ "module": "rate_pid",
+ "kind": "tested",
+ "id": "20261116T231125Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "|integrator| ≤ kimax",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "89c7c468adbf4da5644cb0d15b43a399e8f389c1675a8c791a0b6890b708118a",
+    "file":
+    "ardupilot/modules/rate_pid/evidence/tested/20261116T231125Z-seed1/smallest-margin-integrator_bounded.json",
+    "case": 2},
+   "smallest_margin": 0,
+   "contract_hash":
+   "97b0c8ebb177933fc7e8763e4382173f2cdbf83647d6f8e6b9d39b9f2d17b2d5",
+   "clause": "integrator_bounded",
+   "checked": 400000},
+  {"violations": 358104,
+   "verdict": "failed",
+   "text": "finite(command)",
+   "smallest_margin": null,
+   "counterexample":
+   {"step": 0,
+    "sha256":
+    "8216e6fc293c29f9eca22fa835f1b739a9e815c5fc501551a1eaf595e81681da",
+    "file":
+    "ardupilot/modules/rate_pid/evidence/tested/20261116T231125Z-seed1/counterexample-command_finite.json",
+    "case": 0},
+   "contract_hash":
+   "22e12cddc6a9a9169171a20c7836ffd83d0c3a37481988a4e3f4ea40cc6a9904",
+   "clause": "command_finite",
+   "checked": 400000},
+  {"violations": 159307,
+   "verdict": "failed",
+   "text": "internal_errors = 0",
+   "smallest_margin": null,
+   "counterexample":
+   {"step": 34,
+    "sha256":
+    "0ed15a7b355fd475569aa913fe8742c7255fc35489f571d36f8895887797ea31",
+    "file":
+    "ardupilot/modules/rate_pid/evidence/tested/20261116T231125Z-seed1/counterexample-no_internal_error.json",
+    "case": 3},
+   "contract_hash":
+   "75507c969324cee4a218aad5fec5be7d1c001c38a37d36717a6636c8eeec18f6",
+   "clause": "no_internal_error",
+   "checked": 400000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test rate_pid --seed 1 --cases 2000 --steps 200",
+ "code_hash":
+ "902272e51c456b359a86d903e6875e6898fbec2846c94cfcc4b0525b35070e26",
+ "cases_skipped": 0,
+ "cases": 2000,
+ "assume":
+ ["gains_finite: finite(kp) ∧ finite(ki) ∧ finite(kd)",
+  "kimax_range: 0 ≤ kimax ∧ finite(kimax)",
+  "kpdmax_range: 0 ≤ kpdmax ∧ finite(kpdmax)",
+  "filters_range: 0 ≤ filt_T_hz ∧ finite(filt_T_hz) ∧ 0 ≤ filt_E_hz ∧ finite(filt_E_hz) ∧ 0 ≤ filt_D_hz ∧ finite(filt_D_hz)",
+  "slew_range: 0 ≤ slew_max ∧ finite(slew_max)",
+  "signals_finite: finite(target) ∧ finite(measurement)",
+  "dt_range: 0 < dt ∧ dt ≤ 0.01",
+  "scales_range: 0 ≤ pd_scale ∧ pd_scale ≤ 1 ∧ 0 ≤ i_scale ∧ i_scale ≤ 1"]}

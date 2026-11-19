@@ -1,0 +1,37 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 10000,
+ "steps_per_case": 500,
+ "seed": 1,
+ "seconds": 0.05848475,
+ "outputs_seen":
+ {"vehicle_command_last_400_ticks":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1628}},
+ "module": "px4_cmd_window",
+ "kind": "tested",
+ "id": "20261119T002923Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "vehicle_command_count ≤ vehicle_command_last_400_ticks ∧ vehicle_command_last_400_ticks ≤ 3200",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "a853eedfeef8f03044a3c25df4a8986d72c964a68f823173c0331631c8540b5d",
+    "file":
+    "px4/modules/px4_cmd_window/evidence/tested/20261119T002923Z-seed1/smallest-margin-window_holds_tick.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "47bd49e1a97b7e2c609bb58811dbf68f678d32def193722bdb7d3d7b87c88b24",
+   "clause": "window_holds_tick",
+   "checked": 10000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -fno-exceptions",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_cmd_window --seed 1 --cases 20 --steps 500",
+ "code_hash":
+ "c405dcf1d7adbcfaa7a582af72fd8a907027e0b5e4f12e9088f6cee8fd993f28",
+ "cases_skipped": 0,
+ "cases": 20,
+ "assume": ["slots: vehicle_command_count ≤ 8"]}

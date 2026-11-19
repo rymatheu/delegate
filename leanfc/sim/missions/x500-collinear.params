@@ -1,0 +1,5 @@
+# Test mission (overlay after params/x500.params): WAYPOINT, SPLINE, SPLINE on one straight line north
+# at the start altitude. The two inner points are passed at speed; the target must not slow down there.
+WAYPOINT  4  0  -1
+SPLINE    8  0  -1
+SPLINE   12  0  -1

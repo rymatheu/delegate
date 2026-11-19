@@ -1,0 +1,22 @@
+# px4_rate: PX4's multicopter rate controller (src/modules/mc_rate_control), unmodified.
+# Read by px4/ports.py (ports) and px4/build.sh (sources). Paths relative to $PX4_ROOT.
+main mc_rate_control                       # mc_rate_control_main(argc, argv), started with "start"
+source src/modules/mc_rate_control/MulticopterRateControl.cpp
+source src/lib/rate_control/rate_control.cpp
+params src/modules/mc_rate_control         # mc_rate_control_params.c, mc_acro_params.c
+# every topic the module subscribes to (MulticopterRateControl.hpp:95-105), except
+# parameter_update (parameters are fixed at init)
+sub vehicle_angular_velocity               # the trigger (SubscriptionCallbackWorkItem)
+sub vehicle_rates_setpoint
+sub vehicle_control_mode
+sub vehicle_status
+sub vehicle_land_detected
+sub control_allocator_status
+sub manual_control_setpoint
+sub battery_status
+# every topic it publishes (MulticopterRateControl.hpp:107-111), except vehicle_rates_setpoint,
+# which it also reads (in Acro it publishes the stick rates there; that stays on its own bus)
+pub vehicle_torque_setpoint
+pub vehicle_thrust_setpoint
+pub rate_ctrl_status
+pub actuator_controls_status_0

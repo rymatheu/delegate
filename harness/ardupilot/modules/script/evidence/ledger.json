@@ -1,0 +1,41 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 2000,
+      "smallest_margin": null,
+      "seed": 1,
+      "result_hash": "0406caace5e4b07ad5d162a99f7b344393fad82c4944da19a417a1413e35d82f",
+      "result_file": "ardupilot/modules/script/evidence/tested/20261118T200243Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T200243Z",
+      "contract_hash": "0f7502918d3d39a92969a24de02d451e1cfa012f668ebb035c221d90a9df7678",
+      "command": "harness test script --seed 1 --cases 20 --steps 2000",
+      "code_hash": "01581d3be35a58f65b8ed182ed93050ebf3b48aac8ccc082867aba3a65b1bd75",
+      "clause": "single_input",
+      "checked": 40000,
+      "cases": 20
+    },
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 2000,
+      "smallest_margin": null,
+      "seed": 1,
+      "result_hash": "0406caace5e4b07ad5d162a99f7b344393fad82c4944da19a417a1413e35d82f",
+      "result_file": "ardupilot/modules/script/evidence/tested/20261118T200243Z-seed1.json",
+      "kind": "tested",
+      "date": "20261118T200243Z",
+      "contract_hash": "1e22d87f10e863e34cdc27748c8a6b34bab120575e5fd07d7b155bc7c052d00f",
+      "command": "harness test script --seed 1 --cases 20 --steps 2000",
+      "code_hash": "01581d3be35a58f65b8ed182ed93050ebf3b48aac8ccc082867aba3a65b1bd75",
+      "clause": "dt_400hz",
+      "checked": 40000,
+      "cases": 20
+    }
+  ],
+  "module": "script"
+}

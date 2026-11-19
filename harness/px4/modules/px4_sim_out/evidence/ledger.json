@@ -1,0 +1,41 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 100,
+      "smallest_margin": 0,
+      "seed": 2,
+      "result_hash": "8d431425e0242bfadaf79266d60cd3a36c74e4368623218f636d9d02c45eae28",
+      "result_file": "px4/modules/px4_sim_out/evidence/tested/20261119T002923Z-seed2.json",
+      "kind": "tested",
+      "date": "20261119T002923Z",
+      "contract_hash": "7aa32d23aeb3677eeafda60c0f57450d37052556364445066a36c025fd4d2e56",
+      "command": "harness test px4_sim_out --seed 2 --cases 50 --steps 100",
+      "code_hash": "212f5cf342581a53aff0eab0c1c99a9330fba7842efd5ee70a2a39ed7841a52b",
+      "clause": "pwm_in_plant_range",
+      "checked": 5000,
+      "cases": 50
+    },
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 100,
+      "smallest_margin": 0.001729244,
+      "seed": 2,
+      "result_hash": "8d431425e0242bfadaf79266d60cd3a36c74e4368623218f636d9d02c45eae28",
+      "result_file": "px4/modules/px4_sim_out/evidence/tested/20261119T002923Z-seed2.json",
+      "kind": "tested",
+      "date": "20261119T002923Z",
+      "contract_hash": "73a9920b057c31f53525e3d9872d9bfba280c088e099badd05f9dfb880aa69cf",
+      "command": "harness test px4_sim_out --seed 2 --cases 50 --steps 100",
+      "code_hash": "212f5cf342581a53aff0eab0c1c99a9330fba7842efd5ee70a2a39ed7841a52b",
+      "clause": "pwm_tracks_thrust",
+      "checked": 5000,
+      "cases": 50
+    }
+  ],
+  "module": "px4_sim_out"
+}

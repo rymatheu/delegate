@@ -1,0 +1,5 @@
+# build products, generated code and run outputs of leanfc (never committed)
+.lake/
+out/
+sim/mavlink/.gen/
+__pycache__/

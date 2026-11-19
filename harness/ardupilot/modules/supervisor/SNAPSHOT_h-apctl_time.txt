@@ -1,0 +1,2 @@
+14:57
+round 3: rsync of h-apctl Harness, cpp, modules (all but supervisor), harnesses, py, Main.lean, Top.lean, lakefile.toml (no evidence, no build)

@@ -1,0 +1,33 @@
+# px4_pos: PX4's multicopter position controller (src/modules/mc_pos_control), unmodified.
+# Read by px4/ports.py (ports) and px4/build.sh (sources). Paths relative to $PX4_ROOT.
+main mc_pos_control                        # mc_pos_control_main(argc, argv), started with "start"
+# the module and the libraries its CMakeLists.txt links (GotoControl, PositionControl, Takeoff
+# with hysteresis; motion_planning, which GotoControl's smoothers need; SlewRate, geo's constants
+# and mathlib are headers here)
+source src/modules/mc_pos_control/MulticopterPositionControl.cpp
+source src/modules/mc_pos_control/GotoControl/GotoControl.cpp
+source src/modules/mc_pos_control/PositionControl/PositionControl.cpp
+source src/modules/mc_pos_control/PositionControl/ControlMath.cpp
+source src/modules/mc_pos_control/Takeoff/Takeoff.cpp
+source src/lib/hysteresis/hysteresis.cpp
+source src/lib/motion_planning/HeadingSmoothing.cpp src/lib/motion_planning/PositionSmoothing.cpp
+source src/lib/motion_planning/VelocitySmoothing.cpp
+include src/modules/mc_pos_control
+# parameters: the module's own (every MPC_* and SYS_VEHICLE_RESP of its directory; the flight
+# tasks read many of them too), and the two it reads from commander
+params src/modules/mc_pos_control
+params src/modules/commander/commander_params.c COM_SPOOLUP_TIME COM_THROW_EN
+# every topic the module subscribes to (MulticopterPositionControl.hpp:102-110, GotoControl.hpp:
+# 118), except parameter_update (parameters are fixed at init)
+sub vehicle_local_position                 # the trigger (SubscriptionCallbackWorkItem)
+sub trajectory_setpoint
+sub vehicle_constraints
+sub vehicle_control_mode
+sub vehicle_land_detected
+sub hover_thrust_estimate
+sub goto_setpoint
+# what it publishes (MulticopterPositionControl.hpp:97-99), except trajectory_setpoint and
+# vehicle_constraints, which GotoControl publishes and the module also reads (they stay on its bus)
+pub vehicle_attitude_setpoint
+pub vehicle_local_position_setpoint
+pub takeoff_status

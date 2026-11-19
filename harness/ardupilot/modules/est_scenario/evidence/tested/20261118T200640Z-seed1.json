@@ -1,0 +1,66 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 10000,
+ "steps_per_case": 200,
+ "seed": 1,
+ "seconds": 0.1270907,
+ "outputs_seen":
+ {"pwm3": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm2": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm1": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "pwm0": {"non_finite_steps": 0, "min_finite": 1000, "max_finite": 2000},
+  "likely_flying": {"true_steps": 972},
+  "armed": {"true_steps": 972}},
+ "module": "est_scenario",
+ "kind": "tested",
+ "id": "20261118T200640Z-seed1",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text":
+   "armed ∧ likely_flying ∧ pwm0 = hover_pwm ∧ pwm1 = hover_pwm ∧ pwm2 = hover_pwm ∧ pwm3 = hover_pwm ∨ ¬armed ∧ ¬likely_flying ∧ pwm0 = 1000 ∧ pwm1 = 1000 ∧ pwm2 = 1000 ∧ pwm3 = 1000",
+   "smallest_margin": null,
+   "contract_hash":
+   "b3578aff2d4d3b3aaa47543c2e1da482ca60faf24fb6a320c151c28d8b125526",
+   "clause": "one_phase",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(¬(hover_from_us + 1000 ≤ t_us ∧ t_us + 1000 ≤ hover_until_us) ∨ armed) ∧ (¬(t_us + 1000 ≤ hover_from_us ∨ hover_until_us + 1000 ≤ t_us) ∨ ¬armed)",
+   "smallest_margin_case":
+   {"step": 3,
+    "sha256":
+    "f44e4f75c77ae79589b0ea7d71652a3ccf04c87e936c74bd6ec2d4fb56a453ce",
+    "file":
+    "ardupilot/modules/est_scenario/evidence/tested/20261118T200640Z-seed1/smallest-margin-schedule.json",
+    "case": 12},
+   "smallest_margin": 1000,
+   "contract_hash":
+   "f488920abfc5d670f782a6440813dd6326415b997d9b75f2a9ed86958ce96801",
+   "clause": "schedule",
+   "checked": 10000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "1000 ≤ pwm0 ∧ pwm0 ≤ 2000 ∧ 1000 ≤ pwm1 ∧ pwm1 ≤ 2000 ∧ 1000 ≤ pwm2 ∧ pwm2 ≤ 2000 ∧ 1000 ≤ pwm3 ∧ pwm3 ≤ 2000",
+   "smallest_margin_case":
+   {"step": 0,
+    "sha256":
+    "21fead6652990e29f9054c40d3f28adf204d3a34d85815e331e378a121596700",
+    "file":
+    "ardupilot/modules/est_scenario/evidence/tested/20261118T200640Z-seed1/smallest-margin-pwm_range.json",
+    "case": 0},
+   "smallest_margin": 0,
+   "contract_hash":
+   "c0411b5b402f3f8124b283a9033bae5dd12c2f08d1316f016dedf5bd1ddfd4e8",
+   "clause": "pwm_range",
+   "checked": 10000}],
+ "flags":
+ "-std=gnu++11 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -cl-single-precision-constant -fsigned-char -fno-exceptions -fno-builtin -ffunction-sections -fdata-sections -Wno-gnu-designator -Wno-invalid-offsetof -DARDUPILOT_BUILD -D__AP_LINE__=__LINE__ -DCONFIG_HAL_BOARD=HAL_BOARD_SITL -DCONFIG_HAL_BOARD_SUBTYPE=HAL_BOARD_SUBTYPE_NONE -DAP_NETWORKING_ENABLED=0 -include ap_config.h",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test est_scenario --seed 1 --cases 50 --steps 200",
+ "code_hash":
+ "a3a382a10367d690c7f786cb597e4e573ec71233d1102856e07390be54926483",
+ "cases_skipped": 0,
+ "cases": 50,
+ "assume": ["hover_pwm_range: 1000 ≤ hover_pwm ∧ hover_pwm ≤ 2000"]}

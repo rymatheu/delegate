@@ -1,0 +1,27 @@
+# Crazyflie CF2X (gym-pybullet-drones, PYB physics, gravity 9.80665, control 400 Hz, physics 1200 Hz)
+# for the copter vehicles (`--params`, sim/PROTOCOL.md). One `NAME value` per line with the ArduPilot
+# parameter names; every parameter not listed keeps the ArduPilot default. `#` starts a comment.
+
+# Motors: linear thrust. run_copter.py maps an actuator a of slot i to the thrust fraction a of the
+# maximum per-motor thrust (rpm = MAX_RPM sqrt(a)); the simulator models no ESC or thrust curve, so
+# the actuator must already be the thrust fraction, which is AP_Motors' actuator_to_thrust with
+# expo 0 and spin range [0, 1].
+MOT_THST_EXPO 0
+MOT_SPIN_MIN 0
+MOT_SPIN_MAX 1
+MOT_BAT_VOLT_MAX 0           # no battery-voltage compensation (the simulator has no battery)
+MOT_HOVER_LEARN 0            # fixed hover throttle
+MOT_THST_HOVER 0.4444        # CF2X thrust-to-weight 2.25: hover at 1/2.25 of full thrust
+
+# Mission: the figure-eight course of cf2x-course.txt, NED meters (north, east, down) from the start
+# point. Two diamonds of 1.25 m half-diagonal that meet over the origin: the first lobe turns left and
+# climbs from 0.8 m to 1.4 m, the leg through the crossing climbs to 1.6 m, and the second lobe
+# turns right and descends back to 0.8 m over the start (13.8 m in all).
+waypoint 0 0 -0.8
+waypoint 1.25 1.25 -1.0
+waypoint 0 2.5 -1.2
+waypoint -1.25 1.25 -1.4
+waypoint 1.25 -1.25 -1.6
+waypoint 0 -2.5 -1.4
+waypoint -1.25 -1.25 -1.1
+waypoint 0 0 -0.8

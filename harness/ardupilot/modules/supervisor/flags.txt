@@ -1,0 +1,7 @@
+# Compile flags of the supervisor module, added to the shared ones (as ardupilot/build.sh does).
+# The vehicle (waf: APM_BUILD_DIRECTORY, the program's FRAME_CONFIG and target name).
+-DAPM_BUILD_DIRECTORY=APM_BUILD_ArduCopter
+-DFRAME_CONFIG=MULTICOPTER_FRAME
+-DAP_BUILD_TARGET_NAME="arducopter"
+# The feature switches follow, from probe/features.txt (build.sh appends that file).
+-DAP_MAIN=ardupilot_main   # AP_HAL_Main.h's hook: Copter.cpp's main() under another name; the module's main() is module_protocol.h's

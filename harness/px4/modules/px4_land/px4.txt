@@ -1,0 +1,33 @@
+# px4_land: PX4's land detector (src/modules/land_detector), multicopter, unmodified.
+# Read by px4/ports.py and px4/build.sh. Paths relative to $PX4_ROOT.
+main land_detector
+args multicopter                           # as rc.mc_apps: land_detector start multicopter
+source src/modules/land_detector/land_detector_main.cpp src/modules/land_detector/LandDetector.cpp src/modules/land_detector/MulticopterLandDetector.cpp
+source src/modules/land_detector/FixedwingLandDetector.cpp src/modules/land_detector/VtolLandDetector.cpp src/modules/land_detector/RoverLandDetector.cpp
+source src/modules/land_detector/AirshipLandDetector.cpp src/lib/hysteresis/hysteresis.cpp
+source src/lib/geo/geo.cpp                # RoverLandDetector's get_distance_to_next_waypoint
+# parameters: the module's (LNDMC_*, LNDFW_*, LND_FLIGHT_T_*), and the six multicopter position
+# control parameters MulticopterLandDetector reads by name (MulticopterLandDetector.cpp:62-67)
+params src/modules/land_detector
+params src/modules/mc_pos_control/multicopter_stabilized_mode_params.c MPC_MANTHR_MIN
+params src/modules/mc_pos_control/multicopter_position_control_limits_params.c MPC_THR_MIN
+params src/modules/mc_pos_control/multicopter_position_control_params.c MPC_USE_HTE MPC_THR_HOVER
+params src/modules/mc_pos_control/multicopter_takeoff_land_params.c MPC_LAND_SPEED MPC_LAND_CRWL
+# RoverLandDetector, compiled with the others, declares NAV_ACC_RAD
+params src/modules/navigator/navigator_params.c NAV_ACC_RAD
+# the topics a multicopter land detector reads (LandDetector.h:176-185, MulticopterLandDetector.h:
+# 108-113), except parameter_update; vehicle_imu_status is read at the instance whose gyro the
+# sensor_selection names (instance 0 here)
+sub vehicle_local_position                 # the trigger (SubscriptionCallbackWorkItem; also every 50 ms)
+sub actuator_armed
+sub vehicle_acceleration
+sub vehicle_angular_velocity
+sub vehicle_status
+sub sensor_selection
+sub vehicle_imu_status
+sub vehicle_thrust_setpoint
+sub hover_thrust_estimate
+sub trajectory_setpoint
+sub vehicle_control_mode
+sub takeoff_status
+pub vehicle_land_detected

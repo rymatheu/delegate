@@ -1,0 +1,14 @@
+# ArduPilot sources compiled into the loiter module, relative to $ARDUPILOT_ROOT.
+# The loiter controller, and the code it calls on its step path that returns a value within the
+# call (so cannot be a signal of another stage).
+libraries/AC_WPNav/AC_Loiter.cpp       # the loiter controller: init_target, set_pilot_desired_acceleration_rad, update
+# the attitude controller's command model, called by set_pilot_desired_acceleration_rad
+# (AC_Loiter.cpp:191) and its lean limit (AC_Loiter.cpp:239, 309): command_model_rate_predictor,
+# attitude_command_model, lean_angle_max_rad, ang_vel_limit (AC_AttitudeControl.cpp:1107-1150,
+# 1419-1422), on an attitude object whose parameter members are loaded from the parameter record
+libraries/AC_AttitudeControl/AC_AttitudeControl.cpp
+libraries/AP_Math/control.cpp          # shape_angle_vel_accel (the command model), sqrt_controller (braking)
+libraries/AP_Math/AP_Math.cpp          # wrap_PI, constrain_value, is_equal
+libraries/AP_Math/vector2.cpp          # Vector2 length, is_zero
+libraries/AP_Math/vector3.cpp          # Vector3 operators
+# AC_PosControl.cpp is compiled too, through local_sources.txt (pos_real.cpp): see there.

@@ -1,0 +1,54 @@
+{
+  "module": "px4_sim_out",
+  "code_hash": "(computed by hand)",
+  "campaign": "none",
+  "kind": "hand-checked",
+  "clause": "",
+  "case": 0,
+  "step": 2,
+  "note": "Writes hand-checked-case.json for px4_sim_out, three ticks worked out from adapter.cpp: tick 0: no actuator_motors message: every PWM is the initial 1000. tick 1: controls (0.5, NaN, 1.25, -0.1): 1000 + 1000*0.5 = 1500; NaN is disarmed, 1000; 1.25 is         clipped to 1, 2000; -0.1 is clipped to 0, 1000. tick 2: no message: the PWMs of tick 1 are held (1500, 1000, 2000, 1000).",
+  "params": {},
+  "inputs": [
+    {
+      "actuator_motors_updated": "false",
+      "actuator_motors_control_0": "0x3f333333",
+      "actuator_motors_control_1": "0x3f333333",
+      "actuator_motors_control_2": "0x3f333333",
+      "actuator_motors_control_3": "0x3f333333"
+    },
+    {
+      "actuator_motors_updated": "true",
+      "actuator_motors_control_0": "0x3f000000",
+      "actuator_motors_control_1": "0x7fc00000",
+      "actuator_motors_control_2": "0x3fa00000",
+      "actuator_motors_control_3": "0xbdcccccd"
+    },
+    {
+      "actuator_motors_updated": "false",
+      "actuator_motors_control_0": "0x3f666666",
+      "actuator_motors_control_1": "0x3f666666",
+      "actuator_motors_control_2": "0x3f666666",
+      "actuator_motors_control_3": "0x3f666666"
+    }
+  ],
+  "outputs": [
+    {
+      "pwm0": "1000",
+      "pwm1": "1000",
+      "pwm2": "1000",
+      "pwm3": "1000"
+    },
+    {
+      "pwm0": "1500",
+      "pwm1": "1000",
+      "pwm2": "2000",
+      "pwm3": "1000"
+    },
+    {
+      "pwm0": "1500",
+      "pwm1": "1000",
+      "pwm2": "2000",
+      "pwm3": "1000"
+    }
+  ]
+}

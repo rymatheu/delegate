@@ -1,0 +1,275 @@
+{"tool": "harness 0.1.0 (Lean 4.35.0)",
+ "steps_run": 5000,
+ "steps_per_case": 100,
+ "seed": 5,
+ "seconds": 0.0870625,
+ "outputs_seen":
+ {"sensor_mag_z":
+  {"non_finite_steps": 0, "min_finite": -1.637465, "max_finite": 0.3604553},
+  "sensor_mag_y":
+  {"non_finite_steps": 0, "min_finite": -7.090686, "max_finite": 3.160391},
+  "sensor_mag_x":
+  {"non_finite_steps": 0, "min_finite": -14.3079, "max_finite": 97.85271},
+  "sensor_mag_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_mag_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_mag_temperature":
+  {"non_finite_steps": 231, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_mag_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 197388},
+  "sensor_mag_count": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_gyro_z":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gyro_y":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gyro_x":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gyro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_gyro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_gyro_temperature":
+  {"non_finite_steps": 5000, "min_finite": null, "max_finite": null},
+  "sensor_gyro_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_gyro_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_gyro_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gyro_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_vel_ned_valid": {"true_steps": 2366},
+  "sensor_gps_vel_n_m_s":
+  {"non_finite_steps": 92,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gps_vel_m_s":
+  {"non_finite_steps": 1741,
+   "min_finite": 0,
+   "max_finite": 17972590000000000000},
+  "sensor_gps_vel_e_m_s":
+  {"non_finite_steps": 102,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gps_vel_d_m_s":
+  {"non_finite_steps": 110,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gps_vdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1.1},
+  "sensor_gps_updated": {"true_steps": 2366},
+  "sensor_gps_timestamp_time_relative":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_gps_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_gps_time_utc_usec":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_system_error":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_spoofing_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_selected_rtcm_instance":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_satellites_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 10},
+  "sensor_gps_s_variance_m_s":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.25},
+  "sensor_gps_rtcm_msg_used":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_injection_rate":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_rtcm_crc_failed": {"true_steps": 0},
+  "sensor_gps_noise_per_ms":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_longitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000007625781,
+   "max_finite": 0.000007568359},
+  "sensor_gps_longitude_deg":
+  {"non_finite_steps": 0, "min_finite": -214.7484, "max_finite": 214.7484},
+  "sensor_gps_latitude_deg_lo":
+  {"non_finite_steps": 0,
+   "min_finite": -0.000007614258,
+   "max_finite": 0.000007525976},
+  "sensor_gps_latitude_deg":
+  {"non_finite_steps": 0, "min_finite": -214.7484, "max_finite": 214.7484},
+  "sensor_gps_jamming_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_jamming_indicator":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_offset":
+  {"non_finite_steps": 2366, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading_accuracy":
+  {"non_finite_steps": 2366, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_heading":
+  {"non_finite_steps": 2366, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_hdop":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.7},
+  "sensor_gps_fix_type":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 3},
+  "sensor_gps_epv": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.8},
+  "sensor_gps_eph": {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0.5},
+  "sensor_gps_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_cog_rad":
+  {"non_finite_steps": 72, "min_finite": -3.141593, "max_finite": 3.141593},
+  "sensor_gps_c_variance_rad":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_automatic_gain_control":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_authentication_state":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m_lo":
+  {"non_finite_steps": 86, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_msl_m":
+  {"non_finite_steps": 86,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_gps_altitude_ellipsoid_m_lo":
+  {"non_finite_steps": 86, "min_finite": 0, "max_finite": 0},
+  "sensor_gps_altitude_ellipsoid_m":
+  {"non_finite_steps": 86,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_baro_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_baro_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_baro_temperature":
+  {"non_finite_steps": 66,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_baro_pressure":
+  {"non_finite_steps": 96,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_baro_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_baro_device_id":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 6620172},
+  "sensor_baro_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 1},
+  "sensor_accel_z":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_accel_y":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_accel_x":
+  {"non_finite_steps": 0,
+   "min_finite": -340282300000000000000000000000000000000,
+   "max_finite": 340282300000000000000000000000000000000},
+  "sensor_accel_timestamp_sample":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_accel_timestamp":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 4294967000},
+  "sensor_accel_temperature":
+  {"non_finite_steps": 5000, "min_finite": null, "max_finite": null},
+  "sensor_accel_samples":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_error_count":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_device_id":
+  {"non_finite_steps": 0, "min_finite": 1310988, "max_finite": 1310988},
+  "sensor_accel_count":
+  {"non_finite_steps": 0, "min_finite": 1, "max_finite": 1},
+  "sensor_accel_clip_counter_2":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_1":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0},
+  "sensor_accel_clip_counter_0":
+  {"non_finite_steps": 0, "min_finite": 0, "max_finite": 0}},
+ "module": "px4_sim_in",
+ "kind": "tested",
+ "id": "20261118T233201Z-seed5",
+ "guarantee":
+ [{"violations": 0,
+   "verdict": "passed",
+   "text": "sensor_accel_count = 1 ∧ sensor_gyro_count = 1",
+   "smallest_margin": null,
+   "contract_hash":
+   "824cb8cce0f9d626390e6d8647b8697438bfabe90b525ab6c1a810df0e0d551f",
+   "clause": "imu_every_tick",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_x = imu2_gx ∧ sensor_gyro_y = imu2_gy ∧ sensor_gyro_z = imu2_gz",
+   "smallest_margin": null,
+   "contract_hash":
+   "2dbbb915028755d7279d18a696f217dc21adc3121fc8fc3e49b5c4d761ee9956",
+   "clause": "gyro_is_sample",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_accel_x = imu2_ax ∧ sensor_accel_y = imu2_ay ∧ sensor_accel_z = imu2_az",
+   "smallest_margin": null,
+   "contract_hash":
+   "c9b531e73fbc4c206bd61698b590e93b6d340a002b2847793888cf24b554bc30",
+   "clause": "accel_is_sample",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "sensor_gyro_timestamp_sample = t_us ∧ sensor_accel_timestamp_sample = t_us",
+   "smallest_margin": null,
+   "contract_hash":
+   "a2f255841eb4aa46309a47af73fe8bcb78876de0f5eddb96d93e7ce7a5f7303a",
+   "clause": "stamped",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "(sensor_baro_count = 1) = baro_fresh ∧ (sensor_mag_count = 1) = mag_fresh ∧ sensor_gps_updated = gps_fresh",
+   "smallest_margin": null,
+   "contract_hash":
+   "ba41c67fccc9e0b02cdcb30373c203451de9567032f85af5c5e1eeface253aa8",
+   "clause": "slow_when_fresh",
+   "checked": 5000},
+  {"violations": 0,
+   "verdict": "passed",
+   "text":
+   "¬mag_fresh ∨ |sensor_mag_x * 1000 - mag_x| ≤ 0.02 ∧ |sensor_mag_y * 1000 - mag_y| ≤ 0.02 ∧ |sensor_mag_z * 1000 - mag_z| ≤ 0.02",
+   "smallest_margin_case":
+   {"step": 86,
+    "sha256":
+    "df1f671ca00076fd54cfd53b000e2066bee0efbc5258eeb4f5a4dd5379f15ad8",
+    "file":
+    "px4/modules/px4_sim_in/evidence/tested/20261118T233201Z-seed5/smallest-margin-mag_gauss.json",
+    "case": 25},
+   "smallest_margin": 0.01999618,
+   "contract_hash":
+   "5478d29dd4dd84305088efcec7b4aa7c30bef8dbc6e9c7a775899e71fd684c13",
+   "clause": "mag_gauss",
+   "checked": 5000}],
+ "flags":
+ "-std=gnu++14 -O2 -ffp-contract=off -fno-fast-math -ftrapping-math -fno-exceptions",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+ "command": "harness test px4_sim_in --seed 5 --cases 50 --steps 100",
+ "code_hash":
+ "91e8c3cfa3379d41150cefa7f474884db43fbdb1518035bc7542c22cd71cbbf8",
+ "cases_skipped": 0,
+ "cases": 50,
+ "assume":
+ ["samples_finite: finite(imu2_ax) ∧ finite(imu2_ay) ∧ finite(imu2_az) ∧ finite(imu2_gx) ∧ finite(imu2_gy) ∧ finite(imu2_gz)",
+  "mag_physical: ¬mag_fresh ∨ |mag_x| ≤ 100000 ∧ |mag_y| ≤ 100000 ∧ |mag_z| ≤ 100000"]}

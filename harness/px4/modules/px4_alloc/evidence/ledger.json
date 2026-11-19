@@ -1,0 +1,582 @@
+{"records":
+ [{"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "668cadb8d70ba82b1bc74173aae41d23c019ba4eba0127dcd6e8b53ce74a7418",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261118T233005Z-seed97.json",
+   "kind": "tested",
+   "date": "20261118T233005Z",
+   "contract_hash":
+   "d81d488ac3a1ad4f56ad876cc1c34fb713a5d7715c706dcbe5064720e1a7f6fe",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_in_documented_range",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "668cadb8d70ba82b1bc74173aae41d23c019ba4eba0127dcd6e8b53ce74a7418",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261118T233005Z-seed97.json",
+   "kind": "tested",
+   "date": "20261118T233005Z",
+   "contract_hash":
+   "a2cfc3a7e5e745297640d36d665bf1c0668440037d5dec9a1ad39cb8dd6c239f",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "668cadb8d70ba82b1bc74173aae41d23c019ba4eba0127dcd6e8b53ce74a7418",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261118T233005Z-seed97.json",
+   "kind": "tested",
+   "date": "20261118T233005Z",
+   "contract_hash":
+   "4bf215b3b467c653a06394438ab16da76f8dc2e7e15f08c5e12797872df9f55e",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_answer_torque",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "668cadb8d70ba82b1bc74173aae41d23c019ba4eba0127dcd6e8b53ce74a7418",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261118T233005Z-seed97.json",
+   "kind": "tested",
+   "date": "20261118T233005Z",
+   "contract_hash":
+   "d2f08d956c0f8e16cdaf1444f493cfdfd49f21400db016364d1a05d5ce08c4f9",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_stamped",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "668cadb8d70ba82b1bc74173aae41d23c019ba4eba0127dcd6e8b53ce74a7418",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261118T233005Z-seed97.json",
+   "kind": "tested",
+   "date": "20261118T233005Z",
+   "contract_hash":
+   "84bf2930e0b2f307ff3d0b41e21aff619b060beaa13c92ca98ece71bcf1d4bee",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "no_px4_error",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "d81d488ac3a1ad4f56ad876cc1c34fb713a5d7715c706dcbe5064720e1a7f6fe",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_in_documented_range",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "a2cfc3a7e5e745297640d36d665bf1c0668440037d5dec9a1ad39cb8dd6c239f",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_nonnegative_unless_reversible",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "4bf215b3b467c653a06394438ab16da76f8dc2e7e15f08c5e12797872df9f55e",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_answer_torque",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "d2f08d956c0f8e16cdaf1444f493cfdfd49f21400db016364d1a05d5ce08c4f9",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "motors_stamped",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": null,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "84bf2930e0b2f307ff3d0b41e21aff619b060beaa13c92ca98ece71bcf1d4bee",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "no_px4_error",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "47eaebb207552844f3c7fce0d86db1e37a96ffc0941e76402c50406226208210",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_actuator_motors_reversible_flags",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0b4d0e1f130e5df328f548b4b5dbc601d841e3c0280303c4d9daa6fd03e9a6a8",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_0",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0f7a555a75269149d633ef1f312bcc56565f025bebeec0c36e054be935b4790a",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_1",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0ef8ce5f56a2b32308fd5b0f02b9ce62a7c1032867f140f8e8ef928e3665564d",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_2",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "93287d032846bee72fcb90110f23b49df7f9006f52c4826353ffa69746fe4831",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_3",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "da2be219ddbbd38582cdfa04cdcc041b5c49c49ac4c6bb93a9dfcde05443bea4",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_4",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "c47205bed339005af08c07615ba3267b1e1364f52f7e35745eaa879e3ee49e9b",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_5",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "18517c24c3b11efe5510371b4e58051211f9f0468c0cdb23ef30871f6b6fd95b",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_6",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "85ad6d9412f32cb947c8059bf21526be838b724d3fb5fcb034da8ea10c68ce7b",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_7",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "7e4d6f39286a8acd01b863199c171ed40f0403adeccea3aa8fb845e5b5553d1d",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_8",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "9a975ed6cc5fe8c84c8ecbb64af20b4eab533132173727c7b260003427d709ba",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_9",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "048f5f35914d7b111ce616a6a1a9a3ad28b161047a7b23d6a9db5e3ec044d6bb",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_10",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "0e61909e55c1d0fb5cad868b168d2b79d8d1fdd0540d3b9deab37bcb7777c9ab",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_11",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "d26c297a359487e3bf9b8794786632f197801808838e615ee3cad4d7528adb3b",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_12",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "a8fdfdd395059fa30dc315dda7c4aa0ac7e1eb5056e02c2905c2b90f3133ee07",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_13",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "a21c3c4198ca07b61f35d070dcd103164c4e7bf961c80e28ed68e11e8077b820",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_14",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 125,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "7db2febb618e810667b88c82cca6a6d1773b779fc5c8762f2298a10c2630426b",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_actuator_saturation_15",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "c4ceb7fed6ea6cab47e9edcb2cde786fc2a76aeff9c438459105b1820b6e8f90",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_handled_motor_failure_mask",
+   "checked": 3000,
+   "cases": 30},
+  {"violations": 0,
+   "verdict": "passed",
+   "tool": "harness 0.1.0 (Lean 4.35.0)",
+   "steps_per_case": 100,
+   "smallest_margin": 0,
+   "seed": 97,
+   "result_hash":
+   "320f80519a200c12a721bec118408f6a4bae59540feae56fb46d6d75da47b871",
+   "result_file":
+   "px4/modules/px4_alloc/evidence/tested/20261119T182504Z-seed97.json",
+   "kind": "tested",
+   "date": "20261119T182504Z",
+   "contract_hash":
+   "20044c8c30c2474028ef47580cec5fc767bf18bff085da1c65806fa572c22f32",
+   "command": "harness test px4_alloc --seed 97 --cases 30 --steps 100",
+   "code_hash":
+   "7bc16048d73df9107dcf62c7f1347d5d63fb5797ce4109a5cec4d0b1d1686046",
+   "clause": "width_control_allocator_status_motor_stop_mask",
+   "checked": 3000,
+   "cases": 30}],
+ "module": "px4_alloc"}

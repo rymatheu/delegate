@@ -1,0 +1,44 @@
+# px4_sensors: PX4's sensors module (src/modules/sensors), unmodified: the sensor voting, VehicleIMU,
+# VehicleAngularVelocity, VehicleAcceleration, VehicleAirData, VehicleMagnetometer, VehicleGPSPosition
+# and VehicleOpticalFlow work items it starts, as in the px4_sitl default build (CONFIG_SENSORS_*).
+main sensors
+source src/modules/sensors/sensors.cpp src/modules/sensors/voted_sensors_update.cpp
+source src/modules/sensors/vehicle_imu/VehicleIMU.cpp
+source src/modules/sensors/vehicle_angular_velocity/VehicleAngularVelocity.cpp
+source src/modules/sensors/vehicle_acceleration/VehicleAcceleration.cpp
+source src/modules/sensors/vehicle_air_data/VehicleAirData.cpp
+source src/modules/sensors/vehicle_magnetometer/VehicleMagnetometer.cpp
+source src/modules/sensors/vehicle_gps_position/VehicleGPSPosition.cpp src/modules/sensors/vehicle_gps_position/gps_blending.cpp
+source src/modules/sensors/vehicle_optical_flow/VehicleOpticalFlow.cpp
+source src/modules/sensors/data_validator/DataValidator.cpp src/modules/sensors/data_validator/DataValidatorGroup.cpp
+source src/lib/sensor_calibration/Accelerometer.cpp src/lib/sensor_calibration/Barometer.cpp
+source src/lib/sensor_calibration/Gyroscope.cpp src/lib/sensor_calibration/Magnetometer.cpp
+source src/lib/sensor_calibration/Utilities.cpp
+source src/lib/conversion/rotation.cpp src/lib/world_magnetic_model/geo_mag_declination.cpp
+source src/lib/airspeed/airspeed.cpp src/lib/geo/geo.cpp src/lib/atmosphere/atmosphere.cpp
+include src/modules/sensors
+params src/modules/sensors
+params src/modules/sensors/vehicle_imu
+params src/modules/sensors/vehicle_angular_velocity
+params src/modules/sensors/vehicle_acceleration
+params src/modules/sensors/vehicle_air_data
+params src/modules/sensors/vehicle_gps_position
+# raw sensors, instance 0, as a simulator driver publishes them
+sub sensor_accel slots 1                    # one sample per tick (the bridge publishes the newest)
+sub sensor_gyro slots 1
+sub sensor_baro slots 1
+sub sensor_mag slots 1
+sub sensor_gps
+sub vehicle_control_mode
+pub vehicle_angular_velocity
+pub vehicle_acceleration
+pub vehicle_imu
+pub sensor_combined
+pub vehicle_air_data
+pub vehicle_magnetometer
+pub vehicle_gps_position
+params src/lib/systemlib/system_params.c SYS_HAS_BARO SYS_HAS_GPS SYS_HAS_MAG
+params src/lib/systemlib/system_params.c SYS_CAL_TDEL SYS_CAL_TMAX SYS_CAL_TMIN SYS_FAC_CAL_MODE
+pub sensor_selection
+pub vehicle_imu_status                     # for the land detector
+pub sensors_status_imu

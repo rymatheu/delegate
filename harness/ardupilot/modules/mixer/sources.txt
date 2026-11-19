@@ -1,0 +1,10 @@
+# ArduPilot sources compiled into the mixer module, relative to $ARDUPILOT_ROOT.
+# The quad-X motor mixer (AP_MotorsMatrix and its base classes) and the code it calls on the step
+# path of AP_MotorsMulticopter::output().
+libraries/AP_Motors/AP_Motors_Class.cpp                 # AP_Motors: armed, limits, rc_write
+libraries/AP_Motors/AP_MotorsMulticopter.cpp            # output(), throttle filter, output_logic, PWM
+libraries/AP_Motors/AP_MotorsMatrix.cpp                 # frame setup, output_armed_stabilizing, output_to_motors
+libraries/AP_Motors/AP_Motors_Thrust_Linearization.cpp  # thrust curve, battery-voltage lift compensation
+libraries/AP_Math/AP_Math.cpp                           # constrain_value, safe_sqrt, calc_lowpass_alpha_dt
+libraries/Filter/LowPassFilter.cpp                      # throttle filter, battery-voltage filter, slew filter
+libraries/Filter/DerivativeFilter.cpp                   # throttle slew detector

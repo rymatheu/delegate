@@ -1,0 +1,41 @@
+{
+  "records": [
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 400,
+      "smallest_margin": 0,
+      "seed": 1,
+      "result_hash": "af19c094c350a80ae74a66e12f0c78b63ed6973fda263148aa2e4c1a1b84ec36",
+      "result_file": "px4/modules/px4_drive_cmd/evidence/tested/20261119T002923Z-seed1.json",
+      "kind": "tested",
+      "date": "20261119T002923Z",
+      "contract_hash": "b3fc53478fc6af8ff9614de3df4e4c34e82e5b79ff2516a440f6c62257cff408",
+      "command": "harness test px4_drive_cmd --seed 1 --cases 20 --steps 400",
+      "code_hash": "bac371a34d89f4c64d60b6561bff9210ae72946893bc16053ba156ed70ef204a",
+      "clause": "one_command",
+      "checked": 2800,
+      "cases": 20
+    },
+    {
+      "violations": 0,
+      "verdict": "passed",
+      "tool": "harness 0.1.0 (Lean 4.35.0)",
+      "steps_per_case": 400,
+      "smallest_margin": null,
+      "seed": 1,
+      "result_hash": "af19c094c350a80ae74a66e12f0c78b63ed6973fda263148aa2e4c1a1b84ec36",
+      "result_file": "px4/modules/px4_drive_cmd/evidence/tested/20261119T002923Z-seed1.json",
+      "kind": "tested",
+      "date": "20261119T002923Z",
+      "contract_hash": "62431d18944e6eac0ddb2019794d503a9f278bf6f5c0c8750688156a4e45dd6c",
+      "command": "harness test px4_drive_cmd --seed 1 --cases 20 --steps 400",
+      "code_hash": "bac371a34d89f4c64d60b6561bff9210ae72946893bc16053ba156ed70ef204a",
+      "clause": "gcs_command",
+      "checked": 2800,
+      "cases": 20
+    }
+  ],
+  "module": "px4_drive_cmd"
+}

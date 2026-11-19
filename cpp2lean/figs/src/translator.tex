@@ -1,0 +1,56 @@
+% ==================================================================
+%  Translator -- the stages of cpp2lean. Top row: C++ sources are parsed by
+%  clang into the semantic tree (templates instantiated, overloads
+%  resolved, every implicit conversion an explicit node). The tree enters
+%  the translator lane, whose stages run right to left under it (locations
+%  and typedefs, types and records, bodies) and then left to right
+%  (emission, the Lean model); anything outside the subset leaves the
+%  bodies stage as a rejection with its source location.
+%  one sigconf full text width (about 15.5 cm wide, 3.6 cm tall), placed as
+%  a figure* across both text areas, \input{figs/translator} at natural
+%  size (no \resizebox), pdfLaTeX
+%  Preamble:  \usepackage{tikz}  \usetikzlibrary{arrows.meta,calc,positioning,fit,backgrounds}
+%  TikZ only, no image. Titles \footnotesize, bodies \scriptsize, nothing
+%  smaller. Palette shared with figs/pipeline.tex; style names are
+%  prefixed tr so both figures can live in one document.
+% ==================================================================
+\definecolor{fwInk}{HTML}{22252A}%
+\definecolor{fwMute}{HTML}{8A8F96}%
+\definecolor{fwHair}{HTML}{C9CCD1}%
+\definecolor{fwOchre}{HTML}{C4860F}%
+\definecolor{fwBlue}{HTML}{1E3F7C}%
+\begin{tikzpicture}[node distance=3mm and 6mm, line cap=round, line join=round,
+  trbox/.style={draw=fwInk, line width=0.5pt, rounded corners=2pt, fill=white, align=center, font=\footnotesize, inner sep=4pt, text=fwInk},
+  trstage/.style={trbox, fill=fwHair!25, minimum height=7.5mm},
+  trdata/.style={trbox, fill=fwBlue!8, minimum height=7.5mm},
+  trside/.style={trbox, fill=fwOchre!10, minimum height=7mm, font=\scriptsize},
+  trlane/.style={draw=fwHair, fill=fwHair!12, rounded corners=3pt, line width=0.4pt, inner sep=5pt},
+  trlanelbl/.style={font=\scriptsize\itshape, text=fwMute, anchor=south west, inner sep=1pt},
+  trarr/.style={-{Stealth[length=2mm,width=1.6mm]}, line width=0.6pt, draw=fwInk},
+  trdarr/.style={trarr, dashed, draw=fwMute},
+]
+% top row
+\node[trdata] (src) {C++ sources\\[-1pt]{\scriptsize unity file, headers}};
+\node[trstage, right=of src] (clang) {clang++\\[-1pt]{\scriptsize \texttt{-fsyntax-only}, AST as JSON}};
+\node[trdata, right=of clang] (ast) {Semantic tree\\[-1pt]{\scriptsize types, casts, instantiations}};
+% translator lane, right to left under the tree, then left to right
+\node[trstage, below=5mm of ast, xshift=-18mm, minimum width=32mm] (s1) {locations, typedefs\\[-1pt]{\scriptsize \texttt{fill\_locations}, \texttt{collect\_typedefs}}};
+\node[trstage, left=of s1, minimum width=32mm] (s2) {types and records\\[-1pt]{\scriptsize \texttt{collect\_types}, \texttt{fill\_records}}};
+\node[trstage, left=of s2, minimum width=32mm] (s3) {bodies\\[-1pt]{\scriptsize one handler per node kind}};
+\node[trstage, below=4mm of s3, minimum width=32mm] (s4) {emission\\[-1pt]{\scriptsize \texttt{emit\_structure}, \texttt{emit\_enum}, defs}};
+\node[trdata, right=of s4, minimum width=32mm] (out) {\texttt{Name.lean}\\[-1pt]{\scriptsize + \texttt{Name.signatures.json}}};
+\node[trside, right=of out, minimum width=30mm] (rej) {rejections\\[-1pt]\texttt{file:line:col: rejected: ...}\\[-1pt]exit status 2};
+% arrows
+\draw[trarr] (src) -- (clang);
+\draw[trarr] (clang) -- (ast);
+\draw[trarr] (ast.south) |- ($(ast.south)!0.5!(s1.north)$) -| (s1.north);
+\draw[trarr] (s1) -- (s2);
+\draw[trarr] (s2) -- (s3);
+\draw[trarr] (s3) -- (s4);
+\draw[trarr] (s4) -- (out);
+\draw[trdarr] (s3.east) -- ++(0,-5.5mm) -| (rej.north);
+\begin{scope}[on background layer]
+\node[trlane, fit=(s1)(s2)(s3)(s4), inner sep=5pt] (lane) {};
+\node[trlanelbl] at (lane.north west) {cpp2lean.py, syntax directed, no search, no heuristics};
+\end{scope}
+\end{tikzpicture}%

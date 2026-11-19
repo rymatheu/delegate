@@ -1,0 +1,10 @@
+# build outputs and local environments (never committed)
+.lake/
+build/
+out/
+deps/
+.venv*/
+__pycache__/
+*.pyc
+.DS_Store
+*.log
