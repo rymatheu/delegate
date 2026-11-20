@@ -4,6 +4,9 @@
 set -euo pipefail
 HARNESS="$(cd "$(dirname "$0")/../../.." && pwd -P)"
 OUT="$HARNESS/build/modules/truth_est"
+# the interpreter: the simulator's Python (sim/setup.sh), the interpreter the launcher runs and the code hash names, never whatever `python3` is first on PATH
+PY="$HARNESS/../sim/.venv/bin/python"
+[ -x "$PY" ] || { echo "truth_est/build.sh: no simulator environment at $PY: run sim/setup.sh at the repository root" >&2; exit 1; }
 mkdir -p "$OUT"
 (cd "$HARNESS" && .lake/build/bin/harness gen truth_est > /dev/null)
 {
@@ -11,10 +14,11 @@ mkdir -p "$OUT"
            "$HARNESS/build/gen/truth_est/module_schema.json"; do
     printf '%s  %s\n' "$(shasum -a 256 "$f" | cut -d' ' -f1)" "${f#"$HARNESS"/}"
   done
-  echo "interpreter: $(python3 --version)"
+  echo "interpreter: $("$PY" --version)"
 } > "$OUT/code_inputs.txt"
 H="$(shasum -a 256 "$OUT/code_inputs.txt" | cut -d' ' -f1)"
-printf '#!/bin/sh\nexec /usr/bin/env TRUTH_EST_HASH=%s python3 -I -B %q "$@"\n' "$H" \
-  "$HARNESS/ardupilot/modules/truth_est/adapter.py" > "$OUT/truth_est"
+# the launcher finds the harness and the interpreter from its own place, so the build tree can be moved
+printf '#!/bin/sh\nH="$(cd "$(dirname "$0")/../../.." && pwd)"\nexec /usr/bin/env TRUTH_EST_HASH=%s "$H/../sim/.venv/bin/python" -I -B "$H/ardupilot/modules/truth_est/adapter.py" "$@"\n' \
+  "$H" > "$OUT/truth_est"
 chmod +x "$OUT/truth_est"
 echo "built $OUT/truth_est (code hash $H)"

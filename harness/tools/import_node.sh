@@ -80,7 +80,7 @@ echo "copied $FROM"
 echo "    -> $STACK/$KIND/$NAME (without evidence/)"
 
 # 2 and 3
-python3 -I - "$SRC" "$HARNESS" "$KIND" "$NAME" "$STACK" <<'PY'
+"$HARNESS/../sim/.venv/bin/python" -I - "$SRC" "$HARNESS" "$KIND" "$NAME" "$STACK" <<'PY'
 import os, re, sys
 
 SRC, HARNESS, KIND, NAME, STACK = sys.argv[1:]

@@ -23,6 +23,9 @@ set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 HARNESS="$(cd "$HERE/.." && pwd)"
 SIM="$(cd "$HARNESS/../sim" && pwd)"
+# the interpreter: the simulator's Python (sim/setup.sh), never whatever `python3` is first on PATH
+PY="${HARNESS_PYTHON:-$SIM/.venv/bin/python}"
+[ -x "$PY" ] || { echo "$(basename "$0"): no simulator environment at $PY: run sim/setup.sh at the repository root" >&2; exit 1; }
 scenario=single; udp_port=14550; video_port=5600; pose_port=14601; out=""; record=0; keep=0; video=1
 case "${1:-}" in
   abreast|staggered|single) scenario="$1"; shift ;;
@@ -100,7 +103,7 @@ if [ "$video" = 1 ]; then
   fi
 fi
 cd "$HARNESS"
-python3 -I -B "$HERE/qgc_bridge.py" "$scenario" --udp-port "$udp_port" ${pose_arg[@]+"${pose_arg[@]}"} &
+"$PY" -I -B "$HERE/qgc_bridge.py" "$scenario" --udp-port "$udp_port" ${pose_arg[@]+"${pose_arg[@]}"} &
 PID=$!
 RC=0; wait "$PID" || RC=$?
 PID=""

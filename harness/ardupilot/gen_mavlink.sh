@@ -16,6 +16,9 @@
 set -euo pipefail
 
 HARNESS="$(cd "$(dirname "$0")/.." && pwd)"
+# the interpreter: the simulator's Python (sim/setup.sh), never whatever `python3` is first on PATH
+PY="${HARNESS_PYTHON:-$HARNESS/../sim/.venv/bin/python}"
+[ -x "$PY" ] || { echo "$(basename "$0"): no simulator environment at $PY: run sim/setup.sh at the repository root" >&2; exit 1; }
 ARDUPILOT_ROOT="${ARDUPILOT_ROOT:-$HARNESS/deps/ardupilot}"
 MAVLINK_ROOT="${MAVLINK_ROOT:-$HARNESS/deps/mavlink}"
 OUT="$HARNESS/build/gen/mavlink"
@@ -30,7 +33,7 @@ HAVE="$(git -C "$MAVLINK_ROOT" rev-parse HEAD)"
 rm -rf "$OUT"
 mkdir -p "$OUT/include/mavlink/v2.0"
 DATE="$(TZ=UTC git -C "$MAVLINK_ROOT" log -1 --date=format-local:'%a %b %d %Y' --format=%cd HEAD)"
-python3 -I -c '
+"$PY" -I -c '
 import sys, time
 sys.path.insert(0, sys.argv[1])
 sys.dont_write_bytecode = True

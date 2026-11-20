@@ -15,6 +15,9 @@ set -euo pipefail
 NAME=supervisor
 HERE="$(cd "$(dirname "$0")" && pwd)"
 HARNESS="$(cd "$HERE/../../.." && pwd)"
+# the interpreter: the simulator's Python (sim/setup.sh), never whatever `python3` is first on PATH
+PY="${HARNESS_PYTHON:-$HARNESS/../sim/.venv/bin/python}"
+[ -x "$PY" ] || { echo "$(basename "$0"): no simulator environment at $PY: run sim/setup.sh at the repository root" >&2; exit 1; }
 ARDUPILOT_ROOT="${ARDUPILOT_ROOT:-$HARNESS/deps/ardupilot}"
 ARDUPILOT_ROOT="$(cd "$ARDUPILOT_ROOT" && pwd -P)"
 CXX="${CXX:-clang++}"
@@ -28,7 +31,7 @@ mkdir -p "$OUT/obj" "$OUT/cfg" "$OUT/log" "$GEN"
 (cd "$HARNESS" && "$HARNESS_BIN" gen "$NAME" > /dev/null)
 # (harness gen rewrites the header; keep its old time stamp when its text did not change)
 # the parameter record's fields by name, for the adapter (AP_Param is set by name)
-python3 -I - "$GEN/module_records.h" > "$GEN/param_table.inc" <<'PY'
+"$PY" -I - "$GEN/module_records.h" > "$GEN/param_table.inc" <<'PY'
 import re, sys
 txt = open(sys.argv[1]).read()
 body = re.search(r'struct Params \{(.*?)\};', txt, re.S).group(1)
@@ -38,7 +41,7 @@ for ty, name in re.findall(r'^\s*(\w+)\s+(\w+);', body, re.M):
     print('    {"%s", offsetof(Params, %s), \'%s\'},' % (name, name, kind))
 PY
 # the f32 output fields, for the poison trap's scan (adapter.cpp)
-python3 -I - "$GEN/module_records.h" > "$GEN/output_f32.inc" <<'PY'
+"$PY" -I - "$GEN/module_records.h" > "$GEN/output_f32.inc" <<'PY'
 import re, sys
 txt = open(sys.argv[1]).read()
 body = re.search(r'struct Output \{(.*?)\};', txt, re.S).group(1)

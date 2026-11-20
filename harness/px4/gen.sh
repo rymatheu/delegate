@@ -66,7 +66,7 @@ env PYTHON_EXECUTABLE="$PY" KCONFIG_CONFIG="$OUT/kconfig/boardconfig" PLATFORM=p
   echo "commit: $(git -C "$PX4_ROOT" rev-parse HEAD)"
   echo "submodule src/lib/events/libevents: $(git -C "$PX4_ROOT/src/lib/events/libevents" rev-parse HEAD)"
   echo "python: $("$PY" --version)"
-  "$VENV/bin/pip" freeze | grep -i -E 'empy|genmsg|kconfiglib|yaml|jinja2'
+  uv pip freeze -q --python "$PY" | grep -i -E 'empy|genmsg|kconfiglib|yaml|jinja2'
 } > "$OUT/source.txt"
 echo "generated $OUT: $(ls "$OUT/uORB/topics" | wc -l | tr -d ' ') topic headers"
 cat "$OUT/source.txt"

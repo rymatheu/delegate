@@ -5,6 +5,7 @@
 #
 # Clones the repository's current HEAD (`git clone` from the local repository this script is in) into a temporary
 # directory (under $TMPDIR, default /tmp), then runs there exactly the README's build steps:
+#   (with a `python3` that only fails first on PATH: no step may use the PATH one)
 #   tools/fetch_deps.sh  (ARDUPILOT_SRC, PX4_SRC, MAVLINK_SRC are honored: set them to reuse local clones)
 #   ../sim/setup.sh
 #   LEAN_NUM_THREADS=1 lake build
@@ -55,6 +56,14 @@ abort() { echo FAIL; exit 1; }
 echo "fresh clone of HEAD ${HEAD:0:12} in $WORK"
 step clone bash -c 'git clone -q "$0" "$1" && git -C "$1" checkout -q --detach "$2"' "$ROOT" "$CLONE" "$HEAD" || abort
 H="$CLONE/harness"
+# No step may depend on the `python3` (or `python`) that happens to be first on PATH: every script uses the
+# environments this repository makes (sim/.venv, build/px4venv). Here a stand-in that only fails is put first on PATH.
+mkdir -p "$WORK/no-python"
+for n in python3 python; do
+  printf '#!/bin/sh\necho "check_fresh_clone: the PATH %s was called: $*" >&2\nexit 97\n' "$n" > "$WORK/no-python/$n"
+  chmod +x "$WORK/no-python/$n"
+done
+export PATH="$WORK/no-python:$PATH"
 HB="$H/.lake/build/bin/harness"
 cd "$H" || abort
 
@@ -80,7 +89,7 @@ hashes() {
       echo "  $name: no code hash (not built?)"; bad=1
     elif [ ! -f "$ledger" ]; then
       echo "  $name: no ledger $ledger"; bad=1
-    elif python3 -I -c 'import json,sys; sys.exit(0 if sys.argv[2] in {r.get("code_hash") for r in json.load(open(sys.argv[1]))["records"]} else 1)' \
+    elif "$CLONE/sim/.venv/bin/python" -I -c 'import json,sys; sys.exit(0 if sys.argv[2] in {r.get("code_hash") for r in json.load(open(sys.argv[1]))["records"]} else 1)' \
          "$ledger" "$got"; then
       echo "  $name: ${got:0:16} equals its ledger's"
     else

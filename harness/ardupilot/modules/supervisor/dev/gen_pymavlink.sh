@@ -3,9 +3,12 @@
 # pymavlink's mavgen from deps/mavlink (read only).
 set -euo pipefail
 HARNESS="$(cd "$(dirname "$0")/../../../.." && pwd)"
+# the interpreter: the simulator's Python (sim/setup.sh), never whatever `python3` is first on PATH
+PY="${HARNESS_PYTHON:-$HARNESS/../sim/.venv/bin/python}"
+[ -x "$PY" ] || { echo "$(basename "$0"): no simulator environment at $PY: run sim/setup.sh at the repository root" >&2; exit 1; }
 mkdir -p "$HARNESS/build/gen/supervisor/py"
 cd "$HARNESS"
-python3 -I -c "
+"$PY" -I -c "
 import sys
 sys.path.insert(0, 'deps/mavlink')
 sys.dont_write_bytecode = True
