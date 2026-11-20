@@ -1,0 +1,15 @@
+serve ap_full, code hash fe3a4a3eb10c5aa4f313570ea3d2c943db7fcedfe3584ffd7b76f4f57ffc5244
+summary: 1 inits, 6890 steps
+  ap_full: assumption failed in 0 cases; guarantee violations: none
+  ap_full/plant_sim: assumption failed in 0 cases; guarantee violations: none
+  ap_full/truth_est: assumption failed in 0 cases; guarantee violations: none
+  ap_full/rate_c: assumption failed in 0 cases; guarantee violations: none
+  ap_full/rate_c/roll: assumption failed in 0 cases; guarantee violations: none
+  ap_full/rate_c/pitch: assumption failed in 0 cases; guarantee violations: none
+  ap_full/rate_c/yaw: assumption failed in 0 cases; guarantee violations: none
+  ap_full/mixer: assumption failed in 0 cases; guarantee violations: none
+  ap_full/supervisor: assumption failed in 0 cases; guarantee violations: none
+  ap_full/guidance: assumption failed in 0 cases; guarantee violations: none
+  ap_full/loiter: assumption failed in 0 cases; guarantee violations: none
+  ap_full/position: assumption failed in 0 cases; guarantee violations: none
+  ap_full/attitude: assumption failed in 0 cases; guarantee violations: none
