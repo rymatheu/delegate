@@ -55,7 +55,7 @@ if lsof -nP -iUDP:"$PORT" > /dev/null 2>&1; then echo "fly_gorge.sh: UDP $PORT i
 for f in .lake/build/bin/harness build/modules/plant_sim/plant_sim build/modules/plant_formation/plant_formation \
          build/modules/px4_mavlink/px4_mavlink \
          build/modules/px4_navigator/px4_navigator build/px4venv/bin/python; do
-  [ -e "$HARNESS/$f" ] || { echo "fly_gorge.sh: $f is missing; build first (README.md, Build)" >&2; exit 1; }
+  [ -e "$HARNESS/$f" ] || { echo "fly_gorge.sh: $f is missing: the build did not finish. Run tools/build_modules.sh sim and tools/build_modules.sh px4 (in harness/); each names what is missing or the step that failed." >&2; exit 1; }
 done
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/px4_fly_gorge.XXXXXX")"
 GCS=""; RELAY=""

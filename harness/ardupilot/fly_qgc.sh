@@ -53,7 +53,7 @@ for f in .lake/build/bin/harness build/modules/supervisor/supervisor build/modul
          build/gen/supervisor/py/apm.py; do
   if [ ! -e "$HARNESS/$f" ]; then echo "fly_qgc.sh: $f is missing" >&2; missing=1; fi
 done
-[ "$missing" = 0 ] || { echo "fly_qgc.sh: build first (README.md, \"Build\"); nothing was started" >&2; exit 1; }
+[ "$missing" = 0 ] || { echo "fly_qgc.sh: nothing was started. The build did not finish: run tools/build_modules.sh sim and tools/build_modules.sh ardupilot (in harness/); each names what is missing or the step that failed, and ends with \"OK\" when done." >&2; exit 1; }
 case "$scenario" in
   single) what="one X500 (ap_full_ekf), MAVLink system 1; plan sim/plans/gorge.plan" ;;
   abreast) what="two X500s side by side (ap_formation), systems 1 and 2; plans sim/plans/formation-abreast-v1.plan, -v2.plan" ;;

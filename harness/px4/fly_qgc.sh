@@ -72,7 +72,7 @@ for f in .lake/build/bin/harness build/modules/plant_sim/plant_sim build/modules
   if [ ! -e "$HARNESS/$f" ]; then echo "fly_qgc.sh: $f is missing" >&2; missing=1; fi
 done
 if [ "$missing" = 1 ]; then
-  echo "fly_qgc.sh: build first (README.md, Build); nothing was started" >&2
+  echo "fly_qgc.sh: nothing was started. The build did not finish: run tools/build_modules.sh sim and tools/build_modules.sh px4 (in harness/); each names what is missing or the step that failed, and ends with \"OK\" when done." >&2
   exit 1
 fi
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/px4_fly_qgc.XXXXXX")"
