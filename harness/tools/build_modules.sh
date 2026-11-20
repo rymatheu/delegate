@@ -28,6 +28,7 @@ ardupilot() {
   chmod +x build/top/top_serve
 }
 px4() {
+  command -v xz > /dev/null 2>&1 || { echo "build_modules.sh: xz is missing (brew install xz)" >&2; exit 1; }
   px4/gen.sh
   px4/fetch_mavlink.sh
   for m in px4_rate px4_alloc px4_sensors px4_ekf2 px4_att px4_pos px4_fmm px4_land px4_commander \

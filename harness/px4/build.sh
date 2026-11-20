@@ -32,7 +32,7 @@ if [ ! -f "$MOD/px4.txt" ] && [ -f "$MOD/adapter.cpp" ]; then exec "$HARNESS/px4
 [ -f "$PXGEN/source.txt" ] || { echo "px4_build.sh: run px4/gen.sh first" >&2; exit 1; }
 
 # 1. ports
-python3 -I "$HARNESS/px4/ports.py" "$NAME"
+"$HARNESS/build/px4venv/bin/python" -I "$HARNESS/px4/ports.py" "$NAME"
 # a merge node (px4.txt `merge`): no PX4 code, only the generated word copying and the protocol
 if grep -q '^merge ' "$MOD/px4.txt"; then
   (cd "$HARNESS" && LEAN_NUM_THREADS=1 lake build > /dev/null)

@@ -120,11 +120,11 @@ What to do:
   4. Ctrl-C here (or SIGTERM) stops the vehicles and the cameras.
 MSG
 if [ "$SCEN" = single ]; then
-  python3 -I -B px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" \
+  build/px4venv/bin/python -I -B px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" \
     --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"} &
 else
   F=1; [ "$SCEN" = staggered ] && F=2
-  python3 -I -B px4/harnesses/px4_full/dev/relay.py --node px4_formation --gcs "127.0.0.1:$PORT" \
+  build/px4venv/bin/python -I -B px4/harnesses/px4_full/dev/relay.py --node px4_formation --gcs "127.0.0.1:$PORT" \
     --set formation=$F --set noise_seed="$SEED" --truth "$OUT/truth.csv" --every 4 ${POSE_ARG[@]+"${POSE_ARG[@]}"} &
 fi
 PID=$!

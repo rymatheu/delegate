@@ -94,7 +94,7 @@ else
 fi
 build/px4venv/bin/python -I -B px4/gorge/gcs.py --port "$PORT" "${VEH[@]}" --log "$OUT" > "$OUT/gcs.log" 2>&1 &
 GCS=$!
-python3 -I -B px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" "${REL[@]}" \
+build/px4venv/bin/python -I -B px4/harnesses/px4_full/dev/relay.py --gcs "127.0.0.1:$PORT" --set noise_seed="$SEED" "${REL[@]}" \
   --truth "$OUT/truth.csv" --every 4 --exit-on-disarm 2 ${PACE[@]+"${PACE[@]}"} > "$OUT/relay.log" 2>&1 &
 RELAY=$!
 wait $GCS; RC=$?
@@ -104,6 +104,6 @@ kill -TERM $RELAY 2>/dev/null; wait $RELAY 2>/dev/null
 GCS=""; RELAY=""
 "$SIM_PYTHON" -B "$PX4_DIR/gorge/metrics.py" --sim "$SIM_DIR" "${TRUTHS[@]}" --json "$OUT/metrics.json" \
   > "$OUT/metrics.log" 2>&1 || RC=1
-python3 -I -B "$PX4_DIR/gorge/summary.py" "$OUT" $RC | tee "$OUT/summary.txt"
+build/px4venv/bin/python -I -B "$PX4_DIR/gorge/summary.py" "$OUT" $RC | tee "$OUT/summary.txt"
 if [ "$RECORD" = 1 ]; then echo "recorded: $OUT and the session's ledger record"; else echo "nothing recorded (--record keeps the run)"; fi
 grep -q "^RESULT PASS" "$OUT/summary.txt"

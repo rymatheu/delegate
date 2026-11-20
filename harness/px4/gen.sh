@@ -18,9 +18,14 @@ PX4_ROOT="$(cd "$PX4_ROOT" && pwd -P)"
 VENV="$HARNESS/build/px4venv"
 OUT="$HARNESS/build/gen/px4"
 
-if [ ! -x "$VENV/bin/python" ]; then
-  python3 -m venv "$VENV"
-  "$VENV/bin/pip" install -q "empy==3.3.4" "pyros-genmsg==0.5.8" "pyyaml" "jinja2" "kconfiglib==14.1.0"
+# The environment is made with uv from the same Python 3.12 as the simulator's (sim/setup.sh), never from whatever
+# `python3` is first on PATH (an environment made from the macOS system Python can fail to start with
+# "Library not loaded: @executable_path/../Python3"). One that does not start or lacks a package is made again.
+if ! "$VENV/bin/python" -I -c 'import em, genmsg, yaml, jinja2, kconfiglib' > /dev/null 2>&1; then
+  command -v uv > /dev/null 2>&1 || { echo "px4/gen.sh: uv is missing (https://github.com/astral-sh/uv)" >&2; exit 1; }
+  rm -rf "$VENV"
+  uv venv -q --python 3.12 "$VENV"
+  uv pip install -q --python "$VENV/bin/python" "empy==3.3.4" "pyros-genmsg==0.5.8" "pyyaml" "jinja2" "kconfiglib==14.1.0"
 fi
 PY="$VENV/bin/python"
 

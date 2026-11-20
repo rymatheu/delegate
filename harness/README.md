@@ -14,7 +14,7 @@ Lean is frozen at v4.35.0 (`lean-toolchain`); `lake-manifest.json` has no depend
 
 Prerequisites: macOS with the Xcode command line tools (clang), [elan](https://github.com/leanprover/elan) (it
 installs Lean v4.35.0 from `lean-toolchain`), git, Python 3 (`python3`), [uv](https://github.com/astral-sh/uv) for
-the simulator's environments. From this directory:
+the Python environments (it downloads its own Python 3.12), and `xz` for the PX4 modules (`brew install xz`). From this directory:
 
 ```
 tools/fetch_deps.sh            # ArduPilot, PX4 v1.17.0, mavlink at pinned commits into deps/ (git-ignored)
